@@ -1,0 +1,433 @@
+[[PAGINA 1]]
+A P R E S E N T A Ç Â O I N S T I T U C I O N A L
+SÉBASTIEN RONDINEAU
+COORDENADOR
+21 / 10 / 2026
+ENGENHARIA AEROESPACIAL
+NA UnB
+INOVAÇÃO
+PRECISÃO
+SEGURANÇA
+a e r o e s p a c i a l @ u n b . b r
+h t t p s : / / a e r o e s p a c i a l . u n b . b r /
+[[PAGINA 2]]
+Visão Geral da
+FCTE - UnB
+Gama
+Uma apresentação dos dados institucionais,
+programas acadêmicos e infraestrutura do
+campus da Universidade de Brasília na
+cidade do Gama, onde está a Faculdade de
+Ciências e Tecnologias em Engenharia –
+FCTE.
+Dados Institucionais do Campus da FCTE
+Localização
+Gama, Distrito Federal
+Área Total
+113.040 m²
+Corpo Discente
+~3.100 alunos
+Corpo Docente
+135 professores
+Programas Oferecidos
+Graduação
+Engenharia Automotiva
+Engenharia Eletrônica
+Engenharia de Energia
+Engenharia de Software
+Engenharia Aeroespacial
+Ciências Naturais
+Pós-Graduação
+Engenharia Biomédica
+Integridade dos Materiais
+Professores credenciados em vários PPGs da UnB:
+→ Elétrica, Mecatrônica, Ciências Mecânicas, Computação
+[[PAGINA 3]]
+Introdução à Engenharia Aeroespacial
+A Indústria
+A indústria aeroespacial concebe e constrói veículos
+para a atmosfera e o espaço, fornecendo logística e
+suporte. A indústria brasileira é a maior do
+Hemisfério Sul, sublinhando sua importância
+estratégica.
+O Engenheiro
+O engenheiro aeroespacial projeta, desenvolve, testa
+e opera veículos e sistemas como aeronaves,
+foguetes e satélites, garantindo a inovação e a
+segurança no setor.
+[[PAGINA 4]]
+Histórico do Curso na UnB
+2012
+Criação do curso de Engenharia
+Aeroespacial.
+2015
+Formação da primeira turma de graduados.
+2016
+Consolidação do corpo docente do curso.
+2017
+2019
+Registro profissional aprovado pelo CREA.
+Avaliação com nota máxima pelo MEC.
+
+[[PAGINA 5]]
+Estrutura Curricular
+Básico
+Fundamentos essenciais em
+matemática, física e química,
+formando a base para toda a
+engenharia.
+Profissional
+Disciplinas generalistas de
+engenharia que constroem as
+competências técnicas do
+profissional.
+Específico
+Aprofundamento em áreaschave como aerodinâmica,
+propulsão, estruturas,
+sistemas aeroespaciais e
+telecomunicações.
+Multidisciplinar
+Matérias optativas e de
+extensão que permitem a
+integração com diversas
+outras áreas do
+conhecimento.
+O ciclo básico comum abrange até o 3º semestre, oferecendo uma base sólida e a flexibilidade para mudança de curso ao
+final deste período.
+[[PAGINA 6]]
+Áreas de Atuação Profissional
+Oportunidades de Carreira
+Empresas Aeroespaciais: Desenvolvimento, fabricação e
+operação de veículos aéreos e espaciais.
+Academia: Pesquisa, docência e formação de novos engenheiros.
+Governo: Agências espaciais, defesa e regulamentação do setor.
+Indústria em Geral: Aplicação de conhecimentos em projetos e
+sistemas complexos.
+Mercado Financeiro: Análise e consultoria em investimentos no
+setor aeroespacial.
+Habilidades Essenciais
+Base Sólida: Formação robusta em ciências exatas e
+fundamentos da engenharia.
+Ciência dos Materiais: Conhecimento aprofundado para
+aplicação aeroespacial.
+Projeto Mecânico: Capacidade de atuar no design de veículos e
+seus componentes.
+Sistemas de Propulsão: Domínio de propulsão química, elétrica e
+alternativas.
+Projeto Eletrônico: Capacidade de design de sistemas eletrônicos
+e de telecomunicações.
+
+[[PAGINA 7]]
+Laboratórios de Pesquisa
+Propulsão Química (CPL)
+Especializado em motores híbridos
+(Parafina/HDPE + N2O), atingindo 1kN de
+empuxo e 30 bar de pressão.
+Sistemas Espaciais (LaSE)
+Foco em estruturas espaciais implantáveis,
+projeto de missões, CubeSats,
+sensoriamento remoto e propulsão elétrica.
+Estruturas e Materiais (LEMA)
+Dedicado ao enrolamento filamentar,
+manufatura aditiva (PEEK), testes térmicos
+e análises de dinâmica estrutural.
+Financiamento
+Apoio de fontes governamentais como FAP DF, CNPq e AEB.
+Projetos comerciais e parcerias com a indústria.
+Investimentos estratégicos em infraestrutura de alto valor.
+Equipamentos Especializados
+Câmaras de vácuo de diversos tamanhos (até 1.5m x 2.5m).
+Bombas turbomoleculares e sondas de diagnóstico (Langmuir/íon).
+Máquinas de enrolamento filamentar e manufatura aditiva.
+
+[[PAGINA 8]]
+Laboratórios de Pesquisa
+Air Lab & COSMOS
+Especializado em VANT, aerodinâmica e
+simulações de alta carga computacional para
+aeroespacial, Multidisciplinary Design
+Optimization – eVTOL.
+Telecomunicações (LabTelecom)
+Foco em eletromagnetismo, guerra
+eletrônica e telecomunicação com forte
+infraestrutura de caracterizações
+eletromagnéticas.
+LITE
+Laboratório multidisciplinar da UnB focado
+em pesquisa, ensino e inovação
+tecnológica para engenharia.
+Financiamento
+Apoio de fontes governamentais como FINEP, FAP DF, CNPq e AEB.
+Projetos comerciais e parcerias com a indústria.
+Investimentos estratégicos em infraestrutura de alto valor.
+Equipamentos Especializados
+Analizadores de rede vetorias e logo uma câmaras anecóica de 15.5m
+Clusters computacionais
+Gaiola de testes de VANT e logo um tunel de vento
+
+[[PAGINA 9]]
+Propulsão Híbrida e Elétrica
+Motores Híbridos
+Propulsão Elétrica
+■
+Área central de pesquisa, abrangendo
+propulsores como Resistojets, Arcjets,
+PPTs e HETs.
+■
+Estudos focados em micropropulsão para
+satélites de pequeno porte (smallsats).
+■
+Pesquisas ativas e desenvolvimento de
+novas tecnologias para missões espaciais
+futuras.
+Infraestrutura de Testes
+Laboratório de Plasma (IF):
+■ Câmara de vácuo de 0.5m x 2m.
+■ Câmara maior (1.5m x 2.5m) em instalação.
+Diagnósticos: Sondas Langmuir/iônicas e
+balança de empuxo em fase de instalação.
+Laboratório de Sistemas Espaciais (LASE):
+■ Câmara cilíndrica de 75cm x 125cm.
+■ Capacidade de bombeamento de 2000 l/s
+(expansível para 6000 l/s).
+■
+Laboratório de Propulsão Química (CPL)
+especializado em motores de foguetes a
+propulsão híbrida e líquida, manufatura
+aditiva metálica, motores a jato supersônicos,
+vetorização de empuxo, fluidodinâmica
+computacional de sistemas de propulsão.
+■
+CITI CPL-DeltaV - parceria
+público-privada para o
+desenvolvimento e o teste
+de motores a propulsão
+líquida de até 25 kN,
+incluindo um centro de
+computação de alto
+desempenho (PIT-SJC) e
+uma bancada de teste de
+motores (CPL-UnB).
+
+[[PAGINA 10]]
+Tecnologia de Pequenos Satélites & Telecom
+Foco em CubeSats
+Crescente interesse em pequenos
+satélites devido à redução de
+tamanho e custos de fabricação e
+lançamento, impulsionado pelo
+padrão CubeSat.
+Observação da Terra & Telecom
+Aplicações cruciais de CubeSats em diversas áreas, com destaque
+para a observação terrestre e sensoriamento remoto.
+Projetos de Destaque na UnB
+SERPENS: CubeSat 3U da UnB, lançado em 2015.
+UniPolar: CubeSat 3U de colaboração internacional (2018).
+AlfaCrux: CubeSat 1U de telecomunicações (radioamador) da
+UnB, lançado em 2022 pela SpaceX (missão Transporter-4).
+Laboratório de Sistemas Espaciais (LaSE)
+& LabTelecom
+O LaSE e o LabTelecom da UnB lideram pesquisas em projeto
+de sistemas e análise de missão, com forte ênfase em
+pequenos satélites, observação terrestre, telecomunicações e
+guerra eletrônica / eletromagnética.
+
+[[PAGINA 11]]
+Sistemas de Controle Aeroespacial
+Aplicações em Satélites e Drones
+Pesquisas em controle de voo para aeronaves e drones,
+e controle de atitude de satélites.
+Desenvolvimento de CubeSats: SERPENS 3U (2015),
+UniPolar 3U (2018) e AlfaCrux 1U (2022).
+Atividades com drones através da Equipe De Robótica
+Aérea, fomentando a inovação prática e o aprendizado.
+Programa CBERS com a China
+Parceria no Programa CBERS, uma colaboração
+tecnológica e científica internacional com a China.
+Atuação no desenvolvimento de Sistemas de Controle de
+Determinação de Atitude e Órbita (AODCS).
+O CBERS-4 opera em órbita heliossíncrona, oferecendo
+cobertura global com diferentes resoluções temporais.
+DIAS
+DIAS
+DIAS
+
+[[PAGINA 12]]
+Materiais e Manufatura Avançada
+Frentes de pesquisa do Laboratório de Estruturas e Materiais Aeroespaciais (LEMA) da UnB
+Impressão 3D de PEEK
+Adaptação de impressoras de baixo custo para tecnopolímeros de
+alta performance, visando a redução de custos em aplicações
+aeroespaciais.
+Técnicas de Filament Winding
+Desenvolvimento de máquinas e cálculo de trajetórias para a
+produção de estruturas leves e análise estrutural de vasos de
+pressão.
+Impressão 4D e Nanocompósitos
+Exploração de filamentos com reforços nanométricos (ex: grafeno)
+para otimização de propriedades mecânicas e condutividade
+elétrica.
+Estruturas Otimizadas e Testes
+Criação de núcleos otimizados (colmeia, gyroid) impressos em 3D,
+submetidos a rigorosos testes de fadiga e análise de fratura.
+[[PAGINA 13]]
+Dinâmica Estrutural Aeroespacial
+Análise Modal e Simulações
+Estudo da análise modal experimental e simulações via Elementos
+Finitos para caracterização e otimização dinâmica de estruturas
+aeroespaciais complexas.
+Painéis Sanduíche
+Foco em painéis sanduíche, incluindo colmeias de alumínioalumínio, que são componentes essenciais e de baixo peso na
+construção de satélites modernos.
+Aplicações em Satélites
+Desenvolvimento e validação de modelos estruturais para garantir a
+integridade e o desempenho de satélites geoestacionários brasileiros
+em ambientes espaciais rigorosos.
+Pesquisa Avançada
+Integração de simulações, otimização topológica e manufatura
+aditiva de núcleos compósitos para inovar na concepção de
+estruturas leves e resilientes.
+[[PAGINA 14]]
+Simulações
+Computacionais
+Modelagem CFD e Interação
+Simulações de Grande Escala (LES) para análise de coeficientes e padrões de fluxo.
+Estudo de geometrias complexas e fluxos hipersônicos rarefeitos.
+Análise aprofundada de interações fluido-estrutura e fluxos multifásicos.
+Ferramentas e Aplicações
+Uso de softwares industriais como Simcenter Femap com Nastran para problemas aeroelásticos.
+Análise de estabilidade aeroelástica estática e dinâmica via FEM.
+Desenvolvimento e avaliação de técnicas de controle aeroelástico.
+
+[[PAGINA 15]]
+Laboratório
+Multiusuário LITE
+Uma infraestrutura compartilhada e multidisciplinar para
+pesquisa e desenvolvimento tecnológico em múltiplas
+áreas da engenharia.
+Infraestrutura Compartilhada
+Integração multidisciplinar de
+laboratórios para otimizar recursos
+e colaboração.
+Tecnologia de Ponta
+Acesso a equipamentos de última
+geração e softwares avançados
+para P&D.
+Centro de Excelência
+Foco em pesquisa de ponta para o
+desenvolvimento de soluções
+tecnológicas inovadoras.
+Colaboração Integrada
+Promove projetos integrados de
+pesquisa, ensino e extensão entre
+diversas áreas.
+[[PAGINA 16]]
+Equipes de Competições Estudantis & Empresa Junior
+Capital Rocket Team
+Liderança em competições de foguetes, aplicando
+conhecimentos de propulsão e aerodinâmica.
+Gama CubeDesign
+Desenvolvimento e projeto de satélites, impulsionando a
+inovação em sistemas espaciais.
+Mamutes do Cerrado
+Representação ativa em aeromodelismo, traduzindo teoria
+em prática e competindo nacionalmente.
+EDRA
+Desenvolvimento de drones e veículos aéreos autônomos
+para competições de engenharia aeronáutica e robótica
+Crescimento Profissional
+A participação nas equipes fomenta o desenvolvimento de habilidades técnicas e colaborativas essenciais.
+Zenit Aerospace
+Consultoria técnica em engenharia aeronáutica, espacial e
+drones, projetos de alto impacto e educação espacial.
+ARES
+Aerospace Rover Exploration System: rovers de exploração
+para competições de robótica planetária.
+[[PAGINA 17]]
+Cooperação Internacional
+Parcerias Estratégicas
+INPE: Desenvolvimento de instalações para testes de
+propulsão elétrica.
+UniPolar CubeSat: Proposta de projeto conjunto com
+Polônia e Reino Unido.
+Projeto SPLASH: Colaboração Brasil-Itália para
+aeroescudos de reentrada.
+Programa CBERS: Parceria Brasil-China em satélites de
+recursos terrestres.
+Acordos Globais: Cooperação com centros acadêmicos e
+de pesquisa relevantes.
+Corpo Docente e Pesquisa
+Corpo Docente Internacional: Presença de professores
+estrangeiros, promovendo intercâmbio de conhecimento e culturas.
+Projetos Conjuntos: Envolvimento em projetos
+internacionais que fortalecem as linhas de pesquisa e
+inovação da UnB.
+
+[[PAGINA 18]]
+Eventos Acadêmicos
+Destaque: Conferência Brasileira de Aeroespacial (CAB)
+Fórum essencial para a integração de academia, indústria, governo e
+Forças Armadas, promovendo parcerias estratégicas.
+Objetiva o diálogo e a troca de experiências em educação, pesquisa,
+inovação, tecnologia e gestão no setor.
+Visa discutir desafios e oportunidades para delinear o futuro do
+desenvolvimento aeroespacial nacional e global.
+[[PAGINA 19]]
+Perfil do Egresso
+O Engenheiro Aeroespacial da UnB desenvolve competências e uma preparação abrangente para os desafios da
+indústria global.
+Competências Desenvolvidas
+Fundamentação sólida em ciências exatas e profundo
+conhecimento em ciência dos materiais.
+Habilidades em projeto mecânico de veículos e
+componentes aeroespaciais.
+Domínio de sistemas de propulsão convencionais e
+alternativos (química, elétrica).
+Preparação para a Indústria
+Capacidade de atuar no desenvolvimento, projeto e
+fabricação de veículos aéreos e espaciais.
+Envolvimento em pesquisa de ponta em propulsão, estruturas,
+controle, telecom, guerra eletrônica e sistemas de satélites.
+Experiência em colaborações internacionais e equipes de
+competição, fomentando inovação.
+[[PAGINA 20]]
+Dados de Admissão
+Processo Seletivo
+Método de Ingresso
+O ingresso é realizado principalmente via vestibular, SISU, PAS e
+outros processos seletivos.
+vagas 56 vagas - Eng. Aeroespacial (20% da FCTE)
+Ciclo e Mobilidade
+Ciclo Básico Comum
+Período inicial unificado que se estende até o 3º
+semestre, fornecendo uma base sólida de engenharia.
+Opção de Transferência
+Ao final do 3º semestre, os estudantes têm a
+possibilidade de solicitar transferência para outras
+engenharias dentro da UnB.
+[[PAGINA 21]]
+Perspectivas Futuras
+Inovação em Foco
+A FCTE da UnB-Gama impulsiona inovações em
+propulsão, micropropulsão para pequenos satélites e
+no desenvolvimento de veículos autônomos, incluindo
+drones e sistemas avançados de controle de atitude para
+satélites.
+Alinhamento Estratégico
+O curso mantém um alinhamento fundamental com o
+setor espacial brasileiro, fomentando parcerias com a
+indústria, agências governamentais como a FAB, a AEB e
+centros de pesquisa para impulsionar o desenvolvimento
+nacional.
+[[PAGINA 22]]
+A P R E S E N T A Ç Â O I N S T I T U C I O N A L
+SÉBASTIEN RONDINEAU
+COORDENADOR
+21 / 10 / 2026
+ENGENHARIA AEROESPACIAL
+NA UnB
+INOVAÇÃO
+PRECISÃO
+SEGURANÇA
+a e r o e s p a c i a l @ u n b . b r
+h t t p s : / / a e r o e s p a c i a l . u n b . b r /

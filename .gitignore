@@ -1,0 +1,8 @@
+.venv/
+.cache/
+site/
+__pycache__/
+*.pyc
+# gerados pelo pipeline (recriados por `python -m rumo_rag ingerir`)
+rag/dados/originais/
+rag/dados/chroma*/

@@ -1,0 +1,314 @@
+# Catálogo da base de conhecimento do RUmo (Grupo 04 · Challenge 2)
+# Cada documento-fonte tem um identificador estável (F01, F02, ...) usado nas citações.
+# eixo: ru (alimentação no campus) | fluxo (cursos, disciplinas e vida acadêmica) | apoio (saúde e normas gerais)
+# tipo: norma | edital | pagina | cardapio | ppc | matriz | guia | manual | calendario
+# Data de coleta de todos os itens: 2026-11-06 (salvo indicação em contrário).
+
+coleta: "2026-11-06"
+
+documentos:
+  # ------------------------------------------------------------------ RU
+  - id: F01
+    titulo: "Resolução do CAD nº 0037/2025 — grupos de usuários e valores das refeições do RU"
+    orgao: "UnB · Conselho de Administração"
+    eixo: ru
+    tipo: norma
+    data: "2025-12-04"
+    url: "https://ru.unb.br/wp-content/uploads/2026/02/SEI_13513000_Resolucao_do_CAD_n__0037_2025-ATT.pdf"
+    arquivo: originais/F01.pdf
+  - id: F02
+    titulo: "Resolução DAC nº 002/2024 — Regimento de funcionamento do Restaurante Universitário"
+    orgao: "UnB · Decanato de Assuntos Comunitários"
+    eixo: ru
+    tipo: norma
+    data: "2024"
+    url: "https://ru.unb.br/wp-content/uploads/2025/08/SEI_11843224_Resolucao_002-anexo-2.pdf"
+    arquivo: originais/F02.pdf
+  - id: F03
+    titulo: "Unidades do RU e horários de funcionamento (inclui RU Gama/FCTE)"
+    orgao: "UnB · Diretoria do RU"
+    eixo: ru
+    tipo: pagina
+    data: "2026"
+    url: "https://ru.unb.br/unidades/"
+    arquivo: originais/F03.html
+  - id: F04
+    titulo: "Valores das refeições e grupos de acesso"
+    orgao: "UnB · Diretoria do RU"
+    eixo: ru
+    tipo: pagina
+    data: "2026"
+    url: "https://ru.unb.br/precos-e-grupos/"
+    arquivo: originais/F04.html
+  - id: F05
+    titulo: "Como acessar o RU (carteirinha digital, créditos e catraca)"
+    orgao: "UnB · Diretoria do RU"
+    eixo: ru
+    tipo: pagina
+    data: "2026"
+    url: "https://ru.unb.br/como-acessar/"
+    arquivo: originais/F05.html
+  - id: F06
+    titulo: "Programa Auxílio Alimentação — regras de uso"
+    orgao: "UnB · Diretoria do RU"
+    eixo: ru
+    tipo: pagina
+    data: "2026"
+    url: "https://ru.unb.br/programa-auxilio-alimentacao/"
+    arquivo: originais/F06.html
+  - id: F07
+    titulo: "Edital nº 24/2026 DDS/DAC — Auxílio Alimentação para estudantes em vulnerabilidade"
+    orgao: "UnB · DDS/DAC"
+    eixo: ru
+    tipo: edital
+    data: "2026"
+    url: "https://dds.dac.unb.br/wp-content/uploads/2026/08/Edital_24_alimentacao.pdf"
+    arquivo: originais/F07.pdf
+  - id: F08
+    titulo: "Cardápio semanal do RU Gama — 02/11 a 08/11/2026"
+    orgao: "UnB · Diretoria do RU"
+    eixo: ru
+    tipo: cardapio
+    data: "2026-11-02"
+    url: "https://ru.unb.br/wp-content/uploads/2026/10/Gama-Semana-03-02-11-a-08-11-1.pdf"
+    arquivo: originais/F08.pdf
+  - id: F09
+    titulo: "Cardápio semanal do RU Gama — 09/11 a 15/11/2026"
+    orgao: "UnB · Diretoria do RU"
+    eixo: ru
+    tipo: cardapio
+    data: "2026-11-09"
+    url: "https://ru.unb.br/wp-content/uploads/2026/11/Gama-Semana-04-09-11-a-15-11.pdf"
+    arquivo: originais/F09.pdf
+  - id: F10
+    titulo: "Lei nº 14.914/2024 — Política Nacional de Assistência Estudantil (PNAES)"
+    orgao: "Presidência da República"
+    eixo: ru
+    tipo: norma
+    data: "2024-07-03"
+    url: "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2024/lei/l14914.htm"
+    arquivo: originais/F10.html
+  - id: F11
+    titulo: "Guia Alimentar para a População Brasileira (2ª ed.)"
+    orgao: "Ministério da Saúde"
+    eixo: apoio
+    tipo: guia
+    data: "2014"
+    url: "https://bvsms.saude.gov.br/bvs/publicacoes/guia_alimentar_populacao_brasileira_2ed.pdf"
+    arquivo: originais/F11.pdf
+  - id: F12
+    titulo: "Perguntas e respostas sobre rotulagem de alimentos alergênicos (5ª ed.)"
+    orgao: "ANVISA"
+    eixo: apoio
+    tipo: guia
+    data: "2017"
+    url: "https://bibliotecadigital.anvisa.gov.br/jspui/bitstream/anvisa/213/1/Rotulagem%20de%20alimentos%20alerg%c3%aanicos_5ed_2017.pdf"
+    arquivo: originais/F12.pdf
+  - id: F13
+    titulo: "Assistência estudantil na FCTE"
+    orgao: "UnB · FCTE"
+    eixo: ru
+    tipo: pagina
+    data: "2026"
+    url: "https://fcte.unb.br/assistencia-estudantil/"
+    arquivo: originais/F13.html
+
+  # ------------------------------------------------------------------ FLUXO
+  - id: F14
+    titulo: "Resolução da FCTE nº 01/2025 — ingresso e escolha de curso (ABI Engenharia e Computação)"
+    orgao: "UnB · FCTE"
+    eixo: fluxo
+    tipo: norma
+    data: "2025"
+    url: "https://fcte.unb.br/wp-content/uploads/2025/09/RESOLUCAO-DO-CONSELHO-DA-FCTE-No-01-2025.pdf"
+    arquivo: originais/F14.pdf
+  - id: F15
+    titulo: "Engenharia de Software — matriz curricular e créditos (página do curso)"
+    orgao: "UnB · FCTE · Engenharia de Software"
+    eixo: fluxo
+    curso: software
+    tipo: pagina
+    data: "2026"
+    url: "https://software.unb.br/matriz-curricular/"
+    arquivo: originais/F15.html
+  - id: F16
+    titulo: "Fluxograma de Engenharia de Software (235 créditos) — transcrição"
+    orgao: "UnB · FCTE · Engenharia de Software (transcrição do Grupo 04)"
+    eixo: fluxo
+    curso: software
+    tipo: matriz
+    data: "2026-02"
+    url: "https://software.unb.br/wp-content/uploads/2026/02/grade_curricular_esw.jpg"
+    arquivo: curados/F16_fluxograma_software.md
+  - id: F17
+    titulo: "Projeto Pedagógico do Curso de Engenharia Aeroespacial (PPC 2025)"
+    orgao: "UnB · FCTE · Engenharia Aeroespacial"
+    eixo: fluxo
+    curso: aeroespacial
+    tipo: ppc
+    data: "2025"
+    url: "https://aeroespacial.unb.br/wp-content/uploads/2026/05/PPC_Aero_2025.pdf"
+    arquivo: originais/F17.pdf
+  - id: F18
+    titulo: "Engenharia Aeroespacial na UnB (apresentação do curso, out/2026)"
+    orgao: "UnB · FCTE · Engenharia Aeroespacial"
+    eixo: fluxo
+    curso: aeroespacial
+    tipo: guia
+    data: "2026-10"
+    url: "https://aeroespacial.unb.br/wp-content/uploads/2026/10/Engenharia_Aeroespacial_na_UnB_outubro_2026.pdf"
+    arquivo: originais/F18.pdf
+  - id: F19
+    titulo: "Engenharia Automotiva — estrutura curricular (ingressantes a partir de 2027)"
+    orgao: "UnB · FCTE · Engenharia Automotiva"
+    eixo: fluxo
+    curso: automotiva
+    tipo: matriz
+    data: "2026"
+    url: "https://automotiva.unb.br/estrutura_curricular/"
+    arquivo: originais/F19.html
+  - id: F20
+    titulo: "Engenharia Automotiva — informações gerais do curso"
+    orgao: "UnB · FCTE"
+    eixo: fluxo
+    curso: automotiva
+    tipo: pagina
+    data: "2026"
+    url: "https://fcte.unb.br/engenharia-automotiva/"
+    arquivo: originais/F20.html
+  - id: F21
+    titulo: "Projeto Pedagógico do Curso de Engenharia Eletrônica (PPC 2023)"
+    orgao: "UnB · FCTE · Engenharia Eletrônica"
+    eixo: fluxo
+    curso: eletronica
+    tipo: ppc
+    data: "2023"
+    url: "https://eletronica.unb.br/wp-content/uploads/2025/03/PPC_eletronica2023_2.pdf"
+    arquivo: originais/F21.pdf
+  - id: F22
+    titulo: "Engenharia de Energia — informações gerais do curso"
+    orgao: "UnB · FCTE"
+    eixo: fluxo
+    curso: energia
+    tipo: pagina
+    data: "2026"
+    url: "https://fcte.unb.br/engenharia-de-energia/"
+    arquivo: originais/F22.html
+  - id: F23
+    titulo: "Matriz curricular de Engenharia de Energia (251 créditos) — transcrição"
+    orgao: "UnB · FCTE (transcrição do Grupo 04)"
+    eixo: fluxo
+    curso: energia
+    tipo: matriz
+    data: "2024-08"
+    url: "https://fcte.unb.br/wp-content/uploads/2024/08/Captura-de-tela-de-2024-08-26-15-23-04.png"
+    arquivo: curados/F23_matriz_energia.md
+  - id: F24
+    titulo: "PPGEB — apresentação do Mestrado em Engenharia Biomédica"
+    orgao: "UnB · FCTE · PPGEB"
+    eixo: fluxo
+    curso: biomedica
+    tipo: pagina
+    data: "2026"
+    url: "https://ppgeb.unb.br/apresentacao/"
+    arquivo: originais/F24.html
+  - id: F25
+    titulo: "PPGEB (Mestrado em Engenharia Biomédica) — matriz curricular (créditos mínimos)"
+    orgao: "UnB · FCTE · PPGEB"
+    eixo: fluxo
+    curso: biomedica
+    tipo: matriz
+    data: "2026"
+    url: "https://ppgeb.unb.br/matriz-curricular-copy/"
+    arquivo: originais/F25.html
+  - id: F26
+    titulo: "PPGEB (Mestrado em Engenharia Biomédica) — como aluno de graduação cursa disciplinas do mestrado"
+    orgao: "UnB · FCTE · PPGEB"
+    eixo: fluxo
+    curso: biomedica
+    tipo: pagina
+    data: "2026"
+    url: "https://ppgeb.unb.br/aluno-de-graduacao/"
+    arquivo: originais/F26.html
+  - id: F27
+    titulo: "PPGEB (Mestrado em Engenharia Biomédica) — áreas de concentração e linhas de pesquisa"
+    orgao: "UnB · FCTE · PPGEB"
+    eixo: fluxo
+    curso: biomedica
+    tipo: pagina
+    data: "2026"
+    url: "https://ppgeb.unb.br/areas-de-concentracao-e-linhas-de-pesquisa/"
+    arquivo: originais/F27.html
+  - id: F28
+    titulo: "PPGEB (Mestrado em Engenharia Biomédica) — edital de seleção do mestrado (ingresso em 2027/1)"
+    orgao: "UnB · FCTE · PPGEB"
+    eixo: fluxo
+    curso: biomedica
+    tipo: edital
+    data: "2026-10-08"
+    url: "https://ppgeb.unb.br/2026/10/08/edital-de-selecao-para-o-mestrado-em-engenharia-biomedica-1-2026/"
+    arquivo: originais/F28.html
+  - id: F29
+    titulo: "Calendário universitário de graduação 2026.2 por atividades"
+    orgao: "UnB · Secretaria de Administração Acadêmica"
+    eixo: fluxo
+    tipo: calendario
+    data: "2026-06-25"
+    url: "https://saa.unb.br/wp-content/uploads/2026/06/2026_2_Calend_Ativ_Grad_25_06_2026.pdf"
+    arquivo: originais/F29.pdf
+  - id: F30
+    titulo: "Calendário de matrícula da graduação 2026.1"
+    orgao: "UnB · Secretaria de Administração Acadêmica"
+    eixo: fluxo
+    tipo: calendario
+    data: "2026-02-27"
+    url: "https://saa.unb.br/wp-content/uploads/2026/02/2026_1_Calend_Mat_Grad_27_02_2026.pdf"
+    arquivo: originais/F30.pdf
+  - id: F31
+    titulo: "Resolução CEPE nº 93/2018 — trancamento de matrícula na graduação"
+    orgao: "UnB · CEPE"
+    eixo: fluxo
+    tipo: norma
+    data: "2018"
+    url: "https://deg.unb.br/wp-content/uploads/resolucao_cepe_93_2018_trancamentos.pdf"
+    arquivo: originais/F31.pdf
+  - id: F32
+    titulo: "Tutorial de matrícula no SIGAA (DEG)"
+    orgao: "UnB · Decanato de Ensino de Graduação"
+    eixo: fluxo
+    tipo: manual
+    data: "s.d."
+    url: "https://deg.unb.br/wp-content/uploads/tutorial_matricula_texto.pdf"
+    arquivo: originais/F32.pdf
+  - id: F33
+    titulo: "FAQ — Matrícula no SIGAA"
+    orgao: "UnB"
+    eixo: fluxo
+    tipo: manual
+    data: "2021-01-06"
+    url: "https://noticias.unb.br/images/Noticias/2021/01-Jan/FAQ__MATRICULA_NO_SIGAA__11-1-2021_4.pdf"
+    arquivo: originais/F33.pdf
+  - id: F34
+    titulo: "Manual do discente — aba Ensino do SIGAA"
+    orgao: "UnB · Portal SIG"
+    eixo: fluxo
+    tipo: manual
+    data: "2025-02"
+    url: "https://portalsig.unb.br/wp-content/uploads/2025/02/manual_discente_abaensino.pdf"
+    arquivo: originais/F34.pdf
+  - id: F35
+    titulo: "Estatuto e Regimento Geral da UnB"
+    orgao: "UnB"
+    eixo: apoio
+    tipo: norma
+    data: "s.d."
+    url: "https://unb.br/images/Documentos/Estatuto_e_Regimento_Geral_UnB.pdf"
+    arquivo: originais/F35.pdf
+  - id: F36
+    titulo: "Regimento Interno da Faculdade UnB Gama (FCTE)"
+    orgao: "UnB · FCTE"
+    eixo: fluxo
+    tipo: norma
+    data: "2024-05"
+    url: "http://fcte.unb.br/wp-content/uploads/2024/05/Regimento_Interno_FGA_-_aprovado.pdf"
+    arquivo: originais/F36.pdf

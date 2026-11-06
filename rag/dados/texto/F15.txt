@@ -1,0 +1,60 @@
+Os estudantes de Engenharia de Software (que ingressaram antes de 2024/2) deverão cursar 232 créditos ( ou 3480 horas ), distribuidos da seguinte forma:
+
+- 162 créditos ( ou 2430 horas ) em disciplinas obrigatórias
+
+- 10 créditos ( ou 150 horas ) nas disciplinas de Projeto Integrador 1 e 2
+
+- 14 créditos ( ou 210 horas ) em Estágio Supervisionado
+
+- 10 créditos ( ou 150 horas ) em TCC
+
+- 36 créditos ( ou 540 horas ) em disciplinas optativas, módulos livres e atividades complementares
+
+*cada crédito equivale a 15 horas.
+
+Aqueles estudantes de Engenharia de Software que ingressaram após 2024/2 deverão cursar 235 créditos ( ou 3525 horas ), distribuidos da seguinte forma:
+
+- 147 créditos ( ou 2205 horas ) em disciplinas obrigatórias
+
+- 4 créditos ( ou 60 horas ) nas disciplinas de Projeto Integrador 1 e 2 (6 créditos são contabilizados como extensão)
+
+- 14 créditos ( ou 210 horas ) em Estágio Supervisionado
+
+- 10 créditos ( ou 150 horas ) em TCC
+
+- 36 créditos ( ou 540 horas ) em disciplinas optativas, módulos livres e atividades complementares
+
+- 24 créditos ( ou 360 horas ) em atividades extensionistas. Essas atividades estão distribuidas da seguinte forma:
+
+- 1 crédito na disciplina Engenharia e Ambiente ( ou 15 horas )
+
+- 1 crédito na disciplina Gestão da Produção e Qualidade ( ou 15 horas )
+
+- 2 créditos na disciplina Métodos de Desenvolvimento de Software ( ou 30 horas )
+
+- 2 créditos na disciplina Requisitos de Software ( ou 30 horas )
+
+- 2 créditos na disciplina Qualidade de Software 1 ( ou 30 horas )
+
+- 2 créditos na disciplina Testes de Software ( ou 30 horas )
+
+- 2 créditos na disciplina Engenharia de Produto de Software ( ou 30 horas )
+
+- 3 créditos na disciplina Gerência de Configuração e Evolução de Software ( ou 45 horas )
+
+- 2 créditos na disciplina Projeto Integrador 1 ( ou 30 horas )
+
+- 4 créditos na disciplina Projeto Integrador 2 ( ou 60 horas )
+
+- 3 créditos como Atividade de Extensão de Eng. de Software ( ou 45 horas )
+
+*cada crédito equivale a 15 horas.
+
+Na figura abaixo, as disciplinas de cor amarela são comuns às cinco Engenharias da FGA.
+As disciplinas de cor verde são específicas do curso de Engenharia de Software.
+
+As disciplinas de cor laranja são aquelas referentes ao TCC e Projeto Integrador.
+
+As disciplinas de cor magenta são disciplinas optativas que podem ser escolhidas pelo próprio estudante.
+
+Acesse o PPC do curso aqui .

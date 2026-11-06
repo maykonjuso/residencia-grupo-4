@@ -1,0 +1,102 @@
+{% extends "main.html" %}
+
+{% block tabs %}
+{{ super() }}
+<section class="rm-hero" aria-labelledby="rm-hero-titulo">
+  <canvas class="rm-hero__painel" aria-hidden="true"></canvas>
+  <div class="rm-hero__inner md-grid">
+    <div class="rm-hero__texto">
+      <p class="rm-sobretitulo">Residência em IA · UnB/FCTE · Turma 1 · Challenge 2 · Grupo 04</p>
+      <h1 id="rm-hero-titulo" class="rm-hero__titulo">
+        <span class="rm-marca">RU<span>mo</span></span>: respostas com fonte sobre o
+        <span class="rm-destaque">RU e o fluxo de disciplinas</span> do campus Gama
+      </h1>
+      <p class="rm-hero__chamada">
+        Um assistente com RAG que responde dúvidas sobre
+        <span class="rm-digitando" data-palavras="preços e cardápio do RU|pré-requisitos e grades|calendário e matrícula">preços e cardápio do RU</span><span class="rm-cursor" aria-hidden="true"></span>
+        usando só documentos oficiais da UnB e mostrando de onde tirou cada informação.
+      </p>
+      <div class="rm-hero__acoes">
+        <a class="md-button md-button--primary" href="{{ 'entrega-2/' | url }}">Entrega 2 · RAG</a>
+        <a class="md-button rm-botao-claro" href="{{ 'entrega-1/' | url }}">Entrega 1 · Definições</a>
+        <a class="md-button rm-botao-claro" href="{{ 'entrega-2/demonstracao/' | url }}">Ver a demonstração</a>
+      </div>
+    </div>
+    <figure class="rm-demo" aria-label="Animação com consultas reais feitas ao protótipo">
+      <div class="rm-demo__barra" aria-hidden="true">
+        <i></i><i></i><i></i>
+        <span class="rm-demo__url">rumo · python -m rumo_rag perguntar</span>
+      </div>
+      <div class="rm-demo__abas" role="tablist">
+        <button type="button" role="tab" data-cena="0">RU</button>
+        <button type="button" role="tab" data-cena="1">Fluxo</button>
+        <button type="button" role="tab" data-cena="2">Fora da base</button>
+      </div>
+      <div class="rm-demo__corpo">
+        <div class="rm-chat__pergunta"><b>Estudante</b><span class="rm-chat__q"></span></div>
+        <ol class="rm-chat__trechos" aria-label="Trechos recuperados"></ol>
+        <div class="rm-chat__resposta"><b>RUmo</b><span class="rm-chat__r"></span></div>
+        <div class="rm-demo__rodape"><span class="rm-chat__info">busca híbrida · top 5</span><span class="rm-chat__fontes"></span></div>
+      </div>
+      <figcaption>Perguntas e respostas reais do protótipo, registradas na demonstração da Entrega 2.</figcaption>
+    </figure>
+  </div>
+</section>
+{% endblock %}
+
+{% block content %}
+<section class="rm-numeros rm-revelar" aria-label="O projeto em números">
+  <div class="rm-numero"><b data-contar="36">0</b><span>documentos-fonte oficiais na base</span></div>
+  <div class="rm-numero"><b data-contar="1738">0</b><span>chunks indexados no ChromaDB</span></div>
+  <div class="rm-numero"><b data-contar="6">0</b><span>cursos do Gama (5 engenharias + PPGEB)</span></div>
+  <div class="rm-numero"><b data-contar="100" data-sufixo="%">0</b><span>das perguntas de teste com a fonte certa no top 5</span></div>
+</section>
+
+<section class="rm-secao rm-revelar" aria-labelledby="rm-semanas">
+  <h2 id="rm-semanas">Roadmap do Challenge 2</h2>
+  <p>Sete semanas, uma entrega por semana. Esta GitPage reúne as Entregas 1 e 2.</p>
+  <div class="rm-linha-tempo" role="list" data-concluidas="2">
+    <div class="rm-etapa" role="listitem"><a href="{{ 'entrega-1/' | url }}"><small>Semana 1 · entregue</small><strong>Definições do projeto</strong><span>Problema, partes interessadas, riscos e métricas.</span></a></div>
+    <div class="rm-etapa" role="listitem"><a href="{{ 'entrega-2/' | url }}"><small>Semana 2 · 09/11/2026</small><strong>Primeiro mecanismo RAG</strong><span>Base curada, chunking, embeddings, banco vetorial e demonstração.</span></a></div>
+    <div class="rm-etapa" role="listitem"><a href="{{ 'visao/roadmap/' | url }}"><small>Semana 3</small><strong>LLM × RAG</strong><span>Respostas baseadas em evidências, comparadas com o LLM sozinho.</span></a></div>
+    <div class="rm-etapa" role="listitem"><a href="{{ 'visao/roadmap/' | url }}"><small>Semana 4</small><strong>Multiagentes</strong><span>Um agente para o RU e outro para o fluxo, com orquestrador.</span></a></div>
+    <div class="rm-etapa" role="listitem"><a href="{{ 'visao/roadmap/' | url }}"><small>Semana 5</small><strong>Multimodalidade</strong><span>Ler foto do prato, do cardápio ou do fluxograma.</span></a></div>
+    <div class="rm-etapa" role="listitem"><a href="{{ 'visao/roadmap/' | url }}"><small>Semana 6</small><strong>Integração</strong><span>Aplicação funcional e ponte com o sistema do Grupo 09.</span></a></div>
+    <div class="rm-etapa" role="listitem"><a href="{{ 'visao/roadmap/' | url }}"><small>Semana 7</small><strong>Testes e relatório</strong><span>Refinamento, relatório final e apresentação.</span></a></div>
+  </div>
+</section>
+
+<section class="rm-secao rm-revelar" aria-labelledby="rm-eixos">
+  <h2 id="rm-eixos">Os dois eixos do RUmo</h2>
+  <div class="rm-cartoes">
+    <a class="rm-cartao" href="{{ 'entrega-2/base-de-conhecimento/' | url }}#eixo-ru">
+      <small>Eixo 1 · 11 fontes + 3 de apoio</small>
+      <strong>Restaurante Universitário</strong>
+      <span>Preços por grupo, quem come de graça, horários do RU Gama, cardápio da semana com opções vegetarianas e alergênicos, Auxílio Alimentação e PNAES.</span>
+      <em>CAD 37/2025 · Regimento do RU · Edital 24/2026</em>
+    </a>
+    <a class="rm-cartao" href="{{ 'entrega-2/base-de-conhecimento/' | url }}#eixo-fluxo">
+      <small>Eixo 2 · 22 fontes</small>
+      <strong>Fluxo de disciplinas</strong>
+      <span>Grades e pré-requisitos de Aeroespacial, Automotiva, Eletrônica, Energia e Software, mais o PPGEB; ingresso pela ABI, calendário 2026.2, matrícula e trancamento.</span>
+      <em>PPCs · fluxogramas · CEPE 93/2018 · SAA</em>
+    </a>
+    <a class="rm-cartao" href="{{ 'entrega-2/arquitetura/' | url }}">
+      <small>Como funciona</small>
+      <strong>RAG com rastreabilidade</strong>
+      <span>Busca híbrida (vetorial + BM25) no ChromaDB, LLM local que só responde com base nos trechos e cita cada um. Sem fonte, ele diz que não sabe.</span>
+      <em>multilingual-e5 · ChromaDB · Qwen2.5</em>
+    </a>
+  </div>
+</section>
+
+<section class="rm-secao rm-revelar" aria-labelledby="rm-explorar">
+  <h2 id="rm-explorar">Explore as consultas da demonstração</h2>
+  <p>Escolha uma pergunta para ver os trechos recuperados, a resposta e as fontes citadas.</p>
+  <div id="rm-explorador" class="rm-explorador" aria-live="polite"></div>
+</section>
+
+<div class="rm-conteudo">
+  {{ page.content }}
+</div>
+{% endblock %}

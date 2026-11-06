@@ -1,0 +1,4 @@
+# Só o necessário para gerar o site (usado no GitHub Actions)
+mkdocs>=1.6,<2
+mkdocs-material>=9.5,<10
+termynal>=0.12,<1

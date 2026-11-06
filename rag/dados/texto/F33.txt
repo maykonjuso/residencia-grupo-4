@@ -1,0 +1,93 @@
+[[PAGINA 1]]
+
+FAQ – MATRÍCULA NO SIGAA
+06 de janeiro de 2021
+
+A plataforma está lenta ou fora do ar. O que devo fazer?
+R-> Como as instabilidades estão diretamente relacionadas ao número de acessos
+simultâneos ao sistema, aconselha-se que o estudante feche o seu navegador, aguarde
+alguns minutos e acesse o sistema novamente. A equipe da STI já ampliou a
+infraestrutura de suporte disponível, com consequente melhoria significativa do acesso
+ao sistema pelos estudantes.
+
+Não consegui acesso ao meu número de matrícula. O que devo fazer?
+R-> O estudante consegue acesso ao número de matrícula por meio da página
+https://servicos.unb.br/publico/#/recuperarsenha
+
+Sou calouro e não estou conseguindo acessar o SIGAA. O que devo fazer?
+R-> A matrícula dos estudantes calouros já está sendo efetuada pela SAA em todas as
+disciplinas referentes ao primeiro nível da estrutura curricular do curso. Após a
+realização da matrícula pela SAA, o status do aluno é alterado para ativo e o próximo
+passo é o discente realizar o autocadastro no SIGAA para ter acesso às informações e
+aos documentos referentes ao seu curso, como por exemplo: atestado de matrícula,
+informações referentes à estrutura curricular etc.
+
+Não estou conseguindo acessar o portal do discente. O que devo fazer?
+R-> Se você já é estudante ativo da Universidade e não está conseguindo acessar o portal
+do discente, experimente mudar de navegador. Se o problema for não ter acesso à
+senha, recupere-a por meio da opção “Esqueceu a senha? Clique aqui para recuperá-la”
+em https://sig.unb.br/sigaa/logar.do?dispatch=logOn
+
+[[PAGINA 2]]
+
+Sou calouro: posso mexer na minha grade?
+R-> A matrícula do estudante calouro nas disciplinas do primeiro semestre do seu curso
+é realizada pela SAA. O estudante calouro não poderá fazer alterações em sua matrícula.
+
+Como faço para me matricular em disciplinas no SIGAA?
+R-> O estudante deve seguir os seguintes passos.
+Na ABA Ensino-> Matrícula On-Line-> Realizar Matrícula.
+
+Clicar em Iniciar Seleção de Turmas.
+
+[[PAGINA 3]]
+
+Na tela abaixo, o estudante deve selecionar as turmas nas quais deseja se matricular e
+depois clicar em “Adicionar Turmas Selecionadas”. Na tela seguinte, o Sistema
+apresentará um resumo com as turmas selecionadas.
+
+Nessa tela, o estudante poderá confirmar se as turmas selecionadas estão corretas. Ao
+clicar no botão “Confirmar matrícula”, o sistema direcionará o estudante à seguinte tela,
+na qual o estudante deverá preencher os campos CPF e senha para então efetivar a
+solicitação de matrícula:
+
+[[PAGINA 4]]
+
+Após a confirmação do CPF e senha, é necessário, ainda, clicar no botão “Confirmar
+matrícula”. Nesse ponto a solicitação de matrícula está efetivada. A partir daí o sistema
+permitirá ao aluno gerar o comprovante de matrícula por meio do botão “Imprimir
+comprovante” na tela seguinte.
+
+[[PAGINA 5]]
+
+A ordem de pedido de matrícula na disciplina tem algum impacto?
+R-> Não, a ordem da solicitação não tem qualquer impacto no processamento.
+
+Algumas disciplinas inscritas no SIGAA constam como presenciais. Haverá disciplinas
+presenciais neste semestre?
+R-> Ainda não há previsão de oferta de disciplinas presenciais no semestre 2/2020, pois
+o Conselho de Ensino, Pesquisa e Extensão (CEPE) irá decidir em janeiro/2021 sobre a
+possibilidade de avançarmos para a etapa 2 do Plano de Retomada da UnB, no qual há
+algum grau de presencialidade em disciplinas na Universidade.
+No ensino não presencial, as disciplinas podem ser ministradas com atividades
+síncronas. Devem ser observados, então, os horários cadastrados das disciplinas, para
+não haver choque de horário.
+
+Até que dia posso fazer minha matrícula em disciplinas?
+
+[[PAGINA 6]]
+
+R-> O estudante pode solicitar sua matrícula em disciplinas até o dia 12/01/2021, às
+23h59min.
+
+O prazo terminou e não consegui fazer a matrícula. O que devo fazer?
+R-> Existem dois momentos de solicitação de matrícula: o primeiro período de matrícula
+— do dia 04/01 até 12/01/2021, com processamento do dia 13 ao dia 17/01 — e o
+segundo período de matrícula , chamado de rematrícula, — com solicitação do dia
+21/01 a 25/01, e reprocessamento entre os dias 26 a 29/01/2021.
+Após esses dois processamentos, o sistema ainda disponibilizará o período de matrícula
+extraordinária, do dia 30/01 até 12/02/2021. Nesse período, o estudante poderá se
+matricular em disciplinas que ainda tenham vagas.
+Após esses períodos (primeiro período de matrícula, rematrícula e matrícula
+extraordinária), se o aluno perdeu todos os prazos, deverá procurar o coordenador do
+seu curso e solicitar a matrícula em disciplinas.

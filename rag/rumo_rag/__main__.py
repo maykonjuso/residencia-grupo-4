@@ -1,0 +1,126 @@
+"""Linha de comando do RUmo.
+
+  python -m rumo_rag ingerir            # baixa, extrai, divide, gera embeddings e indexa
+  python -m rumo_rag perguntar "..."    # consulta com resposta e fontes
+  python -m rumo_rag avaliar            # métricas de recuperação no conjunto de teste
+  python -m rumo_rag demo               # roda as perguntas da demonstração e salva as evidências
+"""
+import argparse
+import json
+import sys
+import time
+
+from . import chunking, config, extracao, geracao, indice
+
+
+def ingerir(_args):
+    t0 = time.time()
+    docs = extracao.carregar_catalogo()
+    extracao.baixar(docs)
+    textos = extracao.extrair_todos(docs)
+    chunks = []
+    for d in docs:
+        chunks.extend(chunking.dividir(d, textos[d["id"]]))
+    tamanhos = sorted(len(c["texto"]) for c in chunks)
+    print(f"{len(docs)} documentos → {len(chunks)} chunks · mediana {tamanhos[len(tamanhos)//2]} caracteres")
+    indice.indexar(chunks)
+    print(f"ingestão concluída em {time.time() - t0:.0f}s")
+
+
+def responder(pergunta: str, backend: str, eixo: str | None = None, k: int = config.TOP_K) -> dict:
+    t0 = time.time()
+    trechos = indice.buscar(pergunta, k=k, eixo=eixo)
+    t1 = time.time()
+    resposta = geracao.gerar(pergunta, trechos, backend)
+    t2 = time.time()
+    return {
+        "pergunta": pergunta,
+        "resposta": resposta,
+        "fontes_citadas": geracao.citacoes_usadas(resposta, trechos),
+        "valores_sem_fonte": geracao.valores_sem_fonte(resposta, trechos),
+        "trechos_recuperados": [
+            {k2: t.get(k2) for k2 in ("chunk_id", "doc_id", "titulo", "pagina", "secao", "similaridade", "nota_rrf", "url", "texto")}
+            for t in trechos],
+        "tempo_busca_s": round(t1 - t0, 2),
+        "tempo_geracao_s": round(t2 - t1, 2),
+        "backend": backend,
+    }
+
+
+def imprimir(r: dict):
+    print(f"\nPergunta: {r['pergunta']}\n")
+    print("Trechos recuperados:")
+    for i, t in enumerate(r["trechos_recuperados"], start=1):
+        sim = f" · sim {t['similaridade']}" if t.get("similaridade") is not None else ""
+        print(f"  [{i}] {t['chunk_id']} · {t['titulo'][:60]} · p.{t['pagina']}{sim}")
+    print(f"\nResposta ({r['backend']}):\n{r['resposta']}\n")
+    print("Fontes citadas:")
+    for f in r["fontes_citadas"]:
+        print(f"  [{f['n']}] {f['doc_id']} · {f['titulo']} · p.{f['pagina']} · {f['url']}")
+    if r.get("valores_sem_fonte"):
+        print(f"\n⚠ ALERTA: valores na resposta que não aparecem nas fontes: {', '.join(r['valores_sem_fonte'])}")
+    print(f"\n(busca {r['tempo_busca_s']}s · geração {r['tempo_geracao_s']}s)")
+
+
+def perguntar(args):
+    imprimir(responder(" ".join(args.pergunta), args.backend, args.eixo, args.k))
+
+
+def avaliar(args):
+    casos = [json.loads(l) for l in open(config.AVALIACAO / "perguntas_ouro.jsonl", encoding="utf-8")]
+    linhas = []
+    for modo in ("bm25", "denso", "hibrido"):
+        hit1 = hitk = rr = 0.0
+        detalhes = []
+        for c in casos:
+            res = indice.buscar(c["pergunta"], k=args.k, modo=modo)
+            docs = [r["doc_id"] for r in res]
+            pos = next((i for i, d in enumerate(docs) if d in c["docs_esperados"]), None)
+            hit1 += pos == 0
+            hitk += pos is not None
+            rr += 1 / (pos + 1) if pos is not None else 0
+            detalhes.append({"id": c["id"], "pos": pos, "top": docs})
+        n = len(casos)
+        linhas.append({"modo": modo, "n": n, "hit@1": round(hit1 / n, 3), f"hit@{args.k}": round(hitk / n, 3),
+                       "mrr": round(rr / n, 3), "detalhes": detalhes})
+        print(f"{modo:8s} hit@1={hit1/n:.3f} hit@{args.k}={hitk/n:.3f} MRR={rr/n:.3f} (n={n})")
+    (config.AVALIACAO / "resultado_recuperacao.json").write_text(
+        json.dumps(linhas, ensure_ascii=False, indent=2), encoding="utf-8")
+
+
+def demo(args):
+    perguntas = [json.loads(l) for l in open(config.AVALIACAO / "perguntas_demo.jsonl", encoding="utf-8")]
+    saidas = []
+    for p in perguntas:
+        r = responder(p["pergunta"], args.backend)
+        r["id"] = p["id"]
+        r["rotulo"] = p.get("rotulo", "")
+        imprimir(r)
+        saidas.append(r)
+    destino = config.AVALIACAO / "demo_respostas.json"
+    destino.write_text(json.dumps(saidas, ensure_ascii=False, indent=2), encoding="utf-8")
+    print(f"\nevidências salvas em {destino}")
+
+
+def main(argv=None):
+    ap = argparse.ArgumentParser(prog="rumo_rag")
+    sub = ap.add_subparsers(dest="cmd", required=True)
+    sub.add_parser("ingerir").set_defaults(f=ingerir)
+    p = sub.add_parser("perguntar")
+    p.add_argument("pergunta", nargs="+")
+    p.add_argument("--backend", default=config.BACKEND, choices=["hf", "ollama", "openai", "extrativo"])
+    p.add_argument("--eixo", choices=["ru", "fluxo", "apoio"])
+    p.add_argument("-k", type=int, default=config.TOP_K)
+    p.set_defaults(f=perguntar)
+    a = sub.add_parser("avaliar")
+    a.add_argument("-k", type=int, default=config.TOP_K)
+    a.set_defaults(f=avaliar)
+    d = sub.add_parser("demo")
+    d.add_argument("--backend", default=config.BACKEND, choices=["hf", "ollama", "openai", "extrativo"])
+    d.set_defaults(f=demo)
+    args = ap.parse_args(argv)
+    args.f(args)
+
+
+if __name__ == "__main__":
+    sys.exit(main())

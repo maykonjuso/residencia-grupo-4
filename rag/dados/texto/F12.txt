@@ -1,0 +1,1306 @@
+[[PAGINA 1]]
+
+Agência Nacional de Vigilância Sanitária
+Anvisa
+
+GERÊNCIA-GERAL DE ALIMENTOS
+Gerência de Registro de Alimentos
+5ª edição
+Brasília, 5 de junho de 2017
+MACROTEMA DE ALIMENTOS
+ROTULAGEM DE ALIMENTOS ALERGÊNICOS
+
+[[PAGINA 2]]
+
+GERÊNCIA GERAL DE ALIMENTOS
+Gerência de Registro de Alimentos
+ELABORAÇÃO
+
+Gerência-Geral de Alimentos (GGALI)
+Thalita Antony de Souza Lima
+Antonia Maria de Aquino
+Rodrigo Martins de Vargas
+Tiago Lanius Rauber
+
+Coordenação de Instrução e Análise de Recursos de Alimentos (COREA)
+Ana Paula Rezende Peretti
+
+Gerência de Registro de Alimentos (GEREG)
+Nelio Cezar de Aquino
+Claudia Magalhaes Vieira
+Kelly Dias Botelho
+Renata de Araujo Ferreira
+Simone Coulaud Cunha
+Taina Mendes Nunes
+Vanessa Maestro
+
+Gerência de Pós-Registro de Alimentos (GEPRA)
+Angela Karinne Fagundes de Castro
+Ana Claudia Marquim Firmo de Araujo
+Diego Botelho Gaino
+Liliane Alves Fernandes
+Renata Calegari Lino
+Stefani Faro de Novaes
+
+Gerência de Avaliação de Riscos e Eficácia (GEARE)
+Ligia Lindner Schreiner
+Carolina Araújo Vieira
+Elisabete Gonçalves Dutra
+Fátima Machado Braga
+Larissa Bertollo Gomes Porto
+Lívia Emi Inumaru
+
+[[PAGINA 3]]
+
+GERÊNCIA GERAL DE ALIMENTOS
+Gerência de Registro de Alimentos
+SUMÁRIO
+I – INTRODUÇÃO ............................................................................................................................... 6
+II – LISTA DE ABREVIATURAS .......................................................................................................... 7
+III – PERGUNTAS E RESPOSTAS..................................................................................................... 8
+Esclarecimentos sobre alergias alimentares e outras reações adversas a alimentos. ...................... 8
+2. O que são alergias alimentares? ................................................................................................. 8
+3. Quais alimentos causam alergias alimentares? .......................................................................... 8
+4. Qual a prevalência de alergia alimentar no Brasil? ..................................................................... 9
+5. Como posso saber se tenho alergia alimentar? .......................................................................... 9
+6. Qual o tratamento da alergia alimentar? ..................................................................................... 9
+7. A intolerância à lactose é uma alergia alimentar? .....................................................................10
+8. A doença celíaca é uma alergia alimentar? ..............................................................................10
+Esclarecimentos sobre o processo de regulamentação. ..................................................................11
+9. Qual o papel da rotulagem dos alimentos na alergia alimentar? ..............................................11
+10. Por que a Anvisa decidiu regulamentar a rotulagem de alimentos alergênicos? .....................11
+11. Qual a resolução que trata da rotulagem de alimentos alergênicos? .......................................12
+12. A RDC n. 26/2015 está harmonizada no MERCOSUL? ...........................................................12
+13. Como foi conduzido o processo de elaboração da RDC n. 26/2015 pela Anvisa? ..................13
+Esclarecimentos sobre o âmbito de aplicação da RDC n. 26/2015. .................................................14
+14. Quais produtos devem atender à RDC n. 26/2015? .................................................................14
+15. Os alimentos fracionados em supermercados devem seguir a RDC n. 26/2015? ...................14
+16. Os alimentos excluídos da RDC n. 26/2015 podem veicular declarações sobre alergênicos? 15
+17. Por que as intolerâncias alimentares não foram contempladas pela RDC n. 26/2015? ...........15
+18. Por que a doença celíaca não foi contemplada pela RDC n. 26/2015? ...................................16
+Esclarecimentos sobre os alimentos considerados alergênicos pela RDC n. 26/2015. ...................16
+19. Como foi definida a lista dos principais alimentos alergênicos? ...............................................16
+20. Como faço para solicitar alteração da lista dos principais alimentos alergênicos? ..................17
+21. Podem ser declarados alimentos alergênicos que não constam da RDC n. 26/2015? ............18
+22. O látex nitrílico é considerado um alimento alergênico? ...........................................................18
+23. O pinhão é considerado um alimento alergênico? ....................................................................18
+24. Os sulfitos são considerados alimentos alergênicos? ...............................................................19
+25. A lactose é considerada um derivado de alimento alergênico? ................................................19
+Esclarecimentos sobre as declarações de alergênicos disciplinadas pela RDC n. 26/2015. ..........19
+26. Quais declarações de alergênicos estão cobertas pela RDC n. 26/2015? ...............................19
+27. Como deve ser declarada a presença intencional de alimentos alergênicos? .........................20
+28. Em quais situações devem ser declaradas as advertências da presença intencional de
+alimentos alergênicos ou de seus derivados? ..................................................................................20
+[[PAGINA 4]]
+
+GERÊNCIA GERAL DE ALIMENTOS
+Gerência de Registro de Alimentos
+29. O que é contaminação cruzada com alimentos alergênicos? ...................................................23
+30. Quando deve ser declarada a contaminação cruzada com alimentos alergênicos? ................23
+31. Como deve ser declarada a contaminação cruzada com alimentos alergênicos? ...................24
+32. Quais limites devem ser utilizados para determinar a necessidade de declaração da advertência
+de contaminação cruzada com alimentos alergênicos? ...................................................................24
+33. O que é um Programa de Controle de Alergênicos? ................................................................25
+34. Como deve ser implementado o Programa de Controle de Alergênicos? ................................25
+35. Um produto pode conter advertências de presença intencional e de contaminação cruzada para
+o mesmo alimento alergênico? .........................................................................................................25
+36. Qual advertência deve ser declarada em alimentos com adição de ingredientes compostos que
+contêm alimentos alergênicos ou seus derivados? ..........................................................................26
+37. Qual advertência deve ser declarada em alimentos fabricados com o uso de coadjuvantes de
+tecnologia derivados dos principais alimentos alergênicos? ............................................................27
+38. Qual advertência deve ser declarada para produtos que entram em contato com materiais que
+contêm látex natural ou seus derivados? ..........................................................................................29
+39. Qual advertência deve ser declarada para as embalagens que contém látex natural, mas não
+entram em contato com o alimento? .................................................................................................29
+40. Qual advertência deve ser declarada em produtos obtidos por fermentação microbiana com uso
+de substratos alergênicos? ...............................................................................................................30
+41. Qual advertência deve ser declarada para os novos alimentos e os alimentos com alegações
+de propriedades funcionais ou de saúde? ........................................................................................30
+42. Podem ser realizadas alegações referentes à ausência de alimentos alergênicos? ...............31
+Esclarecimentos sobre os requisitos de legibilidade das declarações sobre alergênicos. ..............32
+43. Quais são os requisitos de legibilidade das advertências? .......................................................32
+44. O formato das advertências pode ser diferente do exigido na RDC n. 26/2015? .....................33
+45. Os produtos destinados exclusivamente ao uso ind ustrial ou aos serviços de alimentação
+devem veicular as advertências no seu rótulo? ................................................................................33
+46. Por que as advertências devem trazer o termo “alérgicos”? ....................................................34
+47. Por que as advertências devem trazer o nome comum dos alimentos alergênicos? ...............34
+48. Como devem ser declarados os nomes comuns dos crustáceos? ...........................................34
+49. Com devem ser declarados os nomes comuns das castanhas? ..............................................34
+50. Como devem ser declarados os nomes comuns dos leites? ....................................................35
+51. Posso declarar as advertências de alergênicos na área de selagem do produto? ..................36
+52. Existem regras específicas para as embalagens pequenas? ...................................................36
+53. Qual deve ser a localização das advertências nos alimentos compostos por um único
+ingrediente e que não possuem lista de ingredientes? .....................................................................36
+Esclarecimentos sobre os procedimentos para adequação à RDC n. 26/2015 ...............................37
+54. Qual o prazo de adequação à RDC n. 26/2015? ......................................................................37
+55. Os produtos que já traziam voluntariamente a declaração de alimentos alergênicos necessitam
+atender as determinações da RDC n. 26/2015? ...............................................................................37
+[[PAGINA 5]]
+
+GERÊNCIA GERAL DE ALIMENTOS
+Gerência de Registro de Alimentos
+56. Como faço para garantir a consistência entre as advertências de cereais alergênicos e de glúten
+para fins de doença celíaca? ............................................................................................................37
+57. As empresas devem atender algum procedimento administrativo para alterar a rotulagem dos
+seus produtos? ..................................................................................................................................38
+58. É permitido o uso de etiquetas complementares para atender a RDC n. 26/2015? .................39
+59. Como será aplicada a RDC n. 26/2015 para os produtos importados? ....................................39
+60. Quais as penalidades no caso de descumprimento da RDC n. 26/2015? ................................40
+61. Quais serão os métodos analíticos empregados nas análises de controle e fiscais? ..............40
+
+[[PAGINA 6]]
+
+GERÊNCIA GERAL DE ALIMENTOS
+Gerência de Registro de Alimentos
+I – INTRODUÇÃO
+O presente documento é um i nstrumento de esclarecimento, não -regulatório, de
+caráter não-vinculante, destinado a reduzir assimetria de informação e esclarecer
+dúvidas e procedimentos existentes. Portanto, o mesmo não se destina a ampliação
+ou restrição de requisitos técnicos.
+Assim, o objetivo deste documento é fornecer orientações sobre o regulamento de
+rotulagem obrigatória dos principais alimentos que causam alergias alimentares,
+publicado pela RDC n. 26/2015.
+Maiores detalhes sobre as contribuições recebidas durante o processo regulatório
+e as justificativas da Anvisa para adoção das regras estabelecidas na RDC n.
+26/2015 podem ser encontrados no Relatório de Consolidação da Consulta Pública
+n. 29/2014 e da Audiência Pública n. 1/2015, disponível no portal da Agência.
+Espera-se que as orientações fornecidas neste documento possam auxiliar as
+empresas e os órgãos do SNVS na interpretação e aplicação dos requerimentos
+estabelecidos na RDC n. 26/2015. Esse documento também traz informações que
+podem ser úteis para os indivíduos com alergias alimentares e suas famílias.
+Esta edição substitui as orientações fornecidas nas edições anteriores. Em caso de
+dúvidas, entre em contato com a Central de Atendimento da Anvisa.
+
+[[PAGINA 7]]
+
+GERÊNCIA GERAL DE ALIMENTOS
+Gerência de Registro de Alimentos
+II – LISTA DE ABREVIATURAS
+Agência Nacional de Vigilância Sanitária (Anvisa)
+Audiência Pública (AP)
+Consulta Pública (CP)
+Diretoria Colegiada da Anvisa (DICOL)
+Food and Drug Administration (FDA)
+Gerência Geral de Alimentos (GGALI)
+Mercado Comum do Sul (MERCOSUL)
+Ministério da Agricultura, Pecuária e Abastecimento (MAPA)
+Ordem dos Advogados do Brasil (OAB)
+Organização das Nações Unidas para Alimentação e Agricultura (FAO)
+Organização Mundial de Saúde (OMS)
+Resolução de Diretoria Colegiada (RDC)
+Resolução Específica (RE)
+Reunião Ordinária Interna (ROI)
+Reunião Ordinária Pública (ROP)
+Sistema Nacional de Vigilância Sanitária (SNVS)
+Subgrupo de Trabalho n. 3 (SGT-3)
+
+[[PAGINA 8]]
+
+GERÊNCIA GERAL DE ALIMENTOS
+Gerência de Registro de Alimentos
+III – PERGUNTAS E RESPOSTAS
+Esclarecimentos sobre alergias alimentares e outras reaç ões adversas a
+alimentos.
+1. O que são alergias alimentares?
+Alergias alimentares são reações adversas desencadeadas por uma resposta
+imunológica específica que ocorrem de forma reprodutível em indivíduos sensíveis
+após o consumo de determinado alimento. Essas reações apresentam ampla
+variação na sua severidade e intervalo de manifestação, podendo afetar os
+sistemas cutâneo, digestivo, respiratório e ou cardiovascular. Indivíduos com
+alergias alimentares podem desenvolver reações adversas graves a alimentos que
+são consumidos de forma segura pela maior parte da população, mesmo quando
+ingeridos em pequenas quantidades.
+A principal preocupação das alergias alimentares é a anafilaxia, que pode levar o
+indivíduo a óbito se não for tratada imediatamente. Estima tivas internacionais
+indicam que entre 30 a 50% dos casos de anafilaxia são causadas por alimentos.
+Em crianças, esses números podem alcançar 80% dos casos. Nos Estados Unidos,
+estima-se que as anafilaxias por alimentos resultam em 30.000 emergências
+domiciliares, 2.000 hospitalizações e 150 mortes por ano.
+Além de representar um sério risco à saúde, as alergias alimentares têm um
+impacto negativo na qualidade de vida das famílias afetadas. Os cuidados
+necessários para evitar o consumo do alimento alergênic o requerem maiores
+gastos com alimentação e saúde, tornam as atividades rotineiras complexas,
+dificultam o gerenciamento das relações sociais e das atividades de lazer e geram
+elevados níveis de estresse e ansiedade.
+2. Quais alimentos causam alergias alimentares?
+Mais de 170 alimentos já foram descritos como causadores de alergias alimentares
+e existem inúmeros fatores ambientais (ex. hábito alimentar, amamentação,
+alimentação complementar, tipo do alimento, nível de processamento e forma de
+preparo do alimento) e individuais (ex. carga genética, sexo, idade, etnia, atividade
+física, etilismo, uso de antibióticos e de inibidores da acidez gástrica) que podem
+influenciar no desenvolvimento de alergias alimentares.
+[[PAGINA 9]]
+
+GERÊNCIA GERAL DE ALIMENTOS
+Gerência de Registro de Alimentos
+A literatura internacional indica que cerca de 90% dos casos de alergia alimentar
+são ocasionados por apenas oito alimentos: ovos, leite, peixe, crustáceos,
+castanhas, amendoim, trigo e soja. Esses alimentos são reconhecidos como
+alergênicos de relevância para a saúde pública pelo Codex Alimentarius, organismo
+da FAO e da OMS responsável pela harmonização internacional de regras para
+alimentos, e por diversos países.
+3. Qual a prevalência de alergia alimentar no Brasil?
+Não existem pesquisas que revelem a prevalência de alergia alimentar na
+população brasi leira. Os dados internacionais apresentam grande variação em
+função das diferenças nas metodologias utilizadas. As estimativas que utilizam
+dados objetivos, como a histórica clínica detalhada dos pacientes e testes
+controlados de desafio, sugerem uma prevalência de 1 a 3%.
+4. Como posso saber se tenho alergia alimentar?
+O diagnóstico deve ser realizado pelo médico, pois exige a investigação detalhada
+da história clínica do indivíduo e a aplicação de diferentes testes de diagnóstico.
+Além disso, essas reações adversas apresentam grande variabilidade de sintomas
+e podem ser confundidas com outras reações adversas a alimentos, como a doença
+celíaca e diversas intolerâncias alimentares (ex. intolerância à lactose).
+5. Qual o tratamento da alergia alimentar?
+O tratamen to da alergia alimentar deve seguir as orientações médicas ou de
+nutricionistas, pois a restrição no consumo de certos alimentos é uma tarefa
+complexa que requer alterações comportamentais e pode apresentar um elevado
+impacto socioeconômico para o indivíduo e sua família.
+Entre as estratégias adotadas pelas famílias de indivíduos com alergias alimentares
+para evitar o consumo do alimento alergênico estão: (a) leitura cuidadosa dos
+rótulos; (b) preferência por produtos da mesma marca; (c) preferência por alimentos
+in natura; (d) consultas com grupos de apoio a alérgicos; (e) contato com os
+fabricantes dos alimentos. Verifica -se, portanto, que o acesso a informações
+corretas e claras é essencial para o gerenciamento do risco de alergias alimentares.
+[[PAGINA 10]]
+
+GERÊNCIA GERAL DE ALIMENTOS
+Gerência de Registro de Alimentos
+Caso o ali mento alergênico seja consumido por pessoas sensíveis, pode ser
+necessária a intervenção médica para reverter os efeitos clínicos agudos e evitar
+reações anafiláticas.
+6. A intolerância à lactose é uma alergia alimentar?
+Não. Embora frequentemente confundida com alergia alimentar ao leite, a
+intolerância à lactose é uma reação adversa que não envolve o sistema imunológico
+e ocorre devido à deficiência da enzima lactase, sendo classificada como uma
+intolerância alimentar.
+O diagnóstico correto é essencial, pois pessoas com alergia ao leite podem
+desenvolver complicações graves (ex. choque anafilático) ao consumirem
+pequenas quantidades de leite, enquanto indivíduos com intolerância a lactose
+suportam quantidades bem maiores desse alimento.
+A lactose é o principa l açúcar presente no leite de mamíferos. Quando alimentos
+contendo lactose são ingeridos, esse açúcar é hidrolisado pela enzima lactase em
+glicose e galactose. Na maioria dos mamíferos, a atividade da enzima lactase
+diminui após o desmame. Esse é um fenômeno normal, geneticamente programado
+e irreversível, conhecido como hipolactasia primária. Sabe -se que a prevalência e
+a idade de manifestação da hipolactasia primária variam, consideravelmente, de
+acordo com o grupo étnico envolvido. Na Europa, por exemplo , sua prevalência
+varia de 4%, na Dinamarca e Irlanda, a 56% na Itália.
+Quando indivíduos com hipolactasia primária ingerem alimentos contendo lactose,
+uma parte desse açúcar não é digerida e atinge o colón, sendo degradada em ácido
+láctico, ácido acético, hidrogênio e dióxido de carbono pelas bactérias intestinais.
+Essa situação é denominada de má digestão de lactose. O aparecimento de
+sintomas abdominais (ex. dor e distensão abdominal, flatulência, diarreia, náusea,
+vômitos ou constipação) em função da má digestão de lactose caracteriza a
+intolerância à lactose.
+7. A doença celíaca é uma alergia alimentar?
+Não. A doença celíaca é uma doença autoimune inflamatória do intestino delgado
+que se manifesta em indivíduos susceptíveis geneticamente em decorrência da
+[[PAGINA 11]]
+
+GERÊNCIA GERAL DE ALIMENTOS
+Gerência de Registro de Alimentos
+ingestão de glúten, uma fração proteica encontrada no trigo, centeio, cevada e
+aveia.
+Essa doença apresenta uma ampla variedade de manifestações clínicas. Os casos
+mais severos incluem diarreia e caquexia. Alguns pacientes podem apresentar
+perda de peso ou retardo no crescimento e desenvolvimento devido aos problemas
+de má absorção. Em adultos, os problemas podem incluir infertilidade, osteoporose
+e deficiência de ferro.
+Acredita-se que indivíduos com doença celíaca possam tolerar pequenas
+quantidades de gl úten na alimentação (10 mg/dia) sem efeitos clínicos objetivos.
+No caso de indivíduos com alergia alimentar ao trigo, quantidades bem inferiores
+de glúten podem ser suficientes para desencadear reações adversas. Além disso,
+o glúten não é a única proteína presente no trigo que pode causar alergia alimentar.
+Esclarecimentos sobre o processo de regulamentação.
+8. Qual o papel da rotulagem dos alimentos na alergia alimentar?
+Como a restrição do consumo de alimentos alergênicos é a única alternativa
+disponível par a prevenir o aparecimento das complicações clínicas, o acesso a
+informações adequadas sobre a presença desses constituintes nos alimentos é
+essencial para proteger a saúde de indivíduos com alergias alimentares.
+Para a maioria dos alimentos embalados, a rotulagem é o principal meio de
+comunicação pelo qual os fabricantes podem informar os consumidores sobre a
+presença de alergênicos, permitindo o gerenciamento do risco de manifestações
+clínicas adversas.
+9. Por que a Anvisa decidiu regulamentar a rotulagem d e alimentos
+alergênicos?
+Essa iniciativa foi motivada pela importância da rotulagem dos alimentos
+embalados para a proteção da saúde e melhoria da qualidade de vida dos
+indivíduos com alergias alimentares e pela constatação de diversos problemas na
+transmissão de informações nos rótulos.
+Entre os principais problemas de rotulagem que prejudicam a identificação da
+presença de constituintes alergênicos nos alimentos, estão: (a) o emprego de
+[[PAGINA 12]]
+
+GERÊNCIA GERAL DE ALIMENTOS
+Gerência de Registro de Alimentos
+terminologias técnicas ou científicas na lista de ingredientes (ex. c aseína, que é
+uma proteína do leite); (b) a declaração de muitos ingredientes por meio de termos
+genéricos que não identificam sua origem (ex. óleos vegetais, amido); (c) a
+ausência de declaração de alguns constituintes de ingredientes compostos e dos
+coadjuvantes de tecnologia na lista de ingredientes; (d) a legibilidade inadequada
+das informações relativas à composição dos alimentos.
+Assim, a Anvisa decidiu regulamentar o tema para garantir que os consumidores
+tenham acesso a informações corretas, compreensíveis e visíveis sobre a presença
+dos principais alimentos que causam alergias alimentares na rotulagem dos
+alimentos embalados.
+10. Qual a resolução que trata da rotulagem de alimentos alergênicos?
+Os requisitos para a rotulagem obrigatória dos principais a limentos que causam
+alergias alimentares foram estabelecidos pela RDC n. 26/2015 , que foi publicada
+no Diário Oficial da União n. 125, de 03/07/2015.
+11. A RDC n. 26/2015 está harmonizada no MERCOSUL?
+Não. Em função da necessidade de melhorar os requisitos da rotulagem de
+alimentos embalados para proteger os indivíduos com alergias alimentares, a
+delegação brasileira solicitou ao MERCOSUL a r evisão do regulamento de
+rotulagem geral, internalizado por meio da RDC n. 259/2002, e apresentou, em
+2011, uma proposta que incluía regras específicas para a declaração de alimentos
+alergênicos.
+Entretanto, as dificuldades em atingir consenso no MERCOSUL e as crescentes
+demandas da sociedade pela regulamentação do tema fizeram com que a DICOL
+avaliasse a pertinência de tratar a matéria em nível nacional, enquanto o tema
+continuasse sem um desfecho no MERCOSUL.
+Na ROI n. 009/2014, a DICOL aprovou por unanim idade que a GGALI elaborasse
+com urgência uma proposta de resolução sobre a rotulagem de alimentos
+alergênicos para ser submetida à CP. Essa decisão foi baseada na relevância e na
+urgência da intervenção para a proteção da saúde de indivíduos com alergia
+[[PAGINA 13]]
+
+GERÊNCIA GERAL DE ALIMENTOS
+Gerência de Registro de Alimentos
+alimentar. A DICOL também determinou que o tema continuasse a ser discutido
+paralelamente no MERCOSUL.
+12. Como foi conduzido o processo de elaboração da RDC n. 26/2015 pela
+Anvisa?
+Na elaboração da resolução foram adotados diversos procedimentos para garantir
+o tratamento técnico e transparente da matéria e permitir a ampla participação da
+sociedade, em consonância com as diretrizes de Boas Práticas Regulatórias da
+Agência.
+Inicialmente, a equipe técnica da GGALI conduziu uma revisão da literatura
+científica e da regulamentação internacional da rotulagem de alimentos
+alergênicos, a fim de identificar os problemas existentes e as alternativas
+regulatórias disponíveis. Posteriormente, foi realizada uma reunião com
+representantes de diferentes segmentos da sociedad e para discutir uma proposta
+de resolução.
+Na ROP n. 009/2014, a DICOL determinou que a proposta de resolução fosse
+submetida à CP, a fim de obter comentários do público em geral. A CP n. 29/2014
+recebeu contribuições de 3.531 participantes, número superior à soma de
+participantes das 32 consultas pública s realizadas pela Agência em 2013, o que
+demonstra a relevância regulatória da matéria.
+O elevado número de contribuições e a complexidade do tema exigiram uma
+extensa análise por parte da equipe técnica da GGALI, que resultou em
+modificações na proposta de resolução. A minuta consolidada foi considerada pela
+DICOL na ROP n. 007/2015, tendo sido aprovada a realização da AP n. 1/2015, a
+fim de obter subsídios sobre a proposta.
+A AP n. 1/2015 contou com 119 participantes e teve 1.788 acessos durante sua
+transmissão pela internet. A minuta consolidada com as modificações resultantes
+das contribuições da AP n. 1/2015 foi discutida e aprovada por unanimidade pela
+DICOL na ROP n. 012/2015.
+
+[[PAGINA 14]]
+
+GERÊNCIA GERAL DE ALIMENTOS
+Gerência de Registro de Alimentos
+Esclarecimentos sobre o âmbito de aplicação da RDC n. 26/2015.
+13. Quais produtos devem atender à RDC n. 26/2015?
+A resolução se aplica aos alimentos, ingredientes, aditivos alimentares e
+coadjuvantes de tecnologia embalados na ausência dos consumidores, inclusive
+aqueles destinados exclusivamente ao processamento industrial e os destinados
+aos serviços de alimentação.
+Os produtos destinados exclusivamente ao processamento industrial foram
+incluídos no escopo da RDC n. 26/2015 porque os fabricantes também necessitam
+de informações claras e precisas sobre a natureza alergênica dos ingredientes,
+aditivos alimentares e coadjuvantes de tecnologia utilizados na elaboração de seus
+alimentos para que sejam capazes de adotar procedimentos adequados de controle
+e de rotulagem. Sem a responsabilização de cada ente da cadeia produtiva pela
+prestação das informações referentes à natureza alergênica de seus produtos não
+seria possível garantir o alcance do objetivo da resolução.
+Já a prestação de informações sobre a natureza alergênica de produtos destinados
+exclusivamente aos serviços de alimentação permite que esses estabelecimentos
+adotem as medidas necessárias para comunicar a presença de alergênicos em
+seus produtos quando for solicitado pelo consumidor e fornecem suporte para
+outras ações regulatórias que estão sendo estudadas pela Anvisa.
+Não obstante, os seguintes alimentos estão isentos de atender ao disposto na
+referida resolução: (a) alimentos embalados que sejam preparados ou fracionados
+em serviços de alimentação e comercializados no próprio estabelecimento (ex.
+preparações culinárias elaboradas e comercializadas em padarias, refeições
+servidas em restaurantes); (b) alimentos embalados nos pontos de venda a pedido
+do consumidor (ex. pães embalados e pesados na presença do consumidor, pizzas
+embaladas para entrega a pedido); e (c) alimentos comercializados sem
+embalagens (ex. frutas e hortaliças a granel).
+14. Os alimentos fracionados em supermercados devem seguir a RDC n.
+26/2015?
+Caso os mercados, supermercados e hipermercados possuam estabelecimentos,
+a exemplo de padarias, que preparem ou fracionem alimentos e que realizem a
+[[PAGINA 15]]
+
+GERÊNCIA GERAL DE ALIMENTOS
+Gerência de Registro de Alimentos
+embalagem desses produtos na ausência do consumidor para venda no mesmo
+local, esses produtos não necessitam seguir a RDC n. 26/2015, conforme disposto
+no art. 2º, inciso I. Entretanto, se esses produtos forem comercializados em outros
+locais, deve ser seguido o disposto na RDC n. 26/2015.
+15. Os alimentos excluídos da RDC n. 26/2015 podem veicular declarações
+sobre alergênicos?
+Sim. Os alimentos que não estão no escopo da RDC n. 26/2015 podem veicular
+declarações sobre alergênicos, desde que sejam respeitados os princípios gerais
+de rotulagem dos alimentos estabelecidos no item 3 da RDC n. 259/2002. Nesses
+casos, a Anvisa recomenda que sejam utilizados os mesmos modelos de
+advertência estabelecidos na RDC n. 26/2015, a fim de aumentar a padronização
+das informações transmitidas e facilitar a compreensão do consumidor.
+16. Por que as intolerâncias alimentares não foram contempladas pela RDC
+n. 26/2015?
+Do ponto de vista regulatório, é importante distinguir as alergias alimentares de
+outras reações adversas a alimento s, pois indivíduos com alergias alimentares
+podem desenvolver reações graves a alimentos que são consumidos de forma
+segura pela maior parte da população, mesmo quando ingeridos em pequenas
+quantidades. Por exemplo, pessoas com alergia ao leite podem desen volver
+complicações graves (ex. choque anafilático) ao consumirem pequenas
+quantidades de leite, enquanto indivíduos com intolerância a lactose suportam
+quantidades bem maiores desse alimento.
+Além disso, a Anvisa possui outras ações regulatórias em andame nto que
+contemplam medidas para auxiliar na prevenção de intolerâncias alimentares e
+outras doenças.
+A revisão dos regulamentos de rotulagem geral e de alimentos para fins especiais,
+previstas na Agenda Regulatória, permitirão o aperfeiçoamento dos requisi tos de
+rotulagem de constituintes relacionados a intolerâncias alimentares e outras
+doenças (ex. sulfitos, tartrazina, outros aditivos alimentares, substâncias
+relacionadas a erros inatos do metabolismo).
+[[PAGINA 16]]
+
+GERÊNCIA GERAL DE ALIMENTOS
+Gerência de Registro de Alimentos
+Recentemente, a Anvisa publicou a RDC n. 136/2017, que estabelece os requisitos
+para declaração obrigatória da presença de lactose nos alimentos, garantindo aos
+consumidores com intolerância alimentar o acesso à informação sobre a presença
+deste açúcar nos rótulos destes alimentos. Para maiores informações sobre o tema,
+consultar o documento de Perguntas e Respostas sobre Rotulagem de Lactose.
+17. Por que a doença celíaca não foi contemplada pela RDC n. 26/2015?
+Além das diferenças na severidade das reações adversas agudas provocadas
+pelas alergias alimentares e pela doença celíaca, foi verificado que a rotulagem dos
+alimentos para fins de controle da doença celíaca já se encontra disciplinada pela
+Lei n. 10.674/2003.
+Além disso, as evidências científicas demonstram que indivíduos com alergia
+alimentar ao trigo podem desenvolver reações adversas a quantidades de glúten
+bem inferiores àquelas definidas internacionalmente como seguras para celíacos.
+Assim, a Anvisa considerou mais adequado distinguir a regulamentação da
+rotulagem de alimentos alergênicos da declara ção de glúten para fins de controle
+da doença celíaca. Vale destacar que a publicação da RDC n. 26/2015 não altera
+as exigências legais vigentes sobre a declaração da presença ou da ausência de
+glúten estabelecidas na Lei n. 10.674/2003, pois esses disposi tivos legais cobrem
+reações adversas diferentes.
+Esclarecimentos sobre os alimentos considerados alergênicos pela RDC n.
+26/2015.
+18. Como foi definida a lista dos principais alimentos alergênicos?
+Em virtude do grande número de alimentos que podem causar alergias alimentares
+(mais de 170 alimentos já foram descritos como alergênicos), a Anvisa identificou
+aqueles que apresentam maior relevância para a saúde pública, considerando os
+dados disponíveis sobre a prevalência e severidade das diferentes alergias
+alimentares.
+A literatura internacional indica que cerca de 90% dos casos de alergia alimentar
+são ocasionados por apenas oito alimentos: ovos, leite, peixe, crustáceos,
+castanhas, amendoim, trigo e soja. Esses alimentos também são reconhecidos pelo
+[[PAGINA 17]]
+
+GERÊNCIA GERAL DE ALIMENTOS
+Gerência de Registro de Alimentos
+Padrão Ger al para Rotulagem de Alimentos Embalados do Codex Alimentarius
+como os principais alergênicos alimentares. Assim, esses alimentos foram incluídos
+na lista da Anvisa de principais alergênicos.
+Além disso, o látex natural foi incluído em função do disposto na Lei n. 12.849/2013
+e das evidências técnico -científicas avaliadas, que demonstraram que essa
+substância ou derivados podem ser utilizados em alimentos e desencadear alergias
+alimentares.
+Durante a elaboração da resolução, foram recebidas diversas contrib uições para
+inclusão de muitos alimentos e substâncias que causam alergias alimentares e
+outras doenças, tais como: abacaxi, aipo, alho, aromatizantes, banana, cacau,
+canela, castanha -portuguesa, coco, cominho, corantes, conservantes, cravo,
+edulcorantes, fenilalanina, carne de frango, gergelim, glutamato monossódico,
+lactose, látex, leguminosas, linhaça, malte, mandioca, mel, milho, moluscos,
+mostarda, noz-moscada, pimenta, pinhão, pinoli, carne suína, própolis.
+Os pedidos para inclusão de alimentos e subs tâncias relacionadas a intolerâncias
+alimentares ou outras doenças (ex. lactose, fenilalanina, alguns aditivos
+alimentares) não foram aceitos, pois a resolução trata apenas das alergias
+alimentares.
+Já os pedidos para inclusão de outros alimentos alergênic os não foram acatados
+devido à ausência de dados sobre a prevalência e severidade dessas alergias na
+população brasileira e pela falta de consenso internacional sobre sua importância.
+19. Como faço para solicitar alteração da lista dos principais alimentos
+alergênicos?
+Para alteração da lista de alimentos alergênicos, foi estabelecido que os
+interessados devem protocolar uma petição específica (Avaliação de Pedidos para
+Alteração da Lista dos Principais Alimentos Alergênicos, código 4053) e atender às
+diretrizes básicas para avaliação de risco e segurança dos alimentos definidas na
+Resolução n. 17/99.
+[[PAGINA 18]]
+
+GERÊNCIA GERAL DE ALIMENTOS
+Gerência de Registro de Alimentos
+20. Podem ser declarados alimentos alergênicos que não constam da RDC
+n. 26/2015?
+Sim. A declaração de outros alimentos alergênicos que não constam da resolução
+pode ser realizada, desde que sejam atendidas às regras estabelecidas na RDC n.
+26/2015 que dizem respeito às condições para decla ração das advertências de
+presença intencional ou de contaminação cruzada e aos requisitos de legibilidade
+dessas advertências.
+A RDC n. 26/2015 não estabeleceu uma lista de alimentos alergênicos de
+declaração voluntaria, pois mais de 170 alimentos já fora m identificados como
+alergênicos e não existe consenso internacional sobre a relevância para a saúde
+pública das alergias alimentares causadas por esses outros alimentos. Entre os
+alimentos que já foram reconhecidos por autoridades sanitárias internacionai s
+como alergênicos, encontram -se: o aipo, a mostarda, o gergelim, o tremoço, os
+moluscos, a geleia real, o pólen, a própolis.
+Por exemplo, a adição intencional de derivados de gergelim no produto pode ser
+declarada somente se a empresa utilizar a advertênc ia: ALÉRGICOS: CONTÉM
+DERIVADOS DE GERGELIM. Além disso, devem ser seguidos os requisitos de
+legibilidade estabelecidos na RDC n. 26/2015, que abordam a localização da
+advertência e as exigências para os caracteres.
+21. O látex nitrílico é considerado um alimento alergênico?
+Não. Apenas o látex natural é considerado um alimento alergênico. O látex nitrílico
+é um polímero sintético que possui características similares à borracha natural,
+apesar de não possuir os alérgenos alimentares do látex natural.
+22. O pinhão é considerado um alimento alergênico?
+Existem diversos tipos de pinhão. Entretanto, somente as espécies do gênero Pinus
+são consideradas alimentos alergênicos pela RDC n. 26/2015, devendo ser
+designados de pinoli. O pinhão do pinheiro -do-paraná (Araucaria angustifolia), por
+exemplo, não é considerado um alimento alergênico, pois não consta do Anexo da
+RDC n. 26/2015 uma vez que não foram encontradas evidências científicas de
+reações alérgicas a este alimento.
+[[PAGINA 19]]
+
+GERÊNCIA GERAL DE ALIMENTOS
+Gerência de Registro de Alimentos
+23. Os sulfitos são considerados alimentos alergênicos?
+Não. Os sulfitos são compostos à base de enxofre utilizados com funções
+tecnológicas em diversos alimentos (aditivos alimentares) e que podem provocar
+reações idiossincráticas em indivíduos sensíveis. Portanto, essas substâncias não
+são consideradas alergênicas e não podem ser declaradas como tal.
+Entretanto, as empresas podem destacar voluntariamente a presença de sulfitos
+em alimentos desde que essa informação esteja em consonância com os princípios
+gerais de rotulagem estabelecidos na RDC n. 259/2002.
+24. A lactose é considerada um derivado de alimento alergênico?
+Sim. A lactose é um açúcar obtido do leite ou de seus constituintes (ex. proteína do
+soro de leite) e que pode ser adicionado a vários alimentos, ingredientes, aditivos
+alimentares e coadjuv antes de tecnologia. Portanto, a lactose é considerada um
+derivado de alimento alergênico.
+Esclarecimentos sobre as declarações de alergênicos disciplinadas pela RDC
+n. 26/2015.
+25. Quais declarações de alergênicos estão cobertas pela RDC n. 26/2015?
+A RDC n. 26/2015 regulamenta declarações relacionadas à: (a) presença
+intencional de alergênicos; (b) possibilidade de contaminação cruzada com
+alergênicos; e (c) ausência de alergênicos. Para cada uma dessas situações estão
+estabelecidos critérios específicos dest inados a garantir a veiculação de
+informações corretas, precisas, compreensíveis e com legibilidade adequada.
+A declaração da presença intencional de alimentos alergênicos cobre os casos em
+que o produto: (a) é um dos alimentos alergênicos (ex. leite, ovo, castanha-de-caju);
+(b) é derivado de um dos alimentos alergênicos (ex. farinha de trigo, iogurte, extrato
+de soja); e ou (c) contém a adição de um ou mais alimentos alergênicos e ou seus
+derivados.
+A declaração de contaminação cruzada com alimentos alergênicos trata dos casos
+em que o produto não tem adição do respectivo alimento alergênico ou seus
+derivados, mas não é possível evitar a contaminação com esses alergênicos em
+determinado estágio do seu processo de fabricação.
+[[PAGINA 20]]
+
+GERÊNCIA GERAL DE ALIMENTOS
+Gerência de Registro de Alimentos
+A declaração da ausência de aler gênicos diz respeito aos casos nos quais as
+empresas pretendem veicular alegações sobre a ausência de alimentos alergênicos
+e seus derivados.
+26. Como deve ser declarada a presença intencional de alimentos
+alergênicos?
+Se o produto comercializado for o alimento alergênico listado no Anexo da RDC n.
+26/2015 ou contiver a adição deste alimento, deve ser declarada a advertência:
+ALÉRGICOS: CONTÉM (NOME COMUM DO ALIMENTO ALERGÊNICO).
+Quando o produto comercializado contiver a adição de um derivado de alimento
+alergênico (ex. farinha de trigo, iogurte, extrato de soja, caseína), deve ser
+veiculada a advertência: ALÉRGICOS: CONTÉM DERIVADOS DE (NOME
+COMUM DO ALIMENTO ALERGÊNICO).
+Nas situações em que o alimento tiver a adição tanto do alimento alergênico como
+de seus derivados, deve ser veiculada a advertência: ALÉRGICOS: CONTÉM
+(NOME COMUM DO ALIMENTO ALERGÊNICO) E DERIVADOS.
+Quando mais de uma das advertências acima for exigida, a informação deve ser
+agrupada em uma única frase (ex. ALÉRGICOS: CONTÉM LEITE, SOJA E
+DERIVADOS E DERIVADOS DE TRIGO). Além disso, devem ser seguidos os
+requisitos de legibilidade estabelecidos na RDC n. 26/2015, que abordam a
+localização da advertência e exigências para os caracteres.
+Embora a RDC n. 26/2015 não defina uma ordem específica a ser seguida no
+agrupamento dessas advertências, as empresas devem garantir que a ordem de
+declaração não gere confusão quanto à composição alergênica do produto,
+respeitando os princípios gerais de rotulagem da RDC n. 259/2002 e os objetivos
+da RDC n. 26/2015.
+27. Em quais situações devem ser declaradas as advertências da presença
+intencional de alimentos alergênicos ou de seus derivados?
+Inicialmente, os fabricantes devem exigir de seus fornecedores informações
+completas e precisas sobre a composição das maté rias-primas adquiridas e
+utilizadas em seus produtos, pois, muitas vezes, essas matérias -primas são
+[[PAGINA 21]]
+
+GERÊNCIA GERAL DE ALIMENTOS
+Gerência de Registro de Alimentos
+identificadas por termos que não revelam sua origem ou composição alergênica
+como, por exemplo, no caso dos ingredientes compostos e das formulações de
+aditivos alimentares e coadjuvantes de tecnologia. Nesse sentido, cabe reforçar
+que a RDC n. 26/2015 também se aplica aos produtos destinados exclusivamente
+para fins industriais.
+Essas informações devem, então, ser consideradas em conjunto com a lista de
+ingredientes do produto, para definir se deve ser declarada a advertência da
+presença intencional de alimentos alergênicos ou de seus derivados.
+Essa abordagem contribui para garantir que a declaração da advertência de
+presença intencional de alimentos alergên icos ou seus derivados seja consistente
+com as informações de rotulagem relacionadas à natureza e composição do
+produto, respeitando os princípios gerais de rotulagem da RDC n. 259/2002 e os
+objetivos da RDC n. 26/2015.
+Quando o produto for um dos principais alimentos alergênicos listados no Anexo da
+RDC n. 26/2015 ou for adicionado destes alimentos, deve ser veiculada a
+advertência de presença intencional dos respectivos alimentos alergênicos.
+Caso o produto contenha a adição de alimentos, ingredientes, aditivos alimentares
+e coadjuvantes de tecnologia obtidos a partir dos principais alimentos alergênicos
+listados no Anexo da RDC n. 26/2015, deve ser utilizada a advertência de presença
+intencional de derivados de alimentos alergênicos. Abaixo são apresent ados
+exemplos de alimentos e ingredientes que podem ser derivados de alimentos
+alergênicos quando adicionados a outros produtos.
+Derivados de trigo: farelos, farinhas, maltes e gérmen de trigo; glúten; xarope de
+glicose; dextrose; maltodextrina; destilados alcoólicos; amidos modificados.
+Derivados de leite: manteiga; queijos; iogurtes; leite em pó; creme de leite;
+proteínas do soro do leite; caseína; lactoalbumina; lactoglobulina; caseinatos;
+lactitol; lactosorro; lactose; ácido lático.
+Derivados de ovos: albumina; clara de ovo em pó; gema de ovo em pó; globulina;
+lisozima; ovalbumina; lecitina de ovo.
+[[PAGINA 22]]
+
+GERÊNCIA GERAL DE ALIMENTOS
+Gerência de Registro de Alimentos
+Derivados de soja: farinha, extrato, óleo e proteínas de soja; tofu; albumina; lecitina
+de soja; tocoferóis; fitoesteróis.
+Deve ser observado, ainda, que a co mposição dos produtos industrializados varia
+muito de fabricante para fabricante e, portanto, o tipo de advertência a ser utilizado
+deve ser determinado caso a caso por cada fabricante.
+A seguir são apresentados alguns exemplos para auxiliar no entendiment o das
+explicações fornecidas acima.
+Exemplo 1: Bandeja de ovos. Lista de ingredientes: ovo.
+O produto é o próprio alimento alergênico sem qualquer modificação (ovo). Assim,
+deve ser declarada a advertência: ALÉRGICOS: CONTÉM OVO.
+Exemplo 2: Mix de amendoim , uva passa, castanha -de-caju e avelã. Lista de
+ingredientes: amendoim torrado, uva passa, castanha-de-caju e avelã.
+O produto é composto por três alimentos alergênicos (amendoim, castanha-de-caju
+e avelã). Portanto, deve ser veiculada a advertência: ALÉRG ICOS: CONTÉM
+AMENDOIM, CASTANHA-DE-CAJU E AVELÃ.
+Exemplo 3: Queijo. Lista de ingredientes: leite pasteurizado, sal, cloreto de cálcio e
+coalho.
+O produto foi fabricado a partir de um alimento alergênico (leite pasteurizado).
+Portanto, deve ser declarada a advertência: ALÉRGICOS: CONTÉM LEITE.
+Exemplo 4: Leite em pó integral instantâneo. Lista de ingredientes: leite integral e
+emulsificante lecitina de soja.
+O produto foi produzido a partir de um alimento alergênico (leite integral) com a
+adição de um aditivo derivado de outro alimento alergênico (soja). Assim, deve ser
+utilizada a advertência: ALÉRGICOS: CONTÉM LEITE E DERIVADOS DE SOJA.
+Exemplo 5: Espaguete com ovos. Lista de ingredientes: farinha de trigo enriquecida
+com ferro e ácido fólico, gema de ovo e corante natural urucum.
+[[PAGINA 23]]
+
+GERÊNCIA GERAL DE ALIMENTOS
+Gerência de Registro de Alimentos
+O produto é adicionado de derivados de alimentos alergênicos (farinha de trigo e
+gema de ovo). Desta forma, deve ser veiculada a advertência: ALÉRGICOS:
+CONTÉM DERIVADOS DE TRIGO E OVO. Caso o corante contenha outros
+derivados de alimentos alergênicos em sua composição, estes também devem ser
+declarados.
+Exemplo 6: Requeijão. Lista de ingredientes: leite desnatado, concentrado proteico
+do soro de leite, manteiga, gordura vegetal hidrogenada, amido, maltodextrina, sal,
+fermento lácteo, aromatizante, conservadores ácido sórbico e nisina.
+O produto tem adição de um alimento alergênico (leite desnatado) e seus derivados
+(concentrado proteico do soro de leite e manteiga). Além disso, a gordura vegetal
+hidrogenada, o amido e a maltodextrin a podem ser derivados de alimentos
+alergênicos (ex. soja e trigo). Se esse fosse o caso, o produto deveria conter a
+advertência: ALÉRGICOS: CONTÉM LEITE E DERIVADOS E DERIVADOS DE
+SOJA E TRIGO. Caso os aditivos alimentares utilizados contenham outros
+derivados de alimentos alergênicos em sua composição, estes também devem ser
+declarados.
+28. O que é contaminação cruzada com alimentos alergênicos?
+A contaminação cruzada diz respeito aos casos em que o produto não tem adição
+intencional de determinado alimento al ergênico ou seus derivados, mas pode
+apresentar traços desse alimento como consequência da presença incidental
+durante alguma etapa da sua fabricação, desde a produção primária até a
+embalagem e comércio.
+29. Quando deve ser declarada a contaminação cruzada co m alimentos
+alergênicos?
+A contaminação cruzada com determinado alimento alergênico deve ser declarada
+quando o produto não se enquadrar nas situações que exigem a declaração da
+presença intencional desse alimento alergênico ou seu derivado. Por exemplo, um
+produto com adição de derivados de leite (ex. caseína) não pode trazer a
+advertência de contaminação cruzada com leite (ALÉRGICOS: PODE CONTER
+LEITE). Neste caso, deve ser utilizada apenas a advertência de presença
+intencional (ALÉRGICOS: CONTÉM DERIVADOS DE LEITE).
+[[PAGINA 24]]
+
+GERÊNCIA GERAL DE ALIMENTOS
+Gerência de Registro de Alimentos
+Outra exigência é que essa advertência seja veiculada somente como última
+alternativa para o gerenciamento do risco da contaminação cruzada. Isso significa
+que as empresas só podem declarar essa informação após terem adotado um
+Programa de Controle de Alergênicos.
+30. Como deve ser declarada a contaminação cruzada com alimentos
+alergênicos?
+A declaração da contaminação cruzada com alimentos alergênicos ou seus
+derivados deve ser realizada por meio da advertência: ALÉRGICOS: PODE
+CONTER (NOME COMUM DO ALIMENTO ALERGÊNICO).
+Quando existir a possibilidade de contaminação cruzada com mais de um alimento
+alergênico ou seus derivados, a informação deve ser agrupada em uma única frase
+(ex. ALÉRGICOS: PODE CONTER CASTANHA -DE-CAJU E LEITE). Nesses
+casos, a R DC n. 26/2015 não define uma ordem específica a ser seguida no
+agrupamento dessas advertências.
+Além disso, devem ser seguidos os requisitos de legibilidade estabelecidos na RDC
+n. 26/2015, que abordam a localização da advertência e as exigências para os
+caracteres.
+31. Quais limites devem ser utilizados para determinar a necessidade de
+declaração da advertência de contaminação cruzada com alimentos
+alergênicos?
+A RDC n. 26/2015 não estabeleceu limites de alérgenos alimentares que possam
+ser utilizados pelas e mpresas para determinar a necessidade de declaração da
+advertência de contaminação cruzada com alimentos alergênicos, pois as
+evidências disponíveis não permitiram estabelecer um limite de segurança de
+alérgenos alimentares capaz de proteger todos os indiv íduos com alergias
+alimentares.
+Isso não impede, todavia, que as empresas desenvolvam sua própria análise de
+risco para os alergênicos de interesse e utilizem métodos analíticos como parte do
+Programa de Controle de Alergênicos para auxiliar na definição da necessidade de
+uso da advertência de contaminação cruzada com alimentos alergênicos.
+[[PAGINA 25]]
+
+GERÊNCIA GERAL DE ALIMENTOS
+Gerência de Registro de Alimentos
+32. O que é um Programa de Controle de Alergênicos?
+Programa de Controle de Alergênicos são procedimentos de Boas Práticas de
+Fabricação destinados a identificar e controla r os principais alimentos alergênicos
+e seus derivados que estão presentes nos estabelecimentos fabricantes, a fim de
+mitigar o risco de contaminação cruzada com esses constituintes durante a
+produção dos alimentos. Todas as empresas envolvidas na fabricação dos produtos
+cobertos pela RDC n. 26/2015 devem adotar esse programa, pois essa é uma
+exigência para a veiculação de advertências da contaminação cruzada com
+alimentos alergênicos ou seus derivados.
+33. Como deve ser implementado o Programa de Controle de Alergênicos?
+A Anvisa está elaborando um Guia sobre Programas de Controle de Alergênicos
+com intuito de trazer recomendações gerais para as empresas e o SNVS, a fim
+auxiliar no cumprimento da RDC n. 26/2015. Esse documento permitirá que as
+empresas conheçam e adotem os principais componentes de um Programa de
+Controle de Alergênicos e que o SNVS atue de forma educativa na verificação
+dessa resolução. Quando concluído, o documento será disponibilizado no portal da
+Anvisa.
+Cada empresa é responsável por adota r os procedimentos de Boas Práticas de
+Fabricação que sejam necessários para identificação e controle dos riscos de
+contaminação cruzada dos alimentos nas diversas etapas de produção, a fim de
+garantir a segurança e qualidade do produto final.
+Portanto, o Programa de Controle de Alergênicos deve ser elaborado,
+implementado e gerido por cada empresa, de acordo com a sua realidade e de seus
+fornecedores, a fim de garantir uma gestão adequada de alergênicos na sua planta
+produtiva e a rotulagem correta dos produtos.
+34. Um produto pode conter advertências de presença intencional e de
+contaminação cruzada para o mesmo alimento alergênico?
+Não. Caso o produto possua a adição de determinado alimento alergênico ou seus
+derivados (ex. castanha -de-caju), deve ser veicula da apenas a declaração da
+presença intencional (ex. ALÉRGICOS: CONTÉM CASTANHA -DE-CAJU). Neste
+caso, a advertência de contaminação cruzada para castanhas -de-caju não pode
+[[PAGINA 26]]
+
+GERÊNCIA GERAL DE ALIMENTOS
+Gerência de Registro de Alimentos
+ser utilizada, mesmo que o produto ou seus ingredientes possam ter o risco de
+contaminação cruzada com esse alimento ou seus derivados.
+35. Qual advertência deve ser declarada em alimentos com adição de
+ingredientes compostos que contêm alimentos alergênicos ou seus
+derivados?
+Inicialmente, os fabricantes devem exigir de seus fornecedores info rmações
+completas e precisas sobre a composição dos ingredientes compostos adquiridos
+e utilizados em seus produtos, pois, muitas vezes, esses ingredientes são
+identificados por termos que não revelam sua origem ou composição alergênica.
+Nesse sentido, cab e reforçar que a RDC n. 26/2015 também se aplica aos
+ingredientes compostos destinados exclusivamente para fins industriais.
+Essas informações devem, então, ser consideradas em conjunto com a lista de
+ingredientes do produto, para definir se deve ser decla rada a advertência da
+presença intencional de alimentos alergênicos ou de seus derivados.
+Nesse contexto, deve ser considerado que as regras atuais para declaração de
+ingredientes compostos da RDC n. 259/2002 não exigem que a composição desses
+ingredientes seja apresentada em todas as situações, o que prejudica o acesso do
+consumidor a informações essenciais para proteger sua saúde.
+Desta forma, a definição do tipo de advertência de presença intencional a ser
+utilizada deve considerar o nome do ingrediente composto declarado na lista de
+ingredientes e sua composição, mesmo que a composição não seja declarada na
+rotulagem.
+A seguir são apresentados dois exemplos para auxiliar no entendimento das
+explicações fornecidas acima.
+Exemplo 1: Mistura para bolo. List a de ingredientes: açúcar, farinha de trigo
+enriquecida com ferro e ácido fólico, sal, soro de leite, leite em pó (leite integral e
+lecitina de soja), fermento químico bicarbonato de sódio e aromatizantes.
+O produto tem adição de derivados de alimentos ale rgênicos, incluindo os
+ingredientes compostos farinha de trigo e leite em pó. Verifica -se também que o
+ingrediente composto leite em pó teve sua composição declarada entre parênteses
+[[PAGINA 27]]
+
+GERÊNCIA GERAL DE ALIMENTOS
+Gerência de Registro de Alimentos
+e que esse ingrediente possui a presença de outro derivado de alimento alergênico
+(lecitina de soja). Consequentemente, deve ser declarada a advertência:
+ALÉRGICOS: CONTÉM DERIVADOS DE TRIGO, LEITE E SOJA. Caso os aditivos
+alimentares utilizados sejam ingredientes compostos e contenham outros derivados
+de alimentos alergênicos em sua composição, estes também devem ser
+declarados.
+Exemplo 2: Salgadinho de milho sabor queijo. Lista de ingredientes: milho, óleo
+vegetal de palma e preparado para salgadinho sabor de queijo (maltodextrina, sal,
+soro de manteiga, farinha de trigo, quei jo, açúcar, óleo de soja e óleo de algodão,
+realçadores de sabor: glutamato monossódico, inosinato dissódico e guanilato
+dissódico, aromatizantes, reguladores de acidez: fosfato dissódico, ácido cítrico e
+ácido lático, corante artificial amarelo crepúsculo e corante caramelo).
+O produto tem adição de um ingrediente composto (preparado para salgadinho
+sabor queijo) que possui diversos outros ingredientes, muitos dos quais também
+são ingredientes compostos que não tiveram sua composição detalhada (ex. queijo,
+sal, farinha de trigo). A partir da lista de ingredientes, verifica-se que o produto tem
+adição de derivados de leite (soro de manteiga e queijo), trigo (farinha de trigo) e
+soja (óleo de soja). Assim, a advertência a ser utilizada seria: ALÉRGICOS:
+CONTÉM DERIVADOS DE LEITE, TRIGO E SOJA. Entretanto, caso os outros
+ingredientes e aditivos alimentares utilizados sejam ingredientes compostos e
+contenham outros derivados de alimentos alergênicos em sua composição, estes
+também devem ser declarados.
+36. Qual advertência deve ser declarada em alimentos fabricados com o uso
+de coadjuvantes de tecnologia derivados dos principais alimentos
+alergênicos?
+Segundo a Portaria SVS/MS n. 540/1997, os coadjuvantes de tecnologias são
+substâncias empregadas intencionalmente na elaboração de produtos por razões
+tecnológicas que devem ser eliminadas ou inativadas, sendo admitidos traços da
+substância ou seus derivados no produto final.
+Assim, quando for utilizado um coadjuvante de tecnologia derivado de determinado
+alimento alergênico na elaboração de um produto e não existir outra fonte deste
+alimento alergênico no produto, a necessidade de declaração da advertência será
+[[PAGINA 28]]
+
+GERÊNCIA GERAL DE ALIMENTOS
+Gerência de Registro de Alimentos
+determinada pela capacidade de remoção dos traços de coadjuvante de tecnologia
+do produto final.
+Caso o process o empregado garanta a ausência de traços do coadjuvante de
+tecnologia no produto final, nenhuma advertência deve ser declarada. Todavia, se
+o coadjuvante de tecnologia estiver presente em traços no produto final, deve ser
+declarada a presença intencional de derivado do alimento alergênico.
+Por exemplo, quando a lisozima, um coadjuvante de tecnologia empregado em
+alimentos como agente de controle de micro-organismos, for utilizada na fabricação
+de um alimento e a empresa não possuir controles capazes de gara ntir sua
+eliminação, o produto final deve trazer a seguinte advertência: ALÉRGICOS:
+CONTÉM DERIVADOS DE OVO. Caso essa enzima seja eliminada pelo
+processamento, nenhuma advertência deve ser declarada.
+De forma similar, caso os fabricantes de vinho que utilizem a ictiocola, um
+coadjuvante de tecnologia utilizado como clarificante, tenham controles capazes de
+garantir que essa substância é eliminada do produto final, nenhuma advertência
+deve ser declarada.
+Quanto aos métodos analíticos e limites específicos para determinar a presença de
+traços de determinado coadjuvante de tecnologia nos diferentes tipos de alimentos,
+recomenda-se a utilização de referências internacionais. Um exemplo é o código
+de boas práticas estabelecido pela International Organization of Vine and Wine
+(OIV) sobre o uso de coadjuvantes de tecnologia derivados de alergênicos para
+clarificação/filtração de vinhos (Resolution OIV-OENO 520-2014).
+Os fabricantes de vinho que utilizarem tais coadjuvantes de tecnologia em seus
+produtos e que a dotarem os procedimentos previstos neste código para garantir
+que o produto final não possui níveis detectáveis dos alérgenos em questão não
+devem declarar a advertência.
+Cabe destacar que os fabricantes de coadjuvantes de tecnologia também devem
+atender ao disposto na RDC n. 26/2015, declarando as advertências exigidas para
+os casos de adição intencional ou de contaminação cruzada com os principais
+alimentos alergênicos. Tais exigências também se aplicam aos coadjuvantes de
+[[PAGINA 29]]
+
+GERÊNCIA GERAL DE ALIMENTOS
+Gerência de Registro de Alimentos
+tecnologia para fins industriais. Por exemplo, os fabricantes de lisozima e ictiocola
+devem identificar que esses produtos são derivados do ovo e de peixe por meio
+das respectivas advertências.
+37. Qual advertência deve ser declarada para produtos que entram em
+contato com materiais que contêm látex natural ou seus derivados?
+O látex natural ou seus derivados podem estar presentes em diversos materiais
+que entram em contato com o alimento, tais como: (a) luvas para manipulação; (b)
+materiais utilizados na selagem de latas; (c) adesivos para selagem a frio; (d) redes
+utilizadas como embalagens; e (e) alguns equipamentos que processam alimentos.
+Adicionalmente, foi notado que produtos contendo látex natural obtidos de
+diferentes fabricantes apresentam grande variação no conteúdo de alérgenos e que
+essas substâncias podem migrar para os alimentos e desencadear alergias
+alimentares.
+Assim, quando um alimento entrar em contato com materiais que contêm látex
+natural e a possibilidade de contaminação com essa substância não for
+adequadamente controlada pelo Programa de Controle de Alergênicos, deve ser
+declarada a advertência de contaminação cruzada.
+Por exemplo, se os manipuladores de uma empresa utilizam luvas de látex para
+manusear os alimentos e não existem controles que garantam que essa substância
+não migra em níveis detectáveis para os alimentos, deve ser declarada a
+advertência: ALÉRGICOS: PODE CONTER LÁTEX NATURAL.
+38. Qual advertência deve ser declarada para as embalagens que contém
+látex natural, mas não entram em contato com o alimento?
+As emba lagens que contêm látex natural, mas não entram em contato com o
+alimento não estão no escopo da RDC n. 26/2015. Portanto, as advertências
+relacionadas ao látex natural previstas nesta resolução não podem ser declaradas
+nesses casos.
+[[PAGINA 30]]
+
+GERÊNCIA GERAL DE ALIMENTOS
+Gerência de Registro de Alimentos
+39. Qual advertência deve ser declarada em produtos obtidos por
+fermentação microbiana com uso de substratos alergênicos?
+Alguns alimentos e ingredientes são produzidos por meio de processos de
+fermentação que utilizam diferentes tipos de micro -organismos (ex. bactérias,
+leveduras). Em alguns casos, pode ser difícil definir se o produto obtido é alergênico
+e o tipo de advertência que deve ser utilizado.
+Caso o produto final seja o substrato alergênico fermentado, deve ser veiculada a
+advertência de presença intencional de alergênicos.
+Por exemplo, a cerveja (produto final) é a bebida obtida pela fermentação alcoólica
+do mosto cervejeiro oriundo do malte da cevada (um derivado de alimento
+alergênico) e água potável. Assim, a cerveja deve trazer a advertência:
+ALÉRGICOS: CONTÉM DERIVADOS DE CEVADA.
+Em outras situações, o produto final não é o substrato alergênico fermentado.
+Nesses casos, o substrato alergênico é utilizado para o crescimento do micro -
+organismo, que produz um produto totalmente diferente. Nessas situações, pode
+ser necessária a declaração da advertência de contaminação cruzada caso não
+seja possível garantir a remoção de traços do substrato alergênico do produto final.
+Por exemplo, se durante a síntese de determinado aminoácido por fermentação
+microbiana forem utilizad os derivados de soja para crescimento dos micro -
+organismos e esses derivados forem adequadamente separados do produto final
+por meio das etapas de processamento, não pode ser declarada nenhuma
+advertência. Caso contrário, deve ser declarada a advertência: ALÉ RGICOS:
+PODE CONTER SOJA.
+40. Qual advertência deve ser declarada para os novos alimentos e os
+alimentos com alegações de propriedades funcionais ou de saúde?
+Como resultado do processo de avaliação da segurança de alimentos enquadrados
+nas categorias de novos alimentos e de alimentos com alegações de propriedades
+funcionais ou de saúde, muitas vezes são estabelecidas advertências que devem
+ser veiculadas nos rótulos dos produtos para alertar grupos populacionais
+específicos sobre os riscos do consumo do produto.
+[[PAGINA 31]]
+
+GERÊNCIA GERAL DE ALIMENTOS
+Gerência de Registro de Alimentos
+Como a RDC n. 26/2015 contempla essas categorias de produtos, os rótulos dos
+novos alimentos e dos alimentos com alegações de propriedades funcionais ou de
+saúde devem ser adequados às novas determinações dentro do prazo
+estabelecido.
+Para os alimentos aprovados com advertências sobre sua alergenicidade (ex.
+quitosana), as empresas devem substituir a advertência por aquela definida na
+RDC n. 26/2015 (ex. ALÉRGICOS: CONTÉM DERIVADOS DE CRUSTÁCEOS
+(CARANQUEJO)).
+Já os produtos aprovados sem advertências e cujo potencial alergênico tenha sido
+reconhecido pela RDC n. 26/2015 (ex. fitoesteróis extraídos do óleo de soja,
+proteína de soja), as empresas devem incluir as advertências exigidas pela
+resolução (ex. ALÉRGICOS: CONTÉM DERIVADOS DE SOJA).
+41. Podem ser real izadas alegações referentes à ausência de alimentos
+alergênicos?
+A RDC n. 26/2015 estabeleceu que alegações sobre a ausência de alimentos
+alergênicos não podem ser utilizadas em alimentos comercializados no Brasil até
+que critérios específicos estejam esta belecidos num regulamento técnico
+específico. Essa medida foi adotada após avaliação das possíveis vantagens e
+problemas que poderiam ocorrer devido à veiculação dessas alegações.
+Esse tipo de alegação tem o potencial de auxiliar os consumidores com alergi as
+alimentares a realizarem escolhas alimentares mais seguras. Adicionalmente,
+podem servir como estímulo para que os fabricantes ofertem mais alimentos isentos
+de alergênicos. Durante a elaboração da resolução, foi verificado que em alguns
+países existem alimentos especialmente desenvolvidos para indivíduos com
+alergias alimentares.
+Entretanto, a Anvisa, até o momento, não conseguiu estabelecer critérios para o
+uso dessas alegações que fossem capazes de proteger os consumidores mais
+sensíveis devido às lim itações no conhecimento técnico -científico disponível. Os
+dados científicos não permitem, por exemplo, estabelecer limites de segurança que
+sejam capazes de proteger todos os indivíduos com alergias alimentares. Já os
+[[PAGINA 32]]
+
+GERÊNCIA GERAL DE ALIMENTOS
+Gerência de Registro de Alimentos
+métodos analíticos disponíveis não são capazes de garantir a completa ausência
+de constituintes alergênicos.
+Deve ser observado, ainda, que a RDC n. 259/2002 proíbe que a ausência de
+componentes que não estão presentes em alimentos de igual natureza seja
+destacada, exceto quando prevista em regulamento técnico específico.
+Portanto, a fim de garantir um tratamento proporcional e claro da matéria em função
+das incertezas existentes, a Anvisa entendeu ser mais adequado estabelecer que
+alegações de ausência de alergênicos somente podem ser utilizadas quando
+atenderem ao disposto em regulamentos técnicos específicos.
+Esclarecimentos sobre os requisitos de legibilidade das declarações sobre
+alergênicos.
+42. Quais são os requisitos de legibilidade das advertências?
+A RDC n. 26/2015 estabeleceu requ isitos de legibilidade que contemplam regras
+sobre a localização da advertência e exigências sobre os caracteres utilizados.
+Também foram estabelecidas regras para o agrupamento das advertências. Essas
+medidas têm como objetivo garantir que as informações sejam fornecidas de forma
+padronizada, clara e em destaque, de forma a facilitar sua visualização e leitura
+pelo consumidor.
+Em relação à localização, as advertências devem estar agrupadas imediatamente
+após ou abaixo da lista de ingredientes. Adicionalmen te, essas informações não
+podem estar dispostas em locais encobertos, removíveis pela abertura do lacre ou
+de difícil visualização, como áreas de selagem e de torção.
+No tocante aos caracteres, esses devem ser legíveis, ter cor contrastante com o
+fundo do rótulo e devem estar em caixa alta, em negrito e ter altura mínima de 2
+mm e nunca inferior à altura de letra utilizada na lista de ingredientes.
+Quando mais de uma advertência for empregada, as informações devem ser
+agrupadas numa única frase iniciada pel o termo “Alérgicos” e seguida das
+respectivas indicações (ex. ALÉRGICOS: CONTÉM LEITE E DERIVADOS DE
+TRIGO. PODE CONTER LÁTEX NATURAL). Nesses casos, a RDC n. 26/2015 não
+define uma ordem específica a ser seguida no agrupamento dessas advertências.
+[[PAGINA 33]]
+
+GERÊNCIA GERAL DE ALIMENTOS
+Gerência de Registro de Alimentos
+43. O forma to das advertências pode ser diferente do exigido na RDC n.
+26/2015?
+A comunicação da presença intencional de alimentos alergênicos e seus derivados
+ou da contaminação cruzada com esses constituintes deve seguir obrigatoriamente
+a padronização estabelecida na RDC n. 26/2015.
+Mesmo que o alimento tenha adição de apenas um ingrediente derivado de
+alimento alergênico (ex. caseína), o texto da advertência deve seguir a
+padronização estabelecida na RDC n. 26/2015 e ser declarada no plural (ex.
+ALÉRGICOS: CONTÉM DERIVADOS DE LEITE).
+Essa padronização também deve ser obedecida para os produtos destinados
+exclusivamente para fins industriais ou para os serviços de alimentação que
+veiculem as advertências nos documentos que acompanham os produtos. Caso os
+documentos que acompanham os produtos não contenham a lista de ingredientes,
+não se aplicam as exigências de localização da advertência após ou abaixo da lista
+de ingredientes e de altura mínima nunca inferior à altura da letra utilizada na lista
+de ingredientes.
+Para as advertências de contaminação cruzada, as empresas podem disponibilizar
+aos consumidores em outros meios de comunicação (ex. serviços de atendimento
+ao consumidor, internet) informações complementares sobre a fonte de
+contaminação.
+44. Os produtos destinad os exclusivamente ao uso industrial ou aos
+serviços de alimentação devem veicular as advertências no seu rótulo?
+A resolução estabeleceu uma alternativa para esses produtos. Os fornecedores
+podem optar por declarar as advertências exigidas nos rótulos ou nos documentos
+que acompanham o produto.
+Essa alternativa pode contribuir para a redução dos custos para cumprimento da
+resolução, sem prejudicar o acesso dos fabricantes a informações sobre a natureza
+alergênica dos diferentes ingredientes utilizados na pr odução de seus alimentos.
+Nesses casos, é facultado o fornecimento das informações por meio de
+documentos (ex. fichas técnicas, notas fiscais, especificações) que acompanham
+[[PAGINA 34]]
+
+GERÊNCIA GERAL DE ALIMENTOS
+Gerência de Registro de Alimentos
+os produtos. Cabe esclarecer que esses documentos devem estar junto aos
+produtos durante todo seu transporte e comercialização.
+Caso os fornecedores entendam que não é viável apresentar as advertências
+exigidas nos documentos que acompanham o produto, as informações devem ser
+impressas nos rótulos desses produtos.
+45. Por que as advertências devem trazer o termo “alérgicos”?
+Esse termo indica para qual grupo populacional a informação é direcionada,
+auxiliando no correto entendimento da advertência e evitando engano dos
+consumidores quanto às verdadeiras características dos alimentos.
+Caso esse termo não fosse exigido, a advertência poderia ser interpretada pelos
+consumidores sem alergias alimentares como uma alegação de conteúdo, ou seja,
+como um destaque a atributos positivos de qualidade do alimento, contrariando os
+princípios gerais de rotulagem estabelecidos na RDC n. 259/2002.
+46. Por que as advertências devem trazer o nome comum dos alimentos
+alergênicos?
+Essa medida foi adotada com intuito de facilitar o entendimento dos consumidores
+com alergias alimentares sobre as informações técnicas ve iculadas na lista de
+ingredientes e que, muitas vezes, não descrevem a origem dos ingredientes.
+47. Como devem ser declarados os nomes comuns dos crustáceos?
+Nestes casos, o termo “crustáceos” deve ser declarado seguido do nome comum
+das espécies entre parênte ses (ex. ALÉRGICOS: CONTÉM CRUSTÁCEOS
+(LAGOSTA)). Essa regra foi adotada, pois o termo “crustáceos” é técnico e
+genérico, o que poderia dificultar o entendimento do consumidor.
+48. Com devem ser declarados os nomes comuns das castanhas?
+Como as castanhas (tree nuts) não formam um grupo taxonômico único e existe
+ampla variação na nomenclatura comum e científica desses alimentos, a Anvisa
+optou por listar nominalmente as espécies consideradas alergênicas pelo nome
+comum que deve ser utilizado e pelo nome científi co para esclarecer as espécies
+contempladas.
+[[PAGINA 35]]
+
+GERÊNCIA GERAL DE ALIMENTOS
+Gerência de Registro de Alimentos
+Portanto, as advertências devem incluir apenas o nome comum das espécies, sem
+o respectivo nome científico. A castanha -do-brasil pode ser denominada também
+de castanha -do-pará (ex. ALÉRGICOS: PODE CONTER AMÊNDOAS E
+CASTANHA-DO-BRASIL).
+49. Como devem ser declarados os nomes comuns dos leites?
+A RDC n. 26/2015 considera que os leites de todas as espécies de animais
+mamíferos são alergênicos. Como essa resolução não possui nenhum dispositivo
+específico sobre a forma de declaração dos nomes comuns das diversas espécies
+de leite, muitas empresas apresentaram questionamentos sobre a forma correta de
+declaração desses alimentos.
+A primeira orientação fornecida foi de que a declaração do nome comum deveria
+ser realiza da pelo termo “leite” seguido do nome da espécie animal (ex.
+ALÉRGICOS: CONTÉM LEITE DE CABRA), exceto para o leite de vaca que deve
+ser denominado apenas como “leite” (ex. ALÉRGICOS: PODE CONTER LEITE).
+Essa orientação considerou a definição de leite constante do art. 475 do Decreto n.
+30.691, de 29 de março de 1952, que aprova o regulamento da inspeção industrial
+e sanitária de produtos de origem animal.
+Entretanto, essa orientação foi questionada por representantes do setor produtivo,
+com a justificativa de que a informação transmitida ao consumidor não ficava clara
+e poderia levá -lo ao engano quanto à verdadeira composição do alimento,
+especialmente no caso de produtos contendo ingredientes obtidos de diferentes
+tipos de leite.
+Assim, a orientação inicial foi revisada, a fim de garantir seu alinhamento ao objetivo
+da RDC n. 26/2015 e aos princípios gerais de rotulagem estabelecidos na RDC n.
+259/2002, que trata da rotulagem geral de alimentos. Nessa oportunidade, foi
+orientado que a declaração do nome com um dos leites deveria ser realizada, sem
+exceção, pelo termo “leite” seguido do nome da espécie animal (ex. ALÉRGICOS:
+CONTÉM LEITE DE CABRA. PODE CONTER LEITE DE VACA).
+No entanto, essa revisão também gerou questionamentos por parte das empresas
+e do Ministério da Agricultura, Pecuária e Abastecimento.
+[[PAGINA 36]]
+
+GERÊNCIA GERAL DE ALIMENTOS
+Gerência de Registro de Alimentos
+Desta forma, com intuito de fornecer uma orientação que contribua para a
+transmissão de informações claras, simples e precisas para o consumidor e que
+esteja alinhada com os dispositivos legais existentes sobre o tema, a orientação em
+questão foi revisada novamente.
+A declaração do nome comum deve ser realizada pelo termo “leite” seguido do
+nome da espécie animal (ex. ALÉRGICOS: CONTÉM LEITE DE CABRA), exceto
+para o leite de vaca que deve ser denominado apena s como “leite” (ex.
+ALÉRGICOS: PODE CONTER LEITE).
+Entretanto, nos casos em que o produto tiver a adição intencional ou contaminação
+cruzada do leite de vaca e de outros tipos de leite, a declaração do nome comum
+dos leites deve ser realizada, sem exceção, pelo termo “leite” seguido do nome da
+espécie animal (ex. ALÉRGICOS: CONTÉM LEITE DE CABRA. PODE CONTER
+LEITE DE VACA).
+50. Posso declarar as advertências de alergênicos na área de selagem do
+produto?
+Não. A RDC n. 26/2015 proíbe expressamente que as advertên cias sejam
+declaradas em áreas de baixa visibilidade, incluindo as áreas de selagem e torção.
+51. Existem regras específicas para as embalagens pequenas?
+Sim. A RDC n. 26/2015 estabelece como embalagens pequenas aquelas com área
+de painel principal igual ou in ferior a 100 cm2. Nesses casos, a altura mínima dos
+caracteres usados nas advertências é de 1 mm. Os demais requisitos são os
+mesmos aplicáveis às outras embalagens.
+52. Qual deve ser a localização das advertências nos alimentos compostos
+por um único ingrediente e que não possuem lista de ingredientes?
+A RDC n. 259/2002 exige a declaração obrigatória da lista de ingredientes nos
+alimentos embalados na ausência dos consumidores, com exceção dos alimentos
+compostos por um único ingrediente.
+No entanto, a rotulagem de alimentos alergênicos continua sendo obrigatória,
+mesmo para os produtos compostos por um único ingrediente e que não tenham
+lista de ingredientes. Nesses casos, a exigência de declarar as advertências
+[[PAGINA 37]]
+
+GERÊNCIA GERAL DE ALIMENTOS
+Gerência de Registro de Alimentos
+imediatamente após ou abaixo da lista de ingredientes não se aplica, devendo ser
+cumpridas as demais regras de legibilidade.
+Esclarecimentos sobre os procedimentos para adequação à RDC n. 26/2015.
+53. Qual o prazo de adequação à RDC n. 26/2015?
+A RDC n. 26/2015 estabeleceu o prazo de 12 meses, conta dos a partir da data de
+sua publicação, para que as empresas realizem as adequações necessárias na
+rotulagem dos seus produtos. Esse prazo se aplica tanto aos produtos que já se
+encontram no mercado quanto aos novos alimentos. Os produtos fabricados antes
+desse prazo podem ser comercializados até o fim do seu prazo de validade.
+O prazo de adequação foi estabelecido considerando: (a) a urgência da medida
+para proteção da saúde de indivíduos com alergias alimentares; (b) as
+necessidades do setor produtivo para implementação das alterações na produção
+e rotulagem; (c) as necessidades do SNVS para adoção de outras medidas
+regulatórias destinadas a auxiliar no cumprimento e fiscalização da norma.
+Deve ser ressaltado que durante a elaboração da RDC n. 26/2015, foi verificada
+uma polarização das propostas referentes ao prazo de adequação. Enquanto
+cidadãos, grupos de apoio a indivíduos com alergias e a OAB solicitaram a redução
+do prazo de 12 meses para seis ou três meses, as contribuições apresentadas por
+empresas e associações do setor produtivo de alimentos pleitearam a extensão do
+prazo para 24 ou 36 meses.
+54. Os produtos que já traziam voluntariamente a declaração de alimentos
+alergênicos necessitam atender as determinações da RDC n. 26/2015?
+Sim. Os rótulos dos pr odutos que já declaravam a presença intencional ou a
+contaminação cruzada com alimentos alergênicos, de forma voluntária, devem
+sofrer as modificações necessárias para garantir que as declarações veiculadas
+atendam as regras estabelecidas na RDC n. 26/2015.
+55. Como faço para garantir a consistência entre as advertências de cereais
+alergênicos e de glúten para fins de doença celíaca?
+Quando um produto contiver a advertência de presença intencional de trigo,
+centeio, cevada, aveia e suas estirpes hibridizadas e ou seus derivados (ex.
+[[PAGINA 38]]
+
+GERÊNCIA GERAL DE ALIMENTOS
+Gerência de Registro de Alimentos
+ALÉRGICOS: CONTÉM CEVADA; ALÉRGICOS: CONTÉM DERIVADOS DE
+TRIGO), deve ser veiculada a advertência: CONTÉ M GLÚTEN, pois a Lei n.
+10.674/2003 não estabelece um limite de glúten para a declaração da sua ausência.
+Quando um produto contiver a advertência de contaminação cruzada com trigo,
+centeio, cevada, aveia e suas estirpes hibridizadas (ex. ALÉRGICOS: PODE
+CONTER CENTEIO), deve ser veiculada a advertência: CONTÉM GLÚTEN, pois a
+Lei n. 10.674/2003 não estabelece um limite de glúten para a declaração da sua
+ausência e não prevê a possibilidade de declaração da contaminação cruzada para
+essa proteína.
+Quando um produto não contiver qualquer advertência sobre a presença intencional
+ou a contaminação cruzada com trigo, centeio, cevada, aveia e suas estirpes
+hibridizadas, deve ser veiculada a advertência: NÃO CONTÉM GLÚTEN.
+56. As empresas devem atender algum procedimen to administrativo para
+alterar a rotulagem dos seus produtos?
+O item 7.4.1 da Resolução n. 23/2000, que trata dos procedimentos básicos para
+registro e dispensa da obrigatoriedade de registro de alimentos, estabelece que a
+adequação dos produtos em função de alterações na legislação é responsabilidade
+exclusiva das empresas e que, nestes casos, não é necessário protocolar nenhuma
+petição específica. Portanto, serão encerradas as eventuais petições de Alteração
+de Rotulagem (código 456) protocoladas na Anvisa que seja especificamente para
+demonstrar o atendimento aos requisitos da RDC n. 26/2015.
+Cabe destacar que os dizeres de rotulagem apresentados nas petições de registro
+e suas alterações devem atender aos requisitos da RDC n. 26/2015 e, nestes casos
+podem ser solicitadas informações específicas (ex. especificações dos
+ingredientes, Programa de Controle de Alergênicos) para comprovar o atendimento
+dos requisitos da RDC n. 26/2015, por meio de exigências técnicas, caso surjam
+dúvidas sobre a presença intenc ional ou possibilidade de contaminação cruzada
+com alimentos alergênicos ou seus derivados.
+[[PAGINA 39]]
+
+GERÊNCIA GERAL DE ALIMENTOS
+Gerência de Registro de Alimentos
+57. É permitido o uso de etiquetas complementares para atender a RDC n.
+26/2015?
+Inicialmente, deve ser observado que a Resolução RDC n. 26/2015 deve ser
+aplicada de forma complementar à RDC n. 259/2012. Nesse sentido, a definição de
+rotulagem estabelecida na RDC n. 259/2002 contempla toda inscrição, legenda,
+imagem ou matéria descritiva escrita, impressa, estampada, gravada, litografada
+ou colada sobre a embalagem do alimento.
+Isso significa que o conteúdo de etiquetas complementares coladas sobre a
+embalagem do produto é considerado rotulagem para fins do disposto nas RDC n.
+259/2002 e 26/2015.
+Portanto, o uso de etiquetas complementares para atender ao disposto na RDC n.
+26/2015 é possível desde que a colocação desta etiqueta: (a) seja realizada
+exclusivamente nos estabelecimentos processadores habilitados pelas autoridades
+competentes para elaboração ou fracionamento do produto; (b) não traga prejuízo
+ao atendimento da s disposições de rotulagem estabelecidas em regulamentos
+técnicos; (c) não traga erro ao consumidor com base no disposto no artigo 21 do
+Decreto-Lei n. 986/69 e no item 3.1 da RDC n. 259/2002; (d) não prejudique a
+visibilidade ou legibilidade de outras inf ormações de declaração obrigatória
+segundo a legislação sanitária vigente; (e) atenda a todos os requisitos
+estabelecidos na RDC n. 26/2015, incluindo aqueles relacionados à localização e
+legibilidade das advertências; e (f) não altere o conteúdo original da informação
+obrigatória.
+58. Como será aplicada a RDC n. 26/2015 para os produtos importados?
+O tratamento dado aos produtos importados deve ser similar aquele dispensado
+aos produtos nacionais. No caso da veiculação de advertências sobre a
+contaminação cruz ada com alimentos alergênicos, o importador deve possuir a
+documentação necessária para demonstrar que o fabricante possui um Programa
+de Controle de Alergênicos.
+[[PAGINA 40]]
+
+GERÊNCIA GERAL DE ALIMENTOS
+Gerência de Registro de Alimentos
+59. Quais as penalidades no caso de descumprimento da RDC n. 26/2015?
+O descumprimento das dispos ições contidas na Resolução RDC n. 26/2015
+constitui infração sanitária, nos termos da Lei n. 6.437/1977 e suas atualizações,
+sem prejuízo das responsabilidades civil, administrativa e penal cabíveis.
+As penalidades previstas para fabricantes que rotulam s eus alimentos em
+desacordo com as normas legais e regulamentares estão previstas no inciso XV do
+artigo 10 da Lei n. 6.437/1977 e incluem: advertência, inutilização, interdição e ou
+multa.
+60. Quais serão os métodos analíticos empregados nas análises de controle
+e fiscais?
+Diferentes métodos analíticos podem ser empregados para análise de alimentos
+alergênicos: (a) métodos físico -químicos para análise das proteínas (ex.
+cromatografia líquida de alta eficiência, eletroforese capilar, espectrometria de
+massa); (b) métodos imunológicos (ex. ELISA, immunoblotting) e (c) métodos de
+análise de DNA (ex. end-point PCR, real time PCR).
+O desempenho de cada método analítico é influenciado de forma distinta por uma
+série de fatores, tais como: (a) alergênico de interesse ; (b) tipo do processamento
+empregado ao alimento; (c) características da matriz alimentar; (d) condições de
+extração; (e) tamanho e homogeneidade das amostras.
+Embora os métodos imunológicos ELISA sejam muito utilizados internacionalmente
+e existam diversos kits comerciais disponíveis, os resultados geralmente não são
+comparáveis entre si, em função de diferenças nos componentes analisados, na
+especificidade dos anticorpos, nas condições de extrações e nos efeitos das
+matrizes alimentares.
+Cabe ressaltar, ainda, que os métodos mais robustos necessitam de um
+investimento maior e capacitação especializada para operá-los, além de requerem
+materiais certificados de referência.
+Portanto, como não existe um método único que seja apropriado para todas as
+situações, a RDC n. 26/2015 não especificou quais ensaios analíticos devem ser
+executados para verificação do cumprimento da norma.

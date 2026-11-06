@@ -1,0 +1,468 @@
+[[PAGINA 1]]
+
+SIG / UnB
+
+Sistema Integrado de Gestão – SIG
+Sistema de Gestão Acadêmica – SIGAA
+
+Decanato de Ensino de Graduação
+Secretaria de Apoio Acadêmico
+Secretaria de Tecnologia da Informação
+
+Módulo Portal do Discente – Aba ensino
+
+[[PAGINA 2]]
+
+Sumário
+OBJETIVO ................................................................................................................ 3
+AUTOCADASTRO .................................................................................................... 3
+PORTAL DO DISCENTE .......................................................................................... 6
+MEUS DADOS PESSOAIS ............................................................................................. 7
+ALTERAÇÃO DE SENHA ............................................................................................. 10
+CAIXA POSTAL – MENSAGEM ................................................................................... 12
+ATUALIZAR FOTO E PERFIL ....................................................................................... 14
+ABA ENSINO .......................................................................................................... 17
+Ensino - Consultar Minhas Notas ............................................................................... 19
+Ensino - Emitir Atestado de Matrícula ........................................................................ 20
+Ensino - Emitir Histórico ............................................................................................. 22
+Ensino - Emitir Declaração de Vínculo ....................................................................... 22
+Ensino - Alunos Aptos A Colar Grau .......................................................................... 23
+Ensino - Solicitar Validação de Documentos Para Registro de Diploma ................. 24
+Ensino – Calendário Acadêmico ................................................................................. 26
+
+[[PAGINA 3]]
+
+MÓDULO PORTAL DO DISCENTE
+
+OBJETIVO
+Este documento tem como objetivo auxiliar e servir como guia na realização dos
+procedimentos do Portal do Discente, da Universidade de Brasília, englobados no
+novo Sistema Integrado de Gestão de Atividades Acadêmicas – SIGAA.
+O SIGAA informatiza os procedimentos da área acadêmica através dos módulos de:
+Graduação, Pós -Graduação ( stricto e lato sensu), Extensão, Estágio, Monitoria,
+Portal Discente, Portal Docente, entre outros.
+
+AUTOCADASTRO
+Os alunos dos cursos de graduação e pós -graduação da Universidade de Brasília,
+na modalidade presencial ou à distância, devem efetuar, a partir de seu ingresso na
+instituição, o cadastro no Sistema Integrado de Gestão de Atividades Acadêmicas
+(SIGAA). É por meio desse sistema que o discente tem acesso a todas as
+informações de sua vida acadêmica, como notas, histórico, comprovante de
+matrícula e declaração de vínculo.
+Para melhor aproveitamento do sistema, é aconselhável a utilização do navegador
+Mozilla Firefox, que pode ser obtido através do endereço www.firefox.com.
+Caso o discente não tenha cadastro, o primeiro passo a ser feito é o autocadastro.
+Para isso, digite o endereço https://www.sig.unb.br para acessar o portal.
+Para realizar o autocadastro, é necessário que o discente saiba seu número de
+matrícula. Caso não saiba, recomenda- se procurar a Secretaria de Administração
+Acadêmica (SAA) para obter essa informação.
+Clique em SIGAA, depois no link Cadastre-se, abaixo de Aluno, para acessar o
+formulário de cadastro (Figura 1: Autocadastro).
+[[PAGINA 4]]
+
+Figura 1: Autocadastro
+
+O cadastro só será validado se os dados digitados forem iguais aos dados
+informados no processo seletivo. O discente terá que informar alguns dados, tais
+como: Matrícula, CPF, usuário (número da matrícula), entre outros. A senha deverá
+ter no mínimo 6 (seis) caracteres (obri gatórios de letras e número). Depois de
+preencher as informações corretamente, clique em C adastrar (Figura 2: Cadastro
+de Discente).
+
+[[PAGINA 5]]
+
+Figura 2: Cadastro de Discente
+Após ter finalizado o seu cadastro, você já terá o seu login e senha. Para acessar ao
+Portal do Discente, retorne para a tela inicial e insira seu login e senha cadastrados
+para acessar o sistema (Figura 3: Acesso do Sistema).
+
+Figura 3: Acesso do Sistema
+
+[[PAGINA 6]]
+
+PORTAL DO DISCENTE
+Para acessar o Portal do Discente, após fazer o login no SIGAA, clique em Portal do
+Discente, que se encontra no lado superior direito da tela. A partir de então, você
+poderá acompanhar e efetuar diversas atividades relacionadas ao ensino, como, por
+exemplo, acessar as turmas nas quais está matriculado, ativ idades cadastradas,
+dentre outras (Figura 4: Portal do Discente).
+
+Figura 4: Portal do Discente
+Ao acessar o portal, o discente poderá atualiz ar sua foto e seus dados pessoais,
+além de ter acesso às mensagens que foram enviadas a ele. Para isto, é necessário
+que o discente esteja com os seus dados atualizados.
+Para ter acesso às mensagens, atualização de foto e perfil, bem como aos dados
+pessoais, clique no link correspondente (Figura 5: Dados Pessoais):
+
+[[PAGINA 7]]
+
+Figura 5: Dados Pessoais
+
+MEUS DADOS PESSOAIS
+Esta funcionalidade permite ao usuário visualizar, no Portal do Discente, seus dados
+pessoais cadastrados no sistema. A Universidade de Brasília utiliza os dados
+cadastrados para envio de correspondência oficial, análise e pagamentos de bolsas,
+transporte público (passe estudantil) etc; para isto, informe seus dados corretamente.
+Estas informações também constarão no diploma que será recebido ao final do
+curso.
+Para realizar a operação, acesse SIGAA → Módulos → Portal do Discente → Meus
+Dados Pessoais (Figura 6: Meus Dados Pessoais).
+
+Figura 6: Meus Dados Pessoais
+
+[[PAGINA 8]]
+
+Há a possibilidade de modificar alguns dos campos já preenchidos. No caso de haver
+erro em dados pessoais bloqueados, o usuário terá que comparecer à coordenação
+do curso para que se realizem as devidas alterações. Ao selecionar a opção, a tela
+a seguir será exibida (Figura 7: Modificação de Dados Pessoais):
+
+Figura 7: Modificação de Dados Pessoais
+São exibidas para o usuário suas informações pessoais e documentos disponíveis
+no sistema que não podem ser modificados. Ainda são exibidos os seguintes
+campos, todos com a possibilidade de alteração:
+Endereço
+• CEP: Informe o número do CEP da residência do discente;
+
+[[PAGINA 9]]
+
+• Logradouro: Informe a r ua ou avenida na qual está situada a casa do
+discente;
+• Número: Insira o número da residência do discente;
+• Complemento: Preencha caso haja necessidade de adicionar mais
+informações sobre o endereço;
+• Bairro: Forneça o bairro no qual está situada a residência do discente;
+• UF: Estado no qual está situada a residência do discente;
+• Município: Município no qual está situada a residência do discente.
+Contatos
+• Telefone: Informação referente ao telefone residencial;
+• Celular: Informação referente ao celular;
+• E-mail: e-mail para contato com o discente.
+Dados Bancários
+• Banco: Banco no qual o discente possui conta;
+• Nº operação: Tipo de conta (Caixa Econômica Federal etc);
+• Nº da Agência: Número da agência que o discente possui conta;
+• Nº Conta Corrente: Número da conta corrente do discente;
+• Tipo de conta: O discente pode selecionar se a conta é corrente, poupança
+ou salário.
+Situação Sócio-Econômica
+• Renda Familiar (mensal): Referente à renda familiar mensal;
+• Quantidade de membros do grupo familiar : Quantidade de membros do
+grupo familiar.
+Confirmação de Senha
+• Identidade (RG): Informe o RG do usuário;
+• Senha: Digite a senha utilizada para entrar no sistema.
+Após modificar os dados que julgar necessário, clique em Confirmar para
+prosseguir. A mensagem de sucesso a seguir será gerada:
+[[PAGINA 10]]
+
+Figura 8
+Caso desista da operação, clique em C ancelar e confirme a desistência na janela
+apresentada posteriormente. Para retornar ao menu principal do módulo, clique em
+Portal do Discente, no final da página (Figura 9: Retornar ao Menu Principal).
+
+Figura 9: Retornar ao Menu Principal
+
+ALTERAÇÃO DE SENHA
+Para alterar a senha, o usuário deverá clicar em Alterar senha no canto superior
+direito da tela (Figura 10: Alterar Senha).
+
+Figura 10: Alterar Senha
+Certifique-se que seu e-mail esteja correto. Caso não esteja, informe o e-mail correto
+e clique em alterar dados . Para alterar a senha, clique no link Clique aqui para
+alterar sua senha (Figura 11: Clique Aqui para Alterar sua Senha).
+
+[[PAGINA 11]]
+
+Figura 11: Clique Aqui para Alterar sua Senha
+Forneça as informações requeridas e clique em Alterar Dados. Caso tenha alterado
+o e-mail, faz-se necessário sair do sistema e realizar novo login (Figura 12: Alterar
+Dados).
+
+Figura 12: Alterar Dados
+Uma mensagem de sucesso será exibida logo após a mudança de senha. Clique em
+Fechar para sair da janela (Figura 13).
+
+[[PAGINA 12]]
+
+Figura 13
+
+CAIXA POSTAL – MENSAGEM
+Para ter acesso as mensagens atribuídas ao seu usuário, clique em Caixa Postal
+localizada no canto superior direito (Figura 14: Caixa Postal).
+
+Figura 14: Caixa Postal
+O aluno também terá acesso a este menu clicando em Mensagens ao lado da foto
+do discente (Figura 15: Mensagens).
+
+Figura 15: Mensagens
+Para verificar as mensagens novas , clique nas mensagens em vermelho. Para
+enviar uma mensagem a um docente/coordenador de curso, clique em E nviar
+mensagem (Figura 16: Enviar Mensagem).
+
+[[PAGINA 13]]
+
+Figura 16: Enviar Mensagem
+
+Ao enviar uma nova mensagem, clique no ícone para adicionar um destinatário.
+Para anexar um arquivo, clique em Escolher arquivo e depois em Anexar Arquivo.
+Depois de completar as informações da mensagem clique em Enviar , caso queira
+cancelar o envio clique em Cancelar. Para voltar à página inicial do sistema clique
+em Voltar ao Sistema (Figura 17).
+
+Figura 17
+
+Caso queira excluir o destinatár io, clique no ícone , caso queira adicionar outro
+destinatário clique novamente no ícone (Figura 18).
+
+[[PAGINA 14]]
+
+Figura 18
+O discente também poderá encaminhar mensagens aos professores e
+coordenadores por esta funcionalidade.
+
+ATUALIZAR FOTO E PERFIL
+Permite que o usuário atualize sua foto e suas informações que foram previamente
+cadastradas no sistema. O discente também poderá cadastrar as inf ormações que
+serão exibidas em seu perfil público, disponível para visualização por qualquer outro
+usuário do sistema.
+Para realizar essa operação, acesse SIGAA → Módulos → Portal do Discente →
+Atualizar Foto e Perfil (Figura 19: Atualizar Foto e Perfil).
+
+Figura 19: Atualizar Foto e Perfil
+Caso o usuário ainda não tenha inserido sua foto ou informações de perfil no sistema,
+ou seja, se esta for a primeira vez que a operação será realizada, a página a seguir
+será disponibilizada (Figura 20: Gravar Perfil).
+
+[[PAGINA 15]]
+
+Figura 20: Gravar Perfil
+Na tela acima, é possível inserir os seguintes Dados do Perfil do usuário:
+• Foto do perfil do usuário no sistema : Para inserir a foto do perfil, informe
+se deseja enviar uma foto arquivada em seu computador ou se prefere tirar
+uma nova foto utilizando sua webcam. Para selecionar uma foto presente em
+seu computador, clique em Escolher Arquivo e selecione a foto deseja da.
+Caso opte por tirar uma nova foto, utilize a ferramenta disponibilizada pelo
+sistema;
+• Descrição Pessoal: Isto é, sua descrição geral, com características que
+acredite ser interessantes para sua carreira acadêmica e profissional;
+• Áreas de Interesse: Refere-se a áreas de ensino e pesquisa e/ou
+profissional;
+• Link do Currículo Lattes;
+• Assinatura: Forma como deseja que suas mensagens sejam assinadas na
+caixa postal do sistema.
+Se desejar retornar ao menu principal do módulo, clique em Portal do Discente, no
+final da página. Esta ação será válida para todas as páginas em que for exibida.
+
+[[PAGINA 16]]
+
+Caso desista da operação, clique em Cancelar e confirme a desistência na janela
+que será exibida posteriormente pelo sistema. Esta opção será válida sempre que
+estiver presente.
+Para confirmar a inserção dos dados, insira sua Senha de acesso ao sistema e clique
+em Gravar perfil . A seguinte mensagem de sucesso da operação será
+disponibilizada no topo da página (Figura 21):
+
+Figura 21
+De volta ao início da operação, caso o usuário tenha inserido sua foto e informações
+de perfil anteriormente e necessite apenas atualizá-las, o sistema o direcionará para
+a página exibida abaixo. Insira/exclua a nova foto, atualize os dados e insira os dados
+de confirmação e clique em Gravar perfil (Figura 22).
+
+Figura 22
+Caso deseje excluir a foto previamente adicionada ao perfil, informe o número da
+sua Identidade e sua Senha de acesso ao sistema e clique em Gravar perfil . A
+seguinte caixa de diálogo será apresentada (Figura 23):
+
+[[PAGINA 17]]
+
+Figura 23
+Clique em Cancelar se desistir da remoção ou em OK para confirmá-la. Optando por
+confirmar, a mensagem abaixo será prontamente exibida, confirmando a operação
+(Figura 24):
+
+Figura 24
+De volta à página anterior, após realizar todas as alterações desejadas, informe o
+número do seu documento de Identidade e sua Senha de acesso ao sistema; após
+clique em Gravar perfil para prosseguir. A mensagem abaixo será, então,
+apresentada (Figura 25):
+
+Figura 25
+ABA ENSINO
+Em relação à aba ensino, o aluno poderá consultar nota, emitir histórico, declaração
+de vínculo e atestado de matrícula, consultar as informações de curso, de
+componente curricular, de turma e de unidades acadêmicas (Figura 26: Aba Ensino).
+
+[[PAGINA 18]]
+
+Figura 26: Aba Ensino
+
+TERMO DEFINIÇÃO
+Consultar minhas notas Permite emitir um relatório contendo
+informações referentes ao seu curso de
+Graduação, como seu Índice de Rendimento
+Acadêmico - IRA, as matérias que já cursou e as
+principais informações referentes a elas - notas
+obtidas, quantidade de faltas e a situação do
+discente ao fim do semestre.
+Consultar Índices Acadêmicos Permite Consultar Índices Acadêmicos.
+Emitir Atestado de Matrícula Permite emitir Atestado de Matrícula.
+
+Emitir Histórico Permite Consultar Histórico Escolar.
+Emitir Declaração de Vínculo Permite emitir declaração de vínculo.
+Alunos aptos a colar grau Informa quando o aluno conclui o curso.
+
+[[PAGINA 19]]
+
+Solicitar Validação de
+Documentos para Registro de
+Diploma
+Solicita que os docume ntos inseridos sejam
+validados.
+Observação docente sobre
+minhas turmas
+Permite visualizar observações dos docentes
+sobre minhas turmas.
+Calendário Acadêmico Demonstrativo do calendário acadêmico
+Consultas Gerais: Consultar
+curso
+Fazer consultas de cursos
+Consultas Gerais: Consultar
+componente curricular
+Fazer consultas de componentes curriculares
+Consultas Gerais: Consultar
+Estrutura Curricular
+Fazer consultas da estrutura curricular
+Ensino - Consultar Minhas Notas
+Essa funcionalidade permite que o usuário emita um relatório contendo informações
+referentes ao seu curso de Graduação, como as matérias que já cursou e as
+principais informações referentes a elas: notas obtidas, quantidade de faltas e a
+situação do discente ao fim do semestre. Para visualizar o relatório, acesse SIGAA
+→ Módulos → Portal do Discente → Ensino → Consultar Minhas Notas (Figura 27:
+Consultar Minhas Notas).
+[[PAGINA 20]]
+
+Figura 27: Consultar Minhas Notas
+O Relatório de Notas do Aluno(a) será prontamente exibido no seguinte formato
+(Figura 28: Relatório de Notas):
+
+Figura 28: Relatório de Notas
+Clique em Portal do Discente se desejar retornar à página inicial do módulo. Para
+retornar à página anterior, clique em Voltar. Se desejar imprimir o relatório, clique
+em Imprimir .
+
+Ensino - Emitir Atestado de Matrícula
+Essa funcionalidade permite ao discente visualizar um relatório com o seu atestado
+de matrícula. Este relatório informará se ele encontra- se matriculado nos
+
+[[PAGINA 21]]
+
+componentes curriculares nos quais solicitou matrícula, além de permitir a
+visualização da sua tabela de horários de aula.
+Para gerar o atestado de matrícula, acesse o SIGAA → Módulos → Portal do
+Discente → Ensino → Emitir Atestado de Matrícula (Figura 29: Emitir Atestado de
+Matrícula).
+
+Figura 29: Emitir Atestado de Matrícula
+Seguindo os passos acima descritos, a seguinte tela será gerada (Figura 30:
+Atestado de Matrícula):
+
+Figura 30: Atestado de Matrícula
+
+[[PAGINA 22]]
+
+Clique em Imprimir ( ) para imprimir o Atestado de Matrícula. Para voltar à tela
+inicial do Portal do Discente, o aluno deverá clicar no link Portal do Discente,
+localizado no superior da página. Clique em Voltar, para retornar à página anterior.
+
+Ensino - Emitir Histórico
+Essa funcionalidade permite que o discente emita seu histórico na Instituição,
+contendo seus dados pessoais, os dados do curso e os detalhes dos componentes
+curriculares já cursados, bem como dos que ainda está cursando.
+Para emitir o histórico, o discente deve acessar o SIGAA → Módulos → Portal do
+Discente → Ensino → Emitir Histórico (Figura 31: Emitir Histórico).
+
+Figura 31: Emitir Histórico
+Um arquivo em PDF será gerado com o histórico do aluno.
+
+Ensino - Emitir Declaração de Vínculo
+Essa funcionalidade permite a emissão de uma declaração de vínculo, por parte da
+Instituição, afirmando que, para os fins que se fizerem necessários, o discente
+encontra-se devidamente vinculado à Universidade.
+
+[[PAGINA 23]]
+
+Para emitir a declaração de vínculo, o usuário deverá acessar SIGAA → Módulos →
+Portal do Discente → Ensino → Emitir Declaração de Vínculo (Figura 32: Emitir
+Declaração de Vínculo).
+
+Figura 32: Emitir Declaração de Vínculo
+Um arquivo em PDF será gerado com a declaração de vínculo do aluno.
+Ensino - Alunos Aptos A Colar Grau
+A lista de concluintes será divulgada no período estabelecido no calendário
+acadêmico. Apenas é possível acessar essa funcionalidade caso a lista tenha sido
+divulgada/enviada pelo órgão responsável.
+Para acessar essa funcionalidade, o usuário deverá acessar SIGAA → Módulos →
+Portal do Discente → Ensino → Alunos Aptos a Colar Grau (Figura 33: Alunos Aptos
+a Colar Grau).
+
+Figura 33: Alunos Aptos a Colar Grau
+
+[[PAGINA 24]]
+
+Ensino - Solicitar Validação de Documentos Para Registro
+de Diploma
+O processo de registro de diploma deverá estar instruído de alguns documentos
+comprobatórios emitidos pela instituição para isto, faz-se necessário a validação dos
+documentos de identificação pela coordenação do seu curso para que seu registro
+de diploma seja realizado.
+Para solicitar a validação dos documentos para registro de diploma, o usuário deverá
+acessar SIGAA → Módulos → Portal do Discente → Ensino → Solicitar Validação de
+Documentos para Registro de Diploma (Figura 34: Validação de Documentos para
+Registro de Diploma).
+
+Figura 34: Validação de Documentos para Registro de Diploma
+Os documentos devem ser enviados de forma que estejam legíveis e em formato
+PDF. Fique atento(a) à situação da sua solicitação. Caso seja negada, você deverá
+entrar com uma nova solicitação de validação de documentos. Clique em Escolher
+arquivo e, em seguida, clique em submeter (Figura 35: Documentos para Registro
+de Diploma).
+
+[[PAGINA 25]]
+
+Figura 35: Documentos para Registro de Diploma
+Após finalizar a submissão dos documentos, uma mensagem de sucesso será
+emitida (Figura 36).
+
+Figura 36
+Caso retorne a operação pelo caminho SIGAA → Módulos → Portal do Discente →
+Ensino → Solicitar Validação de Documentos para Registro de Diploma, a tela a
+seguir aparecerá a data da solicitação de validação dos documentos juntamente com
+a situação.
+Caso queira cancelar a solicitação, clique no ícone . Clique em caso queira
+cadastrar uma nova solicitação . Para visualizar a solicitação , clique em
+(Figura 37: Visualizar Solicitação).
+
+[[PAGINA 26]]
+
+Figura 37: Visualizar Solicitação
+Ensino – Calendário Acadêmico
+O Calendário Acadêmico determina o início e o fim do período letivo de um curso e
+de todos os eventos importantes na Universidade de Brasília , como o período de
+trancamento, de matrícula e outros. Esta funcionalidade permite que o discente da
+Instituição consulte os calendários referentes aos períodos do curso.
+Para realizar a operação, acesse o SIGAA → Mó dulos → Portal do Discente →
+Ensino → Consultar Calendário Acadêmico (Figura 38: Calendário Acadêmico).
+
+[[PAGINA 27]]
+
+Figura 38: Calendário Acadêmico
+Nesta tela são exibidos os calendários acadêmicos dispostos para a visualização do
+discente. A seguinte tela será exibida (Figura 39: Calendários Disponíveis):
+
+Figura 39: Calendários Disponíveis
+Caso deseje visualizar detalhes de um calendário específico, clique no ícone . A
+tela a seguir será gerada pelo sistema (Figura 40: Visualização de Calendário
+Acadêmico):
+
+Figura 40: Visualização de Calendário Acadêmico

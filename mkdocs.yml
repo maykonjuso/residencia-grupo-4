@@ -1,0 +1,141 @@
+site_name: RUmo · Grupo 04 · Challenge 2
+site_description: Residência em IA · UnB/FCTE · Challenge 2 (Big Idea Qualidade de Vida) · Grupo 04 · Assistente com RAG para o Restaurante Universitário e o fluxo de disciplinas das engenharias do campus Gama
+site_author: Grupo 04 · RES IA ELD UnB · Turma 1
+
+site_url: https://maykonjuso.github.io/residencia-grupo-4/
+repo_url: https://github.com/maykonjuso/residencia-grupo-4
+repo_name: maykonjuso/residencia-grupo-4
+edit_uri: ""
+
+# Versão e data da GitPage. Atualizar a cada entrega ou mudança relevante.
+copyright: "Residência em IA · UnB/FCTE · Turma 1 · Challenge 2 · Grupo 04 | Entregas 1 e 2 | Versão 2.0 · 09/11/2026"
+
+theme:
+  name: material
+  custom_dir: overrides
+  language: pt-BR
+  font: false
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/weather-night
+        name: Ativar tema escuro
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/weather-sunny
+        name: Ativar tema claro
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.tracking
+    - navigation.sections
+    - navigation.indexes
+    - navigation.path
+    - navigation.top
+    - navigation.footer
+    - toc.follow
+    - search.highlight
+    - search.suggest
+    - search.share
+    - content.tabs.link
+    - content.tooltips
+    - content.code.copy
+    - announce.dismiss
+
+extra:
+  generator: false
+
+extra_css:
+  - stylesheets/extra.css
+
+extra_javascript:
+  - javascripts/demo-dados.js
+  - javascripts/rumo.js
+
+watch:
+  - overrides
+  - includes
+
+plugins:
+  - search:
+      lang: pt
+  - termynal:
+      title: "terminal"
+      buttons: "macos"
+      prompt_literal_start:
+        - "$"
+
+markdown_extensions:
+  - abbr
+  - pymdownx.snippets:
+      auto_append:
+        - includes/abreviacoes.md
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - footnotes
+  - def_list
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+
+nav:
+  - Início: index.md
+  - Visão do projeto:
+      - visao/index.md
+      - Como funciona (animado): visao/como-funciona.md
+      - Big Idea e Essential Question: visao/essential-question.md
+      - Divisão com o Grupo 09: visao/escopo-grupos.md
+      - Roadmap das 7 semanas: visao/roadmap.md
+  - Entrega 1:
+      - entrega-1/index.md
+      - Problema: entrega-1/problema.md
+      - Partes interessadas: entrega-1/stakeholders.md
+      - Escopo e requisitos: entrega-1/escopo.md
+      - Riscos e limitações: entrega-1/riscos.md
+      - Métricas de sucesso: entrega-1/metricas.md
+  - Entrega 2:
+      - entrega-2/index.md
+      - Base de conhecimento: entrega-2/base-de-conhecimento.md
+      - Estratégia de chunking: entrega-2/chunking.md
+      - Estratégia de embeddings: entrega-2/embeddings.md
+      - Banco vetorial: entrega-2/banco-vetorial.md
+      - Diagrama de arquitetura: entrega-2/arquitetura.md
+      - Pipeline de ingestão: entrega-2/pipeline-ingestao.md
+      - Demonstração: entrega-2/demonstracao.md
+      - Avaliação da recuperação: entrega-2/avaliacao.md
+      - Como executar: entrega-2/como-executar.md
+  - Sobre:
+      - sobre/index.md
+      - Equipe: sobre/equipe.md
+      - Declaração de uso de IA: sobre/uso-de-ia.md
+      - Referências: sobre/referencias.md
+      - Entregas e versões: sobre/entregas.md
+
+validation:
+  links:
+    anchors: warn

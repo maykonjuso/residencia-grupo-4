@@ -1,0 +1,22 @@
+## ÁREAS DE CONCENTRAÇÃO E LINHAS DE PESQUISA
+
+O Programa de Pós-Graduação em Engenharia Biomédica – PPGEB possui apenas uma área de concentração, com suas respectivas Linhas de Pesquisa :
+Área de Concentração: Engenharia Biomédica
+
+Linhas de Pesquisa
+
+APLICAÇÃO DE COMPUTAÇÃO INTELIGENTE EM PESQUISA BIOMÉDICA E CUIDADOS DE SAÚDE
+
+Tópicos de pesquisa : Métodos científicos e técnicas de informação; Sistemas computacionais em tempo real; Engenharia de Software; Inteligência Artificial; Aprendizagem de máquina; Informática hospitalar; Sistemas de visão computacional; Técnicas eficientes de extração e tratamento de informação; Desenvolvimento de sistemas de auxílio a diagnóstico; controle de próteses; Construção de dispositivos médicos; Desenvolvimento de métodos eficientes de tratamento e condicionamento físico; Análise científica de dados relacionados à saúde; Metodologias analíticas e sintéticas; Dados Vitais de ocupantes em veículos automotores; Neuroengenharia.
+
+AVALIAÇÃO, EDUCAÇÃO E POLÍTICAS PÚBLICAS EM SAÚDE
+
+Tópicos de pesquisa : Análise e modelagem de dados epidemiológicos; Análise de sistemas de saúde; Gestão e avaliação de tecnologias em saúde; Estudos da usabilidade de tecnologias médicas; Avaliação da segurança de dados biomédicos; Caracterização dos riscos associados ao uso de equipamentos médico-hospitalares; Perfil Profissional; Melhorias de Ensino; Aplicação de Metodologia Ativa; Ferramentas de cuidado e sustentabilidade; Métodos Qualitativos; Participação Social; Economia; Evidências do Mundo Real; Incorporação de soluções ao SUS; Metrologia; Normalização; Ensaios e Certificação; Inovação, Tecnologia Assistiva e Recursos Terapêuticos; Avaliação de Energia em Ambiente Hospitalar, Instalações Médicas; Otimização de Resíduos Hospitalares; Dinâmica Hospitalar; Análise de mecanismos de lesão relacionados aos usuários de meios de transporte motorizados ou não (vulnerable road user); Avaliação da segurança de veículos de transporte (crashworthiness). Dinâmica de Mecanismos. Emissão de Gases e Saúde; Uso de Energias Alternativas e Políticas Públicas.
+
+PRODUTOS E PROCESSOS EM BIOTECNOLOGIA
+
+Tópicos de pesquisa : Engenharia de sistemas biológicos; Biomateriais; Nanomateriais; Biotecnologia e Nanotecnologia; Síntese e caracterização de materiais para aplicação em dispositivos médicos e em biofármacos; Modelagem matemática e análise de controle de sistemas biológicos e fisiológicos; Estudo da biomecânica e biofísica dos movimentos em ambientes diversos – relação homem-máquinas; Estudos eletrofisiológicos in vitro e in vivo; Aplicações de Radiações ionizantes e não-ionizantes para a Saúde; Aplicação de técnicas experimentais e teóricas da física médica; Engenharia Ortopédica de Reabilitação; Física Médica; Biofísica.
+
+TECNOLOGIAS EM ENGENHARIA BIOMÉDICA
+
+Tópicos de pesquisa : Sistemas microprocessados; Desenvolvimento de Software; Desenvolvimento de Hardware; Aquisição e processamento de dados e sinais fisiológicos; Modelagem matemática e análise de controle de sistemas biológicos e fisiológicos; Desenvolvimento de Sistemas de Uso Terapêutico; Estimulação de tecidos; Desenvolvimento e análise de dispositivos e sistemas microeletrônicos; Projeto de circuitos integrados de baixo consumo de potência para sistemas implantáveis; Desenvolvimento de ferramentas de apoio ao diagnóstico; Projeto, Implementação e Análise de Sistemas Embarcados com base em circuitos reprogramáveis (FPGA); Projetos de Sistemas Híbridos; Projetos de Sistemas Aplicados a Ambientes com Interação Humana – Automotivos, Aeroespaciais, Aeronáuticos; Desenvolvimento de Soluções para Construção de Modelos Completos e Integrados, Identificação e Controle; Robótica; Microeletrônica; Desenvolvimento de Sensores; Processamento de Sinais, Imagens e Vídeos; Formação de Imagens Médicas – Tomografia, Ressonância Magnética.

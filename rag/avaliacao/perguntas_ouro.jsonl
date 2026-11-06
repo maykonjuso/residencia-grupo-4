@@ -1,0 +1,32 @@
+{"id": "Q01", "eixo": "ru", "pergunta": "Quanto custa o almoço no RU para um estudante de graduação sem auxílio?", "docs_esperados": ["F01", "F04"]}
+{"id": "Q02", "eixo": "ru", "pergunta": "Qual o horário do jantar no RU do campus Gama?", "docs_esperados": ["F03", "F02"]}
+{"id": "Q03", "eixo": "ru", "pergunta": "O RU do Gama abre aos sábados?", "docs_esperados": ["F03", "F02"]}
+{"id": "Q04", "eixo": "ru", "pergunta": "Quem tem direito a refeição gratuita no RU?", "docs_esperados": ["F01", "F04", "F06", "F07"]}
+{"id": "Q05", "eixo": "ru", "pergunta": "Quanto paga no RU o estudante que entrou por cota de escola pública e não é baixa renda?", "docs_esperados": ["F01", "F04"]}
+{"id": "Q06", "eixo": "ru", "pergunta": "Como emito a carteirinha digital para entrar no RU?", "docs_esperados": ["F05"]}
+{"id": "Q07", "eixo": "ru", "pergunta": "Quais formas de pagamento são aceitas nos caixas do RU?", "docs_esperados": ["F05", "F04"]}
+{"id": "Q08", "eixo": "ru", "pergunta": "Qual o prato vegetariano estrito do almoço de quarta-feira, 11/11/2026, no RU Gama?", "docs_esperados": ["F09"]}
+{"id": "Q09", "eixo": "ru", "pergunta": "O que tem no café da manhã do RU Gama na segunda-feira 09/11/2026?", "docs_esperados": ["F09"]}
+{"id": "Q10", "eixo": "ru", "pergunta": "Quais são os critérios para participar do edital de Auxílio Alimentação de 2026?", "docs_esperados": ["F07"]}
+{"id": "Q11", "eixo": "ru", "pergunta": "O que a lei do PNAES diz sobre alimentação dos estudantes?", "docs_esperados": ["F10"]}
+{"id": "Q12", "eixo": "apoio", "pergunta": "Por que devo evitar alimentos ultraprocessados?", "docs_esperados": ["F11"]}
+{"id": "Q13", "eixo": "apoio", "pergunta": "O que significa a frase 'pode conter' no rótulo de alergênicos?", "docs_esperados": ["F12"]}
+{"id": "Q14", "eixo": "fluxo", "pergunta": "Quais são os pré-requisitos de Testes de Software?", "docs_esperados": ["F16"]}
+{"id": "Q15", "eixo": "fluxo", "pergunta": "Quantos créditos tem o curso de Engenharia de Software para quem entrou depois de 2024/2?", "docs_esperados": ["F15", "F16"]}
+{"id": "Q16", "eixo": "fluxo", "pergunta": "Quais disciplinas do 4º semestre de Engenharia de Software?", "docs_esperados": ["F16"]}
+{"id": "Q17", "eixo": "fluxo", "pergunta": "Quantos créditos mínimos tem o curso de Engenharia de Energia?", "docs_esperados": ["F22", "F23"]}
+{"id": "Q18", "eixo": "fluxo", "pergunta": "Em que semestre se cursa Termodinâmica 1 na Engenharia de Energia?", "docs_esperados": ["F23"]}
+{"id": "Q19", "eixo": "fluxo", "pergunta": "Quais disciplinas tem o primeiro nível da Engenharia Automotiva para ingressantes a partir de 2027?", "docs_esperados": ["F19"]}
+{"id": "Q20", "eixo": "fluxo", "pergunta": "Quantas horas o aluno de Engenharia Automotiva precisa integralizar?", "docs_esperados": ["F19", "F20"]}
+{"id": "Q21", "eixo": "fluxo", "pergunta": "Qual o tempo mínimo e máximo de integralização da Engenharia Aeroespacial?", "docs_esperados": ["F17", "F18"]}
+{"id": "Q22", "eixo": "fluxo", "pergunta": "Quais são os perfis de formação da Engenharia Eletrônica?", "docs_esperados": ["F21"]}
+{"id": "Q23", "eixo": "fluxo", "pergunta": "Como funciona a escolha de curso no ingresso da FCTE pela ABI Engenharia?", "docs_esperados": ["F14"]}
+{"id": "Q24", "eixo": "fluxo", "pergunta": "Quantas vagas a FCTE oferta para Engenharia de Software?", "docs_esperados": ["F14"]}
+{"id": "Q25", "eixo": "fluxo", "pergunta": "Aluno de graduação pode cursar disciplina do mestrado em Engenharia Biomédica?", "docs_esperados": ["F26"]}
+{"id": "Q26", "eixo": "fluxo", "pergunta": "Quais são as linhas de pesquisa do PPGEB?", "docs_esperados": ["F27", "F28"]}
+{"id": "Q27", "eixo": "fluxo", "pergunta": "Quando é o último dia de aulas do semestre 2026.2?", "docs_esperados": ["F29"]}
+{"id": "Q28", "eixo": "fluxo", "pergunta": "Qual o período de matrícula do 2026.2?", "docs_esperados": ["F29"]}
+{"id": "Q29", "eixo": "fluxo", "pergunta": "Qual a diferença entre trancamento de disciplina e trancamento justificado?", "docs_esperados": ["F31"]}
+{"id": "Q30", "eixo": "fluxo", "pergunta": "Calouro pode alterar a própria matrícula no SIGAA?", "docs_esperados": ["F33", "F32"]}
+{"id": "Q31", "eixo": "fluxo", "pergunta": "Como faço a matrícula on-line no SIGAA?", "docs_esperados": ["F32", "F34", "F29"]}
+{"id": "Q32", "eixo": "fluxo", "pergunta": "Quais são os órgãos colegiados da Faculdade do Gama segundo o regimento interno?", "docs_esperados": ["F36"]}

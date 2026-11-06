@@ -1,0 +1,475 @@
+## ESTRUTURA CURRICULAR
+
+Nas áreas de atuação da Engenharia Automotiva encontram-se os últimos e mais interessantes avanços tecnológicos da sociedade moderna. Os estudos sobre carros autônomos, veículos híbridos e elétricos, novos combustíveis, conectividade, inteligência artificial, redução de emissões e processos inovadores de manufatura, entre outros temas, criam oportunidades para que os engenheiros automotivos trabalhem na vanguarda destas tecnologias, influenciando o transporte, o meio ambiente, o comercio e as políticas públicas.
+
+O aluno do curso de Engenharia Automotiva deverá integralizar 3.930 horas em, no mínimo, 10 semestres. Dessas horas, 3.450 horas estão distribuídas nos componentes obrigatórios do curso, tanto do ciclo básico quanto do profissionalizante, incluindo 210 h de Estágio Curricular, 150 h de Trabalho de Conclusão (TCC1 e TCC2) e 405 h de extensão, algumas horas incluídas nas disciplinas, outras em atividades autônomas. O restante das horas pode ser integralizado nas disciplinas optativas propostas nas trilhas de aprendizagem, além de componentes eletivos e atividades complementares.
+
+ESTRUTURA CURRICULAR DO CURSO
+
+Os componentes curriculares do curso podem ser distribuídos entre os ciclos básico, profissionalizante e específico. As disciplinas do ciclo básico abrangem conteúdos das áreas de Matemática, Física, Química, Informática, Expressão Gráfica, Fenômenos de Transporte, Mecânica dos Sólidos, Ciência e Tecnologia dos Materiais e Eletricidade Aplicada, entre outros, definidos nas DCN de Engenharia. O ciclo profissionalizante contribui com conteúdos que definem a identidade profissional do egresso e é complementado pelo ciclo de conteúdos específico que é constituído por aprofundamentos dos conteúdos profissionalizantes.
+
+# Para ingressantes a partir de 2027
+
+Disciplinas Obrigatórias do Curso
+
+-
+
+1º Nível
+
+-
+
+2º Nível
+
+-
+
+3º Nível
+
+-
+
+4º Nível
+
+-
+
+5º Nível
+
+-
+
+6º Nível
+
+-
+
+7º Nível
+
+-
+
+8º Nível
+
+-
+
+9º Nível
+
+-
+
+10º Nível
+
+## 1º Nível
+
+- CÁLCULO 1
+
+- ALGORITMOS E PROGRAMAÇÃO DE COMPUTADORES
+
+- DESENHO INDUSTRIAL ASSISTIDO POR COMPUTADOR
+
+- ENGENHARIA E AMBIENTE
+
+- INTRODUÇÃO À ENGENHARIA
+
+## 2º Nível
+
+- CÁLCULO 2
+
+- FÍSICA 1
+
+- FÍSICA 1 EXPERIMENTAL
+
+- PROBABILIDADE E ESTATÍSTICA APLICADA À ENGENHARIA
+
+- INTRODUÇÃO À ALGEBRA LINEAR
+
+## 3º Nível
+
+- CÁLCULO 3
+
+- FÍSICA 2
+
+- LABORATÓRIO DE ONDULATÓRIA E FÍSICA TÉRMICA PARA A ENGENHARIA
+
+- MECÂNICA DOS SÓLIDOS 1 PARA ENGENHARIA
+
+- MÉTODOS NUMÉRICOS PARA ENGENHARIA
+
+- QUÍMICA GERAL TEÓRICA
+
+- QUÍMICA GERAL EXPERIMENTAL
+
+- ATIVIDADE DE EXTENSÃO 3
+
+## 4º Nível
+
+- TEORIA DE CIRCUITOS ELETRÔNICOS 1
+
+- PRÁTICA DE CIRCUITOS ELETRÔNICOS 1
+
+- FENÔMENOS DE TRANSPORTE
+
+- MECÂNICA DOS SÓLIDOS 2 PARA ENGENHARIA
+
+- ENGENHARIA ECONÔMICA
+
+- TEORIA DE MATERIAIS DE CONSTRUÇÃO
+
+- LABORATÓRIO DE MATERIAIS DE CONSTRUÇÃO
+
+- HUMANIDADES E CIDADANIA
+
+## 5º Nível
+
+- TEORIA DE ELETRICIDADE APLICADA
+
+- LABORATÓRIO DE ELETRICIDADE APLICADA
+
+- SINAIS E SISTEMAS PARA ENGENHARIA
+
+- PROJETO DE ELEMENTOS AUTOMOTIVOS
+
+- GESTÃO DA PRODUÇÃO E QUALIDADE
+
+- TECNOLOGIAS DE FABRICAÇÃO 1
+
+- ENGENHARIA DE SEGURANÇA DO TRABALHO
+
+## 6º Nível
+
+- ELETRÔNICA VEICULAR
+
+- ACÚSTICA E VIBRAÇÕES VEICULARES
+
+- EQUIPAMENTOS TERMOFLUIDOS AUTOMOTIVOS
+
+- PROJETO DE SISTEMAS AUTOMOTIVOS
+
+- DINÂMICA DOS MECANISMOS
+
+- MATERIAIS COMPOSTOS E PLÁSTICOS
+
+- INTRODUÇÃO AO DESIGN E CONCEPÇÃO DE VEÍCULOS
+
+## 7º Nível
+
+- FUNDAMENTOS DE VEÍCULOS ELÉTRICOS
+
+- DINÂMICA DE VEÍCULOS
+
+- ARQUITETURA DE MOTORES DE COMBUSTÃO INTERNA
+
+- PROJETO INTEGRADOR DE ENGENHARIA 1
+
+- MÉTODOS EXPERIMENTAIS PARA ENGENHARIA
+
+- TECNOLOGIAS DE FABRICAÇÃO 2
+
+## 8º Nível
+
+- SISTEMAS DE CONTROLE AUTOMOTIVO
+
+- FUNDAMENTOS DE SOFTWARE AUTOMOTIVO
+
+- ENGENHARIA DE MANUTENÇÃO
+
+- PROJETO INTEGRADOR DE ENGENHARIA 2
+
+- ATIVIDADE DE EXTENSÃO 2
+
+## 9º Nível
+
+- TRABALHO DE CONCLUSÃO DE CURSO 1
+
+- ESTÁGIO SUPERVISIONADO
+
+- ATIVIDADE DE EXTENSÃO 1
+
+## 10º Nível
+
+- TRABALHO DE CONCLUSÃO DE CURSO 2
+
+- ATIVIDADE DE EXTENSÃO 4
+
+Componentes Optativos do Curso
+
+- ANÁLISE DINÂMICA MÉTODOS DOS ELEMENTOS FINITOS
+
+- ANÁLISE ESTRUTURAL MÉTODO DOS ELEMENTOS FINITOS
+
+- ENGENHARIA DE SOFTWARE AUTOMOTIVO
+
+- ERGONOMIA DO PRODUTO
+
+- GESTÃO DA PRODUÇÃO AUTOMOTIVA
+
+- INTEGRAÇÃO E TESTE
+
+- INTRODUÇÃO À MECÂNICA DA FRATURA
+
+- INTRODUÇÃO AO DESGASTE
+
+- LÍNGUA DE SINAIS BRASILEIRA – BÁSICO
+
+- MÉTODOS E TÉCNICAS DA ESCRITA CIENTÍFICA
+
+- PROJETO DE VEÍCULOS
+
+- PROJETO DE ESTRUTURAS DE VEÍCULOS
+
+- SENSORES E TRANSDUTORES
+
+- SISTEMAS AUTOMOTIVOS
+
+- SISTEMAS HIDRÁULICOS E PNEUMÁTICOS
+
+- TÓPICOS ESPECIAIS EM ENGENHARIA AUTOMOTIVA
+
+- ATIVIDADE COMPLEMENTAR – 15 h
+
+- ATIVIDADE COMPLEMENTAR – 30 h
+
+- ATIVIDADE COMPLEMENTAR – 45 h
+
+- ATIVIDADE COMPLEMENTAR – 60 h
+
+- ATIVIDADE COMPLEMENTAR – 90 h
+
+- ATIVIDADE COMPLEMENTAR – 120 h
+
+Para conhecer mais sobre o curso e sua estrutura curricular, disciplinas obrigatórias, optativas e os pré-requisitos leia o Projeto Pedagógico.
+Para conhecer as disciplinas do curso e como influenciam no perfil do egresso, veja as Trilhas de Aprendizagem .
+
+# Para ingressantes entre 2018 e 2026
+
+Disciplinas Obrigatórias do Curso , outras estruturas podem ser verificadas no SIGAA público da UnB
+
+-
+
+1º Nível
+
+-
+
+2º Nível
+
+-
+
+3º Nível
+
+-
+
+4º Nível
+
+-
+
+5º Nível
+
+-
+
+6º Nível
+
+-
+
+7º Nível
+
+-
+
+8º Nível
+
+-
+
+9º Nível
+
+-
+
+10º Nível
+
+## 1º Nível
+
+- CÁLCULO 1
+
+- ALGORITMOS E PROGRAMAÇÃO DE COMPUTADORES
+
+- DESENHO INDUSTRIAL ASSISTIDO POR COMPUTADOR
+
+- ENGENHARIA E AMBIENTE
+
+- INTRODUÇÃO À ENGENHARIA
+
+## 2º Nível
+
+- CÁLCULO 2
+
+- FÍSICA 1
+
+- FÍSICA 1 EXPERIMENTAL
+
+- PROBABILIDADE E ESTATÍSTICA APLICADO A ENGENHARIA
+
+- INTRODUÇÃO À ALGEBRA LINEAR
+
+## 3º Nível
+
+- CÁLCULO 3
+
+- ONDULATÓRIA E FÍSICA TÉRMICA PARA A ENGENHARIA
+
+- LABORATÓRIO DE ONDULATÓRIA E FÍSICA TÉRMICA PARA A ENGENHARIA
+
+- MECÂNICA DOS SÓLIDOS 1 PARA ENGENHARIA
+
+- INTRODUÇÃO AO DESIGN E CONCEPÇÃO DE VEÍCULOS
+
+- MÉTODOS NUMÉRICOS PARA ENGENHARIA
+
+- QUÍMICA GERAL TEORICA
+
+- QUÍMICA GERAL EXPERIMENTAL
+
+## 4º Nível
+
+- TEORIA DE CIRCUITOS ELETRÔNICOS 1
+
+- PRÁTICA DE CIRCUITOS ELETRÔNICOS 1
+
+- FENÔMENOS DE TRANSPORTE
+
+- ENGENHARIA ECONÔMICA
+
+- TEORIA DE MATERIAIS DE CONSTRUÇÃO
+
+- LABORATÓRIO DE MATERIAIS DE CONSTRUÇÃO
+
+- HUMANIDADES E CIDADANIA
+
+- PROJETO INTEGRADOR DE ENGENHARIA 1
+
+- ERGONOMIA DO PRODUTO
+
+## 5º Nível
+
+- TEORIA DE ELETRICIDADE APLICADA
+
+- LABORATÓRIO DE ELETRICIDADE APLICADA
+
+- SINAIS E SISTEMAS PARA ENGENHARIA
+
+- MECÂNICA DOS SÓLIDOS 2 PARA ENGENHARIA
+
+- GESTÃO DA PRODUÇÃO E QUALIDADE
+
+- TECNOLOGIAS DE FABRICAÇÃO 1
+
+- MÉTODOS EXPERIMENTAIS PARA ENGENHARIA
+
+## 6º Nível
+
+- DINÂMICA DOS MECANISMOS
+
+- TECNOLOGIAS DE FABRICAÇÃO 2
+
+- EQUIPAMENTOS TERMOFLUIDOS AUTOMOTIVOS
+
+- ENGENHARIA DE SEGURANÇA DO TRABALHO
+
+- PROJETO DE ELEMENTOS AUTOMOTIVOS
+
+- MATERIAIS COMPOSTOS E PLÁSTICOS
+
+## 7º Nível
+
+- DINÂMICA DE VEÍCULOS
+
+- ARQUITETURA DE MOTORES DE COMBUSTÃO INTERNA
+
+- ELETRÔNICA VEICULAR
+
+- PROJETO DE SISTEMAS AUTOMOTIVOS
+
+- ACÚSTICA E VIBRAÇÕES VEICULARES
+
+## 8º Nível
+
+- ANÁLISE ESTRUTURAL MÉTODO DOS ELEMENTOS FINITOS
+
+- PROJETO INTEGRADOR DE ENGENHARIA 2
+
+- PROJETO DE ESTRUTURAS DE VEÍCULOS
+
+## 9º Nível
+
+- TRABALHO DE CONCLUSÃO DE CURSO 1
+
+- ESTÁGIO SUPERVISIONADO
+
+## 10º Nível
+
+- TRABALHO DE CONCLUSÃO DE CURSO 2
+
+Componentes Optativos do Curso
+
+- ANÁLISE DINÂMICA MÉTODOS DOS ELEMENTOS FINITOS
+
+- CÁLCULO PARA ENGENHARIA 1
+
+- CÁLCULO PARA ENGENHARIA 2
+
+- CÁLCULO PARA ENGENHARIA 3
+
+- COMPUTAÇÃO BÁSICA
+
+- CONFIABILIDADE DE COMPONENTES E SISTEMAS
+
+- DINÂMICA MULTICORPOS VEICULAR
+
+- ELETRICIDADE APLICADA
+
+- ENGENHARIA DE MANUTENÇÃO
+
+- ENGENHARIA DE SOFTWARE AUTOMOTIVO
+
+- EQUAÇÕES DIFERENCIAIS ORDINÁRIAS
+
+- FUNDAMENTOS DE PROPULSÃO ELÉTRICA VEICULAR
+
+- GESTÃO DA PRODUÇÃO AUTOMOTIVA
+
+- INTEGRAÇÃO E TESTE
+
+- INTRODUÇÃO À CIÊNCIA DA COMPUTAÇÃO
+
+- INTRODUÇÃO À GEOMETRIA ANALÍTICA
+
+- INTRODUÇÃO À MECÂNICA DA FRATURA
+
+- INTRODUÇÃO AO DESGASTE
+
+- LÍNGUA DE SINAIS BRASILEIRA – BÁSICO
+
+- MATERIAIS DE CONSTRUÇÃO DE ENGENHARIA
+
+- MÉTODOS E TÉCNICAS DA ESCRITA CIENTÍFICA
+
+- PROCESSOS DE FABRICAÇÃO
+
+- PROJETO DE VEÍCULOS
+
+- QUÍMICA GERAL
+
+- SENSORES E TRANSDUTORES
+
+- SISTEMAS DE CONTROLE AUTOMOTIVO
+
+- SISTEMAS AUTOMOTIVOS
+
+- SISTEMAS HIDRÁULICOS E PNEUMÁTICOS
+
+- TÓPICOS ESPECIAIS EM ENGENHARIA AUTOMOTIVA
+
+- ATIVIDADE COMPLEMENTAR – 15 h
+
+- ATIVIDADE COMPLEMENTAR – 30 h
+
+- ATIVIDADE COMPLEMENTAR – 45 h
+
+- ATIVIDADE COMPLEMENTAR – 60 h
+
+- ATIVIDADE COMPLEMENTAR – 90 h
+
+- ATIVIDADE COMPLEMENTAR – 120 h
+
+Para conhecer mais sobre o curso e sua estrutura curricular, disciplinas obrigatórias, optativas e os pré-requisitos, leia o Projeto Pedagógico.
+Para conhecer as disciplinas do curso e como influenciam no perfil do egresso, veja as Trilhas de Aprendizagem .
