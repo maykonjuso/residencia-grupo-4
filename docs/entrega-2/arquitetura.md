@@ -1,6 +1,6 @@
 # Diagrama de arquitetura
 
-O RUmo tem duas fases: a **ingestão** (offline, monta a base e o índice) e a **consulta** (online, responde a cada pergunta). O [diagrama animado](../visao/como-funciona.md) mostra as duas, passo a passo, e a conversa com o Grupo 09.
+O RUmo tem duas fases: a **ingestão** (offline, monta a base e o índice) e a **consulta** (online, responde a cada pergunta). O [diagrama animado](../visao/como-funciona.md) mostra as duas, passo a passo, e a conversa com o Grupo 09. A [esteira animada do RAG](../visao/esteira-rag.md) mostra por dentro o caminho de um documento até o banco vetorial e de uma pergunta até a resposta.
 
 ## Visão de componentes
 

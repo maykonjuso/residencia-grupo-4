@@ -6,7 +6,7 @@ hide:
 
 # Como o RUmo funciona e conversa com o Grupo 09
 
-Escolha um cenário e clique em **▶ Reproduzir** (ou avance com **▶|**). Cada passo destaca quem está agindo e mostra os dados trocados.
+Escolha um cenário e clique em **▶ Reproduzir** (ou avance com **▶|**). Cada passo destaca quem está agindo e mostra os dados trocados. Para ver o RAG por dentro (chunking, embeddings, banco vetorial e o caminho de uma pergunta), veja a [esteira do RAG](esteira-rag.md).
 
 <div class="rm-fluxo" data-fluxo data-cenario="1"></div>
 
