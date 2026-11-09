@@ -496,10 +496,12 @@
   function dimensionarSvgMermaid(svg, container, maxW, maxH, escalaMax) {
     if (!svg) return;
     var vb = svg.viewBox && svg.viewBox.baseVal;
-    var w = (vb && vb.width) ? vb.width : (parseFloat(svg.getAttribute("width")) || 420);
-    var h = (vb && vb.height) ? vb.height : (parseFloat(svg.getAttribute("height")) || 320);
-    var escala = Math.min(escalaMax || 0.68, (maxW || 420) / w, (maxH || 320) / h);
-    var largura = Math.max(150, Math.round(w * escala));
+    var w = (vb && vb.width) ? vb.width : (parseFloat(svg.getAttribute("width")) || 600);
+    var h = (vb && vb.height) ? vb.height : (parseFloat(svg.getAttribute("height")) || 450);
+    var tetoW = maxW || 640;
+    var tetoH = maxH || 550;
+    var escala = Math.min(escalaMax || 0.95, tetoW / w, tetoH / h);
+    var largura = Math.max(260, Math.round(w * escala));
     svg.style.setProperty("width", largura + "px", "important");
     svg.style.setProperty("max-width", "100%", "important");
     svg.style.setProperty("height", "auto", "important");
@@ -508,7 +510,7 @@
     if (container) {
       container.style.setProperty("width", "fit-content", "important");
       container.style.setProperty("max-width", "100%", "important");
-      container.style.setProperty("margin", "0.5rem auto", "important");
+      container.style.setProperty("margin", "0.8rem auto", "important");
     }
   }
 
@@ -516,7 +518,7 @@
     document.querySelectorAll(".mermaid").forEach(function (m) {
       var raiz = m.shadowRoot || m;
       var svg = raiz.querySelector("svg");
-      if (svg) dimensionarSvgMermaid(svg, m, 420, 320, 0.68);
+      if (svg) dimensionarSvgMermaid(svg, m, 680, 580, 0.98);
     });
   }
 
@@ -643,7 +645,7 @@
             return mmd.render("rm_pdf_m_" + Date.now() + "_" + idx, codigo).then(function (res) {
               var div = el("div", "mermaid rm-mermaid-pdf", res.svg);
               bloco.replaceWith(div);
-              dimensionarSvgMermaid(div.querySelector("svg"), div, 380, 270, 0.62);
+              dimensionarSvgMermaid(div.querySelector("svg"), div, 640, 520, 0.95);
             }).catch(function () {});
           }));
         }).then(function () { return wrap; });

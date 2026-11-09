@@ -101,9 +101,9 @@ code, kbd, pre { font-family: var(--rm-mono); }
   background: var(--rm-superficie);
   border: 1px solid var(--rm-borda);
   border-radius: var(--rm-raio);
-  padding: 0.5rem 0.75rem;
-  max-width: 340px;
-  margin: 0.6rem auto;
+  padding: 0.8rem 1rem;
+  max-width: 680px;
+  margin: 1rem auto;
   text-align: center;
 }
 .md-typeset .admonition, .md-typeset details { border-radius: var(--rm-raio); }
@@ -801,9 +801,10 @@ li.rm-on .rm-est__trilha i { width: var(--w); }
   }
   .md-typeset table:not([class]) tr { break-inside: avoid; page-break-inside: avoid; }
   .md-typeset .mermaid {
-    max-width: 380px !important;
-    margin: 0.5rem auto !important;
-    padding: 0.4rem 0.6rem !important;
+    max-width: 640px !important;
+    width: auto !important;
+    margin: 0.8rem auto !important;
+    padding: 0.6rem 0.8rem !important;
     break-inside: avoid;
     page-break-inside: avoid;
     box-shadow: none !important;
