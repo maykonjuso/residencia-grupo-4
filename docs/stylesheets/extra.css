@@ -471,8 +471,8 @@ code, kbd, pre { font-family: var(--rm-mono); }
 /* palco */
 .rm-est__palco { display: grid; grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr); min-height: 23rem; }
 .rm-est__visual { padding: 1rem; display: flex; flex-direction: column; justify-content: center; gap: 0.7rem; min-width: 0; font-size: 0.74rem; }
-.rm-est__visual.rm-entrar { animation: rm-entrar 0.45s ease both; }
-@keyframes rm-entrar { from { opacity: 0; transform: translateY(8px); } }
+.rm-est__visual.rm-entrar { animation: rm-est-entrar 0.45s ease both; }
+@keyframes rm-est-entrar { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 .rm-est__info { padding: 1rem 1.1rem; border-left: 1px solid var(--rm-borda); background: rgba(0, 63, 122, 0.03); font-size: 0.76rem; }
 .rm-est__fase { font: 700 0.62rem var(--rm-mono); text-transform: uppercase; letter-spacing: 0.04em; color: var(--unb-verde); }
 .rm-est.rm-consulta .rm-est__fase { color: #c26528; }
