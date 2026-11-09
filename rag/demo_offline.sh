@@ -35,8 +35,24 @@ if curl -s -m 5 "${OLLAMA_URL:-http://localhost:11434}/api/tags" >/dev/null; the
 echo "══════════════════════════"
 echo
 
-if [ "$#" -eq 0 ]; then
-  exec $PY -m rumo_rag demo --backend ollama
-else
+if [ "$#" -ne 0 ]; then
   exec $PY -m rumo_rag perguntar --backend ollama "$@"
 fi
+
+# Sem pergunta: roda as 8 perguntas da demonstração.
+# Atenção: `rumo_rag demo` sobrescreve avaliacao/demo_respostas.json, que é a evidência
+# versionada da entrega (gerada com o Qwen2.5-7B na GPU) e alimenta a GitPage.
+# Por padrão preservamos esse arquivo; para regravá-lo de propósito:
+#   RUMO_GRAVAR_EVIDENCIAS=1 ./demo_offline.sh
+if [ "${RUMO_GRAVAR_EVIDENCIAS:-0}" = "1" ]; then
+  echo "⚠ regravando avaliacao/demo_respostas.json com o backend $MODELO_OLLAMA"
+  exec $PY -m rumo_rag demo --backend ollama
+fi
+
+EVIDENCIA=avaliacao/demo_respostas.json
+RESGUARDO=$(mktemp -t demo_respostas)
+cp "$EVIDENCIA" "$RESGUARDO"
+trap 'mv -f "$RESGUARDO" "$EVIDENCIA"' EXIT INT TERM
+$PY -m rumo_rag demo --backend ollama
+echo
+echo "(evidência versionada em $EVIDENCIA preservada)"
