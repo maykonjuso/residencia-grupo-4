@@ -8,6 +8,8 @@ O foco da Entrega 2 é a **qualidade da recuperação**. Para medir isso com obj
 
 ## Métricas
 
+A avaliação da recuperação utiliza três métricas complementares, definidas na **Tabela 1**.
+
 | Métrica | O que mede |
 |---|---|
 | **Hit@1** | O 1º trecho recuperado é de um documento certo? |
@@ -17,6 +19,8 @@ O foco da Entrega 2 é a **qualidade da recuperação**. Para medir isso com obj
 <p class="legenda">Tabela 1. Métricas. Acerto medido no nível do documento.</p>
 
 ## Resultados
+
+A **Tabela 2** compara o desempenho das cinco configurações testadas frente às metas estipuladas na Entrega 1, e a **Figura 1** destaca a evolução do MRR entre cada abordagem.
 
 | Configuração | Hit@1 | Hit@5 | MRR |
 |---|---|---|---|
@@ -46,6 +50,8 @@ xychart-beta
 - **Por que a configuração final é a híbrida**, se a vetorial pura teve MRR maior: as 32 perguntas quase não têm datas e códigos, e é exatamente nesses identificadores que o vetor falha (ver o [caso do cardápio](embeddings.md#por-que-manter-a-busca-hibrida-se-o-bge-m3-sozinho-foi-melhor-na-media)). O grupo preferiu perder 0,025 de MRR médio a errar o dia do cardápio. Na Semana 3, o conjunto vai ganhar perguntas com datas e códigos, para medir essa troca.
 
 ## Onde a busca híbrida não pôs o documento certo em 1º
+
+Das 32 perguntas avaliadas, apenas duas não trouxeram o documento esperado na primeira posição na configuração híbrida final; o diagnóstico de ambas está detalhado na **Tabela 3**.
 
 | Pergunta | Esperado | Veio em 1º | Posição do certo | Causa provável |
 |---|---|---|---|---|

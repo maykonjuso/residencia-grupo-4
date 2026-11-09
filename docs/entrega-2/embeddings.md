@@ -4,6 +4,8 @@
 
 ## Requisitos para o modelo
 
+A escolha do modelo de representação vetorial partiu das restrições de idioma, privacidade, hardware e tamanho de contexto listadas na **Tabela 1**.
+
 | Requisito | Por quê |
 |---|---|
 | Bom em português | Toda a base e todas as perguntas são em português |
@@ -15,7 +17,7 @@
 
 ## Comparação feita
 
-Os dois modelos indexaram **os mesmos chunks** (mesma versão da base) e responderam às **mesmas 32 perguntas** com documento esperado.
+Os dois modelos indexaram **os mesmos chunks** (mesma versão da base) e responderam às **mesmas 32 perguntas** com documento esperado, com os resultados comparados na **Tabela 2**.
 
 | Modelo | Dimensões | Busca | Hit@1 | Hit@5 | MRR | Indexação |
 |---|---|---|---|---|---|---|

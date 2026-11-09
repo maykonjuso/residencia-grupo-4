@@ -1,3 +1,5 @@
+A **Tabela 2** sintetiza o desempenho da recuperação, da geração e da verificação de fontes nas oito consultas da demonstração (`D1` a `D8`).
+
 | ID | Pergunta (resumo) | Recuperação | Resposta | Fontes | Avaliação |
 |---|---|---|---|---|---|
 | D1 | Preço do almoço (graduação) | Chunk do Grupo II em 1º | R$ 4,50, Grupo II | F04 | <span class="selo selo--verde">correta</span> |
@@ -18,6 +20,8 @@
 - Os casos que dependem de identificador exato (data em D2, código em D4) acertaram graças à busca híbrida.
 
 **O que ainda falha e como vamos tratar**
+
+A **Tabela 3** detalha as limitações identificadas nas consultas parciais (`D3` e `D8`) e as correções previstas para a próxima etapa.
 
 | Caso | Problema | Correção planejada |
 |---|---|---|
