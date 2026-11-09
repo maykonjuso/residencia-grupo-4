@@ -57,6 +57,7 @@ extra_css:
 extra_javascript:
   - javascripts/demo-dados.js
   - javascripts/rumo.js
+  - javascripts/esteira.js
 
 watch:
   - overrides
@@ -108,6 +109,7 @@ nav:
   - Visão do projeto:
       - visao/index.md
       - Como funciona (animado): visao/como-funciona.md
+      - Esteira do RAG (animada): visao/esteira-rag.md
       - Big Idea e Essential Question: visao/essential-question.md
       - Divisão com o Grupo 09: visao/escopo-grupos.md
       - Roadmap das 7 semanas: visao/roadmap.md
