@@ -1,5 +1,24 @@
 # Escopo e requisitos
 
+## MVP
+
+> **O RUmo responde, em português, perguntas sobre o RU e o fluxo de disciplinas da FCTE
+> usando só documentos oficiais da UnB, cita documento, página e URL em cada resposta, e
+> recusa o que não está na base.**
+
+Isso é RF01 a RF05, e foi **atingido na Entrega 2**: o protótipo responde pela linha de
+comando, com fontes, e recusa fora da base. O que vem depois são os entregáveis das Semanas
+4 a 7, não o mínimo do produto.
+
+!!! warning "Prioridade de produto × obrigação de cronograma"
+    As duas coisas não coincidem, e misturá-las confunde a leitura. A coluna **Prioridade**
+    abaixo é o valor para quem usa o RUmo. A coluna **Obrigatório** marca o que o Challenge 2
+    exige em determinada semana, independente disso.
+
+    O caso claro é o RF07 (foto do prato): para o estudante que quer saber o preço do almoço
+    é um extra — `could` por valor de produto. Como entregável da Semana 5, é obrigatório.
+    O grupo entrega os dois conjuntos; a tabela só deixa de fingir que são a mesma coisa.
+
 ## Dentro do escopo
 
 - **RU do campus Gama:** preços por grupo de usuário, gratuidade e Auxílio Alimentação, horários, como acessar (carteirinha digital), cardápio semanal (café, almoço e jantar), regimento.
@@ -15,18 +34,18 @@
 
 ## Requisitos funcionais
 
-| ID | Requisito | Entrega |
-|---|---|---|
-| RF01 | Responder perguntas em português sobre o RU e o fluxo de disciplinas | 2 |
-| RF02 | Recuperar os trechos mais relevantes de uma base de documentos oficiais | 2 |
-| RF03 | Citar, em cada resposta, os trechos usados (documento, página e URL) | 2 |
-| RF04 | Responder "Não encontrei essa informação nas fontes da base" quando não houver base | 2 |
-| RF05 | Ler cardápios em PDF como tabela, separando refeição e dia | 2 |
-| RF06 | Expor `POST /perguntar` no contrato comum com o Grupo 09 | 4 |
-| RF07 | Receber foto de prato ou cardápio e identificar os componentes | 5 |
-| RF08 | Atualizar o cardápio semanal automaticamente | 6 |
+| ID | Requisito | Prioridade | Entrega | Obrigatório | Situação |
+|---|---|---|---|---|---|
+| RF01 | Responder perguntas em português sobre o RU e o fluxo de disciplinas | must · MVP | 2 | Semana 2 | entregue |
+| RF02 | Recuperar os trechos mais relevantes de uma base de documentos oficiais | must · MVP | 2 | Semana 2 | entregue |
+| RF03 | Citar, em cada resposta, os trechos usados (documento, página e URL) | must · MVP | 2 | Semana 2 | entregue |
+| RF04 | Responder "Não encontrei essa informação nas fontes da base" quando não houver base | must · MVP | 2 | Semana 2 | entregue |
+| RF05 | Ler cardápios em PDF como tabela, separando refeição e dia | must · MVP | 2 | Semana 2 | entregue |
+| RF06 | Expor `POST /perguntar` no contrato comum com o Grupo 09 | should | 4 | Semana 4 | planejado |
+| RF07 | Receber foto de prato ou cardápio e identificar os componentes | could | 5 | Semana 5 | planejado |
+| RF08 | Atualizar o cardápio semanal automaticamente | should | 6 | Semana 6 | planejado |
 
-<p class="legenda">Tabela 1. Requisitos funcionais e entrega prevista.</p>
+<p class="legenda">Tabela 1. Requisitos funcionais. <strong>Prioridade</strong> é o valor para quem usa o RUmo; <strong>Obrigatório</strong> é a semana em que o Challenge 2 cobra o entregável. RF01–RF05 formam o MVP.</p>
 
 ## Requisitos não funcionais
 
@@ -39,4 +58,10 @@
 | RNF05 | Identidade visual da UnB, comum com o Grupo 09 | Esta GitPage |
 | RNF06 | Não coletar dados pessoais (LGPD) | Sem login e sem registro de identidade |
 
-<p class="legenda">Tabela 2. Requisitos não funcionais.</p>
+<p class="legenda">Tabela 2. Requisitos não funcionais. RNF01, RNF02 e RNF06 são <strong>must</strong>: sustentam as regras de negócio do RUmo (só fonte oficial, nada sai para serviço externo, nenhum dado pessoal). Os outros três são <strong>should</strong>.</p>
+
+??? abstract "Histórico de revisão"
+
+    | Data | Versão | Descrição | Autor |
+    | :---: | :---: | --- | --- |
+    | 09/11/2026 | 1.1 | Declara o MVP, prioriza RF01–RF08 e separa valor de produto de obrigação de cronograma | Maykon Soares |
