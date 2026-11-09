@@ -24,9 +24,11 @@ python -m rumo_rag demo
 
 ## Checklist (Definition of Done)
 
-- [ ] O comportamento está implementado e demonstrável
-- [ ] RNF aplicáveis respeitados
-- [ ] Se mexeu em chunking, embedding, fusão ou prompt: rodou a avaliação (`python -m rumo_rag avaliar`) e atualizou as tabelas de métricas no mesmo PR
-- [ ] A documentação reflete fielmente o código (sem divergências de números ou fontes)
-- [ ] Diagramas e tabelas conferidos no MkDocs (`mkdocs serve` / `mkdocs build --strict`)
-- [ ] Revisão de pelo menos um colega de equipe
+- [ ] O comportamento do requisito está implementado e **demonstrável**
+- [ ] A resposta cita a fonte de cada afirmação e recusa o que não está na base (RF03, RF04)
+- [ ] RNF01–RNF06 aplicáveis respeitados
+- [ ] Mexi em chunking, embedding, fusão ou prompt? Rodei `python -m rumo_rag avaliar` e
+      atualizei as tabelas de `docs/entrega-2/avaliacao.md` **neste PR**
+- [ ] Documentação afetada atualizada, com linha nova no histórico de revisão da página
+- [ ] `mkdocs build --strict` passa
+- [ ] Revisado por pelo menos um colega

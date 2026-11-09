@@ -33,6 +33,12 @@ A **Tabela 2** compara o desempenho das cinco configurações testadas frente à
 
 <p class="legenda">Tabela 2. Recuperação nas 32 perguntas. Todas as configurações vetoriais e híbridas passaram das metas.</p>
 
+!!! note "Fonte dos números desta página"
+    Todos os valores das Tabelas 2 e 3 são lidos de `rag/avaliacao/resultado_recuperacao_bge-m3.json`
+    e `..._multilingual-e5-base.json`, gerados por `python -m rumo_rag avaliar`. As 32 perguntas
+    estão em `rag/avaliacao/perguntas_ouro.jsonl`. Mexeu em chunking, embedding ou fusão? Rode a
+    avaliação de novo e atualize estas tabelas no mesmo PR.
+
 ```mermaid
 xychart-beta
     title "MRR por configuração (32 perguntas)"
