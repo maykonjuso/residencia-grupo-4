@@ -4,6 +4,15 @@
 (function () {
   "use strict";
 
+  var origShadow = Element.prototype.attachShadow;
+  if (origShadow && !origShadow.__rm) {
+    Element.prototype.attachShadow = function (init) {
+      var cfg = (this && this.classList && this.classList.contains("mermaid")) ? { mode: "open" } : init;
+      return origShadow.call(this, cfg);
+    };
+    Element.prototype.attachShadow.__rm = true;
+  }
+
   var reduzido = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   document.documentElement.classList.add("rm-js");
   var DEMO = window.RUMO_DEMO || [];
@@ -484,13 +493,201 @@
     window.addEventListener("scroll", atualizar, { passive: true }); atualizar();
   }
 
+  function dimensionarSvgMermaid(svg, container, maxW, maxH, escalaMax) {
+    if (!svg) return;
+    var vb = svg.viewBox && svg.viewBox.baseVal;
+    var w = (vb && vb.width) ? vb.width : (parseFloat(svg.getAttribute("width")) || 420);
+    var h = (vb && vb.height) ? vb.height : (parseFloat(svg.getAttribute("height")) || 320);
+    var escala = Math.min(escalaMax || 0.68, (maxW || 420) / w, (maxH || 320) / h);
+    var largura = Math.max(150, Math.round(w * escala));
+    svg.style.setProperty("width", largura + "px", "important");
+    svg.style.setProperty("max-width", "100%", "important");
+    svg.style.setProperty("height", "auto", "important");
+    svg.style.setProperty("display", "block", "important");
+    svg.style.setProperty("margin", "0 auto", "important");
+    if (container) {
+      container.style.setProperty("width", "fit-content", "important");
+      container.style.setProperty("max-width", "100%", "important");
+      container.style.setProperty("margin", "0.5rem auto", "important");
+    }
+  }
+
+  function ajustarMermaid() {
+    document.querySelectorAll(".mermaid").forEach(function (m) {
+      var raiz = m.shadowRoot || m;
+      var svg = raiz.querySelector("svg");
+      if (svg) dimensionarSvgMermaid(svg, m, 420, 320, 0.68);
+    });
+  }
+
+  function rotularAbas(escopo) {
+    (escopo || document).querySelectorAll(".tabbed-set").forEach(function (set) {
+      var labels = set.querySelectorAll(":scope > .tabbed-labels > label");
+      var blocks = set.querySelectorAll(":scope > .tabbed-content > .tabbed-block");
+      blocks.forEach(function (bloco, i) {
+        if (labels[i]) bloco.setAttribute("data-titulo", labels[i].textContent.trim());
+      });
+    });
+  }
+
+  function carregarMermaid() {
+    if (window.mermaid && typeof window.mermaid.render === "function") return Promise.resolve(window.mermaid);
+    return new Promise(function (resolve, reject) {
+      var s = document.createElement("script");
+      s.src = "https://unpkg.com/mermaid@11/dist/mermaid.min.js";
+      s.onload = function () {
+        window.mermaid.initialize({ startOnLoad: false, theme: "default" });
+        resolve(window.mermaid);
+      };
+      s.onerror = reject;
+      document.head.appendChild(s);
+    });
+  }
+
+  function montarBotaoPdfEntrega() {
+    var antigo = document.getElementById("rm-impressao-entrega");
+    if (antigo) antigo.remove();
+    var path = window.location.pathname;
+    if (!/\/entrega-\d+\/?$/.test(path)) return;
+    var artigo = document.querySelector(".md-content__inner.md-typeset");
+    if (!artigo || artigo.querySelector(".rm-barra-exportar")) return;
+    var h1 = artigo.querySelector("h1");
+    if (!h1) return;
+
+    var barra = el("div", "rm-barra-exportar",
+      '<button type="button" class="md-button md-button--primary rm-btn-imprimir">📄 Gerar PDF consolidado desta Entrega (A4)</button>' +
+      '<span class="rm-dica-pdf">Reúne automaticamente todas as páginas desta entrega em um único documento A4 para impressão/PDF.</span>'
+    );
+    artigo.appendChild(barra);
+    var btn = barra.querySelector("button");
+
+    btn.addEventListener("click", function () {
+      var basePath = path.endsWith("/") ? path : path + "/";
+      var vistos = {};
+      var paginas = [];
+      document.querySelectorAll(".md-nav a.md-nav__link[href]").forEach(function (a) {
+        var u = new URL(a.href, window.location.href);
+        if (u.origin === window.location.origin && u.pathname.indexOf(basePath) === 0 && u.pathname !== basePath) {
+          var slug = u.pathname.slice(basePath.length).replace(/\/$/, "");
+          if (slug && !vistos[slug]) {
+            vistos[slug] = true;
+            paginas.push({ url: u.href, slug: slug, titulo: a.textContent.trim() });
+          }
+        }
+      });
+
+      var textoOriginal = btn.textContent;
+      btn.disabled = true;
+      btn.textContent = "⏳ Montando documento A4 (" + (paginas.length + 1) + " páginas)…";
+
+      var container = document.getElementById("rm-impressao-entrega");
+      var promessa = container ? Promise.resolve(container) : Promise.all(paginas.map(function (p) {
+        return fetch(p.url).then(function (r) { return r.text(); }).then(function (html) {
+          var doc = new DOMParser().parseFromString(html, "text/html");
+          var art = doc.querySelector(".md-content__inner");
+          return { slug: p.slug, titulo: p.titulo, html: art ? art.innerHTML : "" };
+        });
+      })).then(function (secoes) {
+        var wrap = el("div", "rm-impressao-entrega md-typeset");
+        wrap.id = "rm-impressao-entrega";
+        var tituloEntrega = h1.textContent.replace("¶", "").trim();
+        var sumarioItens = '<li><a href="#rm-sec-index">Visão geral (' + esc(tituloEntrega) + ')</a></li>' +
+          secoes.map(function (s) { return '<li><a href="#rm-sec-' + esc(s.slug) + '">' + esc(s.titulo) + '</a></li>'; }).join("");
+
+        var capa = '<div class="rm-capa-pdf">' +
+          '<p class="rm-capa-pdf__topo">Universidade de Brasília (UnB) · Faculdade de Ciências e Tecnologias em Engenharia (FCTE · Campus Gama)<br>Residência em Inteligência Artificial · Turma 1 · Challenge 2 (Big Idea: Qualidade de Vida)</p>' +
+          '<h1 class="rm-capa-pdf__titulo">RUmo · Grupo 04</h1>' +
+          '<p class="rm-capa-pdf__subtitulo">' + esc(tituloEntrega) + '</p>' +
+          '<div class="rm-capa-pdf__meta">' +
+          '<div><strong>Integrantes (Grupo 04):</strong> Gabriel Maciel Araújo, Gabriella Oliveira de Souza Dias, Keila Alves Ferreira, Kyara Esteves de Sousa e Maykon Júnio dos Santos Soares</div>' +
+          '<div><strong>Mentor:</strong> Jefferson Viana Fonseca Abreu</div>' +
+          '<div><strong>Fonte:</strong> Consolidado gerado automaticamente a partir da GitPage oficial</div>' +
+          '</div></div>' +
+          '<div class="rm-sumario-pdf"><h2>Sumário</h2><ol>' + sumarioItens + '</ol></div>';
+
+        var cloneIndex = artigo.cloneNode(true);
+        var bExp = cloneIndex.querySelector(".rm-barra-exportar");
+        if (bExp) bExp.remove();
+
+        var htmlTotal = capa + '<section class="rm-secao-pdf" id="rm-sec-index">' + cloneIndex.innerHTML + '</section>';
+        secoes.forEach(function (s) {
+          htmlTotal += '<section class="rm-secao-pdf" id="rm-sec-' + esc(s.slug) + '">' + s.html + '</section>';
+        });
+        wrap.innerHTML = htmlTotal;
+
+        // Remove widgets interativos e títulos/seções vazias no papel
+        wrap.querySelectorAll(".headerlink, #rm-explorador, .rm-explorador, .rm-fluxo, .rm-est, .md-source-file").forEach(function (n) { n.remove(); });
+        wrap.querySelectorAll("h2, h3").forEach(function (h) {
+          var txt = h.textContent.trim().toLowerCase();
+          if (txt.indexOf("explorar de forma interativa") !== -1 || txt.indexOf("interativo") !== -1) {
+            h.remove();
+          }
+        });
+        rotularAbas(wrap);
+        wrap.querySelectorAll("details").forEach(function (d) { d.open = true; });
+
+        wrap.querySelectorAll("a[href]").forEach(function (a) {
+          var href = a.getAttribute("href") || "";
+          var m = href.match(/^(?:\.\.\/|\.\/)?([a-z0-9-]+?)(?:\.md|\/)?(?:#.*)?$/i);
+          if (m && vistos[m[1].toLowerCase()]) a.setAttribute("href", "#rm-sec-" + m[1].toLowerCase());
+        });
+
+        document.body.appendChild(wrap);
+        var mermaids = Array.from(wrap.querySelectorAll("pre.mermaid, div.mermaid"));
+        if (!mermaids.length) return wrap;
+        return carregarMermaid().then(function (mmd) {
+          mmd.initialize({ startOnLoad: false, theme: "default" });
+          return Promise.all(mermaids.map(function (bloco, idx) {
+            var codigo = (bloco.querySelector("code") || bloco).textContent.trim();
+            if (!codigo) return Promise.resolve();
+            return mmd.render("rm_pdf_m_" + Date.now() + "_" + idx, codigo).then(function (res) {
+              var div = el("div", "mermaid rm-mermaid-pdf", res.svg);
+              bloco.replaceWith(div);
+              dimensionarSvgMermaid(div.querySelector("svg"), div, 380, 270, 0.62);
+            }).catch(function () {});
+          }));
+        }).then(function () { return wrap; });
+      });
+
+      promessa.then(function () {
+        btn.disabled = false;
+        btn.textContent = textoOriginal;
+        document.body.classList.add("rm-imprimindo-entrega");
+        setTimeout(function () { window.print(); }, 150);
+      }).catch(function () {
+        btn.disabled = false;
+        btn.textContent = textoOriginal;
+      });
+    });
+  }
+
+  function prepararImpressao() {
+    ajustarMermaid();
+    setTimeout(ajustarMermaid, 400);
+    setTimeout(ajustarMermaid, 1200);
+    setTimeout(ajustarMermaid, 2500);
+    if ("MutationObserver" in window && !window.__rmMermaidObs) {
+      window.__rmMermaidObs = new MutationObserver(ajustarMermaid);
+      window.__rmMermaidObs.observe(document.body, { childList: true, subtree: true });
+    }
+    rotularAbas(document);
+    montarBotaoPdfEntrega();
+  }
+  window.addEventListener("beforeprint", function () {
+    ajustarMermaid();
+    document.querySelectorAll("details").forEach(function (d) { d.open = true; });
+  });
+  window.addEventListener("afterprint", function () {
+    document.body.classList.remove("rm-imprimindo-entrega");
+  });
+
   function iniciar() {
     alvoDigitado = document.querySelector(".rm-digitando");
     montarFundo(document.querySelector(".rm-hero__painel"));
     montarDemoHero(document.querySelector(".rm-demo"));
     montarExplorador(document.getElementById("rm-explorador"));
     document.querySelectorAll(".rm-fluxo[data-fluxo]").forEach(montarFluxo);
-    revelar(); cartoes(); progressoLeitura();
+    revelar(); cartoes(); progressoLeitura(); prepararImpressao();
   }
   if (typeof document$ !== "undefined") document$.subscribe(iniciar);  // navegação instantânea do Material
   else if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", iniciar);
