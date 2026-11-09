@@ -71,6 +71,22 @@ plugins:
       buttons: "macos"
       prompt_literal_start:
         - "$"
+  # print-site precisa ser o ÚLTIMO plugin. Gera site/print_page/ com todas as
+  # páginas numa só, para imprimir em PDF e entregar no Teams (issue #21).
+  - print-site:
+      add_to_navigation: false
+      print_page_title: "RUmo · Assistente com RAG para o RU e o fluxo da FCTE"
+      add_cover_page: true
+      add_table_of_contents: true
+      toc_title: "Sumário"
+      toc_depth: 3
+      add_full_urls: true
+      enumerate_headings: false
+      add_print_site_banner: false
+      # index.md usa o template home.html e não tem h1 de propósito; sem esta
+      # exclusão o plugin emite aviso e o `build --strict` do CI falha.
+      exclude:
+        - index.md
 
 markdown_extensions:
   - abbr

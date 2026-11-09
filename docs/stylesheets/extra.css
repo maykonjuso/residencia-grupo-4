@@ -660,3 +660,60 @@ li.rm-on .rm-est__trilha i { width: var(--w); }
   .rm-est__trilha { display: none; }
   .md-typeset .rm-est__modo small { display: none; }
 }
+
+/* ===========================================================================
+   Impressão — usado pela página única do print-site (issue #21).
+   Sem estas regras o PDF entregue no Teams perde conteúdo: as abas mostram
+   apenas a primeira, os blocos "???" saem fechados e os diagramas animados
+   viram caixas vazias.
+   =========================================================================== */
+@media print {
+
+  /* Abas (pymdownx.tabbed): mostrar TODAS as abas, não só a selecionada.
+     Afeta o contrato POST /perguntar, que tem Requisição, Resposta e Sem base
+     — conteúdo avaliado, que no padrão sairia só com a primeira. */
+  .tabbed-content { display: block !important; }
+  .tabbed-block { display: block !important; page-break-inside: avoid; }
+  .tabbed-labels { font-weight: 600; }
+  .tabbed-labels > label { display: inline-block; margin-right: 1.2em; }
+
+  /* Blocos recolhíveis (???): imprimir abertos. */
+  details { display: block !important; }
+  details > summary { font-weight: 600; }
+  details:not([open]) > *:not(summary) { display: block !important; }
+
+  /* Diagramas animados: dependem de JS e não existem no papel.
+     Em vez de caixa vazia, imprimir um ponteiro para a versão online. */
+  [data-fluxo] > *, [data-esteira] > * { display: none !important; }
+  [data-fluxo], [data-esteira] {
+    min-height: 0 !important;
+    height: auto !important;
+    border: 1px dashed #999;
+    padding: 0.9rem 1rem;
+    background: none !important;
+  }
+  [data-fluxo]::before, [data-esteira]::before {
+    content: "Diagrama interativo — veja em https://maykonjuso.github.io/residencia-grupo-4/";
+    display: block;
+    font-style: italic;
+    font-size: 0.85em;
+  }
+
+  /* Tabelas largas (catálogo das 36 fontes) não devem estourar a página. */
+  .md-typeset table:not([class]) {
+    font-size: 0.72rem;
+    width: 100% !important;
+    table-layout: auto;
+  }
+  .md-typeset table:not([class]) td,
+  .md-typeset table:not([class]) th {
+    word-break: break-word;
+    padding: 0.25em 0.4em;
+  }
+
+  /* Legendas de figura e tabela ficam junto do que descrevem. */
+  .legenda { page-break-before: avoid; font-size: 0.8em; }
+
+  /* Não quebrar bloco de código no meio. */
+  .md-typeset pre, .highlight { page-break-inside: avoid; }
+}
