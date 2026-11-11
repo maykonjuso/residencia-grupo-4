@@ -31,6 +31,8 @@
 
 ## Resultado em números
 
+A **Tabela 1** sintetiza as principais decisões técnicas, volumes e métricas alcançados no protótipo desta entrega.
+
 | | |
 |---|---|
 | Documentos-fonte | 36 |

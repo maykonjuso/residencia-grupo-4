@@ -28,6 +28,8 @@ python exportar_demo.py           # atualiza os dados da demonstração na GitPa
 
 ## Opções
 
+Os parâmetros de linha de comando e as variáveis de ambiente disponíveis para ajustar a busca e o backend de geração estão listados na **Tabela 1**.
+
 | Opção | Exemplo | Efeito |
 |---|---|---|
 | `--eixo` | `--eixo ru` | Busca só no eixo RU, fluxo ou apoio |

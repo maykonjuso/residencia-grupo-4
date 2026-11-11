@@ -4,10 +4,12 @@ O RUmo tem duas fases: a **ingestão** (offline, monta a base e o índice) e a *
 
 ## Visão de componentes
 
+A **Figura 1** apresenta o fluxo completo entre os módulos de ingestão (offline) e de consulta (online), destacando em azul os artefatos de dados e configuração e, em verde, as etapas de processamento.
+
 ```mermaid
 flowchart TB
     subgraph OFF [Fase 1 · Ingestão · offline]
-        direction LR
+        direction TB
         CAT[/catalogo.yaml<br/>36 fontes/] --> DL[Coleta<br/>baixar originais]
         DL --> EX[Extração e limpeza<br/>pypdf · pdfplumber · HTML]
         CUR[/Transcrições curadas<br/>F16 · F23/] --> EX
@@ -17,7 +19,7 @@ flowchart TB
         EM --> VDB[(ChromaDB<br/>HNSW · cosseno)]
     end
     subgraph ON [Fase 2 · Consulta · online]
-        direction LR
+        direction TB
         Q([Pergunta]) --> DEC[Decomposição<br/>subperguntas]
         DEC --> RV[Busca vetorial]
         DEC --> RL[Busca BM25]
@@ -29,8 +31,7 @@ flowchart TB
         LLM --> CIT[Extração das citações n<br/>→ doc · página · URL]
         CIT --> R([Resposta + fontes])
     end
-    VDB -.-> RV
-    BM -.-> RL
+    OFF -.->|"ChromaDB + BM25"| ON
     classDef dado fill:#e6eef7,stroke:#003f7a,color:#00223f
     classDef proc fill:#e6f4ec,stroke:#008137,color:#00381a
     class CAT,CUR,BM,VDB,PR dado
@@ -40,6 +41,8 @@ flowchart TB
 <p class="legenda">Figura 1. Componentes do RUmo. Azul: dados e configuração. Verde: processamento.</p>
 
 ## Componentes
+
+A **Tabela 1** relaciona cada componente da arquitetura à tecnologia adotada e ao respectivo arquivo no repositório.
 
 | Componente | Tecnologia | Arquivo |
 |---|---|---|
@@ -63,6 +66,8 @@ flowchart TB
 4. Depois da geração, o código lê os `[n]` da resposta e devolve a **lista das fontes citadas**, com URL. Citação de número inexistente é descartada.
 
 ## Por que um LLM local
+
+A decisão de executar o modelo de linguagem localmente, em vez de depender de uma API externa por padrão, apoia-se nos critérios comparados na **Tabela 2**.
 
 | Critério | Local (Qwen2.5-7B, 4 bits) | API paga |
 |---|---|---|

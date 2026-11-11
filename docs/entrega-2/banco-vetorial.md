@@ -6,6 +6,8 @@ Código: [`rag/rumo_rag/indice.py`](https://github.com/maykonjuso/residencia-gru
 
 ## Por que ChromaDB
 
+A **Tabela 1** resume as alternativas de armazenamento vetorial avaliadas pelo grupo e os critérios que levaram à escolha do ChromaDB.
+
 | Opção | Prós | Contras | Decisão |
 |---|---|---|---|
 | **ChromaDB** | Embutido em Python, sem servidor; persistente em disco; filtro por metadado; HNSW | Menos recursos de escala que os bancos-servidor | **Escolhido**: ideal para protótipo e para rodar em qualquer notebook do grupo |
@@ -45,8 +47,10 @@ Os metadados servem a três coisas:
 
 ## Busca híbrida
 
+O processo de consulta combina a recuperação densa (ChromaDB) e a lexical (BM25), tratando perguntas simples e compostas conforme o fluxo da **Figura 1**.
+
 ```mermaid
-flowchart LR
+flowchart TD
     Q[Pergunta] --> D{Composta?}
     D -- sim --> S[Subperguntas<br/>+ frase de contexto]
     D -- não --> V
@@ -63,6 +67,8 @@ flowchart LR
 **Reciprocal Rank Fusion:** cada chunk recebe `Σ peso / (60 + posição)` em cada ranking em que aparece. A fusão usa a posição, não a nota bruta, então combina rankings com escalas diferentes (cosseno × BM25) sem calibração.
 
 ## Tamanho e desempenho
+
+A **Tabela 2** sintetiza a dimensão do índice persistido e a latência média observada nas consultas.
 
 | | |
 |---|---|

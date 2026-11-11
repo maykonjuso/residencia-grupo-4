@@ -5,7 +5,7 @@ hide:
 
 # Demonstração
 
-O enunciado pede quatro evidências. Todas aparecem em cada consulta abaixo, que são **saídas reais** do protótipo (`python -m rumo_rag demo`, gravadas em `rag/avaliacao/demo_respostas.json`).
+O enunciado pede quatro evidências, mapeadas na **Tabela 1**. Todas aparecem em cada consulta abaixo, que são **saídas reais** do protótipo (`python -m rumo_rag demo`, gravadas em `rag/avaliacao/demo_respostas.json`).
 
 | Evidência pedida | Onde aparece em cada consulta |
 |---|---|

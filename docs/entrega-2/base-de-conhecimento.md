@@ -4,6 +4,8 @@ A base tem **36 documentos-fonte**, todos públicos e de órgãos oficiais, cole
 
 ## Critérios de curadoria
 
+A seleção e validação das fontes seguiram os seis critérios descritos na **Tabela 1**.
+
 | Critério | Regra aplicada |
 |---|---|
 | Autoridade | Só fontes oficiais: UnB (CAD, CEPE, DAC, DDS, DRU, SAA, DEG, FCTE, coordenações), Presidência da República, Ministério da Saúde, ANVISA |
@@ -17,11 +19,13 @@ A base tem **36 documentos-fonte**, todos públicos e de órgãos oficiais, cole
 
 ## Documentos da base
 
-Tabela gerada automaticamente a partir do catálogo e do índice (`rag/gerar_tabela_fontes.py`).
+As tabelas a seguir (divididas nos eixos **RU**, **Fluxo de disciplinas** e **Apoio**) são geradas automaticamente a partir do catálogo e do índice (`rag/gerar_tabela_fontes.py`).
 
 --8<-- "includes/tabela_fontes.md"
 
 ## Cobertura por curso do campus Gama
+
+A **Tabela 2** detalha como os documentos cobrem os cinco cursos de graduação da FCTE, o mestrado em Engenharia Biomédica (PPGEB) e as normas acadêmicas comuns.
 
 | Curso | Nível | Fontes na base | Grade disponível como |
 |---|---|---|---|
@@ -36,6 +40,8 @@ Tabela gerada automaticamente a partir do catálogo e do índice (`rag/gerar_tab
 <p class="legenda">Tabela 2. Cobertura das engenharias e do PPGEB.</p>
 
 ## Documentos avaliados e não incluídos
+
+Durante o levantamento, alguns materiais foram analisados e descartados desta versão da base pelos motivos registrados na **Tabela 3**.
 
 | Documento | Motivo |
 |---|---|

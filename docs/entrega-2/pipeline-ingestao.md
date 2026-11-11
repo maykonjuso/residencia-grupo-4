@@ -10,6 +10,8 @@ Na RTX 4060, a ingestão completa leva de 45 a 125 s, conforme o modelo de embed
 
 ## Etapas
 
+O pipeline é dividido em oito passos sequenciais, cujo encadeamento é ilustrado na **Figura 1** e detalhado, com suas respectivas entradas e saídas em disco, na **Tabela 1**.
+
 ```mermaid
 flowchart LR
     A[1 · Catálogo<br/>catalogo.yaml] --> B[2 · Coleta<br/>dados/originais/]

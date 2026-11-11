@@ -1,19 +1,25 @@
 ## O que muda
 
-<!-- Uma ou duas frases: o que este PR faz e por quê. -->
-
+<!-- Descreva resumidamente o que foi feito e quais issues este PR resolve. -->
+Resolve #
 Closes #
 
-## Requisito
+## Requisito / Épico
 
-<!-- RF/RNF de docs/entrega-1/escopo.md, ou "tarefa de processo". -->
+<!-- Indique o épico ou requisito relacionado (ex: Épico #2, RF01, RNF03). -->
+
+## O que tem em cada arquivo
+
+<!-- Liste os arquivos alterados com uma breve explicação do motivo. -->
+- **`arquivo`** — descrição da mudança
 
 ## Como verificar
 
-<!-- Comando ou passo que o revisor roda para ver funcionando. -->
-
+<!-- Comandos ou passos para reproduzir e testar localmente. -->
 ```bash
-
+mkdocs build --strict
+# ou
+python -m rumo_rag demo
 ```
 
 ## Checklist (Definition of Done)

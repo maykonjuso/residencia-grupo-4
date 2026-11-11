@@ -16,6 +16,8 @@ Esses são exatamente os dados que o estudante pergunta. Por isso o corte respei
 
 ## Algoritmo
 
+O processo de divisão em blocos lógicos, controle de tamanho e adição de cabeçalho segue o fluxo ilustrado na **Figura 1**.
+
 ```mermaid
 flowchart TD
     T[Texto limpo do documento] --> B[Quebra em blocos lógicos:<br/>página, título #, Art. N,<br/>item 2.1, CAPÍTULO, parágrafo]
@@ -34,6 +36,8 @@ flowchart TD
 <p class="legenda">Figura 1. Fluxo do chunking.</p>
 
 ## Parâmetros
+
+Os limites de tamanho e as regras de corte utilizados no pipeline estão resumidos na **Tabela 1**.
 
 | Parâmetro | Valor | Justificativa |
 |---|---|---|
@@ -103,6 +107,8 @@ Cardápio do RU Gama (FCTE) — Almoço de quarta-feira, 11/11/2026:
 Isso resolve chunks que, sozinhos, não dizem de onde são. A página do PPGEB sobre aluno de graduação, por exemplo, nunca escreve "Engenharia Biomédica"; com o cabeçalho, a pergunta "posso cursar disciplina do mestrado em Engenharia Biomédica?" passou a recuperar a página certa em 1º lugar.
 
 ## Resultado
+
+A **Tabela 2** apresenta o volume total e a distribuição de tamanho dos chunks gerados após a aplicação dessas regras sobre os 36 documentos.
 
 | | |
 |---|---|
