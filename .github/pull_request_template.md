@@ -1,34 +1,49 @@
 ## O que muda
 
-<!-- Descreva resumidamente o que foi feito e quais issues este PR resolve. -->
-Resolve #
+<!-- Descreva resumidamente o que foi feito neste Pull Request e quais issues ele resolve. -->
 Closes #
+Resolve #
 
-## Requisito / Épico
+## Tipo de mudança
 
-<!-- Indique o épico ou requisito relacionado (ex: Épico #2, RF01, RNF03). -->
+- [ ] `feat`: Nova funcionalidade no código do protótipo
+- [ ] `fix`: Correção de bug ou falha de recuperação/geração
+- [ ] `docs`: Criação ou atualização de documentação na GitPage
+- [ ] `chore`: Infraestrutura, dependências, scripts ou automação
+
+## Requisito, Épico e Componente
+
+- **Épico / Requisito:** <!-- Ex: Épico #2, RF03, RNF01 -->
+- **Componente afetado:** <!-- Base de conhecimento | Recuperação | Geração | Avaliação | GitPage e integração -->
+- **Tamanho estimado:** <!-- P | M | G -->
 
 ## O que tem em cada arquivo
 
 <!-- Liste os arquivos alterados com uma breve explicação do motivo. -->
-- **`arquivo`** — descrição da mudança
+- **`caminho/do/arquivo`** — descrição da mudança
 
-## Como verificar
+## Como verificar localmente
 
 <!-- Comandos ou passos para reproduzir e testar localmente. -->
 ```bash
+# Validação da documentação:
 mkdocs build --strict
-# ou
+
+# Validação do protótipo RAG (se aplicável):
+cd rag
 python -m rumo_rag demo
+python -m rumo_rag avaliar
 ```
 
-## Checklist (Definition of Done)
+## Checklist (Definition of Done - DoD)
 
-- [ ] O comportamento do requisito está implementado e **demonstrável**
-- [ ] A resposta cita a fonte de cada afirmação e recusa o que não está na base (RF03, RF04)
-- [ ] RNF01–RNF06 aplicáveis respeitados
-- [ ] Mexi em chunking, embedding, fusão ou prompt? Rodei `python -m rumo_rag avaliar` e
-      atualizei as tabelas de `docs/entrega-2/avaliacao.md` **neste PR**
-- [ ] Documentação afetada atualizada, com linha nova no histórico de revisão da página
-- [ ] `mkdocs build --strict` passa
-- [ ] Revisado por pelo menos um colega
+- [ ] **Requisito demonstrável:** O comportamento do requisito está implementado, testado e demonstrável.
+- [ ] **Regras inegociáveis do RUmo:**
+  - [ ] Toda afirmação cita documento oficial, página e URL (RF03 / RNF01).
+  - [ ] Fora da base, recusa expressamente sem inventar informações (RF04).
+  - [ ] Nenhum dado sensível/pessoal coletado e sem chamadas externas não autorizadas (RNF02, RNF06).
+- [ ] **Aferição de métricas:** Mexeu em chunking, embedding, fusão ou prompt? Rodou `python -m rumo_rag avaliar` e atualizou as tabelas de métricas na documentação neste mesmo PR.
+- [ ] **Documentação e integridade:**
+  - [ ] Páginas afetadas atualizadas com nova linha no histórico de revisão.
+  - [ ] `mkdocs build --strict` executa com sucesso (sem warnings ou links quebrados).
+- [ ] **Revisão por pares:** Revisado e aprovado por pelo menos um colega (preferencialmente o responsável pelo componente afetado).
