@@ -37,13 +37,11 @@ python -m rumo_rag avaliar
 
 ## Checklist (Definition of Done - DoD)
 
-- [ ] **Requisito demonstrável:** O comportamento do requisito está implementado, testado e demonstrável.
-- [ ] **Regras inegociáveis do RUmo:**
-  - [ ] Toda afirmação cita documento oficial, página e URL (RF03 / RNF01).
-  - [ ] Fora da base, recusa expressamente sem inventar informações (RF04).
-  - [ ] Nenhum dado sensível/pessoal coletado e sem chamadas externas não autorizadas (RNF02, RNF06).
-- [ ] **Aferição de métricas:** Mexeu em chunking, embedding, fusão ou prompt? Rodou `python -m rumo_rag avaliar` e atualizou as tabelas de métricas na documentação neste mesmo PR.
-- [ ] **Documentação e integridade:**
-  - [ ] Páginas afetadas atualizadas com nova linha no histórico de revisão.
-  - [ ] `mkdocs build --strict` executa com sucesso (sem warnings ou links quebrados).
-- [ ] **Revisão por pares:** Revisado e aprovado por pelo menos um colega (preferencialmente o responsável pelo componente afetado).
+- [ ] O comportamento do requisito foi implementado e **demonstrado rodando**
+- [ ] Código em PR, aprovado por pelo menos um colega
+- [ ] **A resposta cita a fonte de cada afirmação e recusa o que não está na base** (RF03, RF04)
+- [ ] RNF01–RNF06 aplicáveis respeitados
+- [ ] Mexeu em chunking, embedding ou prompt? A avaliação foi rodada de novo e a linha de base atualizada **no mesmo PR**
+- [ ] Documentação afetada atualizada na GitPage, com linha nova no histórico da página
+- [ ] `mkdocs build --strict` passa localmente sem erros ou avisos
+- [ ] Apresentada na Sprint Review de sexta-feira e aceita pelo PO

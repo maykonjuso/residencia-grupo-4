@@ -3,6 +3,7 @@
 GitPage do **Grupo 04** da Residência em IA (RES IA ELD UnB, Turma 1), Challenge 2, Big Idea *Qualidade de Vida*. Grupo da sala 313 da FCTE/UnB, campus Gama.
 
 - [Processo de trabalho](processo.md)
+- [Critérios DoR e DoD](dor-dod.md)
 - [Equipe](equipe.md)
 - [Declaração de uso de IA](uso-de-ia.md)
 - [Referências](referencias.md)

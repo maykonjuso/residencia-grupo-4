@@ -150,7 +150,7 @@ Para garantir integridade técnica e evitar quebras no protótipo ou na GitPage,
 
 ### Critérios de Aceite para Merge (Definition of Done)
 
-Para assegurar conformidade contínua, o repositório conta com um template padronizado de Pull Request (`.github/pull_request_template.md`), preenchido automaticamente na abertura de qualquer PR. Um Pull Request só pode ser integrado à branch `main` se atender integralmente ao checklist de Definition of Done (DoD):
+Para assegurar conformidade contínua, o repositório conta com um template padronizado de Pull Request (`.github/pull_request_template.md`), preenchido automaticamente na abertura de qualquer PR. Os critérios formais e a matriz completa de entrada e saída estão formalizados em [Critérios de Prontidão (DoR) e Conclusão (DoD)](dor-dod.md). Um Pull Request só pode ser integrado à branch `main` se atender integralmente ao checklist de Definition of Done (DoD):
 
 1. [x] **Requisito demonstrável:** O comportamento do RF/RNF correspondente está implementado e validado.
 2. [x] **Regras inegociáveis de negócio:** Citação explícita de fonte oficial (RF03) e recusa clara caso a resposta não esteja na base (RF04). Nenhum envio não autorizado de dados externos (RNF02).
