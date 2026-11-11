@@ -29,13 +29,15 @@ def tokenizar(t: str) -> list[str]:
     return toks
 
 
-GATILHOS = r"(?:quanto|quanta|qual|quais|como|quando|onde|que horas|até que|o que|posso|preciso)"
+GATILHOS = r"(?:quanto|quanta|quantos|quantas|qual|quais|quem|como|quando|onde|que horas|até que|em que|de que|o que|posso|preciso)"
 
 
 def decompor(pergunta: str) -> list[str]:
     """Quebra perguntas compostas ("Quanto pago ... e até que horas ...?") em subperguntas."""
     partes = re.split(rf"[?!.;]\s+|,?\s+e\s+(?={GATILHOS}\b)", pergunta.strip(), flags=re.I)
-    partes = [p.strip(" ?.") for p in partes if len(tokenizar(p)) >= 3]
+    # Exige ao menos 2 termos informativos ou frase com ao menos 3 palavras para não descartar
+    # subperguntas legítimas cujas palavras viraram stopwords (ex: "e como solicito?")
+    partes = [p.strip(" ?.") for p in partes if len(tokenizar(p)) >= 2 or len(p.split()) >= 3]
     # frases sem palavra interrogativa ("Sou estudante de graduação...") são contexto:
     # vão junto de cada subpergunta em vez de virar uma busca própria
     eh_pergunta = re.compile(rf"\b{GATILHOS}\b", re.I)
