@@ -132,6 +132,11 @@ nav:
       - Demonstração: entrega-2/demonstracao.md
       - Avaliação da recuperação: entrega-2/avaliacao.md
       - Como executar: entrega-2/como-executar.md
+  - Entrega 3:
+      - entrega-3/index.md
+      - LLM vs. RAG: entrega-3/llm-vs-rag.md
+      - Fidelidade e alucinação: entrega-3/fidelidade-e-alucinacao.md
+      - Reescrita de consulta: entrega-3/reescrita-de-consulta.md
   - Sobre:
       - sobre/index.md
       - Processo de trabalho: sobre/processo.md

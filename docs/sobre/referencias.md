@@ -20,6 +20,9 @@
 - MALKOV, Y.; YASHUNIN, D. *Efficient and robust approximate nearest neighbor search using Hierarchical Navigable Small World graphs*. 2018. (HNSW, usado pelo ChromaDB)
 - QWEN TEAM. *Qwen2.5 Technical Report*. 2024.
 - DETTMERS, T. et al. *QLoRA: Efficient Finetuning of Quantized LLMs*. 2023. (quantização NF4, usada na inferência em 4 bits)
+- ES, S. et al. *RAGAS: Automated Evaluation of Retrieval Augmented Generation*. EACL, 2024. (Tríade do RAG e fidelidade factual)
+- GAO, T. et al. *Enabling Large Language Models to Generate Text with Citations* (ALCE Benchmark). EMNLP, 2023. (precisão e cobertura de citações `[n]`)
+- CHEN, J. et al. *Benchmarking Large Language Models in Retrieval-Augmented Generation* (RGB Benchmark). AAAI, 2024. (rejeição negativa e integração de informação multi-hop)
 
 ## Fontes da base de conhecimento
 
