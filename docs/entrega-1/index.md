@@ -12,6 +12,7 @@
 | Problema | [Problema](problema.md) |
 | Stakeholders (partes interessadas) | [Partes interessadas](stakeholders.md) |
 | Escopo e requisitos | [Escopo e requisitos](escopo.md) |
+| Regras de negócio (Semana 3, issue #9) | [Regras de negócio](regras-de-negocio.md) |
 | Riscos | [Riscos e limitações](riscos.md) |
 | Métricas | [Métricas de sucesso](metricas.md) |
 | Big Idea, Essential Question e Challenge | [Visão do projeto](../visao/essential-question.md) |
