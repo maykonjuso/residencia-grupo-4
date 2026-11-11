@@ -6,6 +6,7 @@ A **Tabela 1** apresenta o histórico de versões e entregas publicadas nesta Gi
 |---|---|---|---|
 | 1.0 | Semana 1 | [Entrega 1 · Definições do projeto](../entrega-1/index.md) | Problema, partes interessadas, escopo, riscos, métricas, Essential Question e divisão com o Grupo 09 |
 | 2.0 | 09/11/2026 | [Entrega 2 · Base de conhecimento + protótipo de RAG](../entrega-2/index.md) | 36 fontes, chunking, embeddings, ChromaDB, busca híbrida, LLM local, demonstração com fontes, avaliação e diagrama animado de integração |
+| 3.0 | 13/11/2026 | [Entrega 3 · Respostas baseadas em evidências](../entrega-3/index.md) | Comparação empírica com e sem RAG nas 32 perguntas-ouro, fidelidade, alucinação, análise de falha e reescrita de consulta |
 
 <p class="legenda">Tabela 1. Histórico de versões desta GitPage.</p>
 
@@ -54,3 +55,23 @@ A **Tabela 2** resume as principais decisões técnicas tomadas durante a evolu�
 | Embeddings em fp16 | O bge-m3 em fp32 mais o LLM de 7B estouravam a GPU de 8 GB | Os dois cabem na mesma placa |
 
 <p class="legenda">Tabela 2. Decisões tomadas ao longo da Entrega 2, cada uma com motivo e efeito.</p>
+
+## Registro de mudanças da Entrega 3
+
+A **Tabela 3** resume as principais decisões técnicas tomadas durante o planejamento e execução da Entrega 3, apresentando a motivação e o impacto medido ou esperado de cada uma.
+
+| Mudança | Motivo | Efeito medido |
+|---|---|---|
+| Avaliação local nativa (`valores_sem_fonte` + juiz local) em vez de DeepEval | DeepEval exigia chamadas a APIs externas (violando RNF02) ou gerava risco de OOM na GPU de 8 GB | Pipeline 100% local e auditável (*tempo de execução a medir*) |
+| Comparação sistemática Sem RAG × Com RAG nas 32 perguntas | Quantificar a redução de alucinações observada qualitativamente na Entrega 2 | *Fidelidade e taxa de alucinação a medir* |
+| Decomposição em subconsultas para perguntas compostas | Consultas multi-hop recuperavam apenas o tópico dominante no embedding | *Ganho de completude em perguntas compostas a medir* |
+| Documentação explícita de limitação em grafos transitivos | RAG em texto puro falha em deduzir cadeias longas de pré-requisitos em cascata | Justificativa técnica para ferramenta determinística no Agente Fluxo (Entrega 4) |
+
+<p class="legenda">Tabela 3. Decisões tomadas ao longo da Entrega 3, cada uma com motivo e efeito.</p>
+
+??? abstract "Histórico de revisão"
+
+    | Data | Versão | Descrição | Autor |
+    | :---: | :---: | --- | --- |
+    | 09/11/2026 | 2.0 | Publicação da Entrega 2 e registro de mudanças | Maykon Soares |
+    | 11/11/2026 | 3.0 | Inclusão da versão 3.0 (Entrega 3) e registro de decisões técnicas | Grupo 04 |
