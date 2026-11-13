@@ -1,4 +1,13 @@
-"""Geração da resposta fundamentada nos chunks recuperados, com citação das fontes."""
+"""Geração da resposta fundamentada nos chunks recuperados, com citação das fontes.
+
+Este módulo garante duas regras de negócio (docs/entrega-1/regras-de-negocio.md):
+
+- RN-02 · toda afirmação cita documento, página e URL: a regra 2 do prompt exige [n] depois
+  de cada afirmação; `citacoes_usadas` resolve cada [n] em documento, página e URL; e
+  `resposta_sem_citacao` acusa a resposta que não cita nada.
+- RN-03 · fora da base, recusa: a regra 3 do prompt e o atalho de `gerar` sem trechos usam a
+  mesma frase, `RECUSA`; `valores_sem_fonte` alerta quando aparece valor que não está nos trechos.
+"""
 import json
 import re
 import urllib.request
@@ -6,12 +15,16 @@ from functools import lru_cache
 
 from . import config
 
-INSTRUCOES = """Você é o RUmo, assistente dos estudantes da FCTE/UnB (campus Gama) para dúvidas sobre o \
+# RN-03: a frase de recusa é uma só no sistema inteiro. Mudar aqui muda o prompt e o código.
+RECUSA = "Não encontrei essa informação nas fontes da base."
+
+# Regras 2 (RN-02) e 3 (RN-03) do prompt. Mexeu no texto? Rode a avaliação (CLAUDE.md).
+INSTRUCOES = f"""Você é o RUmo, assistente dos estudantes da FCTE/UnB (campus Gama) para dúvidas sobre o \
 Restaurante Universitário e sobre o fluxo de disciplinas dos cursos.
 Regras:
 1. Responda em português, de forma direta, usando SOMENTE as informações dos trechos numerados abaixo.
 2. Depois de cada afirmação, cite o trecho usado entre colchetes, por exemplo [1] ou [2][3].
-3. Se os trechos não trazem a resposta, diga exatamente: "Não encontrei essa informação nas fontes da base." \
+3. Se os trechos não trazem a resposta, diga exatamente: "{RECUSA}" \
 e sugira o órgão responsável. Não invente valores, datas, códigos ou pré-requisitos.
 4. Se a informação depende do perfil do estudante (grupo de pagamento, curso, ano de ingresso), diga isso.
 5. Seja conciso: no máximo 120 palavras. Copie valores, datas, códigos e nomes exatamente como estão nos trechos."""
@@ -90,13 +103,13 @@ def _gerar_extrativo(pergunta, trechos):
                 candidatas.append((sobreposicao, i, frase.strip()))
     candidatas.sort(key=lambda x: -x[0])
     if not candidatas:
-        return "Não encontrei essa informação nas fontes da base."
+        return RECUSA
     return "\n".join(f"- {f} [{i}]" for _, i, f in candidatas[:4])
 
 
 def gerar(pergunta: str, trechos: list[dict], backend: str = config.BACKEND) -> str:
-    if not trechos:
-        return "Não encontrei essa informação nas fontes da base."
+    if not trechos:                     # RN-03: sem trecho recuperado, nem chama o LLM
+        return RECUSA
     msgs = montar_mensagens(pergunta, trechos)
     if backend == "hf":
         return _gerar_hf(msgs)
@@ -107,11 +120,29 @@ def gerar(pergunta: str, trechos: list[dict], backend: str = config.BACKEND) -> 
     return _gerar_extrativo(pergunta, trechos)
 
 
+def _numeros_citados(resposta: str, n_trechos: int) -> list[int]:
+    """Os [n] da resposta que apontam para um trecho que existe (de 1 a n_trechos)."""
+    return sorted({int(n) for n in re.findall(r"\[(\d+)\]", resposta) if 0 < int(n) <= n_trechos})
+
+
 def citacoes_usadas(resposta: str, trechos: list[dict]) -> list[dict]:
     """Lista as fontes efetivamente citadas na resposta (rastreabilidade)."""
-    nums = sorted({int(n) for n in re.findall(r"\[(\d+)\]", resposta) if 0 < int(n) <= len(trechos)})
+    nums = _numeros_citados(resposta, len(trechos))
     return [{"n": n, **{k: trechos[n - 1][k] for k in ("doc_id", "titulo", "orgao", "pagina", "url", "chunk_id")}}
             for n in nums]
+
+
+def eh_recusa(resposta: str) -> bool:
+    """RN-03: a resposta é (ou contém) a recusa padrão."""
+    return RECUSA.rstrip(".").lower() in resposta.lower()
+
+
+def resposta_sem_citacao(resposta: str, trechos: list[dict]) -> bool:
+    """RN-02: True quando a resposta afirma algo sem citar nenhum trecho válido.
+    A recusa não cita fonte de propósito, então não conta como violação."""
+    if eh_recusa(resposta):
+        return False
+    return not _numeros_citados(resposta, len(trechos))
 
 
 PADRAO_VALOR = re.compile(r"R\$\s?\d+(?:[.,]\d+)?|\b\d{1,2}/\d{1,2}(?:/\d{2,4})?\b|\b\d{1,2}h(?:\d{2})?\b|\b[A-Z]{3}\d{4}\b|\b\d+(?:[.,]\d+)?\s?(?:créditos|horas|vagas|semestres)\b")

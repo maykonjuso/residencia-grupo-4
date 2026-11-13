@@ -38,6 +38,7 @@ def responder(pergunta: str, backend: str, eixo: str | None = None, k: int = con
         "resposta": resposta,
         "fontes_citadas": geracao.citacoes_usadas(resposta, trechos),
         "valores_sem_fonte": geracao.valores_sem_fonte(resposta, trechos),
+        "sem_citacao": geracao.resposta_sem_citacao(resposta, trechos),   # RN-02
         "trechos_recuperados": [
             {k2: t.get(k2) for k2 in ("chunk_id", "doc_id", "titulo", "pagina", "secao", "similaridade", "nota_rrf", "url", "texto")}
             for t in trechos],
@@ -57,6 +58,8 @@ def imprimir(r: dict):
     print("Fontes citadas:")
     for f in r["fontes_citadas"]:
         print(f"  [{f['n']}] {f['doc_id']} · {f['titulo']} · p.{f['pagina']} · {f['url']}")
+    if r.get("sem_citacao"):
+        print("\n⚠ ALERTA (RN-02): a resposta não cita nenhum trecho; trate como não verificada")
     if r.get("valores_sem_fonte"):
         print(f"\n⚠ ALERTA: valores na resposta que não aparecem nas fontes: {', '.join(r['valores_sem_fonte'])}")
     print(f"\n(busca {r['tempo_busca_s']}s · geração {r['tempo_geracao_s']}s)")

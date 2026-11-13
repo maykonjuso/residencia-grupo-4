@@ -118,6 +118,7 @@ nav:
       - Problema: entrega-1/problema.md
       - Partes interessadas: entrega-1/stakeholders.md
       - Escopo e requisitos: entrega-1/escopo.md
+      - Regras de negócio: entrega-1/regras-de-negocio.md
       - Riscos e limitações: entrega-1/riscos.md
       - Métricas de sucesso: entrega-1/metricas.md
   - Entrega 2:
@@ -131,8 +132,15 @@ nav:
       - Demonstração: entrega-2/demonstracao.md
       - Avaliação da recuperação: entrega-2/avaliacao.md
       - Como executar: entrega-2/como-executar.md
+  - Entrega 3:
+      - entrega-3/index.md
+      - LLM vs. RAG: entrega-3/llm-vs-rag.md
+      - Fidelidade e alucinação: entrega-3/fidelidade-e-alucinacao.md
+      - Reescrita de consulta: entrega-3/reescrita-de-consulta.md
   - Sobre:
       - sobre/index.md
+      - Processo de trabalho: sobre/processo.md
+      - DoR e DoD: sobre/dor-dod.md
       - Equipe: sobre/equipe.md
       - Declaração de uso de IA: sobre/uso-de-ia.md
       - Referências: sobre/referencias.md

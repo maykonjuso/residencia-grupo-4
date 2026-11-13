@@ -64,6 +64,7 @@ python -m rumo_rag ingerir                      # baixa, extrai, divide, indexa
 python -m rumo_rag perguntar "Quanto custa o almoço?"
 python -m rumo_rag avaliar                      # métricas de recuperação
 python -m rumo_rag demo
+python -m unittest discover -s testes -v      # regras de negócio RN-01 a RN-05 (sem GPU)
 
 cd .. && pip install -r requirements-docs.txt
 mkdocs serve                                    # :8000
