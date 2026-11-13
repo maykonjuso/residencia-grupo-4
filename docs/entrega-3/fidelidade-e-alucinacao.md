@@ -81,7 +81,7 @@ A **Tabela 1** apresenta as definições operacionais de cada métrica monitorad
 | **Taxa de Alucinação Numérica/Entidade** | *Extrinsic Hallucination Rate* | Frequência de respostas que contêm preços, datas, horários, códigos ou quantidades ausentes nos chunks (`valores_sem_fonte`). | `respostas com valor sem fonte / total de respostas avaliadas` | 0,00 |
 | **Rejeição Negativa (Recusa Correta)** | *Negative Rejection* (RGB) | Capacidade de declarar *"Não encontrei essa informação nas fontes da base"* quando a pergunta extrapola a base. | `recusas corretas (RF04) / total de perguntas sem base` | 1,00 |
 | **Completude Multi-hop** | *Information Integration* (RGB) | Proporção de subperguntas respondidas corretamente em consultas compostas (com dois ou mais tópicos). | `subperguntas atendidas / total de subperguntas da consulta` | ≥ 0,85 |
-| **Latência Fim a Fim (p50 / p95)** | *End-to-End Latency* (LLMOps) | Tempo decorrido na busca híbrida (`tempo_busca`) somado à inferência do modelo local (`tempo_geracao`). | Medição em segundos via `time.perf_counter()` na GPU de 8 GB. | < 30 s |
+| **Latência Fim a Fim (p50 / p95)** | *End-to-End Latency* (LLMOps) | Tempo decorrido na busca híbrida (`tempo_busca`) somado à inferência do modelo local (`tempo_geracao`). | Medição em segundos via `time.perf_counter()` localmente em MacBook Air M4 (24 GB), divergindo da RTX 4060 (8 GB). | < 30 s |
 
 <p class="legenda">Tabela 1. Métricas de avaliação de resposta do RUmo alinhadas à literatura de RAG e LLMOps.</p>
 

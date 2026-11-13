@@ -79,7 +79,7 @@ A **Tabela 1** apresenta o conjunto de teste específico de perguntas compostas 
 
 ## 4. Impacto na latência
 
-Embora a reescrita aumente a completude informacional, a execução de múltiplas buscas híbridas introduz uma etapa adicional de processamento. A **Tabela 2** estrutura a medição do impacto de latência por etapa (Sem Reescrita × Com Reescrita), para verificar a conformidade com o requisito **RNF03** (busca < 1 s e resposta completa < 30 s).
+Embora a reescrita aumente a completude informacional, a execução de múltiplas buscas híbridas introduz uma etapa adicional de processamento. A **Tabela 2** estrutura a medição do impacto de latência por etapa (Sem Reescrita × Com Reescrita) — aferida localmente em um **MacBook Air M4 (24 GB)**, divergindo da RTX 4060 (8 GB) de referência — para verificar a conformidade com o requisito **RNF03** (busca < 1 s e resposta completa < 30 s).
 
 | Etapa do Processo | Sem Reescrita | Com Reescrita | Meta (RNF03) |
 |---|:---:|:---:|:---:|

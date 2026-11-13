@@ -16,7 +16,7 @@ A **Entrega 3 transforma essa observação em medição formal**: responde as me
 - [ ] **Medição de fidelidade e alucinação:** Protocolo de avaliação local medindo taxa de citação, fidelidade, recusa e alucinação. ([Ver metodologia e métricas](fidelidade-e-alucinacao.md))
 - [ ] **Transparência metodológica:** Documentação analítica de um caso real onde o RAG não ajudou ou teve limitação. ([Ver análise de falha](llm-vs-rag.md#o-caso-em-que-o-rag-nao-ajudou))
 - [ ] **Reescrita de consulta para perguntas compostas:** Mecanismo de decomposição de consultas multi-hop mitigando o risco R04. ([Ver arquitetura de reescrita](reescrita-de-consulta.md))
-- [x] **Conformidade arquitetural (RNF02 e RNF03):** Avaliações projetadas para execução 100% local na GPU de 8 GB, preservando privacidade sem envio de dados a APIs de terceiros.
+- [x] **Conformidade arquitetural (RNF02 e RNF03):** Avaliações executadas 100% localmente preservando privacidade sem envio de dados a APIs de terceiros (arquitetura dimensionada para a RTX 4060 8 GB, com latência e respostas aferidas nesta entrega em **MacBook Air M4 24 GB**).
 
 ---
 
@@ -50,3 +50,4 @@ A **Tabela 1** apresenta a matriz de consolidação dos resultados comparativos 
     | Data | Versão | Descrição | Autor |
     | :---: | :---: | --- | --- |
     | 11/11/2026 | 1.0 | Estrutura inicial da Entrega 3 (Épico #4): checklist, matriz de métricas e navegação | Grupo 04 |
+    | 13/11/2026 | 1.1 | Registro do ambiente de medição local (MacBook Air M4 24 GB, divergindo da RTX 4060 8 GB) | Grupo 04 |

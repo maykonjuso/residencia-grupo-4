@@ -8,10 +8,13 @@ Comparação empírica direta entre a geração do modelo **Qwen2.5-7B-Instruct*
 
 Na Entrega 2, o grupo constatou que modelos de linguagem sem ancoragem documental sofrem de alucinações severas em dados de domínio fechado. No caso do Restaurante Universitário e do fluxo acadêmico da FCTE/UnB, inventar o valor de uma refeição, uma data de cardápio ou um pré-requisito de disciplina acarreta prejuízo real ao estudante.
 
-Para mensurar esse comportamento com rigor, submetem-se as mesmas **32 perguntas-ouro** de `rag/avaliacao/perguntas_ouro.jsonl` a dois regimes idênticos de hardware e parâmetros de inferência (temperatura = 0,2, top_p = 0,9, quantização 4 bits na RTX 4060):
+Para mensurar esse comportamento com rigor, submetem-se as mesmas **32 perguntas-ouro** de `rag/avaliacao/perguntas_ouro.jsonl` a dois regimes idênticos de hardware e parâmetros de inferência (temperatura = 0,2, top_p = 0,9, modelo `qwen2.5:7b` via Ollama em **MacBook Air M4 24 GB**):
 
 1. **LLM puro (Sem RAG):** O prompt envia apenas a pergunta do usuário e uma instrução genérica de assistente acadêmico, sem qualquer trecho de documento injetado.
 2. **RUmo (Com RAG):** A pergunta aciona a busca híbrida; os 5 chunks mais relevantes são injetados no contexto, acompanhados de metadados, regra de citação obrigatória [n] e instrução estrita de recusa fora da base (RF03 e RF04).
+
+> [!NOTE]
+> **Divergência de hardware nas medições:** Embora a arquitetura do RUmo tenha sido dimensionada para caber no limite da **NVIDIA RTX 4060 (8 GB VRAM)** (Entregas 1 e 2), os parâmetros de latência e resposta da Entrega 3 estão sendo medidos localmente em um **Apple MacBook Air M4 com 24 GB de memória unificada**.
 
 ### Estudo de ablação: as 4 configurações avaliadas
 

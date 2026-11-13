@@ -68,6 +68,7 @@ A **Tabela 3** resume as principais decisões técnicas tomadas durante o planej
 | Documentação explícita de limitação em grafos transitivos | RAG em texto puro falha em deduzir cadeias longas de pré-requisitos em cascata | Justificativa técnica para ferramenta determinística no Agente Fluxo (Entrega 4) |
 | Adoção do RAG Generativo (`k=5`) + verificador no lugar do RAG Extrativo e de `k=3` | O modo extrativo (`_gerar_extrativo`) falhava na recusa fora da base (RF04) e truncava respostas; `k=3` omitia itens em listas longas de regras | Nos cenários canônicos `P1`–`P3`: síntese completa com citações `[1]`–`[5]`, recusa correta e auditoria via `valores_sem_fonte` (*bateria de 32 perguntas a medir*) |
 | Ampliação de `GATILHOS` e filtro de tokens em `indice.decompor()` | Perguntas compostas com novos marcadores (`posso`, `preciso`, `que horas`) ou subfrases curtas de 2 tokens úteis eram ignoradas | Decomposição passa a aceitar `len(tokenizar(p)) >= 2` ou `>= 3` palavras (*ganho de completude nas 32 perguntas a medir*) |
+| Aferição de latência e respostas em MacBook Air M4 (24 GB) | Os experimentos locais da Entrega 3 foram executados na máquina Apple Silicon da equipe, divergindo da RTX 4060 (8 GB) de referência | Latências medidas (~2–6 s nos cenários `P1`–`P3`) refletem os 24 GB de memória unificada do M4, mantendo a execução 100% local (RNF02) |
 
 <p class="legenda">Tabela 3. Decisões tomadas ao longo da Entrega 3, cada uma com motivo e efeito.</p>
 
