@@ -43,6 +43,22 @@ flowchart TD
 3. **Busca híbrida paralela:** Executa o algoritmo híbrido (BM25 + BGE-M3 com RRF) para cada subconsulta.
 4. **Deduplicação e fusão de contexto:** Combina os conjuntos de chunks recuperados, eliminando sobreposições por `chunk_id` e preservando a diversidade informacional para a geração final.
 
+### Refinamentos implementados em `rag/rumo_rag/indice.py`
+
+Durante os testes com 7 perguntas compostas reais na Entrega 3, foram diagnosticados e corrigidos dois gargalos na função `decompor()`:
+
+1. **Ampliação da expressão regular `GATILHOS`:** A versão inicial não reconhecia pronomes interrogativos frequentes em dúvidas de fluxo e RU (`quem`, `quantos`, `quantas`, `em que`, `de que`), impedindo a quebra da consulta em subperguntas:
+
+```python
+GATILHOS = r"(?:quanto|quanta|quantos|quantas|qual|quais|quem|como|quando|onde|que horas|até que|em que|de que|o que|posso|preciso)"
+```
+
+2. **Prevenção de descarte de subperguntas curtas por *stopwords*:** O filtro anterior (`len(tokenizar(p)) >= 3`) descartava silenciosamente subperguntas legítimas como *"e como solicito?"* ou *"e quando começam as aulas?"*, porque palavras como `como` e `quando` eram removidas como *stopwords* pelo tokenizador do BM25, restando menos de 3 tokens. O critério foi corrigido para preservar cláusulas com pelo menos 2 tokens informativos ou 3 palavras:
+
+```python
+partes = [p.strip(" ?.") for p in partes if len(tokenizar(p)) >= 2 or len(p.split()) >= 3]
+```
+
 ---
 
 ## 3. Matriz de validação em perguntas compostas
@@ -81,3 +97,4 @@ Embora a reescrita aumente a completude informacional, a execução de múltipla
     | Data | Versão | Descrição | Autor |
     | :---: | :---: | --- | --- |
     | 11/11/2026 | 1.0 | Especificação do pipeline de reescrita de consulta, diagrama de arquitetura e casos de teste multi-hop | Grupo 04 |
+    | 13/11/2026 | 1.1 | Documentação dos refinamentos em `GATILHOS` e no filtro de *stopwords* de `indice.decompor()` | Grupo 04 |

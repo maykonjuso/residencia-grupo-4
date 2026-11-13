@@ -59,6 +59,15 @@ Embora o desenho das métricas siga a formulação do RAGAS, do ALCE e do RGB, a
 2. **Fragilidade de JSON em modelos 7B quantizados:** Quando configurados com modelos locais em 4 bits, os prompts internos em inglês do DeepEval exigem esquemas JSON complexos que sofrem falhas de parsing e risco de *Out of Memory (OOM)* na GPU de 8 GB.
 3. **Verificador determinístico de domínio:** No domínio da UnB, o erro mais grave é errar números (preço em R$, data de cardápio, horário, código de disciplina, número de créditos). O verificador determinístico `geracao.valores_sem_fonte` audita 100% desses tokens com precisão exata em milissegundos, algo que um LLM juiz genérico frequentemente deixa passar.
 
+### Camada dupla de segurança e o contraste com o RAG Extrativo
+
+A arquitetura adotada na Entrega 3 combina geração neural local com auditoria simbólica determinística, formando uma camada dupla de proteção contra alucinações:
+
+1. **Geração condicionada ao contexto e citações:** O modelo local (`qwen2.5:7b` via `config.OLLAMA_URL`) recebe os 5 melhores trechos (`k=5`) e é instruído a sintetizar a resposta apenas com base neles, referenciando as fontes com marcadores `[1]`–`[5]` (auditados por `geracao.citacoes_usadas`) ou declarando explicitamente ausência na base (**RF04**).
+2. **Pós-validação numérica determinística:** Antes de entregar a resposta ao estudante, `geracao.valores_sem_fonte` utiliza a expressão regular `geracao.PADRAO_VALOR` para extrair números, preços em `R$`, datas, horários, créditos e códigos presentes na resposta gerada e verificar se constam literalmente nos chunks recuperados. Valores sem lastro são flagrados automaticamente em milissegundos.
+
+O estudo comparativo das 4 configurações (ver [LLM Pura vs. RAG](llm-vs-rag.md)) evidenciou por que essa camada dupla é superior ao modo puramente extrativo (`geracao._gerar_extrativo`): embora o **RAG Extrativo** execute em `< 0,1 s` e possua alucinação numérica zero por apenas recortar trechos literais, ele devolve fragmentos truncados sem síntese de regras e **falha na Rejeição Negativa (RF04)**. Diante de perguntas sem base documental (como o cenário canônico `P3` sobre a senha do Wi-Fi da biblioteca), o modo extrativo sempre retorna os trechos mais próximos por similaridade léxica em vez de informar que a informação não existe nos documentos indexados.
+
 ---
 
 ## 3. Definição das métricas avaliadas
@@ -101,3 +110,4 @@ A **Tabela 2** consolida a estrutura de comparação direta entre o comportament
     | :---: | :---: | --- | --- |
     | 11/11/2026 | 1.0 | Especificação do método de medição, justificativa técnica contra frameworks externos e matriz de métricas | Grupo 04 |
     | 11/11/2026 | 1.1 | Fundamentação das métricas com base na Tríade do RAG (RAGAS), benchmark de citações ALCE e robustez RGB | Grupo 04 |
+    | 13/11/2026 | 1.2 | Documentação da camada dupla de segurança (`valores_sem_fonte`) e do trade-off do RAG Extrativo em RF04 | Grupo 04 |

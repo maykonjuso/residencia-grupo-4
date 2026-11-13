@@ -13,11 +13,35 @@ Para mensurar esse comportamento com rigor, submetem-se as mesmas **32 perguntas
 1. **LLM puro (Sem RAG):** O prompt envia apenas a pergunta do usuário e uma instrução genérica de assistente acadêmico, sem qualquer trecho de documento injetado.
 2. **RUmo (Com RAG):** A pergunta aciona a busca híbrida; os 5 chunks mais relevantes são injetados no contexto, acompanhados de metadados, regra de citação obrigatória [n] e instrução estrita de recusa fora da base (RF03 e RF04).
 
+### Estudo de ablação: as 4 configurações avaliadas
+
+Antes de executar a bateria completa das 32 perguntas-ouro, o grupo implementou dois scripts de benchmark (`rag/testar_4_configuracoes.py` e `rag/comparativo_rag.py`) para comparar **4 configurações de arquitetura** sobre 3 cenários canônicos (`P1`: preço do almoço no RU; `P2`: pré-requisitos de Testes de Software na FCTE; `P3`: pergunta fora da base sobre a senha do Wi-Fi da biblioteca).
+
+A **Tabela 1** resume o comportamento observado em cada configuração, fundamentando a escolha da arquitetura final adotada no RUmo.
+
+| # | Configuração | Latência típica (P1–P3) | Rastreabilidade / Fontes | Alucinações (`valores_sem_fonte`) | Recusa fora da base (RF04) | Veredito |
+|:---:|---|:---:|:---:|:---:|:---:|---|
+| **1** | **LLM Pura (Zero-shot, sem RAG)** | ~3–5 s | 0% (sem fontes) | Alta (inventa tarifas e disciplinas) | Falha (tenta adivinhar) | **Descartada:** viola RF03 e RNF01 |
+| **2** | **RAG Extrativo (Sem LLM)** | < 0,1 s | 100% (trecho literal) | Zero em números | Falha (devolve trechos léxicos sem recusar) | **Descartada:** respostas truncadas e sem recusa RF04 |
+| **3** | **RAG Generativo Simples (`k=3`)** | ~2–4 s | Alta (`[1]`–`[3]`) | Baixa | Acerta | **Insuficiente:** omite regras em listas longas de isenção e fluxo |
+| **4** | **RAG Generativo Completo (`k=5` + Verificador)** | ~3–6 s | Total (`[1]`–`[5]`) | Auditada por `valores_sem_fonte` | Acerta (*"Não encontrei..."*) | **Escolhida para o RUmo** |
+
+<p class="legenda">Tabela 1. Estudo de ablação das 4 configurações de arquitetura avaliadas em <code>rag/testar_4_configuracoes.py</code>.</p>
+
+Para reproduzir a bateria comparativa localmente com o Ollama:
+
+```bash
+cd rag
+export RUMO_OLLAMA_MODEL=qwen2.5:7b
+python testar_4_configuracoes.py
+python comparativo_rag.py
+```
+
 ---
 
 ## 2. Casos comparativos representativos
 
-A **Tabela 1** apresenta três casos emblemáticos selecionados do conjunto de avaliação que ilustram as diferenças qualitativas esperadas e os padrões de resposta observados entre as duas abordagens.
+A **Tabela 2** apresenta três casos emblemáticos selecionados do conjunto de avaliação que ilustram as diferenças qualitativas esperadas e os padrões de resposta observados entre as duas abordagens.
 
 | Pergunta | Resposta do LLM Puro (Sem RAG) | Resposta do RUmo (Com RAG) | Diagnóstico da Diferença |
 |---|---|---|---|
@@ -25,7 +49,7 @@ A **Tabela 1** apresenta três casos emblemáticos selecionados do conjunto de a
 | **Q14:** *"Quais são os pré-requisitos de Testes de Software?"* | *Tendência a misturar convenções de outros cursos ou universidades (ex: citar POO ou Engenharia de Requisitos).* | *Recupera o pré-requisito formal da matriz da FCTE citando o fluxograma F16.* | **Erro de fluxo corrigido:** Respeito à matriz curricular oficial da FCTE/UnB. |
 | **D7 (Fora da base):** *"Qual o wifi da biblioteca da FCTE?"* | *Tendência a inventar nomes de rede genéricos (ex: `UnB-WiFi` ou `FCTE-Visitante`).* | *Responde com recusa expressa: "Não encontrei essa informação nas fontes da base" (RF04).* | **Recusa correta:** Evita inventar credenciais ou configurações sem evidência oficial. |
 
-<p class="legenda">Tabela 1. Casos representativos do protocolo de comparação entre modelo puro e RUmo com RAG.</p>
+<p class="legenda">Tabela 2. Casos representativos do protocolo de comparação entre modelo puro e RUmo com RAG.</p>
 
 ---
 
@@ -39,7 +63,7 @@ Um sistema que relata apenas sucessos mascara fragilidades de engenharia. Em con
 
 ### O que acontece na execução
 
-A **Tabela 2** detalha o diagnóstico da resposta gerada pelo sistema frente ao gabarito curricular oficial da matriz de Engenharia de Software.
+A **Tabela 3** detalha o diagnóstico da resposta gerada pelo sistema frente ao gabarito curricular oficial da matriz de Engenharia de Software.
 
 | Dimensão | Conteúdo observado |
 |---|---|
@@ -48,7 +72,7 @@ A **Tabela 2** detalha o diagnóstico da resposta gerada pelo sistema frente ao 
 | **Gabarito curricular esperado** | O estudante fica impedido de cursar **Cálculo 2** (2º semestre) e, por transitividade de pré-requisito em cascata, as disciplinas subsequentes do 3º semestre que exigem Cálculo 2. |
 | **Diagnóstico da falha** | **Incompletude por falha de encadeamento transitivo.** O RAG recuperou os chunks corretos, mas a resposta final falhou na dedução em cascata. |
 
-<p class="legenda">Tabela 2. Diagnóstico da limitação do RAG em cadeia de pré-requisitos transitivos.</p>
+<p class="legenda">Tabela 3. Diagnóstico da limitação do RAG em cadeia de pré-requisitos transitivos.</p>
 
 ### Causa-raiz da limitação
 
@@ -65,7 +89,7 @@ Esse resultado comprova que **RAG puramente textual é insuficiente para racioc�
 
 ## 4. Matriz consolidada e registro das 32 perguntas-ouro
 
-A **Tabela 3** estrutura a matriz agregada de consolidação das 32 perguntas-ouro por eixo temático (`ru`, `apoio` e `fluxo`), a ser preenchida na conclusão das rodadas de medição.
+A **Tabela 4** estrutura a matriz agregada de consolidação das 32 perguntas-ouro por eixo temático (`ru`, `apoio` e `fluxo`), a ser preenchida na conclusão das rodadas de medição.
 
 | Eixo Temático | Quantidade | Sem RAG: Alucinações | Com RAG: Fidelidade total | Com RAG: Incompletude |
 |---|:---:|:---:|:---:|:---:|
@@ -74,11 +98,11 @@ A **Tabela 3** estrutura a matriz agregada de consolidação das 32 perguntas-ou
 | **Fluxo e Disciplinas (`fluxo`)** | 19 | *A medir* | *A medir* | *A medir* |
 | **Total Consolidado** | **32** | *A medir* | *A medir* | *A medir* |
 
-<p class="legenda">Tabela 3. Matriz de desempenho comparativo agregado nas 32 perguntas de teste.</p>
+<p class="legenda">Tabela 4. Matriz de desempenho comparativo agregado nas 32 perguntas de teste.</p>
 
-A **Tabela 4** (recolhida por padrão devido à extensão) prepara o registro individual completo das **32 perguntas-ouro** (`Q01` a `Q32` de `rag/avaliacao/perguntas_ouro.jsonl`), mapeando o eixo, os documentos esperados e os campos para coleta lado a lado (Sem RAG × Com RAG). Após a execução do benchmark, os casos mais relevantes serão escoados desta tabela mestre para as tabelas analíticas específicas.
+A **Tabela 5** (recolhida por padrão devido à extensão) prepara o registro individual completo das **32 perguntas-ouro** (`Q01` a `Q32` de `rag/avaliacao/perguntas_ouro.jsonl`), mapeando o eixo, os documentos esperados e os campos para coleta lado a lado (Sem RAG × Com RAG). Após a execução do benchmark, os casos mais relevantes serão escoados desta tabela mestre para as tabelas analíticas específicas.
 
-??? info "Tabela 4 · Registro completo das 32 perguntas-ouro: LLM puro × RAG (clique para expandir)"
+??? info "Tabela 5 · Registro completo das 32 perguntas-ouro: LLM puro × RAG (clique para expandir)"
 
     | ID | Eixo | Pergunta | Docs esperados | Resposta Sem RAG (LLM puro) | Resposta Com RAG (RUmo) | Fidelidade / Alucinação | Diagnóstico |
     |:---:|:---:|---|---|---|---|---|---|
@@ -115,7 +139,7 @@ A **Tabela 4** (recolhida por padrão devido à extensão) prepara o registro in
     | **Q31** | `fluxo` | Como faço a matrícula on-line no SIGAA? | `F32`, `F34`, `F29` | *A medir* | *A medir* | *A medir* | *A preencher* |
     | **Q32** | `fluxo` | Quais são os órgãos colegiados da Faculdade do Gama segundo o regimento interno? | `F36` | *A medir* | *A medir* | *A medir* | *A preencher* |
 
-    <p class="legenda">Tabela 4. Tabela mestre das 32 perguntas-ouro (<code>rag/avaliacao/perguntas_ouro.jsonl</code>) para comparação lado a lado entre LLM puro e RUmo com RAG.</p>
+    <p class="legenda">Tabela 5. Tabela mestre das 32 perguntas-ouro (<code>rag/avaliacao/perguntas_ouro.jsonl</code>) para comparação lado a lado entre LLM puro e RUmo com RAG.</p>
 
 ---
 
@@ -125,3 +149,4 @@ A **Tabela 4** (recolhida por padrão devido à extensão) prepara o registro in
     | :---: | :---: | --- | --- |
     | 11/11/2026 | 1.0 | Especificação do protocolo de comparação LLM × RAG, casos de teste e análise do caso de falha | Grupo 04 |
     | 11/11/2026 | 1.1 | Inclusão da Tabela 4 recolhida com as 32 perguntas-ouro de `perguntas_ouro.jsonl` | Grupo 04 |
+    | 13/11/2026 | 1.2 | Inclusão do estudo de ablação das 4 configurações (`Tabela 1`), comandos de benchmark e renumeração das tabelas | Grupo 04 |

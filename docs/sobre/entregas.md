@@ -66,6 +66,8 @@ A **Tabela 3** resume as principais decisões técnicas tomadas durante o planej
 | Comparação sistemática Sem RAG × Com RAG nas 32 perguntas | Quantificar a redução de alucinações observada qualitativamente na Entrega 2 | *Fidelidade e taxa de alucinação a medir* |
 | Decomposição em subconsultas para perguntas compostas | Consultas multi-hop recuperavam apenas o tópico dominante no embedding | *Ganho de completude em perguntas compostas a medir* |
 | Documentação explícita de limitação em grafos transitivos | RAG em texto puro falha em deduzir cadeias longas de pré-requisitos em cascata | Justificativa técnica para ferramenta determinística no Agente Fluxo (Entrega 4) |
+| Adoção do RAG Generativo (`k=5`) + verificador no lugar do RAG Extrativo e de `k=3` | O modo extrativo (`_gerar_extrativo`) falhava na recusa fora da base (RF04) e truncava respostas; `k=3` omitia itens em listas longas de regras | Nos cenários canônicos `P1`–`P3`: síntese completa com citações `[1]`–`[5]`, recusa correta e auditoria via `valores_sem_fonte` (*bateria de 32 perguntas a medir*) |
+| Ampliação de `GATILHOS` e filtro de tokens em `indice.decompor()` | Perguntas compostas com novos marcadores (`posso`, `preciso`, `que horas`) ou subfrases curtas de 2 tokens úteis eram ignoradas | Decomposição passa a aceitar `len(tokenizar(p)) >= 2` ou `>= 3` palavras (*ganho de completude nas 32 perguntas a medir*) |
 
 <p class="legenda">Tabela 3. Decisões tomadas ao longo da Entrega 3, cada uma com motivo e efeito.</p>
 
@@ -75,3 +77,4 @@ A **Tabela 3** resume as principais decisões técnicas tomadas durante o planej
     | :---: | :---: | --- | --- |
     | 09/11/2026 | 2.0 | Publicação da Entrega 2 e registro de mudanças | Maykon Soares |
     | 11/11/2026 | 3.0 | Inclusão da versão 3.0 (Entrega 3) e registro de decisões técnicas | Grupo 04 |
+    | 13/11/2026 | 3.1 | Registro das decisões experimentais das 4 configurações e ajustes de decomposição em `indice.py` | Grupo 04 |
