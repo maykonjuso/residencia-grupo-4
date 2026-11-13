@@ -107,8 +107,30 @@ def classificar_composta(pergunta: str) -> tuple[bool, float]:
         prob_multi = float(probs["multiple"])
         return prob_multi >= config.LIMIAR_COMPOSTA, round(prob_multi, 4)
     except Exception:
-        # Fallback gracioso se o modelo neural não estiver disponível no ambiente
+        # RUMO_STRICT_REWRITE=1 propaga o erro (usado no benchmark/Colab para não mascarar falhas).
+        if os.getenv("RUMO_STRICT_REWRITE") == "1":
+            raise
+        # Fallback gracioso, mas nunca silencioso: o erro é registrado uma vez no stderr.
+        _avisar_falha_classificador()
         return False, 0.0
+
+
+_AVISO_EMITIDO = False
+
+
+def _avisar_falha_classificador() -> None:
+    global _AVISO_EMITIDO
+    if _AVISO_EMITIDO:
+        return
+    _AVISO_EMITIDO = True
+    import sys
+    import traceback
+
+    print(
+        "[reescrita] AVISO: Estágio 1 (d1-omni-600M) falhou; consultas serão tratadas como simples.",
+        file=sys.stderr,
+    )
+    traceback.print_exc(file=sys.stderr)
 
 
 def _extrair_subperguntas_json(texto: str) -> list[str]:

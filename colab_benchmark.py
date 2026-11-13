@@ -148,12 +148,19 @@ def pre_aquecer_modelos(backend: str = "hf", dry_run: bool = False) -> None:
     # 1. Classificador System-1 (LiquidAI/d1-omni-600M)
     try:
         print(f"  [1/2] Pré-aquecendo classificador System-1 ({config.MODELO_DECISAO})...")
-        decisor = reescrita._carregar_decisor()
-        if decisor is not None:
-            teste_cls, prob = reescrita.classificar_composta("Quanto custa o almoço no RU?", backend="hf")
-            print(f"        Classificador operacional na GPU (teste: eh_composta={teste_cls}, p={prob:.2f}).")
-    except Exception as e:
-        print(f"        [Aviso] Falha ao pré-aquecer classificador: {e}")
+        reescrita._carregar_decisor()
+        # Modo estrito: se o Estágio 1 falhar, o erro aparece aqui em vez de virar "pergunta simples".
+        os.environ["RUMO_STRICT_REWRITE"] = "1"
+        pergunta_teste = "Qual o valor do almoço para estudante e quais os horários do jantar no Gama?"
+        teste_cls, prob = reescrita.classificar_composta(pergunta_teste)
+        print(f"        Classificador operacional na GPU (pergunta composta de teste: eh_composta={teste_cls}, p={prob:.4f}).")
+        if not teste_cls:
+            print("        [ALERTA] O classificador NÃO sinalizou a pergunta composta de teste; "
+                  f"revise RUMO_DECISION_THRESHOLD (atual={config.LIMIAR_COMPOSTA}).")
+    except Exception:
+        import traceback
+        print("        [ERRO] Falha no Estágio 1 (classificador d1-omni-600M):")
+        traceback.print_exc()
 
     # 2. Gerador e Decompositor (Qwen2.5-7B)
     try:
