@@ -29,12 +29,15 @@ def ingerir(_args):
 
 def responder(pergunta: str, backend: str, eixo: str | None = None, k: int = config.TOP_K) -> dict:
     t0 = time.time()
-    trechos = indice.buscar(pergunta, k=k, eixo=eixo)
+    subperguntas = indice.decompor(pergunta)
     t1 = time.time()
-    resposta = geracao.gerar(pergunta, trechos, backend)
+    trechos = indice.buscar_com_subperguntas(pergunta, subperguntas, k=k, eixo=eixo)
     t2 = time.time()
+    resposta = geracao.gerar(pergunta, trechos, backend)
+    t3 = time.time()
     return {
         "pergunta": pergunta,
+        "subperguntas": subperguntas,
         "resposta": resposta,
         "fontes_citadas": geracao.citacoes_usadas(resposta, trechos),
         "valores_sem_fonte": geracao.valores_sem_fonte(resposta, trechos),
@@ -42,14 +45,20 @@ def responder(pergunta: str, backend: str, eixo: str | None = None, k: int = con
         "trechos_recuperados": [
             {k2: t.get(k2) for k2 in ("chunk_id", "doc_id", "titulo", "pagina", "secao", "similaridade", "nota_rrf", "url", "texto")}
             for t in trechos],
-        "tempo_busca_s": round(t1 - t0, 2),
-        "tempo_geracao_s": round(t2 - t1, 2),
+        "tempo_decomposicao_s": round(t1 - t0, 3),
+        "tempo_busca_s": round(t2 - t1, 2),
+        "tempo_geracao_s": round(t3 - t2, 2),
         "backend": backend,
     }
 
 
 def imprimir(r: dict):
     print(f"\nPergunta: {r['pergunta']}\n")
+    if r.get("subperguntas"):
+        print("Subperguntas (decomposição):")
+        for s in r["subperguntas"]:
+            print(f"  - {s}")
+        print()
     print("Trechos recuperados:")
     for i, t in enumerate(r["trechos_recuperados"], start=1):
         sim = f" · sim {t['similaridade']}" if t.get("similaridade") is not None else ""

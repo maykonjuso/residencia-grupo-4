@@ -35,7 +35,12 @@ PESO_BM25_IDENTIFICADOR = 3.0  # peso do BM25 na fusão quando a pergunta tem da
 BACKEND = os.getenv("RUMO_LLM_BACKEND", "hf")
 MODELO_HF = os.getenv("RUMO_HF_MODEL", "Qwen/Qwen2.5-7B-Instruct")
 HF_4BIT = os.getenv("RUMO_HF_4BIT", "1") == "1"   # quantização em 4 bits (bitsandbytes)
-MODELO_OLLAMA = os.getenv("RUMO_OLLAMA_MODEL", "qwen2.5:3b")
+MODELO_OLLAMA = os.getenv("RUMO_OLLAMA_MODEL", "qwen2.5:7b")
 OLLAMA_URL = os.getenv("OLLAMA_URL", "http://localhost:11434")
 OPENAI_URL = os.getenv("RUMO_OPENAI_URL", "https://api.openai.com/v1")
 OPENAI_MODEL = os.getenv("RUMO_OPENAI_MODEL", "gpt-4o-mini")
+
+# Reescrita de consultas compostas: Estágio 1 (LiquidAI/d1-omni-600M em GPU) + Estágio 2 (LLM Decomposer)
+MODELO_DECISAO = os.getenv("RUMO_DECISION_MODEL", "LiquidAI/d1-omni-600M")
+LIMIAR_COMPOSTA = float(os.getenv("RUMO_DECISION_THRESHOLD", "0.50"))
+MODELO_DECOMPOSITOR = os.getenv("RUMO_DECOMP_MODEL", MODELO_OLLAMA)

@@ -7,6 +7,7 @@ import chromadb
 from rank_bm25 import BM25Okapi
 
 from . import config
+from .reescrita import classificar_composta, decompor
 
 STOPWORDS = set("""a o as os de da do das dos e é em no na nos nas um uma para por com que se ao à
 às como mais ou qual quais quando onde ser sua seu meu minha eu tem há""".split())
@@ -29,29 +30,13 @@ def tokenizar(t: str) -> list[str]:
     return toks
 
 
-GATILHOS = r"(?:quanto|quanta|qual|quais|como|quando|onde|que horas|até que|o que|posso|preciso)"
-
-
-def decompor(pergunta: str) -> list[str]:
-    """Quebra perguntas compostas ("Quanto pago ... e até que horas ...?") em subperguntas."""
-    partes = re.split(rf"[?!.;]\s+|,?\s+e\s+(?={GATILHOS}\b)", pergunta.strip(), flags=re.I)
-    partes = [p.strip(" ?.") for p in partes if len(tokenizar(p)) >= 3]
-    # frases sem palavra interrogativa ("Sou estudante de graduação...") são contexto:
-    # vão junto de cada subpergunta em vez de virar uma busca própria
-    eh_pergunta = re.compile(rf"\b{GATILHOS}\b", re.I)
-    contexto = " ".join(p for p in partes if not eh_pergunta.search(p))
-    perguntas = [p for p in partes if eh_pergunta.search(p)]
-    if len(perguntas) < 2:
-        return []
-    return [f"{contexto}. {p}" if contexto else p for p in perguntas]
-
-
 @lru_cache(maxsize=1)
 def modelo_embedding():
-    import torch
     from sentence_transformers import SentenceTransformer
-    # fp16 na GPU: metade da memória (bge-m3 ~1,1 GB), sobra espaço para o LLM de 7B na mesma placa de 8 GB
-    kw = {"model_kwargs": {"dtype": torch.float16}} if torch.cuda.is_available() else {}
+    from .reescrita import dispositivo_gpu
+    # fp16 na GPU (CUDA ou MPS): metade da memória (bge-m3 ~1,1 GB), sobra espaço para o LLM na mesma placa
+    dev, dtype = dispositivo_gpu()
+    kw = {"device": dev, "model_kwargs": {"dtype": dtype}} if dev != "cpu" else {}
     return SentenceTransformer(config.MODELO_EMBEDDING, **kw)
 
 
@@ -98,38 +83,32 @@ def _bm25():
     return chunks, BM25Okapi([tokenizar(c["texto_indexado"]) for c in chunks])
 
 
-def buscar(pergunta: str, k: int = config.TOP_K, modo: str = "hibrido", eixo: str | None = None,
-           decompor_pergunta: bool = True) -> list[dict]:
-    """modo: denso | bm25 | hibrido (RRF dos dois).
-    Perguntas compostas são buscadas inteiras e também por subpergunta; tudo entra na fusão."""
+def _buscar_simples(pergunta: str, k: int = config.TOP_K, modo: str = "hibrido",
+                    eixo: str | None = None) -> list[dict]:
+    """Executa busca (denso | bm25 | hibrido) para uma única consulta sem decomposição."""
     chunks, bm25 = _bm25()
     por_id = {c["chunk_id"]: c for c in chunks}
     rankings: list[list[str]] = []
     distancias: dict[str, float] = {}
-    subperguntas = decompor(pergunta) if decompor_pergunta else []
-    consultas = [pergunta] + subperguntas
     pesos: list[float] = []
-    # cada subpergunta ganha uma vaga a mais no contexto (até MAX_TRECHOS)
-    k = min(k + len(subperguntas), config.MAX_TRECHOS) if subperguntas else k
 
-    for q in consultas:
-        # datas e códigos são identificadores exatos: o embedding quase não os distingue
-        # (todos os dias do cardápio ficam com a mesma similaridade), o BM25 sim.
-        tem_identificador = bool(re.search(r"\d{1,2}/\d{1,2}|\b[a-z]{2,4}\d{3,4}\b", q.lower()))
-        if modo in ("denso", "hibrido"):
-            filtro = {"eixo": eixo} if eixo else None
-            r = colecao().query(query_embeddings=[embed_consulta(q).tolist()],
-                                n_results=config.CANDIDATOS, where=filtro)
-            rankings.append(r["ids"][0]); pesos.append(1.0)
-            for cid, dist in zip(r["ids"][0], r["distances"][0]):
-                distancias[cid] = min(dist, distancias.get(cid, 2.0))
+    # datas e códigos são identificadores exatos: o embedding quase não os distingue
+    # (todos os dias do cardápio ficam com a mesma similaridade), o BM25 sim.
+    tem_identificador = bool(re.search(r"\d{1,2}/\d{1,2}|\b[a-z]{2,4}\d{3,4}\b", pergunta.lower()))
+    if modo in ("denso", "hibrido"):
+        filtro = {"eixo": eixo} if eixo else None
+        r = colecao().query(query_embeddings=[embed_consulta(pergunta).tolist()],
+                            n_results=config.CANDIDATOS, where=filtro)
+        rankings.append(r["ids"][0]); pesos.append(1.0)
+        for cid, dist in zip(r["ids"][0], r["distances"][0]):
+            distancias[cid] = min(dist, distancias.get(cid, 2.0))
 
-        if modo in ("bm25", "hibrido"):
-            notas = bm25.get_scores(tokenizar(q))
-            ordem = sorted(range(len(chunks)), key=lambda i: -notas[i])
-            ids = [chunks[i]["chunk_id"] for i in ordem if not eixo or chunks[i]["eixo"] == eixo]
-            rankings.append(ids[:config.CANDIDATOS])
-            pesos.append(config.PESO_BM25_IDENTIFICADOR if tem_identificador else 1.0)
+    if modo in ("bm25", "hibrido"):
+        notas = bm25.get_scores(tokenizar(pergunta))
+        ordem = sorted(range(len(chunks)), key=lambda i: -notas[i])
+        ids = [chunks[i]["chunk_id"] for i in ordem if not eixo or chunks[i]["eixo"] == eixo]
+        rankings.append(ids[:config.CANDIDATOS])
+        pesos.append(config.PESO_BM25_IDENTIFICADOR if tem_identificador else 1.0)
 
     fusao: dict[str, float] = {}
     for ranking, peso in zip(rankings, pesos):
@@ -144,3 +123,37 @@ def buscar(pergunta: str, k: int = config.TOP_K, modo: str = "hibrido", eixo: st
             c["similaridade"] = round(1 - distancias[cid], 4)
         resultado.append(c)
     return resultado
+
+
+def buscar_com_subperguntas(pergunta: str, subperguntas: list[str], k: int = config.TOP_K,
+                            modo: str = "hibrido", eixo: str | None = None) -> list[dict]:
+    """Busca cada subpergunta + consulta original e faz fusão intercalada (round-robin)."""
+    if not subperguntas:
+        return _buscar_simples(pergunta, k=k, modo=modo, eixo=eixo)
+
+    # cada subpergunta ganha uma vaga a mais no contexto (até MAX_TRECHOS)
+    k_final = min(k + len(subperguntas), config.MAX_TRECHOS)
+    listas = [_buscar_simples(s, k=k_final, modo=modo, eixo=eixo) for s in subperguntas]
+    listas.append(_buscar_simples(pergunta, k=k_final, modo=modo, eixo=eixo))
+
+    vistos: set[str] = set()
+    combinados: list[dict] = []
+    for pos in range(k_final):
+        for lista in listas:
+            if pos < len(lista):
+                c = lista[pos]
+                if c["chunk_id"] not in vistos:
+                    vistos.add(c["chunk_id"])
+                    combinados.append(c)
+                    if len(combinados) >= k_final:
+                        return combinados
+    return combinados
+
+
+def buscar(pergunta: str, k: int = config.TOP_K, modo: str = "hibrido", eixo: str | None = None,
+           decompor_pergunta: bool = True) -> list[dict]:
+    """modo: denso | bm25 | hibrido (RRF). Perguntas compostas usam JevK5-Lite + LLM."""
+    if not decompor_pergunta:
+        return _buscar_simples(pergunta, k=k, modo=modo, eixo=eixo)
+    subperguntas = decompor(pergunta)
+    return buscar_com_subperguntas(pergunta, subperguntas, k=k, modo=modo, eixo=eixo)
