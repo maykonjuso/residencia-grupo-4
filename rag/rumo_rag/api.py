@@ -9,11 +9,13 @@ O orquestrador do portal (FcteMapping) e o OpenClaw chamam esta rota. A base, o 
 prompt continuam só do Grupo 04.
 """
 import logging
+import os
 import re
+import secrets
 import time
 from datetime import date
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Header, HTTPException
 from pydantic import BaseModel, ConfigDict, Field
 
 from . import config, geracao, indice
@@ -21,6 +23,9 @@ from . import config, geracao, indice
 log = logging.getLogger("rumo.api")
 DIAS = ("segunda-feira", "terça-feira", "quarta-feira", "quinta-feira", "sexta-feira", "sábado", "domingo")
 SEM_BASE = "Não encontrei essa informação nas fontes da base."
+# Publicada na internet, a API gastaria a cota do LLM de quem chamasse. Com RUMO_API_TOKEN definido,
+# /perguntar exige "Authorization: Bearer <token>" (o mesmo valor em RUMO_API_TOKEN no FcteMapping).
+TOKEN = os.getenv("RUMO_API_TOKEN", "").strip()
 
 app = FastAPI(title="RUmo · Grupo 04", version="1.0.0")
 
@@ -52,13 +57,22 @@ def com_data(pergunta: str, contexto: Contexto) -> str:
 @app.get("/saude")
 def saude():
     chunks, _ = indice._bm25()
-    return {"status": "ok", "grupo": "grupo04", "busca": config.BUSCA, "backend": config.BACKEND,
+    return {"status": "ok", "grupo": "grupo04", "busca": config.BUSCA, "backend": config.BACKEND, "token": bool(TOKEN),
             "modelo": {"hf": config.MODELO_HF, "ollama": config.MODELO_OLLAMA,
                        "openai": config.OPENAI_MODEL}.get(config.BACKEND), "chunks": len(chunks)}
 
 
+def exigir_token(authorization: str | None) -> None:
+    if not TOKEN:
+        return
+    esquema, _, valor = (authorization or "").partition(" ")
+    if esquema.lower() != "bearer" or not secrets.compare_digest(valor.strip().encode(), TOKEN.encode()):
+        raise HTTPException(401, "Token ausente ou inválido.", headers={"WWW-Authenticate": "Bearer"})
+
+
 @app.post("/perguntar")
-def perguntar(entrada: Pergunta):
+def perguntar(entrada: Pergunta, authorization: str | None = Header(default=None)):
+    exigir_token(authorization)
     inicio = time.monotonic()
     pergunta = com_data(entrada.pergunta.strip(), entrada.contexto)
     if entrada.contexto.curso and entrada.contexto.curso.lower() not in pergunta.lower():
