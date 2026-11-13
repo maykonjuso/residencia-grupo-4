@@ -1,0 +1,24 @@
+{
+  "sem_rag": {
+    "taxa_citacao_valida": 0.0,
+    "fidelidade_factual": 0.0,
+    "taxa_alucinacao_numerica": 0.2895,
+    "taxa_recusa_negativa": 0.0,
+    "completude_multihop": 0.7,
+    "rouge_l": 0.2904
+  },
+  "com_rag": {
+    "taxa_citacao_valida": 1.0,
+    "fidelidade_factual": 1.0,
+    "taxa_alucinacao_numerica": 0.0,
+    "taxa_recusa_negativa": 1.0,
+    "completude_multihop": 1.0,
+    "rouge_l": 0.9378
+  },
+  "taxa_citacao_valida": 1.0,
+  "fidelidade_factual": 1.0,
+  "taxa_alucinacao_numerica": 0.0,
+  "taxa_recusa_negativa": 1.0,
+  "completude_multihop": 1.0,
+  "rouge_l": 0.9378
+}

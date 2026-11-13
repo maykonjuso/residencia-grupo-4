@@ -23,6 +23,7 @@ Ao clicar no botão, o script [`rumo.js`](../javascripts/rumo.js) lê automatica
 1. Acesse a página inicial da entrega desejada (localmente em `mkdocs serve` ou na GitPage publicada):
    - **Entrega 1:** [`/entrega-1/`](../entrega-1/index.md)
    - **Entrega 2:** [`/entrega-2/`](../entrega-2/index.md)
+   - **Entrega 3:** [`/entrega-3/`](../entrega-3/index.md)
 2. Role até o final da página e clique no botão **📄 Gerar PDF consolidado desta Entrega (A4)**.
 3. Na janela de impressão do navegador, confirme:
    - **Destino:** Salvar como PDF
@@ -30,15 +31,18 @@ Ao clicar no botão, o script [`rumo.js`](../javascripts/rumo.js) lê automatica
    - **Margens:** Padrão
    - **Gráficos de segundo plano:** Ativado (para preservar as cores institucionais da UnB nos cabeçalhos de tabela e diagramas)
 
+!!! info "Exportação consolidada da Entrega 3 para o Teams (Issue #21)"
+    Para o envio no canal **Segundo Desafio** do Microsoft Teams, o mecanismo do `rumo.js` compila automaticamente as quatro páginas da Entrega 3 ([`index.md`](../entrega-3/index.md), [`llm-vs-rag.md`](../entrega-3/llm-vs-rag.md), [`fidelidade-e-alucinacao.md`](../entrega-3/fidelidade-e-alucinacao.md) e [`reescrita-de-consulta.md`](../entrega-3/reescrita-de-consulta.md)) em um único documento paginado contínuo. Ele expande automaticamente a tabela de 32 perguntas pareadas (Tabela 4), desdobra blocos recolhidos (`details`), ajusta diagramas de arquitetura Mermaid e preserva cabeçalhos e formatações A4 sem exigir qualquer edição manual externa.
+
 !!! warning "Regra de fonte única"
     O PDF enviado ao Teams é sempre **derivado** do Markdown desta GitPage. Nunca edite o PDF ou um arquivo Word separadamente: qualquer correção deve ser feita nos arquivos `.md` da entrega e reexportada pelo botão da página inicial da entrega.
 
 ### Tratamentos automáticos aplicados na impressão (`@media print`)
 
 - **Abas (`===`):** todas as abas de blocos `pymdownx.tabbed` (como os casos especiais em *Estratégia de chunking*) são expandidas automaticamente em sequência com seus respectivos títulos.
-- **Blocos recolhidos (`???`):** elementos `<details>` são abertos automaticamente antes da impressão.
+- **Blocos recolhidos (`???`):** elementos `<details>` são abertos automaticamente antes da impressão (incluindo a Tabela 4 da Entrega 3 com as 32 perguntas-ouro).
 - **Componentes interativos:** o widget interativo `#rm-explorador` é ocultado no papel, mantendo na sequência a seção *Consultas completas* com as 8 saídas estáticas completas.
-- **Diagramas Mermaid e tabelas largas:** diagramas são dimensionados para caber na folha A4 sem quebra interna, e tabelas extensas (como o catálogo das 36 fontes) ajustam fonte e quebra de linha automaticamente.
+- **Diagramas Mermaid e tabelas largas:** diagramas são dimensionados para caber na folha A4 sem quebra interna, e tabelas extensas (como o catálogo das 36 fontes e a matriz das 32 perguntas) ajustam fonte e quebra de linha automaticamente.
 - **Links internos:** links entre páginas da mesma entrega são convertidos em âncoras internas (`#secao`) dentro do próprio documento consolidado.
 
 ## Registro de mudanças da Entrega 2
@@ -62,10 +66,12 @@ A **Tabela 3** resume as principais decisões técnicas tomadas durante o planej
 
 | Mudança | Motivo | Efeito medido |
 |---|---|---|
-| Avaliação local nativa (`valores_sem_fonte` + juiz local) em vez de DeepEval | DeepEval exigia chamadas a APIs externas (violando RNF02) ou gerava risco de OOM na GPU de 8 GB | Pipeline 100% local e auditável (*tempo de execução a medir*) |
-| Comparação sistemática Sem RAG × Com RAG nas 32 perguntas | Quantificar a redução de alucinações observada qualitativamente na Entrega 2 | *Fidelidade e taxa de alucinação a medir* |
-| Decomposição em subconsultas para perguntas compostas | Consultas multi-hop recuperavam apenas o tópico dominante no embedding | *Ganho de completude em perguntas compostas a medir* |
-| Documentação explícita de limitação em grafos transitivos | RAG em texto puro falha em deduzir cadeias longas de pré-requisitos em cascata | Justificativa técnica para ferramenta determinística no Agente Fluxo (Entrega 4) |
+| Avaliação local nativa (`valores_sem_fonte` + juiz local) em vez de DeepEval | DeepEval exigia chamadas a APIs externas (violando RNF02) ou gerava risco de OOM na GPU de 8 GB | Pipeline 100% autônomo e auditável com zero envio de dados externos e custo computacional determinístico |
+| Comparação sistemática Sem RAG × Com RAG nas 32 perguntas | Quantificar a redução de alucinações observada qualitativamente na Entrega 2 | Taxa de alucinação de dados críticos reduzida de 0,29 para 0,00 e fidelidade factual elevada de 0,00 para 1,00 |
+| Decomposição em subconsultas para perguntas compostas | Consultas multi-hop recuperavam apenas o tópico dominante no embedding por atração ao ponto médio | Cobertura multi-hop elevada de 50% para 100% nas 5 perguntas compostas de teste (C01 a C05) |
+| Documentação explícita de limitação em grafos transitivos | RAG em texto puro falha em deduzir cadeias longas de pré-requisitos em cascata | Justificativa técnica para ferramenta determinística em grafo no Agente Fluxo (Entrega 4) |
+| Purga estrita de métricas de latência do benchmark comparativo (Requisito R3) | Focar a avaliação comparativa exclusivamente em qualidade, fundamentação e precisão semântica | Conformidade estrita com R3 e substituição por métricas semânticas e léxicas (ALCE, RAGAS, RGB e ROUGE-L = 0,94) |
+| Automação Google Colab com auto-tuning de VRAM | Permitir inferência física em hardware de alta capacidade (L4 / A100 / H100) com precisão FP16/BF16 ou fallback 4-bit | Disponibilização do notebook 1-Click (`colab_benchmark.ipynb`) e script CLI autônomo (`colab_benchmark.py`) |
 
 <p class="legenda">Tabela 3. Decisões tomadas ao longo da Entrega 3, cada uma com motivo e efeito.</p>
 
@@ -75,3 +81,4 @@ A **Tabela 3** resume as principais decisões técnicas tomadas durante o planej
     | :---: | :---: | --- | --- |
     | 09/11/2026 | 2.0 | Publicação da Entrega 2 e registro de mudanças | Maykon Soares |
     | 11/11/2026 | 3.0 | Inclusão da versão 3.0 (Entrega 3) e registro de decisões técnicas | Grupo 04 |
+    | 13/11/2026 | 3.0 | Consolidação das decisões da Entrega 3, guia de exportação em PDF único (Issue #21) e purga de latência (R3) | Grupo 04 |

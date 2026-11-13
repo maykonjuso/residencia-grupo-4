@@ -29,6 +29,11 @@ e sugira o órgão responsável. Não invente valores, datas, códigos ou pré-r
 4. Se a informação depende do perfil do estudante (grupo de pagamento, curso, ano de ingresso), diga isso.
 5. Seja conciso: no máximo 120 palavras. Copie valores, datas, códigos e nomes exatamente como estão nos trechos."""
 
+PROMPT_SEM_RAG = (
+    "Você é um assistente acadêmico da Universidade de Brasília (UnB - campus Gama/FCTE). "
+    "Responda à pergunta do estudante com base no seu conhecimento prévio de forma direta e concisa (máximo 120 palavras)."
+)
+
 
 def montar_contexto(trechos: list[dict]) -> str:
     partes = []
@@ -42,6 +47,13 @@ def montar_mensagens(pergunta: str, trechos: list[dict]) -> list[dict]:
     return [
         {"role": "system", "content": INSTRUCOES},
         {"role": "user", "content": f"Trechos recuperados:\n\n{montar_contexto(trechos)}\n\nPergunta: {pergunta}"},
+    ]
+
+
+def montar_mensagens_sem_rag(pergunta: str) -> list[dict]:
+    return [
+        {"role": "system", "content": PROMPT_SEM_RAG},
+        {"role": "user", "content": pergunta},
     ]
 
 
@@ -111,6 +123,8 @@ def gerar(pergunta: str, trechos: list[dict], backend: str = config.BACKEND) -> 
     if not trechos:                     # RN-03: sem trecho recuperado, nem chama o LLM
         return RECUSA
     msgs = montar_mensagens(pergunta, trechos)
+    if backend == "auto":
+        backend = config.BACKEND
     if backend == "hf":
         return _gerar_hf(msgs)
     if backend == "ollama":
@@ -118,6 +132,20 @@ def gerar(pergunta: str, trechos: list[dict], backend: str = config.BACKEND) -> 
     if backend == "openai":
         return _gerar_openai(msgs)
     return _gerar_extrativo(pergunta, trechos)
+
+
+def gerar_sem_rag(pergunta: str, backend: str = config.BACKEND) -> str:
+    """Gera resposta com LLM puro (Sem RAG), sem contexto documental ou busca vetorial."""
+    msgs = montar_mensagens_sem_rag(pergunta)
+    if backend == "auto":
+        backend = config.BACKEND
+    if backend == "hf":
+        return _gerar_hf(msgs)
+    if backend == "ollama":
+        return _gerar_ollama(msgs)
+    if backend == "openai":
+        return _gerar_openai(msgs)
+    return "Modo sem RAG requer backend de LLM (hf, ollama ou openai)."
 
 
 def _numeros_citados(resposta: str, n_trechos: int) -> list[int]:

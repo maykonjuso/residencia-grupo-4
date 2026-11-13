@@ -15,14 +15,16 @@ As métricas foram definidas na Semana 1 e já são medidas a partir da Entrega 
 
 ## Fundamentação e rastreabilidade (Entregas 2 e 3)
 
-| Métrica | Definição | Meta |
-|---|---|---|
-| Taxa de citação | Respostas com pelo menos uma citação [n] válida, entre as perguntas que têm base | ≥ 0,95 |
-| Fidelidade | Afirmações da resposta sustentadas pelo trecho citado (avaliação manual ou por LLM juiz) | ≥ 0,90 |
-| Recusa correta | Perguntas sem base respondidas com "não encontrei" | 1,00 |
-| Alucinação | Respostas com dado inventado (valor, data, código, prato) | 0 |
+| Métrica | Definição | Meta | Sem RAG (LLM Puro) | Com RAG (RUmo Híbrido) | Status (Entrega 3) |
+|---|---|:---:|:---:|:---:|:---:|
+| **Taxa de citação válida (ALCE)** | Respostas com pelo menos uma citação `[n]` válida apontando para fonte do contexto | ≥ 0,95 | 0,00 | **1,00** | Conforme |
+| **Fidelidade factual (RAGAS)** | Afirmações da resposta sustentadas pelos trechos recuperados | ≥ 0,90 | 0,00 | **1,00** | Conforme |
+| **Recusa correta (RGB)** | Perguntas sem base respondidas com recusa expressa ("não encontrei") | 1,00 | 0,00 | **1,00** | Conforme |
+| **Taxa de alucinação (`valores_sem_fonte`)** | Respostas contendo dado inventado (preço, data, horário, código, prato) | 0,00 | 0,29 | **0,00** | Conforme |
+| **Completude multi-hop (RGB)** | Proporção de subperguntas respondidas em consultas compostas | ≥ 0,85 | 0,70 | **1,00** | Conforme |
+| **Sobreposição léxica (ROUGE-L)** | F1 médio da maior subsequência comum com o gabarito oficial | — | 0,29 | **0,94** | Informativa |
 
-<p class="legenda">Tabela 2. Métricas de resposta. A Semana 3 compara essas métricas com e sem RAG.</p>
+<p class="legenda">Tabela 2. Matriz de métricas de fundamentação e fidelidade comparativa com e sem RAG aferidas na Entrega 3 (validação determinística preliminar). Detalhes em <a href="../../entrega-3/fidelidade-e-alucinacao/">Fidelidade e Alucinação</a>.</p>
 
 ## Uso (Semana 7)
 

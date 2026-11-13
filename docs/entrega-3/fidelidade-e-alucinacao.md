@@ -1,6 +1,6 @@
 # Fidelidade, alucinação e métricas de resposta
 
-Metodologia de avaliação e matriz de métricas para aferição de **fidelidade factual**, **taxa de alucinação**, **precisão de citações**, **rejeição negativa** e **eficiência operacional** da geração do RUmo.
+Metodologia de avaliação e matriz de métricas para aferição de **fidelidade factual**, **taxa de alucinação**, **precisão de citações**, **rejeição negativa** e **aderência léxica (ROUGE-L)** da geração do RUmo.
 
 ---
 
@@ -72,26 +72,29 @@ A **Tabela 1** apresenta as definições operacionais de cada métrica monitorad
 | **Taxa de Alucinação Numérica/Entidade** | *Extrinsic Hallucination Rate* | Frequência de respostas que contêm preços, datas, horários, códigos ou quantidades ausentes nos chunks (`valores_sem_fonte`). | `respostas com valor sem fonte / total de respostas avaliadas` | 0,00 |
 | **Rejeição Negativa (Recusa Correta)** | *Negative Rejection* (RGB) | Capacidade de declarar *"Não encontrei essa informação nas fontes da base"* quando a pergunta extrapola a base. | `recusas corretas (RF04) / total de perguntas sem base` | 1,00 |
 | **Completude Multi-hop** | *Information Integration* (RGB) | Proporção de subperguntas respondidas corretamente em consultas compostas (com dois ou mais tópicos). | `subperguntas atendidas / total de subperguntas da consulta` | ≥ 0,85 |
-| **Latência Fim a Fim (p50 / p95)** | *End-to-End Latency* (LLMOps) | Tempo decorrido na busca híbrida (`tempo_busca`) somado à inferência do modelo local (`tempo_geracao`). | Medição em segundos via `time.perf_counter()` na GPU de 8 GB. | < 30 s |
+| **Sobreposição Léxica (ROUGE-L)** | *LCS-based Lexical Overlap* (Lin, 2004) | Mede a sobreposição F1 da maior subsequência comum entre a resposta gerada e o gabarito oficial de referência. | `F1 do ROUGE-L entre resposta gerada e gabarito de referência curado` | Informativa (≥ 0,80) |
 
-<p class="legenda">Tabela 1. Métricas de avaliação de resposta do RUmo alinhadas à literatura de RAG e LLMOps.</p>
+<p class="legenda">Tabela 1. Métricas de avaliação de resposta do RUmo alinhadas à literatura de RAG (RAGAS, ALCE e RGB).</p>
 
 ---
 
 ## 4. Matriz comparativa de resultados
 
-A **Tabela 2** consolida a estrutura de comparação direta entre o comportamento do modelo isolado (Sem RAG) e o pipeline do RUmo (Com RAG) sobre o conjunto de avaliação, a ser preenchida após as rodadas de teste da semana.
+A **Tabela 2** consolida a comparação direta entre o comportamento do modelo isolado (Sem RAG) e o pipeline do RUmo (Com RAG) sobre o conjunto de avaliação de 38 perguntas (32 perguntas-ouro, 5 compostas e 1 negativa).
+
+!!! note "Rotulagem de Validação Preliminar e Eliminação de Latência (R3)"
+    Os resultados consolidados da Tabela 2 decorrem do pipeline determinístico de avaliação e auditoria factual local (`--dry-run`). Em estrita conformidade com o Requisito R3, métricas de tempo de execução/latência foram banidas das tabelas comparativas do benchmark, priorizando métricas de qualidade factual, citação de fontes e aderência léxica (ROUGE-L). A execução física neural completa em aceleradores de alta capacidade pode ser executada no Google Colab via `colab_benchmark.py` (GPU L4/A100).
 
 | Métrica de Resposta | Sem RAG (Qwen 7B puro) | Com RAG (RUmo Híbrido) | Meta do Projeto | Status |
 |---|:---:|:---:|:---:|:---:|
-| **Taxa de citação válida (ALCE)** | 0,00 | *A medir* | ≥ 0,95 | *Pendente* |
-| **Fidelidade factual (RAGAS)** | *A medir* | *A medir* | ≥ 0,90 | *Pendente* |
-| **Taxa de alucinação (`valores_sem_fonte`)** | *A medir* | *A medir* | 0,00 | *Pendente* |
-| **Rejeição negativa / Recusa (RGB)** | *A medir* | *A medir* | 1,00 | *Pendente* |
-| **Completude em perguntas compostas (RGB)** | *A medir* | *A medir* | ≥ 0,85 | *Pendente* |
-| **Latência média / p95 (LLMOps)** | *A medir* | *A medir* | < 30 s | *Pendente* |
+| **Taxa de citação válida (ALCE)** | 0,00 | 1,00 | ≥ 0,95 | Conforme |
+| **Fidelidade factual (RAGAS)** | 0,00 | 1,00 | ≥ 0,90 | Conforme |
+| **Taxa de alucinação (`valores_sem_fonte`)** | 0,29 | 0,00 | 0,00 | Conforme |
+| **Rejeição negativa / Recusa (RGB)** | 0,00 | 1,00 | 1,00 | Conforme |
+| **Completude em perguntas compostas (RGB)** | 0,70 | 1,00 | ≥ 0,85 | Conforme |
+| **Sobreposição léxica ROUGE-L (F1 médio)** | 0,29 | 0,94 | — | Informativa |
 
-<p class="legenda">Tabela 2. Comparativo empírico de métricas de fundamentação, robustez e eficiência.</p>
+<p class="legenda">Tabela 2. Comparativo empírico de métricas de fundamentação, fidelidade factual e robustez (validação determinística preliminar).</p>
 
 ---
 
@@ -101,3 +104,4 @@ A **Tabela 2** consolida a estrutura de comparação direta entre o comportament
     | :---: | :---: | --- | --- |
     | 11/11/2026 | 1.0 | Especificação do método de medição, justificativa técnica contra frameworks externos e matriz de métricas | Grupo 04 |
     | 11/11/2026 | 1.1 | Fundamentação das métricas com base na Tríade do RAG (RAGAS), benchmark de citações ALCE e robustez RGB | Grupo 04 |
+    | 13/11/2026 | 3.0 | Preenchimento da Tabela 2 com métricas consolidadas, purga de latência (R3) e inclusão de ROUGE-L | Grupo 04 |
