@@ -8,24 +8,62 @@ Comparação empírica direta entre a geração do modelo **Qwen2.5-7B-Instruct*
 
 Na Entrega 2, o grupo constatou que modelos de linguagem sem ancoragem documental sofrem de alucinações severas em dados de domínio fechado. No caso do Restaurante Universitário e do fluxo acadêmico da FCTE/UnB, inventar o valor de uma refeição, uma data de cardápio ou um pré-requisito de disciplina acarreta prejuízo real ao estudante.
 
-Para mensurar esse comportamento com rigor, submetem-se as mesmas **32 perguntas-ouro** de `rag/avaliacao/perguntas_ouro.jsonl` a dois regimes idênticos de hardware e parâmetros de inferência (temperatura = 0,2, top_p = 0,9, quantização 4 bits na RTX 4060):
+Para mensurar esse comportamento com rigor, submetem-se as mesmas **32 perguntas-ouro** de `rag/avaliacao/perguntas_ouro.jsonl` a dois regimes idênticos de parâmetros de inferência (temperatura = 0,2, top_p = 0,9, modelo `qwen2.5:7b` executado tanto localmente no Ollama em MacBook Air M4 quanto em GPU NVIDIA L4 em precisão FP16 no Google Colab):
 
 1. **LLM puro (Sem RAG):** O prompt envia apenas a pergunta do usuário e uma instrução genérica de assistente acadêmico, sem qualquer trecho de documento injetado.
 2. **RUmo (Com RAG):** A pergunta aciona a busca híbrida; os 5 chunks mais relevantes são injetados no contexto, acompanhados de metadados, regra de citação obrigatória [n] e instrução estrita de recusa fora da base (RF03 e RF04).
+
+### Estudo de ablação: as 4 configurações de arquitetura avaliadas
+
+Antes de executar a bateria completa de 38 perguntas (32 perguntas-ouro + 6 compostas), o grupo implementou dois scripts de benchmark (`rag/testar_4_configuracoes.py` e `rag/comparativo_rag.py`) para comparar **4 configurações de arquitetura** sobre 3 cenários canônicos representativos:
+- **`P1` (Tarifa do RU):** *"Quanto um estudante de graduação paga no almoço do RU?"* (Gabarito: R$ 4,50 - Grupo III ou R$ 0,00 - Grupo I, docs `F01`/`F04`).
+- **`P2` (Fluxo curricular):** *"Quais são os pré-requisitos de Testes de Software na FCTE?"* (Gabarito: Requisitos de Software `FGA0313`, com menção indireta a MDS `FGA0312`, doc `F16`).
+- **`P3` (Fora da base / RF04):** *"Qual é a senha do Wi-Fi da biblioteca da FCTE?"* (Gabarito: Recusa obrigatória conforme RF04, doc `NENHUM`).
+
+A **Tabela 1** resume o comportamento observado empiricamente em cada configuração (medido localmente em MacBook Air M4 via Ollama), acompanhada da análise crítica de suas propriedades.
+
+| # | Configuração | Latência típica | Rastreabilidade / Fontes | Alucinações (`valores_sem_fonte`) | Recusa fora da base (`P3` / RF04) | Veredito |
+|:---:|---|:---:|:---:|:---:|:---:|---|
+| **1** | **LLM Pura (Zero-shot, sem RAG)** | ~3–5 s | 0% (sem fontes) | Nula em números; inventa nomes de entidades | Recusa semântica genérica (TI/secretaria) | **Descartada:** sem fontes auditáveis, viola RF03 e RNF01 |
+| **2** | **RAG Extrativo (Sem LLM)** | < 0,1 s (após warmup) | 100% (trecho literal) | 0 (porém retorna valor errado de outro campus) | Falha (devolve trechos léxicos sem recusar) | **Descartada:** respostas truncadas, erro de contexto e viola RF04 |
+| **3** | **RAG Generativo Simples (`k=3`)** | ~2–4 s | Alta (`[1]`–`[3]`) | 0 em números | Acerta (*"Não encontrei..."*) | **Insuficiente:** omite regras em listas longas de isenção e fluxo |
+| **4** | **RAG Generativo Completo (`k=5` + Verificador)** | ~3–6 s | Total (`[1]`–`[5]`, deduplicadas) | 0 (auditada por regex determinística) | Acerta (*"Não encontrei..."*) | **Escolhida para o RUmo** |
+
+<p class="legenda">Tabela 1. Estudo de ablação comparativo das 4 configurações de arquitetura (<code>rag/testar_4_configuracoes.py</code> e <code>rag/comparativo_rag.py</code>).</p>
+
+> [!IMPORTANT]
+> **Notas e observações empíricas críticas sobre o benchmark das 4 configurações:**
+> 
+> 1. **Gabarito oficial de `P1`:** O valor correto para discentes de graduação sem auxílio socioeconômico é **R$ 4,50** (Grupo III da Resolução F04), sendo R$ 0,00 para estudantes do Grupo I (isentos).
+> 2. **Comportamento real do LLM Puro na recusa (`P3`):** Ao contrário do que verificadores sintáticos simplistas indicavam, o LLM Puro não inventou uma senha arbitrária para a biblioteca no teste zero-shot; ele emitiu uma recusa genérica sensata (*"Não tenho acesso a senhas... contate o departamento de TI ou a secretaria"*). Ele só era marcado como "falha" quando o verificador exigia a frase exata do prompt de RAG (*"não encontrei essa informação"*).
+> 3. **Aplicabilidade da métrica de Recusa:** A métrica de recusa só se aplica a perguntas fora da base documental (`P3`). Para perguntas dentro do domínio (`P1` e `P2`), a métrica é classificada estritamente como **N/A** (não aplicável), pois a resposta esperada é a entrega factual do conteúdo e não uma abstenção.
+> 4. **Limitação de `valores_sem_fonte` diante de alucinações nominais:** No caso `P2`, o LLM Puro cometeu uma alucinação severa ao expandir a sigla FCTE como *"Faculdade Cásper Líbero"*. Contudo, a métrica determinística `valores_sem_fonte` indicou zero alucinações, pois a expressão regular monitora apenas números, moedas (`R$`), datas e códigos curriculares. Isso evidencia por que a auditoria simbólica deve ser complementada pela métrica semântica RAGAS.
+> 5. **Corretude factual vs. Groundedness no RAG Extrativo:** No teste `P1`, o RAG Extrativo recuperou e devolveu um trecho do campus Planaltina indicando a tarifa de R$ 2,50 (Grupo IV). Como "R$ 2,50" constava literalmente no trecho, a métrica determinística reportou zero alucinações. Isso demonstra empiricamente que `valores_sem_fonte == 0` atesta apenas ausência de invenção numérica arbitrária (*groundedness estrito*), mas não garante que o chunk selecionado responda à pergunta específica da FCTE. Apenas a síntese generativa (`k=5`) articulou corretamente a regra da graduação ampla (R$ 4,50).
+> 6. **Artefato de latência no RAG Extrativo e necessidade de aquecimento (Warmup):** A primeira execução de `P1` no RAG Extrativo registrou ~5,9 s em medições locais sem warmup, decorrente exclusivamente do carregamento dos pesos do modelo `bge-m3` na memória. Com o modelo pré-aquecido, o tempo real de geração extrativa é inferior a 0,1 s.
+> 7. **Deduplicação de fontes:** O mecanismo de citação foi aprimorado para deduplicar fontes (`dict.fromkeys`), evitando inflar a contagem quando múltiplos chunks pertencem ao mesmo documento normativo (`F04, F04, F03` passa a reportar 2 documentos distintos).
+
+Para reproduzir a bateria comparativa localmente com o Ollama:
+
+```bash
+cd rag
+export RUMO_OLLAMA_MODEL=qwen2.5:7b
+python testar_4_configuracoes.py
+python comparativo_rag.py
+```
 
 ---
 
 ## 2. Casos comparativos representativos
 
-A **Tabela 1** apresenta três casos emblemáticos selecionados do conjunto de avaliação que ilustram as diferenças qualitativas esperadas e os padrões de resposta observados entre as duas abordagens.
+A **Tabela 2** apresenta três casos emblemáticos selecionados do conjunto de avaliação que ilustram as diferenças qualitativas esperadas e os padrões de resposta observados entre as duas abordagens.
 
 | Pergunta | Resposta do LLM Puro (Sem RAG) | Resposta do RUmo (Com RAG) | Diagnóstico da Diferença |
 |---|---|---|---|
-| **Q01:** *"Quanto custa o almoço no RU para um estudante de graduação sem auxílio?"* | *Tendência a alucinar valor plausível mas incorreto (ex: R$ 5,00 ou R$ 3,50).* | *Recupera os valores oficiais exatos (R$ 6,10 para Grupo III) com citação [1] de F01/F04.* | **Alucinação eliminada:** Ancoragem estrita elimina a invenção de tarifas do RU. |
+| **Q01:** *"Quanto custa o almoço no RU para um estudante de graduação sem auxílio?"* | *Tendência a alucinar valor plausível mas incorreto (ex: R$ 5,00 ou R$ 3,50).* | *Recupera os valores oficiais exatos (R$ 4,50 para Grupo III) com citação [1] de F01/F04.* | **Alucinação eliminada:** Ancoragem estrita elimina a invenção de tarifas do RU. |
 | **Q14:** *"Quais são os pré-requisitos de Testes de Software?"* | *Tendência a misturar convenções de outros cursos ou universidades (ex: citar POO ou Engenharia de Requisitos).* | *Recupera o pré-requisito formal da matriz da FCTE citando o fluxograma F16.* | **Erro de fluxo corrigido:** Respeito à matriz curricular oficial da FCTE/UnB. |
 | **D7 (Fora da base):** *"Qual o wifi da biblioteca da FCTE?"* | *Tendência a inventar nomes de rede genéricos (ex: `UnB-WiFi` ou `FCTE-Visitante`).* | *Responde com recusa expressa: "Não encontrei essa informação nas fontes da base" (RF04).* | **Recusa correta:** Evita inventar credenciais ou configurações sem evidência oficial. |
 
-<p class="legenda">Tabela 1. Casos representativos do protocolo de comparação entre modelo puro e RUmo com RAG.</p>
+<p class="legenda">Tabela 2. Casos representativos do protocolo de comparação entre modelo puro e RUmo com RAG.</p>
 
 ---
 
@@ -39,7 +77,7 @@ Um sistema que relata apenas sucessos mascara fragilidades de engenharia. Em con
 
 ### O que acontece na execução
 
-A **Tabela 2** detalha o diagnóstico da resposta gerada pelo sistema frente ao gabarito curricular oficial da matriz de Engenharia de Software.
+A **Tabela 3** detalha o diagnóstico da resposta gerada pelo sistema frente ao gabarito curricular oficial da matriz de Engenharia de Software.
 
 | Dimensão | Conteúdo observado |
 |---|---|
@@ -48,7 +86,7 @@ A **Tabela 2** detalha o diagnóstico da resposta gerada pelo sistema frente ao 
 | **Gabarito curricular esperado** | O estudante fica impedido de cursar **Cálculo 2** (2º semestre) e, por transitividade de pré-requisito em cascata, as disciplinas subsequentes do 3º semestre que exigem Cálculo 2. |
 | **Diagnóstico da falha** | **Incompletude por falha de encadeamento transitivo.** O RAG recuperou os chunks corretos, mas a resposta final falhou na dedução em cascata. |
 
-<p class="legenda">Tabela 2. Diagnóstico da limitação do RAG em cadeia de pré-requisitos transitivos.</p>
+<p class="legenda">Tabela 3. Diagnóstico da limitação do RAG em cadeia de pré-requisitos transitivos.</p>
 
 ### Causa-raiz da limitação
 
@@ -65,10 +103,10 @@ Esse resultado comprova que **RAG puramente textual é insuficiente para racioc�
 
 ## 4. Matriz consolidada e registro das 32 perguntas-ouro
 
-A **Tabela 3** consolida o desempenho comparativo agregado nas 32 perguntas-ouro por eixo temático (`ru`, `apoio` e `fluxo`).
+A **Tabela 4** consolida o desempenho comparativo agregado nas 32 perguntas-ouro por eixo temático (`ru`, `apoio` e `fluxo`).
 
 !!! note "Medição Real em GPU NVIDIA L4 e Ausência de Latência"
-    Os dados agregados da Tabela 3 decorrem da execução do benchmark físico em GPU NVIDIA L4 no Google Colab. Em cumprimento ao Requisito R3, métricas temporais foram integralmente omitidas. Todas as 32 perguntas do RUmo com RAG contam com zero alucinação numérica (`valores_sem_fonte = 0`) e fidelidade factual de 0,97.
+    Os dados agregados da Tabela 4 decorrem da execução do benchmark físico em GPU NVIDIA L4 no Google Colab. Em cumprimento ao Requisito R3, métricas temporais foram integralmente omitidas. Todas as 32 perguntas do RUmo com RAG contam com zero alucinação numérica (`valores_sem_fonte = 0`) e fidelidade factual de 0,97.
 
 | Eixo Temático | Quantidade | Sem RAG: Alucinações | Com RAG: Fidelidade total | Com RAG: Incompletude |
 |---|:---:|:---:|:---:|:---:|
@@ -77,9 +115,9 @@ A **Tabela 3** consolida o desempenho comparativo agregado nas 32 perguntas-ouro
 | **Fluxo e Disciplinas (`fluxo`)** | 19 | 19 / 19 (3 com valores inventados) | 19 / 19 (100%) | 0 / 19 (0%) |
 | **Total Consolidado** | **32** | **32 / 32 (9 com valores sem fonte)** | **31 / 32 (97%)** | **1 / 32 (3%)*** |
 
-<p class="legenda">Tabela 3. Matriz de desempenho comparativo agregado nas 32 perguntas de teste (medido em GPU NVIDIA L4). *Nota: Q04 apresentou abstenção/recusa por falta de detalhe específico de gratuidade no trecho recuperado.</p>
+<p class="legenda">Tabela 4. Matriz de desempenho comparativo agregado nas 32 perguntas de teste (medido em GPU NVIDIA L4). *Nota: Q04 apresentou abstenção/recusa por falta de detalhe específico de gratuidade no trecho recuperado.</p>
 
-??? info "Tabela 4 · Registro completo das 32 perguntas-ouro: LLM puro × RAG (clique para expandir)"
+??? info "Tabela 5 · Registro completo das 32 perguntas-ouro: LLM puro × RAG (clique para expandir)"
 
     | ID | Eixo | Pergunta | Docs esperados | Resposta Sem RAG (LLM puro) | Resposta Com RAG (RUmo) | Fidelidade / Alucinação | Diagnóstico |
     |:---:|:---:|---|---|---|---|---|---|
@@ -116,7 +154,7 @@ A **Tabela 3** consolida o desempenho comparativo agregado nas 32 perguntas-ouro
     | **Q31** | `fluxo` | Como faço a matrícula on-line no SIGAA? | `F32`, `F34`, `F29` | Basta entrar no portal do discente, clicar em ensino e escolher qualquer matéria com vaga. | A matrícula é realizada acessando o SIGAA no Portal do Discente > Ensino > Matrícula on-line > Realizar Matrícula, selecionando as turmas e confirmando a operação no período estipulado pelo calendário. [1] | Sem RAG: resposta sem ancoragem documental (fidelidade 0,00). Com RAG: 100% fundamentado. | Fundamentação documental e precisão institucional asseguradas. |
     | **Q32** | `fluxo` | Quais são os órgãos colegiados da Faculdade do Gama segundo o regimento interno? | `F36` | Os órgãos colegiados são a Congregação, o Colegiado de Extensão e as Diretorias de Centros. | Conforme o regimento interno da FGA, os órgãos colegiados incluem o Conselho da FGA, o Colegiado de Graduação e Extensão, a Câmara Acadêmica, os Colegiados de Área e os Colegiados dos Programas de Pós-Graduação. [1] | Sem RAG: resposta sem ancoragem documental (fidelidade 0,00). Com RAG: 100% fundamentado. | Fundamentação documental e precisão institucional asseguradas. |
 
-    <p class="legenda">Tabela 4. Tabela mestre das 32 perguntas-ouro (<code>rag/avaliacao/perguntas_ouro.jsonl</code>) para comparação lado a lado entre LLM puro e RUmo com RAG (validação determinística preliminar).</p>
+    <p class="legenda">Tabela 5. Tabela mestre das 32 perguntas-ouro (<code>rag/avaliacao/perguntas_ouro.jsonl</code>) para comparação lado a lado entre LLM puro e RUmo com RAG (validação determinística preliminar).</p>
 
 ---
 
@@ -150,3 +188,4 @@ Para executar a inferência física real na íntegra utilizando aceleradores de 
     | 11/11/2026 | 1.0 | Especificação do protocolo de comparação LLM × RAG, casos de teste e análise do caso de falha | Grupo 04 |
     | 11/11/2026 | 1.1 | Inclusão da Tabela 4 recolhida com as 32 perguntas-ouro de `perguntas_ouro.jsonl` | Grupo 04 |
     | 13/11/2026 | 3.0 | Preenchimento das Tabelas 3 e 4 com dados comparativos, rotulagem determinística, purga de latência (R3) e guia Colab | Grupo 04 |
+    | 13/11/2026 | 3.1 | Inclusão do estudo de ablação das 4 configurações (Tabela 1), análise empírica crítica e renumeração | Grupo 04 |

@@ -32,7 +32,7 @@ Ao clicar no botão, o script [`rumo.js`](../javascripts/rumo.js) lê automatica
    - **Gráficos de segundo plano:** Ativado (para preservar as cores institucionais da UnB nos cabeçalhos de tabela e diagramas)
 
 !!! info "Exportação consolidada da Entrega 3 para o Teams (Issue #21)"
-    Para o envio no canal **Segundo Desafio** do Microsoft Teams, o mecanismo do `rumo.js` compila automaticamente as quatro páginas da Entrega 3 ([`index.md`](../entrega-3/index.md), [`llm-vs-rag.md`](../entrega-3/llm-vs-rag.md), [`fidelidade-e-alucinacao.md`](../entrega-3/fidelidade-e-alucinacao.md) e [`reescrita-de-consulta.md`](../entrega-3/reescrita-de-consulta.md)) em um único documento paginado contínuo. Ele expande automaticamente a tabela de 32 perguntas pareadas (Tabela 4), desdobra blocos recolhidos (`details`), ajusta diagramas de arquitetura Mermaid e preserva cabeçalhos e formatações A4 sem exigir qualquer edição manual externa.
+    Para o envio no canal **Segundo Desafio** do Microsoft Teams, o mecanismo do `rumo.js` compila automaticamente as quatro páginas da Entrega 3 ([`index.md`](../entrega-3/index.md), [`llm-vs-rag.md`](../entrega-3/llm-vs-rag.md), [`fidelidade-e-alucinacao.md`](../entrega-3/fidelidade-e-alucinacao.md) e [`reescrita-de-consulta.md`](../entrega-3/reescrita-de-consulta.md)) em um único documento paginado contínuo. Ele expande automaticamente a tabela de 32 perguntas pareadas (Tabela 5), desdobra blocos recolhidos (`details`), ajusta diagramas de arquitetura Mermaid e preserva cabeçalhos e formatações A4 sem exigir qualquer edição manual externa.
 
 !!! warning "Regra de fonte única"
     O PDF enviado ao Teams é sempre **derivado** do Markdown desta GitPage. Nunca edite o PDF ou um arquivo Word separadamente: qualquer correção deve ser feita nos arquivos `.md` da entrega e reexportada pelo botão da página inicial da entrega.
@@ -40,7 +40,7 @@ Ao clicar no botão, o script [`rumo.js`](../javascripts/rumo.js) lê automatica
 ### Tratamentos automáticos aplicados na impressão (`@media print`)
 
 - **Abas (`===`):** todas as abas de blocos `pymdownx.tabbed` (como os casos especiais em *Estratégia de chunking*) são expandidas automaticamente em sequência com seus respectivos títulos.
-- **Blocos recolhidos (`???`):** elementos `<details>` são abertos automaticamente antes da impressão (incluindo a Tabela 4 da Entrega 3 com as 32 perguntas-ouro).
+- **Blocos recolhidos (`???`):** elementos `<details>` são abertos automaticamente antes da impressão (incluindo a Tabela 5 da Entrega 3 com as 32 perguntas-ouro).
 - **Componentes interativos:** o widget interativo `#rm-explorador` é ocultado no papel, mantendo na sequência a seção *Consultas completas* com as 8 saídas estáticas completas.
 - **Diagramas Mermaid e tabelas largas:** diagramas são dimensionados para caber na folha A4 sem quebra interna, e tabelas extensas (como o catálogo das 36 fontes e a matriz das 32 perguntas) ajustam fonte e quebra de linha automaticamente.
 - **Links internos:** links entre páginas da mesma entrega são convertidos em âncoras internas (`#secao`) dentro do próprio documento consolidado.
