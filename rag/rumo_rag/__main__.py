@@ -29,7 +29,7 @@ def ingerir(_args):
 
 def responder(pergunta: str, backend: str, eixo: str | None = None, k: int = config.TOP_K) -> dict:
     t0 = time.time()
-    subperguntas = indice.decompor(pergunta)
+    subperguntas = indice.decompor(pergunta, backend=backend if backend in ("ollama", "hf") else "auto")
     t1 = time.time()
     trechos = indice.buscar_com_subperguntas(pergunta, subperguntas, k=k, eixo=eixo)
     t2 = time.time()

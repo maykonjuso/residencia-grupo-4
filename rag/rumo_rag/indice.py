@@ -3,9 +3,7 @@ import json
 import re
 from functools import lru_cache
 
-import chromadb
-from rank_bm25 import BM25Okapi
-
+# chromadb e rank_bm25 importados sob demanda para compatibilidade com ambientes sem GPU/índice
 from . import config
 from .reescrita import classificar_composta, decompor
 
@@ -52,6 +50,7 @@ def embed_consulta(q: str):
 
 
 def colecao(recriar: bool = False):
+    import chromadb
     cliente = chromadb.PersistentClient(path=str(config.CHROMA))
     if recriar:
         try:
@@ -79,6 +78,7 @@ def indexar(chunks: list[dict]) -> None:
 
 @lru_cache(maxsize=1)
 def _bm25():
+    from rank_bm25 import BM25Okapi
     chunks = [json.loads(l) for l in open(config.CHUNKS, encoding="utf-8")]
     return chunks, BM25Okapi([tokenizar(c["texto_indexado"]) for c in chunks])
 
@@ -151,9 +151,9 @@ def buscar_com_subperguntas(pergunta: str, subperguntas: list[str], k: int = con
 
 
 def buscar(pergunta: str, k: int = config.TOP_K, modo: str = "hibrido", eixo: str | None = None,
-           decompor_pergunta: bool = True) -> list[dict]:
-    """modo: denso | bm25 | hibrido (RRF). Perguntas compostas usam JevK5-Lite + LLM."""
+           decompor_pergunta: bool = True, backend: str = "auto") -> list[dict]:
+    """modo: denso | bm25 | hibrido (RRF). Perguntas compostas usam LiquidAI/d1-omni-600M + LLM (qwen2.5:7b)."""
     if not decompor_pergunta:
         return _buscar_simples(pergunta, k=k, modo=modo, eixo=eixo)
-    subperguntas = decompor(pergunta)
+    subperguntas = decompor(pergunta, backend=backend)
     return buscar_com_subperguntas(pergunta, subperguntas, k=k, modo=modo, eixo=eixo)

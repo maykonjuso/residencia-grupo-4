@@ -2,7 +2,7 @@
 
 Estágio 1: Classificador discriminativo System-1 (LiquidAI/d1-omni-600M) em GPU
            (CUDA ou Apple Silicon MPS em float16), sem geração autoregressiva de tokens.
-Estágio 2: Reescrita e decomposição contextual via LLM local (Ollama), acionada apenas
+Estágio 2: Reescrita e decomposição contextual via LLM local (Ollama ou HuggingFace), acionada apenas
            quando o classificador indica pergunta múltipla (com fallback sintático).
 """
 from __future__ import annotations
@@ -12,8 +12,7 @@ import os
 import re
 import urllib.request
 from functools import lru_cache
-
-import torch
+from typing import Any
 
 from . import config
 
@@ -60,13 +59,18 @@ _SYSTEM_DECOMPOSICAO = (
 )
 
 
-def dispositivo_gpu() -> tuple[str, torch.dtype]:
+def dispositivo_gpu() -> tuple[str, Any]:
     """Seleciona GPU sempre que disponível (CUDA > MPS em float16), com fallback em CPU."""
-    if torch.cuda.is_available():
-        return "cuda", torch.float16
-    if torch.backends.mps.is_available():
-        return "mps", torch.float16
-    return "cpu", torch.float32
+    try:
+        import torch
+
+        if torch.cuda.is_available():
+            return "cuda", torch.float16
+        if hasattr(torch.backends, "mps") and torch.backends.mps.is_available():
+            return "mps", torch.float16
+        return "cpu", torch.float32
+    except ImportError:
+        return "cpu", None
 
 
 @lru_cache(maxsize=1)
@@ -74,11 +78,12 @@ def _carregar_decisor():
     from transformers import AutoModel
 
     device, dtype = dispositivo_gpu()
+    kw = {"torch_dtype": dtype} if dtype is not None else {}
     return (
         AutoModel.from_pretrained(
             config.MODELO_DECISAO,
             trust_remote_code=True,
-            dtype=dtype,
+            **kw,
         )
         .to(device)
         .eval()
@@ -95,16 +100,46 @@ def classificar_composta(pergunta: str) -> tuple[bool, float]:
     if not _CONECTIVOS.search(q):
         return False, 0.0
 
-    modelo = _carregar_decisor()
-    res = modelo.system_one(q, _QUESTAO_COMPOSTA)
-    probs = res["answers"]["query_structure"]["probabilities"]
-    prob_multi = float(probs["multiple"])
-    return prob_multi >= config.LIMIAR_COMPOSTA, round(prob_multi, 4)
+    try:
+        modelo = _carregar_decisor()
+        res = modelo.system_one(q, _QUESTAO_COMPOSTA)
+        probs = res["answers"]["query_structure"]["probabilities"]
+        prob_multi = float(probs["multiple"])
+        return prob_multi >= config.LIMIAR_COMPOSTA, round(prob_multi, 4)
+    except Exception:
+        # Fallback gracioso se o modelo neural não estiver disponível no ambiente
+        return False, 0.0
 
 
-@lru_cache(maxsize=256)
-def _decompor_llm(pergunta: str) -> tuple[str, ...]:
-    """Estágio 2: desmembra e contextualiza subperguntas via Ollama em JSON estrito."""
+def _extrair_subperguntas_json(texto: str) -> list[str]:
+    """Extrai e valida a lista de subperguntas a partir de JSON retornado pelo LLM."""
+    if not texto or not isinstance(texto, str):
+        return []
+    texto_limpo = texto.strip()
+    match_dict = re.search(r"\{.*\}", texto_limpo, re.DOTALL)
+    if match_dict:
+        texto_limpo = match_dict.group(0)
+    else:
+        match_lista = re.search(r"\[.*\]", texto_limpo, re.DOTALL)
+        if match_lista:
+            texto_limpo = match_lista.group(0)
+    try:
+        dados = json.loads(texto_limpo)
+    except Exception:
+        return []
+    if isinstance(dados, dict):
+        subs = dados.get("subperguntas", [])
+    elif isinstance(dados, list):
+        subs = dados
+    else:
+        return []
+    if not isinstance(subs, list):
+        return []
+    return [s.strip() for s in subs if isinstance(s, str) and len(s.strip()) > 5]
+
+
+def _decompor_ollama(pergunta: str) -> list[str]:
+    """Estágio 2 via Ollama HTTP: desmembra e contextualiza subperguntas em JSON estrito."""
     corpo = {
         "model": config.MODELO_DECOMPOSITOR,
         "messages": [
@@ -123,42 +158,87 @@ def _decompor_llm(pergunta: str) -> tuple[str, ...]:
     )
     with urllib.request.urlopen(req, timeout=30) as resp:
         dados = json.loads(resp.read().decode("utf-8"))
-    conteudo = json.loads(dados["message"]["content"])
-    subs = conteudo.get("subperguntas", [])
-    limpas = [s.strip() for s in subs if isinstance(s, str) and len(s.strip()) > 5]
-    return tuple(limpas)
+    conteudo = dados.get("message", {}).get("content", "")
+    return _extrair_subperguntas_json(conteudo)
+
+
+def _decompor_hf(pergunta: str) -> list[str]:
+    """Estágio 2 via HuggingFace Transformers: desmembra e contextualiza subperguntas."""
+    from . import geracao
+
+    tok, modelo = geracao._hf()
+    msgs = [
+        {"role": "system", "content": _SYSTEM_DECOMPOSICAO},
+        {"role": "user", "content": pergunta},
+    ]
+    entrada = tok.apply_chat_template(
+        msgs, add_generation_prompt=True, return_tensors="pt", return_dict=True
+    ).to(modelo.device)
+    saida = modelo.generate(
+        **entrada,
+        max_new_tokens=160,
+        do_sample=False,
+        repetition_penalty=1.05,
+    )
+    texto = tok.decode(saida[0][entrada["input_ids"].shape[1]:], skip_special_tokens=True).strip()
+    return _extrair_subperguntas_json(texto)
+
+
+@lru_cache(maxsize=256)
+def _decompor_llm(pergunta: str, backend: str = "auto") -> tuple[str, ...]:
+    """Estágio 2: desmembra e contextualiza subperguntas via LLM (Ollama ou HF)."""
+    if backend == "ollama":
+        return tuple(_decompor_ollama(pergunta))
+    if backend == "hf":
+        return tuple(_decompor_hf(pergunta))
+    if backend == "auto":
+        tentativas = [_decompor_hf, _decompor_ollama] if config.BACKEND == "hf" else [_decompor_ollama, _decompor_hf]
+        erros = []
+        for fn in tentativas:
+            try:
+                subs = fn(pergunta)
+                if len(subs) >= 2:
+                    return tuple(subs)
+            except Exception as e:
+                erros.append(e)
+        if erros and len(erros) == len(tentativas):
+            raise RuntimeError(f"Todos os backends de decomposição LLM falharam: {erros}")
+        return ()
+    raise ValueError(f"Backend desconhecido para decomposição: {backend}")
 
 
 def _decompor_fallback(pergunta: str) -> list[str]:
-    """Fallback sintático usado apenas se o endpoint Ollama não responder."""
+    """Fallback sintático usado apenas se nenhum backend LLM responder."""
     partes = re.split(
-        rf"[?!.;]\s+|,?\s+e\s+(?={_GATILHOS_FALLBACK}\b)",
+        rf"(?<=[?!.;])\s+|,?\s+e\s+(?={_GATILHOS_FALLBACK}\b)",
         pergunta.strip(),
         flags=re.I,
     )
-    partes = [p.strip(" ?.") for p in partes if len(p.split()) >= 3]
-    if len(partes) < 2:
-        return []
     eh_pergunta = re.compile(rf"(?:\b{_GATILHOS_FALLBACK}\b|\?$)", re.I)
     contexto = ""
     perguntas = []
     for idx, p in enumerate(partes):
-        if idx == 0 and not eh_pergunta.search(p) and ("estudante" in p.lower() or "graduação" in p.lower()):
-            contexto = p
+        p_limpa = p.strip(" ?.")
+        if len(p_limpa.split()) < 3:
+            continue
+        if idx == 0 and not eh_pergunta.search(p.strip()) and ("estudante" in p.lower() or "graduação" in p.lower()):
+            contexto = p_limpa
         else:
-            perguntas.append(p)
+            perguntas.append(p_limpa)
     if len(perguntas) < 2:
         return []
     return [f"{contexto}. {p}" if contexto else p for p in perguntas]
 
 
-def decompor(pergunta: str) -> list[str]:
+def decompor(pergunta: str, backend: str = "auto") -> list[str]:
     """Executa Estágio 1 (d1-omni-600M em GPU) e, se composta, Estágio 2 (LLM / fallback)."""
     eh_composta, _ = classificar_composta(pergunta)
     if not eh_composta:
         return []
+    if backend == "fallback":
+        return _decompor_fallback(pergunta)
     try:
-        subs = list(_decompor_llm(pergunta.strip()))
+        subs = list(_decompor_llm(pergunta.strip(), backend=backend))
         if len(subs) >= 2:
             return subs
     except Exception:
