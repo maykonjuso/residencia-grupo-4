@@ -90,6 +90,13 @@ def _carregar_decisor():
     )
 
 
+def probabilidade_multipla(pergunta: str) -> float:
+    """Probabilidade bruta de 'múltiplas questões' do d1-omni-600M (sem pré-filtro; propaga erros)."""
+    modelo = _carregar_decisor()
+    res = modelo.system_one(pergunta.strip(), _QUESTAO_COMPOSTA)
+    return float(res["answers"]["query_structure"]["probabilities"]["multiple"])
+
+
 def classificar_composta(pergunta: str) -> tuple[bool, float]:
     """Estágio 1 (System-1 em GPU): retorna (eh_composta, probabilidade_multipla)."""
     q = pergunta.strip()
@@ -101,10 +108,7 @@ def classificar_composta(pergunta: str) -> tuple[bool, float]:
         return False, 0.0
 
     try:
-        modelo = _carregar_decisor()
-        res = modelo.system_one(q, _QUESTAO_COMPOSTA)
-        probs = res["answers"]["query_structure"]["probabilities"]
-        prob_multi = float(probs["multiple"])
+        prob_multi = probabilidade_multipla(q)
         return prob_multi >= config.LIMIAR_COMPOSTA, round(prob_multi, 4)
     except Exception:
         # RUMO_STRICT_REWRITE=1 propaga o erro (usado no benchmark/Colab para não mascarar falhas).

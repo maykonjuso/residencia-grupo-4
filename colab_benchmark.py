@@ -172,12 +172,34 @@ def pre_aquecer_modelos(backend: str = "hf", dry_run: bool = False) -> None:
         print(f"        [Aviso] Falha ao pré-aquecer modelo generativo: {e}")
 
 
+def calibrar_limiar_estagio1(limiar: float | None, calibrar: bool, dry_run: bool) -> float | None:
+    """Define o limiar do Estágio 1: valor manual (--limiar) ou calibrado em conjunto separado (--calibrar)."""
+    from rag.rumo_rag import config
+
+    if dry_run:
+        return None
+    if limiar is not None:
+        config.LIMIAR_COMPOSTA = limiar
+        print(f"[Estágio 1] Limiar definido manualmente: {limiar}")
+    elif calibrar:
+        from rag import calibrar_limiar
+
+        print("\n[Calibração] Calibrando limiar do Estágio 1 em perguntas_calibracao.jsonl (disjunto do benchmark)...")
+        resultado = calibrar_limiar.calibrar()
+        calibrar_limiar.imprimir(resultado)
+        config.LIMIAR_COMPOSTA = resultado["limiar"]
+    print(f"[Estágio 1] Limiar em uso: {config.LIMIAR_COMPOSTA}")
+    return config.LIMIAR_COMPOSTA
+
+
 def executar_colab_benchmark(
     backend: str = "hf",
     dry_run: bool = False,
     saida_formato: str = "md",
     arquivo_saida: str | Path | None = None,
     k: int = 5,
+    calibrar: bool = False,
+    limiar: float | None = None,
 ) -> dict:
     """Executa o pipeline completo de benchmark adaptado para Google Colab com GPU."""
     # 1. Configura autenticação opcional
@@ -192,6 +214,9 @@ def executar_colab_benchmark(
     # 4. Pré-aquece modelos na GPU
     pre_aquecer_modelos(backend=backend, dry_run=dry_run)
 
+    # 4b. Limiar do Estágio 1 (manual ou calibrado em conjunto separado do benchmark)
+    limiar_usado = calibrar_limiar_estagio1(limiar, calibrar, dry_run)
+
     # 5. Executa benchmark
     print(f"\n[Benchmark] Iniciando avaliação comparativa (backend={backend}, dry_run={dry_run})...")
     from rag.benchmark import (
@@ -201,6 +226,8 @@ def executar_colab_benchmark(
     )
 
     dados = executar_benchmark(backend=backend, dry_run=dry_run, k=k)
+    if limiar_usado is not None:
+        dados["limiar_estagio1"] = limiar_usado
 
     # 6. Auditoria estrita de zero latência (Requisito R3)
     verificar_ausencia_latencia(dados)
@@ -239,7 +266,7 @@ def executar_colab_benchmark(
         pareadas[qid][regime] = {
             "resposta": r.get("resposta"),
             "subperguntas": r.get("subperguntas", []),
-            "fontes_citadas": r.get("fontes_citadas", []),
+            "fontes_citadas": r.get("citacoes_usadas", []),
             "valores_sem_fonte": r.get("valores_sem_fonte", []),
             "citacao_valida": r.get("citacao_valida"),
             "fidelidade_factual": r.get("fidelidade_factual"),
@@ -294,6 +321,18 @@ def main(argv: list[str] | None = None) -> int:
         help="Quantidade de trechos recuperados por consulta (padrão: 5)",
     )
 
+    parser.add_argument(
+        "--calibrar",
+        action="store_true",
+        help="Calibra o limiar do Estágio 1 em perguntas_calibracao.jsonl (conjunto disjunto do benchmark)",
+    )
+    parser.add_argument(
+        "--limiar",
+        type=float,
+        default=None,
+        help="Limiar manual de p(múltiplas) do Estágio 1 (tem prioridade sobre --calibrar)",
+    )
+
     args = parser.parse_args(argv)
     executar_colab_benchmark(
         backend=args.backend,
@@ -301,6 +340,8 @@ def main(argv: list[str] | None = None) -> int:
         saida_formato=args.saida,
         arquivo_saida=args.arquivo_saida,
         k=args.k,
+        calibrar=args.calibrar,
+        limiar=args.limiar,
     )
     return 0
 
