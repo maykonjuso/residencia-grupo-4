@@ -1,0 +1,1594 @@
+{
+  "meta": {
+    "gerado_em": "2026-11-13T09:41:43",
+    "backend": "ollama",
+    "modelo": "qwen2.5:7B",
+    "embedding": "BAAI/bge-m3",
+    "top_k": 5,
+    "decodificacao": "temperature=0",
+    "prompt_com_rag": "Você é o RUmo, assistente dos estudantes da FCTE/UnB (campus Gama) para dúvidas sobre o Restaurante Universitário e sobre o fluxo de disciplinas dos cursos.\nRegras:\n1. Responda em português, de forma direta, usando SOMENTE as informações dos trechos numerados abaixo.\n2. Depois de cada afirmação, cite o trecho usado entre colchetes, por exemplo [1] ou [2][3].\n3. Se os trechos não trazem a resposta, diga exatamente: \"Não encontrei essa informação nas fontes da base.\" e sugira o órgão responsável. Não invente valores, datas, códigos ou pré-requisitos.\n4. Se a informação depende do perfil do estudante (grupo de pagamento, curso, ano de ingresso), diga isso.\n5. Seja conciso: no máximo 120 palavras. Copie valores, datas, códigos e nomes exatamente como estão nos trechos.",
+    "prompt_sem_rag": "Você é o RUmo, assistente dos estudantes da FCTE/UnB (campus Gama) para dúvidas sobre o Restaurante Universitário e sobre o fluxo de disciplinas dos cursos.\nRegras:\n1. Responda em português, de forma direta.\n2. Se você não tem certeza da resposta, diga exatamente: \"Não encontrei essa informação nas fontes da base.\" e sugira o órgão responsável. Não invente valores, datas, códigos ou pré-requisitos.\n3. Se a informação depende do perfil do estudante (grupo de pagamento, curso, ano de ingresso), diga isso.\n4. Seja conciso: no máximo 120 palavras.",
+    "n": 35
+  },
+  "respostas": [
+    {
+      "id": "Q01",
+      "eixo": "ru",
+      "categoria": "preço",
+      "pergunta": "Quanto custa o almoço no RU para um estudante de graduação sem auxílio?",
+      "docs_esperados": [
+        "F01",
+        "F04"
+      ],
+      "sem_rag": {
+        "resposta": "O valor do almoço no Restaurante Universitário (RU) para um estudante de graduação sem auxílio é R$ 5,00. Este preço pode variar levemente ao longo do ano, mas geralmente permanece constante para os alunos que não recebem auxílio financeiro.",
+        "recusou": false,
+        "valores_sem_fonte": [
+          "R$ 5,00"
+        ],
+        "tempo_busca_s": 0.0,
+        "tempo_geracao_s": 3.56
+      },
+      "com_rag": {
+        "resposta": "Não encontrei essa informação nas fontes da base. Sugiro que você entre em contato com a Diretoria do RU ou a DDS/DAC para obter informações sobre os valores das refeições no RU para estudantes não beneficiários.",
+        "recusou": true,
+        "valores_sem_fonte": [],
+        "sem_citacao": false,
+        "fontes_citadas": [],
+        "tempo_busca_s": 4.93,
+        "tempo_geracao_s": 2.68,
+        "docs_recuperados": [
+          "F06",
+          "F06",
+          "F07",
+          "F13",
+          "F21"
+        ],
+        "doc_esperado_recuperado": false
+      }
+    },
+    {
+      "id": "Q02",
+      "eixo": "ru",
+      "categoria": "horário",
+      "pergunta": "Qual o horário do jantar no RU do campus Gama?",
+      "docs_esperados": [
+        "F03",
+        "F02"
+      ],
+      "sem_rag": {
+        "resposta": "O horário do jantar no Restaurante Universitário do campus Gama é de segunda a sexta-feira, das 11h30 às 14h30. Para dias úteis, este horário é adequado para o almoço, mas pode ser considerado como jantar em horários mais flexíveis.",
+        "recusou": false,
+        "valores_sem_fonte": [
+          "11h30"
+        ],
+        "tempo_busca_s": 0.0,
+        "tempo_geracao_s": 3.76
+      },
+      "com_rag": {
+        "resposta": "O horário do jantar no RU do Campus Gama é de 17h às 19h30, de segunda a sexta-feira, exceto feriados. [1]",
+        "recusou": false,
+        "valores_sem_fonte": [],
+        "sem_citacao": false,
+        "fontes_citadas": [
+          {
+            "n": 1,
+            "doc_id": "F03",
+            "titulo": "Unidades do RU e horários de funcionamento (inclui RU Gama/FCTE)",
+            "orgao": "UnB · Diretoria do RU",
+            "pagina": 1,
+            "url": "https://ru.unb.br/unidades/",
+            "chunk_id": "F03-0003"
+          }
+        ],
+        "tempo_busca_s": 0.09,
+        "tempo_geracao_s": 10.32,
+        "docs_recuperados": [
+          "F03",
+          "F03",
+          "F02",
+          "F03",
+          "F03"
+        ],
+        "doc_esperado_recuperado": true
+      }
+    },
+    {
+      "id": "Q03",
+      "eixo": "ru",
+      "categoria": "horário",
+      "pergunta": "O RU do Gama abre aos sábados?",
+      "docs_esperados": [
+        "F03",
+        "F02"
+      ],
+      "sem_rag": {
+        "resposta": "O Restaurante Universitário do Gama geralmente não opera aos sábados, mas é recomendado verificar o calendário oficial ou site do RU para confirmar as horários específicos de funcionamento, pois pode haver variações dependendo do período letivo.",
+        "recusou": false,
+        "valores_sem_fonte": [],
+        "tempo_busca_s": 0.0,
+        "tempo_geracao_s": 3.06
+      },
+      "com_rag": {
+        "resposta": "Não encontrei essa informação nas fontes da base. Sugiro verificar o site oficial do Restaurante Universitário ou entrar em contato com a Diretoria do RU para obter informações atualizadas sobre os horários de funcionamento aos sábados no Campus Gama [2].",
+        "recusou": true,
+        "valores_sem_fonte": [],
+        "sem_citacao": false,
+        "fontes_citadas": [
+          {
+            "n": 2,
+            "doc_id": "F03",
+            "titulo": "Unidades do RU e horários de funcionamento (inclui RU Gama/FCTE)",
+            "orgao": "UnB · Diretoria do RU",
+            "pagina": 1,
+            "url": "https://ru.unb.br/unidades/",
+            "chunk_id": "F03-0003"
+          }
+        ],
+        "tempo_busca_s": 0.1,
+        "tempo_geracao_s": 10.1,
+        "docs_recuperados": [
+          "F03",
+          "F03",
+          "F03",
+          "F03",
+          "F03"
+        ],
+        "doc_esperado_recuperado": true
+      }
+    },
+    {
+      "id": "Q04",
+      "eixo": "ru",
+      "categoria": "regra",
+      "pergunta": "Quem tem direito a refeição gratuita no RU?",
+      "docs_esperados": [
+        "F01",
+        "F04",
+        "F06",
+        "F07"
+      ],
+      "sem_rag": {
+        "resposta": "Alunos regularmente matriculados em cursos ofertados pela FCTE/UnB, do primeiro ao quinto período, têm direito a refeições gratuitas. O grupo de pagamento determina se o aluno é isento ou não. Alunos de outros períodos e grupos de pagamento podem ter direitos limitados ou nenhum acesso gratuito.",
+        "recusou": false,
+        "valores_sem_fonte": [],
+        "tempo_busca_s": 0.0,
+        "tempo_geracao_s": 3.94
+      },
+      "com_rag": {
+        "resposta": "Estudantes dos grupos I, II e IV têm direito ao subsídio mediante comprovação de vínculo institucional ativo em curso presencial e apresentação da identidade estudantil [1]. Estagiários regulares vinculados ao DGP/UnB também podem ter acesso com declaração de estágio emitida pela COEST/DGP e documento oficial com foto. Para os grupos I (alíneas \"a\" e \"k\") há necessidade de avaliação socioeconômica realizada pela DDS, que deve ser renovada quando solicitada [1].",
+        "recusou": false,
+        "valores_sem_fonte": [],
+        "sem_citacao": false,
+        "fontes_citadas": [
+          {
+            "n": 1,
+            "doc_id": "F01",
+            "titulo": "Resolução do CAD nº 0037/2025 — grupos de usuários e valores das refeições do RU",
+            "orgao": "UnB · Conselho de Administração",
+            "pagina": 2,
+            "url": "https://ru.unb.br/wp-content/uploads/2026/02/SEI_13513000_Resolucao_do_CAD_n__0037_2025-ATT.pdf",
+            "chunk_id": "F01-0004"
+          }
+        ],
+        "tempo_busca_s": 0.09,
+        "tempo_geracao_s": 14.08,
+        "docs_recuperados": [
+          "F01",
+          "F02",
+          "F06",
+          "F05",
+          "F04"
+        ],
+        "doc_esperado_recuperado": true
+      }
+    },
+    {
+      "id": "Q05",
+      "eixo": "ru",
+      "categoria": "preço",
+      "pergunta": "Quanto paga no RU o estudante que entrou por cota de escola pública e não é baixa renda?",
+      "docs_esperados": [
+        "F01",
+        "F04"
+      ],
+      "sem_rag": {
+        "resposta": "O valor pago pelo estudante que ingressou por cota de escola pública e não é considerado de baixa renda varia conforme o perfil do aluno. Geralmente, os valores são definidos pela universidade para cada grupo de pagamento. Recomendo verificar a tabela de valores publicada no site da FCTE/UnB ou entrar em contato com a Pró-Reitoria de Assuntos Estudantis (PRAE) para obter informações específicas sobre o seu perfil.",
+        "recusou": false,
+        "valores_sem_fonte": [],
+        "tempo_busca_s": 0.0,
+        "tempo_geracao_s": 5.51
+      },
+      "com_rag": {
+        "resposta": "Não encontrei essa informação nas fontes da base. Sugiro verificar com a Diretoria do Restaurante Universitário (RU) ou o Setor de Assistência Estudantil, pois os valores podem variar dependendo do perfil do estudante e das cotas aplicadas. [3]",
+        "recusou": true,
+        "valores_sem_fonte": [],
+        "sem_citacao": false,
+        "fontes_citadas": [
+          {
+            "n": 3,
+            "doc_id": "F04",
+            "titulo": "Valores das refeições e grupos de acesso",
+            "orgao": "UnB · Diretoria do RU",
+            "pagina": 1,
+            "url": "https://ru.unb.br/precos-e-grupos/",
+            "chunk_id": "F04-0000"
+          }
+        ],
+        "tempo_busca_s": 0.23,
+        "tempo_geracao_s": 16.81,
+        "docs_recuperados": [
+          "F17",
+          "F21",
+          "F04",
+          "F17",
+          "F01"
+        ],
+        "doc_esperado_recuperado": true
+      }
+    },
+    {
+      "id": "Q06",
+      "eixo": "ru",
+      "categoria": "procedimento",
+      "pergunta": "Como emito a carteirinha digital para entrar no RU?",
+      "docs_esperados": [
+        "F05"
+      ],
+      "sem_rag": {
+        "resposta": "Para emitir a carteirinha digital do Restaurante Universitário, você deve acessar o aplicativo \"RUmo Meu\" pelo celular. Acesse o app, faça o login com suas credenciais da UnB e siga as instruções para gerar a sua carteirinha digital. Se tiver dúvidas específicas sobre o processo, entre em contato com a Central de Atendimento do RU.",
+        "recusou": false,
+        "valores_sem_fonte": [],
+        "tempo_busca_s": 0.0,
+        "tempo_geracao_s": 5.3
+      },
+      "com_rag": {
+        "resposta": "Para emitir a carteirinha digital, você deve acessar o Sigaa, seguir os passos 1º e 2º descritos [1]. Se for discente pela primeira vez, confira também as etapas 1° a 3º da seção \"Você é discente?\" [2].",
+        "recusou": false,
+        "valores_sem_fonte": [],
+        "sem_citacao": false,
+        "fontes_citadas": [
+          {
+            "n": 1,
+            "doc_id": "F05",
+            "titulo": "Como acessar o RU (carteirinha digital, créditos e catraca)",
+            "orgao": "UnB · Diretoria do RU",
+            "pagina": 1,
+            "url": "https://ru.unb.br/como-acessar/",
+            "chunk_id": "F05-0002"
+          },
+          {
+            "n": 2,
+            "doc_id": "F05",
+            "titulo": "Como acessar o RU (carteirinha digital, créditos e catraca)",
+            "orgao": "UnB · Diretoria do RU",
+            "pagina": 1,
+            "url": "https://ru.unb.br/como-acessar/",
+            "chunk_id": "F05-0000"
+          }
+        ],
+        "tempo_busca_s": 0.1,
+        "tempo_geracao_s": 11.85,
+        "docs_recuperados": [
+          "F05",
+          "F05",
+          "F05",
+          "F34",
+          "F21"
+        ],
+        "doc_esperado_recuperado": true
+      }
+    },
+    {
+      "id": "Q07",
+      "eixo": "ru",
+      "categoria": "procedimento",
+      "pergunta": "Quais formas de pagamento são aceitas nos caixas do RU?",
+      "docs_esperados": [
+        "F05",
+        "F04"
+      ],
+      "sem_rag": {
+        "resposta": "As formas de pagamento aceitas nos caixas do Restaurante Universitário (RU) geralmente incluem cartão magnético, cartão chip e dinheiro. No entanto, as opções podem variar dependendo do perfil do estudante (como grupo de pagamento). Recomendamos verificar o site oficial da FCTE/UnB ou entrar em contato com a administração do RU para informações atualizadas.",
+        "recusou": false,
+        "valores_sem_fonte": [],
+        "tempo_busca_s": 0.0,
+        "tempo_geracao_s": 6.09
+      },
+      "com_rag": {
+        "resposta": "As formas de pagamento aceitas nos caixas do RU são Pix, dinheiro (em espécie), cartão de débito e cartão de crédito. [1][2]",
+        "recusou": false,
+        "valores_sem_fonte": [],
+        "sem_citacao": false,
+        "fontes_citadas": [
+          {
+            "n": 1,
+            "doc_id": "F05",
+            "titulo": "Como acessar o RU (carteirinha digital, créditos e catraca)",
+            "orgao": "UnB · Diretoria do RU",
+            "pagina": 1,
+            "url": "https://ru.unb.br/como-acessar/",
+            "chunk_id": "F05-0001"
+          },
+          {
+            "n": 2,
+            "doc_id": "F04",
+            "titulo": "Valores das refeições e grupos de acesso",
+            "orgao": "UnB · Diretoria do RU",
+            "pagina": 1,
+            "url": "https://ru.unb.br/precos-e-grupos/",
+            "chunk_id": "F04-0006"
+          }
+        ],
+        "tempo_busca_s": 0.18,
+        "tempo_geracao_s": 12.31,
+        "docs_recuperados": [
+          "F05",
+          "F04",
+          "F03",
+          "F02",
+          "F01"
+        ],
+        "doc_esperado_recuperado": true
+      }
+    },
+    {
+      "id": "Q08",
+      "eixo": "ru",
+      "categoria": "cardápio",
+      "pergunta": "Qual o prato vegetariano estrito do almoço de quarta-feira, 11/11/2026, no RU Gama?",
+      "docs_esperados": [
+        "F09"
+      ],
+      "sem_rag": {
+        "resposta": "Não encontrei essa informação nas fontes da base. Sugiro que você verifique o menu atualizado no site oficial do Restaurante Universitário ou entre em contato com a direção do RU para obter as informações mais precisas e atuais.",
+        "recusou": true,
+        "valores_sem_fonte": [],
+        "tempo_busca_s": 0.0,
+        "tempo_geracao_s": 4.16
+      },
+      "com_rag": {
+        "resposta": "O prato vegetariano estrito do almoço de quarta-feira, 11/11/2026, no RU Gama é a Abobrinha recheada com lentilha ao sugo. [1]",
+        "recusou": false,
+        "valores_sem_fonte": [],
+        "sem_citacao": false,
+        "fontes_citadas": [
+          {
+            "n": 1,
+            "doc_id": "F09",
+            "titulo": "Cardápio semanal do RU Gama — 09/11 a 15/11/2026",
+            "orgao": "UnB · Diretoria do RU",
+            "pagina": 2,
+            "url": "https://ru.unb.br/wp-content/uploads/2026/11/Gama-Semana-04-09-11-a-15-11.pdf",
+            "chunk_id": "F09-0007"
+          }
+        ],
+        "tempo_busca_s": 0.12,
+        "tempo_geracao_s": 16.14,
+        "docs_recuperados": [
+          "F09",
+          "F09",
+          "F09",
+          "F08",
+          "F08"
+        ],
+        "doc_esperado_recuperado": true
+      }
+    },
+    {
+      "id": "Q09",
+      "eixo": "ru",
+      "categoria": "cardápio",
+      "pergunta": "O que tem no café da manhã do RU Gama na segunda-feira 09/11/2026?",
+      "docs_esperados": [
+        "F09"
+      ],
+      "sem_rag": {
+        "resposta": "Não encontrei essa informação nas fontes da base. Recomendo verificar o menu do Restaurante Universitário diretamente ou entrar em contato com a administração do RU para obter as informações mais atualizadas.",
+        "recusou": true,
+        "valores_sem_fonte": [],
+        "tempo_busca_s": 0.0,
+        "tempo_geracao_s": 3.6
+      },
+      "com_rag": {
+        "resposta": "No café da manhã de segunda-feira, 09/11/2026, o cardápio inclui:\n- Bebidas: Leite integral ou bebida de soja\n- Panificação: Pão francês, pão careca ou pão integral\n- Gordura: Manteiga ou creme vegetal\n- Complemento padrão: Frango desfiado\n- Complemento ovolactovegetariano: Ovos mexidos\n- Complemento vegetariano estrito: Requeijão de ervas\n- Fruta: Melancia\n\nMesa de apoio com água, achocolatado, açúcar e adoçante. [1]",
+        "recusou": false,
+        "valores_sem_fonte": [],
+        "sem_citacao": false,
+        "fontes_citadas": [
+          {
+            "n": 1,
+            "doc_id": "F09",
+            "titulo": "Cardápio semanal do RU Gama — 09/11 a 15/11/2026",
+            "orgao": "UnB · Diretoria do RU",
+            "pagina": 1,
+            "url": "https://ru.unb.br/wp-content/uploads/2026/11/Gama-Semana-04-09-11-a-15-11.pdf",
+            "chunk_id": "F09-0000"
+          }
+        ],
+        "tempo_busca_s": 0.12,
+        "tempo_geracao_s": 22.95,
+        "docs_recuperados": [
+          "F09",
+          "F09",
+          "F09",
+          "F09",
+          "F09"
+        ],
+        "doc_esperado_recuperado": true
+      }
+    },
+    {
+      "id": "Q10",
+      "eixo": "ru",
+      "categoria": "regra",
+      "pergunta": "Quais são os critérios para participar do edital de Auxílio Alimentação de 2026?",
+      "docs_esperados": [
+        "F07"
+      ],
+      "sem_rag": {
+        "resposta": "Não encontrei essa informação nas fontes da base. Sugiro que você entre em contato com a Pró-Reitoria de Gestão de Pessoas (PROPES) ou o Setor de Bolsas e Auxílios do seu campus para obter os critérios específicos para o edital de Auxílio Alimentação de 2026.",
+        "recusou": true,
+        "valores_sem_fonte": [],
+        "tempo_busca_s": 0.0,
+        "tempo_geracao_s": 5.68
+      },
+      "com_rag": {
+        "resposta": "Os critérios para participar do edital de Auxílio Alimentação de 2026 incluem ser estudante regular com matrícula ativa em curso presencial de graduação ou pós-graduação stricto sensu, possuir avaliação socioeconômica homologada pela COAE/DDS ou estar inscrito no Cadastro Único do Governo Federal com faixa de renda até meio salário-mínimo. É necessário realizar a inscrição pelo SIGAA no período de 03/08/2026 a 15/11/2026. [2][3]",
+        "recusou": false,
+        "valores_sem_fonte": [],
+        "sem_citacao": false,
+        "fontes_citadas": [
+          {
+            "n": 2,
+            "doc_id": "F07",
+            "titulo": "Edital nº 24/2026 DDS/DAC — Auxílio Alimentação para estudantes em vulnerabilidade",
+            "orgao": "UnB · DDS/DAC",
+            "pagina": 1,
+            "url": "https://dds.dac.unb.br/wp-content/uploads/2026/08/Edital_24_alimentacao.pdf",
+            "chunk_id": "F07-0001"
+          },
+          {
+            "n": 3,
+            "doc_id": "F06",
+            "titulo": "Programa Auxílio Alimentação — regras de uso",
+            "orgao": "UnB · Diretoria do RU",
+            "pagina": 1,
+            "url": "https://ru.unb.br/programa-auxilio-alimentacao/",
+            "chunk_id": "F06-0000"
+          }
+        ],
+        "tempo_busca_s": 0.13,
+        "tempo_geracao_s": 22.91,
+        "docs_recuperados": [
+          "F07",
+          "F07",
+          "F06",
+          "F07",
+          "F06"
+        ],
+        "doc_esperado_recuperado": true
+      }
+    },
+    {
+      "id": "Q11",
+      "eixo": "ru",
+      "categoria": "regra",
+      "pergunta": "O que a lei do PNAES diz sobre alimentação dos estudantes?",
+      "docs_esperados": [
+        "F10"
+      ],
+      "sem_rag": {
+        "resposta": "A Lei do PNAES (Programa Nacional de Alimentação Escolar) garante o fornecimento gratuito de refeições balanceadas para estudantes de escolas públicas, incluindo universidades federais. No caso do Restaurante Universitário da FCTE/UnB, isso significa que estudantes inscritos no curso podem ter acesso a refeições gratuitas ou com desconto, dependendo do perfil do aluno (como grupo de pagamento).",
+        "recusou": false,
+        "valores_sem_fonte": [],
+        "tempo_busca_s": 0.0,
+        "tempo_geracao_s": 7.23
+      },
+      "com_rag": {
+        "resposta": "A Lei nº 14.914/2024, através do Programa de Alimentação Saudável na Educação Superior (PASES), destina-se a promover e garantir a segurança alimentar e nutricional dos estudantes durante suas atividades acadêmicas [3].",
+        "recusou": false,
+        "valores_sem_fonte": [],
+        "sem_citacao": false,
+        "fontes_citadas": [
+          {
+            "n": 3,
+            "doc_id": "F10",
+            "titulo": "Lei nº 14.914/2024 — Política Nacional de Assistência Estudantil (PNAES)",
+            "orgao": "Presidência da República",
+            "pagina": 1,
+            "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2024/lei/l14914.htm",
+            "chunk_id": "F10-0016"
+          }
+        ],
+        "tempo_busca_s": 0.12,
+        "tempo_geracao_s": 13.73,
+        "docs_recuperados": [
+          "F07",
+          "F10",
+          "F10",
+          "F10",
+          "F10"
+        ],
+        "doc_esperado_recuperado": true
+      }
+    },
+    {
+      "id": "Q12",
+      "eixo": "apoio",
+      "categoria": "conceito",
+      "pergunta": "Por que devo evitar alimentos ultraprocessados?",
+      "docs_esperados": [
+        "F11"
+      ],
+      "sem_rag": {
+        "resposta": "Alimentos ultraprocessados geralmente contêm muitos ingredientes não-naturais, açúcar, sal e gorduras, podendo levar a problemas de saúde como obesidade, diabetes e doenças cardíacas. É recomendável optar por opções mais naturais e saudáveis.",
+        "recusou": false,
+        "valores_sem_fonte": [],
+        "tempo_busca_s": 0.0,
+        "tempo_geracao_s": 4.62
+      },
+      "com_rag": {
+        "resposta": "Dever-se evitar os alimentos ultraprocessados porque eles são nutricionalmente desbalanceados e tendem a ser consumidos em excesso, substituindo alimentos mais saudáveis. Além disso, sua produção, distribuição e consumo afetam negativamente a cultura, a vida social e o meio ambiente [4][5].",
+        "recusou": false,
+        "valores_sem_fonte": [],
+        "sem_citacao": false,
+        "fontes_citadas": [
+          {
+            "n": 4,
+            "doc_id": "F11",
+            "titulo": "Guia Alimentar para a População Brasileira (2ª ed.)",
+            "orgao": "Ministério da Saúde",
+            "pagina": 42,
+            "url": "https://bvsms.saude.gov.br/bvs/publicacoes/guia_alimentar_populacao_brasileira_2ed.pdf",
+            "chunk_id": "F11-0067"
+          },
+          {
+            "n": 5,
+            "doc_id": "F11",
+            "titulo": "Guia Alimentar para a População Brasileira (2ª ed.)",
+            "orgao": "Ministério da Saúde",
+            "pagina": 127,
+            "url": "https://bvsms.saude.gov.br/bvs/publicacoes/guia_alimentar_populacao_brasileira_2ed.pdf",
+            "chunk_id": "F11-0189"
+          }
+        ],
+        "tempo_busca_s": 0.12,
+        "tempo_geracao_s": 20.32,
+        "docs_recuperados": [
+          "F11",
+          "F11",
+          "F11",
+          "F11",
+          "F11"
+        ],
+        "doc_esperado_recuperado": true
+      }
+    },
+    {
+      "id": "Q13",
+      "eixo": "apoio",
+      "categoria": "conceito",
+      "pergunta": "O que significa a frase 'pode conter' no rótulo de alergênicos?",
+      "docs_esperados": [
+        "F12"
+      ],
+      "sem_rag": {
+        "resposta": "A frase \"pode conter\" no rótulo de alergênicos indica que o produto pode ter entrado em contato com ingredientes considerados alérgenos, mesmo não sendo uma parte principal do seu composição. Isso é importante para pessoas com alergias alimentares evitar acidentes.",
+        "recusou": false,
+        "valores_sem_fonte": [],
+        "tempo_busca_s": 0.0,
+        "tempo_geracao_s": 5.91
+      },
+      "com_rag": {
+        "resposta": "A frase \"pode conter\" indica que há uma possibilidade de contaminação cruzada com o alimento alergênico, mas não foi adicionado intencionalmente ao produto. Deve ser usada somente após a adoção de um Programa de Controle de Alergênicos [30][29].",
+        "recusou": false,
+        "valores_sem_fonte": [],
+        "sem_citacao": true,
+        "fontes_citadas": [],
+        "tempo_busca_s": 0.12,
+        "tempo_geracao_s": 19.53,
+        "docs_recuperados": [
+          "F12",
+          "F12",
+          "F12",
+          "F12",
+          "F12"
+        ],
+        "doc_esperado_recuperado": true
+      }
+    },
+    {
+      "id": "Q14",
+      "eixo": "fluxo",
+      "categoria": "pré-requisito",
+      "pergunta": "Quais são os pré-requisitos de Testes de Software?",
+      "docs_esperados": [
+        "F16"
+      ],
+      "sem_rag": {
+        "resposta": "Os pré-requisitos para a disciplina de Testes de Software podem variar dependendo do curso e do perfil do estudante. Geralmente, é necessário ter concluído disciplinas introdutórias de Programação ou Engenharia de Software. Recomendamos verificar o plano de estudos específico do seu curso no sistema acadêmico da FCTE/UnB para informações precisas.",
+        "recusou": false,
+        "valores_sem_fonte": [],
+        "tempo_busca_s": 0.0,
+        "tempo_geracao_s": 8.3
+      },
+      "com_rag": {
+        "resposta": "Para cursar Testes de Software (FGA0314), é preciso ter cursado antes Métodos de Desenvolvimento de Software (FGA0312) [1].",
+        "recusou": false,
+        "valores_sem_fonte": [],
+        "sem_citacao": false,
+        "fontes_citadas": [
+          {
+            "n": 1,
+            "doc_id": "F16",
+            "titulo": "Fluxograma de Engenharia de Software (235 créditos) — transcrição",
+            "orgao": "UnB · FCTE · Engenharia de Software (transcrição do Grupo 04)",
+            "pagina": 1,
+            "url": "https://software.unb.br/wp-content/uploads/2026/02/grade_curricular_esw.jpg",
+            "chunk_id": "F16-0011"
+          }
+        ],
+        "tempo_busca_s": 0.15,
+        "tempo_geracao_s": 4.82,
+        "docs_recuperados": [
+          "F16",
+          "F16",
+          "F15",
+          "F16",
+          "F16"
+        ],
+        "doc_esperado_recuperado": true
+      }
+    },
+    {
+      "id": "Q15",
+      "eixo": "fluxo",
+      "categoria": "currículo",
+      "pergunta": "Quantos créditos tem o curso de Engenharia de Software para quem entrou depois de 2024/2?",
+      "docs_esperados": [
+        "F15",
+        "F16"
+      ],
+      "sem_rag": {
+        "resposta": "Não encontrei essa informação nas fontes da base. O perfil do estudante, incluindo o ano de ingresso, pode afetar a carga horária total. Recomendo consultar o departamento acadêmico ou o site oficial da FCTE/UnB para obter informações precisas.",
+        "recusou": true,
+        "valores_sem_fonte": [],
+        "tempo_busca_s": 0.0,
+        "tempo_geracao_s": 4.7
+      },
+      "com_rag": {
+        "resposta": "O curso de Engenharia de Software para quem ingressou após 2024/2 tem um total de 235 créditos. [1][2]",
+        "recusou": false,
+        "valores_sem_fonte": [],
+        "sem_citacao": false,
+        "fontes_citadas": [
+          {
+            "n": 1,
+            "doc_id": "F16",
+            "titulo": "Fluxograma de Engenharia de Software (235 créditos) — transcrição",
+            "orgao": "UnB · FCTE · Engenharia de Software (transcrição do Grupo 04)",
+            "pagina": 1,
+            "url": "https://software.unb.br/wp-content/uploads/2026/02/grade_curricular_esw.jpg",
+            "chunk_id": "F16-0000"
+          },
+          {
+            "n": 2,
+            "doc_id": "F15",
+            "titulo": "Engenharia de Software — matriz curricular e créditos (página do curso)",
+            "orgao": "UnB · FCTE · Engenharia de Software",
+            "pagina": 1,
+            "url": "https://software.unb.br/matriz-curricular/",
+            "chunk_id": "F15-0000"
+          }
+        ],
+        "tempo_busca_s": 0.14,
+        "tempo_geracao_s": 14.03,
+        "docs_recuperados": [
+          "F16",
+          "F15",
+          "F16",
+          "F16",
+          "F16"
+        ],
+        "doc_esperado_recuperado": true
+      }
+    },
+    {
+      "id": "Q16",
+      "eixo": "fluxo",
+      "categoria": "currículo",
+      "pergunta": "Quais disciplinas do 4º semestre de Engenharia de Software?",
+      "docs_esperados": [
+        "F16"
+      ],
+      "sem_rag": {
+        "resposta": "As disciplinas do 4º semestre do curso de Engenharia de Software na FCTE/UnB podem variar, mas geralmente incluem:\n\n- Fundamentos de Banco de Dados\n- Sistemas Operacionais\n- Redes de Computadores\n- Projeto e Análise de Algoritmos\n\nPara informações mais precisas, consulte o calendário acadêmico ou o sistema de gerenciamento de estudantes da UnB.",
+        "recusou": false,
+        "valores_sem_fonte": [],
+        "tempo_busca_s": 0.0,
+        "tempo_geracao_s": 7.68
+      },
+      "com_rag": {
+        "resposta": "Não encontrei essa informação nas fontes da base. Sugiro verificar o fluxograma completo ou entrar em contato com a coordenação do curso para obter as informações precisas sobre o 4º semestre.",
+        "recusou": true,
+        "valores_sem_fonte": [],
+        "sem_citacao": false,
+        "fontes_citadas": [],
+        "tempo_busca_s": 0.12,
+        "tempo_geracao_s": 13.74,
+        "docs_recuperados": [
+          "F16",
+          "F16",
+          "F16",
+          "F16",
+          "F16"
+        ],
+        "doc_esperado_recuperado": true
+      }
+    },
+    {
+      "id": "Q17",
+      "eixo": "fluxo",
+      "categoria": "currículo",
+      "pergunta": "Quantos créditos mínimos tem o curso de Engenharia de Energia?",
+      "docs_esperados": [
+        "F22",
+        "F23"
+      ],
+      "sem_rag": {
+        "resposta": "O número exato de créditos mínimos para o curso de Engenharia de Energia pode variar dependendo do perfil do estudante, como grupo de pagamento e ano de ingresso. Geralmente, os cursos de graduação na FCTE/UnB têm entre 130 a 140 créditos, mas é melhor verificar diretamente com o departamento ou secretaria do curso para obter a informação mais precisa.",
+        "recusou": false,
+        "valores_sem_fonte": [
+          "140 créditos"
+        ],
+        "tempo_busca_s": 0.0,
+        "tempo_geracao_s": 8.77
+      },
+      "com_rag": {
+        "resposta": "O curso de Bacharelado em Engenharia de Energia exige no mínimo 251 créditos para formatura, incluindo o Estágio Obrigatório. [1]",
+        "recusou": false,
+        "valores_sem_fonte": [],
+        "sem_citacao": false,
+        "fontes_citadas": [
+          {
+            "n": 1,
+            "doc_id": "F22",
+            "titulo": "Engenharia de Energia — informações gerais do curso",
+            "orgao": "UnB · FCTE",
+            "pagina": 1,
+            "url": "https://fcte.unb.br/engenharia-de-energia/",
+            "chunk_id": "F22-0000"
+          }
+        ],
+        "tempo_busca_s": 0.12,
+        "tempo_geracao_s": 14.84,
+        "docs_recuperados": [
+          "F22",
+          "F25",
+          "F23",
+          "F23",
+          "F23"
+        ],
+        "doc_esperado_recuperado": true
+      }
+    },
+    {
+      "id": "Q18",
+      "eixo": "fluxo",
+      "categoria": "currículo",
+      "pergunta": "Em que semestre se cursa Termodinâmica 1 na Engenharia de Energia?",
+      "docs_esperados": [
+        "F23"
+      ],
+      "sem_rag": {
+        "resposta": "Na Engenharia de Energia, a disciplina Termodinâmica 1 geralmente é cursada no primeiro ano, durante o segundo semestre. No entanto, pode variar levemente dependendo do perfil do estudante e das atualizações curriculares. É sempre bom verificar com o seu orientador ou a coordenação do curso para confirmar.",
+        "recusou": false,
+        "valores_sem_fonte": [],
+        "tempo_busca_s": 0.0,
+        "tempo_geracao_s": 6.0
+      },
+      "com_rag": {
+        "resposta": "Termodinâmica 1 é cursada no 5º semestre do curso de Engenharia de Energia, durante o ano 3 [1][2].",
+        "recusou": false,
+        "valores_sem_fonte": [],
+        "sem_citacao": false,
+        "fontes_citadas": [
+          {
+            "n": 1,
+            "doc_id": "F23",
+            "titulo": "Matriz curricular de Engenharia de Energia (251 créditos) — transcrição",
+            "orgao": "UnB · FCTE (transcrição do Grupo 04)",
+            "pagina": 1,
+            "url": "https://fcte.unb.br/wp-content/uploads/2024/08/Captura-de-tela-de-2024-08-26-15-23-04.png",
+            "chunk_id": "F23-0005"
+          },
+          {
+            "n": 2,
+            "doc_id": "F17",
+            "titulo": "Projeto Pedagógico do Curso de Engenharia Aeroespacial (PPC 2025)",
+            "orgao": "UnB · FCTE · Engenharia Aeroespacial",
+            "pagina": 136,
+            "url": "https://aeroespacial.unb.br/wp-content/uploads/2026/05/PPC_Aero_2025.pdf",
+            "chunk_id": "F17-0299"
+          }
+        ],
+        "tempo_busca_s": 0.3,
+        "tempo_geracao_s": 25.71,
+        "docs_recuperados": [
+          "F23",
+          "F17",
+          "F22",
+          "F23",
+          "F23"
+        ],
+        "doc_esperado_recuperado": true
+      }
+    },
+    {
+      "id": "Q19",
+      "eixo": "fluxo",
+      "categoria": "currículo",
+      "pergunta": "Quais disciplinas tem o primeiro nível da Engenharia Automotiva para ingressantes a partir de 2027?",
+      "docs_esperados": [
+        "F19"
+      ],
+      "sem_rag": {
+        "resposta": "Para ingressantes a partir de 2027, o primeiro nível do curso de Engenharia Automotiva no FCTE/UnB geralmente inclui disciplinas como Introdução à Engenharia, Matemática Aplicada, Física Geral e Química Industrial. No entanto, as disciplinas específicas podem variar ligeiramente conforme a atualização do currículo. Recomendo verificar o plano de estudos mais recente no site da FCTE ou entrar em contato com a coordenação do curso para informações precisas.",
+        "recusou": false,
+        "valores_sem_fonte": [],
+        "tempo_busca_s": 0.0,
+        "tempo_geracao_s": 11.74
+      },
+      "com_rag": {
+        "resposta": "Não encontrei essa informação nas fontes da base. Sugiro consultar o Projeto Pedagógico do curso ou entrar em contato com a coordenação do curso para obter as disciplinas do primeiro nível. [1]",
+        "recusou": true,
+        "valores_sem_fonte": [],
+        "sem_citacao": false,
+        "fontes_citadas": [
+          {
+            "n": 1,
+            "doc_id": "F19",
+            "titulo": "Engenharia Automotiva — estrutura curricular (ingressantes a partir de 2027)",
+            "orgao": "UnB · FCTE · Engenharia Automotiva",
+            "pagina": 1,
+            "url": "https://automotiva.unb.br/estrutura_curricular/",
+            "chunk_id": "F19-0011"
+          }
+        ],
+        "tempo_busca_s": 0.18,
+        "tempo_geracao_s": 15.25,
+        "docs_recuperados": [
+          "F19",
+          "F19",
+          "F19",
+          "F19",
+          "F19"
+        ],
+        "doc_esperado_recuperado": true
+      }
+    },
+    {
+      "id": "Q20",
+      "eixo": "fluxo",
+      "categoria": "currículo",
+      "pergunta": "Quantas horas o aluno de Engenharia Automotiva precisa integralizar?",
+      "docs_esperados": [
+        "F19",
+        "F20"
+      ],
+      "sem_rag": {
+        "resposta": "O número exato de créditos que um aluno do curso de Engenharia Automotiva precisa integralizar pode variar dependendo do perfil do estudante, como grupo de pagamento e ano de ingresso. Geralmente, o curso tem cerca de 180 a 210 créditos-aula. Recomendamos verificar o plano de estudos mais atual no site da FCTE/UnB ou entrar em contato com a Pró-Reitoria de Graduação para informações precisas.",
+        "recusou": false,
+        "valores_sem_fonte": [
+          "210 créditos"
+        ],
+        "tempo_busca_s": 0.0,
+        "tempo_geracao_s": 9.92
+      },
+      "com_rag": {
+        "resposta": "O aluno do curso de Engenharia Automotiva deve integralizar 3.930 horas, no mínimo, distribuídas em componentes obrigatórios e optativos, além de estagio curricular, trabalho de conclusão de curso e atividades de extensão [1].",
+        "recusou": false,
+        "valores_sem_fonte": [],
+        "sem_citacao": false,
+        "fontes_citadas": [
+          {
+            "n": 1,
+            "doc_id": "F19",
+            "titulo": "Engenharia Automotiva — estrutura curricular (ingressantes a partir de 2027)",
+            "orgao": "UnB · FCTE · Engenharia Automotiva",
+            "pagina": 1,
+            "url": "https://automotiva.unb.br/estrutura_curricular/",
+            "chunk_id": "F19-0001"
+          }
+        ],
+        "tempo_busca_s": 0.17,
+        "tempo_geracao_s": 23.44,
+        "docs_recuperados": [
+          "F19",
+          "F17",
+          "F17",
+          "F21",
+          "F21"
+        ],
+        "doc_esperado_recuperado": true
+      }
+    },
+    {
+      "id": "Q21",
+      "eixo": "fluxo",
+      "categoria": "currículo",
+      "pergunta": "Qual o tempo mínimo e máximo de integralização da Engenharia Aeroespacial?",
+      "docs_esperados": [
+        "F17",
+        "F18"
+      ],
+      "sem_rag": {
+        "resposta": "O tempo mínimo para a integralização do curso de Engenharia Aeroespacial na FCTE/UnB é geralmente 4 anos, considerando carga horária regular. O máximo pode variar entre 7 a 8 anos, dependendo das regras atuais e possíveis interrupções no estudo. Verifique as especificações do seu perfil para detalhes precisos.",
+        "recusou": false,
+        "valores_sem_fonte": [],
+        "tempo_busca_s": 0.0,
+        "tempo_geracao_s": 5.99
+      },
+      "com_rag": {
+        "resposta": "O tempo mínimo de integralização para o curso de Engenharia Aeroespacial é 10 níveis, enquanto o tempo máximo é 18 níveis. [2][3]",
+        "recusou": false,
+        "valores_sem_fonte": [],
+        "sem_citacao": false,
+        "fontes_citadas": [
+          {
+            "n": 2,
+            "doc_id": "F17",
+            "titulo": "Projeto Pedagógico do Curso de Engenharia Aeroespacial (PPC 2025)",
+            "orgao": "UnB · FCTE · Engenharia Aeroespacial",
+            "pagina": 16,
+            "url": "https://aeroespacial.unb.br/wp-content/uploads/2026/05/PPC_Aero_2025.pdf",
+            "chunk_id": "F17-0028"
+          },
+          {
+            "n": 3,
+            "doc_id": "F21",
+            "titulo": "Projeto Pedagógico do Curso de Engenharia Eletrônica (PPC 2023)",
+            "orgao": "UnB · FCTE · Engenharia Eletrônica",
+            "pagina": 11,
+            "url": "https://eletronica.unb.br/wp-content/uploads/2025/03/PPC_eletronica2023_2.pdf",
+            "chunk_id": "F21-0016"
+          }
+        ],
+        "tempo_busca_s": 1.26,
+        "tempo_geracao_s": 21.42,
+        "docs_recuperados": [
+          "F17",
+          "F17",
+          "F21",
+          "F17",
+          "F17"
+        ],
+        "doc_esperado_recuperado": true
+      }
+    },
+    {
+      "id": "Q22",
+      "eixo": "fluxo",
+      "categoria": "currículo",
+      "pergunta": "Quais são os perfis de formação da Engenharia Eletrônica?",
+      "docs_esperados": [
+        "F21"
+      ],
+      "sem_rag": {
+        "resposta": "Os perfis de formação na Engenharia Eletrônica do curso da FCTE/UnB incluem especializações em sistemas eletrônicos, automação industrial, telecomunicações e energia. O perfil abrange conhecimentos em circuitos elétricos, microeletrônica, processamento digital de sinais e redes de computadores.",
+        "recusou": false,
+        "valores_sem_fonte": [],
+        "tempo_busca_s": 0.0,
+        "tempo_geracao_s": 5.32
+      },
+      "com_rag": {
+        "resposta": "Não encontrei essa informação nas fontes da base. Sugiro consultar o Projeto Pedagógico do Curso de Engenharia Eletrônica (PPC 2023) diretamente ou entrar em contato com a coordenação do curso para obter detalhes sobre os perfis de formação.",
+        "recusou": true,
+        "valores_sem_fonte": [],
+        "sem_citacao": false,
+        "fontes_citadas": [],
+        "tempo_busca_s": 0.26,
+        "tempo_geracao_s": 15.91,
+        "docs_recuperados": [
+          "F21",
+          "F21",
+          "F21",
+          "F21",
+          "F21"
+        ],
+        "doc_esperado_recuperado": true
+      }
+    },
+    {
+      "id": "Q23",
+      "eixo": "fluxo",
+      "categoria": "regra",
+      "pergunta": "Como funciona a escolha de curso no ingresso da FCTE pela ABI Engenharia?",
+      "docs_esperados": [
+        "F14"
+      ],
+      "sem_rag": {
+        "resposta": "A escolha do curso na FCTE pela ABI (Análise e Desenvolvimento de Sistemas) é feita durante o processo seletivo. Os candidatos devem seguir as orientações específicas do edital do ingresso, que indicam como preencher a preferência pelo curso. É importante verificar os detalhes no site da FCTE ou na ABI, pois podem variar de ano para ano.",
+        "recusou": false,
+        "valores_sem_fonte": [],
+        "tempo_busca_s": 0.0,
+        "tempo_geracao_s": 6.36
+      },
+      "com_rag": {
+        "resposta": "A escolha de curso para a ABI Engenharia ocorre durante o processo seletivo, onde os candidatos indicam suas preferências. No momento do ingresso, as vagas são preenchidas com base na classificação no processo seletivo e na ordem de preferência declarada [3][4]. Não há alteração após o primeiro semestre, salvo em caso de disponibilidade de vagas em outro curso da mesma ABI [4].",
+        "recusou": false,
+        "valores_sem_fonte": [],
+        "sem_citacao": false,
+        "fontes_citadas": [
+          {
+            "n": 3,
+            "doc_id": "F14",
+            "titulo": "Resolução da FCTE nº 01/2025 — ingresso e escolha de curso (ABI Engenharia e Computação)",
+            "orgao": "UnB · FCTE",
+            "pagina": 1,
+            "url": "https://fcte.unb.br/wp-content/uploads/2025/09/RESOLUCAO-DO-CONSELHO-DA-FCTE-No-01-2025.pdf",
+            "chunk_id": "F14-0001"
+          },
+          {
+            "n": 4,
+            "doc_id": "F14",
+            "titulo": "Resolução da FCTE nº 01/2025 — ingresso e escolha de curso (ABI Engenharia e Computação)",
+            "orgao": "UnB · FCTE",
+            "pagina": 1,
+            "url": "https://fcte.unb.br/wp-content/uploads/2025/09/RESOLUCAO-DO-CONSELHO-DA-FCTE-No-01-2025.pdf",
+            "chunk_id": "F14-0003"
+          }
+        ],
+        "tempo_busca_s": 0.13,
+        "tempo_geracao_s": 18.29,
+        "docs_recuperados": [
+          "F14",
+          "F14",
+          "F14",
+          "F14",
+          "F14"
+        ],
+        "doc_esperado_recuperado": true
+      }
+    },
+    {
+      "id": "Q24",
+      "eixo": "fluxo",
+      "categoria": "regra",
+      "pergunta": "Quantas vagas a FCTE oferta para Engenharia de Software?",
+      "docs_esperados": [
+        "F14"
+      ],
+      "sem_rag": {
+        "resposta": "Não encontrei essa informação nas fontes da base. Recomendo que você entre em contato com o setor de admissoes ou o departamento acadêmico da FCTE/UnB para obter as vagas específicas do curso de Engenharia de Software.",
+        "recusou": true,
+        "valores_sem_fonte": [],
+        "tempo_busca_s": 0.0,
+        "tempo_geracao_s": 4.28
+      },
+      "com_rag": {
+        "resposta": "A FCTE oferece anualmente 560 vagas para o Bacharelado em Engenharia com opção de formação em Engenharia de Software, conforme informado nos trechos [2][3].",
+        "recusou": false,
+        "valores_sem_fonte": [],
+        "sem_citacao": false,
+        "fontes_citadas": [
+          {
+            "n": 2,
+            "doc_id": "F17",
+            "titulo": "Projeto Pedagógico do Curso de Engenharia Aeroespacial (PPC 2025)",
+            "orgao": "UnB · FCTE · Engenharia Aeroespacial",
+            "pagina": 19,
+            "url": "https://aeroespacial.unb.br/wp-content/uploads/2026/05/PPC_Aero_2025.pdf",
+            "chunk_id": "F17-0030"
+          },
+          {
+            "n": 3,
+            "doc_id": "F21",
+            "titulo": "Projeto Pedagógico do Curso de Engenharia Eletrônica (PPC 2023)",
+            "orgao": "UnB · FCTE · Engenharia Eletrônica",
+            "pagina": 14,
+            "url": "https://eletronica.unb.br/wp-content/uploads/2025/03/PPC_eletronica2023_2.pdf",
+            "chunk_id": "F21-0020"
+          }
+        ],
+        "tempo_busca_s": 0.14,
+        "tempo_geracao_s": 16.1,
+        "docs_recuperados": [
+          "F17",
+          "F17",
+          "F21",
+          "F24",
+          "F16"
+        ],
+        "doc_esperado_recuperado": false
+      }
+    },
+    {
+      "id": "Q25",
+      "eixo": "fluxo",
+      "categoria": "regra",
+      "pergunta": "Aluno de graduação pode cursar disciplina do mestrado em Engenharia Biomédica?",
+      "docs_esperados": [
+        "F26"
+      ],
+      "sem_rag": {
+        "resposta": "Para cursar uma disciplina do mestrado em Engenharia Biomédica como aluno de graduação, é necessário verificar as regras específicas do seu curso e da pós-graduação. Geralmente, isso depende do perfil do estudante e das normativas internas da FCTE/UnB. Recomendo consultar o departamento ou a coordenação do programa de mestrado em Engenharia Biomédica para obter informações precisas.",
+        "recusou": false,
+        "valores_sem_fonte": [],
+        "tempo_busca_s": 0.0,
+        "tempo_geracao_s": 7.08
+      },
+      "com_rag": {
+        "resposta": "Sim, aluno de graduação pode cursar disciplinas do mestrado em Engenharia Biomédica (PPGEB) como eletivas ou optativas. O processo envolve verificar a oferta, solicitar ao coordenador do curso de graduação e obter aprovação do Colegiado do Curso de Graduação e do PPGEB [1][2].",
+        "recusou": false,
+        "valores_sem_fonte": [],
+        "sem_citacao": false,
+        "fontes_citadas": [
+          {
+            "n": 1,
+            "doc_id": "F26",
+            "titulo": "PPGEB (Mestrado em Engenharia Biomédica) — como aluno de graduação cursa disciplinas do mestrado",
+            "orgao": "UnB · FCTE · PPGEB",
+            "pagina": 1,
+            "url": "https://ppgeb.unb.br/aluno-de-graduacao/",
+            "chunk_id": "F26-0001"
+          },
+          {
+            "n": 2,
+            "doc_id": "F26",
+            "titulo": "PPGEB (Mestrado em Engenharia Biomédica) — como aluno de graduação cursa disciplinas do mestrado",
+            "orgao": "UnB · FCTE · PPGEB",
+            "pagina": 1,
+            "url": "https://ppgeb.unb.br/aluno-de-graduacao/",
+            "chunk_id": "F26-0002"
+          }
+        ],
+        "tempo_busca_s": 0.17,
+        "tempo_geracao_s": 17.36,
+        "docs_recuperados": [
+          "F26",
+          "F26",
+          "F28",
+          "F28",
+          "F25"
+        ],
+        "doc_esperado_recuperado": true
+      }
+    },
+    {
+      "id": "Q26",
+      "eixo": "fluxo",
+      "categoria": "conceito",
+      "pergunta": "Quais são as linhas de pesquisa do PPGEB?",
+      "docs_esperados": [
+        "F27",
+        "F28"
+      ],
+      "sem_rag": {
+        "resposta": "Não encontrei essa informação nas fontes da base. Sugiro entrar em contato diretamente com o Programa de Pós-Graduação em Educação Básica (PPGEB) ou verificar seu site oficial para obter as linhas de pesquisa atualizadas.",
+        "recusou": true,
+        "valores_sem_fonte": [],
+        "tempo_busca_s": 0.0,
+        "tempo_geracao_s": 4.26
+      },
+      "com_rag": {
+        "resposta": "As linhas de pesquisa do PPGEB são:\n\n1. Avaliação, Educação e Políticas Públicas em Saúde\n2. Aplicação de Computação Inteligente em Pesquisa Biomédica e Cuidados de Saúde\n3. Tecnologias em Engenharia Biomédica\n4. Produção e Processos em Biotecnologia [5]",
+        "recusou": false,
+        "valores_sem_fonte": [],
+        "sem_citacao": false,
+        "fontes_citadas": [
+          {
+            "n": 5,
+            "doc_id": "F24",
+            "titulo": "PPGEB — apresentação do Mestrado em Engenharia Biomédica",
+            "orgao": "UnB · FCTE · PPGEB",
+            "pagina": 1,
+            "url": "https://ppgeb.unb.br/apresentacao/",
+            "chunk_id": "F24-0004"
+          }
+        ],
+        "tempo_busca_s": 0.18,
+        "tempo_geracao_s": 17.48,
+        "docs_recuperados": [
+          "F27",
+          "F27",
+          "F24",
+          "F27",
+          "F24"
+        ],
+        "doc_esperado_recuperado": true
+      }
+    },
+    {
+      "id": "Q27",
+      "eixo": "fluxo",
+      "categoria": "calendário",
+      "pergunta": "Quando é o último dia de aulas do semestre 2026.2?",
+      "docs_esperados": [
+        "F29"
+      ],
+      "sem_rag": {
+        "resposta": "Não encontrei essa informação nas fontes da base. Recomendo que você entre em contato com a Pró-Reitoria de Ensino (PROEN) ou verifique no portal da FCTE/UnB para obter o calendário oficial do semestre 2026.2, onde encontrará as datas exatas dos últimos dias de aulas.",
+        "recusou": true,
+        "valores_sem_fonte": [],
+        "tempo_busca_s": 0.0,
+        "tempo_geracao_s": 5.92
+      },
+      "com_rag": {
+        "resposta": "[1] O último dia de aulas do semestre 2026.2 é 14/12/2026.",
+        "recusou": false,
+        "valores_sem_fonte": [],
+        "sem_citacao": false,
+        "fontes_citadas": [
+          {
+            "n": 1,
+            "doc_id": "F29",
+            "titulo": "Calendário universitário de graduação 2026.2 por atividades",
+            "orgao": "UnB · Secretaria de Administração Acadêmica",
+            "pagina": 1,
+            "url": "https://saa.unb.br/wp-content/uploads/2026/06/2026_2_Calend_Ativ_Grad_25_06_2026.pdf",
+            "chunk_id": "F29-0000"
+          }
+        ],
+        "tempo_busca_s": 0.13,
+        "tempo_geracao_s": 16.6,
+        "docs_recuperados": [
+          "F29",
+          "F29",
+          "F30",
+          "F29",
+          "F17"
+        ],
+        "doc_esperado_recuperado": true
+      }
+    },
+    {
+      "id": "Q28",
+      "eixo": "fluxo",
+      "categoria": "calendário",
+      "pergunta": "Qual o período de matrícula do 2026.2?",
+      "docs_esperados": [
+        "F29"
+      ],
+      "sem_rag": {
+        "resposta": "Não encontrei essa informação nas fontes da base. Recomendo que você entre em contato com a Pró-Reitoria de Ensino ou consulte o calendário acadêmico oficial da FCTE/UnB, onde normalmente são divulgadas essas informações específicas para cada período.",
+        "recusou": true,
+        "valores_sem_fonte": [],
+        "tempo_busca_s": 0.0,
+        "tempo_geracao_s": 4.86
+      },
+      "com_rag": {
+        "resposta": "O período de matrícula para o 2026.2 foi de 06/03 a 18/07/2026, conforme informado no Calendário de Matrícula da Graduação 2026.1 [3].",
+        "recusou": false,
+        "valores_sem_fonte": [],
+        "sem_citacao": false,
+        "fontes_citadas": [
+          {
+            "n": 3,
+            "doc_id": "F30",
+            "titulo": "Calendário de matrícula da graduação 2026.1",
+            "orgao": "UnB · Secretaria de Administração Acadêmica",
+            "pagina": 1,
+            "url": "https://saa.unb.br/wp-content/uploads/2026/02/2026_1_Calend_Mat_Grad_27_02_2026.pdf",
+            "chunk_id": "F30-0000"
+          }
+        ],
+        "tempo_busca_s": 0.16,
+        "tempo_geracao_s": 22.89,
+        "docs_recuperados": [
+          "F29",
+          "F29",
+          "F30",
+          "F29",
+          "F30"
+        ],
+        "doc_esperado_recuperado": true
+      }
+    },
+    {
+      "id": "Q29",
+      "eixo": "fluxo",
+      "categoria": "regra",
+      "pergunta": "Qual a diferença entre trancamento de disciplina e trancamento justificado?",
+      "docs_esperados": [
+        "F31"
+      ],
+      "sem_rag": {
+        "resposta": "Trancamento de disciplina é quando o aluno não cursa uma disciplina sem prejuízo para sua matrícula no curso. Já o trancamento justificado ocorre quando o aluno tem uma justificativa aceita pelo departamento, como motivo médico ou familiar, podendo assim interromper temporariamente a frequência à disciplina sem perder a matrícula.",
+        "recusou": false,
+        "valores_sem_fonte": [],
+        "tempo_busca_s": 0.0,
+        "tempo_geracao_s": 5.76
+      },
+      "com_rag": {
+        "resposta": "O Trancamento de Disciplina Justificado (TJ) é uma suspensão temporária das atividades em determinada(s) disciplina(s), sem perda do vínculo com a universidade, enquanto que o Trancamento Geral de Matrícula Justificado (TGMJ) envolve um trancamento geral da matrícula. Ambos pressupõem justificativa prévia e são analisados pela Coordenação do curso ou DTG [3][5].",
+        "recusou": false,
+        "valores_sem_fonte": [],
+        "sem_citacao": false,
+        "fontes_citadas": [
+          {
+            "n": 3,
+            "doc_id": "F31",
+            "titulo": "Resolução CEPE nº 93/2018 — trancamento de matrícula na graduação",
+            "orgao": "UnB · CEPE",
+            "pagina": 2,
+            "url": "https://deg.unb.br/wp-content/uploads/resolucao_cepe_93_2018_trancamentos.pdf",
+            "chunk_id": "F31-0008"
+          },
+          {
+            "n": 5,
+            "doc_id": "F31",
+            "titulo": "Resolução CEPE nº 93/2018 — trancamento de matrícula na graduação",
+            "orgao": "UnB · CEPE",
+            "pagina": 3,
+            "url": "https://deg.unb.br/wp-content/uploads/resolucao_cepe_93_2018_trancamentos.pdf",
+            "chunk_id": "F31-0013"
+          }
+        ],
+        "tempo_busca_s": 0.18,
+        "tempo_geracao_s": 20.11,
+        "docs_recuperados": [
+          "F31",
+          "F31",
+          "F31",
+          "F31",
+          "F31"
+        ],
+        "doc_esperado_recuperado": true
+      }
+    },
+    {
+      "id": "Q30",
+      "eixo": "fluxo",
+      "categoria": "regra",
+      "pergunta": "Calouro pode alterar a própria matrícula no SIGAA?",
+      "docs_esperados": [
+        "F33",
+        "F32"
+      ],
+      "sem_rag": {
+        "resposta": "Não, o calouro não pode alterar a própria matrícula no SIGAA. Essa tarefa é realizada pelos coordenadores de curso ou secretariado acadêmico, dependendo do perfil do estudante e das regras em vigor.",
+        "recusou": false,
+        "valores_sem_fonte": [],
+        "tempo_busca_s": 0.0,
+        "tempo_geracao_s": 4.1
+      },
+      "com_rag": {
+        "resposta": "Não, o calouro não poderá fazer alterações em sua matrícula. A matrícula do estudante calouro nas disciplinas do primeiro semestre do curso é realizada pela SAA. [1]",
+        "recusou": false,
+        "valores_sem_fonte": [],
+        "sem_citacao": false,
+        "fontes_citadas": [
+          {
+            "n": 1,
+            "doc_id": "F33",
+            "titulo": "FAQ — Matrícula no SIGAA",
+            "orgao": "UnB",
+            "pagina": 1,
+            "url": "https://noticias.unb.br/images/Noticias/2021/01-Jan/FAQ__MATRICULA_NO_SIGAA__11-1-2021_4.pdf",
+            "chunk_id": "F33-0002"
+          }
+        ],
+        "tempo_busca_s": 0.18,
+        "tempo_geracao_s": 12.68,
+        "docs_recuperados": [
+          "F33",
+          "F33",
+          "F34",
+          "F34",
+          "F33"
+        ],
+        "doc_esperado_recuperado": true
+      }
+    },
+    {
+      "id": "Q31",
+      "eixo": "fluxo",
+      "categoria": "procedimento",
+      "pergunta": "Como faço a matrícula on-line no SIGAA?",
+      "docs_esperados": [
+        "F32",
+        "F34",
+        "F29"
+      ],
+      "sem_rag": {
+        "resposta": "Não encontrei essa informação nas fontes da base. Sugiro que você entre em contato com o Setor de Atendimento ao Estudante (SAE) ou visite o site oficial da UnB para obter instruções atualizadas sobre a matrícula on-line no SIGAA.",
+        "recusou": true,
+        "valores_sem_fonte": [],
+        "tempo_busca_s": 0.0,
+        "tempo_geracao_s": 4.64
+      },
+      "com_rag": {
+        "resposta": "Para realizar a matrícula on-line no SIGAA, siga estes passos:\n\n1. Acesse o portal do discente.\n2. Navegue até a aba \"Ensino\".\n3. Selecione \"Matrícula on-line\" e clique em \"Realizar Matrícula\".\n4. Inicie a seleção de turmas.\n\nEssas etapas são válidas para matrículas regulares e rematrículas, conforme o calendário acadêmico da UnB [1][2][3].",
+        "recusou": false,
+        "valores_sem_fonte": [],
+        "sem_citacao": false,
+        "fontes_citadas": [
+          {
+            "n": 1,
+            "doc_id": "F33",
+            "titulo": "FAQ — Matrícula no SIGAA",
+            "orgao": "UnB",
+            "pagina": 1,
+            "url": "https://noticias.unb.br/images/Noticias/2021/01-Jan/FAQ__MATRICULA_NO_SIGAA__11-1-2021_4.pdf",
+            "chunk_id": "F33-0002"
+          },
+          {
+            "n": 2,
+            "doc_id": "F29",
+            "titulo": "Calendário universitário de graduação 2026.2 por atividades",
+            "orgao": "UnB · Secretaria de Administração Acadêmica",
+            "pagina": 1,
+            "url": "https://saa.unb.br/wp-content/uploads/2026/06/2026_2_Calend_Ativ_Grad_25_06_2026.pdf",
+            "chunk_id": "F29-0001"
+          },
+          {
+            "n": 3,
+            "doc_id": "F30",
+            "titulo": "Calendário de matrícula da graduação 2026.1",
+            "orgao": "UnB · Secretaria de Administração Acadêmica",
+            "pagina": 1,
+            "url": "https://saa.unb.br/wp-content/uploads/2026/02/2026_1_Calend_Mat_Grad_27_02_2026.pdf",
+            "chunk_id": "F30-0001"
+          }
+        ],
+        "tempo_busca_s": 0.13,
+        "tempo_geracao_s": 25.45,
+        "docs_recuperados": [
+          "F33",
+          "F29",
+          "F30",
+          "F32",
+          "F32"
+        ],
+        "doc_esperado_recuperado": true
+      }
+    },
+    {
+      "id": "Q32",
+      "eixo": "fluxo",
+      "categoria": "regra",
+      "pergunta": "Quais são os órgãos colegiados da Faculdade do Gama segundo o regimento interno?",
+      "docs_esperados": [
+        "F36"
+      ],
+      "sem_rag": {
+        "resposta": "Não encontrei essa informação nas fontes da base. Sugiro consultar o Regimento Interno específico da FCTE/UnB (campus Gama) ou entrar em contato com a Pró-Reitoria de Ensino (PGE) para obter as informações mais precisas sobre os órgãos colegiados da faculdade.",
+        "recusou": true,
+        "valores_sem_fonte": [],
+        "tempo_busca_s": 0.0,
+        "tempo_geracao_s": 5.32
+      },
+      "com_rag": {
+        "resposta": "Os órgãos colegiados da Faculdade do Gama (FGA) incluem:\n\n- Conselho da FGA\n- Colegiado de Graduação\n- Colegiado de Extensão\n- Câmara Acadêmica\n- Colegiado dos Cursos de Pós-Graduação (CCPG)\n\n[2][3]",
+        "recusou": false,
+        "valores_sem_fonte": [],
+        "sem_citacao": false,
+        "fontes_citadas": [
+          {
+            "n": 2,
+            "doc_id": "F21",
+            "titulo": "Projeto Pedagógico do Curso de Engenharia Eletrônica (PPC 2023)",
+            "orgao": "UnB · FCTE · Engenharia Eletrônica",
+            "pagina": 98,
+            "url": "https://eletronica.unb.br/wp-content/uploads/2025/03/PPC_eletronica2023_2.pdf",
+            "chunk_id": "F21-0226"
+          },
+          {
+            "n": 3,
+            "doc_id": "F36",
+            "titulo": "Regimento Interno da Faculdade UnB Gama (FCTE)",
+            "orgao": "UnB · FCTE",
+            "pagina": 8,
+            "url": "http://fcte.unb.br/wp-content/uploads/2024/05/Regimento_Interno_FGA_-_aprovado.pdf",
+            "chunk_id": "F36-0026"
+          }
+        ],
+        "tempo_busca_s": 0.19,
+        "tempo_geracao_s": 16.87,
+        "docs_recuperados": [
+          "F36",
+          "F21",
+          "F36",
+          "F36",
+          "F36"
+        ],
+        "doc_esperado_recuperado": true
+      }
+    },
+    {
+      "id": "X01",
+      "eixo": "fora",
+      "categoria": "fora da base",
+      "pergunta": "Qual o wifi da biblioteca da FCTE?",
+      "docs_esperados": [],
+      "sem_rag": {
+        "resposta": "O Wi-Fi da biblioteca da FCTE/UnB é o \"unbguest\" para visitantes e \"unbmobile\" ou \"unbmobile-edu\" para comunidade acadêmica. Confira as credenciais necessárias com a administração da biblioteca.",
+        "recusou": false,
+        "valores_sem_fonte": [],
+        "tempo_busca_s": 0.0,
+        "tempo_geracao_s": 4.65
+      },
+      "com_rag": {
+        "resposta": "Não encontrei essa informação nas fontes da base. Sugiro verificar diretamente com a Secretaria Acadêmica ou o setor de TI do campus Gama.",
+        "recusou": true,
+        "valores_sem_fonte": [],
+        "sem_citacao": false,
+        "fontes_citadas": [],
+        "tempo_busca_s": 0.17,
+        "tempo_geracao_s": 2.61,
+        "docs_recuperados": [
+          "F17",
+          "F17",
+          "F21",
+          "F17",
+          "F21"
+        ],
+        "doc_esperado_recuperado": false
+      }
+    },
+    {
+      "id": "X02",
+      "eixo": "fora",
+      "categoria": "fora da base",
+      "pergunta": "Quanto custa o estacionamento no campus Gama?",
+      "docs_esperados": [],
+      "sem_rag": {
+        "resposta": "O valor do estacionamento no campus Gama depende do perfil do estudante, como grupo de pagamento e curso. Recomendo que você consulte a Seção de Estacionamento ou o site da FCTE/UnB para informações atualizadas e específicas ao seu caso.",
+        "recusou": false,
+        "valores_sem_fonte": [],
+        "tempo_busca_s": 0.0,
+        "tempo_geracao_s": 4.79
+      },
+      "com_rag": {
+        "resposta": "Não encontrei essa informação nas fontes da base. Sugiro entrar em contato com a Diretoria do Restaurante Universitário ou verificar o site oficial da UnB para obter informações sobre o estacionamento no campus Gama.",
+        "recusou": true,
+        "valores_sem_fonte": [],
+        "sem_citacao": false,
+        "fontes_citadas": [],
+        "tempo_busca_s": 0.12,
+        "tempo_geracao_s": 16.81,
+        "docs_recuperados": [
+          "F03",
+          "F24",
+          "F17",
+          "F03",
+          "F03"
+        ],
+        "doc_esperado_recuperado": false
+      }
+    },
+    {
+      "id": "X03",
+      "eixo": "fora",
+      "categoria": "fora da base",
+      "pergunta": "Quanto custa a xerox na biblioteca da FCTE?",
+      "docs_esperados": [],
+      "sem_rag": {
+        "resposta": "Não encontrei essa informação nas fontes da base. Recomendo entrar em contato com a biblioteca da FCTE/UnB para obter o valor atualizado da xerox, pois ele pode variar dependendo do perfil do estudante e das políticas atuais da instituição.",
+        "recusou": true,
+        "valores_sem_fonte": [],
+        "tempo_busca_s": 0.0,
+        "tempo_geracao_s": 4.69
+      },
+      "com_rag": {
+        "resposta": "Não encontrei essa informação nas fontes da base. Sugiro entrar em contato com a Secretaria Acadêmica ou o setor administrativo da FCTE/UnB para obter informações sobre os custos da xerox na biblioteca.",
+        "recusou": true,
+        "valores_sem_fonte": [],
+        "sem_citacao": false,
+        "fontes_citadas": [],
+        "tempo_busca_s": 0.17,
+        "tempo_geracao_s": 4.07,
+        "docs_recuperados": [
+          "F17",
+          "F17",
+          "F21",
+          "F17",
+          "F21"
+        ],
+        "doc_esperado_recuperado": false
+      }
+    }
+  ]
+}
