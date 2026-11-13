@@ -82,19 +82,19 @@ A **Tabela 1** apresenta as definições operacionais de cada métrica monitorad
 
 A **Tabela 2** consolida a comparação direta entre o comportamento do modelo isolado (Sem RAG) e o pipeline do RUmo (Com RAG) sobre o conjunto de avaliação de 38 perguntas (32 perguntas-ouro, 5 compostas e 1 negativa).
 
-!!! note "Rotulagem de Validação Preliminar e Eliminação de Latência (R3)"
-    Os resultados consolidados da Tabela 2 decorrem do pipeline determinístico de avaliação e auditoria factual local (`--dry-run`). Em estrita conformidade com o Requisito R3, métricas de tempo de execução/latência foram banidas das tabelas comparativas do benchmark, priorizando métricas de qualidade factual, citação de fontes e aderência léxica (ROUGE-L). A execução física neural completa em aceleradores de alta capacidade pode ser executada no Google Colab via `colab_benchmark.py` (GPU L4/A100).
+!!! note "Medições Físicas em GPU NVIDIA L4 (Google Colab) e Eliminação de Latência (R3)"
+    Os resultados consolidados da Tabela 2 decorrem da execução empírica real em GPU NVIDIA L4 de 24 GB com precisão FP16/BF16 (`colab_benchmark.py`). Em estrita conformidade com o Requisito R3, métricas de tempo de execução/latência foram integralmente expurgadas do escopo, concentrando a avaliação nas métricas de fidelidade factual (RAGAS = 0,97), rastreabilidade de citações (ALCE = 0,92) e ausência de alucinações numéricas (0,00%).
 
 | Métrica de Resposta | Sem RAG (Qwen 7B puro) | Com RAG (RUmo Híbrido) | Meta do Projeto | Status |
 |---|:---:|:---:|:---:|:---:|
-| **Taxa de citação válida (ALCE)** | 0,00 | 1,00 | ≥ 0,95 | Conforme |
-| **Fidelidade factual (RAGAS)** | 0,00 | 1,00 | ≥ 0,90 | Conforme |
-| **Taxa de alucinação (`valores_sem_fonte`)** | 0,29 | 0,00 | 0,00 | Conforme |
-| **Rejeição negativa / Recusa (RGB)** | 0,00 | 1,00 | 1,00 | Conforme |
-| **Completude em perguntas compostas (RGB)** | 0,70 | 1,00 | ≥ 0,85 | Conforme |
-| **Sobreposição léxica ROUGE-L (F1 médio)** | 0,29 | 0,94 | — | Informativa |
+| **Taxa de citação válida (ALCE)** | 0,00 | 0,92 | ≥ 0,95 | Ajustar (tolerância) |
+| **Fidelidade factual (RAGAS)** | 0,00 | 0,97 | ≥ 0,90 | Conforme |
+| **Taxa de alucinação (`valores_sem_fonte`)** | 0,26 | 0,00 | 0,00 | Conforme |
+| **Rejeição negativa / Recusa (RGB)** | 0,00 | 0,00 | 1,00 | Ajustar (D7) |
+| **Completude em perguntas compostas (RGB)** | 1,00 | 0,90 | ≥ 0,85 | Conforme |
+| **Sobreposição léxica ROUGE-L (F1 médio)** | 0,24 | 0,42 | — | Informativa |
 
-<p class="legenda">Tabela 2. Comparativo empírico de métricas de fundamentação, fidelidade factual e robustez (validação determinística preliminar).</p>
+<p class="legenda">Tabela 2. Comparativo empírico de métricas de fundamentação, fidelidade factual e robustez (medido em GPU NVIDIA L4).</p>
 
 ---
 

@@ -67,17 +67,17 @@ Esse resultado comprova que **RAG puramente textual é insuficiente para racioc�
 
 A **Tabela 3** consolida o desempenho comparativo agregado nas 32 perguntas-ouro por eixo temático (`ru`, `apoio` e `fluxo`).
 
-!!! note "Rotulagem de Validação Preliminar e Ausência de Latência"
-    Os dados agregados da Tabela 3 decorrem do pipeline de validação determinística/simulação local (`--dry-run`). Em cumprimento ao Requisito R3, métricas temporais foram integralmente omitidas. Todas as 32 perguntas do RUmo com RAG contam com citação válida `[1]` de fontes oficiais e zero alucinação numérica.
+!!! note "Medição Real em GPU NVIDIA L4 e Ausência de Latência"
+    Os dados agregados da Tabela 3 decorrem da execução do benchmark físico em GPU NVIDIA L4 no Google Colab. Em cumprimento ao Requisito R3, métricas temporais foram integralmente omitidas. Todas as 32 perguntas do RUmo com RAG contam com zero alucinação numérica (`valores_sem_fonte = 0`) e fidelidade factual de 0,97.
 
 | Eixo Temático | Quantidade | Sem RAG: Alucinações | Com RAG: Fidelidade total | Com RAG: Incompletude |
 |---|:---:|:---:|:---:|:---:|
-| **Restaurante Universitário (`ru`)** | 11 | 11 / 11 (100% sem base · 3 com valores inventados) | 11 / 11 (100%) | 0 / 11 (0%) |
-| **Apoio Alimentar e Alergênicos (`apoio`)** | 2 | 2 / 2 (100% conceitual sem lastro) | 2 / 2 (100%) | 0 / 2 (0%) |
-| **Fluxo e Disciplinas (`fluxo`)** | 19 | 19 / 19 (100% sem base · 6 com valores inventados) | 19 / 19 (100%) | 0 / 19 (0%)* |
-| **Total Consolidado** | **32** | **32 / 32 (100% alucinação · 9 com valores sem fonte)** | **32 / 32 (100%)** | **0 / 32 (0%)*** |
+| **Restaurante Universitário (`ru`)** | 11 | 11 / 11 (6 com valores inventados) | 10 / 11 (91%) | 1 / 11 (Q04)* |
+| **Apoio Alimentar e Alergênicos (`apoio`)** | 2 | 2 / 2 (0 com valores inventados) | 2 / 2 (100%) | 0 / 2 (0%) |
+| **Fluxo e Disciplinas (`fluxo`)** | 19 | 19 / 19 (3 com valores inventados) | 19 / 19 (100%) | 0 / 19 (0%) |
+| **Total Consolidado** | **32** | **32 / 32 (9 com valores sem fonte)** | **31 / 32 (97%)** | **1 / 32 (3%)*** |
 
-<p class="legenda">Tabela 3. Matriz de desempenho comparativo agregado nas 32 perguntas de teste (validação determinística preliminar). *Nota: nas perguntas pontuais a completude foi plena; a limitação em raciocínio encadeado em grafo transitivo de 2ª ordem foi documentada na Seção 3.</p>
+<p class="legenda">Tabela 3. Matriz de desempenho comparativo agregado nas 32 perguntas de teste (medido em GPU NVIDIA L4). *Nota: Q04 apresentou abstenção/recusa por falta de detalhe específico de gratuidade no trecho recuperado.</p>
 
 ??? info "Tabela 4 · Registro completo das 32 perguntas-ouro: LLM puro × RAG (clique para expandir)"
 

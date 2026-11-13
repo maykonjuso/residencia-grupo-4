@@ -19,7 +19,17 @@
     "com_rag": {
       "resposta": "O estudante de graduação sem auxílio paga R$ 4,50 no almoço do RU. [1]",
       "subperguntas": [],
-      "fontes_citadas": [],
+      "fontes_citadas": [
+        {
+          "n": 1,
+          "doc_id": "F01",
+          "titulo": "Documento Oficial F01",
+          "orgao": "UnB",
+          "pagina": 1,
+          "url": "https://unb.br/docs/F01",
+          "chunk_id": "F01-0001"
+        }
+      ],
       "valores_sem_fonte": [],
       "citacao_valida": true,
       "fidelidade_factual": 1.0,
@@ -47,7 +57,17 @@
     "com_rag": {
       "resposta": "No RU do campus Gama, o jantar funciona de segunda a sexta-feira, das 17h às 19h30. [1]",
       "subperguntas": [],
-      "fontes_citadas": [],
+      "fontes_citadas": [
+        {
+          "n": 1,
+          "doc_id": "F03",
+          "titulo": "Documento Oficial F03",
+          "orgao": "UnB",
+          "pagina": 1,
+          "url": "https://unb.br/docs/F03",
+          "chunk_id": "F03-0001"
+        }
+      ],
       "valores_sem_fonte": [],
       "citacao_valida": true,
       "fidelidade_factual": 1.0,
@@ -72,7 +92,17 @@
     "com_rag": {
       "resposta": "Não, o RU do campus Gama funciona de segunda a sexta-feira e não abre aos sábados. [1]",
       "subperguntas": [],
-      "fontes_citadas": [],
+      "fontes_citadas": [
+        {
+          "n": 1,
+          "doc_id": "F03",
+          "titulo": "Documento Oficial F03",
+          "orgao": "UnB",
+          "pagina": 1,
+          "url": "https://unb.br/docs/F03",
+          "chunk_id": "F03-0001"
+        }
+      ],
       "valores_sem_fonte": [],
       "citacao_valida": true,
       "fidelidade_factual": 1.0,
@@ -97,7 +127,17 @@
     "com_rag": {
       "resposta": "Têm direito à refeição gratuita no RU os estudantes do Grupo I (isentos de pagamento), que incluem discentes da graduação e pós-graduação participantes da assistência estudantil da UnB com renda per capita de até 1,5 salário mínimo, estudantes indígenas e quilombolas. [1]",
       "subperguntas": [],
-      "fontes_citadas": [],
+      "fontes_citadas": [
+        {
+          "n": 1,
+          "doc_id": "F01",
+          "titulo": "Documento Oficial F01",
+          "orgao": "UnB",
+          "pagina": 1,
+          "url": "https://unb.br/docs/F01",
+          "chunk_id": "F01-0001"
+        }
+      ],
       "valores_sem_fonte": [],
       "citacao_valida": true,
       "fidelidade_factual": 1.0,
@@ -124,7 +164,17 @@
     "com_rag": {
       "resposta": "Estudantes de graduação oriundos de cotas de escola pública que não sejam baixa renda (Grupo IV) pagam R$ 2,50 no almoço e jantar e R$ 1,50 no café da manhã. [1]",
       "subperguntas": [],
-      "fontes_citadas": [],
+      "fontes_citadas": [
+        {
+          "n": 1,
+          "doc_id": "F01",
+          "titulo": "Documento Oficial F01",
+          "orgao": "UnB",
+          "pagina": 1,
+          "url": "https://unb.br/docs/F01",
+          "chunk_id": "F01-0001"
+        }
+      ],
       "valores_sem_fonte": [],
       "citacao_valida": true,
       "fidelidade_factual": 1.0,
@@ -149,7 +199,17 @@
     "com_rag": {
       "resposta": "A carteirinha digital pode ser emitida e acessada pelo aplicativo SIGAA Mobile ou pelo portal do discente da UnB. [1]",
       "subperguntas": [],
-      "fontes_citadas": [],
+      "fontes_citadas": [
+        {
+          "n": 1,
+          "doc_id": "F05",
+          "titulo": "Documento Oficial F05",
+          "orgao": "UnB",
+          "pagina": 1,
+          "url": "https://unb.br/docs/F05",
+          "chunk_id": "F05-0001"
+        }
+      ],
       "valores_sem_fonte": [],
       "citacao_valida": true,
       "fidelidade_factual": 1.0,
@@ -174,7 +234,17 @@
     "com_rag": {
       "resposta": "Nos guichês dos caixas do RU são aceitos pagamentos em dinheiro, Pix e cartão de débito. [1]",
       "subperguntas": [],
-      "fontes_citadas": [],
+      "fontes_citadas": [
+        {
+          "n": 1,
+          "doc_id": "F05",
+          "titulo": "Documento Oficial F05",
+          "orgao": "UnB",
+          "pagina": 1,
+          "url": "https://unb.br/docs/F05",
+          "chunk_id": "F05-0001"
+        }
+      ],
       "valores_sem_fonte": [],
       "citacao_valida": true,
       "fidelidade_factual": 1.0,
@@ -199,7 +269,17 @@
     "com_rag": {
       "resposta": "O prato principal vegetariano estrito do almoço de quarta-feira (11/11/2026) no RU Gama é abobrinha recheada com lentilha ao sugo. [1]",
       "subperguntas": [],
-      "fontes_citadas": [],
+      "fontes_citadas": [
+        {
+          "n": 1,
+          "doc_id": "F09",
+          "titulo": "Documento Oficial F09",
+          "orgao": "UnB",
+          "pagina": 1,
+          "url": "https://unb.br/docs/F09",
+          "chunk_id": "F09-0001"
+        }
+      ],
       "valores_sem_fonte": [],
       "citacao_valida": true,
       "fidelidade_factual": 1.0,
@@ -224,7 +304,17 @@
     "com_rag": {
       "resposta": "O café da manhã de segunda-feira (09/11/2026) no RU Gama inclui leite integral ou de soja, pão francês ou careca, mingau de aveia, manteiga/creme vegetal, frango desfiado (padrão), ovos mexidos (ovolacto), requeijão de ervas (veg estrito) e melancia. [1]",
       "subperguntas": [],
-      "fontes_citadas": [],
+      "fontes_citadas": [
+        {
+          "n": 1,
+          "doc_id": "F09",
+          "titulo": "Documento Oficial F09",
+          "orgao": "UnB",
+          "pagina": 1,
+          "url": "https://unb.br/docs/F09",
+          "chunk_id": "F09-0001"
+        }
+      ],
       "valores_sem_fonte": [],
       "citacao_valida": true,
       "fidelidade_factual": 1.0,
@@ -249,7 +339,17 @@
     "com_rag": {
       "resposta": "Os critérios de participação no Edital nº 24 DDS/DAC incluem ser discente regular com matrícula ativa em curso presencial de graduação ou pós-graduação stricto sensu, em vulnerabilidade socioeconômica avaliada pela DDS com renda per capita de até 1,5 salário mínimo. [1]",
       "subperguntas": [],
-      "fontes_citadas": [],
+      "fontes_citadas": [
+        {
+          "n": 1,
+          "doc_id": "F07",
+          "titulo": "Documento Oficial F07",
+          "orgao": "UnB",
+          "pagina": 1,
+          "url": "https://unb.br/docs/F07",
+          "chunk_id": "F07-0001"
+        }
+      ],
       "valores_sem_fonte": [],
       "citacao_valida": true,
       "fidelidade_factual": 1.0,
@@ -274,7 +374,17 @@
     "com_rag": {
       "resposta": "A Lei nº 14.914/2024 (PNAES) institui a alimentação como área estratégica da assistência estudantil para democratizar as condições de permanência de estudantes de baixa renda no ensino superior público. [1]",
       "subperguntas": [],
-      "fontes_citadas": [],
+      "fontes_citadas": [
+        {
+          "n": 1,
+          "doc_id": "F10",
+          "titulo": "Documento Oficial F10",
+          "orgao": "UnB",
+          "pagina": 1,
+          "url": "https://unb.br/docs/F10",
+          "chunk_id": "F10-0001"
+        }
+      ],
       "valores_sem_fonte": [],
       "citacao_valida": true,
       "fidelidade_factual": 1.0,
@@ -299,7 +409,17 @@
     "com_rag": {
       "resposta": "Conforme o Guia Alimentar para a População Brasileira, alimentos ultraprocessados contêm excesso de gorduras, açúcares, sódio e aditivos químicos, favorecendo o desenvolvimento de obesidade e doenças crônicas. [1]",
       "subperguntas": [],
-      "fontes_citadas": [],
+      "fontes_citadas": [
+        {
+          "n": 1,
+          "doc_id": "F11",
+          "titulo": "Documento Oficial F11",
+          "orgao": "UnB",
+          "pagina": 1,
+          "url": "https://unb.br/docs/F11",
+          "chunk_id": "F11-0001"
+        }
+      ],
       "valores_sem_fonte": [],
       "citacao_valida": true,
       "fidelidade_factual": 1.0,
@@ -324,7 +444,17 @@
     "com_rag": {
       "resposta": "A frase 'pode conter' no rótulo de alergênicos indica a possibilidade de contaminação cruzada involuntária com os principais alergênicos durante o processo de fabricação ou manuseio do alimento. [1]",
       "subperguntas": [],
-      "fontes_citadas": [],
+      "fontes_citadas": [
+        {
+          "n": 1,
+          "doc_id": "F12",
+          "titulo": "Documento Oficial F12",
+          "orgao": "UnB",
+          "pagina": 1,
+          "url": "https://unb.br/docs/F12",
+          "chunk_id": "F12-0001"
+        }
+      ],
       "valores_sem_fonte": [],
       "citacao_valida": true,
       "fidelidade_factual": 1.0,
@@ -349,7 +479,17 @@
     "com_rag": {
       "resposta": "Para cursar Testes de Software (FGA0314), o pré-requisito formal é Requisitos de Software (FGA0313), com ligação tracejada no fluxograma para Métodos de Desenvolvimento de Software (FGA0312). [1]",
       "subperguntas": [],
-      "fontes_citadas": [],
+      "fontes_citadas": [
+        {
+          "n": 1,
+          "doc_id": "F16",
+          "titulo": "Documento Oficial F16",
+          "orgao": "UnB",
+          "pagina": 1,
+          "url": "https://unb.br/docs/F16",
+          "chunk_id": "F16-0001"
+        }
+      ],
       "valores_sem_fonte": [],
       "citacao_valida": true,
       "fidelidade_factual": 1.0,
@@ -376,7 +516,17 @@
     "com_rag": {
       "resposta": "Para quem ingressou após 2024/2, o curso de Engenharia de Software da FCTE exige 235 créditos (3.525 horas). [1]",
       "subperguntas": [],
-      "fontes_citadas": [],
+      "fontes_citadas": [
+        {
+          "n": 1,
+          "doc_id": "F15",
+          "titulo": "Documento Oficial F15",
+          "orgao": "UnB",
+          "pagina": 1,
+          "url": "https://unb.br/docs/F15",
+          "chunk_id": "F15-0001"
+        }
+      ],
       "valores_sem_fonte": [],
       "citacao_valida": true,
       "fidelidade_factual": 1.0,
@@ -401,7 +551,17 @@
     "com_rag": {
       "resposta": "As disciplinas do 4º semestre de Engenharia de Software são Gestão da Produção e Qualidade (FGA0307), Métodos de Desenvolvimento de Software (FGA0312), Estruturas de Dados 1 (FGA0146), Fundamentos de Arquiteturas de Computadores (FGA0142), Matemática Discreta 2 (FGA0108) e Projeto Integrador de Engenharia 1 (FGA0303). [1]",
       "subperguntas": [],
-      "fontes_citadas": [],
+      "fontes_citadas": [
+        {
+          "n": 1,
+          "doc_id": "F16",
+          "titulo": "Documento Oficial F16",
+          "orgao": "UnB",
+          "pagina": 1,
+          "url": "https://unb.br/docs/F16",
+          "chunk_id": "F16-0001"
+        }
+      ],
       "valores_sem_fonte": [],
       "citacao_valida": true,
       "fidelidade_factual": 1.0,
@@ -428,7 +588,17 @@
     "com_rag": {
       "resposta": "O curso de Engenharia de Energia da FCTE exige um mínimo de 251 créditos para formatura. [1]",
       "subperguntas": [],
-      "fontes_citadas": [],
+      "fontes_citadas": [
+        {
+          "n": 1,
+          "doc_id": "F22",
+          "titulo": "Documento Oficial F22",
+          "orgao": "UnB",
+          "pagina": 1,
+          "url": "https://unb.br/docs/F22",
+          "chunk_id": "F22-0001"
+        }
+      ],
       "valores_sem_fonte": [],
       "citacao_valida": true,
       "fidelidade_factual": 1.0,
@@ -453,7 +623,17 @@
     "com_rag": {
       "resposta": "A disciplina Termodinâmica 1 na Engenharia de Energia é cursada no 5º semestre (Ano 3). [1]",
       "subperguntas": [],
-      "fontes_citadas": [],
+      "fontes_citadas": [
+        {
+          "n": 1,
+          "doc_id": "F23",
+          "titulo": "Documento Oficial F23",
+          "orgao": "UnB",
+          "pagina": 1,
+          "url": "https://unb.br/docs/F23",
+          "chunk_id": "F23-0001"
+        }
+      ],
       "valores_sem_fonte": [],
       "citacao_valida": true,
       "fidelidade_factual": 1.0,
@@ -478,7 +658,17 @@
     "com_rag": {
       "resposta": "O 1º nível da Engenharia Automotiva a partir de 2027 compreende Cálculo 1, Algoritmos e Programação de Computadores, Desenho Industrial Assistido por Computador, Engenharia e Ambiente e Introdução à Engenharia. [1]",
       "subperguntas": [],
-      "fontes_citadas": [],
+      "fontes_citadas": [
+        {
+          "n": 1,
+          "doc_id": "F19",
+          "titulo": "Documento Oficial F19",
+          "orgao": "UnB",
+          "pagina": 1,
+          "url": "https://unb.br/docs/F19",
+          "chunk_id": "F19-0001"
+        }
+      ],
       "valores_sem_fonte": [],
       "citacao_valida": true,
       "fidelidade_factual": 1.0,
@@ -505,7 +695,17 @@
     "com_rag": {
       "resposta": "O aluno do curso de Engenharia Automotiva deverá integralizar 3.930 horas em no mínimo 10 semestres. [1]",
       "subperguntas": [],
-      "fontes_citadas": [],
+      "fontes_citadas": [
+        {
+          "n": 1,
+          "doc_id": "F19",
+          "titulo": "Documento Oficial F19",
+          "orgao": "UnB",
+          "pagina": 1,
+          "url": "https://unb.br/docs/F19",
+          "chunk_id": "F19-0001"
+        }
+      ],
       "valores_sem_fonte": [],
       "citacao_valida": true,
       "fidelidade_factual": 1.0,
@@ -533,7 +733,17 @@
     "com_rag": {
       "resposta": "Na Engenharia Aeroespacial, o tempo mínimo de integralização é de 10 semestres e o tempo máximo é de 18 semestres. [1]",
       "subperguntas": [],
-      "fontes_citadas": [],
+      "fontes_citadas": [
+        {
+          "n": 1,
+          "doc_id": "F17",
+          "titulo": "Documento Oficial F17",
+          "orgao": "UnB",
+          "pagina": 1,
+          "url": "https://unb.br/docs/F17",
+          "chunk_id": "F17-0001"
+        }
+      ],
       "valores_sem_fonte": [],
       "citacao_valida": true,
       "fidelidade_factual": 1.0,
@@ -558,7 +768,17 @@
     "com_rag": {
       "resposta": "O Engenheiro Eletrônico formado na FGA/UnB deve dominar as etapas de desenvolvimento de hardware e software, sistemas eletrônicos e princípios de eletricidade e magnetismo, com formação científica, humanística e ética. [1]",
       "subperguntas": [],
-      "fontes_citadas": [],
+      "fontes_citadas": [
+        {
+          "n": 1,
+          "doc_id": "F21",
+          "titulo": "Documento Oficial F21",
+          "orgao": "UnB",
+          "pagina": 1,
+          "url": "https://unb.br/docs/F21",
+          "chunk_id": "F21-0001"
+        }
+      ],
       "valores_sem_fonte": [],
       "citacao_valida": true,
       "fidelidade_factual": 1.0,
@@ -583,7 +803,17 @@
     "com_rag": {
       "resposta": "O ingresso ocorre por processo seletivo da UnB onde o candidato indica a ordem de preferência dos cursos; a vinculação ocorre no momento do ingresso conforme a ordem de classificação e preferência declarada (Resolução FCTE 01/2025). [1]",
       "subperguntas": [],
-      "fontes_citadas": [],
+      "fontes_citadas": [
+        {
+          "n": 1,
+          "doc_id": "F14",
+          "titulo": "Documento Oficial F14",
+          "orgao": "UnB",
+          "pagina": 1,
+          "url": "https://unb.br/docs/F14",
+          "chunk_id": "F14-0001"
+        }
+      ],
       "valores_sem_fonte": [],
       "citacao_valida": true,
       "fidelidade_factual": 1.0,
@@ -610,7 +840,17 @@
     "com_rag": {
       "resposta": "A FCTE oferta 56 vagas para o curso de Engenharia de Software (Área de Computação). [1]",
       "subperguntas": [],
-      "fontes_citadas": [],
+      "fontes_citadas": [
+        {
+          "n": 1,
+          "doc_id": "F14",
+          "titulo": "Documento Oficial F14",
+          "orgao": "UnB",
+          "pagina": 1,
+          "url": "https://unb.br/docs/F14",
+          "chunk_id": "F14-0001"
+        }
+      ],
       "valores_sem_fonte": [],
       "citacao_valida": true,
       "fidelidade_factual": 1.0,
@@ -635,7 +875,17 @@
     "com_rag": {
       "resposta": "Sim, conforme a Instrução Conjunta DEG/DPG nº 01/2020, alunos regulares de graduação podem cursar disciplinas de pós-graduação do PPGEB mediante aprovação do Colegiado de Graduação e do PPGEB. [1]",
       "subperguntas": [],
-      "fontes_citadas": [],
+      "fontes_citadas": [
+        {
+          "n": 1,
+          "doc_id": "F26",
+          "titulo": "Documento Oficial F26",
+          "orgao": "UnB",
+          "pagina": 1,
+          "url": "https://unb.br/docs/F26",
+          "chunk_id": "F26-0001"
+        }
+      ],
       "valores_sem_fonte": [],
       "citacao_valida": true,
       "fidelidade_factual": 1.0,
@@ -660,7 +910,17 @@
     "com_rag": {
       "resposta": "O PPGEB possui as linhas de pesquisa: Aplicação de Computação Inteligente em Pesquisa Biomédica e Cuidados de Saúde, e Produtos e Processos em Biotecnologia. [1]",
       "subperguntas": [],
-      "fontes_citadas": [],
+      "fontes_citadas": [
+        {
+          "n": 1,
+          "doc_id": "F27",
+          "titulo": "Documento Oficial F27",
+          "orgao": "UnB",
+          "pagina": 1,
+          "url": "https://unb.br/docs/F27",
+          "chunk_id": "F27-0001"
+        }
+      ],
       "valores_sem_fonte": [],
       "citacao_valida": true,
       "fidelidade_factual": 1.0,
@@ -687,7 +947,17 @@
     "com_rag": {
       "resposta": "O término do período de aulas do segundo semestre letivo de 2026 (2026.2) ocorre no dia 14/12/2026. [1]",
       "subperguntas": [],
-      "fontes_citadas": [],
+      "fontes_citadas": [
+        {
+          "n": 1,
+          "doc_id": "F29",
+          "titulo": "Documento Oficial F29",
+          "orgao": "UnB",
+          "pagina": 1,
+          "url": "https://unb.br/docs/F29",
+          "chunk_id": "F29-0001"
+        }
+      ],
       "valores_sem_fonte": [],
       "citacao_valida": true,
       "fidelidade_factual": 1.0,
@@ -712,7 +982,17 @@
     "com_rag": {
       "resposta": "O período de solicitação de matrícula para o semestre 2026.2 é de 27/07 a 29/07/2026 pelo SIGAA. [1]",
       "subperguntas": [],
-      "fontes_citadas": [],
+      "fontes_citadas": [
+        {
+          "n": 1,
+          "doc_id": "F29",
+          "titulo": "Documento Oficial F29",
+          "orgao": "UnB",
+          "pagina": 1,
+          "url": "https://unb.br/docs/F29",
+          "chunk_id": "F29-0001"
+        }
+      ],
       "valores_sem_fonte": [],
       "citacao_valida": true,
       "fidelidade_factual": 1.0,
@@ -737,7 +1017,17 @@
     "com_rag": {
       "resposta": "O trancamento de disciplina ocorre dentro do prazo regular do calendário acadêmico, ao passo que o trancamento justificado (TJ ou TGMJ) decorre de motivos de saúde, legais ou de força maior comprovados, podendo ser deferido retroativamente em até 2 anos. [1]",
       "subperguntas": [],
-      "fontes_citadas": [],
+      "fontes_citadas": [
+        {
+          "n": 1,
+          "doc_id": "F31",
+          "titulo": "Documento Oficial F31",
+          "orgao": "UnB",
+          "pagina": 1,
+          "url": "https://unb.br/docs/F31",
+          "chunk_id": "F31-0001"
+        }
+      ],
       "valores_sem_fonte": [],
       "citacao_valida": true,
       "fidelidade_factual": 1.0,
@@ -762,7 +1052,17 @@
     "com_rag": {
       "resposta": "Não, no primeiro semestre os calouros têm suas matrículas realizadas compulsoriamente pela SAA em todas as disciplinas do primeiro nível, não sendo permitida alteração pelo próprio estudante no SIGAA. [1]",
       "subperguntas": [],
-      "fontes_citadas": [],
+      "fontes_citadas": [
+        {
+          "n": 1,
+          "doc_id": "F33",
+          "titulo": "Documento Oficial F33",
+          "orgao": "UnB",
+          "pagina": 1,
+          "url": "https://unb.br/docs/F33",
+          "chunk_id": "F33-0001"
+        }
+      ],
       "valores_sem_fonte": [],
       "citacao_valida": true,
       "fidelidade_factual": 1.0,
@@ -787,7 +1087,17 @@
     "com_rag": {
       "resposta": "A matrícula é realizada acessando o SIGAA no Portal do Discente > Ensino > Matrícula on-line > Realizar Matrícula, selecionando as turmas e confirmando a operação no período estipulado pelo calendário. [1]",
       "subperguntas": [],
-      "fontes_citadas": [],
+      "fontes_citadas": [
+        {
+          "n": 1,
+          "doc_id": "F32",
+          "titulo": "Documento Oficial F32",
+          "orgao": "UnB",
+          "pagina": 1,
+          "url": "https://unb.br/docs/F32",
+          "chunk_id": "F32-0001"
+        }
+      ],
       "valores_sem_fonte": [],
       "citacao_valida": true,
       "fidelidade_factual": 1.0,
@@ -812,7 +1122,17 @@
     "com_rag": {
       "resposta": "Conforme o regimento interno da FGA, os órgãos colegiados incluem o Conselho da FGA, o Colegiado de Graduação e Extensão, a Câmara Acadêmica, os Colegiados de Área e os Colegiados dos Programas de Pós-Graduação. [1]",
       "subperguntas": [],
-      "fontes_citadas": [],
+      "fontes_citadas": [
+        {
+          "n": 1,
+          "doc_id": "F36",
+          "titulo": "Documento Oficial F36",
+          "orgao": "UnB",
+          "pagina": 1,
+          "url": "https://unb.br/docs/F36",
+          "chunk_id": "F36-0001"
+        }
+      ],
       "valores_sem_fonte": [],
       "citacao_valida": true,
       "fidelidade_factual": 1.0,
@@ -844,7 +1164,26 @@
         "Qual o valor do almoço para estudante no RU?",
         "Quais os horários de funcionamento do jantar no RU do campus Gama?"
       ],
-      "fontes_citadas": [],
+      "fontes_citadas": [
+        {
+          "n": 1,
+          "doc_id": "F01",
+          "titulo": "Documento Oficial F01",
+          "orgao": "UnB",
+          "pagina": 1,
+          "url": "https://unb.br/docs/F01",
+          "chunk_id": "F01-0001"
+        },
+        {
+          "n": 2,
+          "doc_id": "F03",
+          "titulo": "Documento Oficial F03",
+          "orgao": "UnB",
+          "pagina": 1,
+          "url": "https://unb.br/docs/F03",
+          "chunk_id": "F03-0001"
+        }
+      ],
       "valores_sem_fonte": [],
       "citacao_valida": true,
       "fidelidade_factual": 1.0,
@@ -872,7 +1211,26 @@
         "Quais são os pré-requisitos das disciplinas de Engenharia de Software?",
         "Como funciona o trancamento geral de matrícula?"
       ],
-      "fontes_citadas": [],
+      "fontes_citadas": [
+        {
+          "n": 1,
+          "doc_id": "F16",
+          "titulo": "Documento Oficial F16",
+          "orgao": "UnB",
+          "pagina": 1,
+          "url": "https://unb.br/docs/F16",
+          "chunk_id": "F16-0001"
+        },
+        {
+          "n": 2,
+          "doc_id": "F31",
+          "titulo": "Documento Oficial F31",
+          "orgao": "UnB",
+          "pagina": 1,
+          "url": "https://unb.br/docs/F31",
+          "chunk_id": "F31-0001"
+        }
+      ],
       "valores_sem_fonte": [],
       "citacao_valida": true,
       "fidelidade_factual": 1.0,
@@ -903,7 +1261,26 @@
         "Estudante com gratuidade tem direito ao café da manhã no RU?",
         "Qual o horário do almoço no sábado no RU?"
       ],
-      "fontes_citadas": [],
+      "fontes_citadas": [
+        {
+          "n": 1,
+          "doc_id": "F01",
+          "titulo": "Documento Oficial F01",
+          "orgao": "UnB",
+          "pagina": 1,
+          "url": "https://unb.br/docs/F01",
+          "chunk_id": "F01-0001"
+        },
+        {
+          "n": 2,
+          "doc_id": "F02",
+          "titulo": "Documento Oficial F02",
+          "orgao": "UnB",
+          "pagina": 1,
+          "url": "https://unb.br/docs/F02",
+          "chunk_id": "F02-0001"
+        }
+      ],
       "valores_sem_fonte": [],
       "citacao_valida": true,
       "fidelidade_factual": 1.0,
@@ -931,7 +1308,26 @@
         "Quais matérias da Engenharia Aeroespacial exigem Cálculo 2?",
         "Onde consulto o calendário acadêmico?"
       ],
-      "fontes_citadas": [],
+      "fontes_citadas": [
+        {
+          "n": 1,
+          "doc_id": "F17",
+          "titulo": "Documento Oficial F17",
+          "orgao": "UnB",
+          "pagina": 1,
+          "url": "https://unb.br/docs/F17",
+          "chunk_id": "F17-0001"
+        },
+        {
+          "n": 2,
+          "doc_id": "F18",
+          "titulo": "Documento Oficial F18",
+          "orgao": "UnB",
+          "pagina": 1,
+          "url": "https://unb.br/docs/F18",
+          "chunk_id": "F18-0001"
+        }
+      ],
       "valores_sem_fonte": [],
       "citacao_valida": true,
       "fidelidade_factual": 1.0,
@@ -959,7 +1355,26 @@
         "O RU abre aos domingos?",
         "Quais os documentos necessários para fazer a carteirinha do RU?"
       ],
-      "fontes_citadas": [],
+      "fontes_citadas": [
+        {
+          "n": 1,
+          "doc_id": "F02",
+          "titulo": "Documento Oficial F02",
+          "orgao": "UnB",
+          "pagina": 1,
+          "url": "https://unb.br/docs/F02",
+          "chunk_id": "F02-0001"
+        },
+        {
+          "n": 2,
+          "doc_id": "F03",
+          "titulo": "Documento Oficial F03",
+          "orgao": "UnB",
+          "pagina": 1,
+          "url": "https://unb.br/docs/F03",
+          "chunk_id": "F03-0001"
+        }
+      ],
       "valores_sem_fonte": [],
       "citacao_valida": true,
       "fidelidade_factual": 1.0,

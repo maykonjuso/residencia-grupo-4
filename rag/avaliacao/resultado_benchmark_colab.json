@@ -1,31 +1,31 @@
 {
   "perguntas_total": 38,
   "backend": "hf",
-  "modo_dry_run": true,
+  "modo_dry_run": false,
   "conformidade_requisito_r3": true,
   "metricas_consolidadas": {
     "sem_rag": {
       "taxa_citacao_valida": 0.0,
       "fidelidade_factual": 0.0,
-      "taxa_alucinacao_numerica": 0.2895,
+      "taxa_alucinacao_numerica": 0.2632,
       "taxa_recusa_negativa": 0.0,
-      "completude_multihop": 0.7,
-      "rouge_l": 0.2904
+      "completude_multihop": 1.0,
+      "rouge_l": 0.2366
     },
     "com_rag": {
-      "taxa_citacao_valida": 1.0,
-      "fidelidade_factual": 1.0,
+      "taxa_citacao_valida": 0.9189,
+      "fidelidade_factual": 0.972,
       "taxa_alucinacao_numerica": 0.0,
-      "taxa_recusa_negativa": 1.0,
-      "completude_multihop": 1.0,
-      "rouge_l": 0.9378
+      "taxa_recusa_negativa": 0.0,
+      "completude_multihop": 0.9,
+      "rouge_l": 0.4202
     },
-    "taxa_citacao_valida": 1.0,
-    "fidelidade_factual": 1.0,
+    "taxa_citacao_valida": 0.9189,
+    "fidelidade_factual": 0.972,
     "taxa_alucinacao_numerica": 0.0,
-    "taxa_recusa_negativa": 1.0,
-    "completude_multihop": 1.0,
-    "rouge_l": 0.9378
+    "taxa_recusa_negativa": 0.0,
+    "completude_multihop": 0.9,
+    "rouge_l": 0.4202
   },
   "resultados": [
     {
@@ -35,7 +35,7 @@
       "eixo": "ru",
       "tipo": "simples",
       "tem_base": true,
-      "resposta": "O almoço no Restaurante Universitário da UnB custa em torno de R$ 5,00 para estudantes sem auxílio.",
+      "resposta": "O valor do almoço no Restaurante Universitário (RU) da UnB para estudantes de graduação sem auxílio financeiro é R$ 5,00. Este preço refere-se ao almoço executado pelo Programa Nacional de Alimentação na Educação (PNAE), que oferece refeições acessíveis aos estudantes.",
       "docs_recuperados": [],
       "citacoes_usadas": [],
       "valores_sem_fonte": [
@@ -45,7 +45,7 @@
       "citacao_valida": false,
       "fidelidade_factual": 0.0,
       "afirmacoes_comprovadas": 0,
-      "total_afirmacoes": 1,
+      "total_afirmacoes": 2,
       "completude_multihop": 1.0,
       "subperguntas_atendidas": 1,
       "total_subperguntas": 1,
@@ -59,20 +59,23 @@
       "tipo": "simples",
       "tem_base": true,
       "subperguntas": [],
-      "resposta": "O estudante de graduação sem auxílio paga R$ 4,50 no almoço do RU. [1]",
+      "resposta": "O almoço no RU para um estudante de graduação sem auxílio custa R$ 2,50. [5]",
       "docs_recuperados": [
-        "F01",
+        "F06",
+        "F06",
+        "F17",
+        "F21",
         "F04"
       ],
       "citacoes_usadas": [
         {
-          "n": 1,
-          "doc_id": "F01",
-          "titulo": "Documento Oficial F01",
-          "orgao": "UnB",
+          "n": 5,
+          "doc_id": "F04",
+          "titulo": "Valores das refeições e grupos de acesso",
+          "orgao": "UnB · Diretoria do RU",
           "pagina": 1,
-          "url": "https://unb.br/docs/F01",
-          "chunk_id": "F01-0001"
+          "url": "https://ru.unb.br/precos-e-grupos/",
+          "chunk_id": "F04-0004"
         }
       ],
       "valores_sem_fonte": [],
@@ -84,7 +87,7 @@
       "completude_multihop": 1.0,
       "subperguntas_atendidas": 1,
       "total_subperguntas": 1,
-      "rouge_l": 0.9655
+      "rouge_l": 0.5333
     },
     {
       "id": "Q02",
@@ -93,22 +96,23 @@
       "eixo": "ru",
       "tipo": "simples",
       "tem_base": true,
-      "resposta": "O horário do jantar no RU da UnB geralmente ocorre das 17h30 às 20h30 em todos os campi.",
+      "resposta": "O horário do jantar no Restaurante Universitário (RU) do campus Gama varia conforme o dia da semana. De segunda a sexta-feira, o jantar é servido das 11h30 às 14h30. Nos sábados, o horário é das 11h30 às 14h00. Recomendo verificar o horário exato no site oficial do RU ou na própria unidade, pois pode haver alterações.",
       "docs_recuperados": [],
       "citacoes_usadas": [],
       "valores_sem_fonte": [
-        "17h30",
-        "20h30"
+        "11h30",
+        "14h30",
+        "14h00"
       ],
       "eh_recusa": false,
       "citacao_valida": false,
       "fidelidade_factual": 0.0,
       "afirmacoes_comprovadas": 0,
-      "total_afirmacoes": 1,
+      "total_afirmacoes": 4,
       "completude_multihop": 1.0,
       "subperguntas_atendidas": 1,
       "total_subperguntas": 1,
-      "rouge_l": 0.2286
+      "rouge_l": 0.3514
     },
     {
       "id": "Q02",
@@ -118,20 +122,32 @@
       "tipo": "simples",
       "tem_base": true,
       "subperguntas": [],
-      "resposta": "No RU do campus Gama, o jantar funciona de segunda a sexta-feira, das 17h às 19h30. [1]",
+      "resposta": "O horário do jantar no RU do campus Gama é de 17h às 19h30, de segunda a sexta-feira, exceto feriados. [1][2]",
       "docs_recuperados": [
         "F03",
-        "F02"
+        "F02",
+        "F09",
+        "F09",
+        "F08"
       ],
       "citacoes_usadas": [
         {
           "n": 1,
           "doc_id": "F03",
-          "titulo": "Documento Oficial F03",
-          "orgao": "UnB",
+          "titulo": "Unidades do RU e horários de funcionamento (inclui RU Gama/FCTE)",
+          "orgao": "UnB · Diretoria do RU",
           "pagina": 1,
-          "url": "https://unb.br/docs/F03",
-          "chunk_id": "F03-0001"
+          "url": "https://ru.unb.br/unidades/",
+          "chunk_id": "F03-0003"
+        },
+        {
+          "n": 2,
+          "doc_id": "F02",
+          "titulo": "Resolução DAC nº 002/2024 — Regimento de funcionamento do Restaurante Universitário",
+          "orgao": "UnB · Decanato de Assuntos Comunitários",
+          "pagina": 4,
+          "url": "https://ru.unb.br/wp-content/uploads/2025/08/SEI_11843224_Resolucao_002-anexo-2.pdf",
+          "chunk_id": "F02-0011"
         }
       ],
       "valores_sem_fonte": [],
@@ -143,7 +159,7 @@
       "completude_multihop": 1.0,
       "subperguntas_atendidas": 1,
       "total_subperguntas": 1,
-      "rouge_l": 0.9714
+      "rouge_l": 0.5
     },
     {
       "id": "Q03",
@@ -152,19 +168,22 @@
       "eixo": "ru",
       "tipo": "simples",
       "tem_base": true,
-      "resposta": "Sim, todos os restaurantes universitários da Universidade de Brasília funcionam aos sábados no almoço.",
+      "resposta": "O Registro Único (RU) do Campus Gama da Universidade de Brasília (UnB) normalmente está fechado aos sábados. O atendimento é realizado de segunda a sexta-feira, das 8h às 17h. Recomendo verificar o calendário oficial do RU para confirmar possíveis exceções ou eventos especiais.",
       "docs_recuperados": [],
       "citacoes_usadas": [],
-      "valores_sem_fonte": [],
+      "valores_sem_fonte": [
+        "8h",
+        "17h"
+      ],
       "eh_recusa": false,
       "citacao_valida": false,
       "fidelidade_factual": 0.0,
       "afirmacoes_comprovadas": 0,
-      "total_afirmacoes": 1,
+      "total_afirmacoes": 3,
       "completude_multihop": 1.0,
       "subperguntas_atendidas": 1,
       "total_subperguntas": 1,
-      "rouge_l": 0.1935
+      "rouge_l": 0.3279
     },
     {
       "id": "Q03",
@@ -174,32 +193,35 @@
       "tipo": "simples",
       "tem_base": true,
       "subperguntas": [],
-      "resposta": "Não, o RU do campus Gama funciona de segunda a sexta-feira e não abre aos sábados. [1]",
+      "resposta": "Não, o RU do Gama não abre aos sábados, exceto feriados. Os horários de funcionamento são apenas de segunda a sexta-feira. [1]",
       "docs_recuperados": [
         "F03",
-        "F02"
+        "F03",
+        "F03",
+        "F03",
+        "F08"
       ],
       "citacoes_usadas": [
         {
           "n": 1,
           "doc_id": "F03",
-          "titulo": "Documento Oficial F03",
-          "orgao": "UnB",
+          "titulo": "Unidades do RU e horários de funcionamento (inclui RU Gama/FCTE)",
+          "orgao": "UnB · Diretoria do RU",
           "pagina": 1,
-          "url": "https://unb.br/docs/F03",
-          "chunk_id": "F03-0001"
+          "url": "https://ru.unb.br/unidades/",
+          "chunk_id": "F03-0003"
         }
       ],
       "valores_sem_fonte": [],
       "eh_recusa": false,
       "citacao_valida": true,
       "fidelidade_factual": 1.0,
-      "afirmacoes_comprovadas": 1,
-      "total_afirmacoes": 1,
+      "afirmacoes_comprovadas": 2,
+      "total_afirmacoes": 2,
       "completude_multihop": 1.0,
       "subperguntas_atendidas": 1,
       "total_subperguntas": 1,
-      "rouge_l": 0.9714
+      "rouge_l": 0.5
     },
     {
       "id": "Q04",
@@ -208,7 +230,7 @@
       "eixo": "ru",
       "tipo": "simples",
       "tem_base": true,
-      "resposta": "Estudantes cotistas ou que comprovem baixa renda através de declaração escolar podem comer de graça.",
+      "resposta": "Alunos matriculados regularmente em cursos presenciais da UnB, bolsistas de pós-graduação e servidores docentes e técnicos administrativos em tempo integral têm direito a refeições gratuitas no Restaurante Universitário (RU) conforme regulamento vigente.",
       "docs_recuperados": [],
       "citacoes_usadas": [],
       "valores_sem_fonte": [],
@@ -220,7 +242,7 @@
       "completude_multihop": 1.0,
       "subperguntas_atendidas": 1,
       "total_subperguntas": 1,
-      "rouge_l": 0.1379
+      "rouge_l": 0.1053
     },
     {
       "id": "Q04",
@@ -230,34 +252,25 @@
       "tipo": "simples",
       "tem_base": true,
       "subperguntas": [],
-      "resposta": "Têm direito à refeição gratuita no RU os estudantes do Grupo I (isentos de pagamento), que incluem discentes da graduação e pós-graduação participantes da assistência estudantil da UnB com renda per capita de até 1,5 salário mínimo, estudantes indígenas e quilombolas. [1]",
+      "resposta": "Não encontrei essa informação nas fontes da base. O documento indica que há grupos que recebem subsídio, mas não especifica quem tem direito a refeição gratuita. Sugiro verificar a Resolução do CAD nº 0037/2025 ou entrar em contato com a DDS para obter essas informações.",
       "docs_recuperados": [
         "F01",
-        "F04",
+        "F02",
         "F06",
-        "F07"
+        "F01",
+        "F02"
       ],
-      "citacoes_usadas": [
-        {
-          "n": 1,
-          "doc_id": "F01",
-          "titulo": "Documento Oficial F01",
-          "orgao": "UnB",
-          "pagina": 1,
-          "url": "https://unb.br/docs/F01",
-          "chunk_id": "F01-0001"
-        }
-      ],
+      "citacoes_usadas": [],
       "valores_sem_fonte": [],
-      "eh_recusa": false,
-      "citacao_valida": true,
-      "fidelidade_factual": 1.0,
-      "afirmacoes_comprovadas": 1,
+      "eh_recusa": true,
+      "citacao_valida": false,
+      "fidelidade_factual": 0.0,
+      "afirmacoes_comprovadas": 0,
       "total_afirmacoes": 1,
       "completude_multihop": 1.0,
       "subperguntas_atendidas": 1,
       "total_subperguntas": 1,
-      "rouge_l": 0.9885
+      "rouge_l": 0.1124
     },
     {
       "id": "Q05",
@@ -266,7 +279,7 @@
       "eixo": "ru",
       "tipo": "simples",
       "tem_base": true,
-      "resposta": "Estudantes cotistas de escola pública pagam o valor integral de R$ 3,50 pela refeição.",
+      "resposta": "Os valores pagos pelos estudantes nos Restaurantes Universitários (RUs) da UnB variam. Para estudantes que entraram por cota de escola pública e não são de baixa renda, o valor pago é R$ 3,50 por refeição, conforme estabelecido pela Resolução nº 04/2019 do Conselho Universitário (CONUNB).",
       "docs_recuperados": [],
       "citacoes_usadas": [],
       "valores_sem_fonte": [
@@ -276,11 +289,11 @@
       "citacao_valida": false,
       "fidelidade_factual": 0.0,
       "afirmacoes_comprovadas": 0,
-      "total_afirmacoes": 1,
+      "total_afirmacoes": 2,
       "completude_multihop": 1.0,
       "subperguntas_atendidas": 1,
       "total_subperguntas": 1,
-      "rouge_l": 0.2979
+      "rouge_l": 0.2278
     },
     {
       "id": "Q05",
@@ -290,32 +303,44 @@
       "tipo": "simples",
       "tem_base": true,
       "subperguntas": [],
-      "resposta": "Estudantes de graduação oriundos de cotas de escola pública que não sejam baixa renda (Grupo IV) pagam R$ 2,50 no almoço e jantar e R$ 1,50 no café da manhã. [1]",
+      "resposta": "O estudante que entrou por cota de escola pública e não é baixa renda pertence ao Grupo IV e pagará os seguintes valores por refeição: café da manhã - R$ 1,50; almoço - R$ 2,50; jantar - R$ 2,50. [3][4]",
       "docs_recuperados": [
         "F01",
-        "F04"
+        "F01",
+        "F04",
+        "F04",
+        "F01"
       ],
       "citacoes_usadas": [
         {
-          "n": 1,
-          "doc_id": "F01",
-          "titulo": "Documento Oficial F01",
-          "orgao": "UnB",
+          "n": 3,
+          "doc_id": "F04",
+          "titulo": "Valores das refeições e grupos de acesso",
+          "orgao": "UnB · Diretoria do RU",
           "pagina": 1,
-          "url": "https://unb.br/docs/F01",
-          "chunk_id": "F01-0001"
+          "url": "https://ru.unb.br/precos-e-grupos/",
+          "chunk_id": "F04-0004"
+        },
+        {
+          "n": 4,
+          "doc_id": "F04",
+          "titulo": "Valores das refeições e grupos de acesso",
+          "orgao": "UnB · Diretoria do RU",
+          "pagina": 1,
+          "url": "https://ru.unb.br/precos-e-grupos/",
+          "chunk_id": "F04-0000"
         }
       ],
       "valores_sem_fonte": [],
       "eh_recusa": false,
       "citacao_valida": true,
       "fidelidade_factual": 1.0,
-      "afirmacoes_comprovadas": 1,
-      "total_afirmacoes": 1,
+      "afirmacoes_comprovadas": 3,
+      "total_afirmacoes": 3,
       "completude_multihop": 1.0,
       "subperguntas_atendidas": 1,
       "total_subperguntas": 1,
-      "rouge_l": 0.9846
+      "rouge_l": 0.3836
     },
     {
       "id": "Q06",
@@ -324,7 +349,7 @@
       "eixo": "ru",
       "tipo": "simples",
       "tem_base": true,
-      "resposta": "Para obter a carteirinha, vá à secretaria da sua faculdade portando duas fotos 3x4 e atestado.",
+      "resposta": "Para emitir a carteirinha digital do RU (Reitoria UnB), você deve acessar o portal do aluno do SIGAA, entrar na opção \"Carteirinha Digital\". Lá você pode gerar o documento conforme as instruções fornecidas. Certifique-se de estar logado com suas credenciais de acesso.",
       "docs_recuperados": [],
       "citacoes_usadas": [],
       "valores_sem_fonte": [],
@@ -332,11 +357,11 @@
       "citacao_valida": false,
       "fidelidade_factual": 0.0,
       "afirmacoes_comprovadas": 0,
-      "total_afirmacoes": 1,
+      "total_afirmacoes": 3,
       "completude_multihop": 1.0,
       "subperguntas_atendidas": 1,
       "total_subperguntas": 1,
-      "rouge_l": 0.1714
+      "rouge_l": 0.1613
     },
     {
       "id": "Q06",
@@ -346,75 +371,91 @@
       "tipo": "simples",
       "tem_base": true,
       "subperguntas": [],
-      "resposta": "A carteirinha digital pode ser emitida e acessada pelo aplicativo SIGAA Mobile ou pelo portal do discente da UnB. [1]",
+      "resposta": "Para emitir a carteirinha digital, você deve:\n1. Ter status ativo na UnB.\n2. Realizar auto cadastro no Sigaa.\n3. Possuir foto de perfil na plataforma.\n4. Acessar www.sig.unb.br/sigaa e fazer login.\n5. Clicar em \"Ensino\" > \"Emitir Carteirinha Estudantil\". [1]",
       "docs_recuperados": [
+        "F05",
+        "F05",
+        "F05",
+        "F01",
+        "F03"
+      ],
+      "citacoes_usadas": [
+        {
+          "n": 1,
+          "doc_id": "F05",
+          "titulo": "Como acessar o RU (carteirinha digital, créditos e catraca)",
+          "orgao": "UnB · Diretoria do RU",
+          "pagina": 1,
+          "url": "https://ru.unb.br/como-acessar/",
+          "chunk_id": "F05-0002"
+        }
+      ],
+      "valores_sem_fonte": [],
+      "eh_recusa": false,
+      "citacao_valida": true,
+      "fidelidade_factual": 1.0,
+      "afirmacoes_comprovadas": 6,
+      "total_afirmacoes": 6,
+      "completude_multihop": 1.0,
+      "subperguntas_atendidas": 1,
+      "total_subperguntas": 1,
+      "rouge_l": 0.1587
+    },
+    {
+      "id": "Q07",
+      "regime": "sem_rag",
+      "pergunta": "Quais formas de pagamento são aceitas nos caixas do RU?",
+      "eixo": "ru",
+      "tipo": "simples",
+      "tem_base": true,
+      "resposta": "Os caixas do Restaurante Universitário (RU) da UnB aceitam diversas formas de pagamento, incluindo cartão de débito e crédito (Visa, Mastercard, American Express), cartão Rede, cartão Cielo, dinheiro e também o aplicativo UnB Pag. Recomenda-se verificar periodicamente as atualizações de política de pagamento, pois elas podem sofrer alterações.",
+      "docs_recuperados": [],
+      "citacoes_usadas": [],
+      "valores_sem_fonte": [],
+      "eh_recusa": false,
+      "citacao_valida": false,
+      "fidelidade_factual": 0.0,
+      "afirmacoes_comprovadas": 0,
+      "total_afirmacoes": 2,
+      "completude_multihop": 1.0,
+      "subperguntas_atendidas": 1,
+      "total_subperguntas": 1,
+      "rouge_l": 0.1846
+    },
+    {
+      "id": "Q07",
+      "regime": "com_rag",
+      "pergunta": "Quais formas de pagamento são aceitas nos caixas do RU?",
+      "eixo": "ru",
+      "tipo": "simples",
+      "tem_base": true,
+      "subperguntas": [],
+      "resposta": "As formas de pagamento aceitas nos caixas do RU incluem Pix, dinheiro (em espécie), cartão de débito e cartão de crédito. [1][2]",
+      "docs_recuperados": [
+        "F05",
+        "F04",
+        "F03",
+        "F03",
         "F05"
       ],
       "citacoes_usadas": [
         {
           "n": 1,
           "doc_id": "F05",
-          "titulo": "Documento Oficial F05",
-          "orgao": "UnB",
+          "titulo": "Como acessar o RU (carteirinha digital, créditos e catraca)",
+          "orgao": "UnB · Diretoria do RU",
           "pagina": 1,
-          "url": "https://unb.br/docs/F05",
+          "url": "https://ru.unb.br/como-acessar/",
           "chunk_id": "F05-0001"
-        }
-      ],
-      "valores_sem_fonte": [],
-      "eh_recusa": false,
-      "citacao_valida": true,
-      "fidelidade_factual": 1.0,
-      "afirmacoes_comprovadas": 1,
-      "total_afirmacoes": 1,
-      "completude_multihop": 1.0,
-      "subperguntas_atendidas": 1,
-      "total_subperguntas": 1,
-      "rouge_l": 0.9744
-    },
-    {
-      "id": "Q07",
-      "regime": "sem_rag",
-      "pergunta": "Quais formas de pagamento são aceitas nos caixas do RU?",
-      "eixo": "ru",
-      "tipo": "simples",
-      "tem_base": true,
-      "resposta": "Os caixas do RU aceitam cartão de crédito, dinheiro em espécie e cartão de vale-refeição.",
-      "docs_recuperados": [],
-      "citacoes_usadas": [],
-      "valores_sem_fonte": [],
-      "eh_recusa": false,
-      "citacao_valida": false,
-      "fidelidade_factual": 0.0,
-      "afirmacoes_comprovadas": 0,
-      "total_afirmacoes": 1,
-      "completude_multihop": 1.0,
-      "subperguntas_atendidas": 1,
-      "total_subperguntas": 1,
-      "rouge_l": 0.4375
-    },
-    {
-      "id": "Q07",
-      "regime": "com_rag",
-      "pergunta": "Quais formas de pagamento são aceitas nos caixas do RU?",
-      "eixo": "ru",
-      "tipo": "simples",
-      "tem_base": true,
-      "subperguntas": [],
-      "resposta": "Nos guichês dos caixas do RU são aceitos pagamentos em dinheiro, Pix e cartão de débito. [1]",
-      "docs_recuperados": [
-        "F05",
-        "F04"
-      ],
-      "citacoes_usadas": [
+        },
         {
-          "n": 1,
-          "doc_id": "F05",
-          "titulo": "Documento Oficial F05",
-          "orgao": "UnB",
+          "n": 2,
+          "doc_id": "F04",
+          "titulo": "Valores das refeições e grupos de acesso",
+          "orgao": "UnB · Diretoria do RU",
           "pagina": 1,
-          "url": "https://unb.br/docs/F05",
-          "chunk_id": "F05-0001"
+          "url": "https://ru.unb.br/precos-e-grupos/",
+          "chunk_id": "F04-0006"
         }
       ],
       "valores_sem_fonte": [],
@@ -426,7 +467,7 @@
       "completude_multihop": 1.0,
       "subperguntas_atendidas": 1,
       "total_subperguntas": 1,
-      "rouge_l": 0.9697
+      "rouge_l": 0.4103
     },
     {
       "id": "Q08",
@@ -435,19 +476,21 @@
       "eixo": "ru",
       "tipo": "simples",
       "tem_base": true,
-      "resposta": "O prato vegetariano do RU é quase sempre carne de soja refogada com legumes e salada variada.",
+      "resposta": "Peço desculpas, mas não tenho acesso aos cardápios futuros do Restaurante Universitário Gama. Recomendo que você verifique o site oficial do RU Gama ou entre em contato diretamente com eles para obter informações sobre o prato vegetariano estrito do almoço de quarta-feira, 11/11/2026.",
       "docs_recuperados": [],
       "citacoes_usadas": [],
-      "valores_sem_fonte": [],
+      "valores_sem_fonte": [
+        "11/11/2026"
+      ],
       "eh_recusa": false,
       "citacao_valida": false,
       "fidelidade_factual": 0.0,
       "afirmacoes_comprovadas": 0,
-      "total_afirmacoes": 1,
+      "total_afirmacoes": 2,
       "completude_multihop": 1.0,
       "subperguntas_atendidas": 1,
       "total_subperguntas": 1,
-      "rouge_l": 0.35
+      "rouge_l": 0.3478
     },
     {
       "id": "Q08",
@@ -457,19 +500,23 @@
       "tipo": "simples",
       "tem_base": true,
       "subperguntas": [],
-      "resposta": "O prato principal vegetariano estrito do almoço de quarta-feira (11/11/2026) no RU Gama é abobrinha recheada com lentilha ao sugo. [1]",
+      "resposta": "O prato vegetariano estrito do almoço de quarta-feira, 11/11/2026, no RU Gama é abobrinha recheada com lentilha ao sugo. [1]",
       "docs_recuperados": [
+        "F09",
+        "F09",
+        "F09",
+        "F08",
         "F09"
       ],
       "citacoes_usadas": [
         {
           "n": 1,
           "doc_id": "F09",
-          "titulo": "Documento Oficial F09",
-          "orgao": "UnB",
-          "pagina": 1,
-          "url": "https://unb.br/docs/F09",
-          "chunk_id": "F09-0001"
+          "titulo": "Cardápio semanal do RU Gama — 09/11 a 15/11/2026",
+          "orgao": "UnB · Diretoria do RU",
+          "pagina": 2,
+          "url": "https://ru.unb.br/wp-content/uploads/2026/11/Gama-Semana-04-09-11-a-15-11.pdf",
+          "chunk_id": "F09-0007"
         }
       ],
       "valores_sem_fonte": [],
@@ -481,7 +528,7 @@
       "completude_multihop": 1.0,
       "subperguntas_atendidas": 1,
       "total_subperguntas": 1,
-      "rouge_l": 0.9787
+      "rouge_l": 0.9565
     },
     {
       "id": "Q09",
@@ -490,19 +537,21 @@
       "eixo": "ru",
       "tipo": "simples",
       "tem_base": true,
-      "resposta": "O café da manhã padrão contém café com leite, pão com manteiga e uma fruta da estação.",
+      "resposta": "Peço desculpas, mas não tenho informações específicas sobre o cardápio do Restaurante Universitário (RU) Gama para a data futura de 09/11/2026. O cardápio do RU Gama varia diariamente e é anunciado com antecedência pelos próprios serviços de alimentação da UnB. Recomendo que você verifique o site oficial da UnB ou as redes sociais do RU Gama para obter as informações mais atualizadas e precisas sobre o cardápio dessa data futura.",
       "docs_recuperados": [],
       "citacoes_usadas": [],
-      "valores_sem_fonte": [],
+      "valores_sem_fonte": [
+        "09/11/2026"
+      ],
       "eh_recusa": false,
       "citacao_valida": false,
       "fidelidade_factual": 0.0,
       "afirmacoes_comprovadas": 0,
-      "total_afirmacoes": 1,
+      "total_afirmacoes": 3,
       "completude_multihop": 1.0,
       "subperguntas_atendidas": 1,
       "total_subperguntas": 1,
-      "rouge_l": 0.2712
+      "rouge_l": 0.1754
     },
     {
       "id": "Q09",
@@ -512,31 +561,35 @@
       "tipo": "simples",
       "tem_base": true,
       "subperguntas": [],
-      "resposta": "O café da manhã de segunda-feira (09/11/2026) no RU Gama inclui leite integral ou de soja, pão francês ou careca, mingau de aveia, manteiga/creme vegetal, frango desfiado (padrão), ovos mexidos (ovolacto), requeijão de ervas (veg estrito) e melancia. [1]",
+      "resposta": "No café da manhã de segunda-feira, 09/11/2026, no RU Gama (FCTE), o cardápio inclui:\n- Bebidas: Leite integral ou bebida de soja\n- Panificação: pão francês, pão careca ou pão integral\n- Gordura: manteiga ou creme vegetal\n- Complemento padrão: frango desfiado\n- Complemento ovolactovegetariano: ovos mexidos\n- Complemento vegetariano estrito: requeijão de ervas\n- Fruta: melancia\n- Mesa de apoio: água, achocolatado, açúcar e adoçante [1].",
       "docs_recuperados": [
+        "F09",
+        "F09",
+        "F09",
+        "F09",
         "F09"
       ],
       "citacoes_usadas": [
         {
           "n": 1,
           "doc_id": "F09",
-          "titulo": "Documento Oficial F09",
-          "orgao": "UnB",
+          "titulo": "Cardápio semanal do RU Gama — 09/11 a 15/11/2026",
+          "orgao": "UnB · Diretoria do RU",
           "pagina": 1,
-          "url": "https://unb.br/docs/F09",
-          "chunk_id": "F09-0001"
+          "url": "https://ru.unb.br/wp-content/uploads/2026/11/Gama-Semana-04-09-11-a-15-11.pdf",
+          "chunk_id": "F09-0000"
         }
       ],
       "valores_sem_fonte": [],
       "eh_recusa": false,
       "citacao_valida": true,
       "fidelidade_factual": 1.0,
-      "afirmacoes_comprovadas": 1,
-      "total_afirmacoes": 1,
+      "afirmacoes_comprovadas": 9,
+      "total_afirmacoes": 9,
       "completude_multihop": 1.0,
       "subperguntas_atendidas": 1,
       "total_subperguntas": 1,
-      "rouge_l": 0.9882
+      "rouge_l": 0.6154
     },
     {
       "id": "Q10",
@@ -545,7 +598,7 @@
       "eixo": "ru",
       "tipo": "simples",
       "tem_base": true,
-      "resposta": "Para se inscrever, o aluno deve enviar formulário no SIGAA anexando imposto de renda da família.",
+      "resposta": "Os critérios para participar do edital de Auxílio Alimentação da UnB podem variar, mas geralmente incluem:\n\n1. Ser bolsista ativo em programas oficiais da universidade.\n2. Estar regularmente matriculado em cursos presenciais.\n3. Possuir renda familiar bruta abaixo do limite estabelecido pelo governo.\n4. Não possuir auxílio alimentação em outro programa.\n\nPara informações precisas e atualizadas, consulte o edital específico de 2026 ou o site da Pró-Reitoria de Assuntos Estudantis (PRAE) da UnB.",
       "docs_recuperados": [],
       "citacoes_usadas": [],
       "valores_sem_fonte": [],
@@ -553,11 +606,11 @@
       "citacao_valida": false,
       "fidelidade_factual": 0.0,
       "afirmacoes_comprovadas": 0,
-      "total_afirmacoes": 1,
+      "total_afirmacoes": 6,
       "completude_multihop": 1.0,
       "subperguntas_atendidas": 1,
       "total_subperguntas": 1,
-      "rouge_l": 0.1017
+      "rouge_l": 0.1538
     },
     {
       "id": "Q10",
@@ -567,31 +620,44 @@
       "tipo": "simples",
       "tem_base": true,
       "subperguntas": [],
-      "resposta": "Os critérios de participação no Edital nº 24 DDS/DAC incluem ser discente regular com matrícula ativa em curso presencial de graduação ou pós-graduação stricto sensu, em vulnerabilidade socioeconômica avaliada pela DDS com renda per capita de até 1,5 salário mínimo. [1]",
+      "resposta": "Os critérios para participar do edital de Auxílio Alimentação de 2026 são:\n\n1. Ser estudante regular com matrícula ativa de curso presencial de graduação ou pós-graduação stricto sensu da UnB.\n2. Estar enquadrado em uma das seguintes condições:\n   - Possuir avaliação socioeconômica analisada e homologada pela COAE/DDS, realizada a partir do semestre letivo de 2026.1.\n   - Possuir registro atualizado no Cadastro Único do Governo Federal com faixa de renda de até meio salário-mínimo por pessoa do grupo familiar.\n3. Realizar a inscrição pelo SIGAA no período de 03/08/2026 a 15/11/2026.\n\n[1][3]",
       "docs_recuperados": [
-        "F07"
+        "F07",
+        "F07",
+        "F07",
+        "F07",
+        "F06"
       ],
       "citacoes_usadas": [
         {
           "n": 1,
           "doc_id": "F07",
-          "titulo": "Documento Oficial F07",
-          "orgao": "UnB",
+          "titulo": "Edital nº 24/2026 DDS/DAC — Auxílio Alimentação para estudantes em vulnerabilidade",
+          "orgao": "UnB · DDS/DAC",
           "pagina": 1,
-          "url": "https://unb.br/docs/F07",
+          "url": "https://dds.dac.unb.br/wp-content/uploads/2026/08/Edital_24_alimentacao.pdf",
           "chunk_id": "F07-0001"
+        },
+        {
+          "n": 3,
+          "doc_id": "F07",
+          "titulo": "Edital nº 24/2026 DDS/DAC — Auxílio Alimentação para estudantes em vulnerabilidade",
+          "orgao": "UnB · DDS/DAC",
+          "pagina": 2,
+          "url": "https://dds.dac.unb.br/wp-content/uploads/2026/08/Edital_24_alimentacao.pdf",
+          "chunk_id": "F07-0007"
         }
       ],
       "valores_sem_fonte": [],
       "eh_recusa": false,
       "citacao_valida": true,
       "fidelidade_factual": 1.0,
-      "afirmacoes_comprovadas": 1,
-      "total_afirmacoes": 1,
+      "afirmacoes_comprovadas": 6,
+      "total_afirmacoes": 6,
       "completude_multihop": 1.0,
       "subperguntas_atendidas": 1,
       "total_subperguntas": 1,
-      "rouge_l": 0.9885
+      "rouge_l": 0.383
     },
     {
       "id": "Q11",
@@ -600,7 +666,7 @@
       "eixo": "ru",
       "tipo": "simples",
       "tem_base": true,
-      "resposta": "A lei do PNAES estabelece bolsas financeiras de até um salário mínimo para despesas do estudante.",
+      "resposta": "A Lei do Plano Nacional de Alimentação Escolar (PNAES), Lei Federal nº 13.006/2014, estabelece diretrizes para a alimentação escolar, garantindo refeições nutritivas e balanceadas aos estudantes. O plano visa promover o direito à alimentação adequada como fator fundamental para o desenvolvimento físico e intelectual dos alunos. A lei também prevê a participação dos estudantes na gestão dos serviços de alimentação escolar e a priorização de alimentos produzidos localmente e orgânicos quando possível.",
       "docs_recuperados": [],
       "citacoes_usadas": [],
       "valores_sem_fonte": [],
@@ -608,11 +674,11 @@
       "citacao_valida": false,
       "fidelidade_factual": 0.0,
       "afirmacoes_comprovadas": 0,
-      "total_afirmacoes": 1,
+      "total_afirmacoes": 3,
       "completude_multihop": 1.0,
       "subperguntas_atendidas": 1,
       "total_subperguntas": 1,
-      "rouge_l": 0.1702
+      "rouge_l": 0.1714
     },
     {
       "id": "Q11",
@@ -622,19 +688,32 @@
       "tipo": "simples",
       "tem_base": true,
       "subperguntas": [],
-      "resposta": "A Lei nº 14.914/2024 (PNAES) institui a alimentação como área estratégica da assistência estudantil para democratizar as condições de permanência de estudantes de baixa renda no ensino superior público. [1]",
+      "resposta": "A Lei nº 14.914/2024 estabelece que o Programa de Alimentação Saudável na Educação Superior (PASES) visa promover e garantir a segurança alimentar e nutricional dos estudantes durante suas atividades acadêmicas [2][3].",
       "docs_recuperados": [
+        "F10",
+        "F10",
+        "F10",
+        "F10",
         "F10"
       ],
       "citacoes_usadas": [
         {
-          "n": 1,
+          "n": 2,
           "doc_id": "F10",
-          "titulo": "Documento Oficial F10",
-          "orgao": "UnB",
+          "titulo": "Lei nº 14.914/2024 — Política Nacional de Assistência Estudantil (PNAES)",
+          "orgao": "Presidência da República",
           "pagina": 1,
-          "url": "https://unb.br/docs/F10",
-          "chunk_id": "F10-0001"
+          "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2024/lei/l14914.htm",
+          "chunk_id": "F10-0017"
+        },
+        {
+          "n": 3,
+          "doc_id": "F10",
+          "titulo": "Lei nº 14.914/2024 — Política Nacional de Assistência Estudantil (PNAES)",
+          "orgao": "Presidência da República",
+          "pagina": 1,
+          "url": "https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2024/lei/l14914.htm",
+          "chunk_id": "F10-0005"
         }
       ],
       "valores_sem_fonte": [],
@@ -646,7 +725,7 @@
       "completude_multihop": 1.0,
       "subperguntas_atendidas": 1,
       "total_subperguntas": 1,
-      "rouge_l": 0.9841
+      "rouge_l": 0.2462
     },
     {
       "id": "Q12",
@@ -655,7 +734,7 @@
       "eixo": "apoio",
       "tipo": "simples",
       "tem_base": true,
-      "resposta": "Alimentos ultraprocessados têm calorias vazias e gordura trans que podem prejudicar a digestão.",
+      "resposta": "Alimentos ultraprocessados geralmente contêm altos níveis de açúcar, sal e gorduras saturadas, além de aditivos químicos. Eles podem levar a problemas de saúde como obesidade, diabetes e doenças cardíacas. Opte por uma dieta rica em frutas, vegetais, proteínas magras e grãos integrais para melhorar sua saúde e bem-estar.",
       "docs_recuperados": [],
       "citacoes_usadas": [],
       "valores_sem_fonte": [],
@@ -663,11 +742,11 @@
       "citacao_valida": false,
       "fidelidade_factual": 0.0,
       "afirmacoes_comprovadas": 0,
-      "total_afirmacoes": 1,
+      "total_afirmacoes": 3,
       "completude_multihop": 1.0,
       "subperguntas_atendidas": 1,
       "total_subperguntas": 1,
-      "rouge_l": 0.15
+      "rouge_l": 0.2895
     },
     {
       "id": "Q12",
@@ -677,31 +756,62 @@
       "tipo": "simples",
       "tem_base": true,
       "subperguntas": [],
-      "resposta": "Conforme o Guia Alimentar para a População Brasileira, alimentos ultraprocessados contêm excesso de gorduras, açúcares, sódio e aditivos químicos, favorecendo o desenvolvimento de obesidade e doenças crônicas. [1]",
+      "resposta": "Dever-se evitar alimentos ultraprocessados por várias razões: são nutricionalmente desbalanceados, ricos em gorduras, açúcares e sódio; tendem a ser consumidos em excesso; substituem alimentos mais saudáveis; afetam a cultura, vida social e meio ambiente; e promovem marcas globalizadas que podem desvalorizar culturas alimentares locais. [2][3][4][5]",
       "docs_recuperados": [
+        "F11",
+        "F11",
+        "F11",
+        "F11",
         "F11"
       ],
       "citacoes_usadas": [
         {
-          "n": 1,
+          "n": 2,
           "doc_id": "F11",
-          "titulo": "Documento Oficial F11",
-          "orgao": "UnB",
-          "pagina": 1,
-          "url": "https://unb.br/docs/F11",
-          "chunk_id": "F11-0001"
+          "titulo": "Guia Alimentar para a População Brasileira (2ª ed.)",
+          "orgao": "Ministério da Saúde",
+          "pagina": 42,
+          "url": "https://bvsms.saude.gov.br/bvs/publicacoes/guia_alimentar_populacao_brasileira_2ed.pdf",
+          "chunk_id": "F11-0067"
+        },
+        {
+          "n": 3,
+          "doc_id": "F11",
+          "titulo": "Guia Alimentar para a População Brasileira (2ª ed.)",
+          "orgao": "Ministério da Saúde",
+          "pagina": 46,
+          "url": "https://bvsms.saude.gov.br/bvs/publicacoes/guia_alimentar_populacao_brasileira_2ed.pdf",
+          "chunk_id": "F11-0074"
+        },
+        {
+          "n": 4,
+          "doc_id": "F11",
+          "titulo": "Guia Alimentar para a População Brasileira (2ª ed.)",
+          "orgao": "Ministério da Saúde",
+          "pagina": 40,
+          "url": "https://bvsms.saude.gov.br/bvs/publicacoes/guia_alimentar_populacao_brasileira_2ed.pdf",
+          "chunk_id": "F11-0062"
+        },
+        {
+          "n": 5,
+          "doc_id": "F11",
+          "titulo": "Guia Alimentar para a População Brasileira (2ª ed.)",
+          "orgao": "Ministério da Saúde",
+          "pagina": 43,
+          "url": "https://bvsms.saude.gov.br/bvs/publicacoes/guia_alimentar_populacao_brasileira_2ed.pdf",
+          "chunk_id": "F11-0068"
         }
       ],
       "valores_sem_fonte": [],
       "eh_recusa": false,
       "citacao_valida": true,
       "fidelidade_factual": 1.0,
-      "afirmacoes_comprovadas": 1,
-      "total_afirmacoes": 1,
+      "afirmacoes_comprovadas": 6,
+      "total_afirmacoes": 6,
       "completude_multihop": 1.0,
       "subperguntas_atendidas": 1,
       "total_subperguntas": 1,
-      "rouge_l": 0.9818
+      "rouge_l": 0.1842
     },
     {
       "id": "Q13",
@@ -710,7 +820,7 @@
       "eixo": "apoio",
       "tipo": "simples",
       "tem_base": true,
-      "resposta": "Significa que o alimento foi produzido em ambiente onde pode haver traços de produtos químicos.",
+      "resposta": "A frase \"pode conter\" em rótulos de alergênicos indica que a presença de um ingrediente alérgeno não foi confirmada, mas não pode ser excluída com certeza. Isso geralmente ocorre quando o produto é fabricado em instalações onde outros alimentos contendo alérgenos são processados. A empresa não pode garantir que haja absolutamente nenhum risco de contaminação cruzada.",
       "docs_recuperados": [],
       "citacoes_usadas": [],
       "valores_sem_fonte": [],
@@ -718,743 +828,842 @@
       "citacao_valida": false,
       "fidelidade_factual": 0.0,
       "afirmacoes_comprovadas": 0,
-      "total_afirmacoes": 1,
-      "completude_multihop": 1.0,
-      "subperguntas_atendidas": 1,
-      "total_subperguntas": 1,
-      "rouge_l": 0.093
-    },
-    {
-      "id": "Q13",
-      "regime": "com_rag",
-      "pergunta": "O que significa a frase 'pode conter' no rótulo de alergênicos?",
-      "eixo": "apoio",
-      "tipo": "simples",
-      "tem_base": true,
-      "subperguntas": [],
-      "resposta": "A frase 'pode conter' no rótulo de alergênicos indica a possibilidade de contaminação cruzada involuntária com os principais alergênicos durante o processo de fabricação ou manuseio do alimento. [1]",
-      "docs_recuperados": [
-        "F12"
-      ],
-      "citacoes_usadas": [
-        {
-          "n": 1,
-          "doc_id": "F12",
-          "titulo": "Documento Oficial F12",
-          "orgao": "UnB",
-          "pagina": 1,
-          "url": "https://unb.br/docs/F12",
-          "chunk_id": "F12-0001"
-        }
-      ],
-      "valores_sem_fonte": [],
-      "eh_recusa": false,
-      "citacao_valida": true,
-      "fidelidade_factual": 1.0,
-      "afirmacoes_comprovadas": 1,
-      "total_afirmacoes": 1,
-      "completude_multihop": 1.0,
-      "subperguntas_atendidas": 1,
-      "total_subperguntas": 1,
-      "rouge_l": 0.9825
-    },
-    {
-      "id": "Q14",
-      "regime": "sem_rag",
-      "pergunta": "Quais são os pré-requisitos de Testes de Software?",
-      "eixo": "fluxo",
-      "tipo": "simples",
-      "tem_base": true,
-      "resposta": "Para cursar Testes de Software, é necessário ter feito Programação Orientada a Objetos e Requisitos.",
-      "docs_recuperados": [],
-      "citacoes_usadas": [],
-      "valores_sem_fonte": [],
-      "eh_recusa": false,
-      "citacao_valida": false,
-      "fidelidade_factual": 0.0,
-      "afirmacoes_comprovadas": 0,
-      "total_afirmacoes": 1,
-      "completude_multihop": 1.0,
-      "subperguntas_atendidas": 1,
-      "total_subperguntas": 1,
-      "rouge_l": 0.3333
-    },
-    {
-      "id": "Q14",
-      "regime": "com_rag",
-      "pergunta": "Quais são os pré-requisitos de Testes de Software?",
-      "eixo": "fluxo",
-      "tipo": "simples",
-      "tem_base": true,
-      "subperguntas": [],
-      "resposta": "Para cursar Testes de Software (FGA0314), o pré-requisito formal é Requisitos de Software (FGA0313), com ligação tracejada no fluxograma para Métodos de Desenvolvimento de Software (FGA0312). [1]",
-      "docs_recuperados": [
-        "F16"
-      ],
-      "citacoes_usadas": [
-        {
-          "n": 1,
-          "doc_id": "F16",
-          "titulo": "Documento Oficial F16",
-          "orgao": "UnB",
-          "pagina": 1,
-          "url": "https://unb.br/docs/F16",
-          "chunk_id": "F16-0001"
-        }
-      ],
-      "valores_sem_fonte": [],
-      "eh_recusa": false,
-      "citacao_valida": true,
-      "fidelidade_factual": 1.0,
-      "afirmacoes_comprovadas": 1,
-      "total_afirmacoes": 1,
-      "completude_multihop": 1.0,
-      "subperguntas_atendidas": 1,
-      "total_subperguntas": 1,
-      "rouge_l": 0.9818
-    },
-    {
-      "id": "Q15",
-      "regime": "sem_rag",
-      "pergunta": "Quantos créditos tem o curso de Engenharia de Software para quem entrou depois de 2024/2?",
-      "eixo": "fluxo",
-      "tipo": "simples",
-      "tem_base": true,
-      "resposta": "O curso de Engenharia de Software da UnB possui 240 créditos no total para formação de bacharel.",
-      "docs_recuperados": [],
-      "citacoes_usadas": [],
-      "valores_sem_fonte": [
-        "240 créditos"
-      ],
-      "eh_recusa": false,
-      "citacao_valida": false,
-      "fidelidade_factual": 0.0,
-      "afirmacoes_comprovadas": 0,
-      "total_afirmacoes": 1,
-      "completude_multihop": 1.0,
-      "subperguntas_atendidas": 1,
-      "total_subperguntas": 1,
-      "rouge_l": 0.4324
-    },
-    {
-      "id": "Q15",
-      "regime": "com_rag",
-      "pergunta": "Quantos créditos tem o curso de Engenharia de Software para quem entrou depois de 2024/2?",
-      "eixo": "fluxo",
-      "tipo": "simples",
-      "tem_base": true,
-      "subperguntas": [],
-      "resposta": "Para quem ingressou após 2024/2, o curso de Engenharia de Software da FCTE exige 235 créditos (3.525 horas). [1]",
-      "docs_recuperados": [
-        "F15",
-        "F16"
-      ],
-      "citacoes_usadas": [
-        {
-          "n": 1,
-          "doc_id": "F15",
-          "titulo": "Documento Oficial F15",
-          "orgao": "UnB",
-          "pagina": 1,
-          "url": "https://unb.br/docs/F15",
-          "chunk_id": "F15-0001"
-        }
-      ],
-      "valores_sem_fonte": [],
-      "eh_recusa": false,
-      "citacao_valida": true,
-      "fidelidade_factual": 1.0,
-      "afirmacoes_comprovadas": 1,
-      "total_afirmacoes": 1,
-      "completude_multihop": 1.0,
-      "subperguntas_atendidas": 1,
-      "total_subperguntas": 1,
-      "rouge_l": 0.9756
-    },
-    {
-      "id": "Q16",
-      "regime": "sem_rag",
-      "pergunta": "Quais disciplinas do 4º semestre de Engenharia de Software?",
-      "eixo": "fluxo",
-      "tipo": "simples",
-      "tem_base": true,
-      "resposta": "No 4º semestre cursam-se Métodos Ágeis, Bancos de Dados, Estatística e Circuitos Digitais.",
-      "docs_recuperados": [],
-      "citacoes_usadas": [],
-      "valores_sem_fonte": [],
-      "eh_recusa": false,
-      "citacao_valida": false,
-      "fidelidade_factual": 0.0,
-      "afirmacoes_comprovadas": 0,
-      "total_afirmacoes": 1,
-      "completude_multihop": 1.0,
-      "subperguntas_atendidas": 1,
-      "total_subperguntas": 1,
-      "rouge_l": 0.2069
-    },
-    {
-      "id": "Q16",
-      "regime": "com_rag",
-      "pergunta": "Quais disciplinas do 4º semestre de Engenharia de Software?",
-      "eixo": "fluxo",
-      "tipo": "simples",
-      "tem_base": true,
-      "subperguntas": [],
-      "resposta": "As disciplinas do 4º semestre de Engenharia de Software são Gestão da Produção e Qualidade (FGA0307), Métodos de Desenvolvimento de Software (FGA0312), Estruturas de Dados 1 (FGA0146), Fundamentos de Arquiteturas de Computadores (FGA0142), Matemática Discreta 2 (FGA0108) e Projeto Integrador de Engenharia 1 (FGA0303). [1]",
-      "docs_recuperados": [
-        "F16"
-      ],
-      "citacoes_usadas": [
-        {
-          "n": 1,
-          "doc_id": "F16",
-          "titulo": "Documento Oficial F16",
-          "orgao": "UnB",
-          "pagina": 1,
-          "url": "https://unb.br/docs/F16",
-          "chunk_id": "F16-0001"
-        }
-      ],
-      "valores_sem_fonte": [],
-      "eh_recusa": false,
-      "citacao_valida": true,
-      "fidelidade_factual": 1.0,
-      "afirmacoes_comprovadas": 1,
-      "total_afirmacoes": 1,
-      "completude_multihop": 1.0,
-      "subperguntas_atendidas": 1,
-      "total_subperguntas": 1,
-      "rouge_l": 0.9888
-    },
-    {
-      "id": "Q17",
-      "regime": "sem_rag",
-      "pergunta": "Quantos créditos mínimos tem o curso de Engenharia de Energia?",
-      "eixo": "fluxo",
-      "tipo": "simples",
-      "tem_base": true,
-      "resposta": "O curso de Engenharia de Energia requer aproximadamente 240 créditos para integralização.",
-      "docs_recuperados": [],
-      "citacoes_usadas": [],
-      "valores_sem_fonte": [
-        "240 créditos"
-      ],
-      "eh_recusa": false,
-      "citacao_valida": false,
-      "fidelidade_factual": 0.0,
-      "afirmacoes_comprovadas": 0,
-      "total_afirmacoes": 1,
-      "completude_multihop": 1.0,
-      "subperguntas_atendidas": 1,
-      "total_subperguntas": 1,
-      "rouge_l": 0.5714
-    },
-    {
-      "id": "Q17",
-      "regime": "com_rag",
-      "pergunta": "Quantos créditos mínimos tem o curso de Engenharia de Energia?",
-      "eixo": "fluxo",
-      "tipo": "simples",
-      "tem_base": true,
-      "subperguntas": [],
-      "resposta": "O curso de Engenharia de Energia da FCTE exige um mínimo de 251 créditos para formatura. [1]",
-      "docs_recuperados": [
-        "F22",
-        "F23"
-      ],
-      "citacoes_usadas": [
-        {
-          "n": 1,
-          "doc_id": "F22",
-          "titulo": "Documento Oficial F22",
-          "orgao": "UnB",
-          "pagina": 1,
-          "url": "https://unb.br/docs/F22",
-          "chunk_id": "F22-0001"
-        }
-      ],
-      "valores_sem_fonte": [],
-      "eh_recusa": false,
-      "citacao_valida": true,
-      "fidelidade_factual": 1.0,
-      "afirmacoes_comprovadas": 1,
-      "total_afirmacoes": 1,
-      "completude_multihop": 1.0,
-      "subperguntas_atendidas": 1,
-      "total_subperguntas": 1,
-      "rouge_l": 0.9697
-    },
-    {
-      "id": "Q18",
-      "regime": "sem_rag",
-      "pergunta": "Em que semestre se cursa Termodinâmica 1 na Engenharia de Energia?",
-      "eixo": "fluxo",
-      "tipo": "simples",
-      "tem_base": true,
-      "resposta": "Termodinâmica 1 é oferecida no 3º semestre da graduação em Engenharia de Energia.",
-      "docs_recuperados": [],
-      "citacoes_usadas": [],
-      "valores_sem_fonte": [],
-      "eh_recusa": false,
-      "citacao_valida": false,
-      "fidelidade_factual": 0.0,
-      "afirmacoes_comprovadas": 0,
-      "total_afirmacoes": 1,
-      "completude_multihop": 1.0,
-      "subperguntas_atendidas": 1,
-      "total_subperguntas": 1,
-      "rouge_l": 0.3571
-    },
-    {
-      "id": "Q18",
-      "regime": "com_rag",
-      "pergunta": "Em que semestre se cursa Termodinâmica 1 na Engenharia de Energia?",
-      "eixo": "fluxo",
-      "tipo": "simples",
-      "tem_base": true,
-      "subperguntas": [],
-      "resposta": "A disciplina Termodinâmica 1 na Engenharia de Energia é cursada no 5º semestre (Ano 3). [1]",
-      "docs_recuperados": [
-        "F23"
-      ],
-      "citacoes_usadas": [
-        {
-          "n": 1,
-          "doc_id": "F23",
-          "titulo": "Documento Oficial F23",
-          "orgao": "UnB",
-          "pagina": 1,
-          "url": "https://unb.br/docs/F23",
-          "chunk_id": "F23-0001"
-        }
-      ],
-      "valores_sem_fonte": [],
-      "eh_recusa": false,
-      "citacao_valida": true,
-      "fidelidade_factual": 1.0,
-      "afirmacoes_comprovadas": 1,
-      "total_afirmacoes": 1,
-      "completude_multihop": 1.0,
-      "subperguntas_atendidas": 1,
-      "total_subperguntas": 1,
-      "rouge_l": 0.9677
-    },
-    {
-      "id": "Q19",
-      "regime": "sem_rag",
-      "pergunta": "Quais disciplinas tem o primeiro nível da Engenharia Automotiva para ingressantes a partir de 2027?",
-      "eixo": "fluxo",
-      "tipo": "simples",
-      "tem_base": true,
-      "resposta": "O primeiro nível tem Química Geral, Física 1, Cálculo 1 e Geometria Analítica.",
-      "docs_recuperados": [],
-      "citacoes_usadas": [],
-      "valores_sem_fonte": [],
-      "eh_recusa": false,
-      "citacao_valida": false,
-      "fidelidade_factual": 0.0,
-      "afirmacoes_comprovadas": 0,
-      "total_afirmacoes": 1,
-      "completude_multihop": 1.0,
-      "subperguntas_atendidas": 1,
-      "total_subperguntas": 1,
-      "rouge_l": 0.2326
-    },
-    {
-      "id": "Q19",
-      "regime": "com_rag",
-      "pergunta": "Quais disciplinas tem o primeiro nível da Engenharia Automotiva para ingressantes a partir de 2027?",
-      "eixo": "fluxo",
-      "tipo": "simples",
-      "tem_base": true,
-      "subperguntas": [],
-      "resposta": "O 1º nível da Engenharia Automotiva a partir de 2027 compreende Cálculo 1, Algoritmos e Programação de Computadores, Desenho Industrial Assistido por Computador, Engenharia e Ambiente e Introdução à Engenharia. [1]",
-      "docs_recuperados": [
-        "F19"
-      ],
-      "citacoes_usadas": [
-        {
-          "n": 1,
-          "doc_id": "F19",
-          "titulo": "Documento Oficial F19",
-          "orgao": "UnB",
-          "pagina": 1,
-          "url": "https://unb.br/docs/F19",
-          "chunk_id": "F19-0001"
-        }
-      ],
-      "valores_sem_fonte": [],
-      "eh_recusa": false,
-      "citacao_valida": true,
-      "fidelidade_factual": 1.0,
-      "afirmacoes_comprovadas": 1,
-      "total_afirmacoes": 1,
-      "completude_multihop": 1.0,
-      "subperguntas_atendidas": 1,
-      "total_subperguntas": 1,
-      "rouge_l": 0.9836
-    },
-    {
-      "id": "Q20",
-      "regime": "sem_rag",
-      "pergunta": "Quantas horas o aluno de Engenharia Automotiva precisa integralizar?",
-      "eixo": "fluxo",
-      "tipo": "simples",
-      "tem_base": true,
-      "resposta": "A Engenharia Automotiva exige integralização de 3.600 horas totais de curso.",
-      "docs_recuperados": [],
-      "citacoes_usadas": [],
-      "valores_sem_fonte": [
-        "3.600 horas"
-      ],
-      "eh_recusa": false,
-      "citacao_valida": false,
-      "fidelidade_factual": 0.0,
-      "afirmacoes_comprovadas": 0,
-      "total_afirmacoes": 1,
-      "completude_multihop": 1.0,
-      "subperguntas_atendidas": 1,
-      "total_subperguntas": 1,
-      "rouge_l": 0.2759
-    },
-    {
-      "id": "Q20",
-      "regime": "com_rag",
-      "pergunta": "Quantas horas o aluno de Engenharia Automotiva precisa integralizar?",
-      "eixo": "fluxo",
-      "tipo": "simples",
-      "tem_base": true,
-      "subperguntas": [],
-      "resposta": "O aluno do curso de Engenharia Automotiva deverá integralizar 3.930 horas em no mínimo 10 semestres. [1]",
-      "docs_recuperados": [
-        "F19",
-        "F20"
-      ],
-      "citacoes_usadas": [
-        {
-          "n": 1,
-          "doc_id": "F19",
-          "titulo": "Documento Oficial F19",
-          "orgao": "UnB",
-          "pagina": 1,
-          "url": "https://unb.br/docs/F19",
-          "chunk_id": "F19-0001"
-        }
-      ],
-      "valores_sem_fonte": [],
-      "eh_recusa": false,
-      "citacao_valida": true,
-      "fidelidade_factual": 1.0,
-      "afirmacoes_comprovadas": 1,
-      "total_afirmacoes": 1,
-      "completude_multihop": 1.0,
-      "subperguntas_atendidas": 1,
-      "total_subperguntas": 1,
-      "rouge_l": 0.9714
-    },
-    {
-      "id": "Q21",
-      "regime": "sem_rag",
-      "pergunta": "Qual o tempo mínimo e máximo de integralização da Engenharia Aeroespacial?",
-      "eixo": "fluxo",
-      "tipo": "simples",
-      "tem_base": true,
-      "resposta": "O tempo mínimo de integralização é de 8 semestres e o máximo é de 16 semestres.",
-      "docs_recuperados": [],
-      "citacoes_usadas": [],
-      "valores_sem_fonte": [
-        "8 semestres",
-        "16 semestres"
-      ],
-      "eh_recusa": false,
-      "citacao_valida": false,
-      "fidelidade_factual": 0.0,
-      "afirmacoes_comprovadas": 0,
-      "total_afirmacoes": 1,
-      "completude_multihop": 1.0,
-      "subperguntas_atendidas": 1,
-      "total_subperguntas": 1,
-      "rouge_l": 0.7778
-    },
-    {
-      "id": "Q21",
-      "regime": "com_rag",
-      "pergunta": "Qual o tempo mínimo e máximo de integralização da Engenharia Aeroespacial?",
-      "eixo": "fluxo",
-      "tipo": "simples",
-      "tem_base": true,
-      "subperguntas": [],
-      "resposta": "Na Engenharia Aeroespacial, o tempo mínimo de integralização é de 10 semestres e o tempo máximo é de 18 semestres. [1]",
-      "docs_recuperados": [
-        "F17",
-        "F18"
-      ],
-      "citacoes_usadas": [
-        {
-          "n": 1,
-          "doc_id": "F17",
-          "titulo": "Documento Oficial F17",
-          "orgao": "UnB",
-          "pagina": 1,
-          "url": "https://unb.br/docs/F17",
-          "chunk_id": "F17-0001"
-        }
-      ],
-      "valores_sem_fonte": [],
-      "eh_recusa": false,
-      "citacao_valida": true,
-      "fidelidade_factual": 1.0,
-      "afirmacoes_comprovadas": 1,
-      "total_afirmacoes": 1,
-      "completude_multihop": 1.0,
-      "subperguntas_atendidas": 1,
-      "total_subperguntas": 1,
-      "rouge_l": 0.9756
-    },
-    {
-      "id": "Q22",
-      "regime": "sem_rag",
-      "pergunta": "Quais são os perfis de formação da Engenharia Eletrônica?",
-      "eixo": "fluxo",
-      "tipo": "simples",
-      "tem_base": true,
-      "resposta": "O perfil do engenheiro eletrônico foca em automação industrial e telecomunicações de grande porte.",
-      "docs_recuperados": [],
-      "citacoes_usadas": [],
-      "valores_sem_fonte": [],
-      "eh_recusa": false,
-      "citacao_valida": false,
-      "fidelidade_factual": 0.0,
-      "afirmacoes_comprovadas": 0,
-      "total_afirmacoes": 1,
-      "completude_multihop": 1.0,
-      "subperguntas_atendidas": 1,
-      "total_subperguntas": 1,
-      "rouge_l": 0.2222
-    },
-    {
-      "id": "Q22",
-      "regime": "com_rag",
-      "pergunta": "Quais são os perfis de formação da Engenharia Eletrônica?",
-      "eixo": "fluxo",
-      "tipo": "simples",
-      "tem_base": true,
-      "subperguntas": [],
-      "resposta": "O Engenheiro Eletrônico formado na FGA/UnB deve dominar as etapas de desenvolvimento de hardware e software, sistemas eletrônicos e princípios de eletricidade e magnetismo, com formação científica, humanística e ética. [1]",
-      "docs_recuperados": [
-        "F21"
-      ],
-      "citacoes_usadas": [
-        {
-          "n": 1,
-          "doc_id": "F21",
-          "titulo": "Documento Oficial F21",
-          "orgao": "UnB",
-          "pagina": 1,
-          "url": "https://unb.br/docs/F21",
-          "chunk_id": "F21-0001"
-        }
-      ],
-      "valores_sem_fonte": [],
-      "eh_recusa": false,
-      "citacao_valida": true,
-      "fidelidade_factual": 1.0,
-      "afirmacoes_comprovadas": 1,
-      "total_afirmacoes": 1,
-      "completude_multihop": 1.0,
-      "subperguntas_atendidas": 1,
-      "total_subperguntas": 1,
-      "rouge_l": 0.9841
-    },
-    {
-      "id": "Q23",
-      "regime": "sem_rag",
-      "pergunta": "Como funciona a escolha de curso no ingresso da FCTE pela ABI Engenharia?",
-      "eixo": "fluxo",
-      "tipo": "simples",
-      "tem_base": true,
-      "resposta": "A escolha de curso é feita ao final do 4º semestre por ordem decrescente de IRA dos alunos.",
-      "docs_recuperados": [],
-      "citacoes_usadas": [],
-      "valores_sem_fonte": [],
-      "eh_recusa": false,
-      "citacao_valida": false,
-      "fidelidade_factual": 0.0,
-      "afirmacoes_comprovadas": 0,
-      "total_afirmacoes": 1,
-      "completude_multihop": 1.0,
-      "subperguntas_atendidas": 1,
-      "total_subperguntas": 1,
-      "rouge_l": 0.1818
-    },
-    {
-      "id": "Q23",
-      "regime": "com_rag",
-      "pergunta": "Como funciona a escolha de curso no ingresso da FCTE pela ABI Engenharia?",
-      "eixo": "fluxo",
-      "tipo": "simples",
-      "tem_base": true,
-      "subperguntas": [],
-      "resposta": "O ingresso ocorre por processo seletivo da UnB onde o candidato indica a ordem de preferência dos cursos; a vinculação ocorre no momento do ingresso conforme a ordem de classificação e preferência declarada (Resolução FCTE 01/2025). [1]",
-      "docs_recuperados": [
-        "F14"
-      ],
-      "citacoes_usadas": [
-        {
-          "n": 1,
-          "doc_id": "F14",
-          "titulo": "Documento Oficial F14",
-          "orgao": "UnB",
-          "pagina": 1,
-          "url": "https://unb.br/docs/F14",
-          "chunk_id": "F14-0001"
-        }
-      ],
-      "valores_sem_fonte": [],
-      "eh_recusa": false,
-      "citacao_valida": true,
-      "fidelidade_factual": 1.0,
-      "afirmacoes_comprovadas": 2,
-      "total_afirmacoes": 2,
-      "completude_multihop": 1.0,
-      "subperguntas_atendidas": 1,
-      "total_subperguntas": 1,
-      "rouge_l": 0.9867
-    },
-    {
-      "id": "Q24",
-      "regime": "sem_rag",
-      "pergunta": "Quantas vagas a FCTE oferta para Engenharia de Software?",
-      "eixo": "fluxo",
-      "tipo": "simples",
-      "tem_base": true,
-      "resposta": "A FCTE oferta 80 vagas semestrais para o curso de Engenharia de Software.",
-      "docs_recuperados": [],
-      "citacoes_usadas": [],
-      "valores_sem_fonte": [
-        "80 vagas"
-      ],
-      "eh_recusa": false,
-      "citacao_valida": false,
-      "fidelidade_factual": 0.0,
-      "afirmacoes_comprovadas": 0,
-      "total_afirmacoes": 1,
-      "completude_multihop": 1.0,
-      "subperguntas_atendidas": 1,
-      "total_subperguntas": 1,
-      "rouge_l": 0.7857
-    },
-    {
-      "id": "Q24",
-      "regime": "com_rag",
-      "pergunta": "Quantas vagas a FCTE oferta para Engenharia de Software?",
-      "eixo": "fluxo",
-      "tipo": "simples",
-      "tem_base": true,
-      "subperguntas": [],
-      "resposta": "A FCTE oferta 56 vagas para o curso de Engenharia de Software (Área de Computação). [1]",
-      "docs_recuperados": [
-        "F14"
-      ],
-      "citacoes_usadas": [
-        {
-          "n": 1,
-          "doc_id": "F14",
-          "titulo": "Documento Oficial F14",
-          "orgao": "UnB",
-          "pagina": 1,
-          "url": "https://unb.br/docs/F14",
-          "chunk_id": "F14-0001"
-        }
-      ],
-      "valores_sem_fonte": [],
-      "eh_recusa": false,
-      "citacao_valida": true,
-      "fidelidade_factual": 1.0,
-      "afirmacoes_comprovadas": 1,
-      "total_afirmacoes": 1,
-      "completude_multihop": 1.0,
-      "subperguntas_atendidas": 1,
-      "total_subperguntas": 1,
-      "rouge_l": 0.9677
-    },
-    {
-      "id": "Q25",
-      "regime": "sem_rag",
-      "pergunta": "Aluno de graduação pode cursar disciplina do mestrado em Engenharia Biomédica?",
-      "eixo": "fluxo",
-      "tipo": "simples",
-      "tem_base": true,
-      "resposta": "Somente estudantes do último semestre com IRA acima de 4,0 podem requerer disciplinas de mestrado.",
-      "docs_recuperados": [],
-      "citacoes_usadas": [],
-      "valores_sem_fonte": [],
-      "eh_recusa": false,
-      "citacao_valida": false,
-      "fidelidade_factual": 0.0,
-      "afirmacoes_comprovadas": 0,
-      "total_afirmacoes": 1,
-      "completude_multihop": 1.0,
-      "subperguntas_atendidas": 1,
-      "total_subperguntas": 1,
-      "rouge_l": 0.1702
-    },
-    {
-      "id": "Q25",
-      "regime": "com_rag",
-      "pergunta": "Aluno de graduação pode cursar disciplina do mestrado em Engenharia Biomédica?",
-      "eixo": "fluxo",
-      "tipo": "simples",
-      "tem_base": true,
-      "subperguntas": [],
-      "resposta": "Sim, conforme a Instrução Conjunta DEG/DPG nº 01/2020, alunos regulares de graduação podem cursar disciplinas de pós-graduação do PPGEB mediante aprovação do Colegiado de Graduação e do PPGEB. [1]",
-      "docs_recuperados": [
-        "F26"
-      ],
-      "citacoes_usadas": [
-        {
-          "n": 1,
-          "doc_id": "F26",
-          "titulo": "Documento Oficial F26",
-          "orgao": "UnB",
-          "pagina": 1,
-          "url": "https://unb.br/docs/F26",
-          "chunk_id": "F26-0001"
-        }
-      ],
-      "valores_sem_fonte": [],
-      "eh_recusa": false,
-      "citacao_valida": true,
-      "fidelidade_factual": 1.0,
-      "afirmacoes_comprovadas": 1,
-      "total_afirmacoes": 1,
-      "completude_multihop": 1.0,
-      "subperguntas_atendidas": 1,
-      "total_subperguntas": 1,
-      "rouge_l": 0.9841
-    },
-    {
-      "id": "Q26",
-      "regime": "sem_rag",
-      "pergunta": "Quais são as linhas de pesquisa do PPGEB?",
-      "eixo": "fluxo",
-      "tipo": "simples",
-      "tem_base": true,
-      "resposta": "As linhas de pesquisa envolvem robótica médica, telemedicina e instrumentação cirúrgica.",
-      "docs_recuperados": [],
-      "citacoes_usadas": [],
-      "valores_sem_fonte": [],
-      "eh_recusa": false,
-      "citacao_valida": false,
-      "fidelidade_factual": 0.0,
-      "afirmacoes_comprovadas": 0,
-      "total_afirmacoes": 1,
+      "total_afirmacoes": 3,
       "completude_multihop": 1.0,
       "subperguntas_atendidas": 1,
       "total_subperguntas": 1,
       "rouge_l": 0.2857
     },
     {
+      "id": "Q13",
+      "regime": "com_rag",
+      "pergunta": "O que significa a frase 'pode conter' no rótulo de alergênicos?",
+      "eixo": "apoio",
+      "tipo": "simples",
+      "tem_base": true,
+      "subperguntas": [],
+      "resposta": "A frase \"pode conter\" no rótulo de alergênicos indica que há possibilidade de contaminação cruzada com o alimento alergênico, mas não foi adicionado intencionalmente ao produto. De acordo com as normas, deve-se declarar apenas a presença intencional de alergênicos, e não a contaminação cruzada, a menos que seja especificamente mencionada [2].",
+      "docs_recuperados": [
+        "F12",
+        "F12",
+        "F12",
+        "F12",
+        "F12"
+      ],
+      "citacoes_usadas": [
+        {
+          "n": 2,
+          "doc_id": "F12",
+          "titulo": "Perguntas e respostas sobre rotulagem de alimentos alergênicos (5ª ed.)",
+          "orgao": "ANVISA",
+          "pagina": 25,
+          "url": "https://bibliotecadigital.anvisa.gov.br/jspui/bitstream/anvisa/213/1/Rotulagem%20de%20alimentos%20alerg%c3%aanicos_5ed_2017.pdf",
+          "chunk_id": "F12-0049"
+        }
+      ],
+      "valores_sem_fonte": [],
+      "eh_recusa": false,
+      "citacao_valida": true,
+      "fidelidade_factual": 1.0,
+      "afirmacoes_comprovadas": 2,
+      "total_afirmacoes": 2,
+      "completude_multihop": 1.0,
+      "subperguntas_atendidas": 1,
+      "total_subperguntas": 1,
+      "rouge_l": 0.4
+    },
+    {
+      "id": "Q14",
+      "regime": "sem_rag",
+      "pergunta": "Quais são os pré-requisitos de Testes de Software?",
+      "eixo": "fluxo",
+      "tipo": "simples",
+      "tem_base": true,
+      "resposta": "Os pré-requisitos para testes de software geralmente incluem conhecimentos em programação, compreensão dos fundamentos de engenharia de software, familiaridade com metodologias ágeis e tradicionais, e domínio de ferramentas de teste. Além disso, é recomendável ter uma boa compreensão do ciclo de vida de desenvolvimento de software e conhecimentos básicos sobre análise de requisitos.",
+      "docs_recuperados": [],
+      "citacoes_usadas": [],
+      "valores_sem_fonte": [],
+      "eh_recusa": false,
+      "citacao_valida": false,
+      "fidelidade_factual": 0.0,
+      "afirmacoes_comprovadas": 0,
+      "total_afirmacoes": 2,
+      "completude_multihop": 1.0,
+      "subperguntas_atendidas": 1,
+      "total_subperguntas": 1,
+      "rouge_l": 0.2716
+    },
+    {
+      "id": "Q14",
+      "regime": "com_rag",
+      "pergunta": "Quais são os pré-requisitos de Testes de Software?",
+      "eixo": "fluxo",
+      "tipo": "simples",
+      "tem_base": true,
+      "subperguntas": [],
+      "resposta": "Para cursar Testes de Software (FGA0314), é preciso ter cursado antes Requisitos de Software (FGA0313) [2].",
+      "docs_recuperados": [
+        "F16",
+        "F16",
+        "F15",
+        "F16",
+        "F16"
+      ],
+      "citacoes_usadas": [
+        {
+          "n": 2,
+          "doc_id": "F16",
+          "titulo": "Fluxograma de Engenharia de Software (235 créditos) — transcrição",
+          "orgao": "UnB · FCTE · Engenharia de Software (transcrição do Grupo 04)",
+          "pagina": 1,
+          "url": "https://software.unb.br/wp-content/uploads/2026/02/grade_curricular_esw.jpg",
+          "chunk_id": "F16-0011"
+        }
+      ],
+      "valores_sem_fonte": [],
+      "eh_recusa": false,
+      "citacao_valida": true,
+      "fidelidade_factual": 1.0,
+      "afirmacoes_comprovadas": 1,
+      "total_afirmacoes": 1,
+      "completude_multihop": 1.0,
+      "subperguntas_atendidas": 1,
+      "total_subperguntas": 1,
+      "rouge_l": 0.5116
+    },
+    {
+      "id": "Q15",
+      "regime": "sem_rag",
+      "pergunta": "Quantos créditos tem o curso de Engenharia de Software para quem entrou depois de 2024/2?",
+      "eixo": "fluxo",
+      "tipo": "simples",
+      "tem_base": true,
+      "resposta": "O curso de Engenharia de Software na FCTE/UnB, para os alunos ingressantes após o semestre 2 de 2024, possui 240 créditos. Este número de créditos é válido para a estrutura curricular atualizada conforme as últimas alterações acadêmicas.",
+      "docs_recuperados": [],
+      "citacoes_usadas": [],
+      "valores_sem_fonte": [
+        "240 créditos"
+      ],
+      "eh_recusa": false,
+      "citacao_valida": false,
+      "fidelidade_factual": 0.0,
+      "afirmacoes_comprovadas": 0,
+      "total_afirmacoes": 2,
+      "completude_multihop": 1.0,
+      "subperguntas_atendidas": 1,
+      "total_subperguntas": 1,
+      "rouge_l": 0.2759
+    },
+    {
+      "id": "Q15",
+      "regime": "com_rag",
+      "pergunta": "Quantos créditos tem o curso de Engenharia de Software para quem entrou depois de 2024/2?",
+      "eixo": "fluxo",
+      "tipo": "simples",
+      "tem_base": true,
+      "subperguntas": [],
+      "resposta": "O curso de Engenharia de Software para quem ingressou após 2024/2 tem 235 créditos. [1][2][3]",
+      "docs_recuperados": [
+        "F15",
+        "F16",
+        "F16",
+        "F16",
+        "F15"
+      ],
+      "citacoes_usadas": [
+        {
+          "n": 1,
+          "doc_id": "F15",
+          "titulo": "Engenharia de Software — matriz curricular e créditos (página do curso)",
+          "orgao": "UnB · FCTE · Engenharia de Software",
+          "pagina": 1,
+          "url": "https://software.unb.br/matriz-curricular/",
+          "chunk_id": "F15-0000"
+        },
+        {
+          "n": 2,
+          "doc_id": "F16",
+          "titulo": "Fluxograma de Engenharia de Software (235 créditos) — transcrição",
+          "orgao": "UnB · FCTE · Engenharia de Software (transcrição do Grupo 04)",
+          "pagina": 1,
+          "url": "https://software.unb.br/wp-content/uploads/2026/02/grade_curricular_esw.jpg",
+          "chunk_id": "F16-0000"
+        },
+        {
+          "n": 3,
+          "doc_id": "F16",
+          "titulo": "Fluxograma de Engenharia de Software (235 créditos) — transcrição",
+          "orgao": "UnB · FCTE · Engenharia de Software (transcrição do Grupo 04)",
+          "pagina": 1,
+          "url": "https://software.unb.br/wp-content/uploads/2026/02/grade_curricular_esw.jpg",
+          "chunk_id": "F16-0014"
+        }
+      ],
+      "valores_sem_fonte": [],
+      "eh_recusa": false,
+      "citacao_valida": true,
+      "fidelidade_factual": 1.0,
+      "afirmacoes_comprovadas": 2,
+      "total_afirmacoes": 2,
+      "completude_multihop": 1.0,
+      "subperguntas_atendidas": 1,
+      "total_subperguntas": 1,
+      "rouge_l": 0.4737
+    },
+    {
+      "id": "Q16",
+      "regime": "sem_rag",
+      "pergunta": "Quais disciplinas do 4º semestre de Engenharia de Software?",
+      "eixo": "fluxo",
+      "tipo": "simples",
+      "tem_base": true,
+      "resposta": "No 4º semestre do curso de Engenharia de Software na UnB, as disciplinas comuns incluem: \n\n1. Desenvolvimento Orientado a Aspectos\n2. Gerenciamento de Projetos de Software\n3. Modelagem de Sistemas Computacionais\n4. Banco de Dados II\n5. Introdução à Segurança da Informação\n\nAs disciplinas podem variar ligeiramente dependendo do plano de estudos específico ou do semestre exato. É sempre bom verificar o calendário acadêmico mais recente para informações precisas.",
+      "docs_recuperados": [],
+      "citacoes_usadas": [],
+      "valores_sem_fonte": [],
+      "eh_recusa": false,
+      "citacao_valida": false,
+      "fidelidade_factual": 0.0,
+      "afirmacoes_comprovadas": 0,
+      "total_afirmacoes": 8,
+      "completude_multihop": 1.0,
+      "subperguntas_atendidas": 1,
+      "total_subperguntas": 1,
+      "rouge_l": 0.2124
+    },
+    {
+      "id": "Q16",
+      "regime": "com_rag",
+      "pergunta": "Quais disciplinas do 4º semestre de Engenharia de Software?",
+      "eixo": "fluxo",
+      "tipo": "simples",
+      "tem_base": true,
+      "subperguntas": [],
+      "resposta": "As disciplinas do 4º semestre de Engenharia de Software são:\n- FGA0307 Gestão da Produção e Qualidade — 3-0-1-4\n- FGA0312 Métodos de Desenvolvimento de Software (MDS) — 1-1-2-4\n- FGA0146 Estruturas de Dados 1 — 2-2-0-4\n- FGA0142 Fundamentos de Arquiteturas de Computadores — 2-2-0-4\n- FGA0108 Matemática Discreta 2 — 4-0-0-4\n- FGA0303 Projeto Integrador de Engenharia 1 — 2-0-2-4 [2]",
+      "docs_recuperados": [
+        "F16",
+        "F16",
+        "F16",
+        "F16",
+        "F16"
+      ],
+      "citacoes_usadas": [
+        {
+          "n": 2,
+          "doc_id": "F16",
+          "titulo": "Fluxograma de Engenharia de Software (235 créditos) — transcrição",
+          "orgao": "UnB · FCTE · Engenharia de Software (transcrição do Grupo 04)",
+          "pagina": 1,
+          "url": "https://software.unb.br/wp-content/uploads/2026/02/grade_curricular_esw.jpg",
+          "chunk_id": "F16-0004"
+        }
+      ],
+      "valores_sem_fonte": [],
+      "eh_recusa": false,
+      "citacao_valida": true,
+      "fidelidade_factual": 1.0,
+      "afirmacoes_comprovadas": 7,
+      "total_afirmacoes": 7,
+      "completude_multihop": 1.0,
+      "subperguntas_atendidas": 1,
+      "total_subperguntas": 1,
+      "rouge_l": 0.6549
+    },
+    {
+      "id": "Q17",
+      "regime": "sem_rag",
+      "pergunta": "Quantos créditos mínimos tem o curso de Engenharia de Energia?",
+      "eixo": "fluxo",
+      "tipo": "simples",
+      "tem_base": true,
+      "resposta": "O curso de Engenharia de Energia na UnB possui um total de 180 créditos mínimos para conclusão, distribuídos entre disciplinas obrigatórias, optativas e trabalho de conclusão de curso.",
+      "docs_recuperados": [],
+      "citacoes_usadas": [],
+      "valores_sem_fonte": [
+        "180 créditos"
+      ],
+      "eh_recusa": false,
+      "citacao_valida": false,
+      "fidelidade_factual": 0.0,
+      "afirmacoes_comprovadas": 0,
+      "total_afirmacoes": 1,
+      "completude_multihop": 1.0,
+      "subperguntas_atendidas": 1,
+      "total_subperguntas": 1,
+      "rouge_l": 0.4545
+    },
+    {
+      "id": "Q17",
+      "regime": "com_rag",
+      "pergunta": "Quantos créditos mínimos tem o curso de Engenharia de Energia?",
+      "eixo": "fluxo",
+      "tipo": "simples",
+      "tem_base": true,
+      "subperguntas": [],
+      "resposta": "O curso de Engenharia de Energia tem 251 créditos mínimos para formatura, incluindo o Estágio Obrigatório [1][2].",
+      "docs_recuperados": [
+        "F22",
+        "F23",
+        "F23",
+        "F23",
+        "F23"
+      ],
+      "citacoes_usadas": [
+        {
+          "n": 1,
+          "doc_id": "F22",
+          "titulo": "Engenharia de Energia — informações gerais do curso",
+          "orgao": "UnB · FCTE",
+          "pagina": 1,
+          "url": "https://fcte.unb.br/engenharia-de-energia/",
+          "chunk_id": "F22-0000"
+        },
+        {
+          "n": 2,
+          "doc_id": "F23",
+          "titulo": "Matriz curricular de Engenharia de Energia (251 créditos) — transcrição",
+          "orgao": "UnB · FCTE (transcrição do Grupo 04)",
+          "pagina": 1,
+          "url": "https://fcte.unb.br/wp-content/uploads/2024/08/Captura-de-tela-de-2024-08-26-15-23-04.png",
+          "chunk_id": "F23-0000"
+        }
+      ],
+      "valores_sem_fonte": [],
+      "eh_recusa": false,
+      "citacao_valida": true,
+      "fidelidade_factual": 1.0,
+      "afirmacoes_comprovadas": 1,
+      "total_afirmacoes": 1,
+      "completude_multihop": 1.0,
+      "subperguntas_atendidas": 1,
+      "total_subperguntas": 1,
+      "rouge_l": 0.5882
+    },
+    {
+      "id": "Q18",
+      "regime": "sem_rag",
+      "pergunta": "Em que semestre se cursa Termodinâmica 1 na Engenharia de Energia?",
+      "eixo": "fluxo",
+      "tipo": "simples",
+      "tem_base": true,
+      "resposta": "Na Engenharia de Energia da UnB, o curso de Termodinâmica 1 geralmente é oferecido no primeiro ou segundo semestre do curso, dependendo do planejamento curricular específico do programa. Recomenda-se verificar o calendário acadêmico mais atual do curso para informações precisas.",
+      "docs_recuperados": [],
+      "citacoes_usadas": [],
+      "valores_sem_fonte": [],
+      "eh_recusa": false,
+      "citacao_valida": false,
+      "fidelidade_factual": 0.0,
+      "afirmacoes_comprovadas": 0,
+      "total_afirmacoes": 2,
+      "completude_multihop": 1.0,
+      "subperguntas_atendidas": 1,
+      "total_subperguntas": 1,
+      "rouge_l": 0.25
+    },
+    {
+      "id": "Q18",
+      "regime": "com_rag",
+      "pergunta": "Em que semestre se cursa Termodinâmica 1 na Engenharia de Energia?",
+      "eixo": "fluxo",
+      "tipo": "simples",
+      "tem_base": true,
+      "subperguntas": [],
+      "resposta": "Termodinâmica 1 é cursada no 5º semestre de Engenharia de Energia [1].",
+      "docs_recuperados": [
+        "F23",
+        "F23",
+        "F23",
+        "F22",
+        "F23"
+      ],
+      "citacoes_usadas": [
+        {
+          "n": 1,
+          "doc_id": "F23",
+          "titulo": "Matriz curricular de Engenharia de Energia (251 créditos) — transcrição",
+          "orgao": "UnB · FCTE (transcrição do Grupo 04)",
+          "pagina": 1,
+          "url": "https://fcte.unb.br/wp-content/uploads/2024/08/Captura-de-tela-de-2024-08-26-15-23-04.png",
+          "chunk_id": "F23-0005"
+        }
+      ],
+      "valores_sem_fonte": [],
+      "eh_recusa": false,
+      "citacao_valida": true,
+      "fidelidade_factual": 1.0,
+      "afirmacoes_comprovadas": 1,
+      "total_afirmacoes": 1,
+      "completude_multihop": 1.0,
+      "subperguntas_atendidas": 1,
+      "total_subperguntas": 1,
+      "rouge_l": 0.5185
+    },
+    {
+      "id": "Q19",
+      "regime": "sem_rag",
+      "pergunta": "Quais disciplinas tem o primeiro nível da Engenharia Automotiva para ingressantes a partir de 2027?",
+      "eixo": "fluxo",
+      "tipo": "simples",
+      "tem_base": true,
+      "resposta": "Para ingressantes na Engenharia Automotiva a partir de 2027 na UnB, o primeiro ano geralmente inclui disciplinas como Matemática Aplicada, Física Geral, Química Geral, Inglês Básico, Introdução à Engenharia, Informática para Engenheiros, e Ciências Sociais Aplicadas. Essas disciplinas fornecem uma base sólida nas áreas essenciais antes que os alunos se especializem mais profundamente em automotivo.",
+      "docs_recuperados": [],
+      "citacoes_usadas": [],
+      "valores_sem_fonte": [],
+      "eh_recusa": false,
+      "citacao_valida": false,
+      "fidelidade_factual": 0.0,
+      "afirmacoes_comprovadas": 0,
+      "total_afirmacoes": 2,
+      "completude_multihop": 1.0,
+      "subperguntas_atendidas": 1,
+      "total_subperguntas": 1,
+      "rouge_l": 0.2118
+    },
+    {
+      "id": "Q19",
+      "regime": "com_rag",
+      "pergunta": "Quais disciplinas tem o primeiro nível da Engenharia Automotiva para ingressantes a partir de 2027?",
+      "eixo": "fluxo",
+      "tipo": "simples",
+      "tem_base": true,
+      "subperguntas": [],
+      "resposta": "O primeiro nível da Engenharia Automotiva para ingressantes a partir de 2027 inclui as seguintes disciplinas: CÁLCULO 1, ALGORITMOS E PROGRAMAÇÃO DE COMPUTADORES, DESENHO INDUSTRIAL ASSISTIDO POR COMPUTADOR, ENGENHARIA E AMBIENTE e INTRODUÇÃO À ENGENHARIA. [2]",
+      "docs_recuperados": [
+        "F19",
+        "F19",
+        "F19",
+        "F19",
+        "F19"
+      ],
+      "citacoes_usadas": [
+        {
+          "n": 2,
+          "doc_id": "F19",
+          "titulo": "Engenharia Automotiva — estrutura curricular (ingressantes a partir de 2027)",
+          "orgao": "UnB · FCTE · Engenharia Automotiva",
+          "pagina": 1,
+          "url": "https://automotiva.unb.br/estrutura_curricular/",
+          "chunk_id": "F19-0003"
+        }
+      ],
+      "valores_sem_fonte": [],
+      "eh_recusa": false,
+      "citacao_valida": true,
+      "fidelidade_factual": 1.0,
+      "afirmacoes_comprovadas": 1,
+      "total_afirmacoes": 1,
+      "completude_multihop": 1.0,
+      "subperguntas_atendidas": 1,
+      "total_subperguntas": 1,
+      "rouge_l": 0.8485
+    },
+    {
+      "id": "Q20",
+      "regime": "sem_rag",
+      "pergunta": "Quantas horas o aluno de Engenharia Automotiva precisa integralizar?",
+      "eixo": "fluxo",
+      "tipo": "simples",
+      "tem_base": true,
+      "resposta": "O curso de Engenharia Automotiva na UnB tem duração de 4 anos, correspondendo a 240 créditos. Cada crédito representa aproximadamente 16 horas de carga horária, resultando em cerca de 3840 horas de estudo ao longo do curso. No entanto, a integralização exata pode variar dependendo das fases curriculares e das atividades complementares.",
+      "docs_recuperados": [],
+      "citacoes_usadas": [],
+      "valores_sem_fonte": [
+        "240 créditos",
+        "16 horas",
+        "3840 horas"
+      ],
+      "eh_recusa": false,
+      "citacao_valida": false,
+      "fidelidade_factual": 0.0,
+      "afirmacoes_comprovadas": 0,
+      "total_afirmacoes": 3,
+      "completude_multihop": 1.0,
+      "subperguntas_atendidas": 1,
+      "total_subperguntas": 1,
+      "rouge_l": 0.2319
+    },
+    {
+      "id": "Q20",
+      "regime": "com_rag",
+      "pergunta": "Quantas horas o aluno de Engenharia Automotiva precisa integralizar?",
+      "eixo": "fluxo",
+      "tipo": "simples",
+      "tem_base": true,
+      "subperguntas": [],
+      "resposta": "O aluno do curso de Engenharia Automotiva deve integralizar 3.930 horas em, no mínimo, 10 semestres. [1]",
+      "docs_recuperados": [
+        "F19",
+        "F17",
+        "F20",
+        "F17",
+        "F21"
+      ],
+      "citacoes_usadas": [
+        {
+          "n": 1,
+          "doc_id": "F19",
+          "titulo": "Engenharia Automotiva — estrutura curricular (ingressantes a partir de 2027)",
+          "orgao": "UnB · FCTE · Engenharia Automotiva",
+          "pagina": 1,
+          "url": "https://automotiva.unb.br/estrutura_curricular/",
+          "chunk_id": "F19-0001"
+        }
+      ],
+      "valores_sem_fonte": [],
+      "eh_recusa": false,
+      "citacao_valida": true,
+      "fidelidade_factual": 1.0,
+      "afirmacoes_comprovadas": 1,
+      "total_afirmacoes": 1,
+      "completude_multihop": 1.0,
+      "subperguntas_atendidas": 1,
+      "total_subperguntas": 1,
+      "rouge_l": 0.9143
+    },
+    {
+      "id": "Q21",
+      "regime": "sem_rag",
+      "pergunta": "Qual o tempo mínimo e máximo de integralização da Engenharia Aeroespacial?",
+      "eixo": "fluxo",
+      "tipo": "simples",
+      "tem_base": true,
+      "resposta": "O tempo mínimo para a integralização do curso de Engenharia Aeroespacial na UnB é de 4 anos, considerando o regime de tempo integral. O tempo máximo é de 8 anos, que inclui possíveis faltas justificadas, prorrogações e período de interrupção voluntária do estudo.",
+      "docs_recuperados": [],
+      "citacoes_usadas": [],
+      "valores_sem_fonte": [],
+      "eh_recusa": false,
+      "citacao_valida": false,
+      "fidelidade_factual": 0.0,
+      "afirmacoes_comprovadas": 0,
+      "total_afirmacoes": 2,
+      "completude_multihop": 1.0,
+      "subperguntas_atendidas": 1,
+      "total_subperguntas": 1,
+      "rouge_l": 0.3492
+    },
+    {
+      "id": "Q21",
+      "regime": "com_rag",
+      "pergunta": "Qual o tempo mínimo e máximo de integralização da Engenharia Aeroespacial?",
+      "eixo": "fluxo",
+      "tipo": "simples",
+      "tem_base": true,
+      "subperguntas": [],
+      "resposta": "O tempo mínimo de integralização do curso de Engenharia Aeroespacial é de 10 semestres, enquanto o tempo máximo é de 18 semestres. [2][4]",
+      "docs_recuperados": [
+        "F17",
+        "F17",
+        "F17",
+        "F17",
+        "F17"
+      ],
+      "citacoes_usadas": [
+        {
+          "n": 2,
+          "doc_id": "F17",
+          "titulo": "Projeto Pedagógico do Curso de Engenharia Aeroespacial (PPC 2025)",
+          "orgao": "UnB · FCTE · Engenharia Aeroespacial",
+          "pagina": 16,
+          "url": "https://aeroespacial.unb.br/wp-content/uploads/2026/05/PPC_Aero_2025.pdf",
+          "chunk_id": "F17-0028"
+        },
+        {
+          "n": 4,
+          "doc_id": "F17",
+          "titulo": "Projeto Pedagógico do Curso de Engenharia Aeroespacial (PPC 2025)",
+          "orgao": "UnB · FCTE · Engenharia Aeroespacial",
+          "pagina": 55,
+          "url": "https://aeroespacial.unb.br/wp-content/uploads/2026/05/PPC_Aero_2025.pdf",
+          "chunk_id": "F17-0114"
+        }
+      ],
+      "valores_sem_fonte": [],
+      "eh_recusa": false,
+      "citacao_valida": true,
+      "fidelidade_factual": 1.0,
+      "afirmacoes_comprovadas": 1,
+      "total_afirmacoes": 1,
+      "completude_multihop": 1.0,
+      "subperguntas_atendidas": 1,
+      "total_subperguntas": 1,
+      "rouge_l": 0.7273
+    },
+    {
+      "id": "Q22",
+      "regime": "sem_rag",
+      "pergunta": "Quais são os perfis de formação da Engenharia Eletrônica?",
+      "eixo": "fluxo",
+      "tipo": "simples",
+      "tem_base": true,
+      "resposta": "A Engenharia Eletrônica oferece perfis de formação que abrangem diferentes áreas. O perfil básico engloba fundamentos em eletricidade, eletrônica, sistemas digitais e analógicos, telecomunicações e automação. Há também especializações como Engenharia de Telecomunicações, Sistemas Digitais, Microeletrônica, Biomédica e de Controle e Automação. Estes perfis preparam os engenheiros para trabalhar em desenvolvimento de produtos eletrônicos, sistemas de comunicação, controle e processamento de sinais.",
+      "docs_recuperados": [],
+      "citacoes_usadas": [],
+      "valores_sem_fonte": [],
+      "eh_recusa": false,
+      "citacao_valida": false,
+      "fidelidade_factual": 0.0,
+      "afirmacoes_comprovadas": 0,
+      "total_afirmacoes": 4,
+      "completude_multihop": 1.0,
+      "subperguntas_atendidas": 1,
+      "total_subperguntas": 1,
+      "rouge_l": 0.1505
+    },
+    {
+      "id": "Q22",
+      "regime": "com_rag",
+      "pergunta": "Quais são os perfis de formação da Engenharia Eletrônica?",
+      "eixo": "fluxo",
+      "tipo": "simples",
+      "tem_base": true,
+      "subperguntas": [],
+      "resposta": "Os perfis de formação da Engenharia Eletrônica incluem um profissional generalista, humanista, crítico e reflexivo, capacitado a absorver e desenvolver novas tecnologias. Este profissional deve ser capaz de atuar de forma criativa e ética, considerando aspectos políticos, econômicos, sociais, ambientais e culturais. Além disso, o curso visa formar engenheiros inovadores com foco em sistemas eletrônicos e computacionais, integrando conhecimentos interdisciplinares. [1][5]",
+      "docs_recuperados": [
+        "F21",
+        "F21",
+        "F21",
+        "F21",
+        "F21"
+      ],
+      "citacoes_usadas": [
+        {
+          "n": 1,
+          "doc_id": "F21",
+          "titulo": "Projeto Pedagógico do Curso de Engenharia Eletrônica (PPC 2023)",
+          "orgao": "UnB · FCTE · Engenharia Eletrônica",
+          "pagina": 36,
+          "url": "https://eletronica.unb.br/wp-content/uploads/2025/03/PPC_eletronica2023_2.pdf",
+          "chunk_id": "F21-0070"
+        },
+        {
+          "n": 5,
+          "doc_id": "F21",
+          "titulo": "Projeto Pedagógico do Curso de Engenharia Eletrônica (PPC 2023)",
+          "orgao": "UnB · FCTE · Engenharia Eletrônica",
+          "pagina": 26,
+          "url": "https://eletronica.unb.br/wp-content/uploads/2025/03/PPC_eletronica2023_2.pdf",
+          "chunk_id": "F21-0045"
+        }
+      ],
+      "valores_sem_fonte": [],
+      "eh_recusa": false,
+      "citacao_valida": true,
+      "fidelidade_factual": 1.0,
+      "afirmacoes_comprovadas": 3,
+      "total_afirmacoes": 3,
+      "completude_multihop": 1.0,
+      "subperguntas_atendidas": 1,
+      "total_subperguntas": 1,
+      "rouge_l": 0.1505
+    },
+    {
+      "id": "Q23",
+      "regime": "sem_rag",
+      "pergunta": "Como funciona a escolha de curso no ingresso da FCTE pela ABI Engenharia?",
+      "eixo": "fluxo",
+      "tipo": "simples",
+      "tem_base": true,
+      "resposta": "A escolha do curso na FCTE pela ABI Engenharia ocorre durante o processo seletivo. Os candidatos devem se inscrever em um dos cursos ofertados, como Engenharia Elétrica, Computação ou Sistemas de Informação. Após a aprovação no processo seletivo, os candidatos são matriculados no curso escolhido, conforme suas preferências e disponibilidade de vagas. É importante verificar as datas e procedimentos específicos no site oficial da ABI Engenharia ou da FCTE.",
+      "docs_recuperados": [],
+      "citacoes_usadas": [],
+      "valores_sem_fonte": [],
+      "eh_recusa": false,
+      "citacao_valida": false,
+      "fidelidade_factual": 0.0,
+      "afirmacoes_comprovadas": 0,
+      "total_afirmacoes": 4,
+      "completude_multihop": 1.0,
+      "subperguntas_atendidas": 1,
+      "total_subperguntas": 1,
+      "rouge_l": 0.2075
+    },
+    {
+      "id": "Q23",
+      "regime": "com_rag",
+      "pergunta": "Como funciona a escolha de curso no ingresso da FCTE pela ABI Engenharia?",
+      "eixo": "fluxo",
+      "tipo": "simples",
+      "tem_base": true,
+      "subperguntas": [],
+      "resposta": "O ingresso nos cursos de Engenharia da FCTE ocorre por meio de um processo seletivo. Os candidatos devem indicar, em ordem de preferência, os cursos de Engenharia Aeroespacial, Engenharia Automotiva, Engenharia de Energia, e Engenharia Eletrônica. As vagas serão preenchidas com base na classificação dos candidatos, respeitando a ordem de preferência e a disponibilidade de vagas. [2]",
+      "docs_recuperados": [
+        "F14",
+        "F14",
+        "F14",
+        "F14",
+        "F17"
+      ],
+      "citacoes_usadas": [
+        {
+          "n": 2,
+          "doc_id": "F14",
+          "titulo": "Resolução da FCTE nº 01/2025 — ingresso e escolha de curso (ABI Engenharia e Computação)",
+          "orgao": "UnB · FCTE",
+          "pagina": 1,
+          "url": "https://fcte.unb.br/wp-content/uploads/2025/09/RESOLUCAO-DO-CONSELHO-DA-FCTE-No-01-2025.pdf",
+          "chunk_id": "F14-0001"
+        }
+      ],
+      "valores_sem_fonte": [],
+      "eh_recusa": false,
+      "citacao_valida": true,
+      "fidelidade_factual": 1.0,
+      "afirmacoes_comprovadas": 3,
+      "total_afirmacoes": 3,
+      "completude_multihop": 1.0,
+      "subperguntas_atendidas": 1,
+      "total_subperguntas": 1,
+      "rouge_l": 0.2979
+    },
+    {
+      "id": "Q24",
+      "regime": "sem_rag",
+      "pergunta": "Quantas vagas a FCTE oferta para Engenharia de Software?",
+      "eixo": "fluxo",
+      "tipo": "simples",
+      "tem_base": true,
+      "resposta": "A Faculdade de Ciências Tecnológicas (FCTE) da Universidade de Brasília (UnB) oferece vagas para o curso de Engenharia de Software por meio do Processo Seletivo UnB Gama. O número exato de vagas varia anualmente e depende do edital específico do processo seletivo. Recomendo consultar o site oficial da UnB ou o edital mais recente para obter informações precisas sobre o número de vagas disponíveis para o curso de Engenharia de Software na FCTE.",
+      "docs_recuperados": [],
+      "citacoes_usadas": [],
+      "valores_sem_fonte": [],
+      "eh_recusa": false,
+      "citacao_valida": false,
+      "fidelidade_factual": 0.0,
+      "afirmacoes_comprovadas": 0,
+      "total_afirmacoes": 3,
+      "completude_multihop": 1.0,
+      "subperguntas_atendidas": 1,
+      "total_subperguntas": 1,
+      "rouge_l": 0.25
+    },
+    {
+      "id": "Q24",
+      "regime": "com_rag",
+      "pergunta": "Quantas vagas a FCTE oferta para Engenharia de Software?",
+      "eixo": "fluxo",
+      "tipo": "simples",
+      "tem_base": true,
+      "subperguntas": [],
+      "resposta": "A FCTE oferta 56 vagas para Engenharia de Software, conforme estabelecido na Resolução FCTE nº 01/2025 [1].",
+      "docs_recuperados": [
+        "F14",
+        "F16",
+        "F17",
+        "F16",
+        "F16"
+      ],
+      "citacoes_usadas": [
+        {
+          "n": 1,
+          "doc_id": "F14",
+          "titulo": "Resolução da FCTE nº 01/2025 — ingresso e escolha de curso (ABI Engenharia e Computação)",
+          "orgao": "UnB · FCTE",
+          "pagina": 1,
+          "url": "https://fcte.unb.br/wp-content/uploads/2025/09/RESOLUCAO-DO-CONSELHO-DA-FCTE-No-01-2025.pdf",
+          "chunk_id": "F14-0003"
+        }
+      ],
+      "valores_sem_fonte": [],
+      "eh_recusa": false,
+      "citacao_valida": true,
+      "fidelidade_factual": 1.0,
+      "afirmacoes_comprovadas": 1,
+      "total_afirmacoes": 1,
+      "completude_multihop": 1.0,
+      "subperguntas_atendidas": 1,
+      "total_subperguntas": 1,
+      "rouge_l": 0.5455
+    },
+    {
+      "id": "Q25",
+      "regime": "sem_rag",
+      "pergunta": "Aluno de graduação pode cursar disciplina do mestrado em Engenharia Biomédica?",
+      "eixo": "fluxo",
+      "tipo": "simples",
+      "tem_base": true,
+      "resposta": "Sim, aluno de graduação pode cursar disciplinas do mestrado em Engenharia Biomédica, mas geralmente isso depende das regras internas da instituição e do conselho de pós-graduação. É necessário obter a aprovação do coordenador do programa de mestrado e cumprir possíveis requisitos adicionais, como aprovação em vestibular ou seleção específica para esses casos. Recomenda-se que o aluno entre em contato com o departamento para mais detalhes.",
+      "docs_recuperados": [],
+      "citacoes_usadas": [],
+      "valores_sem_fonte": [],
+      "eh_recusa": false,
+      "citacao_valida": false,
+      "fidelidade_factual": 0.0,
+      "afirmacoes_comprovadas": 0,
+      "total_afirmacoes": 3,
+      "completude_multihop": 1.0,
+      "subperguntas_atendidas": 1,
+      "total_subperguntas": 1,
+      "rouge_l": 0.2449
+    },
+    {
+      "id": "Q25",
+      "regime": "com_rag",
+      "pergunta": "Aluno de graduação pode cursar disciplina do mestrado em Engenharia Biomédica?",
+      "eixo": "fluxo",
+      "tipo": "simples",
+      "tem_base": true,
+      "subperguntas": [],
+      "resposta": "Sim, aluno de graduação pode cursar disciplinas do mestrado em Engenharia Biomédica, mas com restrições. O aluno deve verificar a lista de ofertas, o período de matrícula, e solicitar ao coordenador do curso de graduação. A solicitação deve ser feita como ELETIVA ou OPTATIVA, e precisa ser aprovada pelo colegiado do curso de graduação e do PPGEB. Em alguns casos, também é necessário a aprovação da Câmara de Pesquisa e Pós-Graduação - CPP / DPG. [1][2]",
+      "docs_recuperados": [
+        "F26",
+        "F26",
+        "F28",
+        "F28",
+        "F24"
+      ],
+      "citacoes_usadas": [
+        {
+          "n": 1,
+          "doc_id": "F26",
+          "titulo": "PPGEB (Mestrado em Engenharia Biomédica) — como aluno de graduação cursa disciplinas do mestrado",
+          "orgao": "UnB · FCTE · PPGEB",
+          "pagina": 1,
+          "url": "https://ppgeb.unb.br/aluno-de-graduacao/",
+          "chunk_id": "F26-0001"
+        },
+        {
+          "n": 2,
+          "doc_id": "F26",
+          "titulo": "PPGEB (Mestrado em Engenharia Biomédica) — como aluno de graduação cursa disciplinas do mestrado",
+          "orgao": "UnB · FCTE · PPGEB",
+          "pagina": 1,
+          "url": "https://ppgeb.unb.br/aluno-de-graduacao/",
+          "chunk_id": "F26-0002"
+        }
+      ],
+      "valores_sem_fonte": [],
+      "eh_recusa": false,
+      "citacao_valida": true,
+      "fidelidade_factual": 1.0,
+      "afirmacoes_comprovadas": 4,
+      "total_afirmacoes": 4,
+      "completude_multihop": 1.0,
+      "subperguntas_atendidas": 1,
+      "total_subperguntas": 1,
+      "rouge_l": 0.243
+    },
+    {
+      "id": "Q26",
+      "regime": "sem_rag",
+      "pergunta": "Quais são as linhas de pesquisa do PPGEB?",
+      "eixo": "fluxo",
+      "tipo": "simples",
+      "tem_base": true,
+      "resposta": "O Programa de Pós-Graduação em Educação Básica (PPGEB) da UnB possui várias linhas de pesquisa, incluindo: Formação Docente, Políticas Públicas em Educação, Práticas Educacionais, Tecnologias na Educação, Educação e Desenvolvimento Humano, Educação e Diversidade, e Avaliação em Educação. Cada linha aborda aspectos específicos da educação básica, desde a formação dos professores até questões políticas e tecnológicas na área.",
+      "docs_recuperados": [],
+      "citacoes_usadas": [],
+      "valores_sem_fonte": [],
+      "eh_recusa": false,
+      "citacao_valida": false,
+      "fidelidade_factual": 0.0,
+      "afirmacoes_comprovadas": 0,
+      "total_afirmacoes": 2,
+      "completude_multihop": 1.0,
+      "subperguntas_atendidas": 1,
+      "total_subperguntas": 1,
+      "rouge_l": 0.2651
+    },
+    {
       "id": "Q26",
       "regime": "com_rag",
       "pergunta": "Quais são as linhas de pesquisa do PPGEB?",
@@ -1462,20 +1671,109 @@
       "tipo": "simples",
       "tem_base": true,
       "subperguntas": [],
-      "resposta": "O PPGEB possui as linhas de pesquisa: Aplicação de Computação Inteligente em Pesquisa Biomédica e Cuidados de Saúde, e Produtos e Processos em Biotecnologia. [1]",
+      "resposta": "As linhas de pesquisa do PPGEB (Mestrado em Engenharia Biomédica) são:\n\n1. APLICAÇÃO DE COMPUTAÇÃO INTELIGENTE EM PESQUISA BIOMÉDICA E CUIDADOS DE SAÚDE\n2. AVALIAÇÃO, EDUCAÇÃO E POLÍTICAS PÚBLICAS EM SAÚDE\n3. PRODUTOS E PROCESSOS EM BIOTECNOLOGIA\n4. TECNOLOGIAS EM ENGENHARIA BIOMÉDICA\n\n[1][2][3][5]",
       "docs_recuperados": [
         "F27",
-        "F28"
+        "F27",
+        "F27",
+        "F27",
+        "F27"
       ],
       "citacoes_usadas": [
         {
           "n": 1,
           "doc_id": "F27",
-          "titulo": "Documento Oficial F27",
-          "orgao": "UnB",
+          "titulo": "PPGEB (Mestrado em Engenharia Biomédica) — áreas de concentração e linhas de pesquisa",
+          "orgao": "UnB · FCTE · PPGEB",
           "pagina": 1,
-          "url": "https://unb.br/docs/F27",
+          "url": "https://ppgeb.unb.br/areas-de-concentracao-e-linhas-de-pesquisa/",
+          "chunk_id": "F27-0000"
+        },
+        {
+          "n": 2,
+          "doc_id": "F27",
+          "titulo": "PPGEB (Mestrado em Engenharia Biomédica) — áreas de concentração e linhas de pesquisa",
+          "orgao": "UnB · FCTE · PPGEB",
+          "pagina": 1,
+          "url": "https://ppgeb.unb.br/areas-de-concentracao-e-linhas-de-pesquisa/",
           "chunk_id": "F27-0001"
+        },
+        {
+          "n": 3,
+          "doc_id": "F27",
+          "titulo": "PPGEB (Mestrado em Engenharia Biomédica) — áreas de concentração e linhas de pesquisa",
+          "orgao": "UnB · FCTE · PPGEB",
+          "pagina": 1,
+          "url": "https://ppgeb.unb.br/areas-de-concentracao-e-linhas-de-pesquisa/",
+          "chunk_id": "F27-0002"
+        },
+        {
+          "n": 5,
+          "doc_id": "F27",
+          "titulo": "PPGEB (Mestrado em Engenharia Biomédica) — áreas de concentração e linhas de pesquisa",
+          "orgao": "UnB · FCTE · PPGEB",
+          "pagina": 1,
+          "url": "https://ppgeb.unb.br/areas-de-concentracao-e-linhas-de-pesquisa/",
+          "chunk_id": "F27-0003"
+        }
+      ],
+      "valores_sem_fonte": [],
+      "eh_recusa": false,
+      "citacao_valida": true,
+      "fidelidade_factual": 1.0,
+      "afirmacoes_comprovadas": 6,
+      "total_afirmacoes": 6,
+      "completude_multihop": 1.0,
+      "subperguntas_atendidas": 1,
+      "total_subperguntas": 1,
+      "rouge_l": 0.6
+    },
+    {
+      "id": "Q27",
+      "regime": "sem_rag",
+      "pergunta": "Quando é o último dia de aulas do semestre 2026.2?",
+      "eixo": "fluxo",
+      "tipo": "simples",
+      "tem_base": true,
+      "resposta": "O calendário letivo exato para o semestre 2026.2 da UnB não foi divulgado ainda. Geralmente, esse detalhe é anunciado oficialmente pelo Instituto de Pesquisa e Pós-Graduação (IPPG) da UnB. Recomendo que você acompanhe o site oficial da UnB ou entre em contato diretamente com o IPPG para obter a informação mais precisa e atualizada.",
+      "docs_recuperados": [],
+      "citacoes_usadas": [],
+      "valores_sem_fonte": [],
+      "eh_recusa": false,
+      "citacao_valida": false,
+      "fidelidade_factual": 0.0,
+      "afirmacoes_comprovadas": 0,
+      "total_afirmacoes": 3,
+      "completude_multihop": 1.0,
+      "subperguntas_atendidas": 1,
+      "total_subperguntas": 1,
+      "rouge_l": 0.1053
+    },
+    {
+      "id": "Q27",
+      "regime": "com_rag",
+      "pergunta": "Quando é o último dia de aulas do semestre 2026.2?",
+      "eixo": "fluxo",
+      "tipo": "simples",
+      "tem_base": true,
+      "subperguntas": [],
+      "resposta": "O último dia de aulas do semestre 2026.2 é 14/12/2026, conforme informado no trecho [1].",
+      "docs_recuperados": [
+        "F29",
+        "F29",
+        "F29",
+        "F30",
+        "F29"
+      ],
+      "citacoes_usadas": [
+        {
+          "n": 1,
+          "doc_id": "F29",
+          "titulo": "Calendário universitário de graduação 2026.2 por atividades",
+          "orgao": "UnB · Secretaria de Administração Acadêmica",
+          "pagina": 1,
+          "url": "https://saa.unb.br/wp-content/uploads/2026/06/2026_2_Calend_Ativ_Grad_25_06_2026.pdf",
+          "chunk_id": "F29-0000"
         }
       ],
       "valores_sem_fonte": [],
@@ -1487,51 +1785,53 @@
       "completude_multihop": 1.0,
       "subperguntas_atendidas": 1,
       "total_subperguntas": 1,
-      "rouge_l": 0.9796
+      "rouge_l": 0.5263
     },
     {
-      "id": "Q27",
+      "id": "Q28",
       "regime": "sem_rag",
-      "pergunta": "Quando é o último dia de aulas do semestre 2026.2?",
+      "pergunta": "Qual o período de matrícula do 2026.2?",
       "eixo": "fluxo",
       "tipo": "simples",
       "tem_base": true,
-      "resposta": "O último dia letivo do semestre 2026.2 na UnB está previsto para 18/12/2026.",
+      "resposta": "Os períodos de matrícula podem variar conforme o ano letivo e o curso. Para o semestre 2026.2, geralmente as matrículas ocorrem em junho e julho. Recomendo verificar o calendário oficial da FCTE/UnB, onde você encontrará datas exatas e informações detalhadas sobre o processo de matrícula.",
       "docs_recuperados": [],
       "citacoes_usadas": [],
-      "valores_sem_fonte": [
-        "18/12/2026"
-      ],
+      "valores_sem_fonte": [],
       "eh_recusa": false,
       "citacao_valida": false,
       "fidelidade_factual": 0.0,
       "afirmacoes_comprovadas": 0,
-      "total_afirmacoes": 1,
+      "total_afirmacoes": 3,
       "completude_multihop": 1.0,
       "subperguntas_atendidas": 1,
       "total_subperguntas": 1,
-      "rouge_l": 0.3889
+      "rouge_l": 0.2353
     },
     {
-      "id": "Q27",
+      "id": "Q28",
       "regime": "com_rag",
-      "pergunta": "Quando é o último dia de aulas do semestre 2026.2?",
+      "pergunta": "Qual o período de matrícula do 2026.2?",
       "eixo": "fluxo",
       "tipo": "simples",
       "tem_base": true,
       "subperguntas": [],
-      "resposta": "O término do período de aulas do segundo semestre letivo de 2026 (2026.2) ocorre no dia 14/12/2026. [1]",
+      "resposta": "O período de matrícula no 2026.2 ocorre de 27/07 a 29/07/2026 para estudantes e de 27/07 a 29/07/2026 para coordenação de turmas que não permitem matrícula on-line [2].",
       "docs_recuperados": [
-        "F29"
+        "F30",
+        "F29",
+        "F30",
+        "F29",
+        "F33"
       ],
       "citacoes_usadas": [
         {
-          "n": 1,
+          "n": 2,
           "doc_id": "F29",
-          "titulo": "Documento Oficial F29",
-          "orgao": "UnB",
+          "titulo": "Calendário universitário de graduação 2026.2 por atividades",
+          "orgao": "UnB · Secretaria de Administração Acadêmica",
           "pagina": 1,
-          "url": "https://unb.br/docs/F29",
+          "url": "https://saa.unb.br/wp-content/uploads/2026/06/2026_2_Calend_Ativ_Grad_25_06_2026.pdf",
           "chunk_id": "F29-0001"
         }
       ],
@@ -1544,62 +1844,7 @@
       "completude_multihop": 1.0,
       "subperguntas_atendidas": 1,
       "total_subperguntas": 1,
-      "rouge_l": 0.9756
-    },
-    {
-      "id": "Q28",
-      "regime": "sem_rag",
-      "pergunta": "Qual o período de matrícula do 2026.2?",
-      "eixo": "fluxo",
-      "tipo": "simples",
-      "tem_base": true,
-      "resposta": "O período de matrícula ocorre habitualmente na primeira semana de agosto pelo SIGAA.",
-      "docs_recuperados": [],
-      "citacoes_usadas": [],
-      "valores_sem_fonte": [],
-      "eh_recusa": false,
-      "citacao_valida": false,
-      "fidelidade_factual": 0.0,
-      "afirmacoes_comprovadas": 0,
-      "total_afirmacoes": 1,
-      "completude_multihop": 1.0,
-      "subperguntas_atendidas": 1,
-      "total_subperguntas": 1,
-      "rouge_l": 0.4118
-    },
-    {
-      "id": "Q28",
-      "regime": "com_rag",
-      "pergunta": "Qual o período de matrícula do 2026.2?",
-      "eixo": "fluxo",
-      "tipo": "simples",
-      "tem_base": true,
-      "subperguntas": [],
-      "resposta": "O período de solicitação de matrícula para o semestre 2026.2 é de 27/07 a 29/07/2026 pelo SIGAA. [1]",
-      "docs_recuperados": [
-        "F29"
-      ],
-      "citacoes_usadas": [
-        {
-          "n": 1,
-          "doc_id": "F29",
-          "titulo": "Documento Oficial F29",
-          "orgao": "UnB",
-          "pagina": 1,
-          "url": "https://unb.br/docs/F29",
-          "chunk_id": "F29-0001"
-        }
-      ],
-      "valores_sem_fonte": [],
-      "eh_recusa": false,
-      "citacao_valida": true,
-      "fidelidade_factual": 1.0,
-      "afirmacoes_comprovadas": 1,
-      "total_afirmacoes": 1,
-      "completude_multihop": 1.0,
-      "subperguntas_atendidas": 1,
-      "total_subperguntas": 1,
-      "rouge_l": 0.9767
+      "rouge_l": 0.4561
     },
     {
       "id": "Q29",
@@ -1608,7 +1853,7 @@
       "eixo": "fluxo",
       "tipo": "simples",
       "tem_base": true,
-      "resposta": "Trancamento de disciplina cancela uma matéria; trancamento justificado é quando o aluno adoece.",
+      "resposta": "Trancamento de disciplina ocorre quando o aluno não consegue ou não deseja seguir em frente com a matrícula, resultando na exclusão dela do cronograma escolar. Já o trancamento justificado é uma opção que permite ao aluno interromper temporariamente suas atividades acadêmicas sem perder as notas obtidas, sendo necessário justificar a solicitação, como por motivo de saúde ou outros eventos imprevistos.",
       "docs_recuperados": [],
       "citacoes_usadas": [],
       "valores_sem_fonte": [],
@@ -1620,7 +1865,7 @@
       "completude_multihop": 1.0,
       "subperguntas_atendidas": 1,
       "total_subperguntas": 1,
-      "rouge_l": 0.1887
+      "rouge_l": 0.22
     },
     {
       "id": "Q29",
@@ -1630,31 +1875,44 @@
       "tipo": "simples",
       "tem_base": true,
       "subperguntas": [],
-      "resposta": "O trancamento de disciplina ocorre dentro do prazo regular do calendário acadêmico, ao passo que o trancamento justificado (TJ ou TGMJ) decorre de motivos de saúde, legais ou de força maior comprovados, podendo ser deferido retroativamente em até 2 anos. [1]",
+      "resposta": "O Trancamento de Disciplina Justificado (TJ) implica na suspensão das atividades acadêmicas em uma ou mais disciplinas, enquanto o Trancamento Geral de Matrícula Justificado (TGMJ) suspende toda a matrícula. Ambos pressupõem justificativa prévia e são concedidos mediante análise da comprovação e dos argumentos apresentados pelo estudante [1][3].",
       "docs_recuperados": [
+        "F31",
+        "F31",
+        "F31",
+        "F31",
         "F31"
       ],
       "citacoes_usadas": [
         {
           "n": 1,
           "doc_id": "F31",
-          "titulo": "Documento Oficial F31",
-          "orgao": "UnB",
-          "pagina": 1,
-          "url": "https://unb.br/docs/F31",
-          "chunk_id": "F31-0001"
+          "titulo": "Resolução CEPE nº 93/2018 — trancamento de matrícula na graduação",
+          "orgao": "UnB · CEPE",
+          "pagina": 2,
+          "url": "https://deg.unb.br/wp-content/uploads/resolucao_cepe_93_2018_trancamentos.pdf",
+          "chunk_id": "F31-0006"
+        },
+        {
+          "n": 3,
+          "doc_id": "F31",
+          "titulo": "Resolução CEPE nº 93/2018 — trancamento de matrícula na graduação",
+          "orgao": "UnB · CEPE",
+          "pagina": 3,
+          "url": "https://deg.unb.br/wp-content/uploads/resolucao_cepe_93_2018_trancamentos.pdf",
+          "chunk_id": "F31-0013"
         }
       ],
       "valores_sem_fonte": [],
       "eh_recusa": false,
       "citacao_valida": true,
       "fidelidade_factual": 1.0,
-      "afirmacoes_comprovadas": 1,
-      "total_afirmacoes": 1,
+      "afirmacoes_comprovadas": 2,
+      "total_afirmacoes": 2,
       "completude_multihop": 1.0,
       "subperguntas_atendidas": 1,
       "total_subperguntas": 1,
-      "rouge_l": 0.9877
+      "rouge_l": 0.1818
     },
     {
       "id": "Q30",
@@ -1663,7 +1921,7 @@
       "eixo": "fluxo",
       "tipo": "simples",
       "tem_base": true,
-      "resposta": "Sim, qualquer estudante calouro pode alterar suas turmas normalmente durante a rematrícula no SIGAA.",
+      "resposta": "Sim, calouros podem alterar sua matrícula no SIGAA (Sistema Integrado de Gestão Acadêmica) durante o período de matrícula inicial. É possível realizar mudanças como adicionar ou excluir disciplinas, desde que dentro do prazo estabelecido pela universidade. Recomenda-se sempre verificar as orientações específicas disponibilizadas no portal da UnB ou na Pró-Reitoria de Graduação.",
       "docs_recuperados": [],
       "citacoes_usadas": [],
       "valores_sem_fonte": [],
@@ -1671,11 +1929,11 @@
       "citacao_valida": false,
       "fidelidade_factual": 0.0,
       "afirmacoes_comprovadas": 0,
-      "total_afirmacoes": 1,
+      "total_afirmacoes": 3,
       "completude_multihop": 1.0,
       "subperguntas_atendidas": 1,
       "total_subperguntas": 1,
-      "rouge_l": 0.1395
+      "rouge_l": 0.0964
     },
     {
       "id": "Q30",
@@ -1685,32 +1943,35 @@
       "tipo": "simples",
       "tem_base": true,
       "subperguntas": [],
-      "resposta": "Não, no primeiro semestre os calouros têm suas matrículas realizadas compulsoriamente pela SAA em todas as disciplinas do primeiro nível, não sendo permitida alteração pelo próprio estudante no SIGAA. [1]",
+      "resposta": "Não, o estudante calouro não poderá fazer alterações em sua matrícula. A matrícula nas disciplinas do primeiro semestre é realizada pela SAA. [2]",
       "docs_recuperados": [
         "F33",
+        "F33",
+        "F32",
+        "F32",
         "F32"
       ],
       "citacoes_usadas": [
         {
-          "n": 1,
+          "n": 2,
           "doc_id": "F33",
-          "titulo": "Documento Oficial F33",
+          "titulo": "FAQ — Matrícula no SIGAA",
           "orgao": "UnB",
           "pagina": 1,
-          "url": "https://unb.br/docs/F33",
-          "chunk_id": "F33-0001"
+          "url": "https://noticias.unb.br/images/Noticias/2021/01-Jan/FAQ__MATRICULA_NO_SIGAA__11-1-2021_4.pdf",
+          "chunk_id": "F33-0002"
         }
       ],
       "valores_sem_fonte": [],
       "eh_recusa": false,
       "citacao_valida": true,
       "fidelidade_factual": 1.0,
-      "afirmacoes_comprovadas": 1,
-      "total_afirmacoes": 1,
+      "afirmacoes_comprovadas": 2,
+      "total_afirmacoes": 2,
       "completude_multihop": 1.0,
       "subperguntas_atendidas": 1,
       "total_subperguntas": 1,
-      "rouge_l": 0.9831
+      "rouge_l": 0.1923
     },
     {
       "id": "Q31",
@@ -1719,7 +1980,7 @@
       "eixo": "fluxo",
       "tipo": "simples",
       "tem_base": true,
-      "resposta": "Basta entrar no portal do discente, clicar em ensino e escolher qualquer matéria com vaga.",
+      "resposta": "Para realizar a matrícula on-line no SIGAA, siga estes passos:\n\n1. Acesse o SIGAA pelo site da UnB.\n2. Faça login com sua USP (UnB System Password).\n3. No menu superior, selecione \"Matrícula\".\n4. Escolha o período letivo desejado.\n5. Selecione as disciplinas que deseja cursar.\n6. Confirme suas escolhas e finalize o processo.\n\nSe tiver dúvidas específicas ou problemas durante o processo, entre em contato com o Setor de Tecnologia da Informação da UnB.",
       "docs_recuperados": [],
       "citacoes_usadas": [],
       "valores_sem_fonte": [],
@@ -1727,11 +1988,11 @@
       "citacao_valida": false,
       "fidelidade_factual": 0.0,
       "afirmacoes_comprovadas": 0,
-      "total_afirmacoes": 1,
+      "total_afirmacoes": 8,
       "completude_multihop": 1.0,
       "subperguntas_atendidas": 1,
       "total_subperguntas": 1,
-      "rouge_l": 0.2727
+      "rouge_l": 0.1524
     },
     {
       "id": "Q31",
@@ -1741,33 +2002,25 @@
       "tipo": "simples",
       "tem_base": true,
       "subperguntas": [],
-      "resposta": "A matrícula é realizada acessando o SIGAA no Portal do Discente > Ensino > Matrícula on-line > Realizar Matrícula, selecionando as turmas e confirmando a operação no período estipulado pelo calendário. [1]",
+      "resposta": "Para realizar a matrícula on-line no SIGAA, você deve seguir estes passos:\n\n1. Clique em \"Iniciar seleção de turmas\".\n2. Aparecerão três opções para busca de turmas abertas: \"Ver as turmas da estrutura curricular\", \"Ver equivalentes a estrutura curricular\" e \"Buscar turmas abertas\".\n3. Clique na aba \"Ajuda para matrícula on-line\" para visualizar orientações sobre como encontrar as turmas, visualizar as turmas selecionadas e confirmar as solicitações de matrículas.\n\nLembre-se de que existem três períodos para matrículas: Matrícula, Rematrícula e Matrícula Extraordinária, com diferentes regras de prioridade.",
       "docs_recuperados": [
         "F32",
-        "F34",
-        "F29"
+        "F32",
+        "F32",
+        "F32",
+        "F32"
       ],
-      "citacoes_usadas": [
-        {
-          "n": 1,
-          "doc_id": "F32",
-          "titulo": "Documento Oficial F32",
-          "orgao": "UnB",
-          "pagina": 1,
-          "url": "https://unb.br/docs/F32",
-          "chunk_id": "F32-0001"
-        }
-      ],
+      "citacoes_usadas": [],
       "valores_sem_fonte": [],
       "eh_recusa": false,
-      "citacao_valida": true,
+      "citacao_valida": false,
       "fidelidade_factual": 1.0,
-      "afirmacoes_comprovadas": 1,
-      "total_afirmacoes": 1,
+      "afirmacoes_comprovadas": 5,
+      "total_afirmacoes": 5,
       "completude_multihop": 1.0,
       "subperguntas_atendidas": 1,
       "total_subperguntas": 1,
-      "rouge_l": 0.9831
+      "rouge_l": 0.1513
     },
     {
       "id": "Q32",
@@ -1776,7 +2029,7 @@
       "eixo": "fluxo",
       "tipo": "simples",
       "tem_base": true,
-      "resposta": "Os órgãos colegiados são a Congregação, o Colegiado de Extensão e as Diretorias de Centros.",
+      "resposta": "De acordo com o Regimento Interno da Faculdade de Ciências e Tecnologia de Gama (FCTE/UnB), os principais órgãos colegiados são:\n\n1. Conselho Superior (CS) - órgão máximo de gestão.\n2. Conselho de Ensino, Pesquisa e Extensão (CEPE).\n3. Conselho de Administração (CA).\n4. Conselho de Graduação (CG).\n5. Conselho de Pós-Graduação (CPG).\n\nEstes conselhos têm funções específicas na gestão acadêmica e administrativa da faculdade.",
       "docs_recuperados": [],
       "citacoes_usadas": [],
       "valores_sem_fonte": [],
@@ -1784,11 +2037,11 @@
       "citacao_valida": false,
       "fidelidade_factual": 0.0,
       "afirmacoes_comprovadas": 0,
-      "total_afirmacoes": 1,
+      "total_afirmacoes": 7,
       "completude_multihop": 1.0,
       "subperguntas_atendidas": 1,
       "total_subperguntas": 1,
-      "rouge_l": 0.36
+      "rouge_l": 0.3
     },
     {
       "id": "Q32",
@@ -1798,31 +2051,44 @@
       "tipo": "simples",
       "tem_base": true,
       "subperguntas": [],
-      "resposta": "Conforme o regimento interno da FGA, os órgãos colegiados incluem o Conselho da FGA, o Colegiado de Graduação e Extensão, a Câmara Acadêmica, os Colegiados de Área e os Colegiados dos Programas de Pós-Graduação. [1]",
+      "resposta": "Os órgãos colegiados da Faculdade do Gama, conforme o regimento interno, são:\n\nI. Conselho da FGA;\nII. Colegiado de Graduação;\nIII. Colegiado de Extensão;\nIV. Câmara Acadêmica;\nV. Colegiado dos Cursos de Pós-Graduação (CCPG);\nVI. Colegiados de Área;\nVII. Colegiados dos Programas de Pós-Graduação (CPPG);\nVIII. Direção;\nIX. Coordenação Acadêmica;\nX. Coordenação de Extensão;\nXI. Coordenações de Áreas de Graduação;\nXII. Coordenações de Programas de Pós-Graduação;\nXIII. Centros de natureza acadêmica; e\nXIV. Órgãos Complementares. [2][3]",
       "docs_recuperados": [
+        "F36",
+        "F21",
+        "F36",
+        "F36",
         "F36"
       ],
       "citacoes_usadas": [
         {
-          "n": 1,
+          "n": 2,
+          "doc_id": "F21",
+          "titulo": "Projeto Pedagógico do Curso de Engenharia Eletrônica (PPC 2023)",
+          "orgao": "UnB · FCTE · Engenharia Eletrônica",
+          "pagina": 98,
+          "url": "https://eletronica.unb.br/wp-content/uploads/2025/03/PPC_eletronica2023_2.pdf",
+          "chunk_id": "F21-0226"
+        },
+        {
+          "n": 3,
           "doc_id": "F36",
-          "titulo": "Documento Oficial F36",
-          "orgao": "UnB",
-          "pagina": 1,
-          "url": "https://unb.br/docs/F36",
-          "chunk_id": "F36-0001"
+          "titulo": "Regimento Interno da Faculdade UnB Gama (FCTE)",
+          "orgao": "UnB · FCTE",
+          "pagina": 9,
+          "url": "http://fcte.unb.br/wp-content/uploads/2024/05/Regimento_Interno_FGA_-_aprovado.pdf",
+          "chunk_id": "F36-0027"
         }
       ],
       "valores_sem_fonte": [],
       "eh_recusa": false,
       "citacao_valida": true,
       "fidelidade_factual": 1.0,
-      "afirmacoes_comprovadas": 1,
-      "total_afirmacoes": 1,
+      "afirmacoes_comprovadas": 14,
+      "total_afirmacoes": 14,
       "completude_multihop": 1.0,
       "subperguntas_atendidas": 1,
       "total_subperguntas": 1,
-      "rouge_l": 0.9859
+      "rouge_l": 0.3826
     },
     {
       "id": "C01",
@@ -1831,23 +2097,25 @@
       "eixo": "ru",
       "tipo": "composta",
       "tem_base": true,
-      "resposta": "O almoço de estudante custa R$ 5,00. O jantar no campus Gama funciona das 17h30 às 20h30.",
+      "resposta": "O valor do almoço para estudantes no Gama é R$ 5,00. O jantar funciona de segunda a sexta-feira, das 11h30 às 14h30 e de 17h30 às 19h30. Nos sábados, o horário é das 11h30 às 14h30.",
       "docs_recuperados": [],
       "citacoes_usadas": [],
       "valores_sem_fonte": [
         "R$ 5,00",
+        "11h30",
+        "14h30",
         "17h30",
-        "20h30"
+        "19h30"
       ],
       "eh_recusa": false,
       "citacao_valida": false,
       "fidelidade_factual": 0.0,
       "afirmacoes_comprovadas": 0,
-      "total_afirmacoes": 2,
+      "total_afirmacoes": 3,
       "completude_multihop": 1.0,
       "subperguntas_atendidas": 2,
       "total_subperguntas": 2,
-      "rouge_l": 0.2424
+      "rouge_l": 0.3488
     },
     {
       "id": "C01",
@@ -1857,33 +2125,37 @@
       "tipo": "composta",
       "tem_base": true,
       "subperguntas": [
-        "Qual o valor do almoço para estudante no RU?",
-        "Quais os horários de funcionamento do jantar no RU do campus Gama?"
+        "Qual o valor do almoço para estudantes no RU do Gama?",
+        "Quais os horários de funcionamento do jantar no RU do Gama?"
       ],
-      "resposta": "O estudante de graduação paga R$ 4,50 no almoço do RU [1]. No RU do campus Gama, o horário de funcionamento do jantar é das 17h às 19h30 de segunda a sexta-feira [2].",
+      "resposta": "O valor do almoço para estudantes no RU Gama é R$ 4,50. O jantar funciona de segunda a sexta-feira, exceto feriados, das 17h às 19h30 [1][3].",
       "docs_recuperados": [
-        "F01",
         "F03",
+        "F08",
+        "F02",
+        "F09",
+        "F03",
+        "F17",
         "F04"
       ],
       "citacoes_usadas": [
         {
           "n": 1,
-          "doc_id": "F01",
-          "titulo": "Documento Oficial F01",
-          "orgao": "UnB",
+          "doc_id": "F03",
+          "titulo": "Unidades do RU e horários de funcionamento (inclui RU Gama/FCTE)",
+          "orgao": "UnB · Diretoria do RU",
           "pagina": 1,
-          "url": "https://unb.br/docs/F01",
-          "chunk_id": "F01-0001"
+          "url": "https://ru.unb.br/unidades/",
+          "chunk_id": "F03-0003"
         },
         {
-          "n": 2,
-          "doc_id": "F03",
-          "titulo": "Documento Oficial F03",
-          "orgao": "UnB",
-          "pagina": 1,
-          "url": "https://unb.br/docs/F03",
-          "chunk_id": "F03-0001"
+          "n": 3,
+          "doc_id": "F02",
+          "titulo": "Resolução DAC nº 002/2024 — Regimento de funcionamento do Restaurante Universitário",
+          "orgao": "UnB · Decanato de Assuntos Comunitários",
+          "pagina": 4,
+          "url": "https://ru.unb.br/wp-content/uploads/2025/08/SEI_11843224_Resolucao_002-anexo-2.pdf",
+          "chunk_id": "F02-0011"
         }
       ],
       "valores_sem_fonte": [],
@@ -1895,7 +2167,7 @@
       "completude_multihop": 1.0,
       "subperguntas_atendidas": 2,
       "total_subperguntas": 2,
-      "rouge_l": 0.6988
+      "rouge_l": 0.4416
     },
     {
       "id": "C02",
@@ -1904,7 +2176,7 @@
       "eixo": "fluxo",
       "tipo": "composta",
       "tem_base": true,
-      "resposta": "O pré-requisito para cursar disciplinas avançadas de Engenharia de Software é Programação Orientada a Objetos.",
+      "resposta": "O pré-requisito para o curso de Engenharia de Software na UnB é ter concluído o ensino médio. Em relação ao trancamento geral de matrícula, ele ocorre anualmente, geralmente em junho, permitindo aos alunos interromper temporariamente suas matrículas sem perder os créditos já cursados. É necessário solicitar formalmente junto ao setor de registro acadêmico.",
       "docs_recuperados": [],
       "citacoes_usadas": [],
       "valores_sem_fonte": [],
@@ -1912,11 +2184,11 @@
       "citacao_valida": false,
       "fidelidade_factual": 0.0,
       "afirmacoes_comprovadas": 0,
-      "total_afirmacoes": 1,
-      "completude_multihop": 0.5,
-      "subperguntas_atendidas": 1,
+      "total_afirmacoes": 3,
+      "completude_multihop": 1.0,
+      "subperguntas_atendidas": 2,
       "total_subperguntas": 2,
-      "rouge_l": 0.1613
+      "rouge_l": 0.2
     },
     {
       "id": "C02",
@@ -1925,33 +2197,42 @@
       "eixo": "fluxo",
       "tipo": "composta",
       "tem_base": true,
-      "subperguntas": [
-        "Quais são os pré-requisitos das disciplinas de Engenharia de Software?",
-        "Como funciona o trancamento geral de matrícula?"
-      ],
-      "resposta": "Na Engenharia de Software, os pré-requisitos seguem o fluxograma oficial (ex.: Requisitos de Software para Testes de Software) [1]. O trancamento geral de matrícula (TGM) suspende as atividades do semestre e é solicitado no SIGAA conforme prazos da Resolução CEPE nº 93/2018 [2].",
+      "subperguntas": [],
+      "resposta": "Para cursar Engenharia de Software, é necessário ter concluído Cálculo 1 (MAT0025) antes de entrar em Cálculo 2 (MAT0026), e assim por diante conforme o fluxograma [1]. O Trancamento Geral de Matrícula (TGM) implica a suspensão de todas as atividades acadêmicas sem perda do vínculo com a universidade, podendo ser concedido automaticamente por até dois semestres consecutivos ou não, desde que o estudante tenha cursado ao menos uma disciplina com aprovação [2][5].",
       "docs_recuperados": [
         "F16",
+        "F31",
+        "F31",
+        "F31",
         "F31"
       ],
       "citacoes_usadas": [
         {
           "n": 1,
           "doc_id": "F16",
-          "titulo": "Documento Oficial F16",
-          "orgao": "UnB",
+          "titulo": "Fluxograma de Engenharia de Software (235 créditos) — transcrição",
+          "orgao": "UnB · FCTE · Engenharia de Software (transcrição do Grupo 04)",
           "pagina": 1,
-          "url": "https://unb.br/docs/F16",
-          "chunk_id": "F16-0001"
+          "url": "https://software.unb.br/wp-content/uploads/2026/02/grade_curricular_esw.jpg",
+          "chunk_id": "F16-0011"
         },
         {
           "n": 2,
           "doc_id": "F31",
-          "titulo": "Documento Oficial F31",
-          "orgao": "UnB",
+          "titulo": "Resolução CEPE nº 93/2018 — trancamento de matrícula na graduação",
+          "orgao": "UnB · CEPE",
           "pagina": 1,
-          "url": "https://unb.br/docs/F31",
-          "chunk_id": "F31-0001"
+          "url": "https://deg.unb.br/wp-content/uploads/resolucao_cepe_93_2018_trancamentos.pdf",
+          "chunk_id": "F31-0003"
+        },
+        {
+          "n": 5,
+          "doc_id": "F31",
+          "titulo": "Resolução CEPE nº 93/2018 — trancamento de matrícula na graduação",
+          "orgao": "UnB · CEPE",
+          "pagina": 2,
+          "url": "https://deg.unb.br/wp-content/uploads/resolucao_cepe_93_2018_trancamentos.pdf",
+          "chunk_id": "F31-0004"
         }
       ],
       "valores_sem_fonte": [],
@@ -1963,7 +2244,7 @@
       "completude_multihop": 1.0,
       "subperguntas_atendidas": 2,
       "total_subperguntas": 2,
-      "rouge_l": 0.8791
+      "rouge_l": 0.2353
     },
     {
       "id": "C03",
@@ -1972,22 +2253,19 @@
       "eixo": "ru",
       "tipo": "composta",
       "tem_base": true,
-      "resposta": "Sim, estudantes com gratuidade têm direito a café da manhã. No sábado o almoço vai das 12h às 14h.",
+      "resposta": "Estudantes com gratuidade têm direito a refeições gratuitas nos dias úteis, incluindo café da manhã. No que diz respeito ao almoço no sábado, geralmente não há serviço regular de refeitório. No entanto, algumas instituições oferecem serviços alternativos ou permitem o uso das instalações durante horários específicos. Recomendo verificar as regras específicas do seu refeitório ou se联系我以获取中文回答。",
       "docs_recuperados": [],
       "citacoes_usadas": [],
-      "valores_sem_fonte": [
-        "12h",
-        "14h"
-      ],
+      "valores_sem_fonte": [],
       "eh_recusa": false,
       "citacao_valida": false,
       "fidelidade_factual": 0.0,
       "afirmacoes_comprovadas": 0,
-      "total_afirmacoes": 2,
+      "total_afirmacoes": 4,
       "completude_multihop": 1.0,
       "subperguntas_atendidas": 2,
       "total_subperguntas": 2,
-      "rouge_l": 0.4746
+      "rouge_l": 0.2708
     },
     {
       "id": "C03",
@@ -1996,36 +2274,24 @@
       "eixo": "ru",
       "tipo": "composta",
       "tem_base": true,
-      "subperguntas": [
-        "Estudante com gratuidade tem direito ao café da manhã no RU?",
-        "Qual o horário do almoço no sábado no RU?"
-      ],
-      "resposta": "Estudantes com gratuidade têm direito ao café da manhã no RU [1]. Quanto ao sábado, as unidades Darcy Ribeiro e Ceilândia abrem no almoço, enquanto o RU do Gama não abre aos sábados [2].",
+      "subperguntas": [],
+      "resposta": "Estudantes com gratuidade têm direito ao café da manhã no sábado, das 7h às 9h30. O horário do almoço no sábado é das 11h às 14h30, conforme informado para o RU do Campus Ceilândia [4].",
       "docs_recuperados": [
-        "F01",
         "F02",
         "F03",
-        "F04",
-        "F06"
+        "F06",
+        "F03",
+        "F01"
       ],
       "citacoes_usadas": [
         {
-          "n": 1,
-          "doc_id": "F01",
-          "titulo": "Documento Oficial F01",
-          "orgao": "UnB",
+          "n": 4,
+          "doc_id": "F03",
+          "titulo": "Unidades do RU e horários de funcionamento (inclui RU Gama/FCTE)",
+          "orgao": "UnB · Diretoria do RU",
           "pagina": 1,
-          "url": "https://unb.br/docs/F01",
-          "chunk_id": "F01-0001"
-        },
-        {
-          "n": 2,
-          "doc_id": "F02",
-          "titulo": "Documento Oficial F02",
-          "orgao": "UnB",
-          "pagina": 1,
-          "url": "https://unb.br/docs/F02",
-          "chunk_id": "F02-0001"
+          "url": "https://ru.unb.br/unidades/",
+          "chunk_id": "F03-0002"
         }
       ],
       "valores_sem_fonte": [],
@@ -2037,7 +2303,7 @@
       "completude_multihop": 1.0,
       "subperguntas_atendidas": 2,
       "total_subperguntas": 2,
-      "rouge_l": 0.6757
+      "rouge_l": 0.48
     },
     {
       "id": "C04",
@@ -2046,7 +2312,7 @@
       "eixo": "fluxo",
       "tipo": "composta",
       "tem_base": true,
-      "resposta": "Na Engenharia Aeroespacial, várias disciplinas exigem Cálculo 2 como requisito na grade curricular.",
+      "resposta": "Matérias da Engenharia Aeroespacial que exigem Cálculo 2 incluem Mecânica dos Fluidos, Dinâmica dos Sistemas Mecânicos e Métodos Numéricos. Para consultar o calendário acadêmico, acesse o sistema de informações acadêmicas da UnB ou entre em contato com a Pró-Reitoria de Graduação.",
       "docs_recuperados": [],
       "citacoes_usadas": [],
       "valores_sem_fonte": [],
@@ -2054,11 +2320,11 @@
       "citacao_valida": false,
       "fidelidade_factual": 0.0,
       "afirmacoes_comprovadas": 0,
-      "total_afirmacoes": 1,
-      "completude_multihop": 0.5,
-      "subperguntas_atendidas": 1,
+      "total_afirmacoes": 2,
+      "completude_multihop": 1.0,
+      "subperguntas_atendidas": 2,
       "total_subperguntas": 2,
-      "rouge_l": 0.3019
+      "rouge_l": 0.3171
     },
     {
       "id": "C04",
@@ -2069,32 +2335,27 @@
       "tem_base": true,
       "subperguntas": [
         "Quais matérias da Engenharia Aeroespacial exigem Cálculo 2?",
-        "Onde consulto o calendário acadêmico?"
+        "Onde posso consultar o calendário acadêmico?"
       ],
-      "resposta": "Na Engenharia Aeroespacial, matérias como Mecânica dos Fluidos 1 exigem Cálculo 2 como pré-requisito [1]. O calendário acadêmico oficial com prazos de matrícula pode ser consultado no site da SAA e no SIGAA [2].",
+      "resposta": "As matérias da Engenharia Aeroespacial que exigem Cálculo 2 são: FGA0126 CÁLCULO PARA ENGENHARIA 2 e FGA0128 CÁLCULO PARA ENGENHARIA 3. Para consultar o calendário acadêmico, acesse o SIGAA → Módulos → Portal do Discente → Ensino → Consultar Calendário Acadêmico [2].",
       "docs_recuperados": [
         "F17",
-        "F18",
+        "F34",
+        "F17",
+        "F17",
+        "F34",
+        "F17",
         "F29"
       ],
       "citacoes_usadas": [
         {
-          "n": 1,
-          "doc_id": "F17",
-          "titulo": "Documento Oficial F17",
-          "orgao": "UnB",
-          "pagina": 1,
-          "url": "https://unb.br/docs/F17",
-          "chunk_id": "F17-0001"
-        },
-        {
           "n": 2,
-          "doc_id": "F18",
-          "titulo": "Documento Oficial F18",
-          "orgao": "UnB",
-          "pagina": 1,
-          "url": "https://unb.br/docs/F18",
-          "chunk_id": "F18-0001"
+          "doc_id": "F34",
+          "titulo": "Manual do discente — aba Ensino do SIGAA",
+          "orgao": "UnB · Portal SIG",
+          "pagina": 26,
+          "url": "https://portalsig.unb.br/wp-content/uploads/2025/02/manual_discente_abaensino.pdf",
+          "chunk_id": "F34-0027"
         }
       ],
       "valores_sem_fonte": [],
@@ -2106,7 +2367,7 @@
       "completude_multihop": 1.0,
       "subperguntas_atendidas": 2,
       "total_subperguntas": 2,
-      "rouge_l": 0.8
+      "rouge_l": 0.2308
     },
     {
       "id": "C05",
@@ -2115,7 +2376,7 @@
       "eixo": "ru",
       "tipo": "composta",
       "tem_base": true,
-      "resposta": "O RU não abre aos domingos no campus Gama, apenas no campus Darcy Ribeiro.",
+      "resposta": "O RU (Registro Universitário) da UnB não funciona aos domingos. Para obter ou renovar sua carteirinha, você precisa levar os seguintes documentos: documento de identidade com foto, comprovante de residência atualizado e comprovante de matrícula. Visite o Setor de Protocolo e Registro Acadêmico (SPRA), localizado na FCTE, em Gama, durante os horários de funcionamento.",
       "docs_recuperados": [],
       "citacoes_usadas": [],
       "valores_sem_fonte": [],
@@ -2123,11 +2384,11 @@
       "citacao_valida": false,
       "fidelidade_factual": 0.0,
       "afirmacoes_comprovadas": 0,
-      "total_afirmacoes": 1,
-      "completude_multihop": 0.5,
-      "subperguntas_atendidas": 1,
+      "total_afirmacoes": 3,
+      "completude_multihop": 1.0,
+      "subperguntas_atendidas": 2,
       "total_subperguntas": 2,
-      "rouge_l": 0.3396
+      "rouge_l": 0.3011
     },
     {
       "id": "C05",
@@ -2138,44 +2399,48 @@
       "tem_base": true,
       "subperguntas": [
         "O RU abre aos domingos?",
-        "Quais os documentos necessários para fazer a carteirinha do RU?"
+        "Quais documentos são necessários para fazer a carteirinha no RU?"
       ],
-      "resposta": "O RU do campus Gama não abre aos domingos [1]. Para acessar o RU, o estudante deve apresentar a carteirinha digital no aplicativo SIGAA Mobile ou documento com foto e comprovante de matrícula [2].",
+      "resposta": "Não encontrei essa informação nas fontes da base. A documentação específica para a emissão da carteirinha estudantil digital e os documentos necessários não foram detalhados nos trechos fornecidos. Sugiro consultar a [2][3] para obter mais detalhes sobre a emissão da carteirinha e os documentos necessários.",
       "docs_recuperados": [
-        "F02",
         "F03",
-        "F05"
+        "F05",
+        "F05",
+        "F03",
+        "F03",
+        "F05",
+        "F02"
       ],
       "citacoes_usadas": [
         {
-          "n": 1,
-          "doc_id": "F02",
-          "titulo": "Documento Oficial F02",
-          "orgao": "UnB",
+          "n": 2,
+          "doc_id": "F05",
+          "titulo": "Como acessar o RU (carteirinha digital, créditos e catraca)",
+          "orgao": "UnB · Diretoria do RU",
           "pagina": 1,
-          "url": "https://unb.br/docs/F02",
-          "chunk_id": "F02-0001"
+          "url": "https://ru.unb.br/como-acessar/",
+          "chunk_id": "F05-0002"
         },
         {
-          "n": 2,
-          "doc_id": "F03",
-          "titulo": "Documento Oficial F03",
-          "orgao": "UnB",
+          "n": 3,
+          "doc_id": "F05",
+          "titulo": "Como acessar o RU (carteirinha digital, créditos e catraca)",
+          "orgao": "UnB · Diretoria do RU",
           "pagina": 1,
-          "url": "https://unb.br/docs/F03",
-          "chunk_id": "F03-0001"
+          "url": "https://ru.unb.br/como-acessar/",
+          "chunk_id": "F05-0000"
         }
       ],
       "valores_sem_fonte": [],
-      "eh_recusa": false,
-      "citacao_valida": true,
-      "fidelidade_factual": 1.0,
-      "afirmacoes_comprovadas": 2,
-      "total_afirmacoes": 2,
-      "completude_multihop": 1.0,
-      "subperguntas_atendidas": 2,
+      "eh_recusa": true,
+      "citacao_valida": false,
+      "fidelidade_factual": 0.0,
+      "afirmacoes_comprovadas": 0,
+      "total_afirmacoes": 1,
+      "completude_multihop": 0.5,
+      "subperguntas_atendidas": 1,
       "total_subperguntas": 2,
-      "rouge_l": 0.7123
+      "rouge_l": 0.1647
     },
     {
       "id": "D7",
@@ -2184,7 +2449,7 @@
       "eixo": "fora_da_base",
       "tipo": "fora_da_base",
       "tem_base": false,
-      "resposta": "A rede Wi-Fi da biblioteca da FCTE é UnB-Wireless e a senha pode ser obtida no balcão de atendimento.",
+      "resposta": "O Wi-Fi da Biblioteca da FCTE (Faculdade de Ciências e Tecnologia de Gama) é chamado \"UnB-Gama-EDU\". Este sinal é disponibilizado para alunos, professores e funcionários da universidade. Certifique-se de estar em uma área coberta pelo sinal Wi-Fi da UnB para conexão.",
       "docs_recuperados": [],
       "citacoes_usadas": [],
       "valores_sem_fonte": [],
@@ -2196,7 +2461,7 @@
       "completude_multihop": 1.0,
       "subperguntas_atendidas": 1,
       "total_subperguntas": 1,
-      "rouge_l": 0.069
+      "rouge_l": 0.037
     },
     {
       "id": "D7",
@@ -2206,21 +2471,45 @@
       "tipo": "fora_da_base",
       "tem_base": false,
       "subperguntas": [],
-      "resposta": "Não encontrei essa informação nas fontes da base. Para informações sobre a rede da biblioteca da FCTE, consulte a administração do campus.",
+      "resposta": "Os estudantes têm acesso à rede sem fio nas salas e nas áreas comuns do campus, incluindo a biblioteca. [1][2]",
       "docs_recuperados": [
+        "F21",
+        "F17",
+        "F21",
+        "F21",
         "F17"
       ],
-      "citacoes_usadas": [],
+      "citacoes_usadas": [
+        {
+          "n": 1,
+          "doc_id": "F21",
+          "titulo": "Projeto Pedagógico do Curso de Engenharia Eletrônica (PPC 2023)",
+          "orgao": "UnB · FCTE · Engenharia Eletrônica",
+          "pagina": 114,
+          "url": "https://eletronica.unb.br/wp-content/uploads/2025/03/PPC_eletronica2023_2.pdf",
+          "chunk_id": "F21-0263"
+        },
+        {
+          "n": 2,
+          "doc_id": "F17",
+          "titulo": "Projeto Pedagógico do Curso de Engenharia Aeroespacial (PPC 2025)",
+          "orgao": "UnB · FCTE · Engenharia Aeroespacial",
+          "pagina": 106,
+          "url": "https://aeroespacial.unb.br/wp-content/uploads/2026/05/PPC_Aero_2025.pdf",
+          "chunk_id": "F17-0217"
+        }
+      ],
       "valores_sem_fonte": [],
-      "eh_recusa": true,
+      "eh_recusa": false,
       "citacao_valida": false,
-      "fidelidade_factual": 1.0,
-      "afirmacoes_comprovadas": 1,
+      "fidelidade_factual": 0.0,
+      "afirmacoes_comprovadas": 0,
       "total_afirmacoes": 1,
       "completude_multihop": 1.0,
       "subperguntas_atendidas": 1,
       "total_subperguntas": 1,
-      "rouge_l": 0.5333
+      "rouge_l": 0.069
     }
-  ]
+  ],
+  "limiar_estagio1": 0.3891
 }

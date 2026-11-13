@@ -67,11 +67,11 @@ A **Tabela 3** resume as principais decisões técnicas tomadas durante o planej
 | Mudança | Motivo | Efeito medido |
 |---|---|---|
 | Avaliação local nativa (`valores_sem_fonte` + juiz local) em vez de DeepEval | DeepEval exigia chamadas a APIs externas (violando RNF02) ou gerava risco de OOM na GPU de 8 GB | Pipeline 100% autônomo e auditável com zero envio de dados externos e custo computacional determinístico |
-| Comparação sistemática Sem RAG × Com RAG nas 32 perguntas | Quantificar a redução de alucinações observada qualitativamente na Entrega 2 | Taxa de alucinação de dados críticos reduzida de 0,29 para 0,00 e fidelidade factual elevada de 0,00 para 1,00 |
-| Decomposição em subconsultas para perguntas compostas | Consultas multi-hop recuperavam apenas o tópico dominante no embedding por atração ao ponto médio | Cobertura multi-hop elevada de 50% para 100% nas 5 perguntas compostas de teste (C01 a C05) |
+| Comparação sistemática Sem RAG × Com RAG nas 32 perguntas | Quantificar a redução de alucinações observada qualitativamente na Entrega 2 | Taxa de alucinação de dados críticos reduzida de 0,26 para 0,00 e fidelidade factual elevada de 0,00 para 0,97 em GPU L4 |
+| Decomposição em subconsultas para perguntas compostas | Consultas multi-hop recuperavam apenas o tópico dominante no embedding por atração ao ponto médio | Reescrita em 2 estágios em GPU (`LiquidAI/d1-omni-600M` + `Qwen2.5-7B`) recupera múltiplos eixos informacionais (ex.: C01 e C04 com 100% de cobertura e fidelidade 1.0) |
 | Documentação explícita de limitação em grafos transitivos | RAG em texto puro falha em deduzir cadeias longas de pré-requisitos em cascata | Justificativa técnica para ferramenta determinística em grafo no Agente Fluxo (Entrega 4) |
-| Purga estrita de métricas de latência do benchmark comparativo (Requisito R3) | Focar a avaliação comparativa exclusivamente em qualidade, fundamentação e precisão semântica | Conformidade estrita com R3 e substituição por métricas semânticas e léxicas (ALCE, RAGAS, RGB e ROUGE-L = 0,94) |
-| Automação Google Colab com auto-tuning de VRAM | Permitir inferência física em hardware de alta capacidade (L4 / A100 / H100) com precisão FP16/BF16 ou fallback 4-bit | Disponibilização do notebook 1-Click (`colab_benchmark.ipynb`) e script CLI autônomo (`colab_benchmark.py`) |
+| Purga estrita de métricas de latência do benchmark comparativo (Requisito R3) | Focar a avaliação comparativa exclusivamente em qualidade, fundamentação e precisão semântica | Conformidade estrita com R3 e priorização de métricas semânticas e factuais (ALCE = 0,92, RAGAS = 0,97, Completude = 0,90) |
+| Automação Google Colab com auto-tuning de VRAM | Permitir inferência física em hardware de alta capacidade (L4 / A100 / H100) com precisão FP16/BF16 ou fallback 4-bit | Execução em GPU NVIDIA L4 de 24 GB via script autônomo e notebook 1-Click com limiar calibrado |
 
 <p class="legenda">Tabela 3. Decisões tomadas ao longo da Entrega 3, cada uma com motivo e efeito.</p>
 
