@@ -3,7 +3,6 @@ import json
 import re
 from functools import lru_cache
 
-import chromadb
 from rank_bm25 import BM25Okapi
 
 from . import config
@@ -67,6 +66,7 @@ def embed_consulta(q: str):
 
 
 def colecao(recriar: bool = False):
+    import chromadb  # só a busca densa precisa; o modo bm25 roda sem chromadb/torch
     cliente = chromadb.PersistentClient(path=str(config.CHROMA))
     if recriar:
         try:

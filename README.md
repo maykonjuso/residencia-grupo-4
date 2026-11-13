@@ -15,4 +15,24 @@ python -m rumo_rag perguntar "Quanto um estudante de graduação paga no almoço
 cd .. && mkdocs serve
 ```
 
+## API (integração com o Grupo 09)
+
+`rag/rumo_rag/api.py` implementa o contrato combinado (`POST /perguntar`, `GET /saude`). O chat do portal do Grupo 09 (FcteMapping) e o OpenClaw chamam essa rota.
+
+```bash
+python -m venv .venv && .venv/bin/pip install -r requirements-api.txt   # leve: sem torch nem ChromaDB
+cd rag
+# geração por um modelo gratuito do OpenRouter (o backend "openai" aceita qualquer API compatível)
+RUMO_LLM_BACKEND=openai RUMO_OPENAI_URL=https://openrouter.ai/api/v1 \
+RUMO_OPENAI_MODEL='<modelo>:free' RUMO_OPENAI_KEY='<chave>' \
+../.venv/bin/uvicorn rumo_rag.api:app --port 8001
+```
+
+- Sem o índice vetorial (`chroma_*`), a busca usa só BM25 (`RUMO_BUSCA=bm25`). Com o índice, o padrão é a busca híbrida.
+- `contexto.data` resolve "hoje" e "amanhã" para a data do cardápio.
+- Se o LLM falhar (cota ou rede), a resposta cai para o modo extrativo, com as frases das fontes.
+- `RUMO_API_TOKEN` definido: `/perguntar` exige `Authorization: Bearer <token>`. Use sempre que a API estiver na internet, senão qualquer um gasta a cota do LLM.
+
+**Publicar no Render (gratuito):** `render.yaml` cria o serviço `rumo-api`. No painel: **New → Blueprint**, escolha este repositório e a branch, preencha `RUMO_OPENAI_KEY` (chave do OpenRouter). O `RUMO_API_TOKEN` é gerado sozinho: copie o valor para o serviço do FcteMapping, junto com `RUMO_API_URL` (endereço do `rumo-api`). Conferir: `https://<rumo-api>.onrender.com/saude`. No plano gratuito o serviço dorme depois de ~15 min sem uso e leva cerca de 1 min para acordar.
+
 Integração com o Grupo 09 (mapeamento da FCTE): veja `docs/visao/escopo-grupos.md`.
