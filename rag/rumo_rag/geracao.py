@@ -7,6 +7,10 @@ Este módulo garante duas regras de negócio (docs/entrega-1/regras-de-negocio.m
   `resposta_sem_citacao` acusa a resposta que não cita nada.
 - RN-03 · fora da base, recusa: a regra 3 do prompt e o atalho de `gerar` sem trechos usam a
   mesma frase, `RECUSA`; `valores_sem_fonte` alerta quando aparece valor que não está nos trechos.
+
+Modo sem RAG (issue #17, task #28): `gerar(..., com_rag=False)` usa o mesmo LLM, a mesma persona,
+a mesma regra de recusa e o mesmo limite de tamanho, mas sem trechos e sem a regra de citação
+(que só faz sentido com trechos). É a linha de base "LLM puro" da comparação da Entrega 3.
 """
 import json
 import re
@@ -19,8 +23,10 @@ from . import config
 RECUSA = "Não encontrei essa informação nas fontes da base."
 
 # Regras 2 (RN-02) e 3 (RN-03) do prompt. Mexeu no texto? Rode a avaliação (CLAUDE.md).
-INSTRUCOES = f"""Você é o RUmo, assistente dos estudantes da FCTE/UnB (campus Gama) para dúvidas sobre o \
-Restaurante Universitário e sobre o fluxo de disciplinas dos cursos.
+PERSONA = """Você é o RUmo, assistente dos estudantes da FCTE/UnB (campus Gama) para dúvidas sobre o \
+Restaurante Universitário e sobre o fluxo de disciplinas dos cursos."""
+
+INSTRUCOES = f"""{PERSONA}
 Regras:
 1. Responda em português, de forma direta, usando SOMENTE as informações dos trechos numerados abaixo.
 2. Depois de cada afirmação, cite o trecho usado entre colchetes, por exemplo [1] ou [2][3].
@@ -28,6 +34,16 @@ Regras:
 e sugira o órgão responsável. Não invente valores, datas, códigos ou pré-requisitos.
 4. Se a informação depende do perfil do estudante (grupo de pagamento, curso, ano de ingresso), diga isso.
 5. Seja conciso: no máximo 120 palavras. Copie valores, datas, códigos e nomes exatamente como estão nos trechos."""
+
+# Modo sem RAG (#17/#28): mesma persona, mesma recusa, mesmo limite; só não há trechos.
+# Qualquer outra diferença entre os dois prompts invalida a comparação LLM × RAG.
+INSTRUCOES_SEM_RAG = f"""{PERSONA}
+Regras:
+1. Responda em português, de forma direta.
+2. Se você não tem certeza da resposta, diga exatamente: "{RECUSA}" \
+e sugira o órgão responsável. Não invente valores, datas, códigos ou pré-requisitos.
+3. Se a informação depende do perfil do estudante (grupo de pagamento, curso, ano de ingresso), diga isso.
+4. Seja conciso: no máximo 120 palavras."""
 
 
 def montar_contexto(trechos: list[dict]) -> str:
@@ -38,7 +54,12 @@ def montar_contexto(trechos: list[dict]) -> str:
     return "\n\n".join(partes)
 
 
-def montar_mensagens(pergunta: str, trechos: list[dict]) -> list[dict]:
+def montar_mensagens(pergunta: str, trechos: list[dict], com_rag: bool = True) -> list[dict]:
+    if not com_rag:
+        return [
+            {"role": "system", "content": INSTRUCOES_SEM_RAG},
+            {"role": "user", "content": f"Pergunta: {pergunta}"},
+        ]
     return [
         {"role": "system", "content": INSTRUCOES},
         {"role": "user", "content": f"Trechos recuperados:\n\n{montar_contexto(trechos)}\n\nPergunta: {pergunta}"},
@@ -107,10 +128,14 @@ def _gerar_extrativo(pergunta, trechos):
     return "\n".join(f"- {f} [{i}]" for _, i, f in candidatas[:4])
 
 
-def gerar(pergunta: str, trechos: list[dict], backend: str = config.BACKEND) -> str:
-    if not trechos:                     # RN-03: sem trecho recuperado, nem chama o LLM
+def gerar(pergunta: str, trechos: list[dict], backend: str = config.BACKEND, com_rag: bool = True) -> str:
+    if not com_rag:
+        if backend == "extrativo":      # o extrativo só recorta trechos: sem trechos não há o que comparar
+            raise ValueError("o modo sem RAG precisa de um LLM (backend hf, ollama ou openai)")
+        trechos = []
+    elif not trechos:                   # RN-03: sem trecho recuperado, nem chama o LLM
         return RECUSA
-    msgs = montar_mensagens(pergunta, trechos)
+    msgs = montar_mensagens(pergunta, trechos, com_rag)
     if backend == "hf":
         return _gerar_hf(msgs)
     if backend == "ollama":

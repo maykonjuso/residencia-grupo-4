@@ -170,7 +170,9 @@ class RN05SemDadoPessoal(unittest.TestCase):
     """RN-05 · Não coleta dado pessoal, não pede login, não acessa o SIGAA."""
 
     def test_geracao_recebe_so_pergunta_e_trechos(self):
-        self.assertEqual(list(inspect.signature(geracao.gerar).parameters), ["pergunta", "trechos", "backend"])
+        # com_rag (#17) só liga/desliga os trechos; não carrega nada sobre quem perguntou
+        self.assertEqual(list(inspect.signature(geracao.gerar).parameters),
+                         ["pergunta", "trechos", "backend", "com_rag"])
 
     def test_nenhuma_fonte_e_o_proprio_sigaa(self):
         for id_, d in DOCS.items():
@@ -189,9 +191,46 @@ class RN05SemDadoPessoal(unittest.TestCase):
         with mock.patch.object(cli.indice, "buscar", return_value=TRECHOS), \
                 mock.patch.object(cli.geracao, "gerar", return_value="Custa R$ 5,20 [1]."):
             r = cli.responder("Quanto custa o almoço?", "extrativo")
-        esperadas = {"pergunta", "resposta", "fontes_citadas", "valores_sem_fonte", "sem_citacao",
-                     "trechos_recuperados", "tempo_busca_s", "tempo_geracao_s", "backend"}
+        esperadas = {"pergunta", "modo", "resposta", "recusou", "fontes_citadas", "valores_sem_fonte",
+                     "sem_citacao", "trechos_recuperados", "tempo_busca_s", "tempo_geracao_s", "backend"}
         self.assertEqual(set(r), esperadas, "campo novo na saída: confira se não identifica o estudante")
+
+
+class ModoSemRag(unittest.TestCase):
+    """#17/#28 · A comparação LLM × RAG só vale se a única diferença for a presença dos trechos."""
+
+    def test_prompt_com_rag_nao_mudou(self):
+        # o modo sem RAG não pode alterar a linha de base da Entrega 2
+        self.assertTrue(geracao.INSTRUCOES.startswith(geracao.PERSONA))
+        self.assertIn("SOMENTE as informações dos trechos", geracao.INSTRUCOES)
+
+    def test_mesma_persona_e_mesma_recusa(self):
+        self.assertTrue(geracao.INSTRUCOES_SEM_RAG.startswith(geracao.PERSONA))
+        self.assertIn(f'"{geracao.RECUSA}"', geracao.INSTRUCOES_SEM_RAG)
+        self.assertIn("120 palavras", geracao.INSTRUCOES_SEM_RAG)
+
+    def test_sem_rag_nao_envia_trechos(self):
+        msgs = geracao.montar_mensagens("Quanto custa o almoço?", TRECHOS, com_rag=False)
+        self.assertEqual(msgs[0]["content"], geracao.INSTRUCOES_SEM_RAG)
+        self.assertNotIn("R$ 5,20", msgs[1]["content"])
+        self.assertNotIn("[1]", msgs[1]["content"])
+
+    def test_sem_rag_chama_o_llm_mesmo_sem_trechos(self):
+        # com RAG, lista vazia recusa sem LLM; sem RAG, o LLM tem de ser chamado
+        with mock.patch.object(geracao, "_gerar_hf", return_value="R$ 3,50") as llm:
+            self.assertEqual(geracao.gerar("Quanto custa o almoço?", [], "hf", com_rag=False), "R$ 3,50")
+            llm.assert_called_once()
+
+    def test_extrativo_nao_tem_modo_sem_rag(self):
+        with self.assertRaises(ValueError):
+            geracao.gerar("Quanto custa o almoço?", TRECHOS, "extrativo", com_rag=False)
+
+    def test_perguntas_ouro_tem_eixo_e_categoria(self):
+        for arq in ("perguntas_ouro.jsonl", "perguntas_fora_da_base.jsonl"):
+            for l in open(config.AVALIACAO / arq, encoding="utf-8"):
+                c = json.loads(l)
+                with self.subTest(id=c["id"]):
+                    self.assertTrue(c["eixo"] and c["categoria"])
 
 
 if __name__ == "__main__":
