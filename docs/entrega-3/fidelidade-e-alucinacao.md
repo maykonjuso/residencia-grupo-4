@@ -96,20 +96,37 @@ O estudo comparativo das 4 configurações (ver [LLM Pura vs. RAG](llm-vs-rag.md
 
 ---
 
-## 3. Definição das métricas avaliadas
+## 3. Definição e justificativa prática das métricas avaliadas
 
-A **Tabela 1** apresenta as definições operacionais de cada métrica monitorada na Entrega 3, sua referência na literatura e a meta estabelecida para o projeto.
+A **Tabela 1** apresenta as definições operacionais, o propósito prático no contexto universitário e a meta de cada métrica monitorada na Entrega 3.
 
-| Métrica no RUmo | Equivalente na Literatura | O que mede | Fórmula / Procedimento | Meta |
-|---|---|---|---|---|
-| **Taxa de Citação Válida** | *Citation Recall & Precision* (ALCE) | Proporção de respostas com marcadores `[n]` que apontam para documentos existentes no contexto recuperado. | `respostas com citação [n] válida / perguntas com base documental` | ≥ 0,95 |
-| **Fidelidade Factual** | *Faithfulness / Groundedness* (RAGAS) | Grau em que as afirmações da resposta são comprovadas pelos chunks recuperados, sem extrapolações. | `afirmações comprovadas pelo contexto / total de afirmações da resposta` | ≥ 0,90 |
-| **Taxa de Alucinação Numérica Extrínseca** | *Extrinsic Numerical Hallucination Rate* | Frequência de respostas que contêm preços, datas, horários, códigos ou quantidades ausentes nos chunks (`valores_sem_fonte`). | `respostas com valor sem fonte / total de respostas avaliadas` | 0,00 |
-| **Rejeição Negativa (Recusa Correta)** | *Negative Rejection* (RGB) | Capacidade de declarar *"Não encontrei essa informação nas fontes da base"* quando a pergunta extrapola a base. | `recusas corretas (RF04) / total de perguntas sem base` | 1,00 |
-| **Completude Multi-hop** | *Information Integration* (RGB) | Proporção de subperguntas respondidas corretamente em consultas compostas (com dois ou mais tópicos). | `subperguntas atendidas / total de subperguntas da consulta` | ≥ 0,85 |
-| **Sobreposição Léxica (ROUGE-L)** | *LCS-based Lexical Overlap* (Lin, 2004) | Mede a sobreposição F1 da maior subsequência comum entre a resposta gerada e o gabarito oficial de referência. | `F1 do ROUGE-L entre resposta gerada e gabarito de referência curado` | Informativa (≥ 0,80) |
+| Métrica no RUmo | Equivalente na Literatura | Pra que serve (Justificativa no RUmo) | O que mede e Procedimento | Meta |
+|---|---|---|---|:---:|
+| **Taxa de Citação Válida** | *Citation Recall & Precision* (ALCE) | **Auditabilidade e Segurança Jurídica:** Permite ao discente auditar a resolução oficial da UnB na fonte primária (documento e página), sem depender de fé cega na IA. | Proporção de respostas com marcadores `[n]` apontando para chunks reais recuperados. | ≥ 0,95 |
+| **Fidelidade Factual** | *Faithfulness / Groundedness* (RAGAS) | **Integridade do Conteúdo:** Garante que o modelo atue estritamente como sintetizador dos documentos oficiais, sem extrapolar conceitos ou distorcer resoluções. | Grau em que as afirmações atômicas da resposta são comprovadas pelo contexto recuperado. | ≥ 0,90 |
+| **Taxa de Alucinação Numérica Extrínseca** | *Extrinsic Numerical Hallucination Rate* | **Proteção contra Danos Materiais:** Evita prejuízos financeiros ou acadêmicos imediatos decorrentes de tarifas (R$), datas de trancamento ou códigos de disciplina inventados. | Proporção de respostas contendo valores numéricos ou códigos ausentes nos chunks (`valores_sem_fonte`). | 0,00 |
+| **Rejeição Negativa (Recusa Correta)** | *Negative Rejection* (RGB) | **Honestidade Intelectual (RF04):** Impede que o assistente tente adivinhar respostas fora de seu escopo (senhas, boatos), instruindo o aluno com transparência. | Proporção de recusas padronizadas emitidas diante de perguntas sem base documental indexada. | 1,00 |
+| **Completude Multi-hop** | *Information Integration* (RGB) | **Atendimento Integral a Consultas:** Garante que estudantes com dúvidas em múltiplos tópicos recebam respostas completas, sem omissão da segunda parte da pergunta. | Proporção de subperguntas atendidas satisfatoriamente em perguntas compostas após reescrita. | ≥ 0,85 |
+| **Sobreposição Léxica (ROUGE-L)** | *LCS-based Lexical Overlap* (Lin, 2004) | **Alinhamento Institucional:** Avalia se o vocabulário gerado converge com a redação técnica e terminologia formal dos gabaritos oficiais curados da FCTE. | F1-Score da maior subsequência comum entre resposta e gabarito oficial de referência. | Informativa (≥ 0,80) |
 
-<p class="legenda">Tabela 1. Métricas de avaliação de resposta do RUmo alinhadas à literatura de RAG (RAGAS, ALCE e RGB).</p>
+<p class="legenda">Tabela 1. Métricas de avaliação de resposta do RUmo alinhadas à literatura de RAG (RAGAS, ALCE e RGB) com justificativas práticas de domínio.</p>
+
+### 3.1 Detalhamento da finalidade de cada métrica para o estudante
+
+Para além da conformidade acadêmica com a literatura internacional, cada métrica responde a riscos reais vivenciados no dia a dia da comunidade acadêmica da FCTE:
+
+1. **Por que medir Citações Válidas (ALCE)?**
+   - *Risco mitigado:* Em ambientes regulatórios, uma resposta certa sem fonte não possui validade administrativa. Ao indicar o documento (`[1] Resolução CAD 04/2017`), o aluno pode contestar uma cobrança indevida no guichê do RU ou comprovar seu enquadramento na assistência estudantil.
+2. **Por que medir Fidelidade Factual (RAGAS)?**
+   - *Risco mitigado:* Alucinações sutis de redação (onde o modelo altera o sentido de um artigo de resolução ao resumir). Avaliar a proporção de afirmações sustentadas pelo texto bruto impede que o assistente crie regras tácitas que a UnB nunca aprovou.
+3. **Por que auditar Alucinações Numéricas via `valores_sem_fonte`?**
+   - *Risco mitigado:* Números têm tolerância zero a erros. Um estudante que planeja o orçamento do mês com uma tarifa inventada de R$ 5,00 (em vez de R$ 4,50 ou gratuidade) ou perde o prazo de trancamento justificado sofre danos irreversíveis. O verificador simbólico age como um *circuit breaker* instantâneo.
+4. **Por que medir Rejeição Negativa (RGB / RF04)?**
+   - *Risco mitigado:* *Overconfidence* do modelo. É preferível que o sistema diga claramente *"Não encontrei essa informação nas fontes da base"* do que inventar procedimentos de TI, redes Wi-Fi ou contatos que levem o aluno a perder tempo ou comprometer sua segurança.
+5. **Por que medir Completude Multi-hop (RGB)?**
+   - *Risco mitigado:* Fadiga de interação. Quando o estudante pergunta sobre preço do almoço e horário do jantar na mesma frase, omitir um dos eixos obriga-o a repetir a interação, aumentando a taxa de abandono do assistente.
+6. **Por que registrar ROUGE-L?**
+   - *Risco mitigado:* Prolixidade ou coloquialismo excessivo. Garante que o tom da resposta seja objetivo, formal e alinhado aos padrões da administração pública universitária.
 
 ---
 

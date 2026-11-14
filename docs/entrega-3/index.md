@@ -27,14 +27,14 @@ A **Tabela 1** apresenta a matriz de consolidação dos resultados comparativos 
 !!! note "Metodologia de Aferição e Dados Reais em GPU L4 (Google Colab)"
     Os resultados consolidados na Tabela 1 representam as medições empíricas físicas executadas em hardware de alta capacidade (**Google Colab - GPU NVIDIA L4 de 24 GB**, precisão total **FP16/BF16**, sem quantização de 4 bits). O pipeline utilizou o classificador leve `LiquidAI/d1-omni-600M` calibrado (limiar `0.3891`) para detecção em 2 estágios e o modelo gerador `Qwen/Qwen2.5-7B-Instruct` sobre as 38 perguntas do benchmark. Em cumprimento ao Requisito R3, todas as métricas de latência e tempo de execução foram integralmente expurgadas da avaliação.
 
-| Dimensão avaliada | Modelo Puro (Sem RAG) | RUmo (Com RAG) | Meta (Entrega 1) | Status |
-|---|:---:|:---:|:---:|:---:|
-| **Taxa de citação de fontes [n] (ALCE)** | 0,00 | 0,92 | ≥ 0,95 | Ajustar (tolerância) |
-| **Fidelidade factual (RAGAS)** | 0,00 | 0,97 | ≥ 0,90 | Conforme |
-| **Taxa de alucinação numérica extrínseca (`valores_sem_fonte`)** | 0,26 | 0,00 | 0,00 | Conforme (zero valores sem lastro) |
-| **Taxa de recusa em perguntas sem base (RGB)** | 0,00 | 0,00 | 1,00 | Ajustar (D7) |
-| **Completude em perguntas compostas (RGB)** | 1,00 | 0,90 | ≥ 0,85 | Conforme |
-| **Sobreposição léxica ROUGE-L (F1 médio com gabarito)** | 0,24 | 0,42 | — | Informativa |
+| Dimensão avaliada | Pra que serve (Justificativa Prática) | Modelo Puro (Sem RAG) | RUmo (Com RAG) | Meta (Entrega 1) | Status |
+|---|---|:---:|:---:|:---:|:---:|
+| **Taxa de citação de fontes [n] (ALCE)** | **Auditabilidade:** Permite ao aluno auditar resoluções e editais diretamente no documento oficial. | 0,00 | 0,92 | ≥ 0,95 | Ajustar (tolerância) |
+| **Fidelidade factual (RAGAS)** | **Integridade:** Garante que a resposta sintetize fielmente os trechos, sem extrapolações conceituais. | 0,00 | 0,97 | ≥ 0,90 | Conforme |
+| **Taxa de alucinação numérica extrínseca (`valores_sem_fonte`)** | **Prevenção de danos materiais:** Evita invenção de tarifas (R$), datas de calendário e códigos de matéria. | 0,26 | 0,00 | 0,00 | Conforme (zero valores sem lastro) |
+| **Taxa de recusa em perguntas sem base (RGB)** | **Honestidade intelectual (RF04):** Impede invenção de respostas fora de domínio (senhas de Wi-Fi, boatos). | 0,00 | 0,00 | 1,00 | Ajustar (D7) |
+| **Completude em perguntas compostas (RGB)** | **Atendimento integral:** Garante que ambos os tópicos de perguntas multi-hop sejam respondidos. | 1,00 | 0,90 | ≥ 0,85 | Conforme |
+| **Sobreposição léxica ROUGE-L (F1 médio com gabarito)** | **Alinhamento institucional:** Mede a proximidade vocabular com os gabaritos formais da FCTE. | 0,24 | 0,42 | — | Informativa |
 
 <p class="legenda">Tabela 1. Matriz executiva de métricas comparativas consolidadas da Entrega 3 (medidas em GPU NVIDIA L4 via Google Colab). *Nota: A taxa de alucinação de 0,00 refere-se estritamente à ausência de números, moedas e códigos arbitrários; a fidelidade conceitual completa é dada pelo RAGAS (0,97) e pela análise qualitativa de recusa (D7). Ver [Fidelidade e Alucinação](fidelidade-e-alucinacao.md#tipologia-de-alucinacoes-e-transparencia-metodologica-analise-critica).*</p>
 

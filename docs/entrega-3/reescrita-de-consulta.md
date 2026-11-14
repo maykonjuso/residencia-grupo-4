@@ -71,14 +71,14 @@ A decomposição de consultas assegura que ambos os eixos informacionais sejam b
 
 A **Tabela 2** compara as dimensões de qualidade de integração informacional e precisão de resposta obtidas no benchmark comparativo com e sem a reescrita de consulta ativada.
 
-| Dimensão de Qualidade / Integração | Sem Reescrita | Com Reescrita (2 Estágios) | Meta do Projeto | Status |
-|---|:---:|:---:|:---:|:---:|
-| **Recuperação do 1º tópico da consulta** | 100% (5/5) | 100% (5/5) | ≥ 95% | Conforme |
-| **Recuperação do 2º tópico da consulta** | 0% (0/5) | 100% (5/5) | ≥ 85% | Conforme |
-| **Deduplicação de chunks redundantes (Round-Robin)** | Não aplicável | 100% deduplicado | 100% | Conforme |
-| **Completude multi-hop (RGB Benchmark)** | 1,00 (Sem RAG) | **0,90 (Com RAG)** | ≥ 0,85 | Conforme |
-| **Taxa de alucinação numérica extrínseca (`valores_sem_fonte`)** | 0,26 | **0,00** | 0,00 | Conforme (zero valores sem lastro) |
-| **Aderência léxica ROUGE-L (F1 médio)** | 0,24 | **0,42** | Informativa | Conforme |
+| Dimensão de Qualidade / Integração | Pra que serve (Finalidade Prática) | Sem Reescrita | Com Reescrita (2 Estágios) | Meta do Projeto | Status |
+|---|---|:---:|:---:|:---:|:---:|
+| **Recuperação do 1º tópico da consulta** | Assegura que o tema inicial da pergunta não seja ignorado. | 100% (5/5) | 100% (5/5) | ≥ 95% | Conforme |
+| **Recuperação do 2º tópico da consulta** | Evita que o tópico secundário sofra inanição (*starvation*) informacional. | 0% (0/5) | 100% (5/5) | ≥ 85% | Conforme |
+| **Deduplicação de chunks redundantes (Round-Robin)** | Maximiza a densidade informativa do contexto (k=5) sem repetir trechos. | Não aplicável | 100% deduplicado | 100% | Conforme |
+| **Completude multi-hop (RGB Benchmark)** | Mede se o assistente respondeu integralmente às duas partes da dúvida. | 1,00 (Sem RAG) | **0,90 (Com RAG)** | ≥ 0,85 | Conforme |
+| **Taxa de alucinação numérica extrínseca (`valores_sem_fonte`)** | Garante que a síntese de múltiplos tópicos não invente dados numéricos. | 0,26 | **0,00** | 0,00 | Conforme (zero valores sem lastro) |
+| **Aderência léxica ROUGE-L (F1 médio)** | Monitora a sobreposição de vocabulário técnico com o gabarito curado. | 0,24 | **0,42** | Informativa | Conforme |
 
 <p class="legenda">Tabela 2. Comparativo de qualidade, completude e integração informacional para perguntas multi-hop (medido em GPU NVIDIA L4).</p>
 
