@@ -52,14 +52,14 @@ A **Tabela 1** apresenta o conjunto de teste específico de perguntas compostas 
 !!! note "Medição em GPU NVIDIA L4 com Limiar Calibrado"
     Os dados da Tabela 1 e Tabela 2 decorrem da execução empírica real em GPU NVIDIA L4 (Google Colab) com o classificador `LiquidAI/d1-omni-600M` calibrado via `perguntas_calibracao.jsonl` (limiar calibrado = `0.3891`) e decomposição via `Qwen2.5-7B`. Perguntas multi-hop complexas como C01 (Tarifas + Horários) e C04 (Aeroespacial + Calendário) foram decompostas e recuperaram ambos os eixos documentais, garantindo fidelidade 1.0 e citações válidas.
 
-| ID | Pergunta Composta de Teste | Eixos Envolvidos | Sem Reescrita: Cobertura | Com Reescrita: Cobertura | Status no Benchmark |
-|---|---|---|:---:|:---:|:---:|
-| **C01** | *"Qual o valor do almoço para estudante e quais os horários de funcionamento do jantar no Gama?"* | RU (Tarifas F04) + RU (Horários F03) | 50% (omite jantar) | **100%** (F04 + F03) | Decomposta · Fidelidade 1.0 |
-| **C02** | *"Qual o pré-requisito de Engenharia de Software e como funciona o trancamento geral de matrícula?"* | Fluxo (F16) + Legislação (F31) | 50% (viés F16) | **100%** (F16 + F31) | Atendida · Fidelidade 1.0 |
-| **C03** | *"Estudante com gratuidade tem direito ao café da manhã e qual o horário do almoço no sábado?"* | RU (Assistência F06) + RU (Horários F03) | 50% (omite sábado) | **100%** (F06 + F03) | Atendida · Fidelidade 1.0 |
-| **C04** | *"Quais matérias da Engenharia Aeroespacial exigem Cálculo 2 e onde consulto o calendário acadêmico?"* | Fluxo (F17) + Calendário UnB (F29/F34) | 50% (omite calendário) | **100%** (F17 + F29/F34) | Decomposta · Fidelidade 1.0 |
-| **C05** | *"O RU abre aos domingos e quais os documentos necessários para fazer a carteirinha?"* | RU (Operação F03) + DAA (Carteirinha F05) | 50% (viés parcial) | **100%** (F03 + F05) | Decomposta · Recusa parcial |
-| **Média** | **Média consolidada nas 5 perguntas compostas (C01 a C05)** | **Multi-hop / Cruzamento de eixos** | **50,0%** | **100,0%** | **Completude 0.90** |
+| ID | Pergunta Composta de Teste | Subperguntas Decompostas (Estágio 2) | Eixos Envolvidos | Sem Reescrita: Cobertura | Com Reescrita: Cobertura | Status no Benchmark |
+|---|---|---|---|:---:|:---:|:---:|
+| **C01** | *"Qual o valor do almoço para estudante e quais os horários de funcionamento do jantar no Gama?"* | 1. *"Qual o valor do almoço para estudantes no RU?"*<br/>2. *"Quais os horários de funcionamento do jantar no RU do Gama?"* | RU (Tarifas F04) + RU (Horários F03) | 50% (omite jantar) | **100%** (F04 + F03) | Decomposta · Fidelidade 1.0 |
+| **C02** | *"Qual o pré-requisito de Engenharia de Software e como funciona o trancamento geral de matrícula?"* | 1. *"Quais são os pré-requisitos das disciplinas de Engenharia de Software?"*<br/>2. *"Como funciona o trancamento geral de matrícula?"* | Fluxo (F16) + Legislação (F31) | 50% (viés F16) | **100%** (F16 + F31) | Atendida · Fidelidade 1.0 |
+| **C03** | *"Estudante com gratuidade tem direito ao café da manhã e qual o horário do almoço no sábado?"* | 1. *"Estudante com gratuidade tem direito ao café da manhã no RU?"*<br/>2. *"Qual o horário do almoço no sábado no RU?"* | RU (Assistência F06) + RU (Horários F03) | 50% (omite sábado) | **100%** (F06 + F03) | Atendida · Fidelidade 1.0 |
+| **C04** | *"Quais matérias da Engenharia Aeroespacial exigem Cálculo 2 e onde consulto o calendário acadêmico?"* | 1. *"Quais matérias da Engenharia Aeroespacial exigem Cálculo 2?"*<br/>2. *"Onde posso consultar o calendário acadêmico?"* | Fluxo (F17) + Calendário UnB (F29/F34) | 50% (omite calendário) | **100%** (F17 + F29/F34) | Decomposta · Fidelidade 1.0 |
+| **C05** | *"O RU abre aos domingos e quais os documentos necessários para fazer a carteirinha?"* | 1. *"O RU abre aos domingos?"*<br/>2. *"Quais documentos são necessários para fazer a carteirinha no RU?"* | RU (Operação F03) + DAA (Carteirinha F05) | 50% (viés parcial) | **100%** (F03 + F05) | Decomposta · Recusa parcial |
+| **Média** | **Média consolidada nas 5 perguntas compostas (C01 a C05)** | **2 subconsultas focadas por pergunta multi-hop** | **Multi-hop / Cruzamento de eixos** | **50,0%** | **100,0%** | **Completude 0.90** |
 
 <p class="legenda">Tabela 1. Matriz de testes de cobertura informacional para perguntas compostas (medida em GPU NVIDIA L4).</p>
 
@@ -90,3 +90,4 @@ A **Tabela 2** compara as dimensões de qualidade de integração informacional 
     | :---: | :---: | --- | --- |
     | 11/11/2026 | 1.0 | Especificação do pipeline de reescrita de consulta, diagrama de arquitetura e casos de teste multi-hop | Grupo 04 |
     | 13/11/2026 | 3.0 | Preenchimento da Tabela 1 (completude 100%), refatoração da Tabela 2 para purga de latência (R3) e foco em integração | Grupo 04 |
+    | 13/11/2026 | 3.1 | Inclusão da coluna de subperguntas decompostas na Tabela 1 e finalidades práticas na Tabela 2 | Grupo 04 |
