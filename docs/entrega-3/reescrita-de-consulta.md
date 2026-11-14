@@ -77,7 +77,7 @@ A **Tabela 2** compara as dimensões de qualidade de integração informacional 
 | **Recuperação do 2º tópico da consulta** | 0% (0/5) | 100% (5/5) | ≥ 85% | Conforme |
 | **Deduplicação de chunks redundantes (Round-Robin)** | Não aplicável | 100% deduplicado | 100% | Conforme |
 | **Completude multi-hop (RGB Benchmark)** | 1,00 (Sem RAG) | **0,90 (Com RAG)** | ≥ 0,85 | Conforme |
-| **Taxa de alucinação em perguntas compostas** | 0,26 | **0,00** | 0,00 | Conforme |
+| **Taxa de alucinação numérica extrínseca (`valores_sem_fonte`)** | 0,26 | **0,00** | 0,00 | Conforme (zero valores sem lastro) |
 | **Aderência léxica ROUGE-L (F1 médio)** | 0,24 | **0,42** | Informativa | Conforme |
 
 <p class="legenda">Tabela 2. Comparativo de qualidade, completude e integração informacional para perguntas multi-hop (medido em GPU NVIDIA L4).</p>
