@@ -27,8 +27,10 @@ A Entrega 2 colocou em operação o protótipo funcional do RUmo com o modelo Qw
 
 A **Tabela 1** resume o desempenho do sistema nas 38 perguntas de teste (32 ouro, 5 compostas e 1 negativa) frente às metas do projeto.
 
-!!! note "Ambiente de execução em GPU NVIDIA L4 (Google Colab)"
+!!! note "Ambiente de execução em GPU e dimensionamento de hardware"
     Medições físicas em GPU NVIDIA L4 (24 GB VRAM) com precisão plena **FP16/BF16**. O pipeline integra o classificador leve `LiquidAI/d1-omni-600M` calibrado (limiar `0.3891`) e o gerador `Qwen/Qwen2.5-7B-Instruct`. Em conformidade com o Requisito R3, o relatório exclui métricas temporais ou de latência.
+
+    **Adendo sobre o hardware de avaliação:** O grupo utilizou GPUs no Google Colab temporariamente por estar sem acesso ao MacBook Air M4 (24 GB) para rodar esta bateria de testes. O ambiente em nuvem acelerou a obtenção das métricas, mas seu uso é puramente voltado à avaliação, não ao sistema em produção. Toda a arquitetura do RUmo continua restrita para caber nas especificações de uma **NVIDIA GeForce RTX 4060 de 8 GB** (hardware de referência definido desde a Entrega 1).
 
 | Dimensão avaliada | Pra que serve (Justificativa Prática) | Modelo Puro (Sem RAG) | RUmo (Com RAG) | Meta (Entrega 1) | Status |
 |---|---|:---:|:---:|:---:|:---:|
@@ -52,6 +54,9 @@ A **Tabela 1** resume o desempenho do sistema nas 38 perguntas de teste (32 ouro
 ---
 
 ## 4. Reprodução do benchmark no Google Colab {: #4-execucao-do-benchmark-no-google-colab-gpu-a100l4 }
+
+!!! info "Finalidade da avaliação em nuvem vs. Produção"
+    O uso do Google Colab acelerou a coleta dessas métricas frente à indisponibilidade transitória do MacBook Air M4 (24 GB) da equipe. Trata-se de um ambiente puramente voltado à avaliação e auditoria científica. A arquitetura em produção permanece restrita ao limite de uma **RTX 4060 (8 GB)**, suportando quantização NF4 de 4 bits para execução local contida.
 
 O repositório disponibiliza dois caminhos para reproduzir a avaliação em GPU:
 

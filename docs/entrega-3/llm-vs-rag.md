@@ -158,6 +158,9 @@ A **Tabela 4** consolida o desempenho comparativo agregado nas 32 perguntas-ouro
 
 ## 5. Instruções para reprodução física em GPU no Google Colab {: #5-instrucoes-para-reproducao-fisica-em-gpu-no-google-colab }
 
+!!! info "Finalidade da avaliação em nuvem vs. Produção"
+    O uso temporário de GPUs potentes no Google Colab acelerou a extração dos relatórios comparativos e decorreu da falta momentânea de acesso ao MacBook Air M4 (24 GB) da equipe. Trata-se de um ambiente empregado puramente para avaliação, e não para o sistema em produção: a arquitetura do RUmo permanece estritamente restrita para caber nas especificações de uma **NVIDIA GeForce RTX 4060 de 8 GB** (hardware de referência adotado desde a Entrega 1).
+
 Para executar a inferência física real na íntegra utilizando aceleradores de ponta (NVIDIA A100 / L4 / H100) e aferir as saídas neurais do **Qwen2.5-7B-Instruct** e **LiquidAI/d1-omni-600M**, o grupo preparou dois caminhos de execução prontos para uso:
 
 1. **Notebook 1-Click (`notebooks/colab_benchmark.ipynb`):**
