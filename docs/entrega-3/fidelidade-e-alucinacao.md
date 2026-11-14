@@ -137,8 +137,8 @@ A **Tabela 2** consolida a comparação direta entre o comportamento do modelo i
 !!! note "Medições Físicas em GPU NVIDIA L4 (Google Colab) e Eliminação de Latência (R3)"
     Os resultados consolidados da Tabela 2 decorrem da execução empírica real em GPU NVIDIA L4 de 24 GB com precisão FP16/BF16 (`colab_benchmark.py`). Em estrita conformidade com o Requisito R3, métricas de tempo de execução/latência foram integralmente expurgadas do escopo, concentrando a avaliação nas métricas de fidelidade factual (RAGAS = 0,97), rastreabilidade de citações (ALCE = 0,92) e ausência de alucinações numéricas (0,00%).
 
-> [!WARNING]
-> **Transparência metodológica sobre a taxa de alucinação (0,00%):** A taxa de alucinação de 0,00 reportada na Tabela 2 refere-se **estritamente a valores numéricos, moedas, datas, horários e códigos curriculares auditados deterministicamente por expressão regular (`geracao.valores_sem_fonte`)**. Ela **não** implica ausência total de alucinações semânticas no sistema: a fidelidade factual RAGAS de 0,97 indica que ~3% das afirmações atômicas contêm pequenas deduções sem comprovação literal, e o teste D7 revela a vulnerabilidade do modelo neural em tentar responder quando recebe contexto tangencial em vez de emitir recusa estrita.
+!!! warning "Transparência metodológica sobre a taxa de alucinação (0,00%)"
+    A taxa de alucinação de 0,00 reportada na Tabela 2 refere-se **estritamente a valores numéricos, moedas, datas, horários e códigos curriculares auditados deterministicamente por expressão regular (`geracao.valores_sem_fonte`)**. Ela **não** implica ausência total de alucinações semânticas no sistema: a fidelidade factual RAGAS de 0,97 indica que ~3% das afirmações atômicas contêm pequenas deduções sem comprovação literal, e o teste D7 revela a vulnerabilidade do modelo neural em tentar responder quando recebe contexto tangencial em vez de emitir recusa estrita.
 
 | Métrica de Resposta | Sem RAG (Qwen 7B puro) | Com RAG (RUmo Híbrido) | Meta do Projeto | Status |
 |---|:---:|:---:|:---:|:---:|
