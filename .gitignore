@@ -6,3 +6,7 @@ __pycache__/
 # gerados pelo pipeline (recriados por `python -m rumo_rag ingerir`)
 rag/dados/originais/
 rag/dados/chroma*/
+
+# chaves locais (OpenRouter etc.): nunca no git
+.env
+.env.*

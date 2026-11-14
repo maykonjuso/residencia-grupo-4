@@ -30,6 +30,8 @@ MAX_TRECHOS = 8         # teto quando a pergunta é composta (subperguntas)
 CANDIDATOS = 30         # candidatos de cada buscador antes da fusão
 RRF_K = 60              # constante da Reciprocal Rank Fusion
 PESO_BM25_IDENTIFICADOR = 3.0  # peso do BM25 na fusão quando a pergunta tem data ou código de disciplina
+# Modo da busca na API: hibrido (padrão, precisa do índice no ChromaDB) | bm25 (sem torch nem ChromaDB)
+BUSCA = os.getenv("RUMO_BUSCA", "hibrido" if CHROMA.exists() else "bm25")
 
 # Geração: hf (transformers local) | ollama | openai (API compatível) | extrativo (sem LLM)
 BACKEND = os.getenv("RUMO_LLM_BACKEND", "hf")

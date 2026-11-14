@@ -1,0 +1,29 @@
+# Render Free: API do RUmo (POST /perguntar), chamada pelo assistente do portal (FcteMapping, Grupo 09).
+# Leve: busca BM25 sobre rag/dados/chunks.jsonl e geração por API (OpenRouter, modelos ":free").
+# Sem torch nem ChromaDB: cabe nos 512 MB do plano gratuito.
+services:
+  - type: web
+    name: rumo-api
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements-api.txt
+    startCommand: cd rag && uvicorn rumo_rag.api:app --host 0.0.0.0 --port $PORT --no-access-log
+    healthCheckPath: /saude
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12.8"
+      - key: RUMO_BUSCA
+        value: bm25
+      - key: RUMO_LLM_BACKEND
+        value: openai
+      - key: RUMO_OPENAI_URL
+        value: https://openrouter.ai/api/v1
+      - key: RUMO_OPENAI_MODEL
+        value: "nvidia/nemotron-3-ultra-550b-a55b:free"
+      # Chave do OpenRouter (https://openrouter.ai/keys). Só no painel do Render, nunca no Git.
+      - key: RUMO_OPENAI_KEY
+        sync: false
+      # Token que o FcteMapping manda em "Authorization: Bearer". Copie o valor gerado para
+      # RUMO_API_TOKEN no serviço coleta-fcte.
+      - key: RUMO_API_TOKEN
+        generateValue: true

@@ -4,6 +4,8 @@ import re
 from functools import lru_cache
 
 # chromadb e rank_bm25 importados sob demanda para compatibilidade com ambientes sem GPU/índice
+from rank_bm25 import BM25Okapi
+
 from . import config
 from .reescrita import classificar_composta, decompor
 
@@ -50,7 +52,7 @@ def embed_consulta(q: str):
 
 
 def colecao(recriar: bool = False):
-    import chromadb
+    import chromadb  # só a busca densa precisa; o modo bm25 roda sem chromadb/torch
     cliente = chromadb.PersistentClient(path=str(config.CHROMA))
     if recriar:
         try:
