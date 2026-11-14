@@ -1,31 +1,34 @@
 # Entrega 3 · Respostas baseadas em evidências (LLM × RAG)
 
-**Semana 3 do Challenge 2.** Prazo: sexta-feira, 13/11/2026. Foco desta etapa: *comparação empírica com e sem RAG, medição quantitativa de fidelidade e alucinação, e reescrita de consultas compostas*.
+**Semana 3 do Challenge 2.** Foco: *comparação empírica com e sem RAG, medição quantitativa de fidelidade e alucinação, e reescrita de consultas compostas*.
 
 ---
 
-## 1. O que esta entrega demonstra
+## 1. Escopo da entrega
 
-Na Entrega 2, o grupo colocou em operação o protótipo funcional do RUmo e observou qualitativamente que o modelo Qwen2.5-7B reduziu as alucinações observadas na versão 1.5B. 
+A Entrega 2 colocou em operação o protótipo funcional do RUmo com o modelo Qwen2.5-7B. A **Entrega 3 formaliza essa validação**:
 
-A **Entrega 3 transforma essa observação em medição formal**: responde as mesmas 32 perguntas-ouro do conjunto de teste com e sem RAG, mede o ganho de fidelidade, comprova a eliminação de alucinações em dados sensíveis (preços, pratos e pré-requisitos) e introduz o módulo de reescrita para consultas compostas.
+1. Submete as 32 perguntas-ouro aos regimes com e sem RAG;
+2. Mede a fidelidade factual e a precisão de citações;
+3. Elimina alucinações em dados sensíveis (preços, cardápios e pré-requisitos);
+4. Decompõe consultas compostas em múltiplos eixos informacionais.
 
-### Estrutura de entrega e áreas abordadas
+### Checklist de entregáveis
 
-- [x] **Comparação lado a lado (Sem RAG × Com RAG):** As 32 perguntas-ouro de `rag/avaliacao/perguntas_ouro.jsonl` respondidas com e sem RAG pelo Qwen2.5-7B local. ([Ver especificação](llm-vs-rag.md))
-- [x] **Medição de fidelidade e alucinação:** Protocolo de avaliação local medindo taxa de citação, fidelidade, recusa e alucinação. ([Ver metodologia e métricas](fidelidade-e-alucinacao.md))
-- [x] **Transparência metodológica:** Documentação analítica de um caso real onde o RAG não ajudou ou teve limitação. ([Ver análise de falha](llm-vs-rag.md#o-caso-em-que-o-rag-nao-ajudou))
-- [x] **Reescrita de consulta para perguntas compostas:** Mecanismo de decomposição de consultas multi-hop mitigando o risco R04. ([Ver arquitetura de reescrita](reescrita-de-consulta.md))
-- [x] **Conformidade arquitetural (RNF02 e RNF03):** Avaliações projetadas para execução 100% local na GPU de 8 GB, preservando privacidade sem envio de dados a APIs de terceiros.
+- [x] **Comparação lado a lado (Sem RAG × Com RAG):** 32 perguntas avaliadas com o Qwen2.5-7B local. ([Ver comparação](llm-vs-rag.md))
+- [x] **Métricas de fidelidade e alucinação:** Protocolo local para taxas de citação, fidelidade, recusa e alucinação. ([Ver metodologia](fidelidade-e-alucinacao.md))
+- [x] **Transparência metodológica:** Análise de falha em encadeamento transitivo onde o RAG não bastou. ([Ver caso de falha](llm-vs-rag.md#o-caso-em-que-o-rag-nao-ajudou))
+- [x] **Reescrita de consultas compostas:** Decomposição multi-hop em dois estágios contra recuperação parcial (**R04**). ([Ver arquitetura](reescrita-de-consulta.md))
+- [x] **Privacidade local (RNF02 e RNF03):** Execução sem tráfego de dados para APIs de terceiros.
 
 ---
 
-## 2. Resultados esperados e metas
+## 2. Resultados consolidados
 
-A **Tabela 1** apresenta a matriz de consolidação dos resultados comparativos no conjunto de teste (38 perguntas avaliadas: 32 perguntas-ouro, 5 compostas e 1 negativa), estruturada frente às metas definidas na Entrega 1.
+A **Tabela 1** resume o desempenho do sistema nas 38 perguntas de teste (32 ouro, 5 compostas e 1 negativa) frente às metas do projeto.
 
-!!! note "Metodologia de Aferição e Dados Reais em GPU L4 (Google Colab)"
-    Os resultados consolidados na Tabela 1 representam as medições empíricas físicas executadas em hardware de alta capacidade (**Google Colab - GPU NVIDIA L4 de 24 GB**, precisão total **FP16/BF16**, sem quantização de 4 bits). O pipeline utilizou o classificador leve `LiquidAI/d1-omni-600M` calibrado (limiar `0.3891`) para detecção em 2 estágios e o modelo gerador `Qwen/Qwen2.5-7B-Instruct` sobre as 38 perguntas do benchmark. Em cumprimento ao Requisito R3, todas as métricas de latência e tempo de execução foram integralmente expurgadas da avaliação.
+!!! note "Ambiente de execução em GPU NVIDIA L4 (Google Colab)"
+    Medições físicas em GPU NVIDIA L4 (24 GB VRAM) com precisão plena **FP16/BF16**. O pipeline integra o classificador leve `LiquidAI/d1-omni-600M` calibrado (limiar `0.3891`) e o gerador `Qwen/Qwen2.5-7B-Instruct`. Em conformidade com o Requisito R3, o relatório exclui métricas temporais ou de latência.
 
 | Dimensão avaliada | Pra que serve (Justificativa Prática) | Modelo Puro (Sem RAG) | RUmo (Com RAG) | Meta (Entrega 1) | Status |
 |---|---|:---:|:---:|:---:|:---:|
@@ -48,37 +51,34 @@ A **Tabela 1** apresenta a matriz de consolidação dos resultados comparativos 
 
 ---
 
-## 4. Execução do benchmark no Google Colab (GPU A100/L4) {: #4-execucao-do-benchmark-no-google-colab-gpu-a100l4 }
+## 4. Reprodução do benchmark no Google Colab {: #4-execucao-do-benchmark-no-google-colab-gpu-a100l4 }
 
-Para reprodução independente e execução física em grande escala com aceleração em GPU, o projeto disponibiliza um pipeline de automação completo para o **Google Colab** utilizando instâncias de GPU com alta capacidade de VRAM (A100, L4 ou H100):
+O repositório disponibiliza dois caminhos para reproduzir a avaliação em GPU:
 
-- **Notebook Interativo 1-Click:** [`notebooks/colab_benchmark.ipynb`](https://github.com/maykonjuso/residencia-grupo-4/blob/feat/validacao-reescrita-consulta/notebooks/colab_benchmark.ipynb)
-- **Script Autônomo CLI:** [`colab_benchmark.py`](https://github.com/maykonjuso/residencia-grupo-4/blob/feat/validacao-reescrita-consulta/colab_benchmark.py)
+- **Notebook interativo:** [`notebooks/colab_benchmark.ipynb`](https://github.com/maykonjuso/residencia-grupo-4/blob/feat/validacao-reescrita-consulta/notebooks/colab_benchmark.ipynb)
+- **Script CLI direto:** [`colab_benchmark.py`](https://github.com/maykonjuso/residencia-grupo-4/blob/feat/validacao-reescrita-consulta/colab_benchmark.py)
 
-### Guia passo a passo para execução no Colab
+### Passo a passo de execução
 
 1. **Alocação de GPU:**
-   - Acesse o [Google Colab](https://colab.research.google.com/) e carregue o arquivo `notebooks/colab_benchmark.ipynb`.
-   - No menu superior, selecione **Ambiente de execução** > **Alterar tipo de ambiente de execução** e escolha uma GPU potente (recomendado: **A100** ou **L4**).
-2. **Configuração de Autenticação (Opcional):**
-   - Caso deseje utilizar modelos restritos ou registrar execuções no Hub, cadastre seu token `HF_TOKEN` nos **Secrets** do Colab (ícone de chave na barra lateral esquerda) e conceda permissão de acesso ao notebook.
-3. **Clonagem do Repositório e Dependências:**
-   - Execute a célula de clonagem que realiza o checkout diretamente na branch oficial da Entrega 3:
-     ```bash
-     !git clone -b feat/validacao-reescrita-consulta https://github.com/maykonjuso/residencia-grupo-4.git
-     %cd residencia-grupo-4
-     !pip install -r requirements.txt
-     ```
-4. **Execução do Benchmark:**
-   - Inicie a rodada de avaliação executando o script standalone:
-     ```bash
-     !python3 colab_benchmark.py --backend hf --saida md
-     ```
-   - **Auto-tuning de VRAM:** O script inspeciona a GPU via `torch.cuda`. Em instâncias com ≥ 20 GB de VRAM (A100 ou L4), o modo de precisão plena **FP16/BF16** é ativado automaticamente (`RUMO_HF_4BIT=0`). Em GPUs com menor capacidade (ex.: T4 com 16 GB), o sistema ativa quantização **4-bit NF4** (`RUMO_HF_4BIT=1`) para evitar estouro de memória.
-   - **Garantia R3 (Zero Latência):** O pipeline audita e bloqueia rigorosamente a emissão de métricas de latência/tempo, em conformidade com o Requisito R3.
-5. **Persistência dos Resultados:**
-   - Os arquivos de resultado são consolidados em `rag/avaliacao/resultado_benchmark_colab.json`, `rag/avaliacao/respostas_comparativas.json` e `rag/avaliacao/resultado_benchmark_colab.md`.
-   - O notebook fornece comandos integrados para download imediato via navegador (`google.colab.files.download`), salvamento no Google Drive (`google.colab.drive`) ou commit no GitHub com o segredo `GITHUB_TOKEN`.
+   - Abra o notebook no [Google Colab](https://colab.research.google.com/).
+   - Em **Ambiente de execução** > **Alterar tipo de ambiente de execução**, selecione GPU **L4** ou **A100**.
+2. **Autenticação (Opcional):**
+   - Para baixar modelos do Hugging Face sem restrição de taxa, cadastre seu `HF_TOKEN` nos **Secrets** do Colab.
+3. **Ambiente e dependências:**
+   ```bash
+   !git clone -b feat/validacao-reescrita-consulta https://github.com/maykonjuso/residencia-grupo-4.git
+   %cd residencia-grupo-4
+   !pip install -r requirements.txt
+   ```
+4. **Execução do benchmark:**
+   ```bash
+   !python3 colab_benchmark.py --backend hf --saida md
+   ```
+   - **Precisão adaptativa:** Com ≥ 20 GB de VRAM (A100/L4), o script opera em **FP16/BF16** (`RUMO_HF_4BIT=0`). Em GPUs menores (ex.: T4), ativa quantização **NF4 de 4 bits** (`RUMO_HF_4BIT=1`).
+   - **Conformidade R3:** O script audita as estruturas exportadas e barra qualquer métrica de tempo.
+5. **Arquivos gerados:**
+   - Resultados exportados em `rag/avaliacao/resultado_benchmark_colab.json`, `respostas_comparativas.json` e `resultado_benchmark_colab.md`.
 
 ---
 

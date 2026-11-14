@@ -1,26 +1,26 @@
 # Comparação: LLM puro × RAG
 
-Comparação empírica direta entre a geração do modelo **Qwen2.5-7B-Instruct** operando de forma isolada (memória paramétrica pura) e integrado ao pipeline RAG do RUmo (busca híbrida BGE-M3 + BM25 sobre 36 fontes oficiais).
+Comparação empírica entre o modelo **Qwen2.5-7B-Instruct** operando em memória paramétrica pura e integrado ao pipeline RAG do RUmo (busca híbrida BGE-M3 + BM25 sobre 36 fontes oficiais).
 
 ---
 
 ## 1. Motivação e metodologia
 
-Na Entrega 2, o grupo constatou que modelos de linguagem sem ancoragem documental sofrem de alucinações severas em dados de domínio fechado. No caso do Restaurante Universitário e do fluxo acadêmico da FCTE/UnB, inventar o valor de uma refeição, uma data de cardápio ou um pré-requisito de disciplina acarreta prejuízo real ao estudante.
+Modelos de linguagem sem ancoragem documental sofrem alucinações severas em domínios fechados. Na FCTE e no RU, inventar tarifas, cardápios ou pré-requisitos causa prejuízos imediatos ao estudante.
 
-Para mensurar esse comportamento com rigor, submetem-se as mesmas **32 perguntas-ouro** de `rag/avaliacao/perguntas_ouro.jsonl` a dois regimes idênticos de parâmetros de inferência (temperatura = 0,2, top_p = 0,9, modelo `qwen2.5:7b` executado tanto localmente no Ollama em MacBook Air M4 quanto em GPU NVIDIA L4 em precisão FP16 no Google Colab):
+Para mensurar esse comportamento, submetemos as **32 perguntas-ouro** (`rag/avaliacao/perguntas_ouro.jsonl`) a dois regimes sob parâmetros idênticos (temperatura = 0,2; top_p = 0,9; modelo `qwen2.5:7b` executado em GPU NVIDIA L4 com precisão FP16 no Colab e validado localmente via Ollama):
 
-1. **LLM puro (Sem RAG):** O prompt envia apenas a pergunta do usuário e uma instrução genérica de assistente acadêmico, sem qualquer trecho de documento injetado.
-2. **RUmo (Com RAG):** A pergunta aciona a busca híbrida; os 5 chunks mais relevantes são injetados no contexto, acompanhados de metadados, regra de citação obrigatória [n] e instrução estrita de recusa fora da base (RF03 e RF04).
+1. **LLM puro (Sem RAG):** O prompt envia apenas a pergunta do discente e uma instrução genérica de assistente acadêmico, sem injeção de contexto.
+2. **RUmo (Com RAG):** A busca híbrida recupera os 5 chunks mais relevantes (`k=5`) e os injeta no prompt com metadados, regra de citação `[n]` e instrução de recusa fora da base (**RF03** e **RF04**).
 
-### Estudo de ablação: as 4 configurações de arquitetura avaliadas
+### Estudo de ablação: 4 configurações avaliadas {: #estudo-de-ablacao-as-4-configuracoes-de-arquitetura-avaliadas }
 
-Antes de executar a bateria completa de 38 perguntas (32 perguntas-ouro + 6 compostas), o grupo implementou dois scripts de benchmark (`rag/testar_4_configuracoes.py` e `rag/comparativo_rag.py`) para comparar **4 configurações de arquitetura** sobre 3 cenários canônicos representativos:
+Antes do teste de 38 perguntas, avaliamos **4 configurações de arquitetura** (`rag/testar_4_configuracoes.py` e `rag/comparativo_rag.py`) sobre 3 cenários canônicos:
 - **`P1` (Tarifa do RU):** *"Quanto um estudante de graduação paga no almoço do RU?"* (Gabarito: R$ 4,50 - Grupo III ou R$ 0,00 - Grupo I, docs `F01`/`F04`).
-- **`P2` (Fluxo curricular):** *"Quais são os pré-requisitos de Testes de Software na FCTE?"* (Gabarito: Requisitos de Software `FGA0313`, com menção indireta a MDS `FGA0312`, doc `F16`).
-- **`P3` (Fora da base / RF04):** *"Qual é a senha do Wi-Fi da biblioteca da FCTE?"* (Gabarito: Recusa obrigatória conforme RF04, doc `NENHUM`).
+- **`P2` (Fluxo curricular):** *"Quais são os pré-requisitos de Testes de Software na FCTE?"* (Gabarito: Requisitos de Software `FGA0313`, ligado a MDS `FGA0312`, doc `F16`).
+- **`P3` (Fora da base / RF04):** *"Qual é a senha do Wi-Fi da biblioteca da FCTE?"* (Gabarito: Recusa obrigatória conforme RF04, sem documento associado).
 
-A **Tabela 1** resume o comportamento observado empiricamente em cada configuração (medido localmente em MacBook Air M4 via Ollama), acompanhada da análise crítica de suas propriedades.
+A **Tabela 1** resume o comportamento medido em cada configuração.
 
 | # | Configuração | Latência típica | Rastreabilidade / Fontes | Alucinações (`valores_sem_fonte`) | Recusa fora da base (`P3` / RF04) | Veredito |
 |:---:|---|:---:|:---:|:---:|:---:|---|
@@ -31,14 +31,14 @@ A **Tabela 1** resume o comportamento observado empiricamente em cada configura�
 
 <p class="legenda">Tabela 1. Estudo de ablação comparativo das 4 configurações de arquitetura (<code>rag/testar_4_configuracoes.py</code> e <code>rag/comparativo_rag.py</code>).</p>
 
-!!! warning "Notas e observações empíricas críticas sobre o benchmark das 4 configurações"
-    1. **Gabarito oficial de `P1`:** O valor correto para discentes de graduação sem auxílio socioeconômico é **R$ 4,50** (Grupo III da Resolução F04), sendo R$ 0,00 para estudantes do Grupo I (isentos).
-    2. **Comportamento real do LLM Puro na recusa (`P3`):** Ao contrário do que verificadores sintáticos simplistas indicavam, o LLM Puro não inventou uma senha arbitrária para a biblioteca no teste zero-shot; ele emitiu uma recusa genérica sensata (*"Não tenho acesso a senhas... contate o departamento de TI ou a secretaria"*). Ele só era marcado como "falha" quando o verificador exigia a frase exata do prompt de RAG (*"não encontrei essa informação"*).
-    3. **Aplicabilidade da métrica de Recusa:** A métrica de recusa só se aplica a perguntas fora da base documental (`P3`). Para perguntas dentro do domínio (`P1` e `P2`), a métrica é classificada estritamente como **N/A** (não aplicável), pois a resposta esperada é a entrega factual do conteúdo e não uma abstenção.
-    4. **Limitação de `valores_sem_fonte` diante de alucinações nominais e conceituais:** No caso local `P2`, o LLM Puro cometeu uma alucinação severa ao expandir a sigla FCTE como *"Faculdade Cásper Líbero"*. No benchmark oficial de 38 perguntas na GPU L4, o LLM Puro alucinou a FCTE como *"Faculdade de Ciências Tecnológicas"* (Q24), *"Faculdade de Ciências e Tecnologia de Gama"* (D7/Q32), inventou cursos inexistentes (*Engenharia Elétrica e Sistemas de Informação* em Q23) e alucinou a própria sigla do RU como *"Registro Universitário"* (C05). Contudo, a métrica determinística `valores_sem_fonte` indicou **zero alucinações** em todos esses casos, pois a expressão regular monitora exclusivamente números, moedas (`R$`), datas e códigos curriculares. Isso evidencia por que a auditoria simbólica de números deve ser complementada pela métrica semântica RAGAS (onde 3% das afirmações atômicas sofreram extrapolação). Ver detalhamento da tipologia em [Fidelidade e Alucinação](fidelidade-e-alucinacao.md#tipologia-de-alucinacoes-e-transparencia-metodologica-analise-critica).
-    5. **Corretude factual vs. Groundedness no RAG Extrativo:** No teste `P1`, o RAG Extrativo recuperou e devolveu um trecho do campus Planaltina indicando a tarifa de R$ 2,50 (Grupo IV). Como "R$ 2,50" constava literalmente no trecho, a métrica determinística reportou zero alucinações. Isso demonstra empiricamente que `valores_sem_fonte == 0` atesta apenas ausência de invenção numérica arbitrária (*groundedness estrito*), mas não garante que o chunk selecionado responda à pergunta específica da FCTE. Apenas a síntese generativa (`k=5`) articulou corretamente a regra da graduação ampla (R$ 4,50).
-    6. **Artefato de latência no RAG Extrativo e necessidade de aquecimento (Warmup):** A primeira execução de `P1` no RAG Extrativo registrou ~5,9 s em medições locais sem warmup, decorrente exclusivamente do carregamento dos pesos do modelo `bge-m3` na memória. Com o modelo pré-aquecido, o tempo real de geração extrativa é inferior a 0,1 s.
-    7. **Deduplicação de fontes:** O mecanismo de citação foi aprimorado para deduplicar fontes (`dict.fromkeys`), evitando inflar a contagem quando múltiplos chunks pertencem ao mesmo documento normativo (`F04, F04, F03` passa a reportar 2 documentos distintos).
+!!! warning "Notas empíricas sobre o estudo de ablação das 4 configurações"
+    1. **Gabarito oficial de `P1`:** O valor para graduação sem assistência socioeconômica é **R$ 4,50** (Grupo III, Resolução F04), sendo R$ 0,00 para o Grupo I (isentos).
+    2. **Recusa da LLM Pura em `P3`:** O modelo puro não inventou senhas de Wi-Fi; emitiu recusa genérica (*"Não tenho acesso a senhas... contate o TI ou a secretaria"*). Verificadores sintáticos rígidos que buscavam a frase literal do RAG falhavam em detectar essa abstenção.
+    3. **Escopo da métrica de Recusa:** A recusa aplica-se estritamente a perguntas fora da base documental (`P3`). Em perguntas de domínio (`P1` e `P2`), a métrica registra **N/A** (não aplicável), pois o sistema deve entregar o dado factual.
+    4. **Invisibilidade de alucinações nominais em `valores_sem_fonte`:** O modelo puro alucinou FCTE como *"Faculdade Cásper Líbero"* (local), *"Faculdade de Ciências Tecnológicas"* (Q24) e *"Ciências e Tecnologia de Gama"* (D7/Q32), inventou cursos (*Elétrica e Sistemas de Informação* em Q23) e chamou o RU de *"Registro Universitário"* (C05). Como a regex monitora apenas números, moedas e códigos, acusou **zero alucinações**. Daí a necessidade da auditoria semântica complementar (RAGAS).
+    5. **Groundedness vs. Corretude no RAG Extrativo:** Em `P1`, o modo extrativo devolveu **R$ 2,50** recortando o documento do campus Planaltina. Obteve zero alucinações na regex porque o número constava no chunk, mas errou a regra da FCTE. Apenas a síntese generativa (`k=5`) articulou a regra correta (R$ 4,50).
+    6. **Aquecimento (Warmup) no RAG Extrativo:** A primeira consulta extrativa registrou ~5,9 s em medições locais sem warmup devido ao carregamento inicial do `bge-m3`. Com o modelo aquecido, a latência real é `< 0,1 s`.
+    7. **Deduplicação de fontes:** O extrator deduplica identificadores (`dict.fromkeys`) para refletir a quantidade real de atos normativos distintos citados.
 
 Para reproduzir a bateria comparativa localmente com o Ollama:
 
@@ -53,49 +53,49 @@ python comparativo_rag.py
 
 ## 2. Casos comparativos representativos
 
-A **Tabela 2** apresenta três casos emblemáticos selecionados do conjunto de avaliação que ilustram as diferenças qualitativas esperadas e os padrões de resposta observados entre as duas abordagens.
+A **Tabela 2** ilustra as diferenças qualitativas entre as abordagens em três casos emblemáticos.
 
 | Pergunta | Resposta do LLM Puro (Sem RAG) | Resposta do RUmo (Com RAG) | Diagnóstico da Diferença |
 |---|---|---|---|
-| **Q01:** *"Quanto custa o almoço no RU para um estudante de graduação sem auxílio?"* | *Tendência a alucinar valor plausível mas incorreto (ex: R$ 5,00 ou R$ 3,50).* | *Recupera os valores oficiais exatos (R$ 4,50 para Grupo III) com citação [1] de F01/F04.* | **Alucinação eliminada:** Ancoragem estrita elimina a invenção de tarifas do RU. |
-| **Q14:** *"Quais são os pré-requisitos de Testes de Software?"* | *Tendência a misturar convenções de outros cursos ou universidades (ex: citar POO ou Engenharia de Requisitos).* | *Recupera o pré-requisito formal da matriz da FCTE citando o fluxograma F16.* | **Erro de fluxo corrigido:** Respeito à matriz curricular oficial da FCTE/UnB. |
-| **D7 (Fora da base):** *"Qual o wifi da biblioteca da FCTE?"* | *Tendência a inventar nomes de rede genéricos (ex: `UnB-WiFi` ou `FCTE-Visitante`).* | *Responde com recusa expressa: "Não encontrei essa informação nas fontes da base" (RF04).* | **Recusa correta:** Evita inventar credenciais ou configurações sem evidência oficial. |
+| **Q01:** *"Quanto custa o almoço no RU para um estudante de graduação sem auxílio?"* | *Alucina valor plausível mas incorreto (ex.: R$ 5,00).* | *Recupera o valor oficial exato (R$ 4,50, Grupo III) com citação [1] de F01/F04.* | **Alucinação eliminada:** Ancoragem documental garante a tarifa correta. |
+| **Q14:** *"Quais são os pré-requisitos de Testes de Software?"* | *Mistura requisitos de outras universidades (ex.: POO ou Engenharia de Requisitos).* | *Recupera o pré-requisito formal da FCTE citando o fluxograma F16.* | **Fluxo corrigido:** Respeito à matriz curricular oficial da FCTE/UnB. |
+| **D7 (Fora da base):** *"Qual o wifi da biblioteca da FCTE?"* | *Inventa redes genéricas (ex.: `UnB-WiFi` ou `UnB-Gama-EDU`).* | *Recusa expressamente: "Não encontrei essa informação nas fontes da base" (RF04).* | **Recusa correta:** Evita inventar credenciais sem evidência oficial. |
 
 <p class="legenda">Tabela 2. Casos representativos do protocolo de comparação entre modelo puro e RUmo com RAG.</p>
 
 ---
 
-## 3. O caso em que o RAG não ajudou {: #o-caso-em-que-o-rag-nao-ajudou }
+## 3. Limitação identificada: raciocínio em cascata {: #o-caso-em-que-o-rag-nao-ajudou }
 
-Um sistema que relata apenas sucessos mascara fragilidades de engenharia. Em conformidade com o rigor técnico do projeto, documenta-se a seguir um caso real em que **o pipeline RAG clássico falha em produzir a resposta completa**, evidenciando o limite da recuperação textual pura.
+Relatar apenas acertos mascara fragilidades de engenharia. Documentamos um caso real onde **a recuperação textual pura não produz a resposta completa**.
 
-### A pergunta de teste
+### Pergunta de teste
 
 > *"Se um estudante for reprovado em Cálculo 1 no 1º semestre de Engenharia de Software, quais disciplinas ele fica impossibilitado de cursar até o 3º semestre?"*
 
-### O que acontece na execução
+### Diagnóstico da resposta
 
-A **Tabela 3** detalha o diagnóstico da resposta gerada pelo sistema frente ao gabarito curricular oficial da matriz de Engenharia de Software.
+A **Tabela 3** compara a saída do sistema com o gabarito oficial da matriz de Engenharia de Software.
 
 | Dimensão | Conteúdo observado |
 |---|---|
-| **Documentos recuperados** | Chunks do documento F16 (*Fluxograma de Engenharia de Software FCTE*, páginas 1 e 2) e trechos do regulamento de matrícula. |
-| **Comportamento do RAG** | O sistema recupera perfeitamente os chunks que contêm a lista de disciplinas e seus pré-requisitos imediatos. O modelo identifica com sucesso que Cálculo 1 tranca Cálculo 2 no 2º semestre. Contudo, **omite as dependências de 2ª ordem no 3º semestre** (disciplinas que exigem Cálculo 2 ou Física 1 em cascata). |
-| **Gabarito curricular esperado** | O estudante fica impedido de cursar **Cálculo 2** (2º semestre) e, por transitividade de pré-requisito em cascata, as disciplinas subsequentes do 3º semestre que exigem Cálculo 2. |
-| **Diagnóstico da falha** | **Incompletude por falha de encadeamento transitivo.** O RAG recuperou os chunks corretos, mas a resposta final falhou na dedução em cascata. |
+| **Trechos recuperados** | Chunks do documento F16 (*Fluxograma de Engenharia de Software FCTE*, págs. 1 e 2) e normas de matrícula. |
+| **Comportamento do RAG** | Recupera com precisão a tabela de disciplinas e pré-requisitos imediatos. Identifica que Cálculo 1 tranca Cálculo 2 no 2º semestre, mas **omite as dependências de 2ª ordem no 3º semestre** (disciplinas que exigem Cálculo 2 ou Física 1 em cascata). |
+| **Gabarito oficial** | O estudante fica impedido de cursar **Cálculo 2** (2º semestre) e, por transitividade, as matérias subsequentes do 3º semestre dependentes de Cálculo 2. |
+| **Diagnóstico técnico** | **Incompletude por falha de encadeamento transitivo.** O RAG recuperou os chunks corretos, mas o modelo falhou na dedução em cascata. |
 
 <p class="legenda">Tabela 3. Diagnóstico da limitação do RAG em cadeia de pré-requisitos transitivos.</p>
 
-### Causa-raiz da limitação
+### Causa-raiz
 
-1. **RAG não é motor de inferência em grafo:** O chunk do fluxograma contém a tabela de relações de pré-requisitos imediatos. Mapear dependências em cascata (onde A tranca B, que tranca C) exige busca recursiva em grafo direcionado acíclico (DAG). O LLM de 7B, mesmo com o texto correto no contexto, tem dificuldade de computar caminhos transitivos longos a partir de listas de texto semiestruturadas.
-2. **Dispersão de atenção em contexto denso:** O chunk de fluxograma contém dezenas de disciplinas dispostas em tabela. O modelo sofre de perda de foco nas relações secundárias distantes no prompt (*lost in the middle*).
+1. **RAG textual não infere sobre grafos:** O chunk traz relações locais de dependência imediata. Mapear cadeias longas ($A \rightarrow B \rightarrow C$) exige travessia em grafo direcionado acíclico (DAG). Modelos de 7B têm dificuldade de deduzir caminhos transitivos a partir de tabelas em texto corrido.
+2. **Dispersão de atenção (*Lost in the Middle*):** Chunks de fluxograma agrupam dezenas de disciplinas densas, dispersando a atenção do modelo sobre relações secundárias.
 
-### Lição aprendida e encaminhamento de engenharia
+### Encaminhamento para a Entrega 4
 
-Esse resultado comprova que **RAG puramente textual é insuficiente para raciocínio sobre fluxogramas acadêmicos complexos**. Esse achado fundamenta a arquitetura da próxima etapa:
+Esse resultado comprova que **a recuperação puramente textual é insuficiente para navegar estruturas curriculares complexas**. O projeto endereça essa limitação na próxima fase:
 
-- **Evolução na Entrega 4 (Multiagentes):** Criação de uma ferramenta determinística especializada (*tool calling*) para o **Agente Fluxo**, capaz de consultar a estrutura de dados de disciplinas em grafo estruturado (JSON/NetworkX), em vez de pedir ao LLM que deduza caminhos de pré-requisitos a partir de texto corrido.
+- **Evolução Multiagente (Entrega 4):** O **Agente Fluxo** utilizará uma ferramenta determinística (*tool calling*) com navegação em grafo estruturado (JSON/NetworkX), substituindo a dedução probabilística do texto corrido por busca formal no DAG de disciplinas.
 
 ---
 
@@ -104,7 +104,7 @@ Esse resultado comprova que **RAG puramente textual é insuficiente para racioc�
 A **Tabela 4** consolida o desempenho comparativo agregado nas 32 perguntas-ouro por eixo temático (`ru`, `apoio` e `fluxo`).
 
 !!! note "Medição Real em GPU NVIDIA L4 e Ausência de Latência"
-    Os dados agregados da Tabela 4 decorrem da execução do benchmark físico em GPU NVIDIA L4 no Google Colab. Em cumprimento ao Requisito R3, métricas temporais foram integralmente omitidas. Todas as 32 perguntas do RUmo com RAG contam com zero alucinação numérica (`valores_sem_fonte = 0`) e fidelidade factual de 0,97.
+    Os dados agregados da Tabela 4 decorrem da execução física em GPU NVIDIA L4 no Google Colab. Em conformidade com o Requisito R3, métricas temporais foram omitidas. Todas as 32 perguntas com RAG registram zero alucinação numérica (`valores_sem_fonte = 0`) e fidelidade factual de 0,97.
 
 | Eixo Temático | Quantidade | Sem RAG: Alucinações | Com RAG: Fidelidade total | Com RAG: Incompletude |
 |---|:---:|:---:|:---:|:---:|

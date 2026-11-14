@@ -1,23 +1,23 @@
 # Fidelidade, alucinação e métricas de resposta
 
-Metodologia de avaliação e matriz de métricas para aferição de **fidelidade factual**, **taxa de alucinação**, **precisão de citações**, **rejeição negativa** e **aderência léxica (ROUGE-L)** da geração do RUmo.
+Metodologia e matriz de métricas para aferir **fidelidade factual**, **taxa de alucinação**, **precisão de citações**, **rejeição negativa** e **aderência léxica (ROUGE-L)** no RUmo.
 
 ---
 
-## 1. Fundamentação: o que projetos reais de RAG medem
+## 1. Fundamentação teórica
 
-Na literatura recente e em sistemas de RAG em produção, a avaliação de qualidade deixou de usar métricas léxicas antigas de tradução (como BLEU ou ROUGE, que falham ao avaliar respostas abertas) e consolidou-se em três referências principais que guiam esta entrega:
+Sistemas de RAG modernos substituíram métricas léxicas de tradução (como BLEU ou ROUGE isolado) por três referências consolidadas na literatura:
 
-1. **Tríade do RAG e Framework RAGAS (Es et al., EACL 2024):** Avalia o sistema nos três vértices que ligam **Pergunta**, **Contexto Recuperado** e **Resposta Gerada**:
-    - *Context Relevance / Recall* (Pergunta ↔ Contexto): medido no RUmo via **Hit@1, Hit@5 e MRR** na Entrega 2.
-    - *Faithfulness / Groundedness* (Contexto ↔ Resposta): mede se a resposta se atém exclusivamente aos trechos recuperados, sem inventar fatos extrínsecos.
-    - *Answer Relevance / Completeness* (Pergunta ↔ Resposta): mede se a resposta atende a todas as partes da pergunta do usuário.
-2. **Qualidade de Citações — Benchmark ALCE (Gao et al., EMNLP 2023):** Em domínios normativos e institucionais (como resoluções da UnB e editais de assistência estudantil), não basta a resposta estar correta: cada afirmação precisa apontar para o documento oficial que a comprova (*Citation Recall* e *Citation Precision*).
-3. **Robustez Comportamental — Benchmark RGB (Chen et al., AAAI 2024):** Avalia capacidades críticas de sistemas RAG reais diante de falhas de contexto:
-    - *Negative Rejection* (Rejeição Negativa / Abstenção): capacidade de recusar responder quando os documentos não contêm a informação, em vez de chutar (*cumprimento do RF04*).
-    - *Information Integration* (Integração Multi-hop): capacidade de fundir informações de dois ou mais trechos em perguntas compostas.
+1. **Tríade do RAG e Framework RAGAS (Es et al., EACL 2024):** Avalia os três vértices entre **Pergunta**, **Contexto** e **Resposta**:
+    - *Context Relevance / Recall* (Pergunta ↔ Contexto): avaliado no RUmo via **Hit@1, Hit@5 e MRR** na Entrega 2.
+    - *Faithfulness / Groundedness* (Contexto ↔ Resposta): verifica se a resposta decorre exclusivamente dos trechos recuperados.
+    - *Answer Relevance / Completeness* (Pergunta ↔ Resposta): verifica se a resposta atende a todas as partes da dúvida.
+2. **Precisão de Citações — Benchmark ALCE (Gao et al., EMNLP 2023):** Em bases normativas da UnB, cada afirmação deve apontar para o documento oficial correspondente (*Citation Recall* e *Citation Precision*).
+3. **Robustez Comportamental — Benchmark RGB (Chen et al., AAAI 2024):** Avalia a resiliência do gerador diante de falhas de contexto:
+    - *Negative Rejection* (Rejeição Negativa): capacidade de recusar a resposta quando a base não contém o dado (**RF04**).
+    - *Information Integration* (Integração Multi-hop): capacidade de fundir informações de múltiplos trechos em perguntas compostas.
 
-A **Figura 1** ilustra como a Tríade do RAG e os benchmarks ALCE e RGB são mapeados nas métricas do RUmo.
+A **Figura 1** ilustra o mapeamento dessas referências na arquitetura do RUmo.
 
 ```mermaid
 flowchart TD
@@ -33,7 +33,7 @@ flowchart TD
 
 ## 2. Metodologia de medição local
 
-Para mensurar essas dimensões sem violar a regra de privacidade local (**RNF02**) nem estourar os limites de hardware da GPU de 8 GB (**R07**), o grupo adotou um pipeline de avaliação próprio e reprodutível em duas etapas complementares. A **Figura 2** ilustra o fluxo de processamento da avaliação de cada resposta.
+Para atender à privacidade local (**RNF02**) e aos limites de hardware (**R07**), o RUmo executa a avaliação em duas etapas complementares (Figura 2).
 
 ```mermaid
 flowchart TD
@@ -51,54 +51,54 @@ flowchart TD
 
 <p class="legenda">Figura 2. Pipeline de validação em duas etapas para fidelidade, citação e alucinação.</p>
 
-### Por que não adotar o pacote `deepeval` ou `ragas` diretamente?
+### Por que dispensar os pacotes `deepeval` e `ragas`?
 
-Embora o desenho das métricas siga a formulação do RAGAS, do ALCE e do RGB, a execução via biblioteca externa (`deepeval` / `ragas`) foi descartada após análise de viabilidade pelos seguintes motivos de engenharia:
+Embora siga as formulações do RAGAS, ALCE e RGB, o projeto descartou o uso direto dessas bibliotecas por três razões práticas:
 
-1. **Dependência de APIs pagas por padrão:** Os pacotes usam `gpt-4o` como juiz padrão, violando o requisito **RNF02** (*execução local sem envio de dados a serviços externos*).
-2. **Fragilidade de JSON em modelos 7B quantizados:** Quando configurados com modelos locais em 4 bits, os prompts internos em inglês do DeepEval exigem esquemas JSON complexos que sofrem falhas de parsing e risco de *Out of Memory (OOM)* na GPU de 8 GB.
-3. **Verificador determinístico de domínio:** No domínio da UnB, o erro mais grave é errar números (preço em R$, data de cardápio, horário, código de disciplina, número de créditos). O verificador determinístico `geracao.valores_sem_fonte` audita 100% desses tokens com precisão exata em milissegundos, algo que um LLM juiz genérico frequentemente deixa passar.
+1. **Dependência de APIs externas:** Ambas exigem chaves de serviços proprietários (ex.: GPT-4o), violando o requisito de processamento 100% local (**RNF02**).
+2. **Incompatibilidade com modelos 7B locais:** Prompts internos em inglês com esquemas JSON complexos causam falhas frequentes de parsing e risco de OOM em GPUs modestas.
+3. **Verificação determinística de domínio:** A precisão em números, datas e códigos curriculares exige auditoria simbólica direta. O verificador `geracao.valores_sem_fonte` valida esses tokens em milissegundos, superando juízes neurais genéricos.
 
-### Camada dupla de segurança e o contraste com o RAG Extrativo
+### Camada dupla de segurança e contraste com o RAG Extrativo
 
-A arquitetura adotada na Entrega 3 combina geração neural local com auditoria simbólica determinística, formando uma camada dupla de proteção contra alucinações:
+O RUmo combina geração neural com auditoria determinística em duas camadas:
 
-1. **Geração condicionada ao contexto e citações:** O modelo local (`qwen2.5:7b` via `config.OLLAMA_URL` ou `hf`) recebe os 5 melhores trechos (`k=5`) e é instruído a sintetizar a resposta apenas com base neles, referenciando as fontes com marcadores `[1]`–`[5]` (auditados por `geracao.citacoes_usadas`) ou declarando explicitamente ausência na base (**RF04**).
-2. **Pós-validação numérica determinística:** Antes de entregar a resposta ao estudante, `geracao.valores_sem_fonte` utiliza a expressão regular `geracao.PADRAO_VALOR` para extrair números, preços em `R$`, datas, horários, créditos e códigos presentes na resposta gerada e verificar se constam literalmente nos chunks recuperados. Valores sem lastro são flagrados automaticamente em milissegundos.
+1. **Geração condicionada com citações:** O modelo local (`qwen2.5:7b` via Ollama ou Hugging Face) recebe os 5 trechos mais relevantes (`k=5`). O prompt instrui o modelo a sintetizar a resposta exclusivamente com base neles, referenciando as fontes com marcadores `[1]`–`[5]` ou declarando ausência de dados (**RF04**).
+2. **Pós-validação numérica determinística:** Antes de entregar a resposta, `geracao.valores_sem_fonte` extrai tarifas (`R$`), datas, horários, créditos e códigos de disciplinas via regex (`geracao.PADRAO_VALOR`) e valida sua presença literal nos chunks recuperados.
 
 #### Tipologia de alucinações e transparência metodológica (Análise Crítica)
 
-Em projetos reais de inteligência artificial, declarar genericamente *"zero alucinação"* mascara as nuances do comportamento neural. A análise minuciosa das respostas do benchmark físico na GPU NVIDIA L4 e dos testes de ablação revelou que as alucinações se dividem em classes distintas, com tratamentos e coberturas desiguais:
+Declarar genericamente *"zero alucinação"* mascara o comportamento neural real. A análise empírica na GPU NVIDIA L4 e nos testes de ablação categoriza as falhas observadas em classes operacionais:
 
 1. **Alucinações Numéricas Extrínsecas (Auditadas por `valores_sem_fonte`):**
-   - *O que são:* Valores de tarifas em `R$`, datas de calendário acadêmico, horários de turnos de refeição, quantidade de vagas ou créditos curriculares inventados arbitrariamente pelo modelo.
-   - *Comportamento medido:* No modelo puro (Sem RAG), **26% das respostas** sofreram dessa alucinação (inventando almoço a R$ 5,00, prazos de matrícula em datas inexistentes ou integralização de 240 créditos). No RUmo (Com RAG), a taxa foi reduzida a **0,00%**, atestando que nenhum valor numérico foi inserido na resposta sem respaldo estrito nos chunks recuperados.
-2. **Alucinações de Entidade Nominal e Institucional (Invisíveis à Regex):**
-   - *O que são:* Invenção, distorção ou expansão incorreta de nomes de faculdades, órgãos, setores ou siglas acadêmicas.
-   - *Evidências empíricas no benchmark:*
-     - Em `Q24`, a LLM pura alucinou o nome oficial da FCTE como *"Faculdade de Ciências Tecnológicas"*;
-     - Em `D7`, alucinou como *"Faculdade de Ciências e Tecnologia de Gama"* e inventou uma rede Wi-Fi fictícia chamada `"UnB-Gama-EDU"`;
-     - Em `C05`, alucinou a própria sigla do **RU** como *"Registro Universitário"* e inventou um setor inexistente chamado *"SPRA"*;
-     - No teste de ablação local (`T2`/`P2`), associou a sigla FCTE à *"Faculdade Cásper Líbero"*.
-   - *Diagnóstico:* Todas essas respostas obtiveram pontuação **0 alucinações** na métrica `valores_sem_fonte`, pois a expressão regular monitora exclusivamente números, moedas e códigos alfanuméricos. Isso comprova por que a regex não é suficiente para atestar a verdade textual completa.
+   - *Definição:* Tarifas em `R$`, datas de calendário, horários de turnos, vagas ou créditos curriculares inventados pelo modelo.
+   - *Resultado:* O modelo puro (Sem RAG) alucinou em **26% das respostas** (inventando almoço a R$ 5,00, datas fictícias de matrícula e 240 créditos). O RUmo (Com RAG) reduziu essa taxa a **0,00%**, comprovando que nenhum valor numérico foi emitido sem respaldo literal.
+2. **Alucinações de Entidade Nominal (Invisíveis à Regex):**
+   - *Definição:* Invenção, distorção ou expansão incorreta de nomes de faculdades, órgãos e siglas.
+   - *Evidências no benchmark (LLM Puro):*
+     - Em `Q24`, chamou a FCTE de *"Faculdade de Ciências Tecnológicas"*;
+     - Em `D7`, chamou de *"Faculdade de Ciências e Tecnologia de Gama"* e inventou a rede `"UnB-Gama-EDU"`;
+     - Em `C05`, expandiu **RU** como *"Registro Universitário"* e inventou o setor fictício *"SPRA"*;
+     - No teste de ablação local (`T2`/`P2`), associou FCTE à *"Faculdade Cásper Líbero"*.
+   - *Diagnóstico:* Todas pontuaram **0 alucinações** em `valores_sem_fonte`, pois a regex monitora apenas números e códigos. Isso comprova que a auditoria determinística requer complementação semântica (RAGAS).
 3. **Alucinações Estruturais e Curriculares:**
-   - *O que são:* Invenção de regras administrativas ou cursos inexistentes no campus.
-   - *Evidência empírica:* Em `Q23`, a LLM pura afirmou que os ingressantes da FCTE escolhem cursos como *"Engenharia Elétrica, Computação ou Sistemas de Informação"* (cursos não ofertados na unidade) e inventou a existência do *"site oficial da ABI Engenharia"*.
-4. **Alucinação por Indução de Contexto Ruidoso e Falha de Recusa (RAG):**
-   - *O que são:* Quando a pergunta extrapola a base documental (**RF04**), mas a busca por similaridade devolve trechos adjacentes tangenciais (ex: menção à biblioteca física em `F17`), induzindo o modelo generativo a especular em vez de admitir ignorância.
-   - *Evidência empírica:* No teste real em GPU para `D7` (*"Qual o wifi da biblioteca da FCTE?"*), o RUmo atingiu taxa de recusa **0,00** porque gerou uma frase dedutiva sobre acesso à rede em salas comuns em vez de emitir a recusa padrão (*"Não encontrei essa informação..."*).
-5. **Divergência entre Groundedness Numérico e Corretude Factual:**
-   - No RAG Extrativo (`_gerar_extrativo`), ao responder sobre a tarifa da graduação (`P1`), o sistema recortou um trecho do campus Planaltina e reportou o valor do Grupo IV (**R$ 2,50**). Como "R$ 2,50" constava literalmente no documento recuperado, a métrica determinística acusou **0 alucinações**. A métrica atesta apenas que o gerador não inventou números do nada (*groundedness numérico estrito*), não que a regra legal selecionada é a aplicável ao estudante da FCTE (Grupo III = R$ 4,50).
-6. **Extrapolações Semânticas Sutis capturadas pelo RAGAS:**
-   - A fidelidade factual (*Faithfulness*) do RUmo foi medida em **0,97** (97%). Isso atesta que aproximadamente **3% das afirmações atômicas** geradas continham pequenas deduções ou conexões conceituais que não puderam ser verificadas diretamente contra o texto bruto.
+   - *Definição:* Invenção de regras de matrícula ou cursos não ofertados na unidade.
+   - *Evidência:* Em `Q23`, o modelo puro afirmou que a FCTE oferta *Engenharia Elétrica, Computação e Sistemas de Informação*, além de inventar o *"site oficial da ABI Engenharia"*.
+4. **Alucinação por Contexto Ruidoso e Falha de Recusa (RAG):**
+   - *Definição:* Ocorre quando a pergunta extrapola a base (**RF04**), mas a busca recupera trechos tangenciais que induzem o gerador a especular.
+   - *Evidência:* Em `D7` (*"Qual o wifi da biblioteca da FCTE?"*), o RUmo atingiu taxa de recusa **0,00** porque gerou uma dedução sobre sinal sem fio a partir de trechos da biblioteca física, em vez de emitir a recusa padrão.
+5. **Groundedness Numérico vs. Corretude Factual:**
+   - No RAG Extrativo (`_gerar_extrativo`), ao responder sobre a tarifa de graduação (`P1`), o sistema recortou um chunk de Planaltina e reportou **R$ 2,50** (Grupo IV). Como o valor constava no trecho, a métrica marcou **0 alucinações**. A auditoria determinística atesta apenas que o modelo não inventou números do nada (*groundedness estrito*), mas não garante que o chunk responda ao contexto da FCTE (Grupo III = R$ 4,50).
+6. **Extrapolações Semânticas Sutis:**
+   - A fidelidade factual (*Faithfulness*) do RUmo foi de **0,97** (97%). Isso evidencia que cerca de **3% das afirmações atômicas** continham pequenas conexões dedutivas sem respaldo literal estrito.
 
-O estudo comparativo das 4 configurações (ver [LLM Pura vs. RAG](llm-vs-rag.md#estudo-de-ablacao-as-4-configuracoes-de-arquitetura-avaliadas)) evidenciou por que a camada dupla (geração neural condicionada + verificador determinístico) é a escolha correta para o produto: embora o **RAG Extrativo** execute em `< 0,1 s` e nunca invente termos, ele devolve fragmentos truncados sem síntese de regras e **falha na Rejeição Negativa (RF04)**. Diante de perguntas sem base documental (como o cenário canônico `P3` sobre a senha do Wi-Fi da biblioteca), o modo extrativo sempre retorna os trechos mais próximos por similaridade léxica em vez de informar que a informação não existe nos documentos indexados.
+O estudo das 4 configurações (ver [LLM Pura vs. RAG](llm-vs-rag.md#estudo-de-ablacao-as-4-configuracoes-de-arquitetura-avaliadas)) comprova a superioridade da camada dupla: embora o **RAG Extrativo** execute em `< 0,1 s` e não gere novos tokens, ele devolve fragmentos truncados e **viola a Rejeição Negativa (RF04)** em perguntas fora da base.
 
 ---
 
 ## 3. Definição e justificativa prática das métricas avaliadas
 
-A **Tabela 1** apresenta as definições operacionais, o propósito prático no contexto universitário e a meta de cada métrica monitorada na Entrega 3.
+A **Tabela 1** apresenta as definições operacionais, a finalidade prática no contexto universitário e a meta de cada métrica monitorada na Entrega 3.
 
 | Métrica no RUmo | Equivalente na Literatura | Pra que serve (Justificativa no RUmo) | O que mede e Procedimento | Meta |
 |---|---|---|---|:---:|
@@ -111,22 +111,22 @@ A **Tabela 1** apresenta as definições operacionais, o propósito prático no 
 
 <p class="legenda">Tabela 1. Métricas de avaliação de resposta do RUmo alinhadas à literatura de RAG (RAGAS, ALCE e RGB) com justificativas práticas de domínio.</p>
 
-### 3.1 Detalhamento da finalidade de cada métrica para o estudante
+### 3.1 Finalidade prática das métricas no contexto da FCTE
 
-Para além da conformidade acadêmica com a literatura internacional, cada métrica responde a riscos reais vivenciados no dia a dia da comunidade acadêmica da FCTE:
+Cada métrica responde a riscos operacionais reais vivenciados pela comunidade acadêmica:
 
-1. **Por que medir Citações Válidas (ALCE)?**
-   - *Risco mitigado:* Em ambientes regulatórios, uma resposta certa sem fonte não possui validade administrativa. Ao indicar o documento (`[1] Resolução CAD 04/2017`), o aluno pode contestar uma cobrança indevida no guichê do RU ou comprovar seu enquadramento na assistência estudantil.
-2. **Por que medir Fidelidade Factual (RAGAS)?**
-   - *Risco mitigado:* Alucinações sutis de redação (onde o modelo altera o sentido de um artigo de resolução ao resumir). Avaliar a proporção de afirmações sustentadas pelo texto bruto impede que o assistente crie regras tácitas que a UnB nunca aprovou.
-3. **Por que auditar Alucinações Numéricas via `valores_sem_fonte`?**
-   - *Risco mitigado:* Números têm tolerância zero a erros. Um estudante que planeja o orçamento do mês com uma tarifa inventada de R$ 5,00 (em vez de R$ 4,50 ou gratuidade) ou perde o prazo de trancamento justificado sofre danos irreversíveis. O verificador simbólico age como um *circuit breaker* instantâneo.
-4. **Por que medir Rejeição Negativa (RGB / RF04)?**
-   - *Risco mitigado:* *Overconfidence* do modelo. É preferível que o sistema diga claramente *"Não encontrei essa informação nas fontes da base"* do que inventar procedimentos de TI, redes Wi-Fi ou contatos que levem o aluno a perder tempo ou comprometer sua segurança.
-5. **Por que medir Completude Multi-hop (RGB)?**
-   - *Risco mitigado:* Fadiga de interação. Quando o estudante pergunta sobre preço do almoço e horário do jantar na mesma frase, omitir um dos eixos obriga-o a repetir a interação, aumentando a taxa de abandono do assistente.
-6. **Por que registrar ROUGE-L?**
-   - *Risco mitigado:* Prolixidade ou coloquialismo excessivo. Garante que o tom da resposta seja objetivo, formal e alinhado aos padrões da administração pública universitária.
+1. **Citações Válidas (ALCE) — *Auditabilidade e Respaldo Administrativo:***
+   - Em disputas administrativas (isenção do RU ou trancamento), respostas sem fonte não possuem validade jurídica. A citação (`[1] Resolução CAD 04/2017`) permite ao estudante auditar a regra na fonte primária.
+2. **Fidelidade Factual (RAGAS) — *Integridade Conceitual:***
+   - Impede que o modelo crie regras tácitas ao resumir resoluções, assegurando que o texto final reflita fielmente as normas aprovadas pela UnB.
+3. **Alucinações Numéricas (`valores_sem_fonte`) — *Blindagem contra Danos Materiais:***
+   - Dados numéricos têm tolerância zero a falhas. Tarifas incorretas geram prejuízo financeiro; datas erradas causam perda de semestre. A regex atua como *circuit breaker* determinístico.
+4. **Rejeição Negativa (RGB / RF04) — *Confiabilidade por Honestidade Intelectual:***
+   - Garante que o assistente declare ausência de informação perante tópicos fora do escopo (senhas de Wi-Fi, contatos pessoais), evitando desinformação.
+5. **Completude Multi-hop (RGB) — *Resolução Integral da Dúvida:***
+   - Evita respostas incompletas em perguntas com múltiplos eixos (ex.: tarifa e horário juntos), eliminando a necessidade de reenvio da pergunta.
+6. **Aderência Léxica ROUGE-L — *Alinhamento Vocabular Institucional:***
+   - Avalia a convergência com a terminologia técnica adotada nos gabaritos curados da FCTE.
 
 ---
 
