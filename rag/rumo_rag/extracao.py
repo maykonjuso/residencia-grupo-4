@@ -5,7 +5,10 @@ import urllib.request
 from pathlib import Path
 
 import yaml
-from pypdf import PdfReader
+try:
+    from pypdf import PdfReader
+except ImportError:
+    PdfReader = None
 
 from . import config
 

@@ -27,14 +27,34 @@ def ingerir(_args):
     print(f"ingestão concluída em {time.time() - t0:.0f}s")
 
 
-def responder(pergunta: str, backend: str, eixo: str | None = None, k: int = config.TOP_K) -> dict:
+def responder(pergunta: str, backend: str, eixo: str | None = None, k: int = config.TOP_K, sem_rag: bool = False) -> dict:
+    if sem_rag:
+        t0 = time.time()
+        resposta = geracao.gerar_sem_rag(pergunta, backend=backend)
+        t1 = time.time()
+        return {
+            "pergunta": pergunta,
+            "subperguntas": [],
+            "resposta": resposta,
+            "fontes_citadas": [],
+            "valores_sem_fonte": [],
+            "sem_citacao": False,
+            "trechos_recuperados": [],
+            "tempo_decomposicao_s": 0.0,
+            "tempo_busca_s": 0.0,
+            "tempo_geracao_s": round(t1 - t0, 2),
+            "backend": backend,
+        }
     t0 = time.time()
-    trechos = indice.buscar(pergunta, k=k, eixo=eixo)
+    subperguntas = indice.decompor(pergunta, backend=backend if backend in ("ollama", "hf") else "auto")
     t1 = time.time()
-    resposta = geracao.gerar(pergunta, trechos, backend)
+    trechos = indice.buscar_com_subperguntas(pergunta, subperguntas, k=k, eixo=eixo)
     t2 = time.time()
+    resposta = geracao.gerar(pergunta, trechos, backend)
+    t3 = time.time()
     return {
         "pergunta": pergunta,
+        "subperguntas": subperguntas,
         "resposta": resposta,
         "fontes_citadas": geracao.citacoes_usadas(resposta, trechos),
         "valores_sem_fonte": geracao.valores_sem_fonte(resposta, trechos),
@@ -42,14 +62,25 @@ def responder(pergunta: str, backend: str, eixo: str | None = None, k: int = con
         "trechos_recuperados": [
             {k2: t.get(k2) for k2 in ("chunk_id", "doc_id", "titulo", "pagina", "secao", "similaridade", "nota_rrf", "url", "texto")}
             for t in trechos],
-        "tempo_busca_s": round(t1 - t0, 2),
-        "tempo_geracao_s": round(t2 - t1, 2),
+        "tempo_decomposicao_s": round(t1 - t0, 3),
+        "tempo_busca_s": round(t2 - t1, 2),
+        "tempo_geracao_s": round(t3 - t2, 2),
         "backend": backend,
     }
 
 
-def imprimir(r: dict):
+def imprimir(r: dict, sem_rag: bool = False):
     print(f"\nPergunta: {r['pergunta']}\n")
+    if sem_rag or r.get("sem_rag"):
+        print("Modo: Sem RAG (LLM puro)")
+        print(f"\nResposta ({r['backend']}):\n{r['resposta']}\n")
+        print(f"(geração {r['tempo_geracao_s']}s)")
+        return
+    if r.get("subperguntas"):
+        print("Subperguntas (decomposição):")
+        for s in r["subperguntas"]:
+            print(f"  - {s}")
+        print()
     print("Trechos recuperados:")
     for i, t in enumerate(r["trechos_recuperados"], start=1):
         sim = f" · sim {t['similaridade']}" if t.get("similaridade") is not None else ""
@@ -66,7 +97,14 @@ def imprimir(r: dict):
 
 
 def perguntar(args):
-    imprimir(responder(" ".join(args.pergunta), args.backend, args.eixo, args.k))
+    sem_rag = getattr(args, "sem_rag", False)
+    r = responder(" ".join(args.pergunta), args.backend, args.eixo, args.k, sem_rag=sem_rag)
+    if getattr(args, "saida", "texto") == "json":
+        saida_dict = dict(r)
+        saida_dict["sem_rag"] = sem_rag
+        print(json.dumps(saida_dict, ensure_ascii=False, indent=2))
+    else:
+        imprimir(r, sem_rag=sem_rag)
 
 
 def avaliar(args):
@@ -114,6 +152,8 @@ def main(argv=None):
     p.add_argument("--backend", default=config.BACKEND, choices=["hf", "ollama", "openai", "extrativo"])
     p.add_argument("--eixo", choices=["ru", "fluxo", "apoio"])
     p.add_argument("-k", type=int, default=config.TOP_K)
+    p.add_argument("--sem-rag", action="store_true", help="Executa apenas com LLM puro, sem busca ou recuperação na base")
+    p.add_argument("--saida", choices=["texto", "json"], default="texto", help="Formato de saída (texto ou json)")
     p.set_defaults(f=perguntar)
     a = sub.add_parser("avaliar")
     a.add_argument("-k", type=int, default=config.TOP_K)

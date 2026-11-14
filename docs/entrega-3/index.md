@@ -1,39 +1,47 @@
 # Entrega 3 · Respostas baseadas em evidências (LLM × RAG)
 
-**Semana 3 do Challenge 2.** Prazo: sexta-feira, 13/11/2026. Foco desta etapa: *comparação empírica com e sem RAG, medição quantitativa de fidelidade e alucinação, e reescrita de consultas compostas*.
+**Semana 3 do Challenge 2.** Foco: *comparação empírica com e sem RAG, medição quantitativa de fidelidade e alucinação, e reescrita de consultas compostas*.
 
 ---
 
-## 1. O que esta entrega demonstra
+## 1. Escopo da entrega
 
-Na Entrega 2, o grupo colocou em operação o protótipo funcional do RUmo e observou qualitativamente que o modelo Qwen2.5-7B reduziu as alucinações observadas na versão 1.5B. 
+A Entrega 2 colocou em operação o protótipo funcional do RUmo com o modelo Qwen2.5-7B. A **Entrega 3 formaliza essa validação**:
 
-A **Entrega 3 transforma essa observação em medição formal**: responde as mesmas 32 perguntas-ouro do conjunto de teste com e sem RAG, mede o ganho de fidelidade, comprova a eliminação de alucinações em dados sensíveis (preços, pratos e pré-requisitos) e introduz o módulo de reescrita para consultas compostas.
+1. Submete as 32 perguntas-ouro aos regimes com e sem RAG;
+2. Mede a fidelidade factual e a precisão de citações;
+3. Elimina alucinações em dados sensíveis (preços, cardápios e pré-requisitos);
+4. Decompõe consultas compostas em múltiplos eixos informacionais.
 
-### Estrutura de entrega e áreas abordadas
+### Checklist de entregáveis
 
-- [ ] **Comparação lado a lado (Sem RAG × Com RAG):** As 32 perguntas-ouro de `rag/avaliacao/perguntas_ouro.jsonl` respondidas com e sem RAG pelo Qwen2.5-7B local. ([Ver especificação](llm-vs-rag.md))
-- [ ] **Medição de fidelidade e alucinação:** Protocolo de avaliação local medindo taxa de citação, fidelidade, recusa e alucinação. ([Ver metodologia e métricas](fidelidade-e-alucinacao.md))
-- [ ] **Transparência metodológica:** Documentação analítica de um caso real onde o RAG não ajudou ou teve limitação. ([Ver análise de falha](llm-vs-rag.md#o-caso-em-que-o-rag-nao-ajudou))
-- [ ] **Reescrita de consulta para perguntas compostas:** Mecanismo de decomposição de consultas multi-hop mitigando o risco R04. ([Ver arquitetura de reescrita](reescrita-de-consulta.md))
-- [x] **Conformidade arquitetural (RNF02 e RNF03):** Avaliações projetadas para execução 100% local na GPU de 8 GB, preservando privacidade sem envio de dados a APIs de terceiros.
+- [x] **Comparação lado a lado (Sem RAG × Com RAG):** 32 perguntas avaliadas com o Qwen2.5-7B local. ([Ver comparação](llm-vs-rag.md))
+- [x] **Métricas de fidelidade e alucinação:** Protocolo local para taxas de citação, fidelidade, recusa e alucinação. ([Ver metodologia](fidelidade-e-alucinacao.md))
+- [x] **Transparência metodológica:** Análise de falha em encadeamento transitivo onde o RAG não bastou. ([Ver caso de falha](llm-vs-rag.md#o-caso-em-que-o-rag-nao-ajudou))
+- [x] **Reescrita de consultas compostas:** Decomposição multi-hop em dois estágios contra recuperação parcial (**R04**). ([Ver arquitetura](reescrita-de-consulta.md))
+- [x] **Privacidade local (RNF02 e RNF03):** Execução sem tráfego de dados para APIs de terceiros.
 
 ---
 
-## 2. Resultados esperados e metas
+## 2. Resultados consolidados
 
-A **Tabela 1** apresenta a matriz de consolidação dos resultados comparativos no conjunto de 32 perguntas de teste, estruturada para receber as medições frente às metas da Entrega 1.
+A **Tabela 1** resume o desempenho do sistema nas 38 perguntas de teste (32 ouro, 5 compostas e 1 negativa) frente às metas do projeto.
 
-| Dimensão avaliada | Modelo Puro (Sem RAG) | RUmo (Com RAG) | Meta (Entrega 1) |
-|---|:---:|:---:|:---:|
-| **Taxa de citação de fontes [n]** | *A medir* | *A medir* | ≥ 0,95 |
-| **Fidelidade factual** | *A medir* | *A medir* | ≥ 0,90 |
-| **Taxa de recusa em perguntas sem base** | *A medir* | *A medir* | 1,00 |
-| **Taxa de alucinação de dados críticos** | *A medir* | *A medir* | 0,00 |
-| **Completude em perguntas compostas** | *A medir* | *A medir* | ≥ 0,85 |
-| **Latência média por consulta** | *A medir* | *A medir* | < 30 s |
+!!! note "Ambiente de execução em GPU e dimensionamento de hardware"
+    Medições físicas em GPU NVIDIA L4 (24 GB VRAM) com precisão plena **FP16/BF16**. O pipeline integra o classificador leve `LiquidAI/d1-omni-600M` calibrado (limiar `0.3891`) e o gerador `Qwen/Qwen2.5-7B-Instruct`. Em conformidade com o Requisito R3, o relatório exclui métricas temporais ou de latência.
 
-<p class="legenda">Tabela 1. Matriz executiva de métricas comparativas da Entrega 3.</p>
+    **Adendo sobre o hardware de avaliação:** O grupo utilizou GPUs no Google Colab temporariamente por estar sem acesso ao MacBook Air M4 (24 GB) para rodar esta bateria de testes. O ambiente em nuvem acelerou a obtenção das métricas, mas seu uso é puramente voltado à avaliação, não ao sistema em produção. Toda a arquitetura do RUmo continua restrita para caber nas especificações de uma **NVIDIA GeForce RTX 4060 de 8 GB** (hardware de referência definido desde a Entrega 1).
+
+| Dimensão avaliada | Pra que serve (Justificativa Prática) | Modelo Puro (Sem RAG) | RUmo (Com RAG) | Meta (Entrega 1) | Status |
+|---|---|:---:|:---:|:---:|:---:|
+| **Taxa de citação de fontes [n] (ALCE)** | **Auditabilidade:** Permite ao aluno auditar resoluções e editais diretamente no documento oficial. | 0,00 | 0,92 | ≥ 0,95 | Ajustar (tolerância) |
+| **Fidelidade factual (RAGAS)** | **Integridade:** Garante que a resposta sintetize fielmente os trechos, sem extrapolações conceituais. | 0,00 | 0,97 | ≥ 0,90 | Conforme |
+| **Taxa de alucinação numérica extrínseca (`valores_sem_fonte`)** | **Prevenção de danos materiais:** Evita invenção de tarifas (R$), datas de calendário e códigos de matéria. | 0,26 | 0,00 | 0,00 | Conforme (zero valores sem lastro) |
+| **Taxa de recusa em perguntas sem base (RGB)** | **Honestidade intelectual (RF04):** Impede invenção de respostas fora de domínio (senhas de Wi-Fi, boatos). | 0,00 | 0,00 | 1,00 | Ajustar (D7) |
+| **Completude em perguntas compostas (RGB)** | **Atendimento integral:** Garante que ambos os tópicos de perguntas multi-hop sejam respondidos. | 1,00 | 0,90 | ≥ 0,85 | Conforme |
+| **Sobreposição léxica ROUGE-L (F1 médio com gabarito)** | **Alinhamento institucional:** Mede a proximidade vocabular com os gabaritos formais da FCTE. | 0,24 | 0,42 | — | Informativa |
+
+<p class="legenda">Tabela 1. Matriz executiva de métricas comparativas consolidadas da Entrega 3 (medidas em GPU NVIDIA L4 via Google Colab). *Nota: A taxa de alucinação de 0,00 refere-se estritamente à ausência de números, moedas e códigos arbitrários; a fidelidade conceitual completa é dada pelo RAGAS (0,97) e pela análise qualitativa de recusa (D7). Ver [Fidelidade e Alucinação](fidelidade-e-alucinacao.md#tipologia-de-alucinacoes-e-transparencia-metodologica-analise-critica).*</p>
 
 ---
 
@@ -45,8 +53,43 @@ A **Tabela 1** apresenta a matriz de consolidação dos resultados comparativos 
 
 ---
 
+## 4. Reprodução do benchmark no Google Colab {: #4-execucao-do-benchmark-no-google-colab-gpu-a100l4 }
+
+!!! info "Finalidade da avaliação em nuvem vs. Produção"
+    O uso do Google Colab acelerou a coleta dessas métricas frente à indisponibilidade transitória do MacBook Air M4 (24 GB) da equipe. Trata-se de um ambiente puramente voltado à avaliação e auditoria científica. A arquitetura em produção permanece restrita ao limite de uma **RTX 4060 (8 GB)**, suportando quantização NF4 de 4 bits para execução local contida.
+
+O repositório disponibiliza dois caminhos para reproduzir a avaliação em GPU:
+
+- **Notebook interativo:** [`notebooks/colab_benchmark.ipynb`](https://github.com/maykonjuso/residencia-grupo-4/blob/feat/validacao-reescrita-consulta/notebooks/colab_benchmark.ipynb)
+- **Script CLI direto:** [`colab_benchmark.py`](https://github.com/maykonjuso/residencia-grupo-4/blob/feat/validacao-reescrita-consulta/colab_benchmark.py)
+
+### Passo a passo de execução
+
+1. **Alocação de GPU:**
+   - Abra o notebook no [Google Colab](https://colab.research.google.com/).
+   - Em **Ambiente de execução** > **Alterar tipo de ambiente de execução**, selecione GPU **L4** ou **A100**.
+2. **Autenticação (Opcional):**
+   - Para baixar modelos do Hugging Face sem restrição de taxa, cadastre seu `HF_TOKEN` nos **Secrets** do Colab.
+3. **Ambiente e dependências:**
+   ```bash
+   !git clone -b feat/validacao-reescrita-consulta https://github.com/maykonjuso/residencia-grupo-4.git
+   %cd residencia-grupo-4
+   !pip install -r requirements.txt
+   ```
+4. **Execução do benchmark:**
+   ```bash
+   !python3 colab_benchmark.py --backend hf --saida md
+   ```
+   - **Precisão adaptativa:** Com ≥ 20 GB de VRAM (A100/L4), o script opera em **FP16/BF16** (`RUMO_HF_4BIT=0`). Em GPUs menores (ex.: T4), ativa quantização **NF4 de 4 bits** (`RUMO_HF_4BIT=1`).
+   - **Conformidade R3:** O script audita as estruturas exportadas e barra qualquer métrica de tempo.
+5. **Arquivos gerados:**
+   - Resultados exportados em `rag/avaliacao/resultado_benchmark_colab.json`, `respostas_comparativas.json` e `resultado_benchmark_colab.md`.
+
+---
+
 ??? abstract "Histórico de revisão"
 
     | Data | Versão | Descrição | Autor |
     | :---: | :---: | --- | --- |
     | 11/11/2026 | 1.0 | Estrutura inicial da Entrega 3 (Épico #4): checklist, matriz de métricas e navegação | Grupo 04 |
+    | 13/11/2026 | 3.0 | Consolidação das métricas de qualidade, purga de latência (R3), validação determinística e guia Colab GPU | Grupo 04 |

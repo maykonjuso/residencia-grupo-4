@@ -1,0 +1,269 @@
+{
+  "hardware": "MacBook Air M4 24 GB (CPU para JevK5-Lite/BGE-M3 + Ollama local qwen2.5:7b)",
+  "sem_reescrita": {
+    "cobertura_media_pct": 90.0,
+    "tempo_busca_medio_s": 0.267,
+    "tempo_geracao_medio_s": 17.56,
+    "tempo_total_medio_s": 17.82
+  },
+  "com_reescrita": {
+    "cobertura_media_pct": 100.0,
+    "latencia_jev_media_ms": 329.7,
+    "tempo_decomposicao_medio_s": 3.38,
+    "tempo_busca_medio_s": 0.332,
+    "tempo_geracao_medio_s": 24.39,
+    "tempo_total_medio_s": 28.1
+  },
+  "casos": [
+    {
+      "id": "C01",
+      "pergunta": "Qual o valor do almoço para estudante e quais os horários de funcionamento do jantar no Gama?",
+      "jev_eh_composta": true,
+      "prob_jev": 0.5187,
+      "latencia_jev_ms": 171.4,
+      "subperguntas": [
+        "Qual o valor da refeição no almoço para estudantes no RU do Gama?",
+        "Quais são os horários de funcionamento do jantar no RU do Gama?"
+      ],
+      "sem_reescrita": {
+        "docs": [
+          "F03",
+          "F02",
+          "F17",
+          "F21",
+          "F04"
+        ],
+        "eixo_a_coberto": true,
+        "eixo_b_coberto": true,
+        "eixos_cobertos": 2,
+        "cobertura_pct": 100.0,
+        "tempo_busca_s": 0.397,
+        "tempo_geracao_s": 11.924,
+        "tempo_total_s": 12.321,
+        "citacoes": 1,
+        "valores_sem_fonte": []
+      },
+      "com_reescrita": {
+        "docs": [
+          "F01",
+          "F03",
+          "F02",
+          "F04",
+          "F03",
+          "F17",
+          "F09"
+        ],
+        "eixo_a_coberto": true,
+        "eixo_b_coberto": true,
+        "eixos_cobertos": 2,
+        "cobertura_pct": 100.0,
+        "tempo_decomposicao_s": 4.142,
+        "tempo_busca_s": 0.165,
+        "tempo_geracao_s": 16.227,
+        "tempo_total_s": 20.534,
+        "citacoes": 3,
+        "valores_sem_fonte": []
+      }
+    },
+    {
+      "id": "C02",
+      "pergunta": "Qual o pré-requisito de Engenharia de Software e como funciona o trancamento geral de matrícula?",
+      "jev_eh_composta": true,
+      "prob_jev": 0.4398,
+      "latencia_jev_ms": 347.0,
+      "subperguntas": [
+        "Quais são os pré-requisitos para ingressar no curso de Engenharia de Software?",
+        "Como funciona o processo de trancamento geral de matrícula no campus Gama?"
+      ],
+      "sem_reescrita": {
+        "docs": [
+          "F16",
+          "F31",
+          "F31",
+          "F31",
+          "F31"
+        ],
+        "eixo_a_coberto": true,
+        "eixo_b_coberto": true,
+        "eixos_cobertos": 2,
+        "cobertura_pct": 100.0,
+        "tempo_busca_s": 0.143,
+        "tempo_geracao_s": 15.627,
+        "tempo_total_s": 15.771,
+        "citacoes": 3,
+        "valores_sem_fonte": []
+      },
+      "com_reescrita": {
+        "docs": [
+          "F16",
+          "F31",
+          "F16",
+          "F31",
+          "F31",
+          "F16",
+          "F16"
+        ],
+        "eixo_a_coberto": true,
+        "eixo_b_coberto": true,
+        "eixos_cobertos": 2,
+        "cobertura_pct": 100.0,
+        "tempo_decomposicao_s": 3.207,
+        "tempo_busca_s": 0.556,
+        "tempo_geracao_s": 21.238,
+        "tempo_total_s": 25.001,
+        "citacoes": 3,
+        "valores_sem_fonte": []
+      }
+    },
+    {
+      "id": "C03",
+      "pergunta": "Estudante com gratuidade tem direito ao café da manhã e qual o horário do almoço no sábado?",
+      "jev_eh_composta": true,
+      "prob_jev": 0.5714,
+      "latencia_jev_ms": 189.1,
+      "subperguntas": [
+        "Estudante com gratuidade tem direito ao café da manhã no RU?",
+        "Qual o horário do almoço no sábado no RU?"
+      ],
+      "sem_reescrita": {
+        "docs": [
+          "F02",
+          "F03",
+          "F06",
+          "F03",
+          "F01"
+        ],
+        "eixo_a_coberto": true,
+        "eixo_b_coberto": true,
+        "eixos_cobertos": 2,
+        "cobertura_pct": 100.0,
+        "tempo_busca_s": 0.117,
+        "tempo_geracao_s": 14.275,
+        "tempo_total_s": 14.392,
+        "citacoes": 1,
+        "valores_sem_fonte": []
+      },
+      "com_reescrita": {
+        "docs": [
+          "F06",
+          "F02",
+          "F02",
+          "F09",
+          "F03",
+          "F03",
+          "F08"
+        ],
+        "eixo_a_coberto": true,
+        "eixo_b_coberto": true,
+        "eixos_cobertos": 2,
+        "cobertura_pct": 100.0,
+        "tempo_decomposicao_s": 2.525,
+        "tempo_busca_s": 0.226,
+        "tempo_geracao_s": 18.172,
+        "tempo_total_s": 20.922,
+        "citacoes": 2,
+        "valores_sem_fonte": []
+      }
+    },
+    {
+      "id": "C04",
+      "pergunta": "Quais matérias da Engenharia Aeroespacial exigem Cálculo 2 e onde consulto o calendário acadêmico?",
+      "jev_eh_composta": true,
+      "prob_jev": 0.5108,
+      "latencia_jev_ms": 320.2,
+      "subperguntas": [
+        "Qual matéria da Engenharia Aeroespacial exige Cálculo 2?",
+        "Em qual local posso consultar o calendário acadêmico?"
+      ],
+      "sem_reescrita": {
+        "docs": [
+          "F17",
+          "F17",
+          "F17",
+          "F17",
+          "F17"
+        ],
+        "eixo_a_coberto": true,
+        "eixo_b_coberto": false,
+        "eixos_cobertos": 1,
+        "cobertura_pct": 50.0,
+        "tempo_busca_s": 0.188,
+        "tempo_geracao_s": 31.662,
+        "tempo_total_s": 31.85,
+        "citacoes": 1,
+        "valores_sem_fonte": []
+      },
+      "com_reescrita": {
+        "docs": [
+          "F17",
+          "F34",
+          "F17",
+          "F29",
+          "F17",
+          "F34",
+          "F17"
+        ],
+        "eixo_a_coberto": true,
+        "eixo_b_coberto": true,
+        "eixos_cobertos": 2,
+        "cobertura_pct": 100.0,
+        "tempo_decomposicao_s": 3.993,
+        "tempo_busca_s": 0.463,
+        "tempo_geracao_s": 42.766,
+        "tempo_total_s": 47.222,
+        "citacoes": 2,
+        "valores_sem_fonte": []
+      }
+    },
+    {
+      "id": "C05",
+      "pergunta": "O RU abre aos domingos e quais os documentos necessários para fazer a carteirinha?",
+      "jev_eh_composta": true,
+      "prob_jev": 0.4202,
+      "latencia_jev_ms": 620.9,
+      "subperguntas": [
+        "O RU abre aos domingos?",
+        "Quais são os documentos necessários para fazer a carteirinha no RU?"
+      ],
+      "sem_reescrita": {
+        "docs": [
+          "F05",
+          "F05",
+          "F03",
+          "F05",
+          "F03"
+        ],
+        "eixo_a_coberto": true,
+        "eixo_b_coberto": true,
+        "eixos_cobertos": 2,
+        "cobertura_pct": 100.0,
+        "tempo_busca_s": 0.491,
+        "tempo_geracao_s": 14.299,
+        "tempo_total_s": 14.789,
+        "citacoes": 5,
+        "valores_sem_fonte": []
+      },
+      "com_reescrita": {
+        "docs": [
+          "F03",
+          "F05",
+          "F05",
+          "F03",
+          "F03",
+          "F05",
+          "F02"
+        ],
+        "eixo_a_coberto": true,
+        "eixo_b_coberto": true,
+        "eixos_cobertos": 2,
+        "cobertura_pct": 100.0,
+        "tempo_decomposicao_s": 3.031,
+        "tempo_busca_s": 0.248,
+        "tempo_geracao_s": 23.558,
+        "tempo_total_s": 26.836,
+        "citacoes": 0,
+        "valores_sem_fonte": []
+      }
+    }
+  ]
+}
