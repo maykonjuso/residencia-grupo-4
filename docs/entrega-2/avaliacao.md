@@ -24,17 +24,17 @@ A **Tabela 2** compara o desempenho das cinco configurações testadas frente à
 
 | Configuração | Hit@1 | Hit@5 | MRR |
 |---|---|---|---|
-| BM25 (lexical) | 0,844 | 0,938 | 0,885 |
+| BM25 (lexical, pós-normalização) | 0,906 | 0,969 | 0,932 |
 | Vetorial · multilingual-e5-base | 0,875 | 1,000 | 0,932 |
 | Híbrida · multilingual-e5-base | 0,906 | 1,000 | 0,944 |
 | Vetorial · **BAAI/bge-m3** | **0,969** | **1,000** | **0,984** |
-| Híbrida · **BAAI/bge-m3** (configuração final) | 0,938 | **1,000** | 0,959 |
+| Híbrida · **BAAI/bge-m3** (configuração final) | 0,938 | **1,000** | 0,969 |
 | *Meta da Entrega 1* | *≥ 0,80* | *≥ 0,90* | *≥ 0,85* |
 
-<p class="legenda">Tabela 2. Recuperação nas 32 perguntas. Todas as configurações vetoriais e híbridas passaram das metas.</p>
+<p class="legenda">Tabela 2. Recuperação nas 32 perguntas. Todas as configurações passaram das metas.</p>
 
 !!! note "Fonte dos números desta página"
-    Todos os valores das Tabelas 2 e 3 são lidos de `rag/avaliacao/resultado_recuperacao_bge-m3.json`
+    Todos os valores das Tabelas 2 e 3 são lidos de `rag/avaliacao/resultado_recuperacao.json`
     e `..._multilingual-e5-base.json`, gerados por `python -m rumo_rag avaliar`. As 32 perguntas
     estão em `rag/avaliacao/perguntas_ouro.jsonl`. Mexeu em chunking, embedding ou fusão? Rode a
     avaliação de novo e atualize estas tabelas no mesmo PR.
@@ -44,7 +44,7 @@ xychart-beta
     title "MRR por configuração (32 perguntas)"
     x-axis ["BM25", "e5 vetorial", "e5 híbrida", "bge-m3 vetorial", "bge-m3 híbrida"]
     y-axis "MRR" 0.8 --> 1.0
-    bar [0.885, 0.932, 0.944, 0.984, 0.959]
+    bar [0.932, 0.932, 0.944, 0.984, 0.969]
 ```
 
 <p class="legenda">Figura 1. MRR por configuração.</p>
@@ -61,10 +61,28 @@ Das 32 perguntas avaliadas, apenas duas não trouxeram o documento esperado na p
 
 | Pergunta | Esperado | Veio em 1º | Posição do certo | Causa provável |
 |---|---|---|---|---|
-| Q01 · "Quanto custa o almoço no RU para um estudante de graduação sem auxílio?" | F01 / F04 (preços) | F06 (Auxílio Alimentação) | 5º | "sem auxílio" puxa os documentos do auxílio; os chunks de preço são curtos |
+| Q01 · "Quanto custa o almoço no RU para um estudante de graduação sem auxílio?" | F01 / F04 (preços) | F06 (Auxílio Alimentação) | 2º | "sem auxílio" puxa os documentos do auxílio; após normalização de sinônimos no BM25 subiu de 5º para 2º no híbrido |
 | Q28 · "Qual o período de matrícula do 2026.2?" | F29 (calendário 2026.2) | F30 (calendário 2026.1) | 2º | "2026.2" é quebrado em "2026" e "2", e os dois calendários ficam parecidos |
 
-<p class="legenda">Tabela 3. Falhas de 1º lugar e próximos ajustes: tratar o semestre ("2026.2") como termo único e reescrever a consulta para tirar negações como "sem auxílio" (Semana 3).</p>
+<p class="legenda">Tabela 3. Falhas de 1º lugar e próximos ajustes: tratar o semestre ("2026.2") como termo único e reescrever a consulta para tirar negações como "sem auxílio". </p>
+
+## Modo BM25 em produção (Render) × Híbrido (Issue #51)
+
+A API publicada no Render (`render.yaml`) roda com `RUMO_BUSCA=bm25` porque o plano gratuito limita a memória a **512 MB** (inviabilizando carregar PyTorch, `BAAI/bge-m3` e ChromaDB em produção).
+
+Antes da correção, perguntas como *"qual o preço da refeição no RU para estudantes de graduação?"* falhavam no `bm25` puro: o chunk `F04-0002` (Grupo II, R$ 4,50) usa *"Valores das refeições"* e *"valores atuais"*, enquanto a consulta usa *"preço"* e *"refeição"* (no singular). Nas 32 perguntas-ouro, 5 casos regrediam no `bm25` em relação ao híbrido, com `Q01` (preço do almoço) e `Q24` (vagas de Engenharia de Software) saindo do top-5.
+
+**Decisão tomada:** aplicar **normalização léxica em `tokenizar` (`rag/rumo_rag/indice.py`)** (`SINONIMOS_BM25`, mapeando *"preço"*, *"custa"*, *"tarifa"*, *"valores"* → *"valor"*, além de *"refeições"* → *"refeição"* e *"estudantes"* → *"estudante"*), sem alterar o texto oficial exibido nem aumentar o uso de RAM:
+
+| Configuração | Hit@1 | Hit@5 | MRR | Caso *"preço da refeição... graduação"* |
+|---|---|---|---|---|
+| BM25 antes da correção | 0,844 | 0,938 | 0,885 | `F04-0002` fora do top-5 |
+| **BM25 após normalização (Render)** | **0,906** | **0,969** | **0,932** | **`F04-0002` em 1º lugar** |
+| Híbrida após normalização (local) | 0,938 | 1,000 | 0,969 | `F04-0002` no top-3 |
+
+<p class="legenda">Tabela 4. Impacto da normalização léxica para o modo BM25 em produção (<code>rag/avaliacao/resultado_recuperacao.json</code>).</p>
+
+**Limitação residual documentada:** mesmo após a correção, o `bm25` puro ainda deixa `Q24` (*"Quantas vagas a FCTE oferta para Engenharia de Software?"*) fora do top-5 por ausência de sobreposição léxica direta, mantendo o modo **híbrido** como referência de qualidade sempre que houver memória para embeddings.
 
 ## Limitações da avaliação
 
@@ -72,3 +90,10 @@ Das 32 perguntas avaliadas, apenas duas não trouxeram o documento esperado na p
 - O acerto é por **documento**, não por trecho. Um trecho do documento certo pode não ter a frase exata (por exemplo, Q20 aceita F19 ou F20).
 - As perguntas foram escritas pelo grupo. Na Semana 7, entram perguntas reais coletadas com estudantes.
 - Esta página mede a **recuperação**. A qualidade da **resposta** (citação e fidelidade) está na [demonstração](demonstracao.md) e será medida em escala na Semana 3 (LLM × RAG).
+
+??? abstract "Histórico de revisão"
+
+    | Data | Versão | Descrição | Autor |
+    | :---: | :---: | --- | --- |
+    | 09/11/2026 | 1.0 | Avaliação inicial da recuperação (32 perguntas-ouro) | Grupo 04 |
+    | 16/11/2026 | 1.1 | Medição BM25 × híbrido e normalização léxica para preços do RU (Issue #51) | Grupo 04 |
