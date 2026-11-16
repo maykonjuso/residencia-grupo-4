@@ -1,50 +1,51 @@
 # Entrega 4 — Primeiro Protótipo Multiagente
 
-A **Entrega 4** (Épico `#37`, requisitos **RF01** e **RF02**) marca a evolução do **RUmo** de um pipeline RAG linear para o primeiro **protótipo de Sistema Multiagente**, combinando classificação e decomposição de consultas em dois estágios, roteamento híbrido por domínio, execução paralela de agentes especialistas, validação factual com retorno ao sintetizador e composição com índices de citação isolados.
+A **Entrega 4** (Épico `#37`) marca a evolução do **RUmo** de um fluxo único de busca e resposta para o primeiro **protótipo de Sistema Multiagente**. Em vez de um único bloco responder a tudo de forma linear, o sistema passa a identificar quando há mais de um assunto na mesma dúvida, distribuir cada parte ao especialista adequado em paralelo, auditar a fidelidade dos dados antes de exibi-los e montar a resposta final mantendo as fontes de cada parte isoladas.
 
 !!! info "Escopo atual do protótipo"
-    Esta documentação reflete estritamente o que está implementado e executado no repositório (`rag/rumo_rag/`). Detalhes exclusivos dos agentes especialistas e ferramentas ainda em aberto nas issues **#41**, **#42** e **#43** estão marcados explicitamente como `[a preencher]` ou `[a detalhar]`.
+    Esta documentação descreve estritamente o comportamento implementado e testado no repositório. Detalhes internos dos agentes especialistas e ferramentas adicionais ainda em desenvolvimento nas issues **#41**, **#42** e **#43** aparecem marcados como `[a preencher]` ou `[a detalhar]`.
 
 ---
 
 ## O que é a Entrega 4
 
-O objetivo do protótipo é responder a perguntas simples ou compostas de estudantes da UnB (Campus Gama / FCTE) sobre o **Restaurante Universitário (RU)** e o **Fluxo de Graduação**, dividindo o trabalho entre agentes com papéis definidos e garantindo rastreabilidade das fontes exigida pelo contrato com o portal (`consultas_rag.py` / `POST /perguntar`).
+O objetivo desta etapa é atender perguntas simples ou compostas de estudantes da UnB (Campus Gama / FCTE) sobre o **Restaurante Universitário (RU)** e o **Fluxo de Graduação** com colaboração coordenada entre agentes. A separação das fontes por bloco garante compatibilidade com o cliente do portal único da universidade, que exige que cada citação corresponda exatamente à lista de fontes daquela parte.
 
-A **Tabela 1** resume o estado atual da entrega entre o que foi implementado, o que aguarda detalhamento e o que ficou fora do escopo desta etapa.
+A **Tabela 1** resume o que já funciona no protótipo, o que aguarda detalhamento e o que ficou fora do escopo desta semana.
 
-| Categoria | Item / Componente | Situação | Observação |
+| Categoria | Item / Capacidade | Situação | O que faz na prática |
 |---|---|---|---|
-| **Implementado** | Estrutura base de agentes (`rag/rumo_rag/agentes.py`) | Concluído | Classes `AgenteBase`, `AgenteRU`, `AgenteFluxo`, `AgenteValidador`, `Sintetizador` e `Orquestrador` |
-| **Implementado** | Classificação e decomposição (`rag/rumo_rag/reescrita.py`) | Concluído | Estágio 1 (`d1-omni-600M`, limiar `0.39`) + Estágio 2 LLM conjunto (`decompor_com_roteamento`) e fallback sintático |
-| **Implementado** | Roteamento híbrido (`rotear_subpergunta`) | Concluído | Cascata `Teste 1 (eixo LLM)` → `Regex` → `Teste 2 (d1-omni-600M)` |
-| **Implementado** | Execução paralela e degradação graciosa | Concluído | `ThreadPoolExecutor` com `_LOCK_BUSCA` e `--falhar-agente` para simulação de falhas |
-| **Implementado** | Validador factual e retorno ao sintetizador | Concluído | `AgenteValidador.validar` + `Sintetizador.processar_devolucao` e composição com `[n]` isolados por parte |
-| **Implementado** | Experimento comparativo de roteamento (`perguntas_roteamento_multiplas.jsonl`) | Concluído | Comparação Regex vs. LLM conjunto (Teste 1) vs. `d1-omni-600M` (Teste 2) em 8 consultas / 17 subperguntas |
-| **Aberto (`#41`, `#42`, `#43`)** | Prompts dedicados, regras de domínio e ferramentas específicas de `AgenteRU`, `AgenteFluxo` e `AgenteValidador` | `[a preencher]` | Estrutura e contratos prontos; especialização interna pendente das issues `#41`–`#43` |
-| **Aberto (`#41`, `#42`, `#43`)** | Demonstração completa com modelo generativo LLM nos agentes finalizados | `[a preencher]` | Traces atuais executados com `--backend extrativo`; trace generativo final aguarda `#41`–`#43` |
-| **Fora de escopo** | Integração em tempo real com API externa do Portal Único (Grupo 09) | Fora da entrega | Escopo do projeto unificado documentado em [Escopo entre Grupos](../visao/escopo-grupos.md) |
-| **Fora de escopo** | Memória conversacional persistente multi-turno e autenticação SIGAA | Fora da entrega | Cada chamada ao `Orquestrador.executar` é stateless |
+| **Implementado** | Estrutura base dos agentes e do orquestrador | Concluído | Define os papéis de coordenação, atendimento ao RU, atendimento ao Fluxo de Graduação, validação factual e composição final da resposta |
+| **Implementado** | Classificação e divisão de perguntas compostas | Concluído | Detecta quando uma dúvida mistura mais de um tópico (com limiar calibrado em `0,39`) e a divide em subperguntas independentes, com opção de separação por conectivos em caso de falha |
+| **Implementado** | Roteamento híbrido por assunto | Concluído | Escolhe o agente adequado combinando a sugestão gerada na divisão da pergunta, regras diretas por palavras-chave e um classificador neural de apoio |
+| **Implementado** | Execução simultânea e tolerância a falhas | Concluído | Dispara consultas ao RU e ao Fluxo de Graduação ao mesmo tempo e permite simular queda de um agente sem derrubar a parte saudável |
+| **Implementado** | Conferência factual e retorno ao sintetizador | Concluído | Confirma se valores e afirmações aparecem nos trechos recuperados, solicita correção quando encontra inconsistência e preserva citações independentes por assunto |
+| **Implementado** | Comparativo experimental de roteamento | Concluído | Avalia três estratégias de roteamento em um conjunto de 8 perguntas múltiplas (17 subperguntas) de linguagem natural |
+| **Aberto (`#41`, `#42`, `#43`)** | Prompts especializados, regras finas e ferramentas próprias dos agentes | `[a preencher]` | Contratos e fluxo base estão prontos; a especialização interna depende do fechamento das issues `#41` a `#43` |
+| **Aberto (`#41`, `#42`, `#43`)** | Demonstração completa com modelo generativo final | `[a preencher]` | As execuções atuais validam o fluxo de forma determinística no modo extrativo; a execução final com modelo generativo aguarda `#41` a `#43` |
+| **Fora de escopo** | Comunicação em tempo real com a API do Portal Único (Grupo 09) | Fora da entrega | Integração geral do sistema unificado descrita em [Divisão com o Grupo 09](../visao/escopo-grupos.md) |
+| **Fora de escopo** | Memória conversacional contínua e login autenticado | Fora da entrega | Cada pergunta é processada de forma independente, sem histórico pessoal de usuário |
 
-<p class="legenda">Tabela 1. Escopo implementado, pendências e itens fora da Entrega 4.</p>
+<p class="legenda">Tabela 1. Visão geral do que foi implementado, do que está pendente e do que ficou fora de escopo na Entrega 4.</p>
 
 ---
 
 ## Navegação da Entrega 4
 
-A documentação desta entrega segue os artefatos solicitados no enunciado e está organizada conforme a **Tabela 2**.
+A documentação segue os três artefatos solicitados no enunciado e o registro da execução do sistema, conforme a **Tabela 2**.
 
-| Página | Conteúdo principal |
+| Página | O que você encontra |
 |---|---|
-| [Arquitetura dos Agentes](arquitetura-agentes.md) | Diagrama Mermaid verticalizado dos agentes e conexões, além dos contratos de saída em código |
-| [Responsabilidades dos Agentes](responsabilidades.md) | Tabela com papel, responsabilidades, o que cada agente **pode** e **não pode** fazer, e regras de negócio |
-| [Fluxo de Interação e Roteamento](fluxo-de-interacao.md) | Diagrama de sequência de pergunta composta, mensagens trocadas e relatório comparativo de classificação/roteamento |
-| [Demonstração Executada](demonstracao.md) | Comandos executados, traces reais (`--agentes --trace`), retorno do validador e simulação de falha |
+| [Arquitetura dos Agentes](arquitetura-agentes.md) | Diagrama verticalizado com os quatro agentes, o sintetizador, as conexões entre eles e os pontos de extensão |
+| [Responsabilidades dos Agentes](responsabilidades.md) | Tabela descrevendo o papel, as responsabilidades, o que cada componente **pode** e **não pode** fazer e as regras garantidas |
+| [Fluxo de Interação e Roteamento](fluxo-de-interacao.md) | Diagrama de sequência em linguagem direta para uma pergunta composta e o comparativo das estratégias de classificação e roteamento |
+| [Demonstração Executada](demonstracao.md) | Execuções reais em terminal comprovando paralelismo, isolamento de citações, retorno do validador e degradação graciosa |
 
-<p class="legenda">Tabela 2. Estrutura de páginas da documentação da Entrega 4.</p>
+<p class="legenda">Tabela 2. Guia de navegação da documentação da Entrega 4.</p>
 
 ??? abstract "Histórico de revisão"
     | Versão | Data | Autor | Descrição | Revisor |
     |---|---|---|---|---|
     | 1.0 | 16/11/2026 | @GabrielMacielBR | Versão inicial da documentação da Entrega 4 | @keilogger |
-    | 1.1 | 16/11/2026 | @GabrielMacielBR | Refatoração para a estrutura padronizada (index, arquitetura, responsabilidades, fluxo de interação e demonstração) com marcação explícita de pendências | @maykonjuso |
+    | 1.1 | 16/11/2026 | @GabrielMacielBR | Refatoração para a estrutura padronizada com marcação explícita de pendências | @maykonjuso |
+    | 1.2 | 16/11/2026 | @GabrielMacielBR | Adequação para leitura descritiva sem siglas nem jargões de código internos | @maykonjuso |

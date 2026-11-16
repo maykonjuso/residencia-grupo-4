@@ -514,11 +514,168 @@
     }
   }
 
+  function abrirZoomDiagrama(m) {
+    var existente = document.querySelector(".rm-zoom-modal");
+    if (existente) existente.remove();
+
+    var raiz = m.shadowRoot || m;
+    var svgOriginal = raiz.querySelector("svg");
+    if (!svgOriginal) return;
+
+    var legendaEl = m.nextElementSibling;
+    var legendaTxt = (legendaEl && legendaEl.classList && legendaEl.classList.contains("legenda"))
+      ? legendaEl.textContent.trim()
+      : "Diagrama ampliado (use os botões ou a roda do mouse para dar zoom e arraste para mover)";
+
+    var modal = el("div", "rm-zoom-modal");
+    modal.setAttribute("role", "dialog");
+    modal.setAttribute("aria-modal", "true");
+    modal.setAttribute("aria-label", legendaTxt);
+
+    modal.innerHTML =
+      '<div class="rm-zoom-modal__barra">' +
+        '<span class="rm-zoom-modal__legenda">' + esc(legendaTxt) + '</span>' +
+        '<div class="rm-zoom-modal__controles">' +
+          '<button type="button" class="rm-zoom-modal__btn" data-acao="menos" aria-label="Reduzir zoom" title="Reduzir zoom (-)">−</button>' +
+          '<span class="rm-zoom-modal__nivel">100%</span>' +
+          '<button type="button" class="rm-zoom-modal__btn" data-acao="mais" aria-label="Ampliar zoom" title="Ampliar zoom (+)">+</button>' +
+          '<button type="button" class="rm-zoom-modal__btn" data-acao="reset" title="Restaurar visualização (0)">Ajustar</button>' +
+          '<button type="button" class="rm-zoom-modal__btn rm-zoom-modal__btn--fechar" data-acao="fechar" title="Fechar (Esc)">✕ Fechar (Esc)</button>' +
+        '</div>' +
+      '</div>' +
+      '<div class="rm-zoom-modal__palco">' +
+        '<div class="rm-zoom-modal__conteudo"></div>' +
+      '</div>';
+
+    var palco = modal.querySelector(".rm-zoom-modal__palco");
+    var conteudo = modal.querySelector(".rm-zoom-modal__conteudo");
+    var nivelEl = modal.querySelector(".rm-zoom-modal__nivel");
+
+    var svgClone = svgOriginal.cloneNode(true);
+    svgClone.style.removeProperty("width");
+    svgClone.style.removeProperty("max-width");
+    svgClone.style.removeProperty("height");
+    svgClone.style.removeProperty("margin");
+
+    var vb = svgOriginal.viewBox && svgOriginal.viewBox.baseVal;
+    var r = svgOriginal.getBoundingClientRect();
+    var wOrig = (vb && vb.width) ? vb.width : (r.width || parseFloat(svgOriginal.getAttribute("width")) || 700);
+    var hOrig = (vb && vb.height) ? vb.height : (r.height || parseFloat(svgOriginal.getAttribute("height")) || 500);
+    var fit = Math.min((window.innerWidth * 0.86) / wOrig, (window.innerHeight * 0.78) / hOrig, 1.8);
+    var larguraBase = Math.max(320, Math.round(wOrig * fit));
+    svgClone.style.width = larguraBase + "px";
+    svgClone.style.maxWidth = "none";
+    svgClone.style.height = "auto";
+    svgClone.style.display = "block";
+    conteudo.appendChild(svgClone);
+
+    var escala = 1, tx = 0, ty = 0;
+    var arrastando = false, arrastou = false, iniX = 0, iniY = 0, baseTx = 0, baseTy = 0;
+    var overflowAnt = document.body.style.overflow;
+
+    function aplicarTransform() {
+      conteudo.style.transform = "translate(" + tx + "px, " + ty + "px) scale(" + escala.toFixed(3) + ")";
+      nivelEl.textContent = Math.round(escala * 100) + "%";
+    }
+
+    function alterarZoom(fator) {
+      escala = Math.min(5.0, Math.max(0.4, escala * fator));
+      aplicarTransform();
+    }
+
+    function fechar() {
+      window.removeEventListener("mousemove", aoMover);
+      window.removeEventListener("mouseup", aoSoltar);
+      window.removeEventListener("keydown", aoTeclar);
+      document.body.style.overflow = overflowAnt;
+      modal.remove();
+      if (typeof m.focus === "function") m.focus();
+    }
+
+    function aoMover(e) {
+      if (!arrastando) return;
+      var dx = e.clientX - iniX;
+      var dy = e.clientY - iniY;
+      if (Math.abs(dx) > 3 || Math.abs(dy) > 3) arrastou = true;
+      tx = baseTx + dx;
+      ty = baseTy + dy;
+      aplicarTransform();
+    }
+
+    function aoSoltar() {
+      if (!arrastando) return;
+      arrastando = false;
+      palco.classList.remove("rm-arrastando");
+    }
+
+    function aoTeclar(e) {
+      if (e.key === "Escape") { e.preventDefault(); fechar(); }
+      else if (e.key === "+" || e.key === "=") { e.preventDefault(); alterarZoom(1.25); }
+      else if (e.key === "-") { e.preventDefault(); alterarZoom(1 / 1.25); }
+      else if (e.key === "0") { e.preventDefault(); escala = 1; tx = 0; ty = 0; aplicarTransform(); }
+    }
+
+    modal.addEventListener("click", function (e) {
+      var btn = e.target.closest("[data-acao]");
+      if (!btn) return;
+      var acao = btn.getAttribute("data-acao");
+      if (acao === "mais") alterarZoom(1.25);
+      else if (acao === "menos") alterarZoom(1 / 1.25);
+      else if (acao === "reset") { escala = 1; tx = 0; ty = 0; aplicarTransform(); }
+      else if (acao === "fechar") fechar();
+    });
+
+    palco.addEventListener("wheel", function (e) {
+      e.preventDefault();
+      alterarZoom(e.deltaY < 0 ? 1.15 : 1 / 1.15);
+    }, { passive: false });
+
+    palco.addEventListener("mousedown", function (e) {
+      if (e.button !== 0) return;
+      e.preventDefault();
+      arrastando = true;
+      arrastou = false;
+      iniX = e.clientX;
+      iniY = e.clientY;
+      baseTx = tx;
+      baseTy = ty;
+      palco.classList.add("rm-arrastando");
+    });
+
+    palco.addEventListener("click", function (e) {
+      if (e.target === palco && !arrastou) fechar();
+    });
+
+    window.addEventListener("mousemove", aoMover);
+    window.addEventListener("mouseup", aoSoltar);
+    window.addEventListener("keydown", aoTeclar);
+
+    document.body.style.overflow = "hidden";
+    document.body.appendChild(modal);
+    aplicarTransform();
+  }
+
   function ajustarMermaid() {
     document.querySelectorAll(".mermaid").forEach(function (m) {
+      if (m.closest("#rm-impressao-entrega")) return;
       var raiz = m.shadowRoot || m;
       var svg = raiz.querySelector("svg");
-      if (svg) dimensionarSvgMermaid(svg, m, 680, 580, 0.98);
+      if (!svg) return;
+      dimensionarSvgMermaid(svg, m, 780, 820, 1.0);
+      m.setAttribute("data-rm-zoom", "1");
+      if (!m.__rmZoom) {
+        m.__rmZoom = true;
+        m.setAttribute("tabindex", "0");
+        m.setAttribute("role", "button");
+        m.setAttribute("title", "Clique para ampliar e dar zoom no diagrama");
+        m.addEventListener("click", function () { abrirZoomDiagrama(m); });
+        m.addEventListener("keydown", function (e) {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            abrirZoomDiagrama(m);
+          }
+        });
+      }
     });
   }
 

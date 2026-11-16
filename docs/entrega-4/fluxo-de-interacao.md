@@ -1,145 +1,136 @@
 # Fluxo de Interação e Roteamento
 
-Esta página descreve o fluxo colaborativo de ponta a ponta entre os agentes diante de uma pergunta composta e documenta o experimento comparativo que fundamentou a cascata de classificação e roteamento utilizada pelo **Orquestrador**.
+Esta página mostra como os agentes colaboram do início ao fim diante de uma pergunta composta e apresenta o experimento comparativo que definiu a estratégia de classificação e roteamento do **Orquestrador**.
 
 ---
 
 ## Sequência de colaboração para pergunta composta
 
-A **Figura 1** segue o modelo visual de [Escopo entre Grupos](../visao/escopo-grupos.md) para ilustrar as mensagens trocadas desde a submissão da pergunta até a composição final, incluindo a execução paralela e o caminho de devolução do `AgenteValidador` para o `Sintetizador`.
+A **Figura 1** segue o modelo visual de [Divisão com o Grupo 09](../visao/escopo-grupos.md), reunindo os cinco papéis principais no fluxo em linguagem direta para facilitar a leitura contínua.
 
 ```mermaid
 sequenceDiagram
     autonumber
     actor E as Estudante
-    participant O as Orquestrador<br/>(coordenacao)
-    participant R as reescrita.py<br/>(d1-omni + LLM)
-    participant RU as Agente RU<br/>(eixo = ru)
-    participant FL as Agente Fluxo<br/>(eixo = fluxo)
-    participant V as Agente Validador<br/>(fidelidade)
-    participant S as Sintetizador<br/>(composicao)
+    participant O as Orquestrador
+    participant RU as Agente do RU
+    participant FL as Agente de Fluxo
+    participant V as Agente Validador
 
-    E->>O: "O que tem no almoço e quais os pré-requisitos<br/>de Testes de Software?"
-    O->>R: classificar_composta (limiar 0.39)<br/>+ decompor_com_roteamento
-    R-->>O: 2 subperguntas + eixo sugerido<br/>("ru", "fluxo")
-    O->>O: rotear_subpergunta<br/>(Teste 1 LLM -> Regex -> Teste 2 d1-omni)
-    par em paralelo
-        O->>RU: responder(subpergunta 1, k=5)
-        RU-->>O: RespostaAgente (texto + [1..m] F08/F09)
+    E->>O: Pergunta sobre o almoço de hoje e sobre Testes de Software
+    O->>O: Identifica dois assuntos e divide a pergunta
+    par Consulta aos especialistas em paralelo
+        O->>RU: O que tem no almoço de hoje?
+        RU-->>O: Cardápio do dia com citação do documento oficial
     and
-        O->>FL: responder(subpergunta 2, k=5)
-        FL-->>O: RespostaAgente (texto + [1..k] F16)
+        O->>FL: Quais são os pré-requisitos de Testes de Software?
+        FL-->>O: Lista de pré-requisitos com citação do fluxo curricular
     end
-    O->>V: validar(RespostaAgente) para cada parte
-    alt acao_recomendada = devolver_ao_sintetizador
-        V->>S: devolver_ao_sintetizador<br/>(processar_devolucao)
-        S-->>O: fallback extrativo ou RECUSA / aviso
-    else acao_recomendada = aprovar
-        V-->>O: ResultadoValidacao (APROVADO)
-    end
-    O->>S: compor(pergunta, partes)
-    S-->>O: resposta com indices [n] isolados por parte
-    O-->>E: resposta final + trace (--trace)
+    O->>V: Verifica se os dados e as citações conferem com as fontes
+    V-->>O: Confirma a precisão (ou pede correção ao sintetizador)
+    O->>O: Junta as respostas mantendo as fontes de cada parte separadas
+    O-->>E: Entrega a resposta completa dividida por assunto
 ```
 
-<p class="legenda">Figura 1. Diagrama de sequência de uma pergunta composta com execução paralela, validação factual e devolução ao sintetizador.</p>
+<p class="legenda">Figura 1. Diagrama de sequência de uma pergunta composta com execução paralela, validação factual e composição isolada.</p>
 
-A **Tabela 1** detalha cada interação representada na **Figura 1**.
+A **Tabela 1** explica o que acontece em cada um dos dez passos da **Figura 1**, inclusive como o sistema reage quando ocorre alguma falha.
 
-| Passo | Origem → Destino | Conteúdo trocado | Comportamento em caso de exceção / falha |
+| Passo | Participantes | O que acontece neste passo | Tratamento de falha ou exceção |
 |---|---|---|---|
-| 1 | Estudante → `Orquestrador` | Pergunta em linguagem natural e parâmetros (`backend`, `k`, `--falhar-agente`) | Consulta vazia ou sem contexto cai nos fluxos padrão de recusa |
-| 2–3 | `Orquestrador` ↔ `reescrita.py` | Probabilidade composta (`d1-omni`, limiar `0.39`) e lista de subperguntas com rótulo | Se LLM falhar ou estiver indisponível, ativa `_decompor_fallback` |
-| 4 | `Orquestrador` (interno) | Chamada a `rotear_subpergunta(subpergunta, eixo_sugerido, usar_d1_fallback=True)` | Sem sinal específico, recorre ao `d1-omni` (`limiar_confianca = 0.60`) ou executa especialistas padrão |
-| 5–8 | `Orquestrador` ↔ `AgenteRU` / `AgenteFluxo` | Subpergunta roteada, retorno de `RespostaAgente` (texto, fontes `[n]`, trechos e tempo) | Falha em um agente captura exceção e marca apenas aquela parte para degradação graciosa |
-| 9–13 | `Orquestrador` → `AgenteValidador` ↔ `Sintetizador` | Auditoria de `valores_sem_fonte` e `resposta_sem_citacao` por parte aprovada | Reprovação dispara `processar_devolucao` (fallback extrativo ou `RECUSA` / aviso explícito) |
-| 14–16 | `Orquestrador` ↔ `Sintetizador` → Estudante | Partes validadas mantêm `[1], [2], ...` independentes e trace opcional (`--trace`) | `degradado=True` sinaliza ao estudante e ao portal qual bloco falhou |
+| 1 | Estudante → Orquestrador | O estudante envia a pergunta completa em linguagem natural para o ponto de entrada do sistema. | Consultas vazias ou sem tema reconhecido seguem o fluxo padrão de recusa. |
+| 2 | Orquestrador | Analisa se há mais de um assunto (limiar calibrado em `0,39`), divide a pergunta em subperguntas e define qual especialista atende cada parte. | Se o modelo linguístico falhar na divisão, aplica separação por conectivos gramaticais; em dúvidas ambíguas, consulta o classificador neural de domínio. |
+| 3–6 | Orquestrador ↔ Agente do RU / Agente de Fluxo | Os dois especialistas são consultados ao mesmo tempo na base documental oficial da UnB e devolvem suas respostas com citações próprias. | Se um especialista cair ou falhar, essa parte recebe um aviso explícito de indisponibilidade sem impedir a entrega da parte saudável. |
+| 7–8 | Orquestrador ↔ Agente Validador | O validador confere se valores numéricos e afirmações constam nos trechos recuperados e se há citação de fonte válida. | Se encontrar dado sem fonte ou falta de citação, devolve o bloco ao sintetizador para extração literal segura dos trechos ou emissão de recusa padrão com aviso. |
+| 9 | Orquestrador | O sintetizador reúne os blocos validados preservando a numeração e a lista de fontes de cada parte de forma independente. | Mantém eventuais avisos de falha parcial ou correção vinculados apenas ao bloco afetado. |
+| 10 | Orquestrador → Estudante | O estudante recebe a resposta final organizada por assunto, com referências separadas e histórico detalhado de execução quando solicitado. | Sinaliza explicitamente quando a entrega ocorreu em modo degradado por indisponibilidade parcial. |
 
-<p class="legenda">Tabela 1. Descrição detalhada das mensagens trocadas no fluxo de colaboração.</p>
-
----
-
-## Classificação e roteamento no orquestrador
-
-O roteamento de perguntas simples e compostas combina duas decisões distintas:
-
-1. **Classificação de composição e decomposição (`reescrita.py`):** decide se a pergunta tem múltiplos tópicos usando `LiquidAI/d1-omni-600M` (`LIMIAR_COMPOSTA = 0.39`) e a divide em subperguntas atômicas com `decompor_com_roteamento` (ou fallback sintático `_decompor_fallback`).
-2. **Roteamento de domínio por subpergunta (`rotear_subpergunta` em `agentes.py`):** compara três estratégias testadas empiricamente no repositório:
-   - **Baseline Regex:** palavras-chave léxicas por domínio;
-   - **Teste 1 (`ollama:qwen2.5:7b` conjunto):** o próprio LLM da decomposição já retorna o eixo (`[ru]` ou `[fluxo]`) junto de cada subpergunta, com **zero chamadas adicionais**;
-   - **Teste 2 (`LiquidAI/d1-omni-600M`):** modelo neural zero-shot (`classificar_dominio_d1`, `limiar_confianca = 0.60`) para desambiguar casos sem palavras-chave óbvias.
+<p class="legenda">Tabela 1. Descrição dos dez passos do fluxo de colaboração entre os agentes.</p>
 
 ---
 
-## Relatório comparativo: Regex vs. Teste 1 (LLM) vs. Teste 2 (`d1-omni-600M`)
+## Como o orquestrador classifica e roteia perguntas
 
-Para comparar as estratégias sem viés de um único padrão frasal, foi criado o conjunto `rag/avaliacao/perguntas/perguntas_roteamento_multiplas.jsonl` com **8 perguntas múltiplas** (`M01`–`M08`) que somam **17 subperguntas esperadas** entre os eixos `ru` e `fluxo`. O script executor encontra-se em `rag/avaliacao/scripts/avaliar_roteamento_agentes.py` e os artefatos de saída em `rag/avaliacao/resultados/`.
+Antes de acionar os especialistas, o orquestrador toma duas decisões complementares:
 
-### Dataset de avaliação (`M01`–`M08`)
+1. **Detectar e dividir perguntas compostas:** primeiro verifica se a dúvida mistura mais de um tópico usando o classificador neural calibrado em `0,39`; quando necessário, divide a consulta em subperguntas atômicas por meio de modelo linguístico (com alternativa gramatical por conectivos caso o modelo esteja indisponível).
+2. **Escolher o especialista de cada subpergunta:** direciona cada parte entre **Restaurante Universitário** e **Fluxo de Graduação**. Para definir a melhor estratégia de roteamento, três abordagens foram avaliadas em experimento próprio:
+   - **Regras por palavras-chave (Regex):** busca termos explícitos do domínio diretamente no texto da subpergunta;
+   - **Roteamento conjunto no modelo de linguagem (LLM `qwen2.5:7b`):** o mesmo modelo que divide a pergunta já indica o assunto de cada parte na resposta, sem exigir uma nova chamada ao servidor;
+   - **Classificador neural leve (`LiquidAI/d1-omni-600M`):** modelo local usado tanto para detectar perguntas compostas quanto para desambiguar o domínio quando faltam palavras-chave óbvias (com limiar de confiança `0,60`).
 
-A **Tabela 2** lista as 8 perguntas compostas e a decomposição/roteamento de referência.
+---
 
-| ID | Pergunta composta original | Subperguntas esperadas e eixo alvo |
+## Relatório comparativo das estratégias de roteamento
+
+Para testar as estratégias fora de frases padronizadas, foi criado o conjunto `rag/avaliacao/perguntas/perguntas_roteamento_multiplas.jsonl` com **8 perguntas múltiplas** envolvendo linguagem cotidiana, somando **17 subperguntas esperadas** entre Restaurante Universitário e Fluxo de Graduação. O script avaliador fica em `rag/avaliacao/scripts/avaliar_roteamento_agentes.py` e os registros completos em `rag/avaliacao/resultados/`.
+
+### Conjunto de avaliação (8 perguntas múltiplas, 17 subperguntas)
+
+A **Tabela 2** apresenta as oito perguntas compostas avaliadas, sua divisão esperada e o agente de destino correto de cada subpergunta.
+
+| # | Pergunta composta avaliada | Subperguntas esperadas e agente de destino |
 |---|---|---|
-| `M01` | "O que tem no almoço de quarta-feira e quais são os pré-requisitos de Testes de Software?" | `ru`: O que tem no almoço de quarta-feira no RU? · `fluxo`: Quais são os pré-requisitos de Testes de Software? |
-| `M02` | "Qual a proteína servida hoje ao meio-dia no bandejão e o que preciso ter aprovado antes de pegar Cálculo 2?" | `ru`: Qual a proteína servida hoje no almoço do RU? · `fluxo`: Quais disciplinas preciso ter aprovado antes de cursar Cálculo 2? |
-| `M03` | "Quem tem direito a isenção na refeição e até que horas servem o jantar no Gama?" | `ru`: Quem tem direito a isenção nas refeições do RU? · `ru`: Até que horas é servido o jantar no RU Gama? |
-| `M04` | "Quantas horas de estágio são exigidas em Engenharia de Energia e como um aluno da graduação pede para cursar matéria isolada na pós?" | `fluxo`: Quantas horas de estágio obrigatório são exigidas em Engenharia de Energia? · `fluxo`: Como um estudante de graduação solicita cursar disciplina no mestrado (PPGEB)? |
-| `M05` | "Onde vejo se a comida de hoje tem derivados de leite e qual o prazo máximo para desistir de uma turma no semestre sem reprovar?" | `ru`: Onde consultar se a comida de hoje no RU contém derivados de leite (alergênicos)? · `fluxo`: Qual o prazo máximo para desistir (trancar) uma turma no semestre sem reprovar? |
-| `M06` | "Qual a carga horária mínima por período em Software e quanto paga quem não recebe bolsa de alimentação?" | `fluxo`: Qual a carga horária mínima por semestre em Engenharia de Software? · `ru`: Quanto paga nas refeições do RU quem não recebe auxílio alimentação? |
-| `M07` | "Quanto custa o desjejum para Grupo II, quantos créditos exige Engenharia Aeroespacial e abre aos sábados para comer?" | `ru`: Quanto custa o café da manhã (desjejum) no RU para o Grupo II? · `fluxo`: Quantos créditos exige o curso de Engenharia Aeroespacial? · `ru`: O RU Gama abre aos sábados para refeições? |
-| `M08` | "Sou calouro da ABI na FCTE: em qual etapa escolho minha engenharia específica e quais documentos apresento na catraca para comer?" | `fluxo`: Sou calouro da ABI na FCTE: em qual etapa escolho minha engenharia específica? · `ru`: Quais documentos o estudante apresenta na catraca para comer no RU? |
+| 1 | "O que tem no almoço de quarta-feira e quais são os pré-requisitos de Testes de Software?" | **Restaurante Universitário:** O que tem no almoço de quarta-feira no RU? · **Fluxo de Graduação:** Quais são os pré-requisitos de Testes de Software? |
+| 2 | "Qual a proteína servida hoje ao meio-dia no bandejão e o que preciso ter aprovado antes de pegar Cálculo 2?" | **Restaurante Universitário:** Qual a proteína servida hoje no almoço do RU? · **Fluxo de Graduação:** Quais disciplinas preciso ter aprovado antes de cursar Cálculo 2? |
+| 3 | "Quem tem direito a isenção na refeição e até que horas servem o jantar no Gama?" | **Restaurante Universitário:** Quem tem direito a isenção nas refeições do RU? · **Restaurante Universitário:** Até que horas é servido o jantar no RU Gama? |
+| 4 | "Quantas horas de estágio são exigidas em Engenharia de Energia e como um aluno da graduação pede para cursar matéria isolada na pós?" | **Fluxo de Graduação:** Quantas horas de estágio obrigatório são exigidas em Engenharia de Energia? · **Fluxo de Graduação:** Como um estudante de graduação solicita cursar disciplina no mestrado (PPGEB)? |
+| 5 | "Onde vejo se a comida de hoje tem derivados de leite e qual o prazo máximo para desistir de uma turma no semestre sem reprovar?" | **Restaurante Universitário:** Onde consultar se a comida de hoje no RU contém derivados de leite (alergênicos)? · **Fluxo de Graduação:** Qual o prazo máximo para desistir (trancar) uma turma no semestre sem reprovar? |
+| 6 | "Qual a carga horária mínima por período em Software e quanto paga quem não recebe bolsa de alimentação?" | **Fluxo de Graduação:** Qual a carga horária mínima por semestre em Engenharia de Software? · **Restaurante Universitário:** Quanto paga nas refeições do RU quem não recebe auxílio alimentação? |
+| 7 | "Quanto custa o desjejum para Grupo II, quantos créditos exige Engenharia Aeroespacial e abre aos sábados para comer?" | **Restaurante Universitário:** Quanto custa o café da manhã (desjejum) no RU para o Grupo II? · **Fluxo de Graduação:** Quantos créditos exige o curso de Engenharia Aeroespacial? · **Restaurante Universitário:** O RU Gama abre aos sábados para refeições? |
+| 8 | "Sou calouro da ABI na FCTE: em qual etapa escolho minha engenharia específica e quais documentos apresento na catraca para comer?" | **Fluxo de Graduação:** Sou calouro da ABI na FCTE: em qual etapa escolho minha engenharia específica? · **Restaurante Universitário:** Quais documentos o estudante apresenta na catraca para comer no RU? |
 
-<p class="legenda">Tabela 2. Conjunto de perguntas múltiplas, decomposições e eixos esperados em <code>perguntas_roteamento_multiplas.jsonl</code>.</p>
+<p class="legenda">Tabela 2. Conjunto de 8 perguntas múltiplas e 17 subperguntas de referência do experimento.</p>
 
-### Resultados nas 17 subperguntas canônicas
+### Desempenho nas 17 subperguntas canônicas
 
-Quando os termos do domínio já aparecem explicitamente na subpergunta canônica, todos os métodos alcançam cobertura integral, diferindo apenas em latência, conforme mostra a **Tabela 3**.
+Quando os termos clássicos do domínio aparecem escritos explicitamente na subpergunta canônica, todas as estratégias acertam a totalidade dos casos, diferindo apenas no tempo de resposta, como resume a **Tabela 3**.
 
-| Método | Acertos exatos | Extras (ambíguos `['ru', 'fluxo']`) | Latência média por subpergunta | Observação |
+| Estratégia avaliada | Acertos exatos | Acionamentos extras (ambos os agentes) | Latência média por subpergunta | Observação |
 |---|---:|---:|---:|---|
-| **Baseline Regex** | `17/17` (`100.0%`) | `0` | `0.03 ms` | Custo zero quando palavras-chave canônicas estão presentes |
-| **Teste 1 (`ollama:qwen2.5:7b` conjunto)** | `17/17` (`100.0%`) | `0` | `630.0 ms` isolado / `0 ms` extra na decomposição | O rótulo já vem embutido na saída de decomposição |
-| **Teste 2 (`LiquidAI/d1-omni-600M`)** | `17/17` (`100.0%`) | `0` | `84.6 ms` | Modelo neural local ~`7.4x` mais rápido que chamada LLM isolada |
+| **Regras por palavras-chave (Regex)** | `17/17` (`100.0%`) | `0` | `0.03 ms` | Custo praticamente nulo quando palavras-chave diretas estão presentes |
+| **Roteamento conjunto no modelo de linguagem (`qwen2.5:7b`)** | `17/17` (`100.0%`) | `0` | `630.0 ms` isolado / `0 ms` extra na divisão | O assunto já vem indicado junto com a própria divisão da pergunta |
+| **Classificador neural leve (`LiquidAI/d1-omni-600M`)** | `17/17` (`100.0%`) | `0` | `84.6 ms` | Executa localmente cerca de `7.4x` mais rápido que uma chamada isolada ao modelo de linguagem |
 
-<p class="legenda">Tabela 3. Comparação de acurácia e latência sobre as 17 subperguntas canônicas esperadas.</p>
+<p class="legenda">Tabela 3. Acurácia e latência nas 17 subperguntas canônicas explícitas.</p>
 
-### Estágio de classificação composta e decomposição (8 consultas)
+### Desempenho na detecção de composição e na divisão das 8 consultas
 
-A **Tabela 4** consolida o desempenho do Estágio 1 e do Estágio 2 sobre as 8 perguntas compostas.
+A **Tabela 4** compara as etapas de detecção inicial e decomposição nas oito consultas múltiplas completas.
 
-| Etapa / Método | Resultado observado | Latência média por consulta | Comportamento |
+| Etapa avaliada | Taxa de acerto observada | Latência média por consulta | Comportamento observado |
 |---|---|---:|---|
-| **Estágio 1 (`d1-omni-600M >= 0.39`)** | `7/8` (`87.5%`) | `92.9 ms` | Errou apenas `M06` (`p = 0.374`, abaixo do limiar `0.39`) |
-| **Teste 1 (`ollama:qwen2.5:7b` conjunto)** | `8/8` (`100.0%`) | `3486.7 ms` | Decomposição correta nas 8 consultas e `8/8` sequências exatas de eixos (`[ru]`/`[fluxo]`) |
-| **Fallback sintático (`_decompor_fallback`)** | `7/8` (`87.5%`) | `< 1 ms` | Falhou em `M07` (pergunta com 3 subperguntas separadas por vírgula) |
+| **Classificador de pergunta composta (`d1-omni-600M`, limiar `0.39`)** | `7/8` (`87.5%`) | `92.9 ms` | Deixou passar apenas a pergunta sobre carga horária de Software e valor sem bolsa (`p = 0.374`, logo abaixo do limiar `0.39`) |
+| **Divisão e roteamento conjuntos (`ollama:qwen2.5:7b`)** | `8/8` (`100.0%`) | `3486.7 ms` | Acertou a divisão nas 8 consultas e acertou todas as `8/8` sequências completas de agentes esperados |
+| **Divisão por conectivos gramaticais (alternativa sem LLM)** | `7/8` (`87.5%`) | `< 1 ms` | Falhou apenas na pergunta tripla sobre desjejum, créditos de Engenharia Aeroespacial e funcionamento aos sábados, por conter três partes separadas por vírgula |
 
-<p class="legenda">Tabela 4. Desempenho da classificação composta e da decomposição conjunta nas 8 consultas múltiplas.</p>
+<p class="legenda">Tabela 4. Desempenho das etapas de identificação de perguntas compostas e decomposição nas 8 consultas múltiplas.</p>
 
-### Roteamento das subperguntas naturais geradas pelo LLM (17 subperguntas)
+### Desempenho nas 17 subperguntas naturais geradas pelo modelo de linguagem
 
-O teste mais representativo ocorre quando os roteadores recebem as subperguntas naturais exatamente como saem da decomposição pelo `qwen2.5:7b` (sem palavras explícitas como *"RU"*, *"almoço"* ou *"matrícula"*). A **Tabela 5** mostra o comportamento comparativo e os casos de divergência.
+O cenário mais exigente ocorre quando os roteadores recebem as frases exatamente como saem da divisão em linguagem natural, muitas vezes sem palavras literais como *"RU"*, *"almoço"* ou *"matrícula"*. A **Tabela 5** reúne os totais comparativos e descreve todos os cinco casos em que os métodos divergiram.
 
-| Método / Caso analisado | Acertos exatos | Extras (`['ru', 'fluxo']`) / Detalhe observável |
+| Estratégia ou caso específico de divergência | Resultado comparativo | Explicação observada |
 |---|---|---|
-| **Baseline Regex** | `13/17` (`76.5%`) | `4` ambiguidades em linguagem natural por ausência de termos léxicos exatos |
-| **Teste 2 (`LiquidAI/d1-omni-600M`)** | `16/17` (`94.1%`) | `0` extras; superou Regex em linguagem natural com `1` único erro em `M03` |
-| **Teste 1 (`qwen2.5:7b` conjunto)** | `17/17` (`100.0%`) | `0` extras; aproveita o contexto completo da pergunta composta durante a decomposição |
-| Divergência `M03`: *"Quem tem direito a isenção na refeição?"* (esperado `ru`) | Regex: `['ru']` · T1: `['ru']` · T2: `['fluxo']` | Escores do `d1-omni-600M`: `ru = 0.3032`, `fluxo = 0.6968` |
-| Divergência `M05`: *"Onde vejo se a comida de hoje tem derivados de leite?"* (esperado `ru`) | Regex: `['ru', 'fluxo']` · T1: `['ru']` · T2: `['ru']` | Regex sem match caiu nos dois agentes; `d1-omni-600M` acertou com `ru = 0.9091` (`fluxo = 0.0909`) |
-| Divergência `M06`: *"Quanto paga quem não recebe bolsa de alimentação?"* (esperado `ru`) | Regex: `['ru', 'fluxo']` · T1: `['ru']` · T2: `['ru']` | `d1-omni-600M` classificou `ru = 0.8482` (`fluxo = 0.1518`) |
-| Divergência `M07`: *"Abre aos sábados para comer?"* (esperado `ru`) | Regex: `['ru', 'fluxo']` · T1: `['ru']` · T2: `['ru']` | `d1-omni-600M` classificou `ru = 0.9673` (`fluxo = 0.0327`) |
-| Divergência `M08`: *"Quais documentos apresento na catraca para comer?"* (esperado `ru`) | Regex: `['ru', 'fluxo']` · T1: `['ru']` · T2: `['ru']` | `d1-omni-600M` classificou `ru = 0.9285` (`fluxo = 0.0715`) |
+| **Total — Regras por palavras-chave (Regex)** | `13/17` acertos exatos (`76.5%`) | Gerou `4` indecisões em que disparou os dois agentes por ausência de termos literais |
+| **Total — Classificador neural leve (`LiquidAI/d1-omni-600M`)** | `16/17` acertos exatos (`94.1%`) | Nenhuma indecisão dupla; superou as regras léxicas em linguagem natural com apenas `1` erro |
+| **Total — Roteamento conjunto no modelo de linguagem (`qwen2.5:7b`)** | `17/17` acertos exatos (`100.0%`) | Nenhum erro e nenhuma chamada dupla; aproveita o contexto inteiro da pergunta composta |
+| **Caso 1:** *"Quem tem direito a isenção na refeição?"* (esperado: Restaurante Universitário) | **Regex:** Restaurante Universitário · **LLM conjunto:** Restaurante Universitário · **Neural (`d1-omni`):** Fluxo de Graduação | Único erro do classificador neural (`d1-omni`), que atribuiu probabilidade `0.3032` para Restaurante Universitário e `0.6968` para Fluxo |
+| **Caso 2:** *"Onde vejo se a comida de hoje tem derivados de leite?"* (esperado: Restaurante Universitário) | **Regex:** Ambos os agentes por indecisão · **LLM conjunto:** Restaurante Universitário · **Neural (`d1-omni`):** Restaurante Universitário | Sem palavra literal, as regras dispararam os dois especialistas; o classificador neural acertou com `0.9091` contra `0.0909` |
+| **Caso 3:** *"Quanto paga quem não recebe bolsa de alimentação?"* (esperado: Restaurante Universitário) | **Regex:** Ambos os agentes por indecisão · **LLM conjunto:** Restaurante Universitário · **Neural (`d1-omni`):** Restaurante Universitário | Classificador neural acertou com probabilidade `0.8482` para Restaurante Universitário (`0.1518` para Fluxo) |
+| **Caso 4:** *"Abre aos sábados para comer?"* (esperado: Restaurante Universitário) | **Regex:** Ambos os agentes por indecisão · **LLM conjunto:** Restaurante Universitário · **Neural (`d1-omni`):** Restaurante Universitário | Classificador neural acertou com probabilidade `0.9673` para Restaurante Universitário (`0.0327` para Fluxo) |
+| **Caso 5:** *"Quais documentos apresento na catraca para comer?"* (esperado: Restaurante Universitário) | **Regex:** Ambos os agentes por indecisão · **LLM conjunto:** Restaurante Universitário · **Neural (`d1-omni`):** Restaurante Universitário | Classificador neural acertou com probabilidade `0.9285` para Restaurante Universitário (`0.0715` para Fluxo) |
 
-<p class="legenda">Tabela 5. Desempenho sobre subperguntas naturais geradas pelo LLM e detalhamento dos cinco casos divergentes.</p>
+<p class="legenda">Tabela 5. Comparativo completo sobre subperguntas naturais geradas pelo modelo de linguagem e detalhamento das cinco divergências.</p>
 
-!!! note "Decisão arquitetural resultante: cascata híbrida em `rotear_subpergunta`"
-    1. **Prioridade 1 — Teste 1 (`eixo_sugerido` do LLM conjunto):** aproveita o rótulo emitido em `decompor_com_roteamento` sem custo adicional de latência (`17/17` no experimento);
-    2. **Prioridade 2 — Regex léxica determinística:** quando a pergunta não passa por decomposição LLM ou não traz eixo sugerido e possui sinal inequívoco de domínio (`0.03 ms`);
-    3. **Prioridade 3 — Teste 2 (`LiquidAI/d1-omni-600M` com `limiar_confianca = 0.60`):** acionado apenas quando Regex retorna empate ou ausência de sinal em linguagem natural (`M05`–`M08`), elevando a acurácia de `76.5%` para `94.1%` com custo médio de `84.6 ms`.
+!!! note "Decisão arquitetural adotada: cascata híbrida em três níveis"
+    1. **Nível 1 — Sugestão do modelo de linguagem na divisão da pergunta:** sempre que a consulta passa pela decomposição, aproveita o domínio já retornado junto com as subperguntas (`17/17` acertos e zero latência extra);
+    2. **Nível 2 — Regras rápidas por palavras-chave:** quando não há sugestão prévia e a frase traz termos inequívocos de RU ou Fluxo, roteia em `0.03 ms`;
+    3. **Nível 3 — Classificador neural leve (`LiquidAI/d1-omni-600M`, limiar `0.60`):** entra apenas quando as regras não conseguem decidir em linguagem natural (como nos Casos 2 a 5 acima), elevando a acurácia de `76.5%` para `94.1%` ao custo médio de `84.6 ms`.
 
 ??? abstract "Histórico de revisão"
     | Versão | Data | Autor | Descrição | Revisor |
     |---|---|---|---|---|
     | 1.0 | 16/11/2026 | @GabrielMacielBR | Documentação inicial do roteamento híbrido e experimento comparativo | @keilogger |
-    | 1.1 | 16/11/2026 | @GabrielMacielBR | Renomeação para `fluxo-de-interacao.md`, numeração de tabelas, diagrama de sequência padronizado e tabelas verbatim do experimento | @maykonjuso |
+    | 1.1 | 16/11/2026 | @GabrielMacielBR | Renomeação para `fluxo-de-interacao.md`, diagrama padronizado e tabelas verbatim do experimento | @maykonjuso |
+    | 1.2 | 16/11/2026 | @GabrielMacielBR | Simplificação visual do diagrama de sequência e reescrita em linguagem natural descritiva nas tabelas sem códigos nem notações abstratas | @maykonjuso |

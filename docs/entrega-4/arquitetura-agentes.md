@@ -1,77 +1,78 @@
 # Arquitetura dos Agentes
 
-A arquitetura multiagente do **RUmo** organiza o processamento em uma malha desacoplada implementada em `rag/rumo_rag/agentes.py` e `rag/rumo_rag/reescrita.py`, com **quatro agentes principais** (`Orquestrador`, `AgenteRU`, `AgenteFluxo` e `AgenteValidador`) apoiados pelo componente `Sintetizador` e pelo módulo de reescrita e classificação em dois estágios.
+A arquitetura multiagente do **RUmo** organiza o atendimento em uma esteira colaborativa implementada nos módulos de agentes e de reescrita de consultas do projeto. O desenho reúne **quatro agentes principais** — Orquestrador, Agente do RU, Agente de Fluxo e Agente Validador — apoiados pelo componente Sintetizador e pelo módulo de análise e divisão de perguntas.
 
 !!! info "Estado da implementação"
-    O esqueleto arquitetural, as interfaces entre classes, o paralelismo, o validador factual e a devolução ao sintetizador estão implementados. Detalhes internos das ferramentas e prompts especializados de domínio dependem das issues **#41**, **#42** e **#43** (`[a detalhar]`).
+    A estrutura geral dos agentes, as interfaces entre componentes, a execução paralela, a auditoria factual e o fluxo de retorno ao sintetizador já estão implementados. Prompts especializados e eventuais ferramentas específicas de cada domínio dependem do fechamento das issues **#41**, **#42** e **#43** (`[a detalhar]`).
 
 ---
 
 ## Diagrama da arquitetura multiagente
 
-A **Figura 1** apresenta a arquitetura verticalizada com os quatro agentes, suas conexões de controle e dados, o acesso serializado ao índice vetorial e o caminho de retorno quando o validador reprova uma resposta.
+A **Figura 1** mostra o fluxo verticalizado entre os quatro agentes, a consulta sincronizada à base documental da UnB e o retorno de correção quando o validador identifica alguma afirmação sem respaldo.
 
 ```mermaid
 flowchart TB
-    Est["Estudante / CLI (--agentes)"] --> Orq["Agente Orquestrador (Orquestrador.executar)"]
+    Est["Estudante enviando pergunta"] --> Orq["Agente Orquestrador"]
 
-    Orq -->|"1. Classifica e decompoe"| Rees["reescrita.py: d1-omni (limiar 0.39) + decompor_com_roteamento"]
-    Rees -->|"Subperguntas + eixo sugerido"| Orq
+    Orq -->|"1. Identifica múltiplos assuntos"| Rees["Classificador e Decompositor de Perguntas"]
+    Rees -->|"Subperguntas e sugestão de assunto"| Orq
 
-    Orq -->|"2. Roteamento hibrido (rotear_subpergunta)"| Rot["Cascata: LLM (Teste 1) -> Regex -> d1-omni (Teste 2, limiar 0.60)"]
+    Orq -->|"2. Escolhe o especialista em cascata"| Rot["Roteador de Domínio (LLM, Regras Léxicas e Classificador Neural)"]
 
-    Rot -->|"3a. Execucao paralela (ThreadPoolExecutor)"| AgRU["Agente Especialista RU (AgenteRU)"]
-    Rot -->|"3b. Execucao paralela (ThreadPoolExecutor)"| AgFl["Agente Especialista Fluxo (AgenteFluxo)"]
+    Rot -->|"3a. Consulta simultânea"| AgRU["Agente do Restaurante Universitário (RU)"]
+    Rot -->|"3b. Consulta simultânea"| AgFl["Agente de Fluxo de Graduação"]
 
-    AgRU -->|"buscar_contexto (_LOCK_BUSCA)"| Corpus["Corpus UnB indexado (eixos ru, fluxo, apoio)"]
-    AgFl -->|"buscar_contexto (_LOCK_BUSCA)"| Corpus
+    AgRU -->|"Busca segura na base"| Corpus["Base Oficial da UnB (documentos de RU, Fluxo e Apoio)"]
+    AgFl -->|"Busca segura na base"| Corpus
 
-    AgRU -->|"RespostaAgente (texto + fontes + status)"| Orq
-    AgFl -->|"RespostaAgente (texto + fontes + status)"| Orq
+    AgRU -->|"Resposta parcial com citações"| Orq
+    AgFl -->|"Resposta parcial com citações"| Orq
 
-    Orq -->|"4. Validacao factual"| AgVal["Agente Validador (AgenteValidador.validar)"]
+    Orq -->|"4. Envia para conferência"| AgVal["Agente Validador"]
 
-    AgVal -->|"acao_recomendada = aprovar"| Sint["Sintetizador (compor)"]
-    AgVal -->|"acao_recomendada = devolver_ao_sintetizador"| Ret["Sintetizador.processar_devolucao"]
-    Ret -->|"Fallback extrativo ou RECUSA / aviso"| Sint
+    AgVal -->|"Dados e fontes confirmados"| Sint["Sintetizador de Resposta"]
+    AgVal -->|"Valor inventado ou sem citação"| Ret["Correção segura (extração literal ou recusa)"]
+    Ret -->|"Bloco revisado ou aviso"| Sint
 
-    Orq -.->|"Falha isolada / degradacao graciosa"| Sint
-    Sint -->|"5. Resposta final com [n] isolados + trace"| Est
+    Orq -.->|"Se um agente falhar, mantém a outra parte"| Sint
+    Sint -->|"5. Resposta final com fontes separadas por parte"| Est
 ```
 
-<p class="legenda">Figura 1. Arquitetura verticalizada dos quatro agentes do RUmo, conexões com o corpus, validação factual e devolução ao sintetizador.</p>
+<p class="legenda">Figura 1. Arquitetura verticalizada dos quatro agentes do RUmo, consulta à base documental, validação factual e correção junto ao sintetizador.</p>
 
 ---
 
-## Conexões e contratos entre componentes
+## Conexões entre componentes
 
-A comunicação interna segue o fluxo unidirecional coordenado pelo `Orquestrador`, com um único ciclo controlado de retorno entre o `AgenteValidador` e o `Sintetizador`. A **Tabela 1** descreve cada conexão da arquitetura.
+A comunicação interna é coordenada pelo **Orquestrador** com um único ciclo controlado de retorno entre o **Agente Validador** e o **Sintetizador**. A **Tabela 1** descreve o papel de cada ligação exibida no diagrama.
 
-| Origem | Destino | Payload / Chamada | Regra de execução |
+| Origem | Destino | O que trafega na conexão | Regra de funcionamento |
 |---|---|---|---|
-| CLI (`__main__.py`) | `Orquestrador` | `executar(pergunta, backend, k, falhar_agente)` | Ativado pela flag `--agentes`; `--trace` habilita a coleta detalhada por estágio |
-| `Orquestrador` | `reescrita.py` | `classificar_composta` e `decompor_com_roteamento` | Estágio 1 usa `d1-omni-600M` com `LIMIAR_COMPOSTA = 0.39`; Estágio 2 usa LLM conjunto ou fallback sintático (`_decompor_fallback`) |
-| `Orquestrador` | `rotear_subpergunta` | `(subpergunta, eixo_sugerido, usar_d1_fallback=True)` | Cascata determinística: `Teste 1 (eixo LLM)` → `Regex` → `Teste 2 (d1-omni)` com `limiar_confianca = 0.60` |
-| `Orquestrador` | `AgenteRU` / `AgenteFluxo` | `responder(subpergunta, k=config.TOP_K, backend=config.BACKEND)` | Executado em paralelo via `ThreadPoolExecutor`; acesso ao índice protegido por `_LOCK_BUSCA` |
-| `AgenteRU` / `AgenteFluxo` | `Orquestrador` | `RespostaAgente` | Carrega resposta, fontes recuperadas, trechos, tempos e eventuais exceções capturadas |
-| `Orquestrador` | `AgenteValidador` | `validar(item: RespostaAgente) -> ResultadoValidacao` | Avalia `geracao.valores_sem_fonte` e `geracao.resposta_sem_citacao`; ignora apenas itens que falharam na execução |
-| `AgenteValidador` | `Sintetizador` | `processar_devolucao(item, validacao, backend)` | Acionado quando `acao_recomendada == "devolver_ao_sintetizador"`; tenta fallback extrativo sobre os trechos recuperados ou aplica `RECUSA` |
-| `Sintetizador` | Estudante / Portal | `compor(pergunta, partes)` | Mantém numeração `[n]` independente por bloco e preserva avisos de falha parcial (`degradado=True`) |
+| Interface de entrada | Orquestrador | A pergunta do estudante e as opções de execução escolhidas | Recebe perguntas simples ou compostas e inicia o fluxo multiagente |
+| Orquestrador | Classificador e Decompositor | O texto completo da pergunta original | Avalia se há mais de um assunto e divide a consulta em subperguntas independentes; se o modelo falhar, usa separação gramatical por conectivos |
+| Orquestrador | Roteador de Domínio | Cada subpergunta e a sugestão inicial de assunto | Decide o especialista seguindo uma cascata de três níveis: sugestão da própria divisão, regras por palavras-chave e, em caso de indecisão, classificador neural de domínio |
+| Orquestrador | Agente do RU e Agente de Fluxo | As subperguntas atribuídas a cada especialista | Os especialistas rodam ao mesmo tempo para reduzir o tempo total; leituras no índice documental são sincronizadas para evitar conflitos |
+| Agente do RU e Agente de Fluxo | Orquestrador | A resposta redigida, os trechos consultados, o tempo gasto e eventuais erros | Cada parte traz sua própria lista de referências sem interferir na resposta do outro especialista |
+| Orquestrador | Agente Validador | Cada resposta parcial produzida com sucesso pelos especialistas | Verifica objetivamente se todos os valores informados constam nos trechos e se há citação explícita; partes que falharam antes não passam por validação |
+| Agente Validador | Sintetizador | A decisão de aprovação ou o pedido de devolução para correção | Quando reprova uma resposta, aciona geração segura estritamente extrativa a partir dos trechos recuperados ou aplica a frase padrão de recusa |
+| Sintetizador | Estudante / Portal | As partes aprovadas reunidas e eventuais avisos de indisponibilidade | Preserva a numeração de fontes independente para cada bloco, atendendo à exigência contratual de integração com o portal único |
 
-<p class="legenda">Tabela 1. Conexões, interfaces e regras de execução entre os componentes multiagente.</p>
+<p class="legenda">Tabela 1. Descrição das conexões e regras operacionais entre os componentes multiagente.</p>
 
 ---
 
-## Especialização pendente e pontos de extensão
+## Pontos de extensão previstos
 
-A arquitetura atual já isola as fronteiras de responsabilidade para receber as implementações especializadas sem alterar o contrato do `Orquestrador`:
+A arquitetura atual já separa claramente as fronteiras de responsabilidade para receber os refinamentos das próximas issues sem quebrar os contratos entre os agentes:
 
-1. **`AgenteRU` e `AgenteFluxo` (herdam de `AgenteBase`):** compartilham hoje o fluxo padrão `buscar_contexto` + `gerar_resposta` filtrado por `eixo` (`"ru"` ou `"fluxo"`) somado ao eixo `"apoio"`. Prompts específicos de domínio, reformulações especializadas e eventuais ferramentas auxiliares estão marcados como `[a detalhar na issue #41 / #42]`.
-2. **`AgenteValidador`:** verifica objetivamente valores sem respaldo nas fontes (`geracao.valores_sem_fonte`) e ausência de citação (`geracao.resposta_sem_citacao`). Verificações semânticas adicionais baseadas em modelo estão marcadas como `[a detalhar na issue #43]`.
-3. **Paralelismo thread-safe:** a busca vetorial compartilhada é serializada por `_LOCK_BUSCA` para evitar condições de corrida no backend `BUSCA`, mantendo o paralelismo real nas chamadas de geração (`gerar_resposta`).
+1. **Especialização dos agentes de domínio (Agente do RU e Agente de Fluxo):** hoje compartilham o mesmo ciclo base de recuperação documental e geração, filtrando apenas os documentos do seu assunto e os documentos gerais de apoio. Prompts específicos, estratégias próprias de busca e ferramentas auxiliares ficam reservados como `[a detalhar na issue #41 / #42]`.
+2. **Ampliação do Agente Validador:** hoje audita de forma determinística a presença de citações e a existência literal nos trechos de valores mencionados na resposta. Checagens semânticas adicionais baseadas em modelo linguístico ficam reservadas como `[a detalhar na issue #43]`.
+3. **Execução paralela segura:** enquanto os leitores do banco vetorial são protegidos contra acesso simultâneo, as etapas de geração de resposta acontecem em paralelo, reduzindo a latência acumulada em perguntas compostas.
 
 ??? abstract "Histórico de revisão"
     | Versão | Data | Autor | Descrição | Revisor |
     |---|---|---|---|---|
-    | 1.0 | 16/11/2026 | @GabrielMacielBR | Diagrama inicial da arquitetura multiagente e dataclasses | @keilogger |
+    | 1.0 | 16/11/2026 | @GabrielMacielBR | Diagrama inicial da arquitetura multiagente e estruturas de dados | @keilogger |
     | 1.1 | 16/11/2026 | @GabrielMacielBR | Alinhamento aos 4 agentes do escopo, legenda padronizada e marcação explícita das pendências `#41`–`#43` | @maykonjuso |
+    | 1.2 | 16/11/2026 | @GabrielMacielBR | Reescrita descritiva em linguagem natural no diagrama e tabelas | @maykonjuso |

@@ -102,7 +102,7 @@ code, kbd, pre { font-family: var(--rm-mono); }
   border: 1px solid var(--rm-borda);
   border-radius: var(--rm-raio);
   padding: 0.8rem 1rem;
-  max-width: 680px;
+  max-width: 780px;
   margin: 1rem auto;
   text-align: center;
 }
@@ -725,12 +725,136 @@ li.rm-on .rm-est__trilha i { width: var(--w); }
 .rm-dica-pdf { font-size: 0.7rem; color: var(--rm-texto-suave); }
 .rm-secao-pdf { margin: 1.6rem 0; }
 
+/* =========================================================
+   Zoom e arraste interativos em diagramas Mermaid / flowcharts
+   ========================================================= */
+.md-typeset .mermaid[data-rm-zoom="1"] {
+  position: relative;
+  cursor: zoom-in;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.md-typeset .mermaid[data-rm-zoom="1"]:hover,
+.md-typeset .mermaid[data-rm-zoom="1"]:focus-visible {
+  border-color: var(--unb-verde-claro);
+  box-shadow: var(--rm-sombra);
+  outline: 2px solid transparent;
+}
+.md-typeset .mermaid[data-rm-zoom="1"]::after {
+  content: "🔍 Clique para ampliar";
+  position: absolute;
+  top: 0.45rem;
+  right: 0.55rem;
+  font: 600 0.62rem var(--rm-fonte);
+  padding: 0.18rem 0.5rem;
+  border-radius: 999px;
+  background: var(--unb-azul);
+  color: #fff;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+.md-typeset .mermaid[data-rm-zoom="1"]:hover::after,
+.md-typeset .mermaid[data-rm-zoom="1"]:focus-visible::after {
+  opacity: 0.92;
+}
+
+.rm-zoom-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  background: rgba(0, 18, 38, 0.88);
+  backdrop-filter: blur(4px);
+}
+.rm-zoom-modal__barra {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.65rem 1rem;
+  background: var(--rm-superficie);
+  border-bottom: 1px solid var(--rm-borda);
+  color: var(--md-default-fg-color);
+  font-family: var(--rm-fonte);
+}
+.rm-zoom-modal__legenda {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--md-default-fg-color);
+  max-width: 60ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.rm-zoom-modal__controles {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.rm-zoom-modal__nivel {
+  font: 700 0.74rem var(--rm-mono);
+  min-width: 3.2rem;
+  text-align: center;
+  color: var(--md-default-fg-color);
+}
+.rm-zoom-modal__btn {
+  appearance: none;
+  border: 1px solid var(--rm-borda);
+  background: var(--rm-superficie);
+  color: var(--md-default-fg-color);
+  font: 600 0.74rem var(--rm-fonte);
+  padding: 0.32rem 0.65rem;
+  border-radius: 0.4rem;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+.rm-zoom-modal__btn:hover {
+  border-color: var(--unb-verde);
+  color: var(--unb-verde);
+}
+.rm-zoom-modal__btn--fechar {
+  background: var(--unb-azul);
+  border-color: var(--unb-azul);
+  color: #fff;
+}
+.rm-zoom-modal__btn--fechar:hover {
+  background: var(--unb-azul-2);
+  border-color: var(--unb-azul-2);
+  color: #fff;
+}
+.rm-zoom-modal__palco {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: grab;
+  user-select: none;
+  padding: 1.2rem;
+}
+.rm-zoom-modal__palco.rm-arrastando {
+  cursor: grabbing;
+}
+.rm-zoom-modal__conteudo {
+  background: var(--rm-superficie);
+  border: 1px solid var(--rm-borda);
+  border-radius: var(--rm-raio);
+  padding: 1rem 1.2rem;
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.35);
+  transform-origin: center center;
+}
+
 @media print {
   @page { size: A4 portrait; margin: 12mm; }
   body, html { background: #fff !important; color: #000 !important; font-size: 11pt; line-height: 1.5; }
   .md-header, .md-tabs, .md-sidebar, .md-footer, .rm-progresso, .rm-barra-exportar,
   .rm-btn-imprimir, .rm-explorador, #rm-explorador, .rm-fluxo, .rm-est, [data-fluxo], [data-esteira],
-  .md-top, .headerlink {
+  .rm-zoom-modal, .md-top, .headerlink {
+    display: none !important;
+  }
+  .md-typeset .mermaid[data-rm-zoom="1"]::after {
     display: none !important;
   }
   body.rm-imprimindo-entrega .md-container { display: none !important; }
