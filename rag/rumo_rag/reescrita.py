@@ -42,6 +42,23 @@ _QUESTAO_COMPOSTA = {
     }
 }
 
+_DOMINIO_AGENTE = {
+    "dominio": {
+        "type": "choice",
+        "instructions": "Which university domain does this student question belong to?",
+        "criteria": {
+            "ru": (
+                "University dining hall / cafeteria (RU): meal prices, menu, lunch, dinner, breakfast, "
+                "food allergies, milk/gluten, vegetarian, food assistance/scholarship, access turnstile."
+            ),
+            "fluxo": (
+                "Academic courses and curriculum (FCTE/UnB): classes, prerequisites, credits, semesters, "
+                "internship, dropping a class, major selection (ABI), graduate courses."
+            ),
+        },
+    }
+}
+
 _GATILHOS_FALLBACK = (
     r"(?:quanto|quanta|quantos|quantas|qual|quais|quem|como|quando|onde|"
     r"que horas|até que|em que|de que|o que|posso|preciso|tem direito|abre)"
@@ -50,12 +67,16 @@ _GATILHOS_FALLBACK = (
 _SYSTEM_DECOMPOSICAO = (
     "Você é o módulo de reescrita e decomposição de consultas do sistema RAG acadêmico RUmo "
     "(FCTE/UnB - campus Gama, cobrindo Restaurante Universitário/RU e fluxo de cursos).\n"
+    "Domínios disponíveis para o campo eixo:\n"
+    '- "ru": Restaurante Universitário (cardápio, refeições, preços, alergênicos/leite, auxílio/bolsa alimentação, horários, catraca).\n'
+    '- "fluxo": fluxo de disciplinas, cursos de engenharia da FCTE, pré-requisitos, créditos, estágio, trancamento/desistência, ABI, pós-graduação.\n'
+    '- "ambos": somente quando uma subpergunta indivisível exigir os dois domínios.\n'
     "Sua tarefa é quebrar uma pergunta composta do estudante em 2 ou mais subperguntas independentes, diretas e autocontidas.\n"
     "Regras críticas:\n"
     "1. Explicite o sujeito/domínio implícito em cada subpergunta (ex.: se falar de 'almoço', 'jantar', 'refeição', "
     "'café da manhã' ou 'carteirinha', inclua 'no RU'; se citar um curso ou campus em uma parte, mantenha onde fizer sentido).\n"
-    "2. Não invente informações nem responda à pergunta; apenas reescreva as subperguntas.\n"
-    '3. Retorne APENAS JSON no formato: {"subperguntas": ["subpergunta 1?", "subpergunta 2?"]}.'
+    "2. Não invente informações nem responda à pergunta; apenas reescreva as subperguntas com o seu eixo.\n"
+    '3. Retorne APENAS JSON no formato: {"subperguntas": [{"pergunta": "subpergunta 1?", "eixo": "ru"}, {"pergunta": "subpergunta 2?", "eixo": "fluxo"}]}.'
 )
 
 
@@ -137,8 +158,8 @@ def _avisar_falha_classificador() -> None:
     traceback.print_exc(file=sys.stderr)
 
 
-def _extrair_subperguntas_json(texto: str) -> list[str]:
-    """Extrai e valida a lista de subperguntas a partir de JSON retornado pelo LLM."""
+def _extrair_itens_subperguntas_json(texto: str) -> list[dict[str, str]]:
+    """Extrai lista normalizada [{'pergunta': ..., 'eixo': ...}] de JSON retornado pelo LLM."""
     if not texto or not isinstance(texto, str):
         return []
     texto_limpo = texto.strip()
@@ -161,11 +182,30 @@ def _extrair_subperguntas_json(texto: str) -> list[str]:
         return []
     if not isinstance(subs, list):
         return []
-    return [s.strip() for s in subs if isinstance(s, str) and len(s.strip()) > 5]
+
+    itens: list[dict[str, str]] = []
+    for item in subs:
+        if isinstance(item, str):
+            p = item.strip()
+            eixo = ""
+        elif isinstance(item, dict):
+            p = str(item.get("pergunta") or item.get("subpergunta") or "").strip()
+            eixo_raw = str(item.get("eixo") or "").strip().lower()
+            eixo = eixo_raw if eixo_raw in ("ru", "fluxo", "ambos") else ""
+        else:
+            continue
+        if len(p) > 5:
+            itens.append({"pergunta": p, "eixo": eixo})
+    return itens
 
 
-def _decompor_ollama(pergunta: str) -> list[str]:
-    """Estágio 2 via Ollama HTTP: desmembra e contextualiza subperguntas em JSON estrito."""
+def _extrair_subperguntas_json(texto: str) -> list[str]:
+    """Extrai e valida a lista de subperguntas a partir de JSON retornado pelo LLM."""
+    return [item["pergunta"] for item in _extrair_itens_subperguntas_json(texto)]
+
+
+def _decompor_ollama_bruto(pergunta: str) -> str:
+    """Executa chamada ao Ollama para decomposição e retorna o conteúdo bruto."""
     corpo = {
         "model": config.MODELO_DECOMPOSITOR,
         "messages": [
@@ -175,7 +215,7 @@ def _decompor_ollama(pergunta: str) -> list[str]:
         "format": "json",
         "keep_alive": "10m",
         "stream": False,
-        "options": {"temperature": 0.0, "num_predict": 140},
+        "options": {"temperature": 0.0, "num_predict": 220},
     }
     req = urllib.request.Request(
         f"{config.OLLAMA_URL}/api/chat",
@@ -184,12 +224,16 @@ def _decompor_ollama(pergunta: str) -> list[str]:
     )
     with urllib.request.urlopen(req, timeout=30) as resp:
         dados = json.loads(resp.read().decode("utf-8"))
-    conteudo = dados.get("message", {}).get("content", "")
-    return _extrair_subperguntas_json(conteudo)
+    return dados.get("message", {}).get("content", "")
 
 
-def _decompor_hf(pergunta: str) -> list[str]:
-    """Estágio 2 via HuggingFace Transformers: desmembra e contextualiza subperguntas."""
+def _decompor_ollama(pergunta: str) -> list[str]:
+    """Estágio 2 via Ollama HTTP: desmembra e contextualiza subperguntas em JSON estrito."""
+    return _extrair_subperguntas_json(_decompor_ollama_bruto(pergunta))
+
+
+def _decompor_hf_bruto(pergunta: str) -> str:
+    """Executa chamada ao modelo HuggingFace local e retorna o conteúdo bruto."""
     from . import geracao
 
     tok, modelo = geracao._hf()
@@ -202,12 +246,42 @@ def _decompor_hf(pergunta: str) -> list[str]:
     ).to(modelo.device)
     saida = modelo.generate(
         **entrada,
-        max_new_tokens=160,
+        max_new_tokens=220,
         do_sample=False,
         repetition_penalty=1.05,
     )
-    texto = tok.decode(saida[0][entrada["input_ids"].shape[1]:], skip_special_tokens=True).strip()
-    return _extrair_subperguntas_json(texto)
+    return tok.decode(saida[0][entrada["input_ids"].shape[1]:], skip_special_tokens=True).strip()
+
+
+def _decompor_hf(pergunta: str) -> list[str]:
+    """Estágio 2 via HuggingFace Transformers: desmembra e contextualiza subperguntas."""
+    return _extrair_subperguntas_json(_decompor_hf_bruto(pergunta))
+
+
+@lru_cache(maxsize=256)
+def _decompor_llm_com_eixo(pergunta: str, backend: str = "auto") -> tuple[tuple[str, str], ...]:
+    """Estágio 2 (Teste 1): desmembra e já rotula o eixo de cada subpergunta no mesmo JSON."""
+    def _parse(bruto: str) -> tuple[tuple[str, str], ...]:
+        return tuple((i["pergunta"], i["eixo"]) for i in _extrair_itens_subperguntas_json(bruto))
+
+    if backend == "ollama":
+        return _parse(_decompor_ollama_bruto(pergunta))
+    if backend == "hf":
+        return _parse(_decompor_hf_bruto(pergunta))
+    if backend == "auto":
+        tentativas = [_decompor_hf_bruto, _decompor_ollama_bruto] if config.BACKEND == "hf" else [_decompor_ollama_bruto, _decompor_hf_bruto]
+        erros = []
+        for fn in tentativas:
+            try:
+                itens = _parse(fn(pergunta))
+                if len(itens) >= 2:
+                    return itens
+            except Exception as e:
+                erros.append(e)
+        if erros and len(erros) == len(tentativas):
+            raise RuntimeError(f"Todos os backends de decomposição LLM falharam: {erros}")
+        return ()
+    raise ValueError(f"Backend desconhecido para decomposição: {backend}")
 
 
 @lru_cache(maxsize=256)
@@ -231,6 +305,21 @@ def _decompor_llm(pergunta: str, backend: str = "auto") -> tuple[str, ...]:
             raise RuntimeError(f"Todos os backends de decomposição LLM falharam: {erros}")
         return ()
     raise ValueError(f"Backend desconhecido para decomposição: {backend}")
+
+
+def classificar_dominio_d1(subpergunta: str, limiar_confianca: float = 0.60) -> list[str]:
+    """Teste 2 (System-1 zero-shot): classifica subpergunta ambígua entre 'ru' e 'fluxo' via d1-omni."""
+    try:
+        modelo = _carregar_decisor()
+        res = modelo.system_one(subpergunta.strip(), _DOMINIO_AGENTE)
+        probs = res["answers"]["dominio"]["probabilities"]
+        p_ru = float(probs.get("ru", 0.0))
+        p_fluxo = float(probs.get("fluxo", 0.0))
+        if max(p_ru, p_fluxo) < limiar_confianca:
+            return ["ru", "fluxo"]
+        return ["ru"] if p_ru >= p_fluxo else ["fluxo"]
+    except Exception:
+        return ["ru", "fluxo"]
 
 
 def _decompor_fallback(pergunta: str) -> list[str]:
@@ -270,3 +359,16 @@ def decompor(pergunta: str, backend: str = "auto") -> list[str]:
     except Exception:
         pass
     return _decompor_fallback(pergunta)
+
+
+def decompor_com_roteamento(pergunta: str, backend: str = "auto") -> list[dict[str, str]]:
+    """Decompõe consulta composta retornando subperguntas e eixo sugerido [{'pergunta', 'eixo'}]."""
+    if backend == "fallback":
+        return [{"pergunta": s, "eixo": ""} for s in _decompor_fallback(pergunta)]
+    try:
+        itens = _decompor_llm_com_eixo(pergunta.strip(), backend=backend)
+        if len(itens) >= 2:
+            return [{"pergunta": p, "eixo": e} for p, e in itens]
+    except Exception:
+        pass
+    return [{"pergunta": s, "eixo": ""} for s in _decompor_fallback(pergunta)]
