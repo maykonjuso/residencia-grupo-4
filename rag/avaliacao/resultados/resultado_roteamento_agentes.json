@@ -1,0 +1,676 @@
+{
+  "total_perguntas_compostas": 8,
+  "modelos": {
+    "teste1_llm": "ollama:qwen2.5:7b",
+    "teste2_d1_omni": "LiquidAI/d1-omni-600M"
+  },
+  "metricas_subperguntas": {
+    "regex": {
+      "n_subperguntas": 17,
+      "acertos_exatos": 17,
+      "acuracia_exata": 1.0,
+      "recall_dominio": 1.0,
+      "chamadas_extras_desnecessarias": 0,
+      "latencia_media_ms": 0.03
+    },
+    "teste1_llm": {
+      "n_subperguntas": 17,
+      "acertos_exatos": 17,
+      "acuracia_exata": 1.0,
+      "recall_dominio": 1.0,
+      "chamadas_extras_desnecessarias": 0,
+      "latencia_media_ms": 630.02
+    },
+    "teste2_d1_omni": {
+      "n_subperguntas": 17,
+      "acertos_exatos": 17,
+      "acuracia_exata": 1.0,
+      "recall_dominio": 1.0,
+      "chamadas_extras_desnecessarias": 0,
+      "latencia_media_ms": 84.61
+    }
+  },
+  "metricas_decomposicao": {
+    "d1_omni_estagio1": {
+      "total": 8,
+      "detectadas_compostas": 7,
+      "taxa_deteccao": 0.875,
+      "latencia_media_ms": 92.89
+    },
+    "teste1_llm": {
+      "total": 8,
+      "qtd_subperguntas_correta": 8,
+      "taxa_qtd_correta": 1.0,
+      "sequencia_eixos_correta": 8,
+      "latencia_media_ms": 3486.68
+    },
+    "fallback_sintatico": {
+      "total": 8,
+      "qtd_subperguntas_correta": 7,
+      "taxa_qtd_correta": 0.875
+    }
+  },
+  "compostas": [
+    {
+      "id": "M01",
+      "pergunta": "O que tem no almoço de quarta-feira e quais são os pré-requisitos de Testes de Software?",
+      "esperado_n": 2,
+      "esperado_eixos": [
+        "ru",
+        "fluxo"
+      ],
+      "d1_eh_composta": true,
+      "d1_prob_composta": 0.4652,
+      "d1_latencia_ms": 186.89,
+      "fallback_n": 2,
+      "fallback_subperguntas": [
+        "O que tem no almoço de quarta-feira",
+        "quais são os pré-requisitos de Testes de Software"
+      ],
+      "teste1_subperguntas": [
+        {
+          "pergunta": "O que tem no almoço de quarta-feira?",
+          "eixo": "ru"
+        },
+        {
+          "pergunta": "Quais são os pré-requisitos de Testes de Software?",
+          "eixo": "fluxo"
+        }
+      ],
+      "teste1_qtd_correta": true,
+      "teste1_eixos_corretos": true,
+      "teste1_latencia_ms": 4150.02
+    },
+    {
+      "id": "M02",
+      "pergunta": "Qual a proteína servida hoje ao meio-dia no bandejão e o que preciso ter aprovado antes de pegar Cálculo 2?",
+      "esperado_n": 2,
+      "esperado_eixos": [
+        "ru",
+        "fluxo"
+      ],
+      "d1_eh_composta": true,
+      "d1_prob_composta": 0.4965,
+      "d1_latencia_ms": 273.2,
+      "fallback_n": 2,
+      "fallback_subperguntas": [
+        "Qual a proteína servida hoje ao meio-dia no bandejão",
+        "o que preciso ter aprovado antes de pegar Cálculo 2"
+      ],
+      "teste1_subperguntas": [
+        {
+          "pergunta": "Qual a proteína servida hoje ao meio-dia no bandejão?",
+          "eixo": "ru"
+        },
+        {
+          "pergunta": "O que preciso ter aprovado antes de pegar Cálculo 2?",
+          "eixo": "fluxo"
+        }
+      ],
+      "teste1_qtd_correta": true,
+      "teste1_eixos_corretos": true,
+      "teste1_latencia_ms": 3538.56
+    },
+    {
+      "id": "M03",
+      "pergunta": "Quem tem direito a isenção na refeição e até que horas servem o jantar no Gama?",
+      "esperado_n": 2,
+      "esperado_eixos": [
+        "ru",
+        "ru"
+      ],
+      "d1_eh_composta": true,
+      "d1_prob_composta": 0.445,
+      "d1_latencia_ms": 38.53,
+      "fallback_n": 2,
+      "fallback_subperguntas": [
+        "Quem tem direito a isenção na refeição",
+        "até que horas servem o jantar no Gama"
+      ],
+      "teste1_subperguntas": [
+        {
+          "pergunta": "Quem tem direito a isenção na refeição?",
+          "eixo": "ru"
+        },
+        {
+          "pergunta": "Até que horas servem o jantar no Gama?",
+          "eixo": "ru"
+        }
+      ],
+      "teste1_qtd_correta": true,
+      "teste1_eixos_corretos": true,
+      "teste1_latencia_ms": 2912.45
+    },
+    {
+      "id": "M04",
+      "pergunta": "Quantas horas de estágio são exigidas em Engenharia de Energia e como um aluno da graduação pede para cursar matéria isolada na pós?",
+      "esperado_n": 2,
+      "esperado_eixos": [
+        "fluxo",
+        "fluxo"
+      ],
+      "d1_eh_composta": true,
+      "d1_prob_composta": 0.6226,
+      "d1_latencia_ms": 54.29,
+      "fallback_n": 2,
+      "fallback_subperguntas": [
+        "Quantas horas de estágio são exigidas em Engenharia de Energia",
+        "como um aluno da graduação pede para cursar matéria isolada na pós"
+      ],
+      "teste1_subperguntas": [
+        {
+          "pergunta": "Quantas horas de estágio são exigidas em Engenharia de Energia?",
+          "eixo": "fluxo"
+        },
+        {
+          "pergunta": "Como um aluno da graduação pede para cursar matéria isolada na pós-graduação?",
+          "eixo": "fluxo"
+        }
+      ],
+      "teste1_qtd_correta": true,
+      "teste1_eixos_corretos": true,
+      "teste1_latencia_ms": 3711.48
+    },
+    {
+      "id": "M05",
+      "pergunta": "Onde vejo se a comida de hoje tem derivados de leite e qual o prazo máximo para desistir de uma turma no semestre sem reprovar?",
+      "esperado_n": 2,
+      "esperado_eixos": [
+        "ru",
+        "fluxo"
+      ],
+      "d1_eh_composta": true,
+      "d1_prob_composta": 0.5504,
+      "d1_latencia_ms": 55.0,
+      "fallback_n": 2,
+      "fallback_subperguntas": [
+        "Onde vejo se a comida de hoje tem derivados de leite",
+        "qual o prazo máximo para desistir de uma turma no semestre sem reprovar"
+      ],
+      "teste1_subperguntas": [
+        {
+          "pergunta": "Onde vejo se a comida de hoje tem derivados de leite?",
+          "eixo": "ru"
+        },
+        {
+          "pergunta": "Qual é o prazo máximo para desistir de uma turma no semestre sem reprovar?",
+          "eixo": "fluxo"
+        }
+      ],
+      "teste1_qtd_correta": true,
+      "teste1_eixos_corretos": true,
+      "teste1_latencia_ms": 3663.18
+    },
+    {
+      "id": "M06",
+      "pergunta": "Qual a carga horária mínima por período em Software e quanto paga quem não recebe bolsa de alimentação?",
+      "esperado_n": 2,
+      "esperado_eixos": [
+        "fluxo",
+        "ru"
+      ],
+      "d1_eh_composta": false,
+      "d1_prob_composta": 0.3744,
+      "d1_latencia_ms": 47.03,
+      "fallback_n": 2,
+      "fallback_subperguntas": [
+        "Qual a carga horária mínima por período em Software",
+        "quanto paga quem não recebe bolsa de alimentação"
+      ],
+      "teste1_subperguntas": [
+        {
+          "pergunta": "Qual a carga horária mínima por período em Software?",
+          "eixo": "fluxo"
+        },
+        {
+          "pergunta": "Quanto paga quem não recebe bolsa de alimentação?",
+          "eixo": "ru"
+        }
+      ],
+      "teste1_qtd_correta": true,
+      "teste1_eixos_corretos": true,
+      "teste1_latencia_ms": 2904.79
+    },
+    {
+      "id": "M07",
+      "pergunta": "Quanto custa o desjejum para Grupo II, quantos créditos exige Engenharia Aeroespacial e abre aos sábados para comer?",
+      "esperado_n": 3,
+      "esperado_eixos": [
+        "ru",
+        "fluxo",
+        "ru"
+      ],
+      "d1_eh_composta": true,
+      "d1_prob_composta": 0.6356,
+      "d1_latencia_ms": 38.81,
+      "fallback_n": 2,
+      "fallback_subperguntas": [
+        "Quanto custa o desjejum para Grupo II, quantos créditos exige Engenharia Aeroespacial",
+        "abre aos sábados para comer"
+      ],
+      "teste1_subperguntas": [
+        {
+          "pergunta": "Quanto custa o desjejum para Grupo II?",
+          "eixo": "ru"
+        },
+        {
+          "pergunta": "Quantos créditos exige Engenharia Aeroespacial?",
+          "eixo": "fluxo"
+        },
+        {
+          "pergunta": "Abre aos sábados para comer?",
+          "eixo": "ru"
+        }
+      ],
+      "teste1_qtd_correta": true,
+      "teste1_eixos_corretos": true,
+      "teste1_latencia_ms": 4006.85
+    },
+    {
+      "id": "M08",
+      "pergunta": "Sou calouro da ABI na FCTE: em qual etapa escolho minha engenharia específica e quais documentos apresento na catraca para comer?",
+      "esperado_n": 2,
+      "esperado_eixos": [
+        "fluxo",
+        "ru"
+      ],
+      "d1_eh_composta": true,
+      "d1_prob_composta": 0.514,
+      "d1_latencia_ms": 49.38,
+      "fallback_n": 2,
+      "fallback_subperguntas": [
+        "Sou calouro da ABI na FCTE: em qual etapa escolho minha engenharia específica",
+        "quais documentos apresento na catraca para comer"
+      ],
+      "teste1_subperguntas": [
+        {
+          "pergunta": "Em qual etapa escolho minha engenharia específica?",
+          "eixo": "fluxo"
+        },
+        {
+          "pergunta": "Quais documentos apresento na catraca para comer?",
+          "eixo": "ru"
+        }
+      ],
+      "teste1_qtd_correta": true,
+      "teste1_eixos_corretos": true,
+      "teste1_latencia_ms": 3006.09
+    }
+  ],
+  "subperguntas": [
+    {
+      "id": "M01.1",
+      "id_composta": "M01",
+      "subpergunta": "O que tem no almoço de quarta-feira no RU?",
+      "eixo_esperado": "ru",
+      "rotas_regex": [
+        "ru"
+      ],
+      "latencia_regex_ms": 0.0653,
+      "rotas_t1": [
+        "ru"
+      ],
+      "latencia_t1_ms": 597.97,
+      "rotas_t2": [
+        "ru"
+      ],
+      "probs_t2": {
+        "ru": 0.9804,
+        "fluxo": 0.0196
+      },
+      "latencia_t2_ms": 90.45
+    },
+    {
+      "id": "M01.2",
+      "id_composta": "M01",
+      "subpergunta": "Quais são os pré-requisitos de Testes de Software?",
+      "eixo_esperado": "fluxo",
+      "rotas_regex": [
+        "fluxo"
+      ],
+      "latencia_regex_ms": 0.0166,
+      "rotas_t1": [
+        "fluxo"
+      ],
+      "latencia_t1_ms": 674.67,
+      "rotas_t2": [
+        "fluxo"
+      ],
+      "probs_t2": {
+        "ru": 0.0007,
+        "fluxo": 0.9993
+      },
+      "latencia_t2_ms": 57.64
+    },
+    {
+      "id": "M02.1",
+      "id_composta": "M02",
+      "subpergunta": "Qual a proteína servida hoje no almoço do RU?",
+      "eixo_esperado": "ru",
+      "rotas_regex": [
+        "ru"
+      ],
+      "latencia_regex_ms": 0.0204,
+      "rotas_t1": [
+        "ru"
+      ],
+      "latencia_t1_ms": 594.05,
+      "rotas_t2": [
+        "ru"
+      ],
+      "probs_t2": {
+        "ru": 0.9683,
+        "fluxo": 0.0317
+      },
+      "latencia_t2_ms": 86.58
+    },
+    {
+      "id": "M02.2",
+      "id_composta": "M02",
+      "subpergunta": "Quais disciplinas preciso ter aprovado antes de cursar Cálculo 2?",
+      "eixo_esperado": "fluxo",
+      "rotas_regex": [
+        "fluxo"
+      ],
+      "latencia_regex_ms": 0.0122,
+      "rotas_t1": [
+        "fluxo"
+      ],
+      "latencia_t1_ms": 676.31,
+      "rotas_t2": [
+        "fluxo"
+      ],
+      "probs_t2": {
+        "ru": 0.0039,
+        "fluxo": 0.9961
+      },
+      "latencia_t2_ms": 55.07
+    },
+    {
+      "id": "M03.1",
+      "id_composta": "M03",
+      "subpergunta": "Quem tem direito a isenção nas refeições do RU?",
+      "eixo_esperado": "ru",
+      "rotas_regex": [
+        "ru"
+      ],
+      "latencia_regex_ms": 0.0427,
+      "rotas_t1": [
+        "ru"
+      ],
+      "latencia_t1_ms": 595.27,
+      "rotas_t2": [
+        "ru"
+      ],
+      "probs_t2": {
+        "ru": 0.8563,
+        "fluxo": 0.1437
+      },
+      "latencia_t2_ms": 79.73
+    },
+    {
+      "id": "M03.2",
+      "id_composta": "M03",
+      "subpergunta": "Até que horas é servido o jantar no RU Gama?",
+      "eixo_esperado": "ru",
+      "rotas_regex": [
+        "ru"
+      ],
+      "latencia_regex_ms": 0.0193,
+      "rotas_t1": [
+        "ru"
+      ],
+      "latencia_t1_ms": 611.34,
+      "rotas_t2": [
+        "ru"
+      ],
+      "probs_t2": {
+        "ru": 0.8991,
+        "fluxo": 0.1009
+      },
+      "latencia_t2_ms": 54.0
+    },
+    {
+      "id": "M04.1",
+      "id_composta": "M04",
+      "subpergunta": "Quantas horas de estágio obrigatório são exigidas em Engenharia de Energia?",
+      "eixo_esperado": "fluxo",
+      "rotas_regex": [
+        "fluxo"
+      ],
+      "latencia_regex_ms": 0.0364,
+      "rotas_t1": [
+        "fluxo"
+      ],
+      "latencia_t1_ms": 631.54,
+      "rotas_t2": [
+        "fluxo"
+      ],
+      "probs_t2": {
+        "ru": 0.0223,
+        "fluxo": 0.9777
+      },
+      "latencia_t2_ms": 163.66
+    },
+    {
+      "id": "M04.2",
+      "id_composta": "M04",
+      "subpergunta": "Como um estudante de graduação solicita cursar disciplina no mestrado (PPGEB)?",
+      "eixo_esperado": "fluxo",
+      "rotas_regex": [
+        "fluxo"
+      ],
+      "latencia_regex_ms": 0.0134,
+      "rotas_t1": [
+        "fluxo"
+      ],
+      "latencia_t1_ms": 676.02,
+      "rotas_t2": [
+        "fluxo"
+      ],
+      "probs_t2": {
+        "ru": 0.0012,
+        "fluxo": 0.9988
+      },
+      "latencia_t2_ms": 59.33
+    },
+    {
+      "id": "M05.1",
+      "id_composta": "M05",
+      "subpergunta": "Onde consultar se a comida de hoje no RU contém derivados de leite (alergênicos)?",
+      "eixo_esperado": "ru",
+      "rotas_regex": [
+        "ru"
+      ],
+      "latencia_regex_ms": 0.063,
+      "rotas_t1": [
+        "ru"
+      ],
+      "latencia_t1_ms": 593.02,
+      "rotas_t2": [
+        "ru"
+      ],
+      "probs_t2": {
+        "ru": 0.9491,
+        "fluxo": 0.0509
+      },
+      "latencia_t2_ms": 90.37
+    },
+    {
+      "id": "M05.2",
+      "id_composta": "M05",
+      "subpergunta": "Qual o prazo máximo para desistir (trancar) uma turma no semestre sem reprovar?",
+      "eixo_esperado": "fluxo",
+      "rotas_regex": [
+        "fluxo"
+      ],
+      "latencia_regex_ms": 0.0272,
+      "rotas_t1": [
+        "fluxo"
+      ],
+      "latencia_t1_ms": 672.71,
+      "rotas_t2": [
+        "fluxo"
+      ],
+      "probs_t2": {
+        "ru": 0.0315,
+        "fluxo": 0.9685
+      },
+      "latencia_t2_ms": 62.09
+    },
+    {
+      "id": "M06.1",
+      "id_composta": "M06",
+      "subpergunta": "Qual a carga horária mínima por semestre em Engenharia de Software?",
+      "eixo_esperado": "fluxo",
+      "rotas_regex": [
+        "fluxo"
+      ],
+      "latencia_regex_ms": 0.0449,
+      "rotas_t1": [
+        "fluxo"
+      ],
+      "latencia_t1_ms": 622.75,
+      "rotas_t2": [
+        "fluxo"
+      ],
+      "probs_t2": {
+        "ru": 0.0107,
+        "fluxo": 0.9893
+      },
+      "latencia_t2_ms": 84.89
+    },
+    {
+      "id": "M06.2",
+      "id_composta": "M06",
+      "subpergunta": "Quanto paga nas refeições do RU quem não recebe auxílio alimentação?",
+      "eixo_esperado": "ru",
+      "rotas_regex": [
+        "ru"
+      ],
+      "latencia_regex_ms": 0.02,
+      "rotas_t1": [
+        "ru"
+      ],
+      "latencia_t1_ms": 629.92,
+      "rotas_t2": [
+        "ru"
+      ],
+      "probs_t2": {
+        "ru": 0.956,
+        "fluxo": 0.044
+      },
+      "latencia_t2_ms": 199.62
+    },
+    {
+      "id": "M07.1",
+      "id_composta": "M07",
+      "subpergunta": "Quanto custa o café da manhã (desjejum) no RU para o Grupo II?",
+      "eixo_esperado": "ru",
+      "rotas_regex": [
+        "ru"
+      ],
+      "latencia_regex_ms": 0.0533,
+      "rotas_t1": [
+        "ru"
+      ],
+      "latencia_t1_ms": 582.23,
+      "rotas_t2": [
+        "ru"
+      ],
+      "probs_t2": {
+        "ru": 0.9599,
+        "fluxo": 0.0401
+      },
+      "latencia_t2_ms": 92.43
+    },
+    {
+      "id": "M07.2",
+      "id_composta": "M07",
+      "subpergunta": "Quantos créditos exige o curso de Engenharia Aeroespacial?",
+      "eixo_esperado": "fluxo",
+      "rotas_regex": [
+        "fluxo"
+      ],
+      "latencia_regex_ms": 0.0127,
+      "rotas_t1": [
+        "fluxo"
+      ],
+      "latencia_t1_ms": 674.35,
+      "rotas_t2": [
+        "fluxo"
+      ],
+      "probs_t2": {
+        "ru": 0.001,
+        "fluxo": 0.999
+      },
+      "latencia_t2_ms": 54.21
+    },
+    {
+      "id": "M07.3",
+      "id_composta": "M07",
+      "subpergunta": "O RU Gama abre aos sábados para refeições?",
+      "eixo_esperado": "ru",
+      "rotas_regex": [
+        "ru"
+      ],
+      "latencia_regex_ms": 0.0371,
+      "rotas_t1": [
+        "ru"
+      ],
+      "latencia_t1_ms": 616.55,
+      "rotas_t2": [
+        "ru"
+      ],
+      "probs_t2": {
+        "ru": 0.8403,
+        "fluxo": 0.1597
+      },
+      "latencia_t2_ms": 57.22
+    },
+    {
+      "id": "M08.1",
+      "id_composta": "M08",
+      "subpergunta": "Sou calouro da ABI na FCTE: em qual etapa escolho minha engenharia específica?",
+      "eixo_esperado": "fluxo",
+      "rotas_regex": [
+        "fluxo"
+      ],
+      "latencia_regex_ms": 0.039,
+      "rotas_t1": [
+        "fluxo"
+      ],
+      "latencia_t1_ms": 631.13,
+      "rotas_t2": [
+        "fluxo"
+      ],
+      "probs_t2": {
+        "ru": 0.001,
+        "fluxo": 0.999
+      },
+      "latencia_t2_ms": 92.55
+    },
+    {
+      "id": "M08.2",
+      "id_composta": "M08",
+      "subpergunta": "Quais documentos o estudante apresenta na catraca para comer no RU?",
+      "eixo_esperado": "ru",
+      "rotas_regex": [
+        "ru"
+      ],
+      "latencia_regex_ms": 0.0223,
+      "rotas_t1": [
+        "ru"
+      ],
+      "latencia_t1_ms": 630.56,
+      "rotas_t2": [
+        "ru"
+      ],
+      "probs_t2": {
+        "ru": 0.8812,
+        "fluxo": 0.1188
+      },
+      "latencia_t2_ms": 58.5
+    }
+  ]
+}
