@@ -12,6 +12,28 @@ from .reescrita import classificar_composta, decompor
 STOPWORDS = set("""a o as os de da do das dos e é em no na nos nas um uma para por com que se ao à
 às como mais ou qual quais quando onde ser sua seu meu minha eu tem há""".split())
 
+# Normalização léxica leve para o BM25 (cobre descasamentos comuns sem depender de embeddings).
+SINONIMOS_BM25 = {
+    "preço": "valor",
+    "preços": "valor",
+    "preco": "valor",
+    "precos": "valor",
+    "custa": "valor",
+    "custam": "valor",
+    "custo": "valor",
+    "custos": "valor",
+    "valores": "valor",
+    "tarifa": "valor",
+    "tarifas": "valor",
+    "paga": "valor",
+    "pagam": "valor",
+    "pagar": "valor",
+    "refeições": "refeição",
+    "refeicoes": "refeição",
+    "refeicao": "refeição",
+    "estudantes": "estudante",
+}
+
 
 TOKEN = re.compile(r"\d{1,2}/\d{1,2}(?:/\d{2,4})?|[a-z]{2,4}\d{3,4}|[a-z0-9à-ú]+")
 
@@ -23,6 +45,7 @@ def tokenizar(t: str) -> list[str]:
     for w in TOKEN.findall(t.lower()):
         if w in STOPWORDS:
             continue
+        w = SINONIMOS_BM25.get(w, w)
         if "/" in w:                       # normaliza 11/11/2026 e 11/11 para o mesmo termo extra
             partes = w.split("/")
             toks.append(f"{int(partes[0]):02d}/{int(partes[1]):02d}")
