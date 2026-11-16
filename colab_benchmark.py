@@ -234,7 +234,8 @@ def executar_colab_benchmark(
     print("[Auditoria R3] Verificação estrita de Zero Latência aprovada com 100% de conformidade.")
 
     # 7. Persistência dos resultados
-    caminho_json = Path(arquivo_saida or (RAIZ / "rag" / "avaliacao" / "resultado_benchmark_colab.json"))
+    pasta_resultados = RAIZ / "rag" / "avaliacao" / "resultados"
+    caminho_json = Path(arquivo_saida or (pasta_resultados / "resultado_benchmark_colab.json"))
     caminho_md = caminho_json.with_suffix(".md")
 
     caminho_json.parent.mkdir(parents=True, exist_ok=True)
@@ -248,8 +249,9 @@ def executar_colab_benchmark(
     print(f"[Exportação] Relatório executivo em Markdown salvo em: {caminho_md}")
 
     # Salva também os artefatos de granularidade para as issues #17, #28 e #29
-    caminho_comparativas = RAIZ / "rag" / "avaliacao" / "respostas_comparativas.json"
-    caminho_fidelidade = RAIZ / "rag" / "avaliacao" / "resultado_fidelidade.json"
+    destino_granular = caminho_json.parent if arquivo_saida else pasta_resultados
+    caminho_comparativas = destino_granular / "respostas_comparativas.json"
+    caminho_fidelidade = destino_granular / "resultado_fidelidade.json"
 
     pareadas = {}
     for r in dados.get("resultados", []):
@@ -312,7 +314,7 @@ def main(argv: list[str] | None = None) -> int:
         "--arquivo-saida",
         type=str,
         default=None,
-        help="Caminho para o arquivo JSON de destino (padrão: rag/avaliacao/resultado_benchmark_colab.json)",
+        help="Caminho para o arquivo JSON de destino (padrão: rag/avaliacao/resultados/resultado_benchmark_colab.json)",
     )
     parser.add_argument(
         "-k",

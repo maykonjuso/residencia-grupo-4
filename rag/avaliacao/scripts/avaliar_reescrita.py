@@ -2,8 +2,14 @@
 from __future__ import annotations
 
 import json
+from pathlib import Path
 import statistics
+import sys
 import time
+
+_RAIZ_RAG = Path(__file__).resolve().parents[2]
+if str(_RAIZ_RAG) not in sys.path:
+    sys.path.insert(0, str(_RAIZ_RAG))
 
 from rumo_rag import config, geracao, indice, reescrita
 
@@ -153,7 +159,8 @@ def main() -> None:
         "casos": resultados,
     }
 
-    destino = config.AVALIACAO / "resultado_reescrita.json"
+    config.RESULTADOS_AVALIACAO.mkdir(parents=True, exist_ok=True)
+    destino = config.RESULTADOS_AVALIACAO / "resultado_reescrita.json"
     destino.write_text(json.dumps(resumo, ensure_ascii=False, indent=2), encoding="utf-8")
     print("\nResumo salvo em", destino)
     print(json.dumps(resumo["sem_reescrita"], ensure_ascii=False))
