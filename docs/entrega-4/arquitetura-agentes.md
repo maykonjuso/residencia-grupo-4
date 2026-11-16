@@ -1,110 +1,77 @@
-# Arquitetura e responsabilidades dos agentes
+# Arquitetura dos Agentes
 
-Esta página detalha o desenho estrutural do primeiro sistema multiagentes do RUmo (`rag/rumo_rag/agentes.py`), suas responsabilidades isoladas e os contratos de dados trocados entre os agentes.
+A arquitetura multiagente do **RUmo** organiza o processamento em uma malha desacoplada implementada em `rag/rumo_rag/agentes.py` e `rag/rumo_rag/reescrita.py`, com **quatro agentes principais** (`Orquestrador`, `AgenteRU`, `AgenteFluxo` e `AgenteValidador`) apoiados pelo componente `Sintetizador` e pelo módulo de reescrita e classificação em dois estágios.
+
+!!! info "Estado da implementação"
+    O esqueleto arquitetural, as interfaces entre classes, o paralelismo, o validador factual e a devolução ao sintetizador estão implementados. Detalhes internos das ferramentas e prompts especializados de domínio dependem das issues **#41**, **#42** e **#43** (`[a detalhar]`).
 
 ---
 
-## 1. Visão geral da arquitetura multiagente
+## Diagrama da arquitetura multiagente
 
-A **Figura 1** apresenta a topologia de agentes do RUmo. Em vez de concentrar recuperação e geração em um único bloco, o `Orquestrador` divide a pergunta do estudante em subconsultas independentes, aciona os agentes especialistas (`AgenteRU` e `AgenteFluxo`) em paralelo e submete cada resposta parcial ao crivo do `AgenteValidador` antes de entregá-la ao `Sintetizador`.
+A **Figura 1** apresenta a arquitetura verticalizada com os quatro agentes, suas conexões de controle e dados, o acesso serializado ao índice vetorial e o caminho de retorno quando o validador reprova uma resposta.
 
 ```mermaid
 flowchart TB
-    Q(["Pergunta do estudante"]) --> ORQ["Orquestrador<br/>Estágio 1: d1-omni-600M (limiar 0,39)<br/>Estágio 2: LLM Decompositor + Roteador"]
-    ORQ -->|"subpergunta eixo = ru"| ARU["Agente RU<br/>(Research Agent)<br/>Busca eixo='ru' + geração [1..k]"]
-    ORQ -->|"subpergunta eixo = fluxo"| AFL["Agente Fluxo<br/>(Research Agent)<br/>Busca eixo='fluxo' + geração [1..k]"]
+    Est["Estudante / CLI (--agentes)"] --> Orq["Agente Orquestrador (Orquestrador.executar)"]
 
-    ARU -->|"RespostaAgente"| VAL["Agente Validador<br/>(Validation Agent)<br/>Checa valores_sem_fonte + RN-02"]
-    AFL -->|"RespostaAgente"| VAL
+    Orq -->|"1. Classifica e decompoe"| Rees["reescrita.py: d1-omni (limiar 0.39) + decompor_com_roteamento"]
+    Rees -->|"Subperguntas + eixo sugerido"| Orq
 
-    VAL -->|"aprovado = True"| SINT["Sintetizador<br/>(Analysis & Communication Agent)<br/>Compõe resposta sem misturar [n]"]
-    VAL -->|"aprovado = False<br/>(devolver_ao_sintetizador)"| REP["Reparo no Sintetizador<br/>fallback_extrativo / sinalização"]
-    REP -->|"revalidação"| VAL
+    Orq -->|"2. Roteamento hibrido (rotear_subpergunta)"| Rot["Cascata: LLM (Teste 1) -> Regex -> d1-omni (Teste 2, limiar 0.60)"]
 
-    SINT --> OUT(["Resposta final composta<br/>Fontes e trechos [n] isolados por parte"])
+    Rot -->|"3a. Execucao paralela (ThreadPoolExecutor)"| AgRU["Agente Especialista RU (AgenteRU)"]
+    Rot -->|"3b. Execucao paralela (ThreadPoolExecutor)"| AgFl["Agente Especialista Fluxo (AgenteFluxo)"]
 
-    classDef entrada fill:#e6eef7,stroke:#003f7a,color:#00223f
-    classDef agente fill:#e6f4ec,stroke:#008137,color:#00381a
-    classDef alerta fill:#fff4d6,stroke:#b8860b,color:#4a3500
-    class Q,OUT entrada
-    class ORQ,ARU,AFL,SINT agente
-    class VAL,REP alerta
+    AgRU -->|"buscar_contexto (_LOCK_BUSCA)"| Corpus["Corpus UnB indexado (eixos ru, fluxo, apoio)"]
+    AgFl -->|"buscar_contexto (_LOCK_BUSCA)"| Corpus
+
+    AgRU -->|"RespostaAgente (texto + fontes + status)"| Orq
+    AgFl -->|"RespostaAgente (texto + fontes + status)"| Orq
+
+    Orq -->|"4. Validacao factual"| AgVal["Agente Validador (AgenteValidador.validar)"]
+
+    AgVal -->|"acao_recomendada = aprovar"| Sint["Sintetizador (compor)"]
+    AgVal -->|"acao_recomendada = devolver_ao_sintetizador"| Ret["Sintetizador.processar_devolucao"]
+    Ret -->|"Fallback extrativo ou RECUSA / aviso"| Sint
+
+    Orq -.->|"Falha isolada / degradacao graciosa"| Sint
+    Sint -->|"5. Resposta final com [n] isolados + trace"| Est
 ```
 
-<p class="legenda">Figura 1. Arquitetura do sistema multiagentes do RUmo: orquestração, execução paralela por domínio, auditoria factual e composição final.</p>
+<p class="legenda">Figura 1. Arquitetura verticalizada dos quatro agentes do RUmo, conexões com o corpus, validação factual e devolução ao sintetizador.</p>
 
 ---
 
-## 2. Responsabilidades de cada agente
+## Conexões e contratos entre componentes
 
-A **Tabela 1** consolida o escopo documental, as entradas e as saídas esperadas de cada componente da arquitetura.
+A comunicação interna segue o fluxo unidirecional coordenado pelo `Orquestrador`, com um único ciclo controlado de retorno entre o `AgenteValidador` e o `Sintetizador`. A **Tabela 1** descreve cada conexão da arquitetura.
 
-| Componente | Tipo de agente | Escopo de atuação | Entrada principal | Saída / Efeito |
-|---|---|---|---|---|
-| **Orquestrador** | Coordenador / Roteador | Todo o fluxo (`reescrita.py` + `agentes.py`) | Pergunta original, `backend`, `k` | `dict` completo com partes compostas, avisos de degradação e `trace` |
-| **AgenteRU** | *Research Agent* | Documentos `eixo="ru"` (F01–F09) com fallback em `apoio` | Subpergunta de alimentação / RU | `RespostaAgente` com `[1]..[k]` locais e fontes oficiais do RU |
-| **AgenteFluxo** | *Research Agent* | Documentos `eixo="fluxo"` (F15–F36) com fallback em `apoio` | Subpergunta de graduação / PPGEB | `RespostaAgente` com `[1]..[k]` locais e fontes acadêmicas |
-| **AgenteValidador** | *Validation Agent* | Auditoria RN-02 e RN-03 em cima dos trechos locais | `RespostaAgente` | `ResultadoValidacao` (`aprovar` ou `devolver_ao_sintetizador`) |
-| **Sintetizador** | *Analysis & Communication Agent* | Pós-processamento, reparo e composição | Lista de `RespostaAgente` validadas | Texto final organizado por parte + avisos de queda parcial |
-
-<p class="legenda">Tabela 1. Escopo documental, entradas e saídas dos agentes.</p>
-
-### 2.1. `Orquestrador` (*Orchestrator / Router*)
-
-- **Triagem e decomposição:** aciona `reescrita.classificar_composta` (com `LiquidAI/d1-omni-600M` calibrado em `config.LIMIAR_COMPOSTA = 0.39`) e decompõe consultas múltiplas no Estágio 2 (com fallback sintático para o caso offline quando há cruzamento de termos de RU e Fluxo).
-- **Roteamento:** encaminha cada subpergunta para `["ru"]`, `["fluxo"]` ou ambos (`["ru", "fluxo"]`).
-- **Paralelismo seguro:** dispara os agentes especialistas via `ThreadPoolExecutor`, utilizando `_LOCK_BUSCA` ao redor da consulta ao índice para evitar colisão de inicialização concorrente no `chromadb` (`RustBindingsAPI`), enquanto mantém a chamada pesada de geração ao LLM em paralelo real.
-- **Resiliência:** captura exceções individuais em cada *worker* e mantém as demais partes em funcionamento com aviso explícito (`degradado=True`).
-
-### 2.2. `AgenteRU` e `AgenteFluxo` (*Research Agents*)
-
-Ambos herdam a interface comum de [`AgenteBase`](https://github.com/maykonjuso/residencia-grupo-4/blob/main/rag/rumo_rag/agentes.py), mas filtram os metadados do índice por domínio:
-
-- **`AgenteRU` (`eixo="ru"`):** responde sobre cardápios semanais (F08, F09), tabelas de preços e grupos I–IV (F01, F04), horários e funcionamento (F02, F03), carteirinha/acesso (F05), Programa Auxílio Alimentação e PNAES (F06, F07, F10) e alergênicos.
-- **`AgenteFluxo` (`eixo="fluxo"`):** responde sobre matrizes curriculares, PPCs e fluxogramas das cinco engenharias do campus Gama (F15–F28), calendários acadêmicos e matrícula (F29–F30, F33–F34), normas de trancamento CEPE 93/2018 (F31), regimentos internos (F35–F36) e disciplinas isoladas no PPGEB.
-- **Fallback em `apoio`:** se a busca restrita ao eixo principal retornar lista vazia, o agente consulta automaticamente `eixo="apoio"` (editais e normas transversais), preservando cobertura sem contaminar o ranking principal.
-
-### 2.3. `AgenteValidador` (*Validation Agent*)
-
-Atua como barreira automática de qualidade e conformidade com as regras de negócio após a geração de cada especialista:
-
-- **Fidelidade numérica e factual (`geracao.valores_sem_fonte`):** extrai preços (`R$ ...`), datas (`dd/mm`), horários (`11h30`), códigos de disciplinas (`FGA0314`) e quantidades (créditos, horas, vagas, semestres) da resposta e verifica se todos constam literalmente nos `trechos_recuperados` daquele agente.
-- **Rastreabilidade obrigatória (`geracao.resposta_sem_citacao`, RN-02):** garante que toda resposta não recusada contenha ao menos uma citação válida `[n]` dentro do intervalo `1..len(trechos)`.
-- **Decisão e devolução:** quando qualquer verificação falha, define `aprovado=False` e `acao_recomendada="devolver_ao_sintetizador"`, registrando os motivos no `trace`.
-
-### 2.4. `Sintetizador` (*Analysis & Communication Agent*)
-
-Executa duas funções complementares ao final do fluxo:
-
-1. **Tratamento de devoluções (`processar_devolucao`):** ao receber um item reprovado pelo `AgenteValidador`, tenta regenerar a resposta em modo determinístico estrito (`backend="extrativo"`, que copia apenas frases literais dos trechos com suas citações `[n]`). Se os trechos estiverem vazios, força a recusa padrão `RECUSA` (RN-03); se mesmo após reparo persistir pendência factual, anexa aviso visível ao estudante.
-2. **Composição contratual (`compor`):** reúne as respostas dos agentes mantendo os índices `[1]..[k]` e listas de fontes **completamente isolados por parte**, nunca misturando numerações entre o `AgenteRU` e o `AgenteFluxo` (garantindo compatibilidade estrita com o validador do portal integrado com o Grupo 09).
-
----
-
-## 3. Contratos de dados entre agentes
-
-A **Tabela 2** especifica os campos das estruturas `@dataclass` trocadas internamente entre os agentes em `rag/rumo_rag/agentes.py`.
-
-| Estrutura | Campo | Tipo | Papel no contrato |
+| Origem | Destino | Payload / Chamada | Regra de execução |
 |---|---|---|---|
-| `RespostaAgente` | `agente` / `nome_agente` | `str` | Identificador (`"ru"`, `"fluxo"`) e nome legível do especialista |
-| `RespostaAgente` | `subpergunta` | `str` | Subconsulta atômica recebida após decomposição |
-| `RespostaAgente` | `resposta` | `str` | Texto gerado com citações locais `[1]..[k]` |
-| `RespostaAgente` | `trechos_recuperados` | `list[dict]` | Chunks resumidos que fundamentam apenas esta parte |
-| `RespostaAgente` | `fontes_citadas` | `list[dict]` | Documentos oficiais citados com `n`, `doc_id`, `pagina` e `url` |
-| `RespostaAgente` | `tempo_busca_s` / `tempo_geracao_s` / `tempo_total_s` | `float` | Métricas individuais usadas para comprovar ganho de paralelismo |
-| `RespostaAgente` | `erro` | `str \| None` | Descrição da falha quando o agente cai (degradação elegante) |
-| `RespostaAgente` | `validacao` | `dict \| None` | Parecer serializado emitido pelo `AgenteValidador` |
-| `ResultadoValidacao` | `aprovado` | `bool` | `True` se passou em `valores_sem_fonte` e RN-02 |
-| `ResultadoValidacao` | `motivos` | `list[str]` | Lista de divergências factuais ou falta de citação |
-| `ResultadoValidacao` | `acao_recomendada` | `str` | `"aprovar"` ou `"devolver_ao_sintetizador"` |
+| CLI (`__main__.py`) | `Orquestrador` | `executar(pergunta, backend, k, falhar_agente)` | Ativado pela flag `--agentes`; `--trace` habilita a coleta detalhada por estágio |
+| `Orquestrador` | `reescrita.py` | `classificar_composta` e `decompor_com_roteamento` | Estágio 1 usa `d1-omni-600M` com `LIMIAR_COMPOSTA = 0.39`; Estágio 2 usa LLM conjunto ou fallback sintático (`_decompor_fallback`) |
+| `Orquestrador` | `rotear_subpergunta` | `(subpergunta, eixo_sugerido, usar_d1_fallback=True)` | Cascata determinística: `Teste 1 (eixo LLM)` → `Regex` → `Teste 2 (d1-omni)` com `limiar_confianca = 0.60` |
+| `Orquestrador` | `AgenteRU` / `AgenteFluxo` | `responder(subpergunta, k=config.TOP_K, backend=config.BACKEND)` | Executado em paralelo via `ThreadPoolExecutor`; acesso ao índice protegido por `_LOCK_BUSCA` |
+| `AgenteRU` / `AgenteFluxo` | `Orquestrador` | `RespostaAgente` | Carrega resposta, fontes recuperadas, trechos, tempos e eventuais exceções capturadas |
+| `Orquestrador` | `AgenteValidador` | `validar(item: RespostaAgente) -> ResultadoValidacao` | Avalia `geracao.valores_sem_fonte` e `geracao.resposta_sem_citacao`; ignora apenas itens que falharam na execução |
+| `AgenteValidador` | `Sintetizador` | `processar_devolucao(item, validacao, backend)` | Acionado quando `acao_recomendada == "devolver_ao_sintetizador"`; tenta fallback extrativo sobre os trechos recuperados ou aplica `RECUSA` |
+| `Sintetizador` | Estudante / Portal | `compor(pergunta, partes)` | Mantém numeração `[n]` independente por bloco e preserva avisos de falha parcial (`degradado=True`) |
 
-<p class="legenda">Tabela 2. Campos das estruturas RespostaAgente e ResultadoValidacao.</p>
+<p class="legenda">Tabela 1. Conexões, interfaces e regras de execução entre os componentes multiagente.</p>
 
 ---
+
+## Especialização pendente e pontos de extensão
+
+A arquitetura atual já isola as fronteiras de responsabilidade para receber as implementações especializadas sem alterar o contrato do `Orquestrador`:
+
+1. **`AgenteRU` e `AgenteFluxo` (herdam de `AgenteBase`):** compartilham hoje o fluxo padrão `buscar_contexto` + `gerar_resposta` filtrado por `eixo` (`"ru"` ou `"fluxo"`) somado ao eixo `"apoio"`. Prompts específicos de domínio, reformulações especializadas e eventuais ferramentas auxiliares estão marcados como `[a detalhar na issue #41 / #42]`.
+2. **`AgenteValidador`:** verifica objetivamente valores sem respaldo nas fontes (`geracao.valores_sem_fonte`) e ausência de citação (`geracao.resposta_sem_citacao`). Verificações semânticas adicionais baseadas em modelo estão marcadas como `[a detalhar na issue #43]`.
+3. **Paralelismo thread-safe:** a busca vetorial compartilhada é serializada por `_LOCK_BUSCA` para evitar condições de corrida no backend `BUSCA`, mantendo o paralelismo real nas chamadas de geração (`gerar_resposta`).
 
 ??? abstract "Histórico de revisão"
-
-    | Data | Versão | Descrição | Autor |
-    | :---: | :---: | --- | --- |
-    | 16/11/2026 | 1.0 | Documentação do diagrama arquitetural, responsabilidades dos agentes e contratos de dados da Entrega 4 | Grupo 04 |
+    | Versão | Data | Autor | Descrição | Revisor |
+    |---|---|---|---|---|
+    | 1.0 | 16/11/2026 | @GabrielMacielBR | Diagrama inicial da arquitetura multiagente e dataclasses | @keilogger |
+    | 1.1 | 16/11/2026 | @GabrielMacielBR | Alinhamento aos 4 agentes do escopo, legenda padronizada e marcação explícita das pendências `#41`–`#43` | @maykonjuso |

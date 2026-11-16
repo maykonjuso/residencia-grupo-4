@@ -139,9 +139,10 @@ nav:
       - Reescrita de consulta: entrega-3/reescrita-de-consulta.md
   - Entrega 4:
       - entrega-4/index.md
-      - Arquitetura e responsabilidades: entrega-4/arquitetura-agentes.md
-      - Orquestração, roteamento e fluxo: entrega-4/orquestrador-e-roteamento.md
-      - Demonstração colaborativa: entrega-4/demonstracao-agentes.md
+      - Arquitetura dos agentes: entrega-4/arquitetura-agentes.md
+      - Responsabilidades: entrega-4/responsabilidades.md
+      - Fluxo de interação: entrega-4/fluxo-de-interacao.md
+      - Demonstração: entrega-4/demonstracao.md
   - Sobre:
       - sobre/index.md
       - Processo de trabalho: sobre/processo.md

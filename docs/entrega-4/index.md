@@ -1,53 +1,50 @@
-# Entrega 4 · Primeiro Protótipo Multiagente
+# Entrega 4 — Primeiro Protótipo Multiagente
 
-**Semana 4 do Challenge 2.** Foco: *sistema multiagentes colaborativo com especialização por domínio, orquestração paralela, validação factual e estudo comparativo de roteamento*.
+A **Entrega 4** (Épico `#37`, requisitos **RF01** e **RF02**) marca a evolução do **RUmo** de um pipeline RAG linear para o primeiro **protótipo de Sistema Multiagente**, combinando classificação e decomposição de consultas em dois estágios, roteamento híbrido por domínio, execução paralela de agentes especialistas, validação factual com retorno ao sintetizador e composição com índices de citação isolados.
 
-!!! info "Envio e prazo da entrega"
-    Prazo: **sexta-feira (20/11/2026)**. Os artefatos desta entrega também são exportados para a pasta da equipe no Microsoft Teams, canal **4_Second Challenge**.
-
----
-
-## 1. Escopo da entrega
-
-Nas Entregas 2 e 3, o RUmo executava toda consulta por meio de um único fluxo monolítico de busca e geração. Quando o estudante fazia uma pergunta composta cruzando temas distintos (por exemplo, cardápio do RU e pré-requisitos de disciplina), a busca competia pelos mesmos *slots* de contexto e o gerador misturava instruções.
-
-Na **Entrega 4**, essa arquitetura evolui para um **Sistema Multiagentes** coordenado pelo [`Orquestrador`](https://github.com/maykonjuso/residencia-grupo-4/blob/main/rag/rumo_rag/agentes.py), com separação explícita de responsabilidades, execução paralela e auditoria factual automática antes da síntese final.
-
-### Checklist de entregáveis
-
-- [x] **Mínimo de 2 agentes especializados (+ agentes adicionais):** implementados `AgenteRU` (*Research Agent · Eixo RU*), `AgenteFluxo` (*Research Agent · Eixo Acadêmico/FCTE*), `AgenteValidador` (*Validation Agent · Fidelidade Factual e RN-02*), `Sintetizador` (*Analysis & Communication Agent · Reparo e composição com isolamento de `[n]`*) e `Orquestrador` em `rag/rumo_rag/agentes.py`. ([Ver arquitetura e responsabilidades](arquitetura-agentes.md))
-- [x] **Diagrama da arquitetura e descrição de responsabilidades:** papéis, escopo documental, fluxograma de dados, contratos (`RespostaAgente` e `ResultadoValidacao`) e limites de cada agente. ([Ver arquitetura](arquitetura-agentes.md))
-- [x] **Fluxo de interação, colaboração paralela e relatório de roteamento:** diagrama de sequência das interações, controle de concorrência e experimento comparando **Regex**, **LLM Conjunto (Teste 1)** e **`LiquidAI/d1-omni-600M` (Teste 2)** em perguntas múltiplas. ([Ver orquestração e relatório](orquestrador-e-roteamento.md))
-- [x] **Demonstração de fluxo colaborativo completo:** execução real via CLI com `--agentes --trace`, comprovação de paralelismo (`tempo_paralelo_s < soma_tempos_individuais_s`), ciclo de devolução ao `Sintetizador` e degradação elegante (`--falhar-agente`). ([Ver demonstração](demonstracao-agentes.md))
+!!! info "Escopo atual do protótipo"
+    Esta documentação reflete estritamente o que está implementado e executado no repositório (`rag/rumo_rag/`). Detalhes exclusivos dos agentes especialistas e ferramentas ainda em aberto nas issues **#41**, **#42** e **#43** estão marcados explicitamente como `[a preencher]` ou `[a detalhar]`.
 
 ---
 
-## 2. Resumo dos agentes do sistema
+## O que é a Entrega 4
 
-A **Tabela 1** mapeia cada componente implementado em `rag/rumo_rag/agentes.py` para os papéis previstos na arquitetura multiagentes.
+O objetivo do protótipo é responder a perguntas simples ou compostas de estudantes da UnB (Campus Gama / FCTE) sobre o **Restaurante Universitário (RU)** e o **Fluxo de Graduação**, dividindo o trabalho entre agentes com papéis definidos e garantindo rastreabilidade das fontes exigida pelo contrato com o portal (`consultas_rag.py` / `POST /perguntar`).
 
-| Agente no RUmo | Papel clássico | Classe (`agentes.py`) | Responsabilidade central |
+A **Tabela 1** resume o estado atual da entrega entre o que foi implementado, o que aguarda detalhamento e o que ficou fora do escopo desta etapa.
+
+| Categoria | Item / Componente | Situação | Observação |
 |---|---|---|---|
-| **Orquestrador** | *Orchestrator / Router* | `Orquestrador` | Classifica e decompõe a consulta (`reescrita.py`), roteia cada subpergunta ao domínio adequado, dispara buscas/gerações em paralelo (`ThreadPoolExecutor`) e coordena validação e síntese |
-| **Agente RU** | *Research Agent* (Domínio RU) | `AgenteRU` | Recupera chunks restritos a `eixo="ru"` (com fallback em `apoio`) e gera resposta fundamentada com citações `[n]` locais sobre preços, cardápio, horários, alergênicos e auxílio |
-| **Agente Fluxo** | *Research Agent* (Domínio FCTE) | `AgenteFluxo` | Recupera chunks restritos a `eixo="fluxo"` (com fallback em `apoio`) e gera resposta com citações `[n]` locais sobre grades, pré-requisitos, PPCs, trancamento e pós-graduação |
-| **Agente Validador** | *Validation Agent* | `AgenteValidador` | Audita cada `RespostaAgente` contra os trechos recuperados (`valores_sem_fonte` e `resposta_sem_citacao` da RN-02); reprova e devolve ao `Sintetizador` quando encontra inconsistência |
-| **Sintetizador** | *Analysis & Communication Agent* | `Sintetizador` | Trata devoluções do `AgenteValidador` (aplicando `fallback_extrativo` ou sinalização factual) e compõe a resposta final mantendo os índices `[n]` isolados por parte (regra contratual) |
+| **Implementado** | Estrutura base de agentes (`rag/rumo_rag/agentes.py`) | Concluído | Classes `AgenteBase`, `AgenteRU`, `AgenteFluxo`, `AgenteValidador`, `Sintetizador` e `Orquestrador` |
+| **Implementado** | Classificação e decomposição (`rag/rumo_rag/reescrita.py`) | Concluído | Estágio 1 (`d1-omni-600M`, limiar `0.39`) + Estágio 2 LLM conjunto (`decompor_com_roteamento`) e fallback sintático |
+| **Implementado** | Roteamento híbrido (`rotear_subpergunta`) | Concluído | Cascata `Teste 1 (eixo LLM)` → `Regex` → `Teste 2 (d1-omni-600M)` |
+| **Implementado** | Execução paralela e degradação graciosa | Concluído | `ThreadPoolExecutor` com `_LOCK_BUSCA` e `--falhar-agente` para simulação de falhas |
+| **Implementado** | Validador factual e retorno ao sintetizador | Concluído | `AgenteValidador.validar` + `Sintetizador.processar_devolucao` e composição com `[n]` isolados por parte |
+| **Implementado** | Experimento comparativo de roteamento (`perguntas_roteamento_multiplas.jsonl`) | Concluído | Comparação Regex vs. LLM conjunto (Teste 1) vs. `d1-omni-600M` (Teste 2) em 8 consultas / 17 subperguntas |
+| **Aberto (`#41`, `#42`, `#43`)** | Prompts dedicados, regras de domínio e ferramentas específicas de `AgenteRU`, `AgenteFluxo` e `AgenteValidador` | `[a preencher]` | Estrutura e contratos prontos; especialização interna pendente das issues `#41`–`#43` |
+| **Aberto (`#41`, `#42`, `#43`)** | Demonstração completa com modelo generativo LLM nos agentes finalizados | `[a preencher]` | Traces atuais executados com `--backend extrativo`; trace generativo final aguarda `#41`–`#43` |
+| **Fora de escopo** | Integração em tempo real com API externa do Portal Único (Grupo 09) | Fora da entrega | Escopo do projeto unificado documentado em [Escopo entre Grupos](../visao/escopo-grupos.md) |
+| **Fora de escopo** | Memória conversacional persistente multi-turno e autenticação SIGAA | Fora da entrega | Cada chamada ao `Orquestrador.executar` é stateless |
 
-<p class="legenda">Tabela 1. Papéis, classes e responsabilidades dos agentes da Entrega 4.</p>
-
----
-
-## 3. Navegação da Entrega 4
-
-1. [Arquitetura e responsabilidades dos agentes](arquitetura-agentes.md): diagrama estrutural Mermaid, responsabilidades individuais, escopo documental e contratos `RespostaAgente` / `ResultadoValidacao`.
-2. [Orquestração, fluxo de colaboração e roteamento](orquestrador-e-roteamento.md): diagrama de sequência entre os agentes e **relatório comparativo completo** (Regex × LLM Conjunto Teste 1 × `d1-omni-600M` Teste 2).
-3. [Demonstração colaborativa em execução](demonstracao-agentes.md): saídas reais com `--agentes --trace`, prova de paralelismo, validação com devolução e simulação de falha (`--falhar-agente`).
+<p class="legenda">Tabela 1. Escopo implementado, pendências e itens fora da Entrega 4.</p>
 
 ---
+
+## Navegação da Entrega 4
+
+A documentação desta entrega segue os artefatos solicitados no enunciado e está organizada conforme a **Tabela 2**.
+
+| Página | Conteúdo principal |
+|---|---|
+| [Arquitetura dos Agentes](arquitetura-agentes.md) | Diagrama Mermaid verticalizado dos agentes e conexões, além dos contratos de saída em código |
+| [Responsabilidades dos Agentes](responsabilidades.md) | Tabela com papel, responsabilidades, o que cada agente **pode** e **não pode** fazer, e regras de negócio |
+| [Fluxo de Interação e Roteamento](fluxo-de-interacao.md) | Diagrama de sequência de pergunta composta, mensagens trocadas e relatório comparativo de classificação/roteamento |
+| [Demonstração Executada](demonstracao.md) | Comandos executados, traces reais (`--agentes --trace`), retorno do validador e simulação de falha |
+
+<p class="legenda">Tabela 2. Estrutura de páginas da documentação da Entrega 4.</p>
 
 ??? abstract "Histórico de revisão"
-
-    | Data | Versão | Descrição | Autor |
-    | :---: | :---: | --- | --- |
-    | 16/11/2026 | 1.0 | Criação da documentação da Entrega 4 (Primeiro Protótipo Multiagente · Épico #37) | Grupo 04 |
+    | Versão | Data | Autor | Descrição | Revisor |
+    |---|---|---|---|---|
+    | 1.0 | 16/11/2026 | @GabrielMacielBR | Versão inicial da documentação da Entrega 4 | @keilogger |
+    | 1.1 | 16/11/2026 | @GabrielMacielBR | Refatoração para a estrutura padronizada (index, arquitetura, responsabilidades, fluxo de interação e demonstração) com marcação explícita de pendências | @maykonjuso |
