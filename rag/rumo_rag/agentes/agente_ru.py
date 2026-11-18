@@ -99,8 +99,18 @@ def executar_agente_dominio(agente: Any, mensagem: Mensagem) -> Resposta:
     contexto["tempo_geracao_s"] = round(t2 - t1, 3)
 
     alertas: list[str] = []
-    if not trechos:
+    if resultado.get("aviso_cardapio"):
+        alertas.append(resultado["aviso_cardapio"])
+    elif not trechos:
         alertas.append(f"Nenhum trecho encontrado no eixo {agente.eixo.upper()}.")
+
+    if not trechos and resultado.get("aviso_cardapio"):
+        return Resposta(
+            conteudo=geracao.RECUSA,
+            fontes=[],
+            confianca=0.0,
+            alertas=alertas,
+        )
 
     if geracao.eh_recusa(texto):
         return Resposta(
@@ -149,6 +159,40 @@ Regras:
 5. Seja conciso: no máximo 120 palavras. Copie datas, horários, preparações e valores exatamente como estão nos trechos."""
 
 
+_CONSULTA_CARDAPIO = re.compile(
+    r"\b(?:"
+    r"card[aá]pio|prato|pratos|prote[ií]na|salada|sobremesa|sopa|guarni[cç][aã]o|"
+    r"acompanhamento|fruta|bebida|refresco|panifica[cç][aã]o|vegetariano|vegetariana|"
+    r"vegano|vegana|ovolactovegetariano|alerg[eê]nicos?|gl[uú]ten|lactose|derivados\s+de\s+leite|"
+    r"o\s+que\s+tem|o\s+que\s+vai\s+ter|servid[oa]|servem\s+no\s+(?:almo[cç]o|jantar|caf[eé]|desjejum)|"
+    r"segunda|ter[cç]a|quarta|quinta|sexta"
+    r")\b",
+    re.IGNORECASE,
+)
+
+_CONSULTA_NAO_CARDAPIO = re.compile(
+    r"\b(?:"
+    r"quanto\s+custa|pre[cç]o|pre[cç]os|valor|valores|taxa|paga|grupo\s+(?:i{1,3}|iv)|"
+    r"isen[cç][aã]o|isento|aux[ií]lio|bolsa|pnaes|edital|catraca|carteirinha|qr\s*code|"
+    r"hor[aá]rio|que\s+horas|at[eé]\s+que\s+horas|abre|funciona|funcionamento|documentos"
+    r")\b",
+    re.IGNORECASE,
+)
+
+
+def _eh_pergunta_cardapio(pergunta: str) -> bool:
+    """Identifica perguntas sobre o cardápio/alergênicos (separando de preços, horários e normas)."""
+    if not _CONSULTA_CARDAPIO.search(pergunta):
+        return False
+    if _CONSULTA_NAO_CARDAPIO.search(pergunta) and not re.search(
+        r"\b(?:card[aá]pio|prato|prote[ií]na|alerg[eê]nicos?|gl[uú]ten|lactose|derivados\s+de\s+leite|o\s+que\s+tem)\b",
+        pergunta,
+        re.IGNORECASE,
+    ):
+        return False
+    return True
+
+
 class AgenteRU(Agente):
     """Agente especialista em Restaurante Universitário (preços, cardápio, horários, auxílio)."""
 
@@ -190,16 +234,31 @@ class AgenteRU(Agente):
 
         pergunta = pergunta.strip()
 
-        # Busca restrita aos documentos do eixo RU.
-        # A decomposição fica sob responsabilidade do Orquestrador.
-        with _LOCK_INDICE:
-            trechos = indice.buscar(
-                pergunta,
-                k=self.k,
-                modo=self.modo,
-                eixo=self.eixo,
-                decompor_pergunta=False,
-            )
+        if _eh_pergunta_cardapio(pergunta):
+            from ..coleta import cardapio
+
+            dados_semana, motivo = cardapio.carregar_semana_atual()
+            if dados_semana is None:
+                return {
+                    "agente": self.nome,
+                    "eixo": self.eixo,
+                    "pergunta": pergunta,
+                    "encontrou": False,
+                    "trechos": [],
+                    "fontes": [],
+                    "aviso_cardapio": motivo,
+                }
+            trechos = cardapio.trechos_da_semana(dados_semana, pergunta)
+        else:
+            # Busca restrita aos documentos normativos/informativos do eixo RU.
+            with _LOCK_INDICE:
+                trechos = indice.buscar(
+                    pergunta,
+                    k=self.k,
+                    modo=self.modo,
+                    eixo=self.eixo,
+                    decompor_pergunta=False,
+                )
 
         # Organiza as fontes sem duplicar a mesma página.
         fontes = []
