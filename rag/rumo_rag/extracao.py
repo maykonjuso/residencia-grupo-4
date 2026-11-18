@@ -58,6 +58,75 @@ def data_cardapio(texto: str) -> str:
     return f"{int(m.group(1)):02d}/{int(m.group(2)):02d}/{m.group(3)}" if m else ""
 
 
+_ALERGENICOS_LEGENDA = (
+    "cogumelo", "leite", "mel", "pimenta", "soja",
+    "gluten", "amendoim", "oleaginosa", "ovo", "suino",
+)
+
+
+def _vetorizar_icone(page_img, page, im_dict: dict, n_slices: int = 1):
+    import numpy as np
+
+    sx = page_img.width / page.width
+    sy = page_img.height / page.height
+    x0, top = im_dict["x0"] * sx, im_dict["top"] * sy
+    x1, bot = im_dict["x1"] * sx, im_dict["bottom"] * sy
+    pil = page_img.crop((int(round(x0)), int(round(top)), int(round(x1)), int(round(bot)))).convert("L")
+    vecs = []
+    sw = pil.width / n_slices
+    for i in range(n_slices):
+        crop = pil.crop((int(round(i * sw)), 0, int(round((i + 1) * sw)), pil.height)).resize((24, 24))
+        arr = np.asarray(crop, dtype=np.float32).ravel()
+        arr = arr - arr.mean()
+        norm = float(np.linalg.norm(arr))
+        vecs.append(arr / norm if norm > 1e-6 else arr)
+    return vecs
+
+
+def _templates_alergenicos(pg, texto: str) -> tuple[object | None, dict]:
+    """Auto-calibra os 10 ícones da legenda do rodapé da própria página."""
+    if len(pg.images) < 10 or "cogumelo" not in texto.lower() or "suíno" not in texto.lower():
+        return None, {}
+    footer = sorted((im for im in pg.images if im["top"] > pg.height * 0.85), key=lambda im: im["x0"])
+    if len(footer) != len(_ALERGENICOS_LEGENDA):
+        return None, {}
+    try:
+        pimg = pg.to_image(resolution=144).original
+        templates = {
+            _ALERGENICOS_LEGENDA[i]: _vetorizar_icone(pimg, pg, im, 1)[0]
+            for i, im in enumerate(footer)
+        }
+        return pimg, templates
+    except Exception:
+        return None, {}
+
+
+def _alergenicos_da_celula(pg, pimg, templates: dict, bbox: tuple[float, float, float, float] | None) -> list[str]:
+    if not templates or pimg is None or not bbox:
+        return []
+    import numpy as np
+
+    cx0, ctop, cx1, cbot = bbox
+    ims = [
+        im for im in pg.images
+        if cx0 - 2 <= (im["x0"] + im["x1"]) / 2 <= cx1 + 2
+        and ctop - 2 <= (im["top"] + im["bottom"]) / 2 <= cbot + 2
+    ]
+    encontrados: list[str] = []
+    for im in ims:
+        largura = im["x1"] - im["x0"]
+        altura = max(1e-3, im["bottom"] - im["top"])
+        n = max(1, round(largura / altura))
+        for vec in _vetorizar_icone(pimg, pg, im, n):
+            melhor_id, melhor_score = max(
+                ((aid, float(np.dot(vec, tv))) for aid, tv in templates.items()),
+                key=lambda x: x[1],
+            )
+            if melhor_score >= 0.65 and melhor_id not in encontrados:
+                encontrados.append(melhor_id)
+    return encontrados
+
+
 def _ler_cardapio(p: Path) -> str:
     """Cardápio do RU é uma tabela (linhas = componentes, colunas = dias).
     Extrair como texto corrido mistura as colunas; aqui cada célula é lida
@@ -71,7 +140,9 @@ def _ler_cardapio(p: Path) -> str:
             texto = paginas_texto[n - 1]
             refeicao = next((r for r in ("Café da manhã", "Almoço", "Jantar") if r.lower() in texto.lower()), "Refeição")
             rodape = re.findall(r"(Mesa de apoio:[^\n]*)", texto)
-            for tabela in pg.extract_tables():
+            pimg, templates = _templates_alergenicos(pg, texto)
+            for tab in pg.find_tables():
+                tabela = tab.extract()
                 linhas = [[(c or "").replace("\n", " ").strip() for c in l] for l in tabela]
                 i_dias = next((i for i, l in enumerate(linhas) if any(eh_dia.match(c) for c in l)), None)
                 if i_dias is None:
@@ -87,12 +158,22 @@ def _ler_cardapio(p: Path) -> str:
                     nome = next((v for k, v in DIAS.items() if rotulo.upper().startswith(k)), rotulo.lower())
                     data = data_cardapio(rotulo) or (linha_de_datas and j < len(prox) and data_cardapio(prox[j])) or ""
                     dias.append((j, nome, data))
+                inicio_itens = i_dias + (2 if linha_de_datas else 1)
                 componentes = []
-                for l in linhas[i_dias + (2 if linha_de_datas else 1):]:
+                for offset, l in enumerate(linhas[inicio_itens:]):
+                    r_idx = inicio_itens + offset
                     nome = next((c for c in l[:cols[0]] if c), "")
                     valores = [l[j] if j < len(l) else "" for j in cols]
                     if not nome or not any(valores):
                         continue
+                    row_cells = tab.rows[r_idx].cells if r_idx < len(tab.rows) else []
+                    for pos, j in enumerate(cols):
+                        if not valores[pos]:
+                            continue
+                        bbox = row_cells[j] if j < len(row_cells) else None
+                        alerg = _alergenicos_da_celula(pg, pimg, templates, bbox)
+                        if alerg:
+                            valores[pos] = f"{valores[pos]} [Alergênicos: {', '.join(alerg)}]"
                     if valores[0] and not any(valores[1:]):   # célula mesclada: vale para a semana toda
                         valores = [valores[0]] * len(valores)
                     componentes.append((nome.capitalize(), valores))
