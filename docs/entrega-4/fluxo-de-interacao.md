@@ -26,8 +26,8 @@ sequenceDiagram
         O->>FL: Quais são os pré-requisitos de Testes de Software?
         FL-->>O: Lista de pré-requisitos com citação do fluxo curricular
     end
-    O->>V: Verifica se os dados e as citações conferem com as fontes
-    V-->>O: Confirma a precisão (ou pede correção ao sintetizador)
+    O->>V: Verifica se os dados e as citações conferem com as fontes (sem LLM)
+    V-->>O: Aprova ou reprova com motivo explícito (máx. 1 retentativa ou recusa final)
     O->>O: Junta as respostas mantendo as fontes de cada parte separadas
     O-->>E: Entrega a resposta completa dividida por assunto
 ```
@@ -39,9 +39,9 @@ A **Tabela 1** explica o que acontece em cada um dos dez passos da **Figura 1**,
 | Passo | Participantes | O que acontece neste passo | Tratamento de falha ou exceção |
 |---|---|---|---|
 | 1 | Estudante → Orquestrador | O estudante envia a pergunta completa em linguagem natural para o ponto de entrada do sistema. | Consultas vazias ou sem tema reconhecido seguem o fluxo padrão de recusa. |
-| 2 | Orquestrador | Analisa se há mais de um assunto (limiar calibrado em `0,39`), divide a pergunta em subperguntas e define qual especialista atende cada parte. | Se o modelo linguístico falhar na divisão, aplica separação por conectivos gramaticais; em dúvidas ambíguas, consulta o classificador neural de domínio. |
-| 3–6 | Orquestrador ↔ Agente do RU / Agente de Fluxo | Os dois especialistas são consultados ao mesmo tempo na base documental oficial da UnB e devolvem suas respostas com citações próprias. | Se um especialista cair ou falhar, essa parte recebe um aviso explícito de indisponibilidade sem impedir a entrega da parte saudável. |
-| 7–8 | Orquestrador ↔ Agente Validador | O validador confere se valores numéricos e afirmações constam nos trechos recuperados e se há citação de fonte válida. | Se encontrar dado sem fonte ou falta de citação, devolve o bloco ao sintetizador para extração literal segura dos trechos ou emissão de recusa padrão com aviso. |
+| 2 | Orquestrador | Analisa se há mais de um assunto (limiar `0,39` ou cruzamento explícito RU + Fluxo), divide a pergunta em subperguntas e define qual especialista atende cada parte. | Se o modelo linguístico falhar na divisão, aplica separação por conectivos gramaticais; em dúvidas ambíguas, consulta o classificador neural de domínio. |
+| 3–6 | Orquestrador ↔ Agente do RU / Agente de Fluxo | Os dois especialistas são consultados ao mesmo tempo via contrato padronizado de mensagens na base documental oficial da UnB e respondem com prompts próprios. | Se um especialista receber pergunta exclusiva do outro domínio, recusa imediatamente sem buscar no índice; se cair ou falhar, entrega a parte saudável com aviso. |
+| 7–8 | Orquestrador ↔ Agente Validador | O validador audita deterministicamente (sem chamar LLM) se valores numéricos, códigos e afirmações constam nos trechos recuperados e se há citação `[n]` válida. | Se reprovar, devolve ao sintetizador para **no máximo 1 retentativa com feedback** no mesmo backend; se reprovar pela segunda vez, aplica recusa padrão sem exibir a resposta ruim. |
 | 9 | Orquestrador | O sintetizador reúne os blocos validados preservando a numeração e a lista de fontes de cada parte de forma independente. | Mantém eventuais avisos de falha parcial ou correção vinculados apenas ao bloco afetado. |
 | 10 | Orquestrador → Estudante | O estudante recebe a resposta final organizada por assunto, com referências separadas e histórico detalhado de execução quando solicitado. | Sinaliza explicitamente quando a entrega ocorreu em modo degradado por indisponibilidade parcial. |
 
@@ -134,3 +134,4 @@ O cenário mais exigente ocorre quando os roteadores recebem as frases exatament
     | 1.0 | 16/11/2026 | @GabrielMacielBR | Documentação inicial do roteamento híbrido e experimento comparativo | @keilogger |
     | 1.1 | 16/11/2026 | @GabrielMacielBR | Renomeação para `fluxo-de-interacao.md`, diagrama padronizado e tabelas verbatim do experimento | @maykonjuso |
     | 1.2 | 16/11/2026 | @GabrielMacielBR | Simplificação visual do diagrama de sequência e reescrita em linguagem natural descritiva nas tabelas sem códigos nem notações abstratas | @maykonjuso |
+    | 1.3 | 18/11/2026 | @GabrielMacielBR | Atualização do diagrama e tabela de passos para refletir validador determinístico (sem LLM), guarda de domínio e limite de 1 retentativa com recusa final | — |
