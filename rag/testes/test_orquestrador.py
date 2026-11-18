@@ -9,6 +9,7 @@ Valida sem exigir GPU ou internet:
 6. Invocação direta pela CLI (`python -m rumo_rag "..." --agentes --trace`).
 """
 import io
+import json
 import sys
 import time
 import unittest
@@ -49,35 +50,42 @@ TRECHO_FLUXO = {
 }
 
 
-class _AgenteStub(agentes.AgenteBase):
-    def __init__(self, id_agente: str, nome: str, atraso_s: float = 0.0, erro: Exception | None = None, resposta_fixa: str | None = None, trechos_fixos: list[dict] | None = None):
+class _AgenteStub(agentes.Agente):
+    def __init__(
+        self,
+        id_agente: str,
+        nome: str,
+        atraso_s: float = 0.0,
+        erro: Exception | None = None,
+        resposta_fixa: str | None = None,
+        trechos_fixos: list[dict] | None = None,
+    ):
         self.id_agente = id_agente
         self.nome = nome
+        self.papel = f"Stub de domínio {id_agente}"
         self.eixo = id_agente
         self._atraso_s = atraso_s
         self._erro = erro
         self._resposta_fixa = resposta_fixa
         self._trechos_fixos = trechos_fixos if trechos_fixos is not None else []
+        self.mensagens_recebidas: list[agentes.Mensagem] = []
 
-    def responder(self, subpergunta: str, k: int = config.TOP_K, backend: str = config.BACKEND) -> agentes.RespostaAgente:
-        t0 = time.monotonic()
+    def executar(self, mensagem: agentes.Mensagem) -> agentes.Resposta:
+        self.mensagens_recebidas.append(mensagem)
         if self._atraso_s:
             time.sleep(self._atraso_s)
         if self._erro:
             raise self._erro
+        backend = (mensagem.contexto or {}).get("backend", config.BACKEND)
         trechos = list(self._trechos_fixos)
-        resp = self._resposta_fixa or geracao.gerar(subpergunta, trechos, backend=backend)
-        t1 = time.monotonic()
-        return agentes.RespostaAgente(
-            agente=self.id_agente,
-            nome_agente=self.nome,
-            subpergunta=subpergunta,
-            resposta=resp,
-            trechos_recuperados=trechos,
-            fontes_citadas=geracao.citacoes_usadas(resp, trechos),
-            tempo_busca_s=0.01,
-            tempo_geracao_s=round(t1 - t0, 3),
-            tempo_total_s=round(t1 - t0, 3),
+        if isinstance(mensagem.contexto, dict):
+            mensagem.contexto["trechos_recuperados"] = trechos
+        resp = self._resposta_fixa or geracao.gerar(mensagem.conteudo, trechos, backend=backend)
+        fontes = geracao.citacoes_usadas(resp, trechos)
+        return agentes.Resposta(
+            conteudo=resp,
+            fontes=fontes,
+            confianca=1.0 if trechos else 0.0,
         )
 
 
@@ -351,6 +359,317 @@ class TestCliAgentesTrace(unittest.TestCase):
         self.assertIn("5. Composição (Sintetizador):", saida)
         self.assertIn("F09", saida)
         self.assertIn("F20", saida)
+
+
+class TestContratoAgentesEValidacao(unittest.TestCase):
+    def test_agente_ru_cumpre_contrato_e_executa_opcao_a(self):
+        agente = agentes.AgenteRU(k=3, modo="bm25")
+        self.assertIsInstance(agente, agentes.Agente)
+
+        msg = agentes.Mensagem(
+            remetente="Orquestrador",
+            destinatario=agente.nome,
+            conteudo="O que tem no almoço?",
+            contexto={"backend": "extrativo"},
+        )
+        with mock.patch.object(agentes.indice, "buscar", return_value=[TRECHO_RU]) as m_buscar:
+            resp = agente.executar(msg)
+
+        m_buscar.assert_called_once_with(
+            "O que tem no almoço?",
+            k=3,
+            modo="bm25",
+            eixo="ru",
+            decompor_pergunta=False,
+        )
+        self.assertIsInstance(resp, agentes.Resposta)
+        self.assertIn("frango grelhado", resp.conteudo.lower())
+        self.assertIn("[1]", resp.conteudo)
+        self.assertEqual(len(resp.fontes), 1)
+        self.assertEqual(resp.fontes[0]["doc_id"], "F09")
+        self.assertAlmostEqual(resp.confianca, 0.82)
+        self.assertEqual(resp.alertas, [])
+        self.assertEqual(msg.contexto["trechos_recuperados"], [TRECHO_RU])
+
+    def test_orquestrador_comunica_por_mensagem_resposta_e_trace_oficial(self):
+        class _AgenteFakePuro(agentes.Agente):
+            def __init__(self, nome: str, papel: str, resposta: str, fontes: list[dict]):
+                self.nome = nome
+                self.papel = papel
+                self.recebidas: list[agentes.Mensagem] = []
+                self._resposta = resposta
+                self._fontes = fontes
+
+            def executar(self, mensagem: agentes.Mensagem) -> agentes.Resposta:
+                self.recebidas.append(mensagem)
+                return agentes.Resposta(conteudo=self._resposta, fontes=self._fontes, confianca=0.95)
+
+        fake_ru = _AgenteFakePuro(
+            nome="Agente RU Fake",
+            papel="RU",
+            resposta="O almoço custa R$ 6,10 [1].",
+            fontes=[{
+                "doc_id": "F01",
+                "titulo": "Valores das refeições",
+                "orgao": "UnB",
+                "pagina": 1,
+                "url": "https://ru.unb.br",
+                "chunk_id": "F01-0001",
+                "texto": "Estudantes de graduação pagam R$ 6,10 pelo almoço.",
+            }],
+        )
+        fake_fluxo = _AgenteFakePuro(
+            nome="Agente Fluxo Fake",
+            papel="Fluxo",
+            resposta="Requer Métodos de Desenvolvimento de Software [1].",
+            fontes=[{
+                "doc_id": "F20",
+                "titulo": "Matriz curricular",
+                "orgao": "UnB",
+                "pagina": 4,
+                "url": "https://software.unb.br",
+                "chunk_id": "F20-0012",
+            }],
+        )
+        orq = agentes.Orquestrador(agente_ru=fake_ru, agente_fluxo=fake_fluxo)
+
+        with mock.patch.object(agentes.reescrita, "classificar_composta", return_value=(True, 0.91)), \
+             mock.patch.object(
+                 agentes.reescrita,
+                 "decompor_com_roteamento",
+                 return_value=[
+                     {"pergunta": "Quanto custa o almoço no RU?", "eixo": "ru"},
+                     {"pergunta": "Qual o pré-requisito de Testes de Software?", "eixo": "fluxo"},
+                 ],
+             ):
+            res = orq.executar(
+                "Quanto custa o almoço no RU e qual o pré-requisito de Testes de Software?",
+                backend="extrativo",
+            )
+
+        # Verifica envio real de objetos Mensagem
+        self.assertEqual(len(fake_ru.recebidas), 1)
+        self.assertEqual(fake_ru.recebidas[0].remetente, "Orquestrador")
+        self.assertEqual(fake_ru.recebidas[0].destinatario, "Agente RU Fake")
+        self.assertEqual(len(fake_fluxo.recebidas), 1)
+
+        # Trace oficial serializável em JSON com trocas de Mensagem -> Resposta
+        json_dump = json.dumps(res, ensure_ascii=False)
+        self.assertIn("interacoes", json_dump)
+        interacoes = res["trace_agentes"]["interacoes"]
+        destinatarios = [it["mensagem"]["destinatario"] for it in interacoes]
+        self.assertIn("Agente RU Fake", destinatarios)
+        self.assertIn("Agente Fluxo Fake", destinatarios)
+        self.assertIn("Agente Validador", destinatarios)
+        self.assertIn("Sintetizador", destinatarios)
+        self.assertTrue(all(it["horario"] for it in interacoes))
+
+    def test_agente_fluxo_cumpre_contrato_e_executa_opcao_a(self):
+        agente = agentes.AgenteFluxo(k=3, modo="bm25")
+        self.assertIsInstance(agente, agentes.Agente)
+
+        msg = agentes.Mensagem(
+            remetente="Orquestrador",
+            destinatario=agente.nome,
+            conteudo="Quais os pré-requisitos de Testes de Software?",
+            contexto={"backend": "extrativo"},
+        )
+        with mock.patch.object(agentes.indice, "buscar", return_value=[TRECHO_FLUXO]) as m_buscar:
+            resp = agente.executar(msg)
+
+        m_buscar.assert_called_once_with(
+            "Quais os pré-requisitos de Testes de Software?",
+            k=3,
+            modo="bm25",
+            eixo="fluxo",
+            decompor_pergunta=False,
+        )
+        self.assertIsInstance(resp, agentes.Resposta)
+        self.assertIn("testes de software", resp.conteudo.lower())
+        self.assertIn("[1]", resp.conteudo)
+        self.assertEqual(len(resp.fontes), 1)
+        self.assertEqual(resp.fontes[0]["doc_id"], "F20")
+        self.assertAlmostEqual(resp.confianca, 0.79)
+        self.assertEqual(resp.alertas, [])
+        self.assertEqual(msg.contexto["trechos_recuperados"], [TRECHO_FLUXO])
+
+    def test_orquestrador_padrao_instancia_agente_ru_e_agente_fluxo(self):
+        orq = agentes.Orquestrador()
+        self.assertIsInstance(orq.agentes["ru"], agentes.AgenteRU)
+        self.assertIsInstance(orq.agentes["fluxo"], agentes.AgenteFluxo)
+
+        with mock.patch.object(agentes.reescrita, "classificar_composta", return_value=(False, 0.05)), \
+             mock.patch.object(agentes.indice, "buscar", return_value=[TRECHO_RU]):
+            res = orq.executar("O que tem no almoço do RU hoje?", backend="extrativo")
+
+        self.assertFalse(res["degradado"])
+        self.assertIn("frango grelhado", res["resposta"].lower())
+        self.assertEqual(res["fontes_citadas"][0]["doc_id"], "F09")
+
+    def test_validador_executar_via_contrato_mensagem_resposta(self):
+        validador = agentes.AgenteValidador()
+        self.assertIsInstance(validador, agentes.Agente)
+
+        msg_ok = agentes.Mensagem(
+            remetente="Orquestrador",
+            destinatario=validador.nome,
+            conteudo="No almoço terá frango grelhado [1].",
+            contexto={"trechos": [TRECHO_RU], "fontes": [{"n": 1, "doc_id": "F09"}]},
+        )
+        resp_ok = validador.executar(msg_ok)
+        self.assertEqual(resp_ok.conteudo, "APROVADO")
+        self.assertEqual(resp_ok.confianca, 1.0)
+        self.assertEqual(resp_ok.alertas, [])
+
+        msg_err = agentes.Mensagem(
+            remetente="Orquestrador",
+            destinatario=validador.nome,
+            conteudo="O almoço custa R$ 99,90 sem fonte.",
+            contexto={"trechos": [TRECHO_RU], "fontes": []},
+        )
+        resp_err = validador.executar(msg_err)
+        self.assertEqual(resp_err.conteudo, "REPROVADO")
+        self.assertEqual(resp_err.confianca, 0.0)
+        self.assertTrue(any("R$ 99,90" in a for a in resp_err.alertas))
+        self.assertTrue(any("RN-02" in a for a in resp_err.alertas))
+
+    def test_validador_limite_de_uma_retentativa_e_recusa_final(self):
+        agente_ru = _AgenteStub(
+            "ru",
+            "Agente RU",
+            resposta_fixa="O almoço custa R$ 99,90 [1].",
+            trechos_fixos=[TRECHO_RU],
+        )
+        orq = agentes.Orquestrador(agente_ru=agente_ru)
+
+        with mock.patch.object(agentes.reescrita, "classificar_composta", return_value=(False, 0.05)), \
+             mock.patch.object(
+                 agentes.geracao,
+                 "gerar",
+                 return_value="Ainda com preço inventado R$ 88,80 [1].",
+             ) as m_gerar:
+            res = orq.executar("Qual o preço do almoço?", backend="hf")
+
+        # Só pode tentar reparar 1 vez (1 chamada ao fallback extrativo)
+        self.assertEqual(m_gerar.call_count, 1)
+        etapa_val = next(p for p in res["trace"] if p["etapa"] == "validacao_factual")
+        devolucoes = etapa_val["devolucoes_ao_sintetizador"]
+        self.assertEqual(len(devolucoes), 1)
+        self.assertEqual(devolucoes[0]["tentativa"], 1)
+        self.assertTrue(devolucoes[0]["recusa_final"])
+        self.assertTrue(devolucoes[0]["aprovado_apos_devolucao"])
+        self.assertEqual(res["resposta"], geracao.RECUSA)
+
+    def test_cada_agente_possui_e_utiliza_prompt_proprio(self):
+        ag_ru = agentes.AgenteRU(modo="bm25")
+        ag_fluxo = agentes.AgenteFluxo(modo="bm25")
+
+        # Prompts distintos entre si e diferentes do prompt genérico
+        self.assertNotEqual(ag_ru.instrucoes, ag_fluxo.instrucoes)
+        self.assertNotEqual(ag_ru.instrucoes, geracao.INSTRUCOES)
+        self.assertNotEqual(ag_fluxo.instrucoes, geracao.INSTRUCOES)
+
+        # Ambos mantêm RN-02 e RN-03
+        for instr in (ag_ru.instrucoes, ag_fluxo.instrucoes):
+            self.assertIn("[1]", instr)
+            self.assertIn(f'diga exatamente: "{geracao.RECUSA}"', instr)
+
+        prompts_capturados = []
+
+        def fake_ollama(msgs):
+            prompts_capturados.append(msgs[0]["content"])
+            return "Resposta fundamentada [1]."
+
+        with mock.patch.object(agentes.geracao, "_gerar_ollama", side_effect=fake_ollama):
+            with mock.patch.object(agentes.indice, "buscar", return_value=[TRECHO_RU]):
+                ag_ru.executar(
+                    agentes.Mensagem(
+                        remetente="Orquestrador",
+                        destinatario=ag_ru.nome,
+                        conteudo="O que tem no almoço?",
+                        contexto={"backend": "ollama"},
+                    )
+                )
+            with mock.patch.object(agentes.indice, "buscar", return_value=[TRECHO_FLUXO]):
+                ag_fluxo.executar(
+                    agentes.Mensagem(
+                        remetente="Orquestrador",
+                        destinatario=ag_fluxo.nome,
+                        conteudo="Quais os pré-requisitos?",
+                        contexto={"backend": "ollama"},
+                    )
+                )
+
+        self.assertEqual(prompts_capturados, [ag_ru.instrucoes, ag_fluxo.instrucoes])
+        self.assertEqual(ag_ru.montar_mensagens("Q?", [TRECHO_RU])[0]["content"], ag_ru.instrucoes)
+        self.assertEqual(ag_fluxo.montar_mensagens("Q?", [TRECHO_FLUXO])[0]["content"], ag_fluxo.instrucoes)
+
+    def test_decomposicao_acionada_em_cruzamento_ru_fluxo_mesmo_abaixo_do_limiar_d1(self):
+        agente_ru = _AgenteStub("ru", "Agente RU", resposta_fixa="O RU abre às 11h [1].", trechos_fixos=[TRECHO_RU])
+        agente_fluxo = _AgenteStub("fluxo", "Agente Fluxo", resposta_fixa="Requer FGA0313 [1].", trechos_fixos=[TRECHO_FLUXO])
+        orq = agentes.Orquestrador(agente_ru=agente_ru, agente_fluxo=agente_fluxo)
+
+        pergunta = "Quais os pré-requisitos de Testes de Software e que horas abre o RU?"
+        with mock.patch.object(agentes.reescrita, "classificar_composta", return_value=(False, 0.3503)):
+            res = orq.executar(pergunta, backend="extrativo")
+
+        self.assertEqual(len(res["subperguntas"]), 2)
+        self.assertEqual([p["agente"] for p in res["partes"]], ["fluxo", "ru"])
+        self.assertEqual(len(agente_fluxo.mensagens_recebidas), 1)
+        self.assertEqual(len(agente_ru.mensagens_recebidas), 1)
+        self.assertIn("pré-requisitos", agente_fluxo.mensagens_recebidas[0].conteudo.lower())
+        self.assertIn("ru", agente_ru.mensagens_recebidas[0].conteudo.lower())
+
+    def test_agentes_recusam_perguntas_fora_do_seu_dominio(self):
+        ag_ru = agentes.AgenteRU(modo="bm25")
+        ag_fluxo = agentes.AgenteFluxo(modo="bm25")
+
+        with mock.patch.object(agentes.indice, "buscar", side_effect=AssertionError("Não devia buscar fora do domínio")):
+            resp_ru = ag_ru.executar(
+                agentes.Mensagem(
+                    remetente="Orquestrador",
+                    destinatario=ag_ru.nome,
+                    conteudo="Quais os pré-requisitos de Testes de Software?",
+                    contexto={"backend": "extrativo"},
+                )
+            )
+            resp_fluxo = ag_fluxo.executar(
+                agentes.Mensagem(
+                    remetente="Orquestrador",
+                    destinatario=ag_fluxo.nome,
+                    conteudo="Qual o cardápio do almoço no RU?",
+                    contexto={"backend": "extrativo"},
+                )
+            )
+
+        self.assertEqual(resp_ru.conteudo, geracao.RECUSA)
+        self.assertEqual(resp_ru.fontes, [])
+        self.assertEqual(resp_ru.confianca, 0.0)
+        self.assertTrue(any("fora do domínio" in a.lower() for a in resp_ru.alertas))
+
+        self.assertEqual(resp_fluxo.conteudo, geracao.RECUSA)
+        self.assertEqual(resp_fluxo.fontes, [])
+        self.assertEqual(resp_fluxo.confianca, 0.0)
+        self.assertTrue(any("fora do domínio" in a.lower() for a in resp_fluxo.alertas))
+
+    def test_recusa_do_llm_nao_carrega_citacoes_espurias(self):
+        ag_ru = agentes.AgenteRU(modo="bm25")
+        resposta_suja = (
+            f"{geracao.RECUSA} [1][2] Sugiro consultar a Diretoria do RU sobre créditos."
+        )
+        msg = agentes.Mensagem(
+            remetente="Orquestrador",
+            destinatario=ag_ru.nome,
+            conteudo="Que horas abre o RU?",
+            contexto={"backend": "ollama"},
+        )
+        with mock.patch.object(agentes.indice, "buscar", return_value=[TRECHO_RU]), \
+             mock.patch.object(agentes.geracao, "_gerar_ollama", return_value=resposta_suja):
+            resp = ag_ru.executar(msg)
+
+        self.assertEqual(resp.conteudo, geracao.RECUSA)
+        self.assertEqual(resp.fontes, [])
+        self.assertEqual(resp.confianca, 0.0)
 
 
 if __name__ == "__main__":
