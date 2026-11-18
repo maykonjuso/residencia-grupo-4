@@ -75,22 +75,6 @@ documentos:
     data: "2026"
     url: "https://dds.dac.unb.br/wp-content/uploads/2026/08/Edital_24_alimentacao.pdf"
     arquivo: originais/F07.pdf
-  - id: F08
-    titulo: "Cardápio semanal do RU Gama — 02/11 a 08/11/2026"
-    orgao: "UnB · Diretoria do RU"
-    eixo: ru
-    tipo: cardapio
-    data: "2026-11-02"
-    url: "https://ru.unb.br/wp-content/uploads/2026/10/Gama-Semana-03-02-11-a-08-11-1.pdf"
-    arquivo: originais/F08.pdf
-  - id: F09
-    titulo: "Cardápio semanal do RU Gama — 09/11 a 15/11/2026"
-    orgao: "UnB · Diretoria do RU"
-    eixo: ru
-    tipo: cardapio
-    data: "2026-11-09"
-    url: "https://ru.unb.br/wp-content/uploads/2026/11/Gama-Semana-04-09-11-a-15-11.pdf"
-    arquivo: originais/F09.pdf
   - id: F10
     titulo: "Lei nº 14.914/2024 — Política Nacional de Assistência Estudantil (PNAES)"
     orgao: "Presidência da República"
@@ -323,3 +307,12 @@ documentos:
     data: "2024-05"
     url: "http://fcte.unb.br/wp-content/uploads/2024/05/Regimento_Interno_FGA_-_aprovado.pdf"
     arquivo: originais/F36.pdf
+  - id: F37
+    titulo: "Cardápio semanal do RU Gama — 16/11 a 22/11/2026"
+    orgao: "UnB · Diretoria do RU"
+    eixo: ru
+    tipo: cardapio
+    data: "2026-11-16"
+    url: "https://ru.unb.br/wp-content/uploads/2026/11/Gama-Semana-01-16-11-a-20-11-1.pdf"
+    arquivo: originais/F37.pdf
+    coletado_em: "2026-11-18"  # scraper (#50), página https://ru.unb.br/cardapio-gama/
