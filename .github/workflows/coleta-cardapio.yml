@@ -1,0 +1,83 @@
+name: Coleta semanal do cardápio (RU Gama)
+
+on:
+  schedule:
+    # Executa de 1 em 1 hora às segundas e terças (UTC) até encontrar o PDF da semana atual.
+    # Assim que a semana vigente entra no rag/catalogo.yaml, as execuções seguintes encerram em no-op.
+    - cron: "0 * * * 1,2"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: coleta-cardapio
+  cancel-in-progress: false
+
+jobs:
+  coletar-cardapio:
+    runs-on: ubuntu-latest
+    env:
+      TZ: America/Sao_Paulo
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verificar se a semana atual já está no catálogo
+        id: verificar
+        run: |
+          python3 - <<'EOF'
+          import datetime, os, re
+          hoje = datetime.date.today()
+          with open("rag/catalogo.yaml", encoding="utf-8") as f:
+              txt = f.read()
+          datas = re.findall(
+              r'tipo:\s*cardapio\s*\n\s*data:\s*"?(\d{4}-\d{2}-\d{2})"?',
+              txt,
+          )
+          ja = any(
+              datetime.date.fromisoformat(d) <= hoje <= datetime.date.fromisoformat(d) + datetime.timedelta(days=6)
+              for d in datas
+          )
+          with open(os.environ["GITHUB_OUTPUT"], "a") as out:
+              out.write(f"ja_coletado={'true' if ja else 'false'}\n")
+          print(f"Data local (BRT): {hoje} | Semana já coletada: {ja}")
+          EOF
+
+      - name: Configurar Python e dependências mínimas da coleta
+        if: steps.verificar.outputs.ja_coletado != 'true'
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Instalar dependências da coleta
+        if: steps.verificar.outputs.ja_coletado != 'true'
+        run: pip install --quiet pypdf pdfplumber pyyaml pillow numpy certifi jsonschema
+
+      - name: Executar coleta do cardápio
+        if: steps.verificar.outputs.ja_coletado != 'true'
+        id: coleta
+        run: |
+          cd rag
+          python -m rumo_rag.coleta cardapio 2> stderr.log || { cat stderr.log >&2; exit 1; }
+          cat stderr.log >&2
+          if grep -q "nenhuma semana publicada contém" stderr.log; then
+            echo "semana_encontrada=false" >> "$GITHUB_OUTPUT"
+            echo "⏳ PDF da semana atual ainda não publicado. Nova tentativa automática na próxima hora."
+          else
+            echo "semana_encontrada=true" >> "$GITHUB_OUTPUT"
+          fi
+          rm -f stderr.log
+
+      - name: Commitar e enviar novo cardápio
+        if: steps.verificar.outputs.ja_coletado != 'true' && steps.coleta.outputs.semana_encontrada == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add rag/catalogo.yaml rag/dados/originais/ rag/dados/brutos/cardapio-gama/
+          if git diff --cached --quiet; then
+            echo "Nenhuma alteração nova para commitar."
+          else
+            git commit -m "chore(coleta): atualiza cardapio semanal do RU Gama"
+            git push
+          fi
