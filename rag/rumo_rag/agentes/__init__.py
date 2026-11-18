@@ -6,14 +6,13 @@ from .agente_ru import AgenteRU
 from .base import Agente
 from .mensagem import Mensagem, Resposta
 from .orquestrador import (
-    AgenteValidador,
     Orquestrador,
     RespostaAgente,
-    ResultadoValidacao,
     Sintetizador,
     rotear_subpergunta,
 )
 from .trace import Interacao, Trace
+from .validador import AgenteValidador, ResultadoValidacao
 
 __all__ = [
     "Agente",
