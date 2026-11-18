@@ -13,7 +13,6 @@ from __future__ import annotations
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import asdict, dataclass, field
 import os
-import re
 import time
 from typing import Any
 
@@ -23,6 +22,11 @@ from .agente_ru import AgenteRU, _TERMOS_FLUXO, _TERMOS_RU
 from .base import Agente
 from .mensagem import Mensagem, Resposta
 from .trace import Trace
+from .validador import (
+    AgenteValidador,
+    ResultadoValidacao,
+    normalizar_trecho_validacao as _normalizar_trecho_validacao,
+)
 
 _CAMPOS_TRECHO_RESUMO = (
     "chunk_id",
@@ -55,18 +59,6 @@ class RespostaAgente:
     validacao: dict | None = None
 
 
-@dataclass
-class ResultadoValidacao:
-    """Parecer factual emitido pelo AgenteValidador sobre a saída de um agente."""
-
-    aprovado: bool
-    valores_sem_fonte: list[str]
-    sem_citacao: bool
-    eh_recusa: bool
-    motivos: list[str]
-    acao_recomendada: str
-
-
 def _resumir_trecho(t: dict) -> dict:
     """Padroniza os campos essenciais de um chunk recuperado."""
     resumo = {k: t.get(k) for k in _CAMPOS_TRECHO_RESUMO}
@@ -75,20 +67,6 @@ def _resumir_trecho(t: dict) -> dict:
     if resumo["secao"] is None:
         resumo["secao"] = ""
     return resumo
-
-
-def _normalizar_trecho_validacao(t: dict) -> dict:
-    """Garante as chaves mínimas esperadas por `geracao.py` ao validar ou extrair citações."""
-    return {
-        "chunk_id": t.get("chunk_id") or "",
-        "doc_id": t.get("doc_id") or "",
-        "titulo": t.get("titulo") or "",
-        "orgao": t.get("orgao") or "",
-        "pagina": t.get("pagina") if t.get("pagina") is not None else "",
-        "secao": t.get("secao") or "",
-        "url": t.get("url") or "",
-        "texto": t.get("texto") or t.get("conteudo") or "",
-    }
 
 
 def _normalizar_fontes(fontes: list[dict] | None, texto: str, trechos: list[dict] | None) -> list[dict]:
@@ -105,112 +83,6 @@ def _normalizar_fontes(fontes: list[dict] | None, texto: str, trechos: list[dict
     return []
 
 
-def _avaliar_validacao(
-    conteudo: str,
-    trechos: list[dict] | None,
-    fontes: list[dict] | None,
-    erro: str | None = None,
-) -> ResultadoValidacao:
-    """Executa a checagem factual (valores sem respaldo e citação obrigatória RN-02)."""
-    if erro:
-        return ResultadoValidacao(
-            aprovado=False,
-            valores_sem_fonte=[],
-            sem_citacao=False,
-            eh_recusa=False,
-            motivos=[f"Falha na execução do agente: {erro}"],
-            acao_recomendada="devolver_ao_sintetizador",
-        )
-
-    recusa = geracao.eh_recusa(conteudo)
-    motivos: list[str] = []
-
-    if trechos is not None:
-        trechos_norm = [_normalizar_trecho_validacao(t) for t in trechos]
-        valores = geracao.valores_sem_fonte(conteudo, trechos_norm)
-        sem_cit = geracao.resposta_sem_citacao(conteudo, trechos_norm)
-    else:
-        fontes_com_texto = [
-            _normalizar_trecho_validacao(f)
-            for f in (fontes or [])
-            if f.get("texto") or f.get("conteudo")
-        ]
-        valores = geracao.valores_sem_fonte(conteudo, fontes_com_texto) if fontes_com_texto else []
-        tem_marcador = bool(re.search(r"\[\d+\]", conteudo))
-        sem_cit = (not recusa) and (not tem_marcador or not fontes)
-
-    if valores:
-        motivos.append(f"Valores sem respaldo nos trechos: {', '.join(valores)}")
-    if sem_cit:
-        motivos.append("Resposta afirmativa sem citação [n] (RN-02)")
-
-    aprovado = not motivos
-    return ResultadoValidacao(
-        aprovado=aprovado,
-        valores_sem_fonte=valores,
-        sem_citacao=sem_cit,
-        eh_recusa=recusa,
-        motivos=motivos,
-        acao_recomendada="aprovar" if aprovado else "devolver_ao_sintetizador",
-    )
-
-
-class AgenteValidador(Agente):
-    """Verifica fidelidade factual (valores sem fonte) e citações obrigatórias (RN-02)."""
-
-    nome = "Agente Validador"
-    papel = "Validador factual e verificador de citações (RN-02 e RN-03)"
-
-    def executar(self, mensagem: Mensagem) -> Resposta:
-        contexto = mensagem.contexto if isinstance(mensagem.contexto, dict) else {}
-        trechos = contexto.get("trechos")
-        fontes = contexto.get("fontes") or []
-        erro = contexto.get("erro")
-
-        parecer = _avaliar_validacao(
-            conteudo=mensagem.conteudo,
-            trechos=trechos,
-            fontes=fontes,
-            erro=erro,
-        )
-        contexto["validacao"] = asdict(parecer)
-        return Resposta(
-            conteudo="APROVADO" if parecer.aprovado else "REPROVADO",
-            fontes=list(fontes),
-            confianca=1.0 if parecer.aprovado else 0.0,
-            alertas=list(parecer.motivos),
-        )
-
-    def validar(
-        self,
-        item: RespostaAgente | Resposta,
-        trechos: list[dict] | None = None,
-    ) -> ResultadoValidacao:
-        """Executa o contrato do validador e devolve parecer estruturado `ResultadoValidacao`."""
-        if isinstance(item, Resposta):
-            msg = Mensagem(
-                remetente="Orquestrador",
-                destinatario=self.nome,
-                conteudo=item.conteudo,
-                contexto={"trechos": trechos, "fontes": item.fontes},
-            )
-        else:
-            msg = Mensagem(
-                remetente="Orquestrador",
-                destinatario=self.nome,
-                conteudo=item.resposta,
-                contexto={
-                    "agente": item.agente,
-                    "subpergunta": item.subpergunta,
-                    "trechos": trechos if trechos is not None else item.trechos_recuperados,
-                    "fontes": item.fontes_citadas,
-                    "erro": item.erro,
-                },
-            )
-        self.executar(msg)
-        return ResultadoValidacao(**msg.contexto["validacao"])
-
-
 class Sintetizador(Agente):
     """Trata devoluções do AgenteValidador (máx. 1 retentativa) e compõe a saída isolando `[n]`."""
 
@@ -225,8 +97,9 @@ class Sintetizador(Agente):
         backend: str,
         tentativa: int = 1,
         instrucoes_base: str | None = None,
+        agente_execucao: Agente | None = None,
     ) -> tuple[RespostaAgente, dict]:
-        """Tenta corrigir a resposta com feedback do validador em até 1 retentativa no mesmo backend."""
+        """Tenta corrigir a resposta com feedback do validador em até 1 retentativa."""
         resposta_anterior = item.resposta
         evento: dict[str, Any] = {
             "agente": item.agente,
@@ -234,6 +107,7 @@ class Sintetizador(Agente):
             "tentativa": tentativa,
             "motivos_reprovacao": list(validacao.motivos),
             "resposta_anterior": resposta_anterior,
+            "segunda_tentativa": False,
             "acao": "recusa_apos_retentativa",
         }
 
@@ -241,17 +115,57 @@ class Sintetizador(Agente):
             evento["acao"] = "erro_agente"
             return item, evento
 
+        if tentativa > self.max_retentativas:
+            item.resposta = geracao.RECUSA
+            item.fontes_citadas = []
+            evento["acao"] = "recusa_apos_retentativa"
+            return item, evento
+
+        if agente_execucao is not None:
+            evento["segunda_tentativa"] = True
+            msg_ret = Mensagem(
+                remetente=self.nome,
+                destinatario=getattr(agente_execucao, "nome", item.nome_agente),
+                conteudo=item.subpergunta,
+                contexto={
+                    "eixo": item.agente,
+                    "backend": backend,
+                    "tentativa": tentativa + 1,
+                    "segunda_tentativa": True,
+                    "motivos_reprovacao": list(validacao.motivos),
+                    "resposta_anterior": resposta_anterior,
+                },
+            )
+            try:
+                resp_ret = agente_execucao.executar(msg_ret)
+                novos_trechos = msg_ret.contexto.get("trechos_recuperados") if isinstance(msg_ret.contexto, dict) else None
+                if isinstance(novos_trechos, list):
+                    item.trechos_recuperados = [_resumir_trecho(t) for t in novos_trechos]
+                elif resp_ret.fontes:
+                    fontes_texto = [
+                        _resumir_trecho(f)
+                        for f in resp_ret.fontes
+                        if isinstance(f, dict) and (f.get("texto") or f.get("conteudo"))
+                    ]
+                    if fontes_texto:
+                        item.trechos_recuperados = fontes_texto
+                item.resposta = resp_ret.conteudo
+                item.fontes_citadas = _normalizar_fontes(resp_ret.fontes, resp_ret.conteudo, item.trechos_recuperados)
+                evento["resposta_segunda_tentativa"] = item.resposta
+                evento["acao"] = "retentativa_agente"
+                evento["_interacao_retentativa"] = (msg_ret, resp_ret)
+            except Exception as exc:
+                item.resposta = geracao.RECUSA
+                item.fontes_citadas = []
+                evento["erro_retentativa"] = f"{type(exc).__name__}: {exc}"
+                evento["acao"] = "recusa_apos_retentativa"
+            return item, evento
+
         trechos = [_normalizar_trecho_validacao(t) for t in (item.trechos_recuperados or [])]
         if not trechos:
             item.resposta = geracao.RECUSA
             item.fontes_citadas = []
             evento["acao"] = "recusa_sem_trechos"
-            return item, evento
-
-        if tentativa > self.max_retentativas:
-            item.resposta = geracao.RECUSA
-            item.fontes_citadas = []
-            evento["acao"] = "recusa_apos_retentativa"
             return item, evento
 
         motivos_txt = "; ".join(validacao.motivos) or "Resposta reprovada pelo Agente Validador"
@@ -276,6 +190,8 @@ class Sintetizador(Agente):
         else:
             item.resposta = nova_resp
             item.fontes_citadas = geracao.citacoes_usadas(nova_resp, trechos)
+        evento["segunda_tentativa"] = True
+        evento["resposta_segunda_tentativa"] = item.resposta
         evento["acao"] = "retentativa_com_feedback"
         return item, evento
 
@@ -354,6 +270,7 @@ class Sintetizador(Agente):
             val = ResultadoValidacao(**val_raw) if isinstance(val_raw, dict) else val_raw
             backend = contexto.get("backend", config.BACKEND)
             tentativa = int(contexto.get("tentativa", 1))
+            agente_execucao = contexto.pop("_agente_execucao", None)
 
             corrigida, evento = self.processar_devolucao(
                 parte,
@@ -361,7 +278,11 @@ class Sintetizador(Agente):
                 backend=backend,
                 tentativa=tentativa,
                 instrucoes_base=contexto.get("instrucoes_base"),
+                agente_execucao=agente_execucao,
             )
+            interacao_ret = evento.pop("_interacao_retentativa", None)
+            if interacao_ret is not None:
+                contexto["_interacao_retentativa"] = interacao_ret
             contexto["parte_corrigida"] = asdict(corrigida)
             contexto["evento_devolucao"] = evento
             return Resposta(
@@ -618,7 +539,14 @@ class Orquestrador:
         motivos_iniciais = list(val.motivos)
         ev_devolucao: dict[str, Any] | None = None
         if not val.aprovado:
-            instrucoes_base = getattr(self.agentes.get(parte.agente), "instrucoes", None)
+            ag_dom = self.agentes.get(parte.agente)
+            eh_agente_fake = (
+                ag_dom is not None
+                and not isinstance(ag_dom, (AgenteRU, AgenteFluxo))
+                and not hasattr(ag_dom, "_resposta_fixa")
+                and hasattr(ag_dom, "executar")
+            )
+            instrucoes_base = getattr(ag_dom, "instrucoes", None)
             msg_dev = Mensagem(
                 remetente="Orquestrador",
                 destinatario=self.sintetizador.nome,
@@ -630,14 +558,23 @@ class Orquestrador:
                     "backend": backend,
                     "tentativa": 1,
                     "instrucoes_base": instrucoes_base,
+                    "_agente_execucao": ag_dom if eh_agente_fake else None,
                 },
             )
             resp_dev = self.sintetizador.executar(msg_dev)
+            interacao_ret = msg_dev.contexto.pop("_interacao_retentativa", None)
             trace_oficial.registrar(msg_dev, resp_dev)
+            if interacao_ret is not None:
+                trace_oficial.registrar(*interacao_ret)
 
             parte = RespostaAgente(**msg_dev.contexto["parte_corrigida"])
             ev_devolucao = msg_dev.contexto["evento_devolucao"]
 
+            trechos_reval = (
+                parte.trechos_recuperados
+                if (not sem_trechos_explicitos or parte.trechos_recuperados)
+                else None
+            )
             msg_reval = Mensagem(
                 remetente="Orquestrador",
                 destinatario=self.validador.nome,
@@ -645,7 +582,7 @@ class Orquestrador:
                 contexto={
                     "agente": parte.agente,
                     "subpergunta": parte.subpergunta,
-                    "trechos": None if sem_trechos_explicitos else parte.trechos_recuperados,
+                    "trechos": trechos_reval,
                     "fontes": parte.fontes_citadas,
                     "erro": parte.erro,
                 },
@@ -666,7 +603,7 @@ class Orquestrador:
                     contexto={
                         "agente": parte.agente,
                         "subpergunta": parte.subpergunta,
-                        "trechos": None if sem_trechos_explicitos else parte.trechos_recuperados,
+                        "trechos": trechos_reval,
                         "fontes": [],
                         "erro": None,
                     },

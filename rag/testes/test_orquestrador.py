@@ -178,6 +178,28 @@ class TestRoteamentoELimiar(unittest.TestCase):
         rotas = [p["agente"] for p in res["partes"]]
         self.assertEqual(rotas, ["ru", "fluxo"])
 
+    def test_decomposicao_roteamento_e_paralelismo_tres_e_quatro_subperguntas(self):
+        agente_ru = _AgenteStub("ru", "Agente RU", atraso_s=0.12, resposta_fixa="Informação do RU [1].", trechos_fixos=[TRECHO_RU])
+        agente_fluxo = _AgenteStub("fluxo", "Agente Fluxo", atraso_s=0.12, resposta_fixa="Informação do Fluxo [1].", trechos_fixos=[TRECHO_FLUXO])
+        orq = agentes.Orquestrador(agente_ru=agente_ru, agente_fluxo=agente_fluxo)
+
+        for n_subs, eixos in (
+            (3, ["ru", "fluxo", "ru"]),
+            (4, ["ru", "ru", "fluxo", "fluxo"]),
+        ):
+            itens = [
+                {"pergunta": f"Subpergunta {i + 1}?", "eixo": eixos[i]}
+                for i in range(n_subs)
+            ]
+            with mock.patch.object(agentes.reescrita, "classificar_composta", return_value=(True, 0.95)), \
+                 mock.patch.object(agentes.reescrita, "decompor_com_roteamento", return_value=itens):
+                res = orq.executar("Pergunta composta com múltiplas partes?", backend="extrativo")
+
+            self.assertEqual(len(res["subperguntas"]), n_subs)
+            self.assertEqual(len(res["partes"]), n_subs)
+            self.assertEqual([p["agente"] for p in res["partes"]], eixos)
+            self.assertLess(res["tempo_paralelo_s"], res["soma_tempos_individuais_s"])
+
 
 class TestParalelismoEComposicao(unittest.TestCase):
     def test_execucao_paralela_menor_que_soma_individual(self):

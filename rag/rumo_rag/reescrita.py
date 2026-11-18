@@ -75,8 +75,9 @@ _SYSTEM_DECOMPOSICAO = (
     "Regras críticas:\n"
     "1. Explicite o sujeito/domínio implícito em cada subpergunta (ex.: se falar de 'almoço', 'jantar', 'refeição', "
     "'café da manhã' ou 'carteirinha', inclua 'no RU'; se citar um curso ou campus em uma parte, mantenha onde fizer sentido).\n"
-    "2. Não invente informações nem responda à pergunta; apenas reescreva as subperguntas com o seu eixo.\n"
-    '3. Retorne APENAS JSON no formato: {"subperguntas": [{"pergunta": "subpergunta 1?", "eixo": "ru"}, {"pergunta": "subpergunta 2?", "eixo": "fluxo"}]}.'
+    "2. Nunca junte duas perguntas ou assuntos distintos na mesma subpergunta (mesmo que venham ligados por 'e' ou vírgula sem novo pronome interrogativo, como 'e funciona aos sábados?'). Separe cada intenção em um item próprio.\n"
+    "3. Não invente informações nem responda à pergunta; apenas reescreva as subperguntas com o seu eixo.\n"
+    '4. Retorne APENAS JSON no formato: {"subperguntas": [{"pergunta": "subpergunta 1?", "eixo": "ru"}, {"pergunta": "subpergunta 2?", "eixo": "fluxo"}, {"pergunta": "subpergunta 3?", "eixo": "ru"}]}.'
 )
 
 
