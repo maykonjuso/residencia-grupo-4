@@ -5,6 +5,8 @@ __pycache__/
 *.pyc
 # gerados pelo pipeline (recriados por `python -m rumo_rag ingerir`)
 rag/dados/originais/
+# HTML bruto de cada coleta do cardápio (#50): só local, para diagnosticar mudança de layout
+rag/dados/brutos/
 rag/dados/chroma*/
 
 # chaves locais (OpenRouter etc.): nunca no git

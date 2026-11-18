@@ -6,6 +6,17 @@
 
 coleta: "2026-11-06"
 
+# Páginas de onde a coleta automatizada (python -m rumo_rag.coleta) descobre fontes novas.
+# Não entram na base: são o índice. Cada semana coletada vira um documento F.. abaixo.
+fontes_de_coleta:
+  - id: cardapio-gama
+    titulo: "Cardápio Gama (FCTE) — página com o PDF de cada semana"
+    orgao: "UnB · Diretoria do RU"
+    url: "https://ru.unb.br/cardapio-gama/"
+    formato: "HTML com um link por semana (texto \"ISM – dd/mm/aaaa A dd/mm/aaaa\") para PDF com a tabela do cardápio"
+    data: "2026-11-18"   # verificação da URL e do formato
+    coletor: "rumo_rag.coleta.scraper (issue #50)"
+
 documentos:
   # ------------------------------------------------------------------ RU
   - id: F01

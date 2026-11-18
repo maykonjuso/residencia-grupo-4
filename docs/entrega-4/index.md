@@ -3,31 +3,31 @@
 A **Entrega 4** (Épico `#37`) marca a evolução do **RUmo** de um fluxo único de busca e resposta para o primeiro **protótipo de Sistema Multiagente**. Em vez de um único bloco responder a tudo de forma linear, o sistema passa a identificar quando há mais de um assunto na mesma dúvida, distribuir cada parte ao especialista adequado em paralelo, auditar a fidelidade dos dados antes de exibi-los e montar a resposta final mantendo as fontes de cada parte isoladas.
 
 !!! info "Escopo atual do protótipo"
-    Esta documentação descreve o comportamento implementado e demonstrado no repositório. Os agentes de domínio, o orquestrador e o validador seguem o contrato `Agente` / `Mensagem` / `Resposta`; a CLI pode executar o fluxo multiagente.
+    Esta documentação descreve estritamente o comportamento implementado e testado na arquitetura multiagente do RUmo, incluindo o contrato comum de comunicação entre agentes (`#40`), os especialistas de RU (`#41`) e Fluxo (`#42`) com prompts e guarda de domínio próprios, o validador ativo (`#43`) com limite de 1 retentativa e recusa final, e o suporte a APIs compatíveis com OpenAI/OpenRouter.
 
 ---
 
 ## O que é a Entrega 4
 
-O objetivo desta etapa é atender perguntas simples ou compostas de estudantes da UnB (Campus Gama / FCTE) sobre o **Restaurante Universitário (RU)** e o **Fluxo de Graduação** com colaboração coordenada entre agentes. A separação das fontes por bloco permite conferir cada afirmação contra as referências da parte correspondente.
+O objetivo desta etapa é atender perguntas simples ou compostas de estudantes da UnB (Campus Gama / FCTE) sobre o **Restaurante Universitário (RU)** e o **Fluxo de Graduação** com colaboração coordenada entre agentes. A separação das fontes por bloco garante compatibilidade com o cliente do portal único da universidade, que exige que cada citação corresponda exatamente à lista de fontes daquela parte.
 
-A **Tabela 1** resume o que funciona no protótipo e os limites desta entrega.
+A **Tabela 1** resume o que já funciona no protótipo, o que aguarda detalhamento e o que ficou fora do escopo desta semana.
 
 | Categoria | Item / Capacidade | Situação | O que faz na prática |
 |---|---|---|---|
-| **Implementado** | Estrutura e contrato dos agentes | Concluído | Orquestrador, Agente RU, Agente Fluxo, Agente Validador e Sintetizador comunicam-se por `Mensagem` e `Resposta`; as interações podem ser registradas em `Trace` |
-| **Implementado** | Classificação e divisão de perguntas compostas | Concluído | Detecta assuntos múltiplos, divide a pergunta e inclui proteção para cruzamentos RU + Fluxo mesmo quando a probabilidade fica abaixo do limiar `0,39` |
+| **Implementado** | Contrato comum e rastreamento entre agentes (`#40`) | Concluído | Padroniza a comunicação via mensagens e respostas tipadas e registra todas as interações em ordem cronológica |
+| **Implementado** | Especialização do Agente do RU (`#41`) e do Agente de Fluxo (`#42`) | Concluído | Cada agente possui prompt de sistema próprio, guarda preventiva contra perguntas fora do seu domínio e higienização automática de recusas |
+| **Implementado** | Classificação e divisão de perguntas compostas | Concluído | Detecta múltiplos tópicos via limiar neural calibrado (`0,39`) ou cruzamento explícito entre RU e Fluxo, dividindo em subperguntas independentes |
 | **Implementado** | Roteamento híbrido por assunto | Concluído | Escolhe o agente adequado combinando a sugestão gerada na divisão da pergunta, regras diretas por palavras-chave e um classificador neural de apoio |
 | **Implementado** | Execução simultânea e tolerância a falhas | Concluído | Dispara consultas ao RU e ao Fluxo de Graduação ao mesmo tempo e permite simular queda de um agente sem derrubar a parte saudável |
-| **Implementado** | Prompts especializados e proteção de domínio | Concluído | RU e Fluxo têm instruções próprias, recusam consultas claramente fora do seu domínio e mantêm as fontes do próprio eixo |
-| **Implementado** | Conferência factual e retorno ao sintetizador | Concluído | Confere citações e valores, permite uma tentativa de correção e recusa quando a resposta continua sem respaldo |
-| **Implementado** | CLI multiagente | Concluído | A CLI aceita `--agentes` e `--trace` para executar e exibir a colaboração entre os agentes |
+| **Implementado** | Validador ativo e devolução ao sintetizador (`#43`) | Concluído | Validador determinístico (sem LLM) reprova valores sem fonte ou falta de citação, devolve para no máximo **1 retentativa com feedback** e aplica recusa padrão se reprovar duas vezes |
+| **Implementado** | Suporte a provedor local ou API externa (OpenRouter/OpenAI) | Concluído | Permite executar decomposição e agentes via Ollama, HuggingFace local, modo extrativo ou API compatível com OpenAI mantendo o padrão local |
 | **Implementado** | Comparativo experimental de roteamento | Concluído | Avalia três estratégias de roteamento em um conjunto de 8 perguntas múltiplas (17 subperguntas) de linguagem natural |
 | **Implementado** | Cardápio estruturado por compartimento (`#54`) | Concluído | Converte as refeições dos cardápios em JSON por compartimento da bandeja e trilha alimentar (*padrão*, *ovolacto* e *vegano*), preservando documento e página de origem em cada opção |
-| **Fora de escopo** | Atendimento geral a qualquer assunto ou campus da UnB | Não incluído | Os especialistas desta entrega cobrem os domínios RU e Fluxo acadêmico da FCTE |
+| **Fora de escopo** | Comunicação em tempo real com a API do Portal Único (Grupo 09) | Fora da entrega | Integração geral do sistema unificado descrita em [Divisão com o Grupo 09](../visao/escopo-grupos.md) |
 | **Fora de escopo** | Memória conversacional contínua e login autenticado | Fora da entrega | Cada pergunta é processada de forma independente, sem histórico pessoal de usuário |
 
-<p class="legenda">Tabela 1. Visão geral do que foi implementado e do que ficou fora de escopo na Entrega 4.</p>
+<p class="legenda">Tabela 1. Visão geral do que foi implementado, do que está pendente e do que ficou fora de escopo na Entrega 4.</p>
 
 !!! note "Apoio à montagem de prato — Cardápio estruturado (#54)"
     Como complemento da base de conhecimento para a interface do monta-prato, o módulo de coleta transforma os cardápios já extraídos da base em JSON organizado por compartimento da bandeja (incluindo almoço, jantar e café da manhã) e por trilha alimentar (*padrão*, *ovolactovegetariano* e *vegetariano estrito*). Cada opção mantém o documento e a página de origem, trata falhas de formatação do PDF com avisos e pode ser gerada em `rag/` via `python -m rumo_rag.coleta cardapio --estruturado --data 2026-11-09 --refeicao almoco`.
@@ -54,4 +54,4 @@ A documentação segue os três artefatos solicitados no enunciado e o registro 
     | 1.1 | 16/11/2026 | @GabrielMacielBR | Refatoração para a estrutura padronizada com marcação explícita de pendências | @maykonjuso |
     | 1.2 | 16/11/2026 | @GabrielMacielBR | Adequação para leitura descritiva sem siglas nem jargões de código internos | @maykonjuso |
     | 1.3 | 18/11/2026 | @GabrielMacielBR | Inclusão breve do cardápio estruturado por compartimento (`#54`, por @Kyara2) no resumo da Entrega 4 | — |
-    | 1.4 | 18/11/2026 | @keilogger | Atualização do estado da Entrega 4 após a implementação e demonstração do fluxo multiagente | — |
+    | 1.4 | 18/11/2026 | @GabrielMacielBR | Atualização do panorama após conclusão do contrato (`#40`), especialização (`#41`/`#42`) e validador ativo (`#43`) | — |

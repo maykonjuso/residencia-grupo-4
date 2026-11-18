@@ -1,12 +1,12 @@
 # Fluxo de Interação e Roteamento
 
-Esta página mostra como os agentes colaboram diante de uma pergunta composta e resume o experimento que orientou a estratégia de classificação e roteamento do **Orquestrador**. Cada chamada entre agentes usa o contrato `Mensagem` → `Resposta`; o `Trace` registra as interações em ordem.
+Esta página mostra como os agentes colaboram do início ao fim diante de uma pergunta composta e apresenta o experimento comparativo que definiu a estratégia de classificação e roteamento do **Orquestrador**.
 
 ---
 
 ## Sequência de colaboração para pergunta composta
 
-A **Figura 1** segue o modelo visual de [Divisão com o Grupo 09](../visao/escopo-grupos.md) e mostra as mensagens trocadas por uma pergunta que reúne RU e Fluxo.
+A **Figura 1** segue o modelo visual de [Divisão com o Grupo 09](../visao/escopo-grupos.md), reunindo os cinco papéis principais no fluxo em linguagem direta para facilitar a leitura contínua.
 
 ```mermaid
 sequenceDiagram
@@ -16,30 +16,19 @@ sequenceDiagram
     participant RU as Agente do RU
     participant FL as Agente de Fluxo
     participant V as Agente Validador
-    participant S as Sintetizador
 
     E->>O: Pergunta sobre o almoço de hoje e sobre Testes de Software
-    O->>O: Classifica e divide em subperguntas com domínio sugerido
+    O->>O: Identifica dois assuntos e divide a pergunta
     par Consulta aos especialistas em paralelo
-        O->>RU: Mensagem: subpergunta do RU + contexto
-        RU-->>O: Resposta: texto, fontes, confiança e alertas
+        O->>RU: O que tem no almoço de hoje?
+        RU-->>O: Cardápio do dia com citação do documento oficial
     and
-        O->>FL: Mensagem: subpergunta acadêmica + contexto
-        FL-->>O: Resposta: texto, fontes, confiança e alertas
+        O->>FL: Quais são os pré-requisitos de Testes de Software?
+        FL-->>O: Lista de pré-requisitos com citação do fluxo curricular
     end
-    loop Para cada resposta sem falha
-        O->>V: Mensagem: resposta parcial + trechos e fontes
-        V-->>O: Resposta: aprovada ou reprovada com motivos
-        opt Se reprovada
-            O->>S: Mensagem: devolução + feedback + trechos
-            S-->>O: Resposta corrigida (uma tentativa)
-            O->>V: Mensagem: resposta corrigida para revalidação
-            V-->>O: Resposta: parecer final
-        end
-    end
-    O->>S: Mensagem: partes aprovadas ou avisos de falha
-    S-->>O: Resposta: composição com fontes isoladas por parte
-    Note over O,S: O Trace registra cada par Mensagem → Resposta com horário
+    O->>V: Verifica se os dados e as citações conferem com as fontes (sem LLM)
+    V-->>O: Aprova ou reprova com motivo explícito (máx. 1 retentativa ou recusa final)
+    O->>O: Junta as respostas mantendo as fontes de cada parte separadas
     O-->>E: Entrega a resposta completa dividida por assunto
 ```
 
@@ -50,9 +39,9 @@ A **Tabela 1** explica o que acontece em cada um dos dez passos da **Figura 1**,
 | Passo | Participantes | O que acontece neste passo | Tratamento de falha ou exceção |
 |---|---|---|---|
 | 1 | Estudante → Orquestrador | O estudante envia a pergunta completa em linguagem natural para o ponto de entrada do sistema. | Consultas vazias ou sem tema reconhecido seguem o fluxo padrão de recusa. |
-| 2 | Orquestrador | Combina a detecção de pergunta composta (limiar calibrado em `0,39`), a identificação de cruzamento RU + Fluxo e a sugestão de domínio para produzir as subperguntas. | Se a classificação do modelo falhar, usa os fallbacks implementados para ainda detectar cruzamentos claros ou dividir por conectivos. |
-| 3–6 | Orquestrador ↔ Agente do RU / Agente de Fluxo | Os dois especialistas são consultados ao mesmo tempo na base documental oficial da UnB e devolvem suas respostas com citações próprias. | Se um especialista cair ou falhar, essa parte recebe um aviso explícito de indisponibilidade sem impedir a entrega da parte saudável. |
-| 7–8 | Orquestrador ↔ Agente Validador | O validador confere se valores numéricos e afirmações constam nos trechos recuperados e se há citação de fonte válida. | Se encontrar dado sem fonte ou falta de citação, devolve o bloco ao sintetizador para extração literal segura dos trechos ou emissão de recusa padrão com aviso. |
+| 2 | Orquestrador | Analisa se há mais de um assunto (limiar `0,39` ou cruzamento explícito RU + Fluxo), divide a pergunta em subperguntas e define qual especialista atende cada parte. | Se o modelo linguístico falhar na divisão, aplica separação por conectivos gramaticais; em dúvidas ambíguas, consulta o classificador neural de domínio. |
+| 3–6 | Orquestrador ↔ Agente do RU / Agente de Fluxo | Os dois especialistas são consultados ao mesmo tempo via contrato padronizado de mensagens na base documental oficial da UnB e respondem com prompts próprios. | Se um especialista receber pergunta exclusiva do outro domínio, recusa imediatamente sem buscar no índice; se cair ou falhar, entrega a parte saudável com aviso. |
+| 7–8 | Orquestrador ↔ Agente Validador | O validador audita deterministicamente (sem chamar LLM) se valores numéricos, códigos e afirmações constam nos trechos recuperados e se há citação `[n]` válida. | Se reprovar, devolve ao sintetizador para **no máximo 1 retentativa com feedback** no mesmo backend; se reprovar pela segunda vez, aplica recusa padrão sem exibir a resposta ruim. |
 | 9 | Orquestrador | O sintetizador reúne os blocos validados preservando a numeração e a lista de fontes de cada parte de forma independente. | Mantém eventuais avisos de falha parcial ou correção vinculados apenas ao bloco afetado. |
 | 10 | Orquestrador → Estudante | O estudante recebe a resposta final organizada por assunto, com referências separadas e histórico detalhado de execução quando solicitado. | Sinaliza explicitamente quando a entrega ocorreu em modo degradado por indisponibilidade parcial. |
 
@@ -64,7 +53,7 @@ A **Tabela 1** explica o que acontece em cada um dos dez passos da **Figura 1**,
 
 Antes de acionar os especialistas, o orquestrador toma duas decisões complementares:
 
-1. **Detectar e dividir perguntas compostas:** combina a probabilidade do classificador neural (limiar `0,39`) com uma detecção explícita de cruzamento entre os termos de RU e Fluxo. Quando a pergunta é composta, a reescrita produz subperguntas e sugestões de domínio; há fallback gramatical caso o modelo falhe.
+1. **Detectar e dividir perguntas compostas:** primeiro verifica se a dúvida mistura mais de um tópico usando o classificador neural calibrado em `0,39`; quando necessário, divide a consulta em subperguntas atômicas por meio de modelo linguístico (com alternativa gramatical por conectivos caso o modelo esteja indisponível).
 2. **Escolher o especialista de cada subpergunta:** direciona cada parte entre **Restaurante Universitário** e **Fluxo de Graduação**. Para definir a melhor estratégia de roteamento, três abordagens foram avaliadas em experimento próprio:
    - **Regras por palavras-chave (Regex):** busca termos explícitos do domínio diretamente no texto da subpergunta;
    - **Roteamento conjunto no modelo de linguagem (LLM `qwen2.5:7b`):** o mesmo modelo que divide a pergunta já indica o assunto de cada parte na resposta, sem exigir uma nova chamada ao servidor;
@@ -145,4 +134,4 @@ O cenário mais exigente ocorre quando os roteadores recebem as frases exatament
     | 1.0 | 16/11/2026 | @GabrielMacielBR | Documentação inicial do roteamento híbrido e experimento comparativo | @keilogger |
     | 1.1 | 16/11/2026 | @GabrielMacielBR | Renomeação para `fluxo-de-interacao.md`, diagrama padronizado e tabelas verbatim do experimento | @maykonjuso |
     | 1.2 | 16/11/2026 | @GabrielMacielBR | Simplificação visual do diagrama de sequência e reescrita em linguagem natural descritiva nas tabelas sem códigos nem notações abstratas | @maykonjuso |
-    | 1.3 | 18/11/2026 | @keilogger | Inclusão do Sintetizador, do contrato Mensagem/Resposta e do trace na sequência de colaboração | — |
+    | 1.3 | 18/11/2026 | @GabrielMacielBR | Atualização do diagrama e tabela de passos para refletir validador determinístico (sem LLM), guarda de domínio e limite de 1 retentativa com recusa final | — |

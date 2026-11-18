@@ -35,6 +35,33 @@ class TestEsquema(unittest.TestCase):
         self.assertEqual(r["mesa_apoio"], ["água", "farinha", "molho de pimenta", "vinagre", "azeite", "sal"])
         self.assertEqual(r["fonte"]["doc_id"], "F09")
         self.assertEqual(r["fonte"]["pagina"], 2)
+        self.assertFalse(r["alergenicos"]["disponivel"])
+        self.assertEqual(len(r["alergenicos"]["legenda"]), 10)
+        self.assertIn("ícones", r["alergenicos"]["observacao"])
+        self.assertTrue(all(o["alergenicos"] == [] for c in r["compartimentos"] for o in c["opcoes"]))
+
+    def test_alergenicos_anotados_no_texto_sao_normalizados(self):
+        c = {
+            "chunk_id": "F98-0001",
+            "doc_id": "F98",
+            "pagina": 2,
+            "titulo": "RU Gama",
+            "url": "https://ru.unb.br/cardapio-gama/",
+            "secao": "Almoço · segunda-feira 16/11/2026",
+            "texto": (
+                "## Almoço · segunda-feira 16/11/2026\n"
+                "- Prato principal padrão: Frango com creme de milho [Alergênicos: Leite e derivados, Trigo/Glúten]\n"
+                "- Prato principal vegetariano estrito: Soja refogada [Alergênicos: soja]"
+            ),
+        }
+        r = cardapio.estruturar_chunk(c)
+        cardapio.validar(r)
+        self.assertTrue(r["alergenicos"]["disponivel"])
+        self.assertEqual(r["alergenicos"]["observacao"], "")
+        opcoes = {o["trilha"]: o for o in r["compartimentos"][0]["opcoes"]}
+        self.assertEqual(opcoes["padrao"]["nome"], "Frango com creme de milho")
+        self.assertEqual(opcoes["padrao"]["alergenicos"], ["leite", "gluten"])
+        self.assertEqual(opcoes["vegano"]["alergenicos"], ["soja"])
 
     def test_todas_as_refeicoes_da_semana_validam_no_schema(self):
         self.assertTrue(F09)

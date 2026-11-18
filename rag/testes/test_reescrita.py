@@ -202,6 +202,36 @@ class TestDecompor(unittest.TestCase):
         self.assertEqual(subs[0], "O estudante de graduação paga taxa")
         self.assertEqual(subs[1], "Como solicitar isenção")
 
+    def test_decompor_sem_limite_de_duas_subperguntas_tres_e_quatro(self):
+        resposta_ollama_4 = {
+            "message": {
+                "content": json.dumps({
+                    "subperguntas": [
+                        {"pergunta": "Quanto custa o almoço no RU para o Grupo III?", "eixo": "ru"},
+                        {"pergunta": "O RU Gama abre aos sábados?", "eixo": "ru"},
+                        {"pergunta": "Quais os pré-requisitos de Cálculo 2?", "eixo": "fluxo"},
+                        {"pergunta": "Qual a carga horária mínima em Engenharia de Software?", "eixo": "fluxo"},
+                    ]
+                })
+            }
+        }
+        mock_resp = io.BytesIO(json.dumps(resposta_ollama_4).encode("utf-8"))
+        with mock.patch.object(reescrita, "classificar_composta", return_value=(True, 0.96)), \
+                mock.patch("urllib.request.urlopen", return_value=mock_resp):
+            reescrita._decompor_llm_com_eixo.cache_clear()
+            itens = reescrita.decompor_com_roteamento(
+                "Quanto custa o almoço no RU? Abre aos sábados? Pré-requisitos de Cálculo 2? E carga horária de Software?",
+                backend="ollama",
+            )
+            self.assertEqual(len(itens), 4)
+            self.assertEqual([i["eixo"] for i in itens], ["ru", "ru", "fluxo", "fluxo"])
+
+        subs_fallback_3 = reescrita._decompor_fallback(
+            "Até que horas servem o almoço no RU Gama? Quais os pré-requisitos de Estruturas de Dados? "
+            "E quantas horas de estágio exige Engenharia Eletrônica?"
+        )
+        self.assertEqual(len(subs_fallback_3), 3)
+
 
 class TestBuscarComSubperguntas(unittest.TestCase):
     """Testes de integração: recuperação intercalada round-robin e fusão de chunks."""
