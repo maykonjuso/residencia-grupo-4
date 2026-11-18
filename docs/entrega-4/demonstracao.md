@@ -161,16 +161,16 @@ O conjunto completo de **12 perguntas múltiplas** (`rag/avaliacao/perguntas/per
 | **M05** | Onde vejo se a comida de hoje tem derivados de leite e qual o prazo máximo para desistir de uma turma no semestre sem reprovar? | `2/2` | `ru`, `fluxo` | `2,07` | `3,19` | `1,12` | Ambos recusaram honestamente por falta de base/data |
 | **M06** | Qual a carga horária mínima por período em Software e quanto paga quem não recebe bolsa de alimentação? | `2/2` | `fluxo`, `ru` | `20,00` | `21,12` | `1,12` | Ambos recusaram honestamente sem base exata |
 | **M07** | Quanto custa o desjejum para Grupo II, quantos créditos exige Engenharia Aeroespacial e abre aos sábados para comer? | `3/3` | `ru`, `fluxo`, `ru` | `39,23` | `88,53` | `49,30` | Fluxo devolvido (`2510 horas` sem fonte) → corrigido (`251 créditos`); `3/3` aprovadas |
-| **M08** | Sou calouro na FCTE: em qual etapa escolho minha engenharia específica e quais documentos apresento na catraca para comer? | `2/2` | `fluxo`, `ru` | `40,15` | `67,90` | `27,74` | Aprovado (`2/2` com citação) |
+| **M08** | Sou estudante da FCTE: quantos créditos exige Engenharia de Software e quais documentos apresento na catraca para comer? | `2/2` | `fluxo`, `ru` | `25,71` | `41,80` | `16,09` | Aprovado (`2/2` com citação) |
 | **M09** | Até que horas servem o almoço no RU Gama? Quais os pré-requisitos de Estruturas de Dados? E quantas horas de estágio exige Engenharia Eletrônica? | `3/3` | `ru`, `fluxo`, `fluxo` | `21,19` | `42,43` | `21,24` | Aprovado (`3/3` com citação) |
 | **M10** | Qual o horário do café da manhã no RU, quanto custa o jantar para o Grupo III e quem tem direito à isenção nas refeições? | `3/3` | `ru`, `ru`, `ru` | `17,53` | `34,65` | `17,12` | Aprovado (`3/3` com citação) |
 | **M11** | Quanto custa o almoço no RU para Grupo III? O RU Gama abre aos sábados? Quais os pré-requisitos de Cálculo 2? E qual a carga horária mínima por semestre em Engenharia de Software? | `4/4` | `ru`, `ru`, `fluxo`, `fluxo` | `36,14` | `84,75` | `48,61` | 3 partes respondidas com citação; 4ª parte recusou honestamente |
-| **M12** | Sou estudante da FCTE: em que momento escolho minha engenharia na ABI, quantos créditos exige Engenharia Automotiva, quais documentos levo na catraca do RU e como comprovo direito ao auxílio alimentação? | `4/4` | `fluxo`, `fluxo`, `ru`, `ru` | `32,14` | `61,32` | `29,19` | Aprovado (`4/4` com citação) |
+| **M12** | Sou estudante da FCTE: quantas horas de estágio exige Engenharia de Energia, quantos créditos exige Engenharia Automotiva, quais documentos levo na catraca do RU e como comprovo direito ao auxílio alimentação? | `4/4` | `fluxo`, `fluxo`, `ru`, `ru` | `47,53` | `118,68` | `71,15` | Aprovado (`4/4` com citação) |
 
 <p class="legenda">Tabela 2. Resultados ponta a ponta nas 12 perguntas múltiplas (duplas, triplas e quádruplas) com busca híbrida e modelo generativo local (qwen2.5:7b).</p>
 
 - **Decomposição e roteamento:** **`12/12` (`100%`)** das consultas foram quebradas no número exato de subperguntas esperadas (`31/31` subperguntas) e roteadas na ordem e nos domínios corretos.
-- **Paralelismo comprovado:** redução total de **`219,31 s`** (`263,56 s` em paralelo contra `482,87 s` individuais, economia média de **`45,4%`** na execução dos agentes, escalando para 3 e 4 *workers* simultâneos).
+- **Paralelismo comprovado:** redução total de **`249,63 s`** (`264,50 s` em paralelo contra `514,13 s` individuais, economia média de **`48,6%`** na execução dos agentes, escalando para 3 e 4 *workers* simultâneos).
 - **Fidelidade e escopo:** **`31/31`** partes aprovadas no desfecho final pelo **Agente Validador** (`0` erros de execução). Nas 2 reprovações iniciais (`M04` e `M07`), o fluxo ativo devolveu ao **Sintetizador**: em `M07`, a retentativa corrigiu o valor para `251 créditos`; em `M04`, como o valor sem respaldo persistiu na 2ª tentativa, foi aplicada a recusa final honesta.
 
 ??? abstract "Histórico de revisão"

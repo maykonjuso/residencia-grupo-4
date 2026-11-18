@@ -35,7 +35,7 @@ A **Tabela 2** detalha como os documentos cobrem os cinco cursos de graduação 
 | Engenharia de Energia | Graduação | Informações gerais (F22), matriz (F23) | Imagem → transcrição do grupo |
 | Engenharia de Software | Graduação | Matriz e créditos (F15), fluxograma (F16) | Imagem → transcrição do grupo |
 | Engenharia Biomédica (PPGEB) | Mestrado | Apresentação, matriz, aluno de graduação, linhas, edital (F24–F28) | Página do programa |
-| Comum a todos | — | ABI (F14), calendário (F29, F30), trancamento (F31), matrícula (F32–F34), regimentos (F35, F36) | Texto |
+| Comum a todos | — | Ingresso e normas de curso (F14), calendário (F29, F30), trancamento (F31), matrícula (F32–F34), regimentos (F35, F36) | Texto |
 
 <p class="legenda">Tabela 2. Cobertura das engenharias e do PPGEB.</p>
 

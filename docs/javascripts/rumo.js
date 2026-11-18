@@ -31,7 +31,7 @@
 
   /* ---------- Fundo do hero: fichas com termos da base ---------- */
   var TERMOS = ["RU Gama", "R$ 4,50", "Grupo II", "CAD 37/2025", "almoço 11h–14h30", "vegetariano estrito",
-    "FGA0314", "Cálculo 1", "MDS → Requisitos", "ABI Engenharia", "PPGEB", "2026.2", "trancamento",
+    "FGA0314", "Cálculo 1", "MDS → Requisitos", "Engenharia de Software", "PPGEB", "2026.2", "trancamento",
     "SIGAA", "ChromaDB", "e5-base", "BM25", "RRF", "top-5", "[1][2]", "Energia · 251 cr", "Software · 235 cr",
     "Aeroespacial", "Automotiva", "Eletrônica", "Edital 24/2026", "PNAES"];
 
