@@ -7,6 +7,7 @@ DADOS = RAIZ / "dados"
 ORIGINAIS = DADOS / "originais"     # arquivos baixados (PDF/HTML), fora do git
 TEXTO = DADOS / "texto"             # texto extraído e limpo, um .txt por documento
 CHUNKS = DADOS / "chunks.jsonl"     # chunks com metadados (também alimenta o BM25)
+CARDAPIO_SEMANAL_JSON = DADOS / "cardapio_semanal.json"  # cardápio semanal estruturado (fonte única do Agente RU)
 CATALOGO = RAIZ / "catalogo.yaml"
 AVALIACAO = RAIZ / "avaliacao"
 PERGUNTAS_AVALIACAO = AVALIACAO / "perguntas"

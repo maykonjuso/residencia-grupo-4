@@ -316,6 +316,184 @@ def semana(inicio: str) -> list[str]:
     return [(d + timedelta(days=i)).isoformat() for i in range(7)]
 
 
+# ----------------------------------------------------------------------------- cardápio semanal (.json)
+
+_DIAS_SEMANA_PT = (
+    "segunda-feira", "terça-feira", "quarta-feira", "quinta-feira",
+    "sexta-feira", "sábado", "domingo",
+)
+_RE_PAGINA = re.compile(r"\[\[PAGINA (\d+)\]\]\s*\n(## [^\n]+)")
+
+
+def estruturar_semana(resultado_coleta: dict, doc_id: str = "F99") -> dict:
+    """Converte a coleta semanal (`scraper.coletar`) no JSON único `cardapio_semanal.json`."""
+    sem = resultado_coleta["semana"]
+    texto = resultado_coleta.get("texto", "")
+    blocos = re.split(r"(?=\[\[PAGINA \d+\]\])", texto)
+    refeicoes: list[dict] = []
+    for bloco in blocos:
+        bloco = bloco.strip()
+        if not bloco:
+            continue
+        m = _RE_PAGINA.match(bloco)
+        pagina = int(m.group(1)) if m else 1
+        secao = m.group(2).lstrip("# ").strip() if m else ""
+        chunk = {
+            "chunk_id": f"{doc_id}-{len(refeicoes) + 1:04d}",
+            "doc_id": doc_id,
+            "pagina": pagina,
+            "titulo": f"Cardápio semanal do RU Gama — {sem.inicio:%d/%m} a {sem.fim:%d/%m/%Y}",
+            "url": sem.url,
+            "secao": secao,
+            "texto": bloco,
+        }
+        est = estruturar_chunk(chunk)
+        if est["compartimentos"]:
+            refeicoes.append(est)
+    return {
+        "unidade": "gama",
+        "semana": {"inicio": sem.inicio.isoformat(), "fim": sem.fim.isoformat()},
+        "atualizado_em": datetime.now().isoformat(timespec="seconds"),
+        "fonte": {
+            "doc_id": doc_id,
+            "url": sem.url,
+            "pagina_listagem": "https://ru.unb.br/cardapio-gama/",
+        },
+        "alergenicos": {
+            "disponivel": any(r["alergenicos"]["disponivel"] for r in refeicoes),
+            "legenda": [{"id": aid, "nome": rotulo} for aid, rotulo in ALERGENICOS_OFICIAIS],
+        },
+        "refeicoes": refeicoes,
+    }
+
+
+def salvar_semana_json(
+    resultado_coleta: dict,
+    doc_id: str,
+    destino: Path | None = None,
+) -> Path:
+    """Grava `cardapio_semanal.json` atomicamente."""
+    from .scraper import gravar_atomico
+
+    destino = destino or config.CARDAPIO_SEMANAL_JSON
+    dados = estruturar_semana(resultado_coleta, doc_id=doc_id)
+    gravar_atomico(destino, json.dumps(dados, ensure_ascii=False, indent=2) + "\n")
+    return destino
+
+
+def carregar_semana_atual(
+    hoje: date | None = None,
+    caminho: Path = config.CARDAPIO_SEMANAL_JSON,
+) -> tuple[dict | None, str | None]:
+    """Carrega `cardapio_semanal.json` e valida se a semana bate com a data atual."""
+    ref = hoje or date.today()
+    if not caminho.exists():
+        return None, "Cardápio semanal (.json) não encontrado."
+    try:
+        dados = json.loads(caminho.read_text(encoding="utf-8"))
+        sem = dados.get("semana") or {}
+        inicio = date.fromisoformat(sem["inicio"])
+        fim = date.fromisoformat(sem["fim"])
+    except Exception:
+        return None, "Cardápio semanal (.json) inválido ou sem intervalo de semana."
+    if not (inicio <= ref <= fim):
+        return None, (
+            f"Cardápio semanal desatualizado ({inicio:%d/%m/%Y} a {fim:%d/%m/%Y}) "
+            f"para a data atual ({ref:%d/%m/%Y})."
+        )
+    return dados, None
+
+
+def _datas_da_pergunta(pergunta: str, inicio: date, fim: date, hoje: date) -> set[str]:
+    q = _sem_acento(pergunta)
+    datas: set[str] = set()
+    if re.search(r"\bhoje\b", q):
+        datas.add(hoje.isoformat())
+    if re.search(r"\bamanha\b", q):
+        datas.add((hoje + timedelta(days=1)).isoformat())
+    for idx, nome in enumerate(("segunda", "terca", "quarta", "quinta", "sexta", "sabado", "domingo")):
+        if re.search(rf"\b{nome}(?:-feira)?\b", q):
+            d = inicio + timedelta(days=(idx - inicio.weekday()) % 7)
+            if inicio <= d <= fim:
+                datas.add(d.isoformat())
+    for d_str, m_str in re.findall(r"\b(\d{1,2})/(\d{1,2})\b", q):
+        try:
+            d = date(inicio.year, int(m_str), int(d_str))
+            if inicio <= d <= fim:
+                datas.add(d.isoformat())
+        except ValueError:
+            pass
+    return datas
+
+
+def _refeicoes_da_pergunta(pergunta: str) -> set[str]:
+    q = _sem_acento(pergunta)
+    refs: set[str] = set()
+    if re.search(r"\b(?:cafe|desjejum)\b", q):
+        refs.add("cafe")
+    if re.search(r"\b(?:almoco|meio-dia)\b", q):
+        refs.add("almoco")
+    if re.search(r"\b(?:jantar|janta|noite)\b", q):
+        refs.add("jantar")
+    return refs
+
+
+def _formatar_refeicao_texto(r: dict) -> str:
+    d_iso = r.get("data", "")
+    try:
+        dt = date.fromisoformat(d_iso)
+        dia_nome = _DIAS_SEMANA_PT[dt.weekday()]
+        data_br = f"{dt:%d/%m/%Y}"
+    except ValueError:
+        dia_nome, data_br = "", d_iso
+    nome_ref = REFEICOES.get(r.get("refeicao", ""), r.get("refeicao", ""))
+    linhas = [f"Cardápio do RU Gama (FCTE) — {nome_ref} de {dia_nome}, {data_br}:"]
+    for comp in r.get("compartimentos", []):
+        for o in comp.get("opcoes", []):
+            trilha = f" ({o['trilha']})" if o.get("trilha") not in (None, "todas") else ""
+            alerg = f" [Alergênicos: {', '.join(o['alergenicos'])}]" if o.get("alergenicos") else ""
+            linhas.append(f"- {comp['titulo']}{trilha}: {o['nome']}{alerg}")
+    if r.get("mesa_apoio"):
+        linhas.append(f"Mesa de apoio: {', '.join(r['mesa_apoio'])}.")
+    return "\n".join(linhas)
+
+
+def trechos_da_semana(dados: dict, pergunta: str, hoje: date | None = None) -> list[dict]:
+    """Filtra as refeições relevantes de `cardapio_semanal.json` e devolve trechos padronizados."""
+    ref_hoje = hoje or date.today()
+    inicio = date.fromisoformat(dados["semana"]["inicio"])
+    fim = date.fromisoformat(dados["semana"]["fim"])
+    datas_alvo = _datas_da_pergunta(pergunta, inicio, fim, ref_hoje)
+    refs_alvo = _refeicoes_da_pergunta(pergunta)
+    fonte_sem = dados.get("fonte") or {}
+
+    trechos: list[dict] = []
+    for r in dados.get("refeicoes", []):
+        if datas_alvo and r.get("data") not in datas_alvo:
+            continue
+        if refs_alvo and r.get("refeicao") not in refs_alvo:
+            continue
+        f = r.get("fonte") or {}
+        d_iso = r.get("data", "")
+        try:
+            dt = date.fromisoformat(d_iso)
+            secao = f"{REFEICOES.get(r['refeicao'], r['refeicao'])} · {_DIAS_SEMANA_PT[dt.weekday()]} {dt:%d/%m/%Y}"
+        except ValueError:
+            secao = r.get("refeicao", "")
+        trechos.append({
+            "chunk_id": f.get("chunk_id") or "",
+            "doc_id": f.get("doc_id") or fonte_sem.get("doc_id") or "CARDAPIO",
+            "titulo": f"Cardápio semanal do RU Gama ({inicio:%d/%m} a {fim:%d/%m/%Y})",
+            "orgao": "UnB · Diretoria do RU",
+            "pagina": f.get("pagina") or 1,
+            "secao": secao,
+            "url": f.get("url") or fonte_sem.get("url") or "",
+            "texto": _formatar_refeicao_texto(r),
+            "similaridade": 1.0,
+        })
+    return trechos[:config.TOP_K]
+
+
 # ----------------------------------------------------------------------------- validação
 
 def validar(cardapio: dict) -> None:

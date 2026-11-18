@@ -37,7 +37,7 @@ def cmd_coleta(args) -> int:
     if args.dry_run:
         print("(dry-run: nada foi gravado)", file=sys.stderr)
         return 0
-    g = scraper.gravar(r["pagina"], r["pdf"], r["semana"], date.today())
+    g = scraper.gravar(r["pagina"], r["pdf"], r["semana"], date.today(), resultado=r)
     for arq in g["arquivos"]:
         print(f"gravado: {arq}", file=sys.stderr)
     if g["novo"]:
