@@ -32,6 +32,13 @@ from pathlib import Path
 
 from .. import config
 
+try:
+    import certifi
+
+    os.environ.setdefault("SSL_CERT_FILE", certifi.where())
+except ImportError:
+    pass
+
 PAGINA = "https://ru.unb.br/cardapio-gama/"
 ORGAO = "UnB · Diretoria do RU"
 USER_AGENT = ("RUmo/1.0 (Residência em IA UnB/FCTE, Grupo 04; coleta semanal do cardápio; "
@@ -281,9 +288,24 @@ def coletar(referencia: date, pagina_local: Path | None = None, pdf_local: Path 
 
 
 def imprimir(resultado: dict) -> str:
+    from .cardapio import ALERGENICOS_OFICIAIS
+
     s = resultado["semana"]
-    linhas = [f"Cardápio do RU Gama · semana de {s.inicio:%d/%m/%Y} a {s.fim:%d/%m/%Y}",
-              f"fonte: {s.url}", f"listada em: {PAGINA}", ""]
+    legenda = ", ".join(rotulo for _, rotulo in ALERGENICOS_OFICIAIS)
+    extraidos = "[Alergênicos:" in resultado.get("texto", "")
+    obs = (
+        "Extraídos automaticamente dos ícones do PDF por célula (auto-calibrados pela legenda do rodapé)."
+        if extraidos
+        else "Notações de alergênicos por prato no PDF oficial são ícones (imagens) não extraídos como texto."
+    )
+    linhas = [
+        f"Cardápio do RU Gama · semana de {s.inicio:%d/%m/%Y} a {s.fim:%d/%m/%Y}",
+        f"fonte: {s.url}",
+        f"listada em: {PAGINA}",
+        f"alergenicos (legenda oficial): {legenda}",
+        f"alergenicos (observacao): {obs}",
+        "",
+    ]
     for d in resultado["dias"]:
         linhas.append(f"{d['dia']} {d['data']}".strip())
         for ref, itens in d["refeicoes"].items():

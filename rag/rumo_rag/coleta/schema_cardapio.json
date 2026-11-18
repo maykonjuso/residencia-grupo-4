@@ -3,7 +3,7 @@
   "$id": "rumo/cardapio-estruturado.json",
   "title": "Cardápio estruturado por compartimento (monta-prato)",
   "type": "object",
-  "required": ["unidade", "data", "refeicao", "compartimentos", "mesa_apoio", "fonte", "avisos"],
+  "required": ["unidade", "data", "refeicao", "compartimentos", "mesa_apoio", "alergenicos", "fonte", "avisos"],
   "additionalProperties": false,
   "properties": {
     "unidade": {"type": "string", "minLength": 1},
@@ -24,12 +24,17 @@
             "minItems": 1,
             "items": {
               "type": "object",
-              "required": ["id", "nome", "trilha", "fonte"],
+              "required": ["id", "nome", "trilha", "alergenicos", "fonte"],
               "additionalProperties": false,
               "properties": {
                 "id": {"type": "string", "pattern": "^[a-z0-9-]+$"},
                 "nome": {"type": "string", "minLength": 1},
                 "trilha": {"enum": ["todas", "padrao", "ovolacto", "vegano"]},
+                "alergenicos": {
+                  "type": "array",
+                  "uniqueItems": true,
+                  "items": {"$ref": "#/$defs/alergenico"}
+                },
                 "fonte": {"$ref": "#/$defs/fonte"}
               }
             }
@@ -38,6 +43,27 @@
       }
     },
     "mesa_apoio": {"type": "array", "items": {"type": "string"}},
+    "alergenicos": {
+      "type": "object",
+      "required": ["disponivel", "legenda", "observacao"],
+      "additionalProperties": false,
+      "properties": {
+        "disponivel": {"type": "boolean"},
+        "legenda": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "nome"],
+            "additionalProperties": false,
+            "properties": {
+              "id": {"$ref": "#/$defs/alergenico"},
+              "nome": {"type": "string", "minLength": 1}
+            }
+          }
+        },
+        "observacao": {"type": "string"}
+      }
+    },
     "fonte": {
       "allOf": [
         {"$ref": "#/$defs/fonte"},
@@ -47,6 +73,20 @@
     "avisos": {"type": "array", "items": {"type": "string"}}
   },
   "$defs": {
+    "alergenico": {
+      "enum": [
+        "cogumelo",
+        "leite",
+        "mel",
+        "pimenta",
+        "soja",
+        "gluten",
+        "amendoim",
+        "oleaginosa",
+        "ovo",
+        "suino"
+      ]
+    },
     "fonte": {
       "type": "object",
       "required": ["doc_id", "pagina"],
