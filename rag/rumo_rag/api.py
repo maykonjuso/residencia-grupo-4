@@ -4,6 +4,9 @@
 
   POST /perguntar   {"pergunta": "...", "contexto": {"campus": "gama", "data": "2026-11-11"}, "max_trechos": 5}
   GET  /saude       backend de geração, modo de busca e quantidade de chunks
+  GET  /precos      tabela de preços por grupo, com fonte (o perfil escolhe o valor no navegador, #66)
+  GET  /cardapio?data=2026-11-09&refeicao=almoco   cardápio por compartimento (#54)
+  GET  /web/...     módulo do perfil (rumo-perfil.js) e página de demonstração
 
 O orquestrador do portal (FcteMapping) e o OpenClaw chamam esta rota. A base, o índice e o
 prompt continuam só do Grupo 04.
@@ -15,10 +18,15 @@ import secrets
 import time
 from datetime import date
 
-from fastapi import FastAPI, Header, HTTPException
+from pathlib import Path
+
+from fastapi import FastAPI, Header, HTTPException, Query
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, ConfigDict, Field
 
 from . import config, geracao, indice
+from .coleta import cardapio as cardapio_estruturado
+from .coleta import precos as tabela_precos
 
 log = logging.getLogger("rumo.api")
 DIAS = ("segunda-feira", "terça-feira", "quarta-feira", "quinta-feira", "sexta-feira", "sábado", "domingo")
@@ -28,6 +36,9 @@ SEM_BASE = "Não encontrei essa informação nas fontes da base."
 TOKEN = os.getenv("RUMO_API_TOKEN", "").strip()
 
 app = FastAPI(title="RUmo · Grupo 04", version="1.0.0")
+WEB = Path(__file__).resolve().parent.parent / "web"
+if WEB.is_dir():
+    app.mount("/web", StaticFiles(directory=WEB, html=True), name="web")
 
 
 class Contexto(BaseModel):
@@ -96,3 +107,19 @@ def perguntar(entrada: Pergunta, authorization: str | None = Header(default=None
         "backend": backend,
         "tempo_ms": int((time.monotonic() - inicio) * 1000),
     }
+
+
+# Rotas de dados para a interface (#58). Só leitura e iguais para todo mundo: não recebem
+# nada do perfil, que fica no navegador (#66). Sem LLM, então não gastam cota nem pedem token.
+
+@app.get("/precos")
+def precos():
+    return tabela_precos.carregar()
+
+
+@app.get("/cardapio")
+def cardapio(data: date, refeicao: str = Query(pattern="^(cafe|almoco|jantar)$")):
+    resultado = cardapio_estruturado.buscar(data.isoformat(), refeicao)
+    if not resultado:
+        raise HTTPException(404, SEM_BASE)
+    return resultado[0]
