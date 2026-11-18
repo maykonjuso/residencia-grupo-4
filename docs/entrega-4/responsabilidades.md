@@ -2,8 +2,8 @@
 
 A divisão clara de papéis no **RUmo** impede que o mesmo componente decida rotas, consulte documentos, audite fatos e monte o texto final sem separação de interesses. O objetivo desta página é deixar explícito o que cada agente **pode** e **não pode** fazer dentro do protótipo implementado.
 
-!!! warning "Escopo das issues dependentes (#41, #42 e #43)"
-    As tabelas abaixo descrevem exatamente o comportamento implementado no código atual. Estratégias adicionais de geração, instruções específicas de domínio ou ferramentas auxiliares atribuídas internamente ao Agente do RU, ao Agente de Fluxo e ao Agente Validador estão marcadas como `[a detalhar]` até o fechamento das issues **#41**, **#42** e **#43**.
+!!! info "Como ler a matriz"
+    A tabela registra o que cada agente pode fazer e os limites que impedem buscas fora do eixo, afirmações sem fonte e mistura de citações.
 
 ---
 
@@ -14,10 +14,10 @@ A **Tabela 1** detalha o papel, a função central e as fronteiras de atuação 
 | Agente / Componente | Papel | Responsabilidade principal | O que PODE fazer | O que NÃO PODE fazer |
 |---|---|---|---|---|
 | **Orquestrador** | Coordenação e controle de fluxo | Receber a dúvida do estudante, identificar se há mais de um assunto, encaminhar cada parte ao especialista certo em paralelo e consolidar o resultado | Dividir perguntas compostas em subperguntas; escolher o agente responsável por cada assunto; disparar especialistas ao mesmo tempo; simular falha controlada em testes; acionar o Agente Validador e o Sintetizador | Buscar trechos diretamente no banco de documentos; escrever a resposta final de domínio por conta própria; alterar ou renumerar as citações produzidas pelos especialistas |
-| **Agente do RU** | Especialista no Restaurante Universitário | Responder dúvidas sobre cardápio, horários de funcionamento, valores das refeições, isenção, acesso na catraca e alergênicos | Consultar os documentos oficiais do Restaurante Universitário e guias de apoio de forma sincronizada; redigir a resposta com citação explícita das fontes consultadas. Ferramentas e instruções dedicadas: `[a detalhar na issue #41]` | Responder dúvidas de outros domínios sem encaminhamento explícito; aprovar a própria resposta no lugar do Agente Validador; misturar sua resposta com a de outro agente |
-| **Agente de Fluxo** | Especialista em Fluxo de Graduação | Responder dúvidas sobre pré-requisitos, créditos, estágio obrigatório, trancamento de turma, ingresso na área básica e matrícula em pós-graduação | Consultar os documentos oficiais de fluxogramas e normas acadêmicas da FCTE/UnB junto aos guias de apoio; redigir a resposta citando os documentos utilizados. Ferramentas e instruções dedicadas: `[a detalhar na issue #42]` | Buscar ou inventar informações sobre o Restaurante Universitário; apagar ou modificar fontes retornadas pelo índice; aprovar a própria resposta |
-| **Agente Validador** | Auditoria factual e de citações | Conferir cada resposta gerada pelos especialistas antes de ela seguir para a entrega ao estudante | Verificar se todos os números ou fatos específicos da resposta constam nos trechos recuperados e se há citação de fonte válida; aprovar o bloco ou devolvê-lo ao Sintetizador para correção. Checagens semânticas extras: `[a detalhar na issue #43]` | Fazer novas buscas no banco de documentos para preencher lacunas; inventar dados para consertar uma resposta incompleta; aprovar texto que contenha valores sem respaldo nas fontes |
-| **Sintetizador** | Correção de devoluções e montagem final | Tratar respostas reprovadas pelo validador e compor o texto final mantendo as referências de cada parte separadas | Converter respostas reprovadas em saída extrativa segura com base nos trechos já recuperados (ou aplicar recusa padrão e aviso explícito quando não houver base); montar a resposta final em blocos independentes sinalizando eventuais falhas parciais | Fundir ou renumerar referências entre subperguntas diferentes; descartar uma parte aprovada quando outro agente falhar; ocultar avisos de falha ou de reprovação |
+| **Agente do RU** | Especialista no Restaurante Universitário | Responder sobre cardápios, refeições, horários, preços, grupos de pagamento, isenção, auxílio e alergênicos | Buscar no eixo `ru`; gerar com `INSTRUCOES_RU`; citar os trechos utilizados; declarar incerteza ou recusar quando a base não responde | Responder sobre disciplinas; inventar preços, datas ou condições de pagamento; omitir citações ou aprovar a própria resposta |
+| **Agente de Fluxo** | Especialista em fluxo acadêmico da FCTE/UnB | Responder sobre disciplinas, pré-requisitos, créditos, cursos e normas acadêmicas | Buscar no eixo `fluxo`; gerar com `INSTRUCOES_FLUXO`; distinguir relações explicitadas por seta cheia das ligações tracejadas; citar as fontes e explicitar incerteza | Responder sobre o RU; tratar uma ligação tracejada como pré-requisito confirmado; inventar códigos ou regras; aprovar a própria resposta |
+| **Agente Validador** | Auditoria factual e de citações | Conferir cada resposta antes da composição final | Verificar citações e valores numéricos contra as fontes recebidas; devolver a resposta quando falhar na conferência; informar motivos no trace | Fazer novas buscas; inventar dados; substituir a responsabilidade do especialista por interpretação sem fonte |
+| **Sintetizador** | Correção e composição | Corrigir uma resposta reprovada e montar os blocos finais | Fazer no máximo uma retentativa com feedback do Validador e os trechos já recuperados; aplicar a recusa padrão quando a correção não for suficiente; preservar partes e fontes isoladas | Fazer uma nova busca; misturar ou renumerar citações entre partes; ocultar falhas de um agente |
 
 <p class="legenda">Tabela 1. Matriz de responsabilidades, permissões e restrições dos agentes e do sintetizador.</p>
 
@@ -27,18 +27,19 @@ A **Tabela 1** detalha o papel, a função central e as fronteiras de atuação 
 
 Além da divisão individual de papéis da **Tabela 1**, o desenho do sistema assegura cinco garantias operacionais resumidas na **Tabela 2**.
 
-| Garantia operacional | Como funciona hoje | Pendência vinculada |
+| Garantia operacional | Como funciona hoje | Limite conhecido |
 |---|---|---|
-| **Classificação em dois estágios** | Primeiro avalia se a pergunta mistura mais de um assunto usando o limiar calibrado em `0,39`; quando necessário, divide em subperguntas por modelo linguístico ou, em caso de indisponibilidade, por conectivos gramaticais | Calibração adicional em perguntas reais em aberto: `[a preencher]` |
-| **Roteamento em cascata** | Prioriza a sugestão de assunto emitida na própria divisão da pergunta; se faltar sugestão, usa regras por palavras-chave e recorre ao classificador neural (com limiar de confiança `0,60`) apenas em casos ambíguos | Inclusão de novos domínios além de RU e Fluxo: `[a detalhar]` |
-| **Execução paralela segura** | Dispara especialistas diferentes ao mesmo tempo para economizar latência, enquanto sincroniza as leituras ao índice vetorial para evitar conflitos de concorrência | Ajuste fino de tempo limite por agente: `[a preencher]` |
-| **Isolamento de fontes por assunto** | Cada bloco da resposta mantém sua própria contagem de citações e sua própria lista de documentos, cumprindo a exigência do cliente do portal único | Validação integrada diretamente no portal único: `[a preencher]` |
-| **Degradação graciosa em falha** | Se um especialista falhar ou ficar indisponível, o sistema entrega normalmente a resposta do agente saudável acompanhada de aviso explícito sobre a parte faltante | Política de nova tentativa automática por falha transitória: `[a preencher]` |
+| **Classificação e decomposição** | Combina detecção de pergunta composta, divisão com sugestão de domínio e fallback para cruzamento RU + Fluxo ou conectivos | Perguntas ambíguas fora desses domínios podem exigir revisão humana |
+| **Roteamento em cascata** | Usa domínio sugerido na decomposição, regras lexicais e classificador neural para casos ambíguos | Os especialistas cobrem RU e Fluxo da FCTE; não há agente geral para todo assunto da UnB |
+| **Execução paralela segura** | Executa especialistas simultaneamente e sincroniza acesso ao índice | O tempo depende do backend de geração e da máquina/serviço que executa o modelo |
+| **Isolamento de fontes** | Cada bloco mantém suas citações e fontes do domínio correspondente | A numeração das citações é local a cada parte da resposta |
+| **Degradação graciosa** | Se um agente falhar, a parte saudável ainda é entregue com aviso; a resposta é marcada como degradada | Uma falha não é repetida automaticamente; correção do Validador tem limite de uma tentativa |
 
-<p class="legenda">Tabela 2. Garantias operacionais implementadas no protótipo multiagente e pendências registradas.</p>
+<p class="legenda">Tabela 2. Garantias operacionais implementadas e limites conhecidos do protótipo multiagente.</p>
 
 ??? abstract "Histórico de revisão"
     | Versão | Data | Autor | Descrição | Revisor |
     |---|---|---|---|---|
     | 1.0 | 16/11/2026 | @GabrielMacielBR | Criação da página dedicada de responsabilidades com matriz pode / não pode e regras contratuais | @maykonjuso |
     | 1.1 | 16/11/2026 | @GabrielMacielBR | Reescrita em linguagem descritiva evitando identificadores internos e siglas | @maykonjuso |
+    | 1.2 | 18/11/2026 | @keilogger | Substituição de pendências antigas pela implementação real de prompts, guardas, validação e síntese | — |

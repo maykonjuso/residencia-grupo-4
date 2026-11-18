@@ -3,7 +3,7 @@
 A arquitetura multiagente do **RUmo** organiza o atendimento em uma esteira colaborativa implementada nos módulos de agentes e de reescrita de consultas do projeto. O desenho reúne **quatro agentes principais** — Orquestrador, Agente do RU, Agente de Fluxo e Agente Validador — apoiados pelo componente Sintetizador e pelo módulo de análise e divisão de perguntas.
 
 !!! info "Estado da implementação"
-    A estrutura geral dos agentes, as interfaces entre componentes, a execução paralela, a auditoria factual e o fluxo de retorno ao sintetizador já estão implementados. Prompts especializados e eventuais ferramentas específicas de cada domínio dependem do fechamento das issues **#41**, **#42** e **#43** (`[a detalhar]`).
+    Os agentes de domínio têm prompts próprios e guarda contra perguntas claramente fora do seu domínio. Orquestrador, Validador e Sintetizador usam o contrato `Mensagem` / `Resposta`; as chamadas são registradas em trace serializável. A CLI expõe o fluxo por `--agentes` e `--trace`.
 
 ---
 
@@ -56,7 +56,7 @@ A comunicação interna é coordenada pelo **Orquestrador** com um único ciclo 
 | Agente do RU e Agente de Fluxo | Orquestrador | A resposta redigida, os trechos consultados, o tempo gasto e eventuais erros | Cada parte traz sua própria lista de referências sem interferir na resposta do outro especialista |
 | Orquestrador | Agente Validador | Cada resposta parcial produzida com sucesso pelos especialistas | Verifica objetivamente se todos os valores informados constam nos trechos e se há citação explícita; partes que falharam antes não passam por validação |
 | Agente Validador | Sintetizador | A decisão de aprovação ou o pedido de devolução para correção | Quando reprova uma resposta, aciona geração segura estritamente extrativa a partir dos trechos recuperados ou aplica a frase padrão de recusa |
-| Sintetizador | Estudante / Portal | As partes aprovadas reunidas e eventuais avisos de indisponibilidade | Preserva a numeração de fontes independente para cada bloco, atendendo à exigência contratual de integração com o portal único |
+| Sintetizador | Estudante | As partes aprovadas reunidas e eventuais avisos de indisponibilidade | Preserva a numeração de fontes independente para cada bloco |
 
 <p class="legenda">Tabela 1. Descrição das conexões e regras operacionais entre os componentes multiagente.</p>
 
@@ -64,15 +64,17 @@ A comunicação interna é coordenada pelo **Orquestrador** com um único ciclo 
 
 ## Pontos de extensão previstos
 
-A arquitetura atual já separa claramente as fronteiras de responsabilidade para receber os refinamentos das próximas issues sem quebrar os contratos entre os agentes:
+## Limites e pontos de extensão
 
-1. **Especialização dos agentes de domínio (Agente do RU e Agente de Fluxo):** hoje compartilham o mesmo ciclo base de recuperação documental e geração, filtrando apenas os documentos do seu assunto e os documentos gerais de apoio. Prompts específicos, estratégias próprias de busca e ferramentas auxiliares ficam reservados como `[a detalhar na issue #41 / #42]`.
-2. **Ampliação do Agente Validador:** hoje audita de forma determinística a presença de citações e a existência literal nos trechos de valores mencionados na resposta. Checagens semânticas adicionais baseadas em modelo linguístico ficam reservadas como `[a detalhar na issue #43]`.
-3. **Execução paralela segura:** enquanto os leitores do banco vetorial são protegidos contra acesso simultâneo, as etapas de geração de resposta acontecem em paralelo, reduzindo a latência acumulada em perguntas compostas.
+1. **Domínios cobertos:** o roteador especializado distingue RU e Fluxo. Perguntas de outros domínios podem ser recusadas ou encaminhadas ao fluxo genérico, conforme o resultado da classificação.
+2. **Validação factual:** o Validador verifica citação e valores numéricos em relação aos trechos recuperados; não é um juiz semântico geral nem faz uma nova busca documental.
+3. **Correção limitada:** o Sintetizador faz no máximo uma retentativa com o feedback do Validador. Se a resposta continuar sem respaldo, o sistema aplica a recusa padrão.
+4. **Rastreabilidade:** o trace registra as mensagens e respostas em ordem, com horário; a CLI permite exibi-lo durante a execução.
 
 ??? abstract "Histórico de revisão"
     | Versão | Data | Autor | Descrição | Revisor |
     |---|---|---|---|---|
     | 1.0 | 16/11/2026 | @GabrielMacielBR | Diagrama inicial da arquitetura multiagente e estruturas de dados | @keilogger |
-    | 1.1 | 16/11/2026 | @GabrielMacielBR | Alinhamento aos 4 agentes do escopo, legenda padronizada e marcação explícita das pendências `#41`–`#43` | @maykonjuso |
+    | 1.1 | 16/11/2026 | @GabrielMacielBR | Alinhamento aos quatro agentes do escopo e legenda padronizada | @maykonjuso |
     | 1.2 | 16/11/2026 | @GabrielMacielBR | Reescrita descritiva em linguagem natural no diagrama e tabelas | @maykonjuso |
+    | 1.3 | 18/11/2026 | @keilogger | Atualização da arquitetura para os contratos, prompts, trace, validação e limites implementados | — |
