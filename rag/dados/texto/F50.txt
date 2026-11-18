@@ -1,0 +1,1517 @@
+[[PAGINA 1]]
+
+EDITAL Nº 23/DAC/2026
+PROCESSO Nº 23106.076575/2026-68
+
+EDITAL DE AVALIAÇÃO SOCIOECONÔMICA EXIGIDA PARA ACESSO AOS PROGRAMAS DE
+ASSISTÊNCIA ESTUDANTIL
+
+1. DISPOSIÇÕES PRELIMINARES
+Em conformidade com a Lei n. 14.914, de 3 de julho de 2024, que institui a Política Nacional de Assistência
+Estudantil (PNAES), com a Resolução do Conselho de Administração nº 25/2023 da Universidade de Brasília
+(UnB) e com a Instrução Normativa n. 1/2026 da Diretoria de Desenvolvimento Social (DDS/DAC), o
+DECANATO DE ASSUNTOS COMUNITÁRIOS (DAC) da UnB torna público o presente Edital que visa à
+avaliação socioeconômica, condição necessária de acesso aos programas de assistência estudantil,
+considerada a situação de vulnerabilidade socioeconômica e/ou risco social da pessoa estudante de curso de
+graduação ou de pós-graduação stricto sensu e de seu respectivo grupo familiar.
+
+2. PÚBLICO DESTINATÁRIO
+2.1. Podem se inscrever discentes da UnB que cumpram os seguintes requisitos:
+2.1.1. Estar vinculado a curso presencial de graduação ou de pós-graduação
+stricto sensu
+;
+2.1.2. Realizar a inscrição conforme exigido no item 4 deste Edital.
+2.2. Pessoas estudantes em situação de Trancamento Geral de Matrícula (TGM) ou Justificado (TGMJ) podem
+solicitar a avaliação, mas não podem concorrer aos editais dos programas de assistência estudantil enquanto
+durar o trancamento.
+2.3. Pessoas estudantes oriundas de outras unidades federativas que participem do Programa de Mobilidade
+Acadêmica na UnB e não recebam benefícios equivalentes aos da assistência estudantil de sua Universidade
+de origem podem se submeter ao processo de avaliação socioeconômica.
+
+3. PRINCÍPIO E PROCEDIMENTOS BALIZADORES DA AVALIAÇÃO SOCIOECONÔMICA
+3.1.
+A avaliação socioeconômica é realizada com base no preenchimento, pela pessoa estudante, do Cadastro
+Único da Universidade de Brasília, disponível no SIGAA, e na documentação comprobatória apresentada. Seu
+objetivo é analisar as condições socioeconômicas da pessoa estudante e de seu núcleo familiar, a fim de
+caracterizar seu perfil socioeconômico, identificar eventual situação de vulnerabilidade socioeconômica e/ou
+risco social e verificar se atende aos critérios de elegibilidade para participação nos programas de assistência
+estudantil da Diretoria de Desenvolvimento Social (DDS) da Universidade de Brasília.
+3.2. Entende-se como grupo familiar a unidade nuclear composta por uma ou mais pessoas, que contribuam
+para o rendimento ou tenham despesas atendidas por aquela unidade, residindo ou não no mesmo domicílio,
+mediante comprovação documental e análise técnica.
+3.3. O resultado final da avaliação socioeconômica corresponde ao
+Índice de Vulnerabilidade Socioeconômica
+(IVSe) e será composto pela soma ponderada entre a pontuação obtida no preenchimento do cadastro
+preliminar da assistência estudantil (CPAE) e a renda bruta familiar per capita (RFPC), na sua relação com o
+valor do salário-mínimo (SM) vigente, conforme a fórmula a seguir:
+IVSe = (CPAE × 0,6) + [(RFPC ÷ SM) × 0,4 × 100]
+3.4. Segundo a lógica da pontuação adotada, quanto menor for a pontuação final obtida, maior será o índice
+de vulnerabilidade socioeconômica identificado.
+3.5. A pontuação atribuída a cada item do cadastro preliminar da assistência estudantil é indicada no Anexo 1
+do presente Edital.
+3.6. A pontuação obtida por meio do IVSe não constitui decisão automática de deferimento ou indeferimento,
+devendo ser homologada pela equipe de assistentes sociais da DDS/DAC, podendo ser modificada após análise
+técnica fundamentada.
+3.7. Dentre o público destinatário inscrito, terá prioridade de análise na avaliação socioeconômica:
+3.7.1. Estudantes com deficiência (conforme autodeclaração no
+cadastro preliminar da assistência
+estudantil
+e respectiva comprovação documental);
+Boletim de Atos Oficiais da UnB em 24/07/2026
+Edital 23 DAC/2026 (14554454) SEI 23106.076575/2026-68 / pg. 1
+[[PAGINA 2]]
+3.7.2. Estudantes indígenas ou quilombolas (conforme autodeclaração no
+cadastro preliminar da
+assistência estudantil
+e respectiva comprovação documental);
+3.7.3. Estudantes do curso de Licenciatura em Educação do Campo (LEdoC);
+3.7.4. Estudantes do Programa de Estudantes – Convênio inscritos no curso de Português como Língua
+Estrangeira (conforme listagem enviada pelo setor encarregado de seu acompanhamento na UnB);
+3.7.5. Estudantes do Programa de Estudantes – Convênio de Graduação (conforme listagem enviada pelo
+setor encarregado de seu acompanhamento na UnB);
+3.7.6. Estudantes que estejam com pedido de reintegração à programa de assistência estudantil pendente
+de apreciação por falta de avaliação socioeconômica válida;
+3.7.7. Estudantes ingressantes em 2026.2.
+3.8. Para os demais estudantes inscritos, que não se enquadrem nas prioridades indicadas no item 3.7, será
+observada a ordem de inscrição.
+3.9. Pessoas estudantes que já possuíam perfil de assistência estudantil conforme o modelo de avaliação
+socioeconômica anterior a 2026 podem participar deste edital e solicitar nova avaliação para fins de futuros
+editais ou futuros pedidos de reintegração.
+3.10. Pessoas estudantes que tenham se submetido ao Edital de Avaliação Socioeconômica em 2026.1 e obtido
+o perfil para assistência não devem solicitar nova avaliação, a menos que sua situação de vulnerabilidade
+socioeconômica e renda familiar por pessoa tenham se alterado.
+3.11. A qualquer tempo no processo de avaliação socioeconômica, pessoa estudante poderá ser convocada,
+com antecedência mínima de 5 dias úteis, para participar de entrevista com assistente social. A notificação
+será via SIGAA, e-mail, plataforma
+Teams
+ou contato telefônico. A pessoa estudante que permanecer inerte,
+sem comparecer ou solicitar reagendamento antes do dia da entrevista, terá seu status alterado para
+"desclassificado".
+
+4. INSCRIÇÃO
+4.1. Período:
+03/08/2026 a 15/11/2026
+.
+4.2. Plataforma virtual: utilizar o Sistema Integrado de Gestão de Atividades Acadêmicas (SIGAA), disponível
+no endereço <sig.unb.br>, no menu “Bolsas”. Em caso de dúvidas, consultar o Manual Portal do discente
+disponível em <https://portalsig.unb.br/wp-content/uploads/2025/02/Portal_do_Discente__Manual_Aba_Bolsas.pdf>.
+4.3. Passo a passo:
+I. Acessar o SIGAA, em sig.unb.br, com login e senha;
+II. Na tela inicial do discente, selecionar a opção “Meus Dados Pessoais”, no canto superior direito e
+verificar as informações sobre conta bancária e endereço, completando-as ou atualizando-as se
+necessário. Observe que a conta corrente informada precisa estar no nome da pessoa estudante e não são
+aceitas contas poupança, contas conjuntas, contas salário e contas em nome de terceiros;
+III. Aderir ao Cadastro Único
+2026.1
+em “Bolsas” --> “Cadastro Único” --> “Aderir”, preenchendo o
+formulário e anexando a documentação indicada no Anexo 1 deste edital;
+IV. Inscrever-se clicando na aba “Bolsas” --> “Solicitação de Bolsas” --> “Solicitação de Bolsa Auxílio” e
+inscrevendo-se no item "Avaliação socioeconômica".
+V. Na tela de emissão do comprovante de inscrição, o estudante não deve utilizar o botão “voltar” do
+navegador para concluir sua inscrição. Utilizar apenas o botão “voltar” do próprio sistema, localizado
+abaixo do comprovante de inscrição.
+4.4.
+Observações importantes sobre a juntada de documentação
+:
+4.4.1. A pessoa estudante deve reunir toda a documentação necessária antes de iniciar o preenchimento
+do formulário já que, uma vez feita a submissão do Cadastro Único, o SIGAA não permite a edição de
+respostas do formulário, nem juntada de novos documentos.
+4.4.2. Excepcionalmente, e de modo justificado, a pessoa estudante poderá solicitar a
+correção/complementação de sua documentação antes da primeira análise da equipe técnica. Em tal
+situação, deverá solicitar a alteração do Cadastro Único para o status "pendente de documentação". Tal
+solicitação pode ser feita por e-mail (
+coae.dds@unb.br
+) ou presencialmente. Atendida a solicitação, a
+avaliação socioeconômica retornará ao final da fila de avaliações.
+4.4.3. Documentos devem ser enviados em arquivo único por categoria (PDF, PNG, JPG, ZIP ou RAR),
+respeitando o limite de 10MB. Prefira o formato PDF.
+4.4.4. Em nenhuma hipótese serão aceitas documentações enviadas por e-mail ou entregues pessoalmente
+para pessoa assistente social, mesmo em caso de entrevista por ela solicitada. A documentação deve ser
+inserida/atualizada diretamente no Cadastro Único do SIGAA, exclusivamente pela pessoa estudante e
+dentro dos prazos indicados neste Edital.
+4.4.5. Pessoa estudante notificada, pela primeira vez, por ausência total ou incompletude de
+Edital 23 DAC/2026 (14554454) SEI 23106.076575/2026-68 / pg. 2
+[[PAGINA 3]]
+documentação, terá 10 (dez) dias corridos para atender o solicitado na notificação. A pessoa estudante
+que permanecer inerte, sem enviar nenhuma da documentação solicitada dentro do prazo, terá seu status
+alterado para "desclassificado", sendo excluída de participação neste edital de avaliação socioeconômica.
+A pessoa estudante que atender à notificação dentro do prazo, será informada se o envio de nova
+documentação foi suficiente. Recomenda-se solicitar atendimento presencial na Coordenação de
+Assistência Estudantil (COAE/DDS) para tirar as dúvidas antes do envio da documentação.
+4.4.6. Pessoa estudante notificada, pela segunda vez, por incompletude de documentação, terá 10 (dez)
+dias corridos para atender o solicitado na notificação. A pessoa estudante que permanecer inerte, sem
+enviar nenhuma da documentação solicitada dentro do prazo, terá seu status alterado para
+"desclassificado", sendo excluída de participação neste edital de avaliação socioeconômica. A pessoa
+estudante que atender à notificação dentro do prazo, será informada se o envio de nova documentação foi
+suficiente. Recomenda-se solicitar atendimento presencial na COAE/DDS para tirar as dúvidas antes do
+envio da documentação.
+4.4.7. Pessoa estudante notificada, pela terceira vez, por incompletude de documentação, terá 10 (dez)
+dias corridos para atender o solicitado na notificação. Tanto a pessoa estudante que permanecer inerte,
+sem enviar nenhuma da documentação solicitada dentro do prazo, quanto a que mantiver o envio de
+documentação incompleta, terão seu status alterado para "desclassificado", sendo excluídas de
+participação neste edital de avaliação socioeconômica.
+4.5. É de total responsabilidade da pessoa estudante acompanhar o e-mail registrado no SIGAA, por meio do
+qual receberá as notificações, bem como as mudanças de status do Cadastro Único e da bolsa avaliação
+socioeconômica no mesmo sistema, a fim de que não perca os prazos indicados neste Edital.
+
+5. RESULTADO E RECURSO
+5.1. O resultado será atribuído no SIGAA. Para acompanhamento do mesmo pela pessoa estudante, os status
+possíveis do sistema são:
+I – EM ANÁLISE: inscrição registrada no sistema;
+II – ATRIBUÍDO: em análise por assistente social;
+III – PERFIL PARA ASSISTÊNCIA: atendimento do requisito de renda bruta familiar per capita de até 1
+salário-mínimo;
+IV – PENDENTE DE DOCUMENTAÇÃO: o Cadastro Único precisa ser complementado em sua
+documentação;
+V – INDEFERIDO: quando sejam verificadas inconsistências e/ou omissão de informações;
+VI – NÃO PERFIL: pessoa estudante que apresentar renda bruta familiar per capita superior a 1 saláriomínimo;
+VII – DESCLASSIFICADO: não complementação da documentação solicitada e/ou não comparecimento à
+entrevista quando convocada pela assistente social.
+5.2. A pessoa estudante poderá interpor recurso administrativo, por meio do preenchimento d
+o formulário
+https://forms.office.com/r/1mQ2DeuKUU
+em dez dias corridos, a partir do momento em que:
+I - tenha seu status no SIGAA alterado para "indeferido", questionando o motivo do indeferimento, não
+podendo, porém, juntar documentação que não tenha enviado em momento previamente exigido pelo edital;
+II - tenha seu status no SIGAA alterado para "desclassificado", questionando o motivo da desclassificação, não
+podendo, porém, juntar documentação que não tenha enviado em momento previamente exigido pelo edital;
+III - tenha seu status no SIGAA alterado para "não perfil", questionando o motivo da tal resultado, não
+podendo, porém, juntar documentação que não tenha enviado em momento previamente exigido pelo edital;
+IV - tenha seu status no SIGAA alterado para "perfil para assistência", questionando o
+Índice de
+Vulnerabilidade Socioeconômica (IVSe) obtido após as análises feitas pela equipe técnica da COAE/DDS,
+não
+podendo, porém, juntar documentação que não tenha enviado em momento previamente exigido pelo edital.
+
+6. DISPOSIÇÕES FINAIS
+6.1. É de responsabilidade da pessoa estudante acompanhar, pelo SIGAA, o status da análise de sua
+solicitação, especialmente a fim de se evitar prejuízos causados por eventuais falhas técnicas ou operacionais
+de notificação do sistema.
+6.2.
+O estudante terá a avaliação socioeconômica indeferida em caso de inconsistência, de omissão de
+informações ou em razão de fraude.
+
+6.2.1
+
+A verificação de que a pessoa estudante tenha omitido dados ou documentos e/ou prestado informações
+ou declarações falsas poderá acarretar, a qualquer tempo, o indeferimento da Avaliação Socioeconômica, a
+desclassificação do certame ou a interrupção imediata dos auxílios dos programas de assistência estudantil
+em que tenha sido contemplada, sem prejuízo da responsabilização legal aplicável ao caso.
+
+Edital 23 DAC/2026 (14554454) SEI 23106.076575/2026-68 / pg. 3
+[[PAGINA 4]]
+6.3. A pessoa estudante, ao realizar sua inscrição, manifesta ciência quanto às regras previstas neste edital,
+bem como quanto às normativas da Universidade de Brasília relativas à assistência estudantil e à avaliação
+socioeconômica, aceitando-as todas em seus próprios termos, não podendo invocar seu desconhecimento a
+qualquer título, época ou pretexto.
+6.4. O DAC não se responsabiliza pelo não recebimento de solicitação para inscrição por motivos de falhas
+técnicas de equipamentos, intermitências de conexões virtuais, congestionamento de linhas de comunicação,
+ou outros fatores que impossibilitem a transferência dos dados.
+6.5. Casos omissos e identificados pela COAE/DDS serão resolvidos pelo DAC.
+6.6. Casos de dúvidas devem ser enviados para:
+coae.dds@unb.br
+ou dirimidos presencialmente na
+COAE/DDS.
+6.7. O presente edital entra em vigor na data de sua publicação.
+
+ANEXOS
+
+ANEXO 1
+Categoria
+
+O que será analisado
+
+Documentos necessários
+
+Identificação
+
+Identificação da pessoa
+estudante e do grupo familiar
+RG ou CNH de todos os integrantes; CPF de todos
+(inclusive menores) *caso o número CPF conste no RG ou
+CNH, não é necessário incluir o cartão CPF;
+Certidão de Nascimento (menores sem RG);
+Nos casos de falecimento de membro do grupo familiar
+deverá ser apresentada a respectiva certidão de óbito.
+
+Moradia
+
+Situação de moradia da pessoa
+estudante e do grupo familiar
+Comprovante de residência: conta de água ou luz;
+Contrato de aluguel ou Declaração de aluguel informal e
+documento de identidade do declarante; ou
+Declaração de imóvel cedido e documento de identidade
+do declarante; ou
+IPTU/ITR/financiamento (conforme o caso); ou
+Moradia de favor: Declaração do cedente
+e documento
+de identidade do declarante.
+
+*
+Os modelos das declarações estão disponíveis em:
+https://dds.dac.unb.br/wpcontent/uploads/2025/02/Modelo-de-Declaracoes-1.pdf
+
+Moradia – situações
+específicas
+Aldeia, ocupação, assentamento,
+situação de rua
+Declaração de liderança indígena/FUNAI.
+Documento do Centro POP ou autodeclaração de
+situação de rua.
+Declaração de situações mais específicas não descritas
+anteriormente.
+Saúde/ Deficiência
+Doenças graves, crônicas,
+transtorno mental e/ou
+deficiência
+Laudo ou Relatório médico/psicológico com CID.
+*
+Obs.: Não serão aceitas receitas de medicamento ou
+cartões de atendimento.
+
+Escolaridade
+Apenas para estudantes já
+graduados
+Diploma de graduação
+
+Renda – sem
+renda
+
+Ausência de renda estudante
+e demais membros da família.
+(Menores de idade apresentar
+somente declaração de
+recebimento ou não de
+pensão alimentícia)
+
+Extratos bancários dos últimos 3 meses das contas
+bancárias de
+todos
+os bancos onde a pessoa possui
+conta, (conta corrente, conta poupança e/ou conta de
+pagamento, inclusive contas digitais, como Mercado
+Pago, PicPay e similares);
+Declaração de não possuir renda (modelo do edital);
+Certidão negativa do Banco Central (se não tiver conta)
+Ac
+esso ao relatório no site:
+https://registrato.bcb.gov.br/registrato/login/
+
+Renda – trabalho
+formal
+Emprego com carteira assinada
+(CLT)
+Serviço público (efetivo ou
+temporário)
+Jovem aprendiz
+
+Três últimos contracheques
+
+Edital 23 DAC/2026 (14554454) SEI 23106.076575/2026-68 / pg. 4
+[[PAGINA 5]]
+Renda –
+trabalho
+informal ou
+autônomo
+
+Atividades sem vínculo formal
+(bicos, MEI, freelancer, apps)
+Extratos bancários dos últimos 3 meses das contas
+bancárias de
+todos
+os bancos onde a pessoa possui
+conta, (conta corrente, conta poupança e/ou conta de
+pagamento, inclusive contas digitais, como Mercado
+Pago, PicPay e similares);
+Declaração de trabalho informal (modelo do edital);
+Certidão negativa do Banco Central (se não tiver conta)
+Renda – ajuda de
+terceiros
+Ajuda financeira de pessoas
+fora do grupo familiar
+Extratos bancários dos últimos 3 meses das contas
+bancárias de
+todos
+os bancos onde a pessoa possui
+conta, (conta corrente, conta poupança e/ou conta de
+pagamento, inclusive contas digitais, como Mercado
+Pago, PicPay e similares);
+Declaração de ajuda financeira com valor e documento
+de identidade do declarante (modelo do edital) ou
+reconhecimento em cartório.
+Renda – pensão
+alimentícia
+Recebimento ou não de pensão
+Para quem recebe: sentença judicial, extrato bancário
+que comprove o recebimento ou Declaração de
+recebimento de pensão informal. (modelo do edital)
+Para quem não recebe: declaração de não recebimento
+de pensão (modelo do edital)
+Renda –
+benefícios
+assistenciais
+Bolsa Família, BPC, pratocheio, vale gás, pé de meia e
+outros benefícios
+Comprovante de recebimento do benefício;
+Extratos bancários dos últimos 3 meses das contas
+bancárias de
+todos
+os bancos onde a pessoa possui
+conta, (conta corrente, conta poupança e/ou conta de
+pagamento, inclusive contas digitais, como Mercado
+Pago, PicPay e similares).
+
+Renda – benefícios
+previdenciários
+Seguro-desemprego,
+auxílio-doença / por
+incapacidade temporária,
+aposentadoria, pensão por
+morte etc.
+Extrato de Pagamento de Benefício, referente à
+competência mais recente.
+
+*Atenção: não será aceito extrato bancário em substituição
+ao Extrato de Pagamento do Benefício.
+Caso seja vinculado ao INSS: O documento poderá ser
+emitido pelo site ou app
+Meu INSS
+, conforme orientações
+disponíveis em:
+https://www.gov.br/pt-br/servicos/emitirextrato-de-pagamento-de-beneficio
+.
+Renda – bolsas e
+estágio
+Estágio ou bolsa de extensão/
+pesquisa etc.
+Contrato de estágio vigente;
+Declaração da bolsa.
+
+Renda –
+programas da
+assistência
+estudantil
+Programa de Assistência
+Estudantil (Socioeconômico,
+Moradia, creche, Afroatitude,
+PROMISSAES PBPMEC etc)
+Extratos bancários dos últimos 3 meses das contas
+bancárias de
+todos
+os bancos onde a pessoa possui
+conta, (conta corrente, conta poupança e/ou conta de
+pagamento, inclusive contas digitais, como Mercado
+Pago, PicPay e similares).
+Renda –
+aluguel
+recebido
+
+Rendimentos de imóveis
+alugados
+Contrato de locação com o valor expresso ou declaração
+do proprietário; cópia do documento oficial de identidade
+do declarante ou reconhecer a declaração/contrato em
+cartório.
+Renda – atividade
+rural
+Agricultura familiar,
+assentamento, aldeia indígena
+ITR, CCU, DAP/PRONAF;
+Ou declaração de renda informal (modelo do edital)
+
+Renda –
+estudante
+estrangeiro
+
+Recursos financeiros vindos do
+exterior
+Extratos bancários dos últimos 3 (três) meses de todas
+as contas bancárias (corrente, poupança e demais
+modalidades), em todas as instituições financeiras nas
+quais a pessoa estudante ou integrante do núcleo
+familiar possua conta;
+Relatório do Banco Central do Brasil (Registrato).
+Os relatórios poderão ser emitidos por meio do sistema
+Registrato
+, disponível em:
+https://registrato.bcb.gov.br/registrato/login/
+.
+Poupança e
+economia pessoal
+Recursos financeiros de
+poupança
+Extratos bancários dos últimos 3 meses das contas
+bancárias de todos os bancos onde a pessoa possui
+conta, (conta corrente, conta poupança e/ou conta de
+pagamento, inclusive contas digitais, como Mercado
+Pago, PicPay e similares).
+Edital 23 DAC/2026 (14554454) SEI 23106.076575/2026-68 / pg. 5
+[[PAGINA 6]]
+
+Documentos
+Complementares
+
+Podem ser solicitados pela
+assistente social
+Declaração ou Certidão de Imposto de Renda;
+Carteira de Trabalho - CTPS digital (atualizada);
+CCS ou Registrato: Relatório de todas as contas
+bancárias em nome da pessoa ou membro do grupo
+familiar. Disponível em:
+https://registrato.bcb.gov.br/registrato/login/
+
+Extrato do CNIS. Disponível em:
+https://www.gov.br/ptbr/servicos/obter-extrato-previdenciario
+
+*Outros documentos podem ser solicitados pela assistente
+social responsável pela avaliação socioeconômica, se julgar
+necessário.
+
+ANEXO 2
+MODELOS DE DECLARAÇÃO: <
+https://dds.dac.unb.br/wp-content/uploads/2025/02/Modelo-de-Declaracoes1.pdf
+>
+
+ANEXO 3
+
+CONCEITOS E ORIENTAÇÕES GERAIS
+
+1. Núcleo Familiar
+Entende-se por núcleo familiar a unidade composta por uma ou mais pessoas, eventualmente ampliada por
+outros integrantes que contribuam para a renda ou tenham suas despesas atendidas por essa unidade familiar,
+residindo ou não no mesmo domicílio, desde que tal composição seja comprovada por documentação e validada
+pela equipe técnica da Diretoria de Desenvolvimento Social (DDS).
+1.1 Estudantes com núcleo familiar em outro estado ou no exterior
+Para estudantes cujas famílias residam em outro estado ou no exterior, é obrigatória a apresentação da
+documentação referente ao núcleo familiar da localidade de origem.
+1.2 Estudante solteiro(a)
+O(A) estudante solteiro(a) deverá informar os dados dos pais, irmãos e/ou dependentes legais que compõem
+seu núcleo familiar.
+1.3 Estudante casado(a) ou em união estável
+O(A) estudante casado(a) ou em união estável deverá informar os dados do(a) cônjuge ou companheiro(a), dos
+filhos e/ou dos dependentes legais que compõem seu núcleo familiar.
+2. Renda
+Considera-se renda todo valor auferido por pessoa física ou jurídica. Para fins da Avaliação Socioeconômica,
+serão considerados, entre outros, rendimentos provenientes de trabalho formal e informal, atividades
+autônomas, prestação de serviços por profissionais liberais, aluguel de bens, benefícios previdenciários e
+assistenciais, programas de transferência de renda, bolsas acadêmicas, auxílios da assistência estudantil,
+seguro-desemprego, auxílio-doença, pensão alimentícia, ajuda financeira de terceiros e quaisquer outros
+recursos que contribuam para a manutenção do grupo familiar.
+
+3. Renda Familiar Bruta
+Considera-se renda familiar bruta a soma dos rendimentos brutos de todos os integrantes do grupo familiar.
+4. Renda Familiar Per Capita
+Considera-se renda familiar per capita o resultado da divisão da renda familiar bruta pelo número de
+integrantes do grupo familiar.
+5. Rendimentos não considerados no cálculo da renda
+Não serão considerados no cálculo da renda:
+I – pagamento de pensão alimentícia para dependentes que não integram o grupo familiar;
+II – valores referentes a férias e décimo terceiro salário;
+III – valores referentes à participação no Programa de Auxílio Transporte e no Programa de Moradia Estudantil
+da Graduação.
+6. Movimentação bancária
+Quando forem identificados, nos extratos bancários, valores incompatíveis com a renda declarada pela pessoa
+estudante ou por integrante do grupo familiar, o titular da conta deverá apresentar declaração justificando a
+origem desses valores, assinada conforme o documento de identidade apresentado.
+7. Status "Pendente de Documentação"
+Edital 23 DAC/2026 (14554454) SEI 23106.076575/2026-68 / pg. 6
+[[PAGINA 7]]
+Quando o Cadastro Único for colocado no status "Pendente de Documentação", o sistema enviará uma
+mensagem para o endereço eletrônico cadastrado pela pessoa estudante no SIGAA. É de responsabilidade da
+pessoa estudante acompanhar regularmente sua caixa de entrada e demais pastas de recebimento.
+
+ANEXO 4
+PERGUNTAS DO CADASTRO ÚNICO COM RESPECTIVA PONTUAÇÃO
+
+QUANTOS
+PONTOS?
+MÁXIMO
+1. PESSOA
+Qual a sua
+identidade de
+gênero?
+
+a) Homem
+transgênero:
+homem que foi
+socialmente
+atribuído como do
+gênero feminino ao
+nascer, mas que
+expressa uma
+identidade de
+gênero masculina.
+
+b) Homem
+cisgênero: homem
+que expressa o
+gênero que lhe
+fora socialmente
+atribuído ao
+nascer.
+
+c) Mulher
+transgênero:
+mulher que foi
+socialmente
+atribuída como do
+gênero masculino
+ao nascer, mas que
+expressa uma
+identidade de
+gênero feminina
+
+d) Mulher
+cisgênero: mulher
+que expressa o
+gênero que lhe
+fora socialmente
+atribuído ao
+nascer.
+
+e) Travesti:
+identidade de
+gênero feminina
+própria da América
+Latina.
+
+f) Pessoa nãobinária: pessoa que
+não tem a
+identidade de
+gênero limitada
+pelo binarismo
+femininomasculino, ou que
+tenha a identidade
+de gênero fluida.
+
+g) Outra
+
+h) Prefiro não
+informar
+
+Qual a sua
+orientação
+
+Edital 23 DAC/2026 (14554454) SEI 23106.076575/2026-68 / pg. 7
+[[PAGINA 8]]
+sexual?
+
+a) Assexual
+
+b)
+Bissexual/pansexua
+l (ou
+biafetiva/panafetiv
+a)
+
+c) Heterossexual
+(ou heteroafetiva)
+
+d) Homossexual
+(ou homoafetiva) -
+lésbica/gay
+
+e) Prefiro não
+informar
+
+Qual a sua
+raça/etnia?
+
+a) Amarela
+
+b) Branca
+
+c) Indígena
+
+d) Parda
+
+e) Preta
+
+f) Quilombola
+
+Qual o seu estado
+civil?
+
+a) Solteiro(a)
+
+b) Casado(a)
+
+c) Viúvo(a)
+
+d) Divorciado(a)
+
+e) União estável
+
+SUBTOTAL 1
+
+2. FORMAÇÃO
+ACADÊMICA
+Você cursou o
+ensino médio em
+escola pública?
+
+a) Sim, todo o
+ensino médio
+
+b) Sim, parte do
+ensino médio
+
+c) Não
+
+Qual o turno do
+seu curso?
+
+a) Diurno
+
+b) Noturno
+
+Você já concluiu
+algum curso de
+nível superior -
+bacharelado,
+licenciatura,
+tecnólogo ou
+outros?
+
+Não
+
+Sim (tecnólogo,
+licenciatura,
+bacharelado,
+médico, etc)
+
+Estou em processo
+de dupla
+habilitação
+
+Ainda não concluí,
+mas estou
+estudando em duas
+
+Edital 23 DAC/2026 (14554454) SEI 23106.076575/2026-68 / pg. 8
+[[PAGINA 9]]
+instituições
+SUBTOTAL 2
+
+3. RELAÇÕES
+FAMILIARES
+Com quem você
+mora
+atualmente?
+
+a) Sozinho
+
+b) Com meus dois
+genitores
+
+c) Com meus dois
+genitores e irmãos
+
+d) Com um dos
+meus genitores
+
+e) Com um dos
+meus genitores e
+irmão(s)
+
+f) Com um dos
+meus genitores e
+padrasto ou
+madrasta
+
+g) Com um dos
+meus genitores,
+padrasto ou
+madrasta e
+irmão(s)
+
+h) Com
+companheiro/a
+
+i) Com
+companheiro/a e
+filho/a(s)
+
+j) Com meus
+filhos/as
+
+k) Com familiares
+(tio/a, avô/ó)
+
+l) Com amigos ou
+conhecidos
+
+m) Outra situação
+(explique na
+questão 29)
+
+Você reside com
+seu grupo
+familiar e
+mantém contato
+ou relação de
+dependência
+financeira com
+eles? (é
+necessário
+comprovação de
+independência
+financeira por
+meio de
+documentos).
+
+a) Sim
+
+b) Não
+
+c) Não se aplica
+
+Possui filhos?
+
+a) Não
+
+b) Sim, estou
+gestante
+
+c) Sim, 1 filho (a)
+
+d) Sim, 2 filhos (as)
+
+e) Sim, 3 filhos (as)
+ou mais
+
+Edital 23 DAC/2026 (14554454) SEI 23106.076575/2026-68 / pg. 9
+[[PAGINA 10]]
+
+Seus pais são:
+
+a) Casados
+
+b) Separados
+
+c) Meu pai é
+falecido
+
+d) Meu pai é
+desconhecido
+
+e) Minha mãe é
+falecida
+
+f) Ambos são
+falecidos
+
+g) Outros (explicar
+na questão 29)
+
+Não se aplica (Não
+resido com meus
+pais e não
+mantenho relação
+de dependência
+financeira com
+eles)
+
+Caso seus pais
+sejam separados,
+há pagamento de
+pensão
+alimentícia ou
+outro tipo de
+auxílio financeiro
+pelo genitor que
+não reside com
+você? (Para os
+estudantes com
+menos de 24
+anos, é
+obrigatória a
+apresentação de
+documento que
+comprove o
+recebimento ou a
+ausência de
+pensão). Em caso
+de dúvidas,
+procure a
+Assistência
+Estudantil.
+
+a) Sim
+
+b) Não
+
+c) Não se aplica
+
+Qual a
+escolaridade do
+seu
+pai/padrasto?
+
+a) Não possuo
+contato com ele,
+sem informação
+
+b) Não
+alfabetizado
+
+c) Ensino
+fundamental
+incompleto
+
+d) Ensino
+fundamental
+completo
+
+e) Ensino
+médio/técnico
+
+f) Ensino superior
+
+g) Mestrado
+
+Edital 23 DAC/2026 (14554454) SEI 23106.076575/2026-68 / pg. 10
+[[PAGINA 11]]
+
+h) Doutorado
+
+Qual a
+escolaridade da
+sua
+mãe/madrasta?
+
+a) Não possuo
+contato com ele,
+sem informação
+
+b) Não
+alfabetizado
+
+c) Ensino
+fundamental
+incompleto
+
+d) Ensino
+fundamental
+completo
+
+e) Ensino
+médio/técnico
+
+f) Ensino superior
+
+g) Mestrado
+
+h) Doutorado
+
+SUBTOTAL 3
+
+4.
+TERRITORIALID
+ADE/
+ESPACIALIDADE
+Qual o local de
+residência do seu
+grupo familiar?
+(comprove por
+meio de
+documento)
+
+a) Distrito Federal
+
+b) Entorno do DF
+(Região Integrada
+de
+Desenvolvimento -
+RIDE)
+
+c) Outra Unidade
+da Federação (fora
+da RIDE)
+
+d) Outro país
+
+Onde você reside
+atualmente?
+(comprove por
+meio de
+documento)
+
+a) Distrito Federal
+
+b) Entorno do DF
+(RIDE)
+
+c) Outra Unidade
+da Federação (fora
+da RIDE)
+
+d) Outro país
+
+Informe a
+distância
+aproximada entre
+sua residência e
+o campus onde
+você estuda:
+
+a) Até 10km.
+
+b) Entre 10 e
+30km.
+
+c) Entre 30 e
+50km.
+
+d) Acima de 50km.
+
+Qual a situação
+Edital 23 DAC/2026 (14554454) SEI 23106.076575/2026-68 / pg. 11
+[[PAGINA 12]]
+
+do imóvel em que
+você mora?
+(comprove por
+meio de
+documento, para
+participar de
+Editais de
+seleção)
+
+a) Próprio
+
+b) Próprio em
+aquisição
+(financiado ou com
+pagamento em
+curso)
+
+c) Cedido por
+familiares
+
+d) Em processo de
+inventário/partilha
+
+e) Moradia
+estudantil
+(UnB/CEU,
+UnB/Colina...)
+
+f)
+Alugado/república/
+pensionato
+
+g) Cedido por
+terceiros
+
+h) Assentamento
+
+i) Comunidade
+indígena
+
+j) Comunidade
+quilombola
+
+k) Moradia sub
+judice, com risco
+de remoção
+
+l) Ocupação
+irregular
+
+m) Estou em
+situação de rua
+
+Qual a situação
+do imóvel em que
+seu grupo
+familiar mora?
+(comprove por
+meio de
+documento, para
+participar de
+Editais de
+seleção)
+
+a) Próprio
+
+b) Próprio em
+aquisição
+(financiado ou com
+pagamento em
+curso)
+
+c) Cedido por
+familiares
+
+d) Em processo de
+inventário/partilha
+
+e) Moradia
+estudantil
+(UnB/CEU,
+UnB/Colina...)
+
+f)
+Alugado/república/
+pensionato
+
+g) Cedido por
+terceiros
+
+Edital 23 DAC/2026 (14554454) SEI 23106.076575/2026-68 / pg. 12
+[[PAGINA 13]]
+
+h) Assentamento
+
+i) Comunidade
+indígena
+
+j) Comunidade
+quilombola
+
+k) Moradia sub
+judice, com risco
+de remoção
+
+l) Ocupação
+irregular
+
+m) Estão em
+situação de rua
+
+SUBTOTAL 4
+
+5.
+CONDIÇÃO DE
+SAÚDE
+Você possui
+agravo de saúde?
+(em caso
+positivo,
+comprove por
+meio de
+documento para
+participar de
+Editais de
+seleção)
+
+a) Não
+
+b) Sim, possuo
+doença(s)
+crônica(s)
+
+c) Sim, possuo
+doença(s) grave(s)
+
+d) Sim, possuo
+transtorno(s)
+mental
+
+Você é pessoa
+com deficiência?
+(em caso
+positivo,
+comprove por
+meio de
+documento para
+participar de
+Editais de
+seleção)
+
+a) Sim
+
+b) Não
+
+Caso tenha
+respondido “Sim”
+na questão
+anterior, indique
+o tipo de
+deficiência:
+
+a) Não possuo
+deficiência
+
+b) Deficiência
+física
+(inclui
+limitações
+motoras,
+amputações, uso
+de próteses,
+paralisias, máformação
+congênita,
+nanismo, entre
+outras)
+
+c) Deficiência
+auditiva
+
+Edital 23 DAC/2026 (14554454) SEI 23106.076575/2026-68 / pg. 13
+[[PAGINA 14]]
+
+d) Deficiência
+visual
+(inclui baixa
+visão, visão
+monocular,
+cegueira e
+daltonismo)
+
+e) Deficiência
+intelectual
+
+f) Surdocegueira
+
+g) Transtorno do
+Espectro Autista
+(TEA)
+
+Você possui
+alguma
+necessidade
+educacional e/ou
+funcional
+específica?
+(em caso
+positivo,
+comprove por
+meio de
+documento para
+participar de
+Editais de
+seleção)
+
+a) Não
+
+b) Mobilidade
+reduzida
+
+c) Pessoas com
+transtornos globais
+do
+desenvolvimento:
+as que apresentam
+alterações
+qualitativas das
+interações sociais
+recíprocas e da
+comunicação, um
+repertório de
+interesses e
+atividades restrito,
+estereotipado e
+repetitivo.
+Incluem-se nesse
+grupo pessoas com
+síndrome de Rett e
+transtorno
+desintegrativo da
+infância.
+
+d) Pessoas com
+altas habilidades e
+superdotação: as
+que demonstram
+potencial elevado
+nas áreas
+intelectual,
+acadêmica,
+artística, de
+liderança e
+psicomotricidade,
+isoladas ou
+combinadas, além
+de apresentar
+grande
+criatividade,
+envolvimento na
+
+Edital 23 DAC/2026 (14554454) SEI 23106.076575/2026-68 / pg. 14
+[[PAGINA 15]]
+aprendizagem e
+realização de
+tarefas em áreas
+de seu interesse.
+
+e) Pessoas com
+transtornos
+funcionais
+específicos: as que
+apresentam
+dislexia,
+disortografia,
+disgrafia,
+discalculia,
+dislalia, falha de
+processamento
+auditivo e
+transtorno de
+atenção e
+hiperatividade,
+entre outros.
+
+Alguém do seu
+grupo familiar
+possui agravo de
+saúde? (em caso
+positivo,
+comprove por
+meio de
+documento para
+participar de
+Editais de
+seleção)
+
+a) Não
+
+b) Sim, meu
+familiar possui
+doença(s)
+crônica(s)
+
+c) Sim, meu
+familiar possui
+doença(s) grave(s)
+
+d) Sim, meu
+familiar possui
+transtorno(s)
+mental
+
+Alguém do seu
+grupo familiar é
+pessoa com
+deficiência?
+(em caso
+positivo,
+comprove por
+meio de
+documento para
+participar de
+Editais de
+seleção)
+
+a) Sim
+
+b) Não
+
+SUBTOTAL 5
+
+NATUREZA DA
+FONTE DE
+RENDA
+Qual a natureza
+da sua principal
+fonte de renda
+pessoal?
+
+Ajuda financeira
+(ajuda eventual de
+conhecidos,
+familiares, “pensão
+informal”)
+
+Benefício da
+Edital 23 DAC/2026 (14554454) SEI 23106.076575/2026-68 / pg. 15
+[[PAGINA 16]]
+
+Assistência Social
+(Bolsa Família/
+BPC- LOAS)
+
+Benefício
+Temporário INSS
+(segurodesemprego,
+auxílio-doença /
+por incapacidade,
+etc)
+
+Bolsa Acadêmica
+Graduação (PIBEX,
+PIBID, ...)
+
+Bolsa Acadêmica
+de Pós-Graduação
+(CNPQ/ CAPES,
+...)
+
+Bolsa de
+Assistência
+Estudantil
+(Socioeconômico,
+Moradia, creche)
+
+Economias
+pessoais (poupança
+ou recursos
+semelhantes)
+
+Estágio
+remunerado ou
+jovem aprendiz
+
+Microempresário/
+Microempreended
+or (MEI)
+
+Pensão alimentícia
+formal (judicial)
+
+Proventos,
+Pensões,
+Vencimentos ou
+Soldo (Servidor
+público,
+Aposentado,
+Pensionista,
+militar, ...)
+
+Rendimentos:
+aluguel,
+participação em
+lucros, aplicações
+financeiras...
+
+Servidor público
+efetivo
+
+Servidor público
+temporário
+
+Trabalhador formal
+(CLT)
+
+Trabalho
+autônomo/
+informal
+
+Nenhuma, não
+possuo renda.
+
+Qual a natureza
+da principal
+fonte de renda
+do/a
+mantenedor/a ou
+responsável do
+grupo familiar?
+(comprove a
+renda de todos os
+integrantes do
+grupo familiar,
+por meio de
+
+Edital 23 DAC/2026 (14554454) SEI 23106.076575/2026-68 / pg. 16
+[[PAGINA 17]]
+documentos,
+para participar
+de Editais de
+seleção)
+
+Ajuda financeira
+(ajuda eventual de
+conhecidos,
+familiares, “pensão
+informal”)
+
+Benefício da
+Assistência Social
+(Bolsa Família/
+BPC- LOAS)
+
+Benefício
+Temporário INSS
+(segurodesemprego,
+auxílio-doença /
+por incapacidade,
+etc)
+
+Bolsa Acadêmica
+Graduação (PIBEX,
+PIBID, ...)
+
+Bolsa Acadêmica
+de Pós-Graduação
+(CNPQ/ CAPES,
+...)
+
+Bolsa de
+Assistência
+Estudantil
+(Socioeconômico,
+Moradia, creche)
+
+Economias
+pessoais (poupança
+ou recursos
+semelhantes)
+
+Estágio
+remunerado ou
+jovem aprendiz
+
+Microempresário/
+Microempreended
+or (MEI)
+
+Pensão alimentícia
+formal (judicial)
+
+Proventos,
+Pensões,
+Vencimentos ou
+Soldo (Servidor
+público,
+Aposentado,
+Pensionista,
+militar, ...)
+
+Rendimentos:
+aluguel,
+participação em
+lucros, aplicações
+financeiras...
+
+Servidor público
+efetivo
+
+Servidor público
+temporário
+
+Trabalhador formal
+(CLT)
+
+Trabalho
+autônomo/
+informal
+
+Nenhuma, ele/ela
+não possui renda.
+
+SUBTOTAL 6
+
+Edital 23 DAC/2026 (14554454) SEI 23106.076575/2026-68 / pg. 17
+[[PAGINA 18]]
+
+Documento assinado eletronicamente por
+Douglas Antonio Rocha Pinheiro
+,
+Decano(a) Substituto(a)
+de Assuntos Comunitários
+, em 24/07/2026, às 15:37, conforme horário oficial de Brasília, com
+fundamento na Instrução da Reitoria 0003/2016 da Universidade de Brasília.
+A autenticidade deste documento pode ser conferida no site http://sei.unb.br/sei/controlador_externo.php?
+acao=documento_conferir&id_orgao_acesso_externo=0, informando o código verificador
+14554454
+e o
+código CRC
+7440E8FD
+.
+Referência:
+Processo nº 23106.076575/2026-68
+SEI nº 14554454
+Edital 23 DAC/2026 (14554454) SEI 23106.076575/2026-68 / pg. 18
