@@ -78,6 +78,10 @@ class TestDryRun(AmbienteIsolado):
             self.assertEqual(out.count(f"  {refeicao}\n"), 5, refeicao)
         self.assertIn("Prato principal padrão: Frango a pizzaiolo", out)
         self.assertIn("fonte: https://ru.unb.br/wp-content/uploads/2026/08/Gama-Semana-02-31-8-a-6-9.pdf", out)
+        self.assertIn("alergenicos (legenda oficial):", out)
+        self.assertIn("Leite e derivados", out)
+        self.assertIn("Trigo/Glúten", out)
+        self.assertIn("alergenicos (observacao):", out)
 
     def test_dry_run_nao_grava_nada(self):
         antes = self.catalogo.read_text(encoding="utf-8")
