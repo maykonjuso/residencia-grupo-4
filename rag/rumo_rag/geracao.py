@@ -43,9 +43,9 @@ def montar_contexto(trechos: list[dict]) -> str:
     return "\n\n".join(partes)
 
 
-def montar_mensagens(pergunta: str, trechos: list[dict]) -> list[dict]:
+def montar_mensagens(pergunta: str, trechos: list[dict], instrucoes: str = INSTRUCOES) -> list[dict]:
     return [
-        {"role": "system", "content": INSTRUCOES},
+        {"role": "system", "content": instrucoes},
         {"role": "user", "content": f"Trechos recuperados:\n\n{montar_contexto(trechos)}\n\nPergunta: {pergunta}"},
     ]
 
@@ -119,10 +119,16 @@ def _gerar_extrativo(pergunta, trechos):
     return "\n".join(f"- {f} [{i}]" for _, i, f in candidatas[:4])
 
 
-def gerar(pergunta: str, trechos: list[dict], backend: str = config.BACKEND) -> str:
+def gerar_com_instrucoes(
+    pergunta: str,
+    trechos: list[dict],
+    instrucoes: str = INSTRUCOES,
+    backend: str = config.BACKEND,
+) -> str:
+    """Gera resposta usando um prompt de sistema específico (mantendo RN-02 e RN-03)."""
     if not trechos:                     # RN-03: sem trecho recuperado, nem chama o LLM
         return RECUSA
-    msgs = montar_mensagens(pergunta, trechos)
+    msgs = montar_mensagens(pergunta, trechos, instrucoes=instrucoes)
     if backend == "auto":
         backend = config.BACKEND
     if backend == "hf":
@@ -132,6 +138,10 @@ def gerar(pergunta: str, trechos: list[dict], backend: str = config.BACKEND) -> 
     if backend == "openai":
         return _gerar_openai(msgs)
     return _gerar_extrativo(pergunta, trechos)
+
+
+def gerar(pergunta: str, trechos: list[dict], backend: str = config.BACKEND) -> str:
+    return gerar_com_instrucoes(pergunta, trechos, instrucoes=INSTRUCOES, backend=backend)
 
 
 def gerar_sem_rag(pergunta: str, backend: str = config.BACKEND) -> str:
