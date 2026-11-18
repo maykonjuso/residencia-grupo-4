@@ -686,6 +686,61 @@ class TestContratoAgentesEValidacao(unittest.TestCase):
         self.assertEqual(resp.fontes, [])
         self.assertEqual(resp.confianca, 0.0)
 
+    def test_orquestrador_usa_backend_openai_na_decomposicao_e_nos_agentes(self):
+        agentes.reescrita._decompor_llm_com_eixo.cache_clear()
+        orq = agentes.Orquestrador()
+        requisicoes = []
+
+        def fake_urlopen(req, timeout=180):
+            body = json.loads(req.data.decode("utf-8"))
+            requisicoes.append((req.full_url, dict(req.header_items()), body))
+            system_msg = body["messages"][0]["content"]
+            if "módulo de reescrita e decomposição" in system_msg:
+                conteudo = json.dumps({
+                    "subperguntas": [
+                        {"pergunta": "O que tem no almoço do RU?", "eixo": "ru"},
+                        {"pergunta": "Quais os pré-requisitos de Testes de Software?", "eixo": "fluxo"},
+                    ]
+                })
+            elif "Agente RU" in system_msg:
+                conteudo = "No almoço será servido frango grelhado [1]."
+            else:
+                conteudo = "Requer Métodos de Desenvolvimento de Software [1]."
+            payload = json.dumps({"choices": [{"message": {"content": conteudo}}]}).encode("utf-8")
+            resp_http = io.BytesIO(payload)
+            resp_http.__enter__ = lambda s: s
+            resp_http.__exit__ = lambda s, *a: False
+            return resp_http
+
+        def fake_buscar(pergunta, k=config.TOP_K, modo="hibrido", eixo=None, decompor_pergunta=False):
+            return [TRECHO_RU] if eixo == "ru" else [TRECHO_FLUXO]
+
+        with mock.patch.dict("os.environ", {"OPENROUTER_API_KEY": "sk-or-teste"}, clear=False), \
+             mock.patch.object(agentes.config, "OPENAI_URL", "https://openrouter.ai/api/v1/"), \
+             mock.patch.object(agentes.config, "OPENAI_MODEL", "qwen/qwen-2.5-72b-instruct"), \
+             mock.patch("urllib.request.urlopen", side_effect=fake_urlopen), \
+             mock.patch.object(agentes.reescrita, "classificar_composta", return_value=(True, 0.88)), \
+             mock.patch.object(agentes.indice, "buscar", side_effect=fake_buscar), \
+             mock.patch.object(agentes.reescrita, "_decompor_ollama_bruto", side_effect=AssertionError), \
+             mock.patch.object(agentes.reescrita, "_decompor_hf_bruto", side_effect=AssertionError), \
+             mock.patch.object(agentes.geracao, "_gerar_ollama", side_effect=AssertionError), \
+             mock.patch.object(agentes.geracao, "_gerar_hf", side_effect=AssertionError):
+            res = orq.executar(
+                "O que tem no almoço e quais os pré-requisitos de Testes de Software?",
+                backend="openai",
+            )
+
+        self.assertEqual(len(requisicoes), 3)  # 1 decomposição + 2 agentes
+        for url, headers, body in requisicoes:
+            self.assertEqual(url, "https://openrouter.ai/api/v1/chat/completions")
+            self.assertEqual(headers.get("Authorization"), "Bearer sk-or-teste")
+            self.assertEqual(headers.get("User-agent"), "RUmo-UnB/1.0")
+            self.assertEqual(body["model"], "qwen/qwen-2.5-72b-instruct")
+        self.assertEqual([p["agente"] for p in res["partes"]], ["ru", "fluxo"])
+        self.assertIn("frango grelhado [1]", res["resposta"])
+        self.assertIn("Métodos de Desenvolvimento de Software [1]", res["resposta"])
+        self.assertFalse(res["degradado"])
+
 
 if __name__ == "__main__":
     unittest.main()

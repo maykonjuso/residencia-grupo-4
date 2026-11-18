@@ -534,7 +534,9 @@ class Orquestrador:
         t0 = time.monotonic()
         eh_composta, prob_composta = reescrita.classificar_composta(pergunta)
         backend_decomp = (
-            backend if backend in ("ollama", "hf") else ("fallback" if backend == "extrativo" else "auto")
+            backend
+            if backend in ("ollama", "hf", "openai")
+            else ("fallback" if backend == "extrativo" else "auto")
         )
         cruzamento_dominios = bool(_TERMOS_RU.search(pergunta) and _TERMOS_FLUXO.search(pergunta))
         partes_fallback = reescrita._decompor_fallback(pergunta)

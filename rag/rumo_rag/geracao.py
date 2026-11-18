@@ -83,8 +83,12 @@ def _gerar_hf(msgs):
 
 
 def _post(url, corpo, cabecalhos=None):
-    req = urllib.request.Request(url, data=json.dumps(corpo).encode(),
-                                 headers={"Content-Type": "application/json", **(cabecalhos or {})})
+    headers = {
+        "Content-Type": "application/json",
+        "User-Agent": "RUmo-UnB/1.0",
+        **(cabecalhos or {}),
+    }
+    req = urllib.request.Request(url, data=json.dumps(corpo).encode(), headers=headers)
     with urllib.request.urlopen(req, timeout=180) as r:
         return json.loads(r.read())
 
@@ -97,9 +101,11 @@ def _gerar_ollama(msgs):
 
 def _gerar_openai(msgs):
     import os
-    r = _post(f"{config.OPENAI_URL}/chat/completions",
+    chave = os.environ.get("RUMO_OPENAI_KEY") or os.environ["OPENROUTER_API_KEY"]
+    url = f"{config.OPENAI_URL.rstrip('/')}/chat/completions"
+    r = _post(url,
               {"model": config.OPENAI_MODEL, "messages": msgs, "temperature": 0},
-              {"Authorization": f"Bearer {os.environ['RUMO_OPENAI_KEY']}"})
+              {"Authorization": f"Bearer {chave}"})
     return r["choices"][0]["message"]["content"].strip()
 
 

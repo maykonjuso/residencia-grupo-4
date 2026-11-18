@@ -59,7 +59,10 @@ def responder(
             "backend": backend,
         }
     t0 = time.time()
-    subperguntas = indice.decompor(pergunta, backend=backend if backend in ("ollama", "hf") else "auto")
+    subperguntas = indice.decompor(
+        pergunta,
+        backend=backend if backend in ("ollama", "hf", "openai") else "auto",
+    )
     t1 = time.time()
     trechos = indice.buscar_com_subperguntas(pergunta, subperguntas, k=k, modo=config.BUSCA, eixo=eixo)
     t2 = time.time()

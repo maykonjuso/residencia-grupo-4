@@ -258,6 +258,22 @@ def _decompor_hf(pergunta: str) -> list[str]:
     return _extrair_subperguntas_json(_decompor_hf_bruto(pergunta))
 
 
+def _decompor_openai_bruto(pergunta: str) -> str:
+    """Executa chamada à API compatível com OpenAI/OpenRouter e retorna o conteúdo bruto."""
+    from . import geracao
+
+    msgs = [
+        {"role": "system", "content": _SYSTEM_DECOMPOSICAO},
+        {"role": "user", "content": pergunta},
+    ]
+    return geracao._gerar_openai(msgs)
+
+
+def _decompor_openai(pergunta: str) -> list[str]:
+    """Estágio 2 via API OpenAI/OpenRouter: desmembra e contextualiza subperguntas."""
+    return _extrair_subperguntas_json(_decompor_openai_bruto(pergunta))
+
+
 @lru_cache(maxsize=256)
 def _decompor_llm_com_eixo(pergunta: str, backend: str = "auto") -> tuple[tuple[str, str], ...]:
     """Estágio 2 (Teste 1): desmembra e já rotula o eixo de cada subpergunta no mesmo JSON."""
@@ -268,8 +284,15 @@ def _decompor_llm_com_eixo(pergunta: str, backend: str = "auto") -> tuple[tuple[
         return _parse(_decompor_ollama_bruto(pergunta))
     if backend == "hf":
         return _parse(_decompor_hf_bruto(pergunta))
+    if backend == "openai":
+        return _parse(_decompor_openai_bruto(pergunta))
     if backend == "auto":
-        tentativas = [_decompor_hf_bruto, _decompor_ollama_bruto] if config.BACKEND == "hf" else [_decompor_ollama_bruto, _decompor_hf_bruto]
+        if config.BACKEND == "openai":
+            tentativas = [_decompor_openai_bruto]
+        elif config.BACKEND == "hf":
+            tentativas = [_decompor_hf_bruto, _decompor_ollama_bruto]
+        else:
+            tentativas = [_decompor_ollama_bruto, _decompor_hf_bruto]
         erros = []
         for fn in tentativas:
             try:
@@ -286,13 +309,20 @@ def _decompor_llm_com_eixo(pergunta: str, backend: str = "auto") -> tuple[tuple[
 
 @lru_cache(maxsize=256)
 def _decompor_llm(pergunta: str, backend: str = "auto") -> tuple[str, ...]:
-    """Estágio 2: desmembra e contextualiza subperguntas via LLM (Ollama ou HF)."""
+    """Estágio 2: desmembra e contextualiza subperguntas via LLM (Ollama, HF ou OpenAI)."""
     if backend == "ollama":
         return tuple(_decompor_ollama(pergunta))
     if backend == "hf":
         return tuple(_decompor_hf(pergunta))
+    if backend == "openai":
+        return tuple(_decompor_openai(pergunta))
     if backend == "auto":
-        tentativas = [_decompor_hf, _decompor_ollama] if config.BACKEND == "hf" else [_decompor_ollama, _decompor_hf]
+        if config.BACKEND == "openai":
+            tentativas = [_decompor_openai]
+        elif config.BACKEND == "hf":
+            tentativas = [_decompor_hf, _decompor_ollama]
+        else:
+            tentativas = [_decompor_ollama, _decompor_hf]
         erros = []
         for fn in tentativas:
             try:
