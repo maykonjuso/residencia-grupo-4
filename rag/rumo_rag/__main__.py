@@ -2,6 +2,7 @@
 
   python -m rumo_rag ingerir            # baixa, extrai, divide, gera embeddings e indexa
   python -m rumo_rag perguntar "..."    # consulta com resposta e fontes
+  python -m rumo_rag "..." --agentes --trace  # orquestrador multiagentes em paralelo
   python -m rumo_rag avaliar            # métricas de recuperação no conjunto de teste
   python -m rumo_rag demo               # roda as perguntas da demonstração e salva as evidências
 """
@@ -10,7 +11,7 @@ import json
 import sys
 import time
 
-from . import chunking, config, extracao, geracao, indice
+from . import agentes, chunking, config, extracao, geracao, indice
 
 
 def ingerir(_args):
@@ -27,7 +28,19 @@ def ingerir(_args):
     print(f"ingestão concluída em {time.time() - t0:.0f}s")
 
 
-def responder(pergunta: str, backend: str, eixo: str | None = None, k: int = config.TOP_K, sem_rag: bool = False) -> dict:
+def responder(
+    pergunta: str,
+    backend: str,
+    eixo: str | None = None,
+    k: int = config.TOP_K,
+    sem_rag: bool = False,
+    usar_agentes: bool = False,
+    falhar_agente: str | None = None,
+) -> dict:
+    if usar_agentes:
+        return agentes.Orquestrador().executar(
+            pergunta, backend=backend, k=k, falhar_agente=falhar_agente
+        )
     if sem_rag:
         t0 = time.time()
         resposta = geracao.gerar_sem_rag(pergunta, backend=backend)
@@ -46,7 +59,10 @@ def responder(pergunta: str, backend: str, eixo: str | None = None, k: int = con
             "backend": backend,
         }
     t0 = time.time()
-    subperguntas = indice.decompor(pergunta, backend=backend if backend in ("ollama", "hf") else "auto")
+    subperguntas = indice.decompor(
+        pergunta,
+        backend=backend if backend in ("ollama", "hf", "openai") else "auto",
+    )
     t1 = time.time()
     trechos = indice.buscar_com_subperguntas(pergunta, subperguntas, k=k, modo=config.BUSCA, eixo=eixo)
     t2 = time.time()
@@ -96,19 +112,148 @@ def imprimir(r: dict, sem_rag: bool = False):
     print(f"\n(busca {r['tempo_busca_s']}s · geração {r['tempo_geracao_s']}s)")
 
 
+def imprimir_agentes(r: dict, mostrar_trace: bool = False):
+    print(f"\nPergunta: {r['pergunta']}\n")
+    if mostrar_trace:
+        print("=== [TRACE · Orquestrador Multiagentes] ===")
+        for passo in r.get("trace", []):
+            etapa = passo.get("etapa")
+            if etapa == "classificacao_decomposicao":
+                print(
+                    f"1. Classificação/Decomposição: composta={passo['eh_composta']} "
+                    f"(p={passo['prob_composta']}, limiar={passo['limiar']}, {passo['tempo_s']}s)"
+                )
+                for i, sub in enumerate(passo.get("subperguntas", []), start=1):
+                    print(f"   - Subpergunta {i}: {sub}")
+            elif etapa == "roteamento":
+                print(f"2. Roteamento ({passo['total_chamadas']} execução(ões)):")
+                for rota in passo.get("rotas", []):
+                    print(f"   - \"{rota['subpergunta']}\" -> {', '.join(rota['agentes'])}")
+            elif etapa == "execucao_paralela":
+                print(
+                    f"3. Execução em paralelo: tempo_total={passo['tempo_paralelo_s']}s "
+                    f"| soma_individual={passo['soma_tempos_individuais_s']}s "
+                    f"| ganho={passo['ganho_paralelismo_s']}s"
+                )
+                for ex in passo.get("execucoes", []):
+                    status = f"ERRO ({ex['erro']})" if ex.get("erro") else f"OK ({ex['n_trechos']} trechos)"
+                    print(f"   - [{ex['nome_agente']}] {ex['tempo_total_s']}s · {status}")
+            elif etapa == "validacao_factual":
+                print("4. Validador factual:")
+                for res in passo.get("resultados", []):
+                    if res.get("ignorado_por_erro"):
+                        estado = "ignorado (agente falhou)"
+                    elif res.get("indisponivel"):
+                        estado = "indisponível (degradado)"
+                    else:
+                        estado = "APROVADO" if res.get("aprovado") else "REPROVADO"
+                    det = f" ({'; '.join(res['motivos'])})" if res.get("motivos") else ""
+                    if res.get("aprovado_inicial") is False and not res.get("ignorado_por_erro") and not res.get("indisponivel"):
+                        motivos_ini = "; ".join(res.get("motivos_iniciais", []))
+                        print(
+                            f"   - {res['agente']}: 1ª avaliação=REPROVADO ({motivos_ini}) "
+                            f"-> pós-reparo={estado}{det}"
+                        )
+                    else:
+                        print(f"   - {res['agente']}: {estado}{det}")
+                for dev in passo.get("devolucoes_ao_sintetizador", []):
+                    status_pos = (
+                        "RECUSA FINAL"
+                        if dev.get("recusa_final")
+                        else ("APROVADO" if dev.get("aprovado_apos_devolucao") else "SINALIZADO")
+                    )
+                    motivos_dev = "; ".join(dev.get("motivos_reprovacao", []))
+                    resp_ant = (dev.get("resposta_anterior") or "").replace("\n", " ").strip()
+                    if len(resp_ant) > 120:
+                        resp_ant = resp_ant[:117] + "..."
+                    print(
+                        f"   -> Devolvido ao Sintetizador ({dev['nome_agente']}, "
+                        f"tentativa {dev.get('tentativa', 1)}/1): "
+                        f"ação={dev['acao']} · pós-reparo={status_pos}"
+                    )
+                    if motivos_dev:
+                        print(f"      motivos: {motivos_dev}")
+                    if resp_ant:
+                        print(f"      resposta reprovada: \"{resp_ant}\"")
+            elif etapa == "composicao_sintetizador":
+                print(
+                    f"5. Composição (Sintetizador): {passo['n_partes']} parte(s) · "
+                    f"índices [n] isolados={passo['indices_isolados_por_parte']} · "
+                    f"degradado={passo['degradado']}"
+                )
+        interacoes = r.get("interacoes") or []
+        if interacoes:
+            print(f"6. Interações registradas no Trace ({len(interacoes)} Mensagem -> Resposta):")
+            for idx_i, it in enumerate(interacoes, start=1):
+                msg_i = it.get("mensagem", {})
+                resp_i = it.get("resposta", {})
+                conteudo_r = (resp_i.get("conteudo") or "").replace("\n", " ").strip()
+                if len(conteudo_r) > 80:
+                    conteudo_r = conteudo_r[:77] + "..."
+                alertas_i = resp_i.get("alertas") or []
+                alerta_txt = f" · alertas={len(alertas_i)}" if alertas_i else ""
+                print(
+                    f"   [{idx_i}] {msg_i.get('remetente')} -> {msg_i.get('destinatario')}: "
+                    f"\"{conteudo_r}\"{alerta_txt}"
+                )
+        print("===========================================\n")
+
+    for i, parte in enumerate(r.get("partes", []), start=1):
+        print(f"--- Parte {i} · {parte['nome_agente']} ---")
+        print(f"Subpergunta: {parte['subpergunta']}")
+        if parte.get("erro"):
+            print(f"⚠ Falha no agente: {parte['erro']}")
+            print()
+            continue
+        print("Trechos recuperados (índices locais):")
+        for idx_t, t in enumerate(parte.get("trechos_recuperados", []), start=1):
+            sim = f" · sim {t['similaridade']}" if t.get("similaridade") is not None else ""
+            print(f"  [{idx_t}] {t['chunk_id']} · {t['titulo'][:60]} · p.{t['pagina']}{sim}")
+        print(f"\nResposta ({r['backend']}):\n{parte['resposta']}\n")
+        print("Fontes citadas:")
+        for f in parte.get("fontes_citadas", []):
+            print(f"  [{f['n']}] {f['doc_id']} · {f['titulo']} · p.{f['pagina']} · {f['url']}")
+        val = parte.get("validacao") or {}
+        if val.get("motivos"):
+            print(f"⚠ Validador: {'; '.join(val['motivos'])}")
+        print()
+
+    for aviso in r.get("avisos", []):
+        print(aviso)
+
+    print(
+        f"(paralelo {r['tempo_paralelo_s']}s vs soma individual {r['soma_tempos_individuais_s']}s "
+        f"· decomposição {r['tempo_decomposicao_s']}s)"
+    )
+
+
 def perguntar(args):
     sem_rag = getattr(args, "sem_rag", False)
-    r = responder(" ".join(args.pergunta), args.backend, args.eixo, args.k, sem_rag=sem_rag)
+    usar_agentes = getattr(args, "agentes", False)
+    falhar_agente = getattr(args, "falhar_agente", None)
+    r = responder(
+        " ".join(args.pergunta),
+        args.backend,
+        args.eixo,
+        args.k,
+        sem_rag=sem_rag,
+        usar_agentes=usar_agentes,
+        falhar_agente=falhar_agente,
+    )
     if getattr(args, "saida", "texto") == "json":
         saida_dict = dict(r)
-        saida_dict["sem_rag"] = sem_rag
+        if not usar_agentes:
+            saida_dict["sem_rag"] = sem_rag
         print(json.dumps(saida_dict, ensure_ascii=False, indent=2))
+    elif usar_agentes:
+        imprimir_agentes(r, mostrar_trace=getattr(args, "trace", False))
     else:
         imprimir(r, sem_rag=sem_rag)
 
 
 def avaliar(args):
-    casos = [json.loads(l) for l in open(config.AVALIACAO / "perguntas_ouro.jsonl", encoding="utf-8")]
+    with open(config.PERGUNTAS_AVALIACAO / "perguntas_ouro.jsonl", encoding="utf-8") as f:
+        casos = [json.loads(l) for l in f]
     linhas = []
     for modo in ("bm25", "denso", "hibrido"):
         hit1 = hitk = rr = 0.0
@@ -125,12 +270,14 @@ def avaliar(args):
         linhas.append({"modo": modo, "n": n, "hit@1": round(hit1 / n, 3), f"hit@{args.k}": round(hitk / n, 3),
                        "mrr": round(rr / n, 3), "detalhes": detalhes})
         print(f"{modo:8s} hit@1={hit1/n:.3f} hit@{args.k}={hitk/n:.3f} MRR={rr/n:.3f} (n={n})")
-    (config.AVALIACAO / "resultado_recuperacao.json").write_text(
+    config.RESULTADOS_AVALIACAO.mkdir(parents=True, exist_ok=True)
+    (config.RESULTADOS_AVALIACAO / "resultado_recuperacao.json").write_text(
         json.dumps(linhas, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
 def demo(args):
-    perguntas = [json.loads(l) for l in open(config.AVALIACAO / "perguntas_demo.jsonl", encoding="utf-8")]
+    with open(config.PERGUNTAS_AVALIACAO / "perguntas_demo.jsonl", encoding="utf-8") as f:
+        perguntas = [json.loads(l) for l in f]
     saidas = []
     for p in perguntas:
         r = responder(p["pergunta"], args.backend)
@@ -138,7 +285,8 @@ def demo(args):
         r["rotulo"] = p.get("rotulo", "")
         imprimir(r)
         saidas.append(r)
-    destino = config.AVALIACAO / "demo_respostas.json"
+    config.RESULTADOS_AVALIACAO.mkdir(parents=True, exist_ok=True)
+    destino = config.RESULTADOS_AVALIACAO / "demo_respostas.json"
     destino.write_text(json.dumps(saidas, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"\nevidências salvas em {destino}")
 
@@ -153,6 +301,10 @@ def main(argv=None):
     p.add_argument("--eixo", choices=["ru", "fluxo", "apoio"])
     p.add_argument("-k", type=int, default=config.TOP_K)
     p.add_argument("--sem-rag", action="store_true", help="Executa apenas com LLM puro, sem busca ou recuperação na base")
+    p.add_argument("--agentes", action="store_true", help="Usa o orquestrador multiagentes (RU, Fluxo e Validador)")
+    p.add_argument("--trace", action="store_true", help="Exibe o rastreamento completo da orquestração multiagentes")
+    p.add_argument("--falhar-agente", choices=["ru", "fluxo", "validador"], default=None,
+                   help="Simula queda de um agente para testar degradação elegante")
     p.add_argument("--saida", choices=["texto", "json"], default="texto", help="Formato de saída (texto ou json)")
     p.set_defaults(f=perguntar)
     a = sub.add_parser("avaliar")
@@ -161,7 +313,13 @@ def main(argv=None):
     d = sub.add_parser("demo")
     d.add_argument("--backend", default=config.BACKEND, choices=["hf", "ollama", "openai", "extrativo"])
     d.set_defaults(f=demo)
-    args = ap.parse_args(argv)
+
+    lista_args = list(sys.argv[1:] if argv is None else argv)
+    subcomandos = {"ingerir", "perguntar", "avaliar", "demo", "-h", "--help"}
+    if lista_args and lista_args[0] not in subcomandos:
+        lista_args = ["perguntar", *lista_args]
+
+    args = ap.parse_args(lista_args)
     args.f(args)
 
 

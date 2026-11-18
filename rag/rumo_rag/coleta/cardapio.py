@@ -4,7 +4,7 @@ Lê os chunks de cardápio (um chunk = uma refeição de um dia, gerado por
 ``extracao._ler_cardapio`` + ``chunking.dividir``) e transforma cada linha
 "- Componente: valor" em um compartimento da bandeja com suas opções.
 
-Decisões de parsing (documentadas em docs/entrega-4/cardapio-estruturado.md):
+Decisões de parsing (resumidas em docs/entrega-4/index.md; issue #54):
 
 - Alternativas: " OU ", " ou ", " / " e " OPÇÃO: " separam opções. "Leite integral OU
   Bebida de soja" vira 2 opções; "Alho e limão" continua 1 opção (o "e" não separa).

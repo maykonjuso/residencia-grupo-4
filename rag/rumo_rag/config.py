@@ -9,6 +9,9 @@ TEXTO = DADOS / "texto"             # texto extraído e limpo, um .txt por docum
 CHUNKS = DADOS / "chunks.jsonl"     # chunks com metadados (também alimenta o BM25)
 CATALOGO = RAIZ / "catalogo.yaml"
 AVALIACAO = RAIZ / "avaliacao"
+PERGUNTAS_AVALIACAO = AVALIACAO / "perguntas"
+RESULTADOS_AVALIACAO = AVALIACAO / "resultados"
+SCRIPTS_AVALIACAO = AVALIACAO / "scripts"
 
 # Embeddings: BAAI/bge-m3 (multilíngue, 1024 dimensões) venceu o multilingual-e5-base na avaliação.
 # Para usar o E5: RUMO_EMBEDDING=intfloat/multilingual-e5-base (prefixos aplicados automaticamente).
@@ -44,5 +47,5 @@ OPENAI_MODEL = os.getenv("RUMO_OPENAI_MODEL", "gpt-4o-mini")
 
 # Reescrita de consultas compostas: Estágio 1 (LiquidAI/d1-omni-600M em GPU) + Estágio 2 (LLM Decomposer)
 MODELO_DECISAO = os.getenv("RUMO_DECISION_MODEL", "LiquidAI/d1-omni-600M")
-LIMIAR_COMPOSTA = float(os.getenv("RUMO_DECISION_THRESHOLD", "0.50"))
+LIMIAR_COMPOSTA = float(os.getenv("RUMO_DECISION_THRESHOLD", "0.39"))
 MODELO_DECOMPOSITOR = os.getenv("RUMO_DECOMP_MODEL", MODELO_OLLAMA)

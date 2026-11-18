@@ -36,7 +36,8 @@ class TestEscolherLimiar(unittest.TestCase):
 class TestConjuntoCalibracao(unittest.TestCase):
     def test_disjunto_do_benchmark_e_balanceado(self):
         calib = calibrar_limiar.carregar_calibracao()
-        bench = [json.loads(l) for l in open(config.AVALIACAO / "perguntas_benchmark.jsonl", encoding="utf-8") if l.strip()]
+        with open(config.PERGUNTAS_AVALIACAO / "perguntas_benchmark.jsonl", encoding="utf-8") as f:
+            bench = [json.loads(l) for l in f if l.strip()]
         perguntas_bench = {b["pergunta"].strip().lower() for b in bench}
         for item in calib:
             self.assertNotIn(item["pergunta"].strip().lower(), perguntas_bench)

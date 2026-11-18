@@ -7,6 +7,7 @@ A **Tabela 1** apresenta o histórico de versões e entregas publicadas nesta Gi
 | 1.0 | Semana 1 | [Entrega 1 · Definições do projeto](../entrega-1/index.md) | Problema, partes interessadas, escopo, riscos, métricas, Essential Question e divisão com o Grupo 09 |
 | 2.0 | 09/11/2026 | [Entrega 2 · Base de conhecimento + protótipo de RAG](../entrega-2/index.md) | 36 fontes, chunking, embeddings, ChromaDB, busca híbrida, LLM local, demonstração com fontes, avaliação e diagrama animado de integração |
 | 3.0 | 13/11/2026 | [Entrega 3 · Respostas baseadas em evidências](../entrega-3/index.md) | Comparação empírica com e sem RAG nas 32 perguntas-ouro, fidelidade, alucinação, análise de falha e reescrita de consulta |
+| 4.0 | 16/11/2026 | [Entrega 4 · Primeiro Protótipo Multiagente](../entrega-4/index.md) | Orquestrador, Agente RU, Agente Fluxo, Agente Validador, Sintetizador, paralelismo e estudo comparativo de roteamento |
 
 <p class="legenda">Tabela 1. Histórico de versões desta GitPage.</p>
 
@@ -24,6 +25,7 @@ Ao clicar no botão, o script [`rumo.js`](../javascripts/rumo.js) lê automatica
    - **Entrega 1:** [`/entrega-1/`](../entrega-1/index.md)
    - **Entrega 2:** [`/entrega-2/`](../entrega-2/index.md)
    - **Entrega 3:** [`/entrega-3/`](../entrega-3/index.md)
+   - **Entrega 4:** [`/entrega-4/`](../entrega-4/index.md)
 2. Role até o final da página e clique no botão **📄 Gerar PDF consolidado desta Entrega (A4)**.
 3. Na janela de impressão do navegador, confirme:
    - **Destino:** Salvar como PDF
@@ -75,6 +77,18 @@ A **Tabela 3** resume as principais decisões técnicas tomadas durante o planej
 
 <p class="legenda">Tabela 3. Decisões tomadas ao longo da Entrega 3, cada uma com motivo e efeito.</p>
 
+## Registro de mudanças da Entrega 4
+
+A **Tabela 4** consolida as decisões arquiteturais tomadas na implantação do primeiro protótipo multiagente (Entrega 4).
+
+| Mudança | Motivo | Efeito medido |
+|---|---|---|
+| Especialização `AgenteRU` + `AgenteFluxo` + `AgenteValidador` + `Sintetizador` | Consultas compostas competiam pelos mesmos *slots* e geravam alucinações ou citações misturadas | Citações `[n]` isoladas por parte, validação factual automática e devolução ao `Sintetizador` (`fallback_extrativo`) |
+| Execução paralela via `ThreadPoolExecutor` com `_LOCK_BUSCA` | Chamadas em série dobravam a latência; consultas simultâneas ao `chromadb` colidiam no `RustBindingsAPI` | Ganho real de paralelismo (`3,68s` vs `7,27s`) sem colisão de índice e com degradação elegante em falhas (`--falhar-agente`) |
+| Calibração de `LIMIAR_COMPOSTA` (`0,50` → `0,39`) e estudo Teste 1 vs. Teste 2 | O limiar antigo falhava em acionar compostas (`p=0,39`) e o regex errava 4/17 formulações coloquiais naturais | Acurácia de roteamento nas subperguntas naturais sobe de `76,5%` (Regex) para `94,1%` (`d1-omni-600M`) e `100,0%` (`qwen2.5:7b` conjunto) |
+
+<p class="legenda">Tabela 4. Decisões tomadas ao longo da Entrega 4, cada uma com motivo e efeito.</p>
+
 ??? abstract "Histórico de revisão"
 
     | Data | Versão | Descrição | Autor |
@@ -82,3 +96,4 @@ A **Tabela 3** resume as principais decisões técnicas tomadas durante o planej
     | 09/11/2026 | 2.0 | Publicação da Entrega 2 e registro de mudanças | Maykon Soares |
     | 11/11/2026 | 3.0 | Inclusão da versão 3.0 (Entrega 3) e registro de decisões técnicas | Grupo 04 |
     | 13/11/2026 | 3.0 | Consolidação das decisões da Entrega 3, guia de exportação em PDF único (Issue #21) e purga de latência (R3) | Grupo 04 |
+    | 16/11/2026 | 4.0 | Inclusão da versão 4.0 (Entrega 4 · Primeiro Protótipo Multiagente) e registro de decisões arquiteturais | Grupo 04 |

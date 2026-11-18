@@ -8,7 +8,7 @@ repo_name: maykonjuso/residencia-grupo-4
 edit_uri: ""
 
 # Versão e data da GitPage. Atualizar a cada entrega ou mudança relevante.
-copyright: "Residência em IA · UnB/FCTE · Turma 1 · Challenge 2 · Grupo 04 | Entregas 1 e 2 | Versão 2.0 · 09/11/2026"
+copyright: "Residência em IA · UnB/FCTE · Turma 1 · Challenge 2 · Grupo 04 | Entregas 1, 2, 3 e 4 | Versão 4.0 · 16/11/2026"
 
 theme:
   name: material
@@ -71,6 +71,17 @@ plugins:
       buttons: "macos"
       prompt_literal_start:
         - "$"
+  - glightbox:
+      touchNavigation: true
+      loop: false
+      effect: zoom
+      slide_effect: none
+      width: 100%
+      height: auto
+      zoomable: true
+      draggable: true
+      auto_caption: false
+      caption_position: bottom
 
 markdown_extensions:
   - abbr
@@ -138,7 +149,11 @@ nav:
       - Fidelidade e alucinação: entrega-3/fidelidade-e-alucinacao.md
       - Reescrita de consulta: entrega-3/reescrita-de-consulta.md
   - Entrega 4:
-      - Cardápio estruturado: entrega-4/cardapio-estruturado.md
+      - entrega-4/index.md
+      - Arquitetura dos agentes: entrega-4/arquitetura-agentes.md
+      - Responsabilidades: entrega-4/responsabilidades.md
+      - Fluxo de interação: entrega-4/fluxo-de-interacao.md
+      - Demonstração: entrega-4/demonstracao.md
   - Sobre:
       - sobre/index.md
       - Processo de trabalho: sobre/processo.md

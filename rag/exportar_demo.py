@@ -1,12 +1,12 @@
-"""Gera docs/javascripts/demo-dados.js a partir de avaliacao/demo_respostas.json (saídas reais)."""
+"""Gera docs/javascripts/demo-dados.js a partir de avaliacao/resultados/demo_respostas.json (saídas reais)."""
 import json
 import re
 from pathlib import Path
 
 raiz = Path(__file__).resolve().parent
-dados = json.loads((raiz / "avaliacao" / "demo_respostas.json").read_text(encoding="utf-8"))
+dados = json.loads((raiz / "avaliacao" / "resultados" / "demo_respostas.json").read_text(encoding="utf-8"))
 rotulos = {json.loads(l)["id"]: json.loads(l).get("rotulo", "")
-           for l in (raiz / "avaliacao" / "perguntas_demo.jsonl").read_text(encoding="utf-8").splitlines() if l.strip()}
+           for l in (raiz / "avaliacao" / "perguntas" / "perguntas_demo.jsonl").read_text(encoding="utf-8").splitlines() if l.strip()}
 for d in dados:
     d["rotulo"] = d.get("rotulo") or rotulos.get(d["id"], "")
     d["backend_rotulo"] = "Qwen2.5-7B-Instruct · 4 bits · local" if d["backend"] == "hf" else d["backend"]

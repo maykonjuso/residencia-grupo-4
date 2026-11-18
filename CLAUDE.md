@@ -80,8 +80,8 @@ mais caro que esta documentação pode ter.
 |---|---|
 | 36 fontes (F01–F36) | `rag/catalogo.yaml` |
 | 1.738 chunks | `rag/dados/chunks.jsonl` |
-| 32 perguntas de teste | `rag/avaliacao/perguntas_ouro.jsonl` |
-| Hit@1, Hit@5, MRR | `rag/avaliacao/resultado_recuperacao_*.json` |
+| 32 perguntas de teste | `rag/avaliacao/perguntas/perguntas_ouro.jsonl` |
+| Hit@1, Hit@5, MRR | `rag/avaliacao/resultados/resultado_recuperacao_*.json` |
 | Modelos, limiares, pesos, tamanho de chunk | `rag/rumo_rag/config.py` |
 
 A configuração final é a **busca híbrida**, que tem Hit@1 menor que a densa pura

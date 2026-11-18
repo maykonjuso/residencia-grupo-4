@@ -16,9 +16,15 @@ import sys
 from pathlib import Path
 
 try:
-    from .rumo_rag import config, reescrita
+    from ...rumo_rag import config, reescrita
 except ImportError:  # execução direta
-    from rag.rumo_rag import config, reescrita
+    _RAIZ_RAG = Path(__file__).resolve().parents[2]
+    if str(_RAIZ_RAG) not in sys.path:
+        sys.path.insert(0, str(_RAIZ_RAG))
+    try:
+        from rag.rumo_rag import config, reescrita
+    except ImportError:
+        from rumo_rag import config, reescrita
 
 
 def escolher_limiar(probs_compostas: list[float], probs_simples: list[float]) -> dict:
@@ -54,7 +60,7 @@ def escolher_limiar(probs_compostas: list[float], probs_simples: list[float]) ->
 
 
 def carregar_calibracao(caminho: Path | str | None = None) -> list[dict]:
-    caminho = Path(caminho or config.AVALIACAO / "perguntas_calibracao.jsonl")
+    caminho = Path(caminho or config.PERGUNTAS_AVALIACAO / "perguntas_calibracao.jsonl")
     with open(caminho, encoding="utf-8") as f:
         return [json.loads(linha) for linha in f if linha.strip()]
 
@@ -78,7 +84,8 @@ def calibrar(caminho: Path | str | None = None, salvar: bool = True) -> dict:
         }
     )
     if salvar:
-        destino = config.AVALIACAO / "calibracao_limiar.json"
+        config.RESULTADOS_AVALIACAO.mkdir(parents=True, exist_ok=True)
+        destino = config.RESULTADOS_AVALIACAO / "calibracao_limiar.json"
         destino.write_text(json.dumps(resultado, ensure_ascii=False, indent=2), encoding="utf-8")
     return resultado
 

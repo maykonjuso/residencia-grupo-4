@@ -12,14 +12,17 @@ import sys
 from pathlib import Path
 from typing import Any
 
-# Suporte flexível a imports tanto como pacote 'rag.benchmark' quanto script direto
+# Suporte flexível a imports tanto como pacote quanto script direto
 try:
-    from .rumo_rag import config, geracao, indice, reescrita
+    from ...rumo_rag import config, geracao, indice, reescrita
 except ImportError:
+    _RAIZ_RAG = Path(__file__).resolve().parents[2]
+    if str(_RAIZ_RAG) not in sys.path:
+        sys.path.insert(0, str(_RAIZ_RAG))
     try:
-        from rumo_rag import config, geracao, indice, reescrita
-    except ImportError:
         from rag.rumo_rag import config, geracao, indice, reescrita
+    except ImportError:
+        from rumo_rag import config, geracao, indice, reescrita
 
 # R3: Lista de termos/chaves estritamente proibidos em estruturas de resultado do benchmark
 TERMOS_PROIBIDOS_LATENCIA = (
@@ -65,7 +68,7 @@ def verificar_ausencia_latencia(obj: Any, caminho: str = "root") -> None:
 def carregar_perguntas_benchmark(caminho: Path | str | None = None) -> list[dict]:
     """Carrega o conjunto completo de 38 perguntas de avaliação do benchmark."""
     if caminho is None:
-        caminho = config.AVALIACAO / "perguntas_benchmark.jsonl"
+        caminho = config.PERGUNTAS_AVALIACAO / "perguntas_benchmark.jsonl"
     caminho = Path(caminho)
     if not caminho.exists():
         raise FileNotFoundError(f"Arquivo do conjunto de teste não encontrado: {caminho}")

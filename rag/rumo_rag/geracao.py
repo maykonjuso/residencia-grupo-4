@@ -43,9 +43,9 @@ def montar_contexto(trechos: list[dict]) -> str:
     return "\n\n".join(partes)
 
 
-def montar_mensagens(pergunta: str, trechos: list[dict]) -> list[dict]:
+def montar_mensagens(pergunta: str, trechos: list[dict], instrucoes: str = INSTRUCOES) -> list[dict]:
     return [
-        {"role": "system", "content": INSTRUCOES},
+        {"role": "system", "content": instrucoes},
         {"role": "user", "content": f"Trechos recuperados:\n\n{montar_contexto(trechos)}\n\nPergunta: {pergunta}"},
     ]
 
@@ -83,8 +83,12 @@ def _gerar_hf(msgs):
 
 
 def _post(url, corpo, cabecalhos=None):
-    req = urllib.request.Request(url, data=json.dumps(corpo).encode(),
-                                 headers={"Content-Type": "application/json", **(cabecalhos or {})})
+    headers = {
+        "Content-Type": "application/json",
+        "User-Agent": "RUmo-UnB/1.0",
+        **(cabecalhos or {}),
+    }
+    req = urllib.request.Request(url, data=json.dumps(corpo).encode(), headers=headers)
     with urllib.request.urlopen(req, timeout=180) as r:
         return json.loads(r.read())
 
@@ -97,9 +101,11 @@ def _gerar_ollama(msgs):
 
 def _gerar_openai(msgs):
     import os
-    r = _post(f"{config.OPENAI_URL}/chat/completions",
+    chave = os.environ.get("RUMO_OPENAI_KEY") or os.environ["OPENROUTER_API_KEY"]
+    url = f"{config.OPENAI_URL.rstrip('/')}/chat/completions"
+    r = _post(url,
               {"model": config.OPENAI_MODEL, "messages": msgs, "temperature": 0},
-              {"Authorization": f"Bearer {os.environ['RUMO_OPENAI_KEY']}"})
+              {"Authorization": f"Bearer {chave}"})
     return r["choices"][0]["message"]["content"].strip()
 
 
@@ -119,10 +125,16 @@ def _gerar_extrativo(pergunta, trechos):
     return "\n".join(f"- {f} [{i}]" for _, i, f in candidatas[:4])
 
 
-def gerar(pergunta: str, trechos: list[dict], backend: str = config.BACKEND) -> str:
+def gerar_com_instrucoes(
+    pergunta: str,
+    trechos: list[dict],
+    instrucoes: str = INSTRUCOES,
+    backend: str = config.BACKEND,
+) -> str:
+    """Gera resposta usando um prompt de sistema específico (mantendo RN-02 e RN-03)."""
     if not trechos:                     # RN-03: sem trecho recuperado, nem chama o LLM
         return RECUSA
-    msgs = montar_mensagens(pergunta, trechos)
+    msgs = montar_mensagens(pergunta, trechos, instrucoes=instrucoes)
     if backend == "auto":
         backend = config.BACKEND
     if backend == "hf":
@@ -132,6 +144,10 @@ def gerar(pergunta: str, trechos: list[dict], backend: str = config.BACKEND) -> 
     if backend == "openai":
         return _gerar_openai(msgs)
     return _gerar_extrativo(pergunta, trechos)
+
+
+def gerar(pergunta: str, trechos: list[dict], backend: str = config.BACKEND) -> str:
+    return gerar_com_instrucoes(pergunta, trechos, instrucoes=INSTRUCOES, backend=backend)
 
 
 def gerar_sem_rag(pergunta: str, backend: str = config.BACKEND) -> str:
