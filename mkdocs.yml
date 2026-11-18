@@ -137,6 +137,8 @@ nav:
       - LLM vs. RAG: entrega-3/llm-vs-rag.md
       - Fidelidade e alucinação: entrega-3/fidelidade-e-alucinacao.md
       - Reescrita de consulta: entrega-3/reescrita-de-consulta.md
+  - Entrega 4:
+      - Cardápio estruturado: entrega-4/cardapio-estruturado.md
   - Sobre:
       - sobre/index.md
       - Processo de trabalho: sobre/processo.md
