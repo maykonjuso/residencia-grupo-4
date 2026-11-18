@@ -22,6 +22,13 @@ Probabilidade (P) e impacto (I) em escala de 1 a 3. Exposição = P × I.
 ## Limitações conhecidas
 
 - O RUmo **não substitui** o SIGAA, a SAA nem a Diretoria do RU. Pré-requisitos e grades devem ser confirmados no SIGAA.
-- Os ícones de alergênicos do cardápio do RU (leite, glúten, ovo etc.) **são imagens** no PDF e não foram extraídos. Isso fica para a etapa multimodal (Semana 5).
+- Os ícones de alergênicos do cardápio do RU (leite, glúten, ovo etc.) **são imagens** no PDF. Desde a Issue #55, são lidos e anotados prato a prato; calorias não são publicadas pelo RU e não entram na base ([detalhes](../entrega-2/base-de-conhecimento.md#alergenicos-e-informacao-nutricional-issue-55)).
 - As transcrições dos fluxogramas de Software e Energia foram feitas pelo grupo a partir de imagens; setas tracejadas foram marcadas como tais.
 - As respostas dependem da data de coleta (06/11/2026). Fora desse período, o cardápio na base deixa de valer.
+
+??? abstract "Histórico de revisão"
+
+    | Data | Versão | Descrição | Autor |
+    | :---: | :---: | --- | --- |
+    | 06/11/2026 | 1.0 | Riscos e limitações da Entrega 1 | Maykon Soares |
+    | 18/11/2026 | 1.1 | Limitação dos alergênicos atualizada: ícones lidos por prato (Issue #55) | Grupo 04 |

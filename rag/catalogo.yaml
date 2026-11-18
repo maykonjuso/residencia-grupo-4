@@ -323,3 +323,13 @@ documentos:
     data: "2024-05"
     url: "http://fcte.unb.br/wp-content/uploads/2024/05/Regimento_Interno_FGA_-_aprovado.pdf"
     arquivo: originais/F36.pdf
+
+  # --------------------------------------------- RU · alergênicos (Issue #55, coletado em 18/11/2026)
+  - id: F37
+    titulo: "Serviço de alimentação do RU — cardápio, opções vegetarianas e identificação de alergênicos"
+    orgao: "UnB · Diretoria do RU"
+    eixo: ru
+    tipo: pagina
+    data: "s.d."
+    url: "https://ru.unb.br/servico-alimentacao/"
+    arquivo: originais/F37.html

@@ -5,7 +5,7 @@ Responde só com documentos oficiais da UnB, cita cada fonte e recusa o que não
 
 - Site: https://maykonjuso.github.io/residencia-grupo-4/
 - `docs/` · GitPage (MkDocs Material) com as Entregas 1 e 2
-- `rag/` · protótipo: catálogo de 36 fontes, ingestão, ChromaDB, busca híbrida, LLM local, avaliação
+- `rag/` · protótipo: catálogo de 37 fontes, ingestão, ChromaDB, busca híbrida, LLM local, avaliação
 
 ```bash
 python -m venv .venv && source .venv/bin/activate

@@ -46,7 +46,7 @@
   function eixoDe(docId) {
     var n = parseInt(String(docId).slice(1), 10);
     if (n === 11 || n === 12 || n === 35) return "apoio";
-    return n <= 13 ? "ru" : "fluxo";
+    return n <= 13 || n === 37 ? "ru" : "fluxo";
   }
   var NOME_EIXO = { ru: "RU", fluxo: "Fluxo das engenharias", apoio: "Apoio" };
 
@@ -182,14 +182,14 @@
      ========================================================= */
   var INGESTAO = [
     {
-      nome: "Fontes oficiais", sub: "36 documentos", dur: 5200,
+      nome: "Fontes oficiais", sub: "37 documentos", dur: 5200,
       titulo: "1. Fontes oficiais entram no catálogo",
-      texto: "Tudo começa pelos <b>36 documentos oficiais</b> da UnB: resoluções e preços do RU, cardápios semanais, PPCs, fluxogramas das engenharias, calendário acadêmico. Cada fonte é registrada com órgão, data, URL e eixo. O RUmo só responde com o que estiver aqui.",
-      numeros: [["36", "fontes"], ["3", "eixos"]],
+      texto: "Tudo começa pelos <b>37 documentos oficiais</b> da UnB: resoluções e preços do RU, cardápios semanais, PPCs, fluxogramas das engenharias, calendário acadêmico. Cada fonte é registrada com órgão, data, URL e eixo. O RUmo só responde com o que estiver aqui.",
+      numeros: [["37", "fontes"], ["3", "eixos"]],
       arquivo: "rag/catalogo.yaml",
       desenhar: function (p, d, ctx) {
         var g = el("div", "rm-est__docs");
-        for (var i = 1; i <= 36; i++) {
+        for (var i = 1; i <= 37; i++) {
           var id = "F" + (i < 10 ? "0" : "") + i;
           var doc = el("span", "rm-est__doc rm-eixo--" + eixoDe(id), id);
           g.appendChild(doc);
@@ -234,7 +234,7 @@
       nome: "Chunking", sub: "~900 caracteres", dur: 6500,
       titulo: "3. Chunking: o texto vira pedaços",
       texto: "O LLM não lê um documento inteiro; ele lê <b>pedaços (chunks)</b>. O corte respeita a estrutura: títulos, artigos de norma, itens de edital, páginas. Cada chunk mira ~900 caracteres (máx. 1.400) e ganha um <b>cabeçalho de contexto</b> com documento e seção, que ajuda a achar trechos curtos como “Almoço e jantar: R$ 4,50”. Quando um bloco passa do limite, ele é cortado por frase com 150 caracteres repetidos entre vizinhos. Cardápios: uma refeição por chunk.",
-      numeros: [["1.738", "chunks"], ["~900", "caracteres"], ["150", "de sobreposição"]],
+      numeros: [["1.742", "chunks"], ["~900", "caracteres"], ["150", "de sobreposição"]],
       arquivo: "rag/rumo_rag/chunking.py",
       desenhar: function (p, d, ctx) {
         var doc = el("div", "rm-est__corte");
@@ -273,14 +273,14 @@
         linha.appendChild(seta()); linha.appendChild(saida);
         p.appendChild(linha);
         ctx.depois(900, function () { v.el.classList.add("rm-on"); });
-        p.appendChild(el("div", "rm-est__nota", "Os 1.738 chunks passam por aqui, em lotes de 16."));
+        p.appendChild(el("div", "rm-est__nota", "Os 1.742 chunks passam por aqui, em lotes de 16."));
       }
     },
     {
       nome: "Banco vetorial", sub: "ChromaDB + BM25", dur: 6500,
       titulo: "5. Banco vetorial: os vetores são guardados",
       texto: "Os vetores vão para o <b>ChromaDB</b> (índice HNSW, distância cosseno), junto com o texto e os metadados (fonte, página, seção, URL). No mapa, cada ponto é um chunk: <b>assuntos parecidos ficam perto</b>. Em paralelo, um índice <b>BM25</b> guarda as palavras exatas, bom para datas e códigos de disciplina. Isso é feito <b>uma vez</b>; depois, cada pergunta só consulta.",
-      numeros: [["1.738", "vetores"], ["HNSW", "cosseno"]],
+      numeros: [["1.742", "vetores"], ["HNSW", "cosseno"]],
       arquivo: "rag/rumo_rag/indice.py · indexar()",
       desenhar: function (p, d, ctx) {
         var linha = el("div", "rm-est__linha rm-est__linha--mapa");
@@ -298,7 +298,7 @@
         linha.appendChild(lado); linha.appendChild(bm);
         p.appendChild(linha);
         var cont = lado.querySelector(".rm-est__contador");
-        ctx.contar(cont, 1738, 1700);
+        ctx.contar(cont, 1742, 1700);
       }
     }
   ];

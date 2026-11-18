@@ -84,6 +84,25 @@ Antes da correção, perguntas como *"qual o preço da refeição no RU para est
 
 **Limitação residual documentada:** mesmo após a correção, o `bm25` puro ainda deixa `Q24` (*"Quantas vagas a FCTE oferta para Engenharia de Software?"*) fora do top-5 por ausência de sobreposição léxica direta, mantendo o modo **híbrido** como referência de qualidade sempre que houver memória para embeddings.
 
+## Alergênicos por prato (Issue #55)
+
+A Issue #55 acrescentou ao texto dos cardápios (F08 e F09) a etiqueta de alergênicos de cada opção de prato, lida dos ícones, e incluiu a F37, página "Serviço alimentação" do RU. Nas 32 perguntas-ouro, o BM25 ficou **idêntico**: mesmos documentos nas mesmas posições, com Hit@1 0,906, Hit@5 0,969 e MRR 0,932. Fora dos dois cardápios e da F37, nenhum chunk mudou.
+
+As perguntas novas não fazem parte do conjunto-ouro. Elas foram verificadas no BM25 e respondidas com o Qwen2.5-7B local (Ollama):
+
+| Pergunta | 1º trecho recuperado | Resposta |
+|---|---|---|
+| *"A lasanha de frango do dia 10/11 tem glúten?"* | `F09-0006`, com *"Lasanha de frango [Alergênicos: Trigo/Glúten, Leite e derivados]"* | Sim, citando o cardápio. Antes da #55, recusava |
+| *"O strogonoff de frango do jantar de 11/11 tem leite?"* | `F09-0012`, com leite, glúten e cogumelo | Sim, citando o cardápio |
+| *"O mix de doces do almoço de 10/11 tem amendoim?"* | `F09-0006` | Sim, citando o cardápio |
+| *"Quantas calorias tem o almoço do RU?"* | Nenhum trecho com calorias | Recusa |
+| *"O RU tem opção para quem tem doença celíaca?"* | Trechos do guia da ANVISA (F12), **sem a F37** | — |
+| *"O RU atende dieta para celíaco?"* | F37 em 3º lugar | Recusa |
+
+<p class="legenda">Tabela 5. Perguntas de alergênicos no modo BM25.</p>
+
+As duas últimas linhas mostram uma limitação de vocabulário. A F37 fala em *"dietas especializadas"*, e não em *celíaca*: a fonte só aparece quando a pergunta usa a palavra "dieta", e mesmo assim o modelo recusa, porque a página não fala de doença celíaca. A busca densa deve aproximar os termos pelo significado, mas isso só pode ser confirmado rodando `python -m rumo_rag avaliar` com o BGE-M3. A proposta é incluir perguntas de alergênicos no conjunto-ouro numa próxima revisão.
+
 ## Limitações da avaliação
 
 - 32 perguntas é pouco para diferenças pequenas: 1 pergunta vale 0,031 no Hit@1.
@@ -97,3 +116,4 @@ Antes da correção, perguntas como *"qual o preço da refeição no RU para est
     | :---: | :---: | --- | --- |
     | 09/11/2026 | 1.0 | Avaliação inicial da recuperação (32 perguntas-ouro) | Grupo 04 |
     | 16/11/2026 | 1.1 | Medição BM25 × híbrido e normalização léxica para preços do RU (Issue #51) | Grupo 04 |
+    | 18/11/2026 | 1.2 | Alergênicos por prato: BM25 idêntico nas 32 perguntas-ouro e perguntas novas de alergênicos; medição híbrida pendente (Issue #55) | Grupo 04 |

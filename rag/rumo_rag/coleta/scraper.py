@@ -294,9 +294,9 @@ def imprimir(resultado: dict) -> str:
     legenda = ", ".join(rotulo for _, rotulo in ALERGENICOS_OFICIAIS)
     extraidos = "[Alergênicos:" in resultado.get("texto", "")
     obs = (
-        "Extraídos automaticamente dos ícones do PDF por célula (auto-calibrados pela legenda do rodapé)."
+        "Lidos dos ícones do PDF, prato a prato, comparados com a legenda do rodapé de cada página (Issue #55)."
         if extraidos
-        else "Notações de alergênicos por prato no PDF oficial são ícones (imagens) não extraídos como texto."
+        else "Nenhum ícone de alergênico identificado no PDF oficial para esta refeição. Confirme na linha de distribuição."
     )
     linhas = [
         f"Cardápio do RU Gama · semana de {s.inicio:%d/%m/%Y} a {s.fim:%d/%m/%Y}",

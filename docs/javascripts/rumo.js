@@ -219,7 +219,7 @@
     indice: [1020, 62, 165, 76, "ChromaDB", "banco vetorial"],
     llm04: [825, 178, 165, 76, "LLM gerador", "Qwen2.5-7B local"],
     resp04: [630, 178, 165, 76, "Resposta", "com fontes [n]"],
-    base: [630, 288, 165, 70, "Base curada", "36 fontes oficiais"],
+    base: [630, 288, 165, 70, "Base curada", "37 fontes oficiais"],
     ingest: [825, 288, 165, 70, "Ingestão", "extrair · chunk · embed"],
     api09: [630, 470, 165, 76, "API do Grupo 09", "POST /perguntar"],
     rag09: [825, 470, 165, 76, "RAG do Grupo 09", "salas e acessos"],
@@ -243,7 +243,7 @@
       pergunta: "Etapa offline: monta a base de conhecimento e o banco vetorial.",
       passos: [
         { nos: ["base"], arestas: [], quem: "g04", titulo: "Curadoria das fontes",
-          texto: "36 documentos oficiais (RU, DDS/DAC, SAA, DEG, FCTE, PPCs e fluxogramas das engenharias, PPGEB) entram no catálogo com órgão, data, URL e eixo.",
+          texto: "37 documentos oficiais (RU, DDS/DAC, SAA, DEG, FCTE, PPCs e fluxogramas das engenharias, PPGEB) entram no catálogo com órgão, data, URL e eixo.",
           carga: "- id: F09\n  titulo: Cardápio semanal do RU Gama — 09/11 a 15/11/2026\n  orgao: UnB · Diretoria do RU\n  eixo: ru\n  tipo: cardapio\n  url: https://ru.unb.br/wp-content/uploads/2026/11/..." },
         { nos: ["ingest"], arestas: ["a_bg"], quem: "g04", titulo: "Extração e chunking",
           texto: "PDFs com pypdf; cardápios lidos como tabela (pdfplumber) e convertidos em um registro por refeição e por dia; HTML com abas vira seções. Chunks de ~900 caracteres respeitando títulos e artigos.",
