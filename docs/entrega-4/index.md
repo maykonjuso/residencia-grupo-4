@@ -21,12 +21,16 @@ A **Tabela 1** resume o que já funciona no protótipo, o que aguarda detalhamen
 | **Implementado** | Execução simultânea e tolerância a falhas | Concluído | Dispara consultas ao RU e ao Fluxo de Graduação ao mesmo tempo e permite simular queda de um agente sem derrubar a parte saudável |
 | **Implementado** | Conferência factual e retorno ao sintetizador | Concluído | Confirma se valores e afirmações aparecem nos trechos recuperados, solicita correção quando encontra inconsistência e preserva citações independentes por assunto |
 | **Implementado** | Comparativo experimental de roteamento | Concluído | Avalia três estratégias de roteamento em um conjunto de 8 perguntas múltiplas (17 subperguntas) de linguagem natural |
+| **Implementado** | Cardápio estruturado por compartimento (`#54`) | Concluído | Converte as refeições dos cardápios em JSON por compartimento da bandeja e trilha alimentar (*padrão*, *ovolacto* e *vegano*), preservando documento e página de origem em cada opção |
 | **Aberto (`#41`, `#42`, `#43`)** | Prompts especializados, regras finas e ferramentas próprias dos agentes | `[a preencher]` | Contratos e fluxo base estão prontos; a especialização interna depende do fechamento das issues `#41` a `#43` |
 | **Aberto (`#41`, `#42`, `#43`)** | Demonstração completa com modelo generativo final | `[a preencher]` | As execuções atuais validam o fluxo de forma determinística no modo extrativo; a execução final com modelo generativo aguarda `#41` a `#43` |
 | **Fora de escopo** | Comunicação em tempo real com a API do Portal Único (Grupo 09) | Fora da entrega | Integração geral do sistema unificado descrita em [Divisão com o Grupo 09](../visao/escopo-grupos.md) |
 | **Fora de escopo** | Memória conversacional contínua e login autenticado | Fora da entrega | Cada pergunta é processada de forma independente, sem histórico pessoal de usuário |
 
 <p class="legenda">Tabela 1. Visão geral do que foi implementado, do que está pendente e do que ficou fora de escopo na Entrega 4.</p>
+
+!!! note "Apoio à montagem de prato — Cardápio estruturado (#54)"
+    Como complemento da base de conhecimento para a interface do monta-prato, o módulo de coleta transforma os cardápios já extraídos da base em JSON organizado por compartimento da bandeja (incluindo almoço, jantar e café da manhã) e por trilha alimentar (*padrão*, *ovolactovegetariano* e *vegetariano estrito*). Cada opção mantém o documento e a página de origem, trata falhas de formatação do PDF com avisos e pode ser gerada em `rag/` via `python -m rumo_rag.coleta cardapio --estruturado --data 2026-11-09 --refeicao almoco`.
 
 ---
 
@@ -49,3 +53,4 @@ A documentação segue os três artefatos solicitados no enunciado e o registro 
     | 1.0 | 16/11/2026 | @GabrielMacielBR | Versão inicial da documentação da Entrega 4 | @keilogger |
     | 1.1 | 16/11/2026 | @GabrielMacielBR | Refatoração para a estrutura padronizada com marcação explícita de pendências | @maykonjuso |
     | 1.2 | 16/11/2026 | @GabrielMacielBR | Adequação para leitura descritiva sem siglas nem jargões de código internos | @maykonjuso |
+    | 1.3 | 18/11/2026 | @GabrielMacielBR | Inclusão breve do cardápio estruturado por compartimento (`#54`, por @Kyara2) no resumo da Entrega 4 | — |
