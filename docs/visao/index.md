@@ -38,7 +38,7 @@ As respostas existem, mas estão espalhadas em resoluções, editais, PDFs de ca
 | Eixo | Cobertura | Fontes |
 |---|---|---|
 | RU | Preços por grupo, gratuidade, horários do RU Gama, cardápio semanal (2 semanas), Auxílio Alimentação, PNAES | 11 |
-| Fluxo de disciplinas | Engenharia Aeroespacial, Automotiva, Eletrônica, de Energia e de Software (graduação) e PPGEB (mestrado em Engenharia Biomédica); ingresso pela ABI; calendário 2026.2; matrícula; trancamento; regimentos | 22 |
+| Fluxo de disciplinas | Engenharia Aeroespacial, Automotiva, Eletrônica, de Energia e de Software (graduação) e PPGEB (mestrado em Engenharia Biomédica); calendário 2026.2; matrícula; trancamento; regimentos | 22 |
 | Apoio | Guia Alimentar (Ministério da Saúde), alergênicos (ANVISA), Estatuto e Regimento Geral da UnB | 3 |
 
 <p class="legenda">Tabela 1. Cobertura da base de conhecimento. Detalhes em <a href="../entrega-2/base-de-conhecimento/">Base de conhecimento</a>.</p>
