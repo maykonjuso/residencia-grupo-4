@@ -224,13 +224,16 @@ class Sintetizador(Agente):
         validacao: ResultadoValidacao,
         backend: str,
         tentativa: int = 1,
+        instrucoes_base: str | None = None,
     ) -> tuple[RespostaAgente, dict]:
-        """Tenta recuperar a aderência factual em até 1 retentativa; caso contrário recusa ou sinaliza."""
+        """Tenta corrigir a resposta com feedback do validador em até 1 retentativa no mesmo backend."""
+        resposta_anterior = item.resposta
         evento: dict[str, Any] = {
             "agente": item.agente,
             "nome_agente": item.nome_agente,
             "tentativa": tentativa,
             "motivos_reprovacao": list(validacao.motivos),
+            "resposta_anterior": resposta_anterior,
             "acao": "recusa_apos_retentativa",
         }
 
@@ -251,24 +254,29 @@ class Sintetizador(Agente):
             evento["acao"] = "recusa_apos_retentativa"
             return item, evento
 
-        if backend != "extrativo":
-            nova_resp = geracao.gerar(item.subpergunta, trechos, backend="extrativo")
+        motivos_txt = "; ".join(validacao.motivos) or "Resposta reprovada pelo Agente Validador"
+        base_instr = instrucoes_base or geracao.INSTRUCOES
+        instrucoes_reparo = (
+            f"{base_instr}\n\n"
+            f"CORREÇÃO OBRIGATÓRIA (motivos da reprovação anterior: {motivos_txt}):\n"
+            "- Reescreva a resposta mantendo SOMENTE fatos presentes nos trechos recuperados.\n"
+            "- Coloque obrigatoriamente a citação [1], [2], ... ao final de CADA afirmação e de CADA item de lista.\n"
+            "- Remova ou recuse qualquer valor, preço, data, horário ou código que não conste literalmente nos trechos."
+        )
+
+        nova_resp = geracao.gerar_com_instrucoes(
+            item.subpergunta,
+            trechos,
+            instrucoes=instrucoes_reparo,
+            backend=backend,
+        )
+        if geracao.eh_recusa(nova_resp):
+            item.resposta = geracao.RECUSA
+            item.fontes_citadas = []
+        else:
             item.resposta = nova_resp
             item.fontes_citadas = geracao.citacoes_usadas(nova_resp, trechos)
-            evento["acao"] = "fallback_extrativo"
-            return item, evento
-
-        # Se já estava em modo extrativo, tenta regeneração limpa uma vez ou recusa se não houver base
-        nova_resp = geracao.gerar(item.subpergunta, trechos, backend="extrativo")
-        if nova_resp != item.resposta:
-            item.resposta = nova_resp
-            item.fontes_citadas = geracao.citacoes_usadas(nova_resp, trechos)
-            evento["acao"] = "regeneracao_extrativa"
-            return item, evento
-
-        item.resposta = geracao.RECUSA
-        item.fontes_citadas = []
-        evento["acao"] = "recusa_apos_retentativa"
+        evento["acao"] = "retentativa_com_feedback"
         return item, evento
 
     def compor(self, pergunta: str, partes: list[RespostaAgente]) -> dict:
@@ -352,6 +360,7 @@ class Sintetizador(Agente):
                 val,
                 backend=backend,
                 tentativa=tentativa,
+                instrucoes_base=contexto.get("instrucoes_base"),
             )
             contexto["parte_corrigida"] = asdict(corrigida)
             contexto["evento_devolucao"] = evento
@@ -603,8 +612,11 @@ class Orquestrador:
                 None,
             )
 
+        aprovado_inicial = val.aprovado
+        motivos_iniciais = list(val.motivos)
         ev_devolucao: dict[str, Any] | None = None
         if not val.aprovado:
+            instrucoes_base = getattr(self.agentes.get(parte.agente), "instrucoes", None)
             msg_dev = Mensagem(
                 remetente="Orquestrador",
                 destinatario=self.sintetizador.nome,
@@ -615,6 +627,7 @@ class Orquestrador:
                     "validacao": asdict(val),
                     "backend": backend,
                     "tentativa": 1,
+                    "instrucoes_base": instrucoes_base,
                 },
             )
             resp_dev = self.sintetizador.executar(msg_dev)
@@ -667,6 +680,8 @@ class Orquestrador:
         parte.validacao = asdict(val)
         evento = {
             "agente": parte.agente,
+            "aprovado_inicial": aprovado_inicial,
+            "motivos_iniciais": motivos_iniciais,
             "aprovado": val.aprovado,
             "acao_recomendada": val.acao_recomendada,
             "motivos": list(val.motivos),

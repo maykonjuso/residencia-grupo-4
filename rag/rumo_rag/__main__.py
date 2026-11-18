@@ -145,17 +145,53 @@ def imprimir_agentes(r: dict, mostrar_trace: bool = False):
                     else:
                         estado = "APROVADO" if res.get("aprovado") else "REPROVADO"
                     det = f" ({'; '.join(res['motivos'])})" if res.get("motivos") else ""
-                    print(f"   - {res['agente']}: {estado}{det}")
+                    if res.get("aprovado_inicial") is False and not res.get("ignorado_por_erro") and not res.get("indisponivel"):
+                        motivos_ini = "; ".join(res.get("motivos_iniciais", []))
+                        print(
+                            f"   - {res['agente']}: 1ª avaliação=REPROVADO ({motivos_ini}) "
+                            f"-> pós-reparo={estado}{det}"
+                        )
+                    else:
+                        print(f"   - {res['agente']}: {estado}{det}")
                 for dev in passo.get("devolucoes_ao_sintetizador", []):
-                    print(
-                        f"   -> Devolvido ao Sintetizador ({dev['nome_agente']}): "
-                        f"ação={dev['acao']} · pós-reparo={'APROVADO' if dev['aprovado_apos_devolucao'] else 'SINALIZADO'}"
+                    status_pos = (
+                        "RECUSA FINAL"
+                        if dev.get("recusa_final")
+                        else ("APROVADO" if dev.get("aprovado_apos_devolucao") else "SINALIZADO")
                     )
+                    motivos_dev = "; ".join(dev.get("motivos_reprovacao", []))
+                    resp_ant = (dev.get("resposta_anterior") or "").replace("\n", " ").strip()
+                    if len(resp_ant) > 120:
+                        resp_ant = resp_ant[:117] + "..."
+                    print(
+                        f"   -> Devolvido ao Sintetizador ({dev['nome_agente']}, "
+                        f"tentativa {dev.get('tentativa', 1)}/1): "
+                        f"ação={dev['acao']} · pós-reparo={status_pos}"
+                    )
+                    if motivos_dev:
+                        print(f"      motivos: {motivos_dev}")
+                    if resp_ant:
+                        print(f"      resposta reprovada: \"{resp_ant}\"")
             elif etapa == "composicao_sintetizador":
                 print(
                     f"5. Composição (Sintetizador): {passo['n_partes']} parte(s) · "
                     f"índices [n] isolados={passo['indices_isolados_por_parte']} · "
                     f"degradado={passo['degradado']}"
+                )
+        interacoes = r.get("interacoes") or []
+        if interacoes:
+            print(f"6. Interações registradas no Trace ({len(interacoes)} Mensagem -> Resposta):")
+            for idx_i, it in enumerate(interacoes, start=1):
+                msg_i = it.get("mensagem", {})
+                resp_i = it.get("resposta", {})
+                conteudo_r = (resp_i.get("conteudo") or "").replace("\n", " ").strip()
+                if len(conteudo_r) > 80:
+                    conteudo_r = conteudo_r[:77] + "..."
+                alertas_i = resp_i.get("alertas") or []
+                alerta_txt = f" · alertas={len(alertas_i)}" if alertas_i else ""
+                print(
+                    f"   [{idx_i}] {msg_i.get('remetente')} -> {msg_i.get('destinatario')}: "
+                    f"\"{conteudo_r}\"{alerta_txt}"
                 )
         print("===========================================\n")
 

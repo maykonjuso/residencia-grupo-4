@@ -237,7 +237,7 @@ class TestParalelismoEComposicao(unittest.TestCase):
 
 class TestValidadorEDegradacao(unittest.TestCase):
     def test_validador_reprova_valor_inventado_e_devolve_ao_sintetizador(self):
-        # Resposta alucinada (R$ 99,90 não existe no TRECHO_RU) aciona devolução ao Sintetizador
+        # Resposta alucinada (R$ 99,90 não existe no TRECHO_RU) aciona retentativa com feedback no mesmo backend
         agente_ru = _AgenteStub(
             "ru",
             "Agente RU",
@@ -246,14 +246,27 @@ class TestValidadorEDegradacao(unittest.TestCase):
         )
         orq = agentes.Orquestrador(agente_ru=agente_ru)
 
-        with mock.patch.object(agentes.reescrita, "classificar_composta", return_value=(False, 0.05)):
-            res = orq.executar("O que tem no almoço?", backend="hf")
+        with mock.patch.object(agentes.reescrita, "classificar_composta", return_value=(False, 0.05)), \
+             mock.patch.object(
+                 agentes.geracao,
+                 "gerar_com_instrucoes",
+                 return_value="No almoço será servido frango grelhado [1].",
+             ) as m_gerar_instr:
+            res = orq.executar("O que tem no almoço?", backend="ollama")
+
+        self.assertEqual(m_gerar_instr.call_count, 1)
+        kwargs = m_gerar_instr.call_args.kwargs
+        self.assertEqual(kwargs["backend"], "ollama")
+        self.assertIn("R$ 99,90", kwargs["instrucoes"])
 
         etapa_val = next(p for p in res["trace"] if p["etapa"] == "validacao_factual")
+        self.assertFalse(etapa_val["resultados"][0]["aprovado_inicial"])
+        self.assertTrue(etapa_val["resultados"][0]["aprovado"])
         devolucoes = etapa_val["devolucoes_ao_sintetizador"]
         self.assertEqual(len(devolucoes), 1)
         self.assertEqual(devolucoes[0]["agente"], "ru")
-        self.assertEqual(devolucoes[0]["acao"], "fallback_extrativo")
+        self.assertEqual(devolucoes[0]["acao"], "retentativa_com_feedback")
+        self.assertIn("R$ 99,90", devolucoes[0]["resposta_anterior"])
         self.assertTrue(devolucoes[0]["aprovado_apos_devolucao"])
         self.assertNotIn("R$ 99,90", res["resposta"])
 
@@ -545,16 +558,18 @@ class TestContratoAgentesEValidacao(unittest.TestCase):
         with mock.patch.object(agentes.reescrita, "classificar_composta", return_value=(False, 0.05)), \
              mock.patch.object(
                  agentes.geracao,
-                 "gerar",
+                 "gerar_com_instrucoes",
                  return_value="Ainda com preço inventado R$ 88,80 [1].",
              ) as m_gerar:
             res = orq.executar("Qual o preço do almoço?", backend="hf")
 
-        # Só pode tentar reparar 1 vez (1 chamada ao fallback extrativo)
+        # Só pode tentar reparar 1 vez (1 chamada ao mesmo backend com feedback)
         self.assertEqual(m_gerar.call_count, 1)
+        self.assertEqual(m_gerar.call_args.kwargs["backend"], "hf")
         etapa_val = next(p for p in res["trace"] if p["etapa"] == "validacao_factual")
         devolucoes = etapa_val["devolucoes_ao_sintetizador"]
         self.assertEqual(len(devolucoes), 1)
+        self.assertEqual(devolucoes[0]["acao"], "retentativa_com_feedback")
         self.assertEqual(devolucoes[0]["tentativa"], 1)
         self.assertTrue(devolucoes[0]["recusa_final"])
         self.assertTrue(devolucoes[0]["aprovado_apos_devolucao"])
