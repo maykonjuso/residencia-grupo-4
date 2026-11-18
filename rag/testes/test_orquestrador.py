@@ -395,7 +395,8 @@ class TestCliAgentesTrace(unittest.TestCase):
         self.assertIn("4. Validador factual:", saida)
         self.assertIn("5. Composição (Sintetizador):", saida)
         self.assertIn("F09", saida)
-        self.assertIn("F20", saida)
+        self.assertIn("F16", saida)
+        self.assertIn("confirme no SIGAA", saida)
 
 
 class TestContratoAgentesEValidacao(unittest.TestCase):
@@ -511,24 +512,21 @@ class TestContratoAgentesEValidacao(unittest.TestCase):
             conteudo="Quais os pré-requisitos de Testes de Software?",
             contexto={"backend": "extrativo"},
         )
-        with mock.patch.object(agentes.indice, "buscar", return_value=[TRECHO_FLUXO]) as m_buscar:
+        with mock.patch.object(agentes.indice, "buscar", return_value=[TRECHO_FLUXO]) as m_buscar, \
+             mock.patch.object(agentes.geracao, "gerar_com_instrucoes") as m_gerar:
             resp = agente.executar(msg)
 
-        m_buscar.assert_called_once_with(
-            "Quais os pré-requisitos de Testes de Software?",
-            k=3,
-            modo="bm25",
-            eixo="fluxo",
-            decompor_pergunta=False,
-        )
+        m_buscar.assert_not_called()
+        m_gerar.assert_not_called()
         self.assertIsInstance(resp, agentes.Resposta)
         self.assertIn("testes de software", resp.conteudo.lower())
         self.assertIn("[1]", resp.conteudo)
         self.assertEqual(len(resp.fontes), 1)
-        self.assertEqual(resp.fontes[0]["doc_id"], "F20")
-        self.assertAlmostEqual(resp.confianca, 0.79)
+        self.assertEqual(resp.fontes[0]["doc_id"], "F16")
+        self.assertEqual(resp.confianca, 1.0)
         self.assertEqual(resp.alertas, [])
-        self.assertEqual(msg.contexto["trechos_recuperados"], [TRECHO_FLUXO])
+        self.assertEqual(len(msg.contexto["trechos_recuperados"]), 1)
+        self.assertEqual(msg.contexto["trechos_recuperados"][0]["doc_id"], "F16")
 
     def test_orquestrador_padrao_instancia_agente_ru_e_agente_fluxo(self):
         orq = agentes.Orquestrador()
@@ -754,7 +752,7 @@ class TestContratoAgentesEValidacao(unittest.TestCase):
                 backend="openai",
             )
 
-        self.assertEqual(len(requisicoes), 3)  # 1 decomposição + 2 agentes
+        self.assertEqual(len(requisicoes), 2)  # decomposição + geração RU; Fluxo usa o grafo local
         for url, headers, body in requisicoes:
             self.assertEqual(url, "https://openrouter.ai/api/v1/chat/completions")
             self.assertEqual(headers.get("Authorization"), "Bearer sk-or-teste")
@@ -762,7 +760,8 @@ class TestContratoAgentesEValidacao(unittest.TestCase):
             self.assertEqual(body["model"], "qwen/qwen-2.5-72b-instruct")
         self.assertEqual([p["agente"] for p in res["partes"]], ["ru", "fluxo"])
         self.assertIn("frango grelhado [1]", res["resposta"])
-        self.assertIn("Métodos de Desenvolvimento de Software [1]", res["resposta"])
+        self.assertIn("Métodos de Desenvolvimento de Software (MDS) (FGA0312)", res["resposta"])
+        self.assertIn("ligação tracejada", res["resposta"])
         self.assertFalse(res["degradado"])
 
 

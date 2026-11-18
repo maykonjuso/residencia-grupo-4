@@ -2,9 +2,12 @@
 
 from __future__ import annotations
 
+import time
+
 from .. import config, geracao, indice
-from .agente_ru import _LOCK_INDICE, executar_agente_dominio
+from .agente_ru import _LOCK_INDICE, executar_agente_dominio, pergunta_fora_do_dominio
 from .base import Agente
+from ..grafo_curricular import carregar_grafo_f16
 from .mensagem import Mensagem, Resposta
 
 INSTRUCOES_FLUXO = f"""Você é o Agente Fluxo do sistema RUmo, especialista exclusivo nos fluxos de disciplinas, cursos de engenharia e normas acadêmicas da FCTE/UnB (campus Gama).
@@ -83,6 +86,39 @@ class AgenteFluxo(Agente):
         """Monta as mensagens para o LLM usando o prompt especializado do Agente Fluxo."""
         return geracao.montar_mensagens(pergunta, trechos, instrucoes=self.instrucoes)
 
+    def responder_grafo(self, mensagem: Mensagem) -> Resposta | None:
+        """Usa o grafo local para consultas suportadas, sem recorrer ao LLM."""
+        if not pergunta_fora_do_dominio(mensagem.conteudo, self.eixo):
+            t0 = time.monotonic()
+            consulta = carregar_grafo_f16().consultar(mensagem.conteudo)
+            tempo_busca = round(time.monotonic() - t0, 3)
+            if consulta is not None:
+                contexto = mensagem.contexto if isinstance(mensagem.contexto, dict) else {}
+                mensagem.contexto = contexto
+                fonte = {
+                    "doc_id": "F16",
+                    "titulo": "Fluxograma de Engenharia de Software (235 créditos) — transcrição",
+                    "orgao": "UnB · FCTE · Engenharia de Software (transcrição do Grupo 04)",
+                    "pagina": 1,
+                    "secao": "Grafo de pré-requisitos",
+                    "url": "https://software.unb.br/matriz-curricular/",
+                    "chunk_id": "F16-grafo-curricular",
+                }
+                trecho = {**fonte, "texto": consulta.evidencia, "similaridade": 1.0}
+                contexto["trechos_recuperados"] = [trecho]
+                contexto["tempo_busca_s"] = tempo_busca
+                contexto["tempo_geracao_s"] = 0.0
+                return Resposta(
+                    conteudo=consulta.conteudo,
+                    fontes=[fonte],
+                    confianca=1.0,
+                    alertas=list(consulta.alertas),
+                )
+        return None
+
     def executar(self, mensagem: Mensagem) -> Resposta:
-        """Executa guarda de domínio, busca no eixo Fluxo e geração com prompt próprio."""
+        """Executa consulta determinística ao grafo ou usa a busca RAG especializada."""
+        resposta_grafo = self.responder_grafo(mensagem)
+        if resposta_grafo is not None:
+            return resposta_grafo
         return executar_agente_dominio(self, mensagem)
