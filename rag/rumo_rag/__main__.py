@@ -41,6 +41,41 @@ def responder(
         return agentes.Orquestrador().executar(
             pergunta, backend=backend, k=k, falhar_agente=falhar_agente
         )
+    # Consultas curriculares suportadas pelo grafo são resolvidas pelo algoritmo
+    # mesmo no modo CLI padrão (os comandos da task não exigem --agentes).
+    mensagem_grafo = agentes.Mensagem(
+        remetente="CLI",
+        destinatario="Agente Fluxo",
+        conteudo=pergunta,
+        contexto={"backend": backend},
+    )
+    resposta_grafo = agentes.AgenteFluxo(k=k, modo=config.BUSCA).responder_grafo(mensagem_grafo)
+    if resposta_grafo is not None:
+        trechos = mensagem_grafo.contexto.get("trechos_recuperados", [])
+        return {
+            "pergunta": pergunta,
+            "subperguntas": [],
+            "resposta": resposta_grafo.conteudo,
+            "fontes_citadas": [
+                {"n": i, **fonte} for i, fonte in enumerate(resposta_grafo.fontes, start=1)
+            ],
+            "valores_sem_fonte": [],
+            "sem_citacao": False,
+            "trechos_recuperados": [
+                {
+                    chave: trecho.get(chave)
+                    for chave in (
+                        "chunk_id", "doc_id", "titulo", "pagina", "secao",
+                        "similaridade", "url", "texto",
+                    )
+                }
+                for trecho in trechos
+            ],
+            "tempo_decomposicao_s": 0.0,
+            "tempo_busca_s": mensagem_grafo.contexto.get("tempo_busca_s", 0.0),
+            "tempo_geracao_s": 0.0,
+            "backend": "grafo",
+        }
     if sem_rag:
         t0 = time.time()
         resposta = geracao.gerar_sem_rag(pergunta, backend=backend)
