@@ -12,8 +12,14 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from rumo_rag.coleta import cardapio  # noqa: E402
 from rumo_rag.coleta.__main__ import main  # noqa: E402
 
-CHUNKS = cardapio.carregar_chunks_cardapio()
+FIX_F09 = Path(__file__).resolve().parent / "fixtures" / "cardapio_gama" / "f09_chunks.jsonl"
+CHUNKS = cardapio.carregar_chunks_cardapio(FIX_F09)
 F09 = [c for c in CHUNKS if c["doc_id"] == "F09"]
+
+_orig_carregar = cardapio.carregar_chunks_cardapio
+cardapio.carregar_chunks_cardapio = lambda caminho=FIX_F09: _orig_carregar(
+    FIX_F09 if caminho == cardapio.config.CHUNKS else caminho
+)
 
 
 def _norm(s: str) -> str:

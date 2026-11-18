@@ -369,14 +369,14 @@ class TestCliAgentesTrace(unittest.TestCase):
                  cli.agentes.reescrita,
                  "decompor_com_roteamento",
                  return_value=[
-                     {"pergunta": "O que tem no almoço?", "eixo": "ru"},
+                     {"pergunta": "Quanto custa o almoço no RU?", "eixo": "ru"},
                      {"pergunta": "Quais os pré-requisitos de Testes de Software?", "eixo": "fluxo"},
                  ],
              ), \
              mock.patch.object(cli.agentes.indice, "_buscar_simples", side_effect=fake_buscar), \
              mock.patch("sys.stdout", buf):
             cli.main([
-                "O que tem no almoço e quais os pré-requisitos de Testes de Software?",
+                "Quanto custa o almoço no RU e quais os pré-requisitos de Testes de Software?",
                 "--agentes",
                 "--trace",
                 "--backend",
@@ -385,7 +385,7 @@ class TestCliAgentesTrace(unittest.TestCase):
 
         saida = buf.getvalue()
         self.assertIn("[TRACE · Orquestrador Multiagentes]", saida)
-        self.assertIn("Subpergunta 1: O que tem no almoço?", saida)
+        self.assertIn("Subpergunta 1: Quanto custa o almoço no RU?", saida)
         self.assertIn("Subpergunta 2: Quais os pré-requisitos de Testes de Software?", saida)
         self.assertIn("[Agente RU]", saida)
         self.assertIn("[Agente Fluxo]", saida)
@@ -404,14 +404,14 @@ class TestContratoAgentesEValidacao(unittest.TestCase):
         msg = agentes.Mensagem(
             remetente="Orquestrador",
             destinatario=agente.nome,
-            conteudo="O que tem no almoço?",
+            conteudo="Quanto custa o almoço no RU?",
             contexto={"backend": "extrativo"},
         )
         with mock.patch.object(agentes.indice, "buscar", return_value=[TRECHO_RU]) as m_buscar:
             resp = agente.executar(msg)
 
         m_buscar.assert_called_once_with(
-            "O que tem no almoço?",
+            "Quanto custa o almoço no RU?",
             k=3,
             modo="bm25",
             eixo="ru",
@@ -535,7 +535,7 @@ class TestContratoAgentesEValidacao(unittest.TestCase):
 
         with mock.patch.object(agentes.reescrita, "classificar_composta", return_value=(False, 0.05)), \
              mock.patch.object(agentes.indice, "buscar", return_value=[TRECHO_RU]):
-            res = orq.executar("O que tem no almoço do RU hoje?", backend="extrativo")
+            res = orq.executar("Quanto custa o almoço no RU?", backend="extrativo")
 
         self.assertFalse(res["degradado"])
         self.assertIn("frango grelhado", res["resposta"].lower())
@@ -623,7 +623,7 @@ class TestContratoAgentesEValidacao(unittest.TestCase):
                     agentes.Mensagem(
                         remetente="Orquestrador",
                         destinatario=ag_ru.nome,
-                        conteudo="O que tem no almoço?",
+                        conteudo="Quanto custa o almoço no RU?",
                         contexto={"backend": "ollama"},
                     )
                 )
@@ -720,7 +720,7 @@ class TestContratoAgentesEValidacao(unittest.TestCase):
             if "módulo de reescrita e decomposição" in system_msg:
                 conteudo = json.dumps({
                     "subperguntas": [
-                        {"pergunta": "O que tem no almoço do RU?", "eixo": "ru"},
+                        {"pergunta": "Quanto custa o almoço no RU?", "eixo": "ru"},
                         {"pergunta": "Quais os pré-requisitos de Testes de Software?", "eixo": "fluxo"},
                     ]
                 })

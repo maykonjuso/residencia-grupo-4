@@ -47,6 +47,7 @@ class AmbienteIsolado(unittest.TestCase):
         self.catalogo.write_text(config.CATALOGO.read_text(encoding="utf-8"), encoding="utf-8")
         self.patches = [mock.patch.object(config, "CATALOGO", self.catalogo),
                         mock.patch.object(config, "ORIGINAIS", self.tmp / "originais"),
+                        mock.patch.object(config, "CARDAPIO_SEMANAL_JSON", self.tmp / "cardapio_semanal.json"),
                         mock.patch.object(scraper, "BRUTOS", self.tmp / "brutos")]
         for p in self.patches:
             p.start()
@@ -153,10 +154,10 @@ class TestGravacao(AmbienteIsolado):
         self.assertEqual(codigo, 0, err)
         arquivos = self.arquivos()
         self.assertTrue(any(a.startswith("brutos/") and a.endswith(".html") for a in arquivos), arquivos)
-        self.assertIn("originais/F37.pdf", arquivos)
         docs = yaml.safe_load(self.catalogo.read_text(encoding="utf-8"))["documentos"]
         novo = docs[-1]
-        self.assertEqual(novo["id"], "F37")
+        self.assertIn(f"originais/{novo['id']}.pdf", arquivos)
+        self.assertIn("cardapio_semanal.json", arquivos)
         self.assertEqual(novo["tipo"], "cardapio")
         self.assertEqual(novo["orgao"], "UnB · Diretoria do RU")
         self.assertEqual(novo["data"], "2026-08-31")
@@ -165,11 +166,13 @@ class TestGravacao(AmbienteIsolado):
 
     def test_rodar_de_novo_nao_duplica_a_semana(self):
         self._coletar()
+        docs_antes = yaml.safe_load(self.catalogo.read_text(encoding="utf-8"))["documentos"]
+        doc_id = docs_antes[-1]["id"]
         codigo, _, err = self._coletar()
         self.assertEqual(codigo, 0, err)
-        self.assertIn("já estava no catálogo como F37", err)
+        self.assertIn(f"já estava no catálogo como {doc_id}", err)
         docs = yaml.safe_load(self.catalogo.read_text(encoding="utf-8"))["documentos"]
-        self.assertEqual(sum(1 for d in docs if d["id"] == "F37"), 1)
+        self.assertEqual(sum(1 for d in docs if d["id"] == doc_id), 1)
 
     def test_comentarios_do_catalogo_sao_preservados(self):
         self._coletar()
