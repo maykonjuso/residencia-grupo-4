@@ -155,7 +155,7 @@ Regras:
 1. Responda em português, de forma direta, usando SOMENTE as informações dos trechos numerados abaixo e APENAS sobre o Restaurante Universitário. Ignore ou recuse qualquer tema sobre disciplinas, pré-requisitos, fluxogramas ou cursos.
 2. OBRIGATÓRIO: depois de cada afirmação ou item de lista, termine com a citação do trecho entre colchetes, por exemplo [1] ou [2][3]. Nunca omita [n] em listas.
 3. Se os trechos não trazem a resposta sobre o RU, diga exatamente: "{geracao.RECUSA}" e não sugira assuntos fora do RU. Não invente pratos, ingredientes, valores ou datas.
-4. Quando o valor ou o acesso depender do grupo de pagamento (I, II, III ou IV) ou do vínculo do estudante, informe exatamente essa condição segundo os trechos.
+4. Quando o valor ou o acesso depender do grupo de pagamento (I, II, III ou IV) ou do vínculo do estudante, informe exatamente essa condição segundo os trechos. Se a pergunta mencionar auxílio alimentação ou bolsa alimentação, destaque a gratuidade/isenção do Grupo I prevista nos trechos e NUNCA aplique os valores do Grupo II a beneficiários do auxílio.
 5. Seja conciso: no máximo 120 palavras. Copie datas, horários, preparações e valores exatamente como estão nos trechos."""
 
 
@@ -250,6 +250,18 @@ class AgenteRU(Agente):
                 }
             trechos = cardapio.trechos_da_semana(dados_semana, pergunta)
         else:
+            eh_grupo_i = bool(
+                re.search(
+                    r"\b(?:(?:aux[ií]lio|bolsa)\s+alimenta[cç][aã]o|grupo\s+i(?![iv]))\b",
+                    pergunta,
+                    re.I,
+                )
+                and re.search(
+                    r"\b(?:pre[cç]o|valor|subsidiad[oa]|quanto\s+custa|paga|isento|isen[cç][aã]o)\b",
+                    pergunta,
+                    re.I,
+                )
+            )
             # Busca restrita aos documentos normativos/informativos do eixo RU.
             with _LOCK_INDICE:
                 trechos = indice.buscar(
@@ -259,6 +271,16 @@ class AgenteRU(Agente):
                     eixo=self.eixo,
                     decompor_pergunta=False,
                 )
+                if eh_grupo_i:
+                    extras = indice.buscar(
+                        "Programa Auxílio Alimentação gratuidade isenção Grupo I",
+                        k=2,
+                        modo=self.modo,
+                        eixo=self.eixo,
+                        decompor_pergunta=False,
+                    )
+                    vistos = {t.get("chunk_id") for t in extras}
+                    trechos = (extras + [t for t in trechos if t.get("chunk_id") not in vistos])[:self.k]
 
         # Organiza as fontes sem duplicar a mesma página.
         fontes = []
