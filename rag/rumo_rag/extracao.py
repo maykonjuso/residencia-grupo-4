@@ -47,6 +47,17 @@ DIAS = {"2ª": "segunda-feira", "3ª": "terça-feira", "4ª": "quarta-feira", "5
         "6ª": "sexta-feira", "SÁB": "sábado", "DOM": "domingo"}
 
 
+# Datas do cabeçalho do cardápio: "09/11/2026", "9/11/2026" e "1º/9/2026" aparecem no mesmo PDF.
+# O chunking e a API (com_data) esperam sempre dd/mm/aaaa, então tudo é normalizado aqui (#50).
+DATA_CARDAPIO = re.compile(r"(\d{1,2})\s*[ºo°]?\s*/\s*(\d{1,2})\s*/\s*(\d{4})")
+
+
+def data_cardapio(texto: str) -> str:
+    """Primeira data do texto em dd/mm/aaaa, ou "" se não houver."""
+    m = DATA_CARDAPIO.search(texto or "")
+    return f"{int(m.group(1)):02d}/{int(m.group(2)):02d}/{m.group(3)}" if m else ""
+
+
 def _ler_cardapio(p: Path) -> str:
     """Cardápio do RU é uma tabela (linhas = componentes, colunas = dias).
     Extrair como texto corrido mistura as colunas; aqui cada célula é lida
@@ -69,14 +80,13 @@ def _ler_cardapio(p: Path) -> str:
                 if not cols:
                     continue
                 prox = linhas[i_dias + 1] if i_dias + 1 < len(linhas) else []
-                linha_de_datas = any(re.search(r"\d{2}/\d{2}/\d{4}", c) for c in prox)
+                linha_de_datas = any(data_cardapio(c) for c in prox)
                 dias = []
                 for j in cols:
                     rotulo = linhas[i_dias][j]
                     nome = next((v for k, v in DIAS.items() if rotulo.upper().startswith(k)), rotulo.lower())
-                    m = re.search(r"\d{2}/\d{2}/\d{4}", rotulo) or (linha_de_datas and j < len(prox)
-                                                                     and re.search(r"\d{2}/\d{2}/\d{4}", prox[j]))
-                    dias.append((j, nome, m.group(0) if m else ""))
+                    data = data_cardapio(rotulo) or (linha_de_datas and j < len(prox) and data_cardapio(prox[j])) or ""
+                    dias.append((j, nome, data))
                 componentes = []
                 for l in linhas[i_dias + (2 if linha_de_datas else 1):]:
                     nome = next((c for c in l[:cols[0]] if c), "")

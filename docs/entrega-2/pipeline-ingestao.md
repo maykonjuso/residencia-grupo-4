@@ -59,5 +59,57 @@ ingestão concluída em 100s
 ## Atualização da base
 
 - **Novo documento:** acrescentar uma entrada no `catalogo.yaml` e rodar `ingerir`.
-- **Cardápio da semana:** trocar a URL de F08/F09 (ou acrescentar F37, F38…) e rodar `ingerir`. Na Semana 6, um script vai ler a página `ru.unb.br/cardapio-gama/` e fazer isso sozinho.
+- **Cardápio da semana:** o scraper (abaixo) lê a página do RU Gama e acrescenta a semana nova ao `catalogo.yaml`; depois é só rodar `ingerir`.
 - **Reprodutibilidade:** os textos extraídos (`dados/texto/`) ficam no repositório, para qualquer pessoa conferir o que o sistema leu. Os originais e o índice são gerados de novo pelo comando.
+
+## Coleta automatizada do cardápio
+
+O cardápio muda toda semana, e trocar a URL à mão era o passo que mais esquecíamos. O scraper
+(`rag/rumo_rag/coleta/scraper.py`, issue #50) faz isso a partir da fonte oficial.
+
+| | |
+|---|---|
+| **Fonte** | [`ru.unb.br/cardapio-gama/`](https://ru.unb.br/cardapio-gama/) · UnB · Diretoria do RU, registrada em `fontes_de_coleta` no `catalogo.yaml` |
+| **Formato** | página HTML com um link por semana ("ISM – 31/08/2026 A 06/09/2026") para um PDF com a tabela do cardápio. Não é imagem: a tabela é lida pela mesma função da ingestão (`extracao._ler_cardapio`) |
+| **Saída** | dias da semana com as refeições, no formato do chunking (`## Almoço · terça-feira 01/09/2026`), o que mantém o `api.com_data()` funcionando |
+
+```bash
+cd rag
+python -m rumo_rag.coleta cardapio --dry-run                     # semana atual: imprime, não grava
+python -m rumo_rag.coleta cardapio --dry-run --semana 2026-11-16 # outra semana publicada
+python -m rumo_rag.coleta cardapio                               # grava e registra no catálogo
+python -m rumo_rag ingerir                                       # indexa a semana nova
+```
+
+**O que a gravação faz.** Guarda o HTML bruto da página em `rag/dados/brutos/cardapio-gama/`
+(fora do git), o PDF em `rag/dados/originais/F<nn>.pdf` e acrescenta a entrada `F<nn>` no fim
+do `catalogo.yaml`, com órgão, URL, data da semana e data da coleta. Rodar de novo na mesma
+semana não duplica a entrada.
+
+**Decisões.**
+
+- **Educado com o site institucional:** uma requisição por recurso (a página e o PDF da
+  semana), em sequência, sem paralelismo e sem nova tentativa automática, com `User-Agent`
+  identificando o projeto
+- **Datas pelo texto do link, não pelo nome do arquivo:** os nomes têm número de semana fora
+  de ordem (`Gama-Semana-04-12-10-a-18-10.pdf` antes de `Gama-Semana-01-19-10-…`). O nome só é
+  usado quando o texto do link não tem datas
+- **Datas normalizadas:** os PDFs a partir de ago/2026 escrevem `31/8/2026` e `1º/9/2026`. A
+  leitura passou a aceitar esses formatos e sempre produz `dd/mm/aaaa`; seção sem data recebe
+  a data pelo dia da semana, com aviso
+- **Nada pela metade:** tudo é baixado e lido em memória antes de gravar, e cada arquivo é
+  escrito num temporário e renomeado. Sem rede, o comando sai com código 3, explica o motivo
+  e não cria nenhum arquivo
+- **Se o cardápio virar imagem:** o scraper para com mensagem e não força OCR. A semana passa a
+  ser fonte curada à mão, como o fluxograma em `dados/curados/F16_*.md`
+
+Os testes (`rag/testes/test_scraper_cardapio.py`) não acessam a internet: usam uma cópia da
+estrutura da página e um PDF com o mesmo layout, em `rag/testes/fixtures/cardapio_gama/`.
+
+---
+
+??? abstract "Histórico de revisão"
+
+    | Data | Versão | Descrição | Autor |
+    | :---: | :---: | --- | --- |
+    | 18/11/2026 | 1.1 | Coleta automatizada do cardápio do RU Gama: fonte, formato, comandos e decisões (#50) | Kyara Esteves |
