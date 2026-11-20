@@ -200,7 +200,12 @@ def valores_sem_fonte(resposta: str, trechos: list[dict]) -> list[str]:
     """Verificador de fidelidade: todo preço, data, horário, código de disciplina ou quantidade
     citado na resposta precisa aparecer em algum trecho recuperado. Os que não aparecem
     são devolvidos para o sistema alertar o estudante (possível alucinação)."""
-    base = _normalizar(" ".join(t["texto"] + " " + t.get("secao", "") for t in trechos))
+    base = _normalizar(
+        " ".join(
+            f"{t.get('titulo', '')} {t.get('secao', '')} {t.get('texto', '')}"
+            for t in trechos
+        )
+    )
     faltando = []
     for v in PADRAO_VALOR.findall(resposta):
         if _normalizar(v) not in base and v not in faltando:

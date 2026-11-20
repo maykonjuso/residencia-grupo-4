@@ -169,7 +169,7 @@ _CONSULTA_CARDAPIO = re.compile(
     r"vegano|vegana|ovolactovegetariano|alerg[eê]nicos?|gl[uú]ten|trigo|lactose|leite|"
     r"soja|amendoim|oleaginosas?|cogumelos?|su[ií]n[oa]|ovos?|pimenta|mel|derivados\s+de\s+leite|"
     r"o\s+que\s+tem|o\s+que\s+vai\s+ter|servid[oa]|"
-    r"(?:qual|que)\s+dia\s+(?:tem|vai\s+ter|servem)|"
+    r"(?:qual|que)\s+dia(?:\s+(?:d?esta|d?essa|na|da)\s+semana)?\s+(?:tem|vai\s+ter|servem|servid[oa])|"
     r"(?:almo[cç]o|jantar|caf[eé](?:\s+da\s+manh[aã])?|desjejum)\s+de\s+(?:hoje|amanh[ãa])|"
     r"servem\s+no\s+(?:almo[cç]o|jantar|caf[eé]|desjejum)|"
     r"segunda|ter[cç]a|quarta|quinta|sexta"

@@ -209,10 +209,12 @@ def test_agente_ru_pergunta_sem_dia_ou_refeicao_encontra_prato_e_alergenico(monk
     agente = AgenteRU()
 
     # Sem citar dia/refeição: não deve truncar nos 5 cafés da manhã
-    res_feijoada = agente.pesquisar("Qual dia tem feijoada?")
-    assert res_feijoada["encontrou"] is True
-    assert res_feijoada["trechos"][0]["secao"].startswith("Almoço · sexta-feira 20/11/2026")
-    assert "Feijoada [Alergênicos: Suíno, Pimenta]" in res_feijoada["trechos"][0]["texto"]
+    for q_feijoada in ("Qual dia tem feijoada?", "Qual dia desta semana tem feijoada?"):
+        res_feijoada = agente.pesquisar(q_feijoada)
+        assert res_feijoada["encontrou"] is True
+        assert res_feijoada["trechos"][0]["doc_id"] == "F56"
+        assert res_feijoada["trechos"][0]["secao"].startswith("Almoço · sexta-feira 20/11/2026")
+        assert "Feijoada [Alergênicos: Suíno, Pimenta]" in res_feijoada["trechos"][0]["texto"]
 
     res_amendoim = agente.pesquisar("Qual prato da semana tem amendoim?")
     assert res_amendoim["encontrou"] is True
