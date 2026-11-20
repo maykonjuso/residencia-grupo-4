@@ -30,7 +30,7 @@ quadrantChart
 | Parte interessada | Papel | O que espera do RUmo | Como entra no projeto |
 |---|---|---|---|
 | Estudantes de graduação da FCTE | Usuários principais | Respostas rápidas e certas sobre RU e disciplinas, com link para conferir | Perguntas reais na base de testes; validação na Semana 7 |
-| Calouros | Usuários com mais dúvidas | Entender ABI, primeiro semestre, carteirinha e RU | Perguntas de ingresso e acesso ao RU |
+| Calouros | Usuários com mais dúvidas | Entender primeiro semestre, matrícula no SIGAA, carteirinha e RU | Perguntas de ingresso e acesso ao RU |
 | Estudantes em vulnerabilidade | Usuários que dependem do RU | Saber se têm direito à gratuidade e como pedir | Fontes do Auxílio Alimentação (Edital 24/2026, Resolução CAD 37/2025) |
 | Estudantes com restrição alimentar | Usuários | Opções vegetarianas, alergênicos | Cardápio por dia e guia da ANVISA sobre alergênicos |
 | Estudantes do PPGEB e graduandos interessados | Usuários | Regras do mestrado e como cursar disciplina de pós | Páginas do PPGEB |
@@ -44,7 +44,7 @@ quadrantChart
 
 ## Persona principal
 
-!!! quote "Ana, 19 anos, 3º semestre, ABI Engenharia"
-    Mora em Santa Maria e passa o dia no campus. Almoça e janta no RU quase todo dia e quer saber o cardápio antes de sair de casa, porque não come carne vermelha. Vai escolher o curso no fim do semestre e está entre Energia e Software. Quer saber o que muda na grade de cada um e se já pode adiantar alguma disciplina. Ouviu que entrou por cota de escola pública e talvez pague menos no RU, mas não sabe quanto.
+!!! quote "Ana, 19 anos, 3º semestre, Engenharia"
+    Mora em Santa Maria e passa o dia no campus. Almoça e janta no RU quase todo dia e quer saber o cardápio antes de sair de casa, porque não come carne vermelha. Está avaliando quais disciplinas cursar no próximo semestre entre Energia e Software e quer saber o que muda na grade de cada um e quais pré-requisitos precisa cumprir. Ouviu que entrou por cota de escola pública e talvez pague menos no RU, mas não sabe quanto.
 
-Perguntas da Ana que o RUmo responde hoje, com fonte: preço do Grupo IV (R$ 2,50 no almoço, CAD 37/2025), cardápio de cada dia da semana (RU Gama), grades de Energia (251 créditos) e Software (235 créditos) e as regras de escolha de curso na ABI.
+Perguntas da Ana que o RUmo responde hoje, com fonte: preço do Grupo IV (R$ 2,50 no almoço, CAD 37/2025), cardápio de cada dia da semana (RU Gama), grades de Energia (251 créditos) e Software (235 créditos) e regras de matrícula e trancamento no SIGAA.
