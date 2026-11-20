@@ -35,10 +35,16 @@ class TestEsquema(unittest.TestCase):
         self.assertEqual(r["mesa_apoio"], ["água", "farinha", "molho de pimenta", "vinagre", "azeite", "sal"])
         self.assertEqual(r["fonte"]["doc_id"], "F09")
         self.assertEqual(r["fonte"]["pagina"], 2)
-        self.assertFalse(r["alergenicos"]["disponivel"])
+        # alergênicos lidos dos ícones do PDF (Issue #55), conferidos contra a imagem da página 2
+        self.assertTrue(r["alergenicos"]["disponivel"])
         self.assertEqual(len(r["alergenicos"]["legenda"]), 10)
-        self.assertIn("ícones", r["alergenicos"]["observacao"])
-        self.assertTrue(all(o["alergenicos"] == [] for c in r["compartimentos"] for o in c["opcoes"]))
+        self.assertEqual(r["alergenicos"]["observacao"], "")
+        alerg = {o["nome"]: o["alergenicos"] for c in r["compartimentos"] for o in c["opcoes"]}
+        self.assertEqual(alerg["Caponata de berinjela"], ["cogumelo"])
+        self.assertEqual(alerg["Carne ao molho de vinho"], ["soja"])
+        self.assertEqual(alerg["Berinjela recheada com quinoa gratinada"], ["leite"])
+        self.assertEqual(alerg["Soja refogada com legumes"], ["soja"])
+        self.assertEqual(alerg["Alface roxa"], [])
 
     def test_alergenicos_anotados_no_texto_sao_normalizados(self):
         c = {
@@ -108,7 +114,9 @@ class TestFidelidadeAoChunk(unittest.TestCase):
                 m = cardapio.LINHA.match(linha.strip())
                 if not m:
                     continue
-                valor = cardapio.SEPARADORES.split(m.group("valor"))[0]
+                # a etiqueta "[Alergênicos: ...]" (#55) não faz parte do nome; o parser também a ignora
+                valor = re.sub(r"\s*\[[^\]]*\]", "", m.group("valor"))
+                valor = cardapio.SEPARADORES.split(valor)[0]
                 primeira = _norm(re.split(r"\s+e\s+", valor)[0])
                 with self.subTest(chunk=c["chunk_id"], linha=linha):
                     self.assertIn(primeira.replace("arroz ", ""), nomes)

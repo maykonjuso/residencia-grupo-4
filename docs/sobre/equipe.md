@@ -23,7 +23,7 @@ sistema, para que nenhuma parte fique sem responsável.
 
 | Componente | Responsabilidade | Onde fica |
 |---|---|---|
-| Base de conhecimento | Catálogo das 36 fontes oficiais, extração dos PDFs e estratégia de chunking | `rag/catalogo.yaml`, `rag/rumo_rag/extracao.py`, `chunking.py` |
+| Base de conhecimento | Catálogo das 37 fontes oficiais, extração dos PDFs e estratégia de chunking | `rag/catalogo.yaml`, `rag/rumo_rag/extracao.py`, `chunking.py` |
 | Recuperação | Embeddings, banco vetorial e busca híbrida | `rag/rumo_rag/indice.py` |
 | Geração | Prompt, LLM local, citação das fontes e recusa fora da base | `rag/rumo_rag/geracao.py` |
 | Avaliação | Perguntas-ouro, métricas de recuperação, fidelidade e alucinação | `rag/avaliacao/` |
@@ -60,3 +60,4 @@ Mentor do Challenge 2: Jefferson Viana Fonseca Abreu.
     | Data | Versão | Descrição | Autor |
     | :---: | :---: | --- | --- |
     | 09/11/2026 | 1.1 | Papéis e componentes definidos; tabela de contribuições por entrega | Maykon Soares |
+    | 18/11/2026 | 1.2 | Catálogo passa a 37 fontes (Issue #55) | Grupo 04 |

@@ -1,11 +1,11 @@
 [[PAGINA 1]]
 ## Café da manhã · segunda-feira 02/11/2026
 Cardápio do RU Gama (FCTE) — Café da manhã de segunda-feira, 02/11/2026:
-- Bebidas: Leite integral ou Bebida de soja
-- Panificação: Pão francês ou Pão careca ou Pão integral
-- Gordura: Manteiga ou creme vegetal
+- Bebidas: Leite integral [Alergênicos: Leite e derivados] ou Bebida de soja [Alergênicos: Soja]
+- Panificação: Pão francês [Alergênicos: Trigo/Glúten] ou Pão careca [Alergênicos: Trigo/Glúten] ou Pão integral [Alergênicos: Trigo/Glúten]
+- Gordura: Manteiga [Alergênicos: Leite e derivados] ou creme vegetal
 - Complemento padrão: Carne desfiada
-- Complemento ovolactovegetariano: Queijo muçarela
+- Complemento ovolactovegetariano: Queijo muçarela [Alergênicos: Leite e derivados]
 - Complemento vegetariano estrito: Homus de grão de bico
 - Fruta: Abacaxi
 Mesa de apoio: água, achocolatado, açúcar e adoçante. Cardápio sujeito a alteração.
@@ -13,36 +13,36 @@ Mesa de apoio: água, achocolatado, açúcar e adoçante. Cardápio sujeito a al
 [[PAGINA 1]]
 ## Café da manhã · terça-feira 03/11/2026
 Cardápio do RU Gama (FCTE) — Café da manhã de terça-feira, 03/11/2026:
-- Bebidas: Leite integral ou Bebida de soja
-- Panificação: Pão francês ou Pão careca ou
-- Opção extra: Pão de queijo
-- Gordura: Manteiga ou creme vegetal
+- Bebidas: Leite integral [Alergênicos: Leite e derivados] ou Bebida de soja [Alergênicos: Soja]
+- Panificação: Pão francês [Alergênicos: Trigo/Glúten] ou Pão careca [Alergênicos: Trigo/Glúten] ou
+- Opção extra: Pão de queijo [Alergênicos: Leite e derivados]
+- Gordura: Manteiga [Alergênicos: Leite e derivados] ou creme vegetal
 - Complemento padrão: Frango desfiado
-- Complemento ovolactovegetariano: Queijo minas
-- Complemento vegetariano estrito: Pasta de amendoim
+- Complemento ovolactovegetariano: Queijo minas [Alergênicos: Leite e derivados]
+- Complemento vegetariano estrito: Pasta de amendoim [Alergênicos: Amendoim]
 - Fruta: Melancia
 Mesa de apoio: água, achocolatado, açúcar e adoçante. Cardápio sujeito a alteração.
 
 [[PAGINA 1]]
 ## Café da manhã · quarta-feira 04/11/2026
 Cardápio do RU Gama (FCTE) — Café da manhã de quarta-feira, 04/11/2026:
-- Bebidas: Leite integral ou Bebida de soja
-- Panificação: Pão francês ou Pão careca ou Pão integral
-- Gordura: Manteiga ou creme vegetal
-- Complemento padrão: Ovos mexidos
-- Complemento ovolactovegetariano: Pasta de ricota
-- Complemento vegetariano estrito: Caponata de berinjela
+- Bebidas: Leite integral [Alergênicos: Leite e derivados] ou Bebida de soja [Alergênicos: Soja]
+- Panificação: Pão francês [Alergênicos: Trigo/Glúten] ou Pão careca [Alergênicos: Trigo/Glúten] ou Pão integral [Alergênicos: Trigo/Glúten]
+- Gordura: Manteiga [Alergênicos: Leite e derivados] ou creme vegetal
+- Complemento padrão: Ovos mexidos [Alergênicos: Leite e derivados, Ovo]
+- Complemento ovolactovegetariano: Pasta de ricota [Alergênicos: Leite e derivados]
+- Complemento vegetariano estrito: Caponata de berinjela [Alergênicos: Cogumelo]
 - Fruta: Melão
 Mesa de apoio: água, achocolatado, açúcar e adoçante. Cardápio sujeito a alteração.
 
 [[PAGINA 1]]
 ## Café da manhã · quinta-feira 05/11/2026
 Cardápio do RU Gama (FCTE) — Café da manhã de quinta-feira, 05/11/2026:
-- Bebidas: Leite integral ou Bebida de soja
-- Panificação: Pão francês ou Pão careca ou Pão integral
-- Gordura: Manteiga ou creme vegetal
-- Complemento padrão: Patê de frango
-- Complemento ovolactovegetariano: Ovos mexidos
+- Bebidas: Leite integral [Alergênicos: Leite e derivados] ou Bebida de soja [Alergênicos: Soja]
+- Panificação: Pão francês [Alergênicos: Trigo/Glúten] ou Pão careca [Alergênicos: Trigo/Glúten] ou Pão integral [Alergênicos: Trigo/Glúten]
+- Gordura: Manteiga [Alergênicos: Leite e derivados] ou creme vegetal
+- Complemento padrão: Patê de frango [Alergênicos: Trigo/Glúten, Ovo, Leite e derivados]
+- Complemento ovolactovegetariano: Ovos mexidos [Alergênicos: Leite e derivados, Ovo]
 - Complemento vegetariano estrito: Homus de abóbora
 - Fruta: Maçã
 Mesa de apoio: água, achocolatado, açúcar e adoçante. Cardápio sujeito a alteração.
@@ -50,12 +50,12 @@ Mesa de apoio: água, achocolatado, açúcar e adoçante. Cardápio sujeito a al
 [[PAGINA 1]]
 ## Café da manhã · sexta-feira 06/11/2026
 Cardápio do RU Gama (FCTE) — Café da manhã de sexta-feira, 06/11/2026:
-- Bebidas: Leite integral ou Bebida de soja
-- Panificação: Pão francês ou Pão careca ou
-- Opção extra: Bolo
-- Gordura: Manteiga ou creme vegetal
-- Complemento padrão: Iogurte natural
-- Complemento ovolactovegetariano: Queijo minas
+- Bebidas: Leite integral [Alergênicos: Leite e derivados] ou Bebida de soja [Alergênicos: Soja]
+- Panificação: Pão francês [Alergênicos: Trigo/Glúten] ou Pão careca [Alergênicos: Trigo/Glúten] ou
+- Opção extra: Bolo [Alergênicos: Ovo, Trigo/Glúten, Leite e derivados]
+- Gordura: Manteiga [Alergênicos: Leite e derivados] ou creme vegetal
+- Complemento padrão: Iogurte natural [Alergênicos: Leite e derivados]
+- Complemento ovolactovegetariano: Queijo minas [Alergênicos: Leite e derivados]
 - Complemento vegetariano estrito: Geleia rústica de abacaxi e chia
 - Fruta: Banana
 Mesa de apoio: água, achocolatado, açúcar e adoçante. Cardápio sujeito a alteração.
@@ -67,11 +67,11 @@ Cardápio do RU Gama (FCTE) — Almoço de segunda-feira, 02/11/2026:
 - Salada 2: Picles de cebola
 - Molho para salada: Ácido
 - Prato principal padrão: Frango assado com manjericão
-- Prato principal ovolactovegetariano: Quiche de legumes e lentilha gratinada
+- Prato principal ovolactovegetariano: Quiche de legumes e lentilha gratinada [Alergênicos: Leite e derivados, Trigo/Glúten, Ovo]
 - Prato principal vegetariano estrito: Refogado de lentilha, couve- flor e brócolis
 - Guarnição: Jardineira verde (Chuchu e abobrinha)
 - Acompanhamentos: Arroz branco e integral Feijão preto
-- Sobremesa: Mix de doces OPÇÃO: Fruta
+- Sobremesa: Mix de doces [Alergênicos: Amendoim, Leite e derivados] OPÇÃO: Fruta
 - Bebida (refresco de): Morango
 Mesa de apoio: água, farinha, molho de pimenta, vinagre, azeite e sal. Cardápio sujeito a alteração.
 
@@ -80,9 +80,9 @@ Mesa de apoio: água, farinha, molho de pimenta, vinagre, azeite e sal. Cardápi
 Cardápio do RU Gama (FCTE) — Almoço de terça-feira, 03/11/2026:
 - Salada 1: Alface com chicória
 - Salada 2: Abobrinha cozida com orégano
-- Molho para salada: Chipotle /Limão
-- Prato principal padrão: Suíno ao molho de bacon
-- Prato principal ovolactovegetariano: Ovos assados ao sugo
+- Molho para salada: Chipotle [Alergênicos: Pimenta] /Limão
+- Prato principal padrão: Suíno ao molho de bacon [Alergênicos: Suíno, Soja]
+- Prato principal ovolactovegetariano: Ovos assados ao sugo [Alergênicos: Ovo]
 - Prato principal vegetariano estrito: Berinjela recheada com homus de grão de bico
 - Guarnição: Cenoura refogada com salsinha
 - Acompanhamentos: Arroz branco e integral Feijão carioca
@@ -96,8 +96,8 @@ Cardápio do RU Gama (FCTE) — Almoço de quarta-feira, 04/11/2026:
 - Salada 1: Mix de folhas
 - Salada 2: Abóbora ralada
 - Molho para salada: Salsa
-- Prato principal padrão: Strogonoff de frango
-- Prato principal ovolactovegetariano: Iscas de soja ao sugo gratinadas
+- Prato principal padrão: Strogonoff de frango [Alergênicos: Leite e derivados, Trigo/Glúten, Cogumelo]
+- Prato principal ovolactovegetariano: Iscas de soja ao sugo gratinadas [Alergênicos: Leite e derivados, Soja]
 - Prato principal vegetariano estrito: Polpetone de quinoa
 - Guarnição: Batata sauté
 - Acompanhamentos: Arroz branco e integral Feijão preto
@@ -108,12 +108,12 @@ Mesa de apoio: água, farinha, molho de pimenta, vinagre, azeite e sal. Cardápi
 [[PAGINA 2]]
 ## Almoço · quinta-feira 05/11/2026
 Cardápio do RU Gama (FCTE) — Almoço de quinta-feira, 05/11/2026:
-- Salada 1: Acelga temperada
+- Salada 1: Acelga temperada [Alergênicos: Soja]
 - Salada 2: Sunomono de rabanete
 - Molho para salada: Ácido
 - Prato principal padrão: Carne de sol
-- Prato principal ovolactovegetariano: Risoto de brócolis com couve e queijo
-- Prato principal vegetariano estrito: Almôndega de soja ao sugo
+- Prato principal ovolactovegetariano: Risoto de brócolis com couve e queijo [Alergênicos: Leite e derivados, Trigo/Glúten]
+- Prato principal vegetariano estrito: Almôndega de soja ao sugo [Alergênicos: Soja]
 - Guarnição: Mandioca cozida
 - Acompanhamentos: Arroz branco e integral Feijão carioca
 - Sobremesa: Banana
@@ -126,10 +126,10 @@ Cardápio do RU Gama (FCTE) — Almoço de sexta-feira, 06/11/2026:
 - Salada 1: Couve-manteiga
 - Salada 2: Beterraba ralada
 - Molho para salada: Vinagrete
-- Prato principal padrão: Feijoada
-- Prato principal ovolactovegetariano: Omelete de cebola ao forno com queijo gratinada
-- Prato principal vegetariano estrito: Feijoada vegetariana
-- Guarnição: Farofa crocante
+- Prato principal padrão: Feijoada [Alergênicos: Suíno, Pimenta]
+- Prato principal ovolactovegetariano: Omelete de cebola ao forno com queijo gratinada [Alergênicos: Leite e derivados, Ovo]
+- Prato principal vegetariano estrito: Feijoada vegetariana [Alergênicos: Soja]
+- Guarnição: Farofa crocante [Alergênicos: Soja]
 - Acompanhamentos: Arroz branco e integral Feijão preto
 - Sobremesa: Laranja
 - Bebida (refresco de): Uva
@@ -141,11 +141,11 @@ Cardápio do RU Gama (FCTE) — Jantar de segunda-feira, 02/11/2026:
 - Salada 1: Mix de folhas
 - Salada 2: Beterraba ralada
 - Molho para salada: Hortelã
-- Prato principal padrão: Lagarto ao molho escuro
-- Prato principal ovolactovegetariano: Baião de dois com queijo coalho
-- Prato principal vegetariano estrito: Tomate recheado com soja
+- Prato principal padrão: Lagarto ao molho escuro [Alergênicos: Soja]
+- Prato principal ovolactovegetariano: Baião de dois com queijo coalho [Alergênicos: Leite e derivados, Trigo/Glúten]
+- Prato principal vegetariano estrito: Tomate recheado com soja [Alergênicos: Soja]
 - Sopa: Creme de abóbora
-- Torrada: Torrada
+- Torrada: Torrada [Alergênicos: Trigo/Glúten]
 - Acompanhamentos: Arroz branco e integral Feijão preto
 - Sobremesa: Laranja
 - Bebida (refresco de): Morango
@@ -155,13 +155,13 @@ Mesa de apoio: água, farinha, molho de pimenta, vinagre, azeite e sal. Cardápi
 ## Jantar · terça-feira 03/11/2026
 Cardápio do RU Gama (FCTE) — Jantar de terça-feira, 03/11/2026:
 - Salada 1: Acelga
-- Salada 2: Salada de macarrão
+- Salada 2: Salada de macarrão [Alergênicos: Trigo/Glúten]
 - Molho para salada: Manjericão
-- Prato principal padrão: Frango assado ao molho mostarda e mel
-- Prato principal ovolactovegetariano: Escondidinho de ervilha gratinado
+- Prato principal padrão: Frango assado ao molho mostarda e mel [Alergênicos: Trigo/Glúten, Leite e derivados, Mel]
+- Prato principal ovolactovegetariano: Escondidinho de ervilha gratinado [Alergênicos: Leite e derivados]
 - Prato principal vegetariano estrito: Bolinho de ervilha
 - Sopa: Sopa de fubá
-- Torrada: Torrada
+- Torrada: Torrada [Alergênicos: Trigo/Glúten]
 - Acompanhamentos: Arroz branco e integral Feijão carioca
 - Sobremesa: Banana
 - Bebida (refresco de): Acerola
@@ -172,12 +172,12 @@ Mesa de apoio: água, farinha, molho de pimenta, vinagre, azeite e sal. Cardápi
 Cardápio do RU Gama (FCTE) — Jantar de quarta-feira, 04/11/2026:
 - Salada 1: Repolho roxo
 - Salada 2: Tomate
-- Molho para salada: Iogurte / Limão
+- Molho para salada: Iogurte [Alergênicos: Leite e derivados] / Limão
 - Prato principal padrão: Filé de peixe ao molho de ervas
-- Prato principal ovolactovegetariano: Omelete caprese gratinada
-- Prato principal vegetariano estrito: Bobó de legumes com soja
+- Prato principal ovolactovegetariano: Omelete caprese gratinada [Alergênicos: Leite e derivados, Ovo]
+- Prato principal vegetariano estrito: Bobó de legumes com soja [Alergênicos: Soja]
 - Sopa: Creme de legumes
-- Torrada: Torrada
+- Torrada: Torrada [Alergênicos: Trigo/Glúten]
 - Acompanhamentos: Arroz branco e integral Feijão preto
 - Sobremesa: Doce de banana OPÇÃO: Fruta
 - Bebida (refresco de): Manga
@@ -189,11 +189,11 @@ Cardápio do RU Gama (FCTE) — Jantar de quinta-feira, 05/11/2026:
 - Salada 1: Alface crespa
 - Salada 2: Cenoura ralada
 - Molho para salada: Chimichurri / Limão
-- Prato principal padrão: Isca de frango ao molho branco
-- Prato principal ovolactovegetariano: Quibe de legumes com quinoa gratinado
+- Prato principal padrão: Isca de frango ao molho branco [Alergênicos: Trigo/Glúten, Leite e derivados]
+- Prato principal ovolactovegetariano: Quibe de legumes com quinoa gratinado [Alergênicos: Leite e derivados, Trigo/Glúten]
 - Prato principal vegetariano estrito: Refogado de grão de bico
-- Sopa: Sopa de macarrão com legumes
-- Torrada: Torrada
+- Sopa: Sopa de macarrão com legumes [Alergênicos: Trigo/Glúten]
+- Torrada: Torrada [Alergênicos: Trigo/Glúten]
 - Acompanhamentos: Arroz branco e integral Feijão carioca
 - Sobremesa: Melancia
 - Bebida (refresco de): Limão
@@ -204,12 +204,12 @@ Mesa de apoio: água, farinha, molho de pimenta, vinagre, azeite e sal. Cardápi
 Cardápio do RU Gama (FCTE) — Jantar de sexta-feira, 06/11/2026:
 - Salada 1: Alface roxa
 - Salada 2: Berinjela com azeitonas
-- Molho para salada: Chipotle
-- Prato principal padrão: Hambúrguer gratinado
-- Prato principal ovolactovegetariano: Nhoque ao molho branco com soja e queijo
-- Prato principal vegetariano estrito: Moqueca de banana da terra com proteína de soja
+- Molho para salada: Chipotle [Alergênicos: Pimenta]
+- Prato principal padrão: Hambúrguer gratinado [Alergênicos: Leite e derivados]
+- Prato principal ovolactovegetariano: Nhoque ao molho branco com soja e queijo [Alergênicos: Trigo/Glúten, Leite e derivados, Soja]
+- Prato principal vegetariano estrito: Moqueca de banana da terra com proteína de soja [Alergênicos: Soja]
 - Sopa: Creme de cebola e alho poró
-- Torrada: Torrada
+- Torrada: Torrada [Alergênicos: Trigo/Glúten]
 - Acompanhamentos: Arroz branco e integral Feijão preto
 - Sobremesa: Abacaxi
 - Bebida (refresco de): Uva

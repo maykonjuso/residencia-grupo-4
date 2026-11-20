@@ -14,6 +14,7 @@
 | F09 | [Cardápio semanal do RU Gama — 09/11 a 15/11/2026](https://ru.unb.br/wp-content/uploads/2026/11/Gama-Semana-04-09-11-a-15-11.pdf) | UnB · Diretoria do RU | cardapio | 2026-11-09 | 15 |
 | F10 | [Lei nº 14.914/2024 — Política Nacional de Assistência Estudantil (PNAES)](https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2024/lei/l14914.htm) | Presidência da República | norma | 2024-07-03 | 33 |
 | F13 | [Assistência estudantil na FCTE](https://fcte.unb.br/assistencia-estudantil/) | UnB · FCTE | pagina | 2026 | 5 |
+| F37 | [Serviço de alimentação do RU — cardápio, opções vegetarianas e identificação de alergênicos](https://ru.unb.br/servico-alimentacao/) | UnB · Diretoria do RU | pagina | s.d. | 4 |
 
 ### Eixo fluxo de disciplinas {#eixo-fluxo}
 

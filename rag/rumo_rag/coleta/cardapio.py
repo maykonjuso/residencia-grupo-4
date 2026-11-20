@@ -272,7 +272,7 @@ def estruturar_chunk(chunk: dict) -> dict:
             "observacao": (
                 ""
                 if tem_alergenicos
-                else "Notações de alergênicos por prato no PDF oficial são ícones (imagens) não extraídos como texto."
+                else "Nenhum ícone de alergênico identificado no PDF oficial para esta refeição. Confirme na linha de distribuição."
             ),
         },
         "fonte": {"doc_id": chunk["doc_id"], "pagina": chunk.get("pagina"),

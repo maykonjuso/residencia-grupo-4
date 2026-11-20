@@ -1,6 +1,6 @@
 # Base de conhecimento
 
-A base tem **36 documentos-fonte**, todos públicos e de órgãos oficiais, coletados em **06/11/2026**. O catálogo completo, com metadados, está em [`rag/catalogo.yaml`](https://github.com/maykonjuso/residencia-grupo-4/blob/main/rag/catalogo.yaml); cada documento tem um ID estável (F01 a F36), usado nas citações das respostas.
+A base tem **37 documentos-fonte**, todos públicos e de órgãos oficiais, coletados em **06/11/2026**. Na Entrega 2 eram 36; a página "Serviço alimentação" do RU (F37) entrou pela Issue #55 (18/11/2026). O catálogo completo, com metadados, está em [`rag/catalogo.yaml`](https://github.com/maykonjuso/residencia-grupo-4/blob/main/rag/catalogo.yaml); cada documento tem um ID estável (F01 a F37), usado nas citações das respostas.
 
 ## Critérios de curadoria
 
@@ -60,3 +60,40 @@ Dois cursos publicam a grade **só como imagem**. O grupo transcreveu as duas pa
 
 - **F16 · Fluxograma de Engenharia de Software:** 10 semestres, 235 créditos, códigos, créditos T-P-E-Total, códigos antigos e uma linha de pré-requisito por disciplina, lida das setas (setas tracejadas marcadas como tais).
 - **F23 · Matriz de Engenharia de Energia:** 10 semestres, 251 créditos, ciclo de cada disciplina (básico, profissionalizante, específico, PI, TCC/estágio).
+
+## Alergênicos e informação nutricional (Issue #55)
+
+Perguntas como *"a lasanha tem glúten?"* ou *"qual o prato menos calórico?"* dependem de dados por prato. A **Tabela 4** resume o que o RU publica, conferido em 18/11/2026 no site do RU e nos PDFs dos cardápios do Gama.
+
+| Informação | O RU publica? | Onde |
+|---|---|---|
+| Calorias e nutrientes por prato | **Não** | Nem no site nem no PDF do cardápio |
+| Alergênicos por prato | **Sim**, por ícones | PDF do cardápio semanal, com legenda no rodapé de cada página |
+| Atendimento a dietas especiais | **Não**, por declaração oficial | Página "Serviço alimentação" (F37) |
+
+<p class="legenda">Tabela 4. Informação nutricional e de alergênicos publicada pelo RU.</p>
+
+A página do RU (F37) diz que *"preparações que contenham leite de origem animal, ovos, glúten, cogumelo, mel, soja, pimenta, sementes oleaginosas, carne suína e/ou frutos do mar em seus ingredientes estão identificadas no cardápio e na distribuição aos usuários"* e que *"não há previsão de atendimento para usuários com necessidade de dietas especializadas e/ou individualizadas"*.
+
+**Decisões tomadas:**
+
+- **Calorias não entram na base.** O RU não publica calorias, e nenhum valor é estimado. Para *"qual o prato menos calórico?"*, o RUmo recusa. Declarar a limitação é aceitável; inventar um número é defeito.
+- **Alergênicos vêm dos ícones do cardápio oficial, sem inferência pelo nome do prato.** O cardápio marca cada preparação com ícones (Cogumelo, Leite e derivados, Mel, Pimenta, Soja, Trigo/Glúten, Amendoim, Oleaginosa, Ovo, Suíno). O módulo `rag/rumo_rag/alergenos.py` compara cada ícone da tabela com os da legenda da própria página e o liga à **opção de prato** dentro da célula, e não à célula inteira: em *"Rosé / Limão"*, os ícones de leite e ovo são do Rosé. Inferir pelo nome teria errado: o *Requeijão de ervas* (vegetariano estrito) não tem ícone de leite no cardápio oficial.
+- **Um formato só, o do cardápio estruturado (#54).** No texto do cardápio, cada opção ganha a etiqueta logo depois do nome, por exemplo *"Rosé [Alergênicos: Leite e derivados, Ovo] / Limão"*. O RUmo responde citando o cardápio, e `rag/rumo_rag/coleta/cardapio.py` transforma a etiqueta no campo `alergenicos` de cada opção do JSON de montagem de prato, usado pelo monta-prato (#63) e pela interface.
+- **Ícone duvidoso não vira afirmação.** Se a comparação com a legenda não for clara, a etiqueta diz *"a conferir na distribuição"*, o alergênico duvidoso não é afirmado e o JSON registra um aviso. Nas semanas da base, nenhum ícone ficou duvidoso.
+
+**Como foi conferido.** As 6 páginas dos cardápios da base (F08 e F09) foram conferidas à mão contra a imagem, opção por opção. Os casos conferidos viraram teste automático (`rag/testes/test_alergenos.py`). A primeira versão da leitura de ícones, que anotava a célula inteira, errava 87 das 306 opções comparáveis; a versão atual erra 0. Uma terceira semana, fora da base (16 a 20/11/2026), foi usada só como prova: no almoço e no jantar, todos os ícones bateram com a imagem.
+
+**Limitações declaradas:**
+
+- A legenda do RU Gama **não tem ícone de peixe nem de frutos do mar**, embora a página do RU cite frutos do mar. O *Filé de peixe ao molho de ervas* (04/11) não tem nenhum ícone.
+- O cardápio está sujeito a alterações sem aviso prévio. Os ícones valem para o cardápio publicado, não para o que foi servido.
+- "Leite e derivados" é a categoria do RU. O cardápio não diz se há opção sem lactose.
+- Na busca só por palavras (BM25, o modo usado em produção), *"o RU tem opção para quem tem doença celíaca?"* não recupera a F37, porque a página fala em *"dietas especializadas"* e não em *celíaca*. A medição com a busca híbrida está pendente (ver [Avaliação](avaliacao.md#alergenicos-por-prato-issue-55)).
+
+??? abstract "Histórico de revisão"
+
+    | Data | Versão | Descrição | Autor |
+    | :---: | :---: | --- | --- |
+    | 09/11/2026 | 1.0 | Base com 36 documentos-fonte (Entrega 2) | Grupo 04 |
+    | 18/11/2026 | 1.1 | 37 documentos: F37 (serviço de alimentação do RU), alergênicos por prato lidos dos ícones do cardápio, calorias declaradas como lacuna (Issue #55) | Grupo 04 |
