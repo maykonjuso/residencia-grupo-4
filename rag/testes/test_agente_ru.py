@@ -1,4 +1,10 @@
+import sys
+from pathlib import Path
 import pytest
+
+_RAG = Path(__file__).resolve().parents[1]
+if str(_RAG) not in sys.path:
+    sys.path.insert(0, str(_RAG))
 
 from rumo_rag import indice
 from rumo_rag.agentes import AgenteRU

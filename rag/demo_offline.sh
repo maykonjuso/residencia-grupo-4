@@ -40,19 +40,19 @@ if [ "$#" -ne 0 ]; then
 fi
 
 # Sem pergunta: roda as 8 perguntas da demonstração.
-# Atenção: `rumo_rag demo` sobrescreve avaliacao/demo_respostas.json, que é a evidência
+# Atenção: `rumo_rag demo` sobrescreve avaliacao/resultados/demo_respostas.json, que é a evidência
 # versionada da entrega (gerada com o Qwen2.5-7B na GPU) e alimenta a GitPage.
 # Por padrão preservamos esse arquivo; para regravá-lo de propósito:
 #   RUMO_GRAVAR_EVIDENCIAS=1 ./demo_offline.sh
 if [ "${RUMO_GRAVAR_EVIDENCIAS:-0}" = "1" ]; then
-  echo "⚠ regravando avaliacao/demo_respostas.json com o backend $MODELO_OLLAMA"
+  echo "⚠ regravando avaliacao/resultados/demo_respostas.json com o backend $MODELO_OLLAMA"
   exec $PY -m rumo_rag demo --backend ollama
 fi
 
-EVIDENCIA=avaliacao/demo_respostas.json
-RESGUARDO=$(mktemp -t demo_respostas)
+EVIDENCIA=avaliacao/resultados/demo_respostas.json
+RESGUARDO=$(mktemp -t demo_respostas.XXXXXX)
 cp "$EVIDENCIA" "$RESGUARDO"
-trap 'mv -f "$RESGUARDO" "$EVIDENCIA"' EXIT INT TERM
+trap 'if [ -e "$RESGUARDO" ]; then mv -f "$RESGUARDO" "$EVIDENCIA"; fi' EXIT INT TERM
 $PY -m rumo_rag demo --backend ollama
 echo
 echo "(evidência versionada em $EVIDENCIA preservada)"

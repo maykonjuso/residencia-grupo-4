@@ -5,8 +5,8 @@
 {"id": "Q05", "eixo": "ru", "pergunta": "Quanto paga no RU o estudante que entrou por cota de escola pública e não é baixa renda?", "docs_esperados": ["F01", "F04"]}
 {"id": "Q06", "eixo": "ru", "pergunta": "Como emito a carteirinha digital para entrar no RU?", "docs_esperados": ["F05"]}
 {"id": "Q07", "eixo": "ru", "pergunta": "Quais formas de pagamento são aceitas nos caixas do RU?", "docs_esperados": ["F05", "F04"]}
-{"id": "Q08", "eixo": "ru", "pergunta": "Qual o prato vegetariano estrito do almoço de quarta-feira, 11/11/2026, no RU Gama?", "docs_esperados": ["F09"]}
-{"id": "Q09", "eixo": "ru", "pergunta": "O que tem no café da manhã do RU Gama na segunda-feira 09/11/2026?", "docs_esperados": ["F09"]}
+{"id": "Q08", "eixo": "ru", "pergunta": "Quais alergênicos são identificados no cardápio e na distribuição do RU?", "docs_esperados": ["F37"]}
+{"id": "Q09", "eixo": "ru", "pergunta": "Como funciona o Restaurante Executivo (RE) no campus Darcy Ribeiro?", "docs_esperados": ["F37"]}
 {"id": "Q10", "eixo": "ru", "pergunta": "Quais são os critérios para participar do edital de Auxílio Alimentação de 2026?", "docs_esperados": ["F07"]}
 {"id": "Q11", "eixo": "ru", "pergunta": "O que a lei do PNAES diz sobre alimentação dos estudantes?", "docs_esperados": ["F10"]}
 {"id": "Q12", "eixo": "apoio", "pergunta": "Por que devo evitar alimentos ultraprocessados?", "docs_esperados": ["F11"]}

@@ -8,8 +8,14 @@ Cobre os requisitos das Issues #17 e #28:
 """
 import io
 import json
+import sys
 import unittest
+from pathlib import Path
 from unittest import mock
+
+_RAIZ = Path(__file__).resolve().parents[2]
+if str(_RAIZ) not in sys.path:
+    sys.path.insert(0, str(_RAIZ))
 
 from rag.rumo_rag import __main__ as cli
 from rag.rumo_rag import geracao
