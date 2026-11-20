@@ -128,6 +128,8 @@ def classificar_composta(pergunta: str) -> tuple[bool, float]:
         return True, 0.95
     if not _CONECTIVOS.search(q):
         return False, 0.0
+    if not config.USAR_D1:
+        return False, 0.0
 
     try:
         prob_multi = probabilidade_multipla(q)
@@ -340,6 +342,8 @@ def _decompor_llm(pergunta: str, backend: str = "auto") -> tuple[str, ...]:
 
 def classificar_dominio_d1(subpergunta: str, limiar_confianca: float = 0.60) -> list[str]:
     """Teste 2 (System-1 zero-shot): classifica subpergunta ambígua entre 'ru' e 'fluxo' via d1-omni."""
+    if not config.USAR_D1:
+        return ["ru", "fluxo"]
     try:
         modelo = _carregar_decisor()
         res = modelo.system_one(subpergunta.strip(), _DOMINIO_AGENTE)
