@@ -62,6 +62,24 @@ A comunicação interna é coordenada pelo **Orquestrador** com um único ciclo 
 
 ---
 
+## Modelos, ferramentas e pilha técnica
+
+Para manter a leitura das demais páginas direta e livre de jargões repetidos, a **Tabela 2** concentra em um único ponto todos os modelos, motores de busca e ferramentas empregados no protótipo multiagente (tanto na execução local com GPU quanto no deploy leve em nuvem).
+
+| Camada / Papel | Modelo ou ferramenta | Como é usado no protótipo |
+|---|---|---|
+| **Classificador de composição e domínio** | `LiquidAI/d1-omni-600M` (`transformers` + `PyTorch` em GPU/CPU) | Modelo discriminativo leve (*System-1*, sem geração autoregressiva) para detectar perguntas compostas (limiar `0,39`) e desambiguar domínio quando as regras léxicas não decidem (limiar `0,60`). Desligável em nuvem leve (`RUMO_USAR_D1=0`). |
+| **LLM decompositor e gerador (local)** | `Qwen/Qwen2.5-7B-Instruct` (HuggingFace, 4 bits via `bitsandbytes`) ou `qwen2.5:7b` (Ollama) | Divide perguntas compostas em subperguntas rotuladas por eixo (`ru`/`fluxo`) e gera respostas fundamentadas exclusivamente nos trechos recuperados com citações `[n]`. |
+| **LLM via API externa (nuvem)** | API compatível com OpenAI — padrão de deploy: OpenRouter com `nvidia/nemotron-3.5-lightning:free` (`RUMO_LLM_BACKEND=openai`) | Executa decomposição e agentes sem GPU local (Render/Vercel), com fallback automático para modo `extrativo` (sem LLM) diante de falha de rede ou limite de cota. |
+| **RAG (busca híbrida e léxica)** | Embeddings `BAAI/bge-m3` (1.024 dim., fp16) + **ChromaDB** (HNSW, cosseno) + **BM25** (`rank_bm25`) com fusão **RRF** (`k=60`) | No modo completo, combina busca vetorial e BM25 (peso `3,0` para datas e códigos de disciplina) sobre 53 fontes oficiais (`1.954` chunks em `chunks.jsonl`, top-5 por agente). Em deploy leve (`RUMO_BUSCA=bm25`), opera apenas com BM25. |
+| **Cardápio semanal e alergênicos** | JSON estruturado `cardapio_semanal.json` (`F56`), validado via `jsonschema`; coleta com `pdfplumber`, `pypdf` e `BeautifulSoup` | Fonte única do Agente do RU para refeições da semana corrente (por dia, refeição, compartimento e trilha alimentar) e alergênicos por prato, evitando conflito com cardápios antigos no RAG. |
+| **Orquestração e validação factual** | Python 3.12 (`ThreadPoolExecutor` + `threading.Lock`) e **Agente Validador determinístico** (regex + checagem sem LLM) | Executa `AgenteRU` e `AgenteFluxo` em paralelo sincronizando leituras ao índice; o validador audita valores numéricos, códigos, datas e citações `[n]` contra os trechos locais (máx. 1 retentativa antes da recusa). |
+| **API e deploy** | **FastAPI** + **Uvicorn** (`rag/rumo_rag/api.py`, `rag/api/index.py`), configurado para **Vercel** (`rag/vercel.json`) e **Render** (`render.yaml`) | Expõe `POST /perguntar` (contrato v1.0 com `trace` opcional) e `GET /saude` integrados ao `Orquestrador`, com suíte automatizada em `pytest`. |
+
+<p class="legenda">Tabela 2. Especificação consolidada de modelos, motores de recuperação e ferramentas utilizadas no protótipo multiagente.</p>
+
+---
+
 ## Pontos de extensão previstos
 
 A arquitetura atual já separa claramente as fronteiras de responsabilidade para receber os refinamentos das próximas issues sem quebrar os contratos entre os agentes:
@@ -77,3 +95,4 @@ A arquitetura atual já separa claramente as fronteiras de responsabilidade para
     | 1.1 | 16/11/2026 | @GabrielMacielBR | Alinhamento aos 4 agentes do escopo, legenda padronizada e marcação explícita das pendências `#41`–`#43` | @maykonjuso |
     | 1.2 | 16/11/2026 | @GabrielMacielBR | Reescrita descritiva em linguagem natural no diagrama e tabelas | @maykonjuso |
     | 1.3 | 18/11/2026 | @GabrielMacielBR | Atualização para contrato unificado (`#40`), guarda e prompts por agente (`#41`/`#42`) e validador determinístico com 1 retentativa (`#43`) | — |
+    | 1.4 | 20/11/2026 | @GabrielMacielBR | Inclusão da Tabela 2 consolidando modelos, RAG e ferramentas utilizadas em um único ponto | — |

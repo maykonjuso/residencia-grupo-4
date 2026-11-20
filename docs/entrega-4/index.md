@@ -40,7 +40,7 @@ A documentação segue os três artefatos solicitados no enunciado e o registro 
 
 | Página | O que você encontra |
 |---|---|
-| [Arquitetura dos Agentes](arquitetura-agentes.md) | Diagrama verticalizado com os quatro agentes, o sintetizador, as conexões entre eles e os pontos de extensão |
+| [Arquitetura dos Agentes](arquitetura-agentes.md) | Diagrama verticalizado com os quatro agentes, o sintetizador, as conexões entre eles, a tabela consolidada de modelos e ferramentas utilizadas e os pontos de extensão |
 | [Responsabilidades dos Agentes](responsabilidades.md) | Tabela descrevendo o papel, as responsabilidades, o que cada componente **pode** e **não pode** fazer e as regras garantidas |
 | [Fluxo de Interação e Roteamento](fluxo-de-interacao.md) | Diagrama de sequência em linguagem direta para uma pergunta composta e o comparativo das estratégias de classificação e roteamento |
 | [Demonstração Executada](demonstracao.md) | Execuções reais em terminal comprovando paralelismo, isolamento de citações, retorno do validador e degradação graciosa |
@@ -55,3 +55,4 @@ A documentação segue os três artefatos solicitados no enunciado e o registro 
     | 1.2 | 16/11/2026 | @GabrielMacielBR | Adequação para leitura descritiva sem siglas nem jargões de código internos | @maykonjuso |
     | 1.3 | 18/11/2026 | @GabrielMacielBR | Inclusão breve do cardápio estruturado por compartimento (`#54`, por @Kyara2) no resumo da Entrega 4 | — |
     | 1.4 | 18/11/2026 | @GabrielMacielBR | Atualização do panorama após conclusão do contrato (`#40`), especialização (`#41`/`#42`) e validador ativo (`#43`) | — |
+    | 1.5 | 20/11/2026 | @GabrielMacielBR | Referência na navegação para a tabela consolidada de modelos e ferramentas em Arquitetura dos Agentes | — |
