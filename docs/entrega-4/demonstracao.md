@@ -173,6 +173,67 @@ O conjunto completo de **12 perguntas múltiplas** (`rag/avaliacao/perguntas/per
 - **Paralelismo comprovado:** redução total de **`249,63 s`** (`264,50 s` em paralelo contra `514,13 s` individuais, economia média de **`48,6%`** na execução dos agentes, escalando para 3 e 4 *workers* simultâneos).
 - **Fidelidade e escopo:** **`31/31`** partes aprovadas no desfecho final pelo **Agente Validador** (`0` erros de execução). Nas 2 reprovações iniciais (`M04` e `M07`), o fluxo ativo devolveu ao **Sintetizador**: em `M07`, a retentativa corrigiu o valor para `251 créditos`; em `M04`, como o valor sem respaldo persistiu na 2ª tentativa, foi aplicada a recusa final honesta.
 
+### Exemplo de resposta final entregue ao estudante (`M07`, `qwen2.5:7b`)
+
+Para ilustrar a entrega consolidada recebida pelo usuário, o bloco abaixo reproduz a saída real registrada para a pergunta tripla **`M07`** (*"Quanto custa o desjejum para Grupo II, quantos créditos exige Engenharia Aeroespacial e abre aos sábados para comer?"*) após a correção acionada pelo **Agente Validador** (`2510 horas` → `251 créditos`), mantendo as citações isoladas por subpergunta:
+
+```text
+[Agente RU] Quanto custa o desjejum para Grupo II?
+O desjejum para Grupo II custa R$ 2,00. [1]
+Fonte: [1] Valores das refeições e grupos de acesso (F04 · p. 1)
+
+[Agente Fluxo] Quantos créditos exige Engenharia Aeroespacial?
+De acordo com o Projeto Pedagógico do Curso de Engenharia Aeroespacial (PPC 2025) [1], o curso exige no mínimo 251 créditos.
+Fonte: [1] Projeto Pedagógico do Curso de Engenharia Aeroespacial (PPC 2025) (F17 · p. 204)
+
+[Agente RU] Abre aos sábados para comer no RU?
+Não, o Restaurante Universitário do Campus Gama/FCTE não abre aos sábados para refeições. Segundo os horários informados [3], os serviços são oferecidos apenas de segunda à sexta-feira, exceto feriados.
+Fonte: [3] Unidades do RU e horários de funcionamento (inclui RU Gama/FCTE) (F03 · p. 1)
+```
+
+---
+
+## Caso 7 — Consulta composta com cardápio semanal estruturado (alergênicos) e Fluxo
+
+Com a integração do cardápio estruturado da semana corrente (`cardapio_semanal.json`, fonte `F56`) ao **Agente do RU** e do catálogo de 54 fontes oficiais, consultas sobre alergênicos passaram a ser respondidas diretamente a partir da semana vigente sem conflito com PDFs antigos no RAG:
+
+```bash
+cd rag
+RUMO_BUSCA=bm25 RUMO_USAR_D1=0 ../.venv/bin/python -m rumo_rag perguntar \
+  "Quais pratos do almoço de quarta-feira têm leite ou lactose e quais são os pré-requisitos de Testes de Software?" \
+  --agentes --trace --backend extrativo
+```
+
+Saída real registrada em terminal (modo leve compatível com deploy em nuvem):
+
+```text
+=== [TRACE · Orquestrador Multiagentes] ===
+1. Classificação/Decomposição: composta=True (p=0.0, limiar=0.39, 0.0s)
+   - Subpergunta 1: Quais pratos do almoço de quarta-feira têm leite ou lactose
+   - Subpergunta 2: quais são os pré-requisitos de Testes de Software
+2. Roteamento (2 execução(ões)):
+   - "Quais pratos do almoço de quarta-feira têm leite ou lactose" -> ru
+   - "quais são os pré-requisitos de Testes de Software" -> fluxo
+3. Execução em paralelo: tempo_total=0.259s | soma_individual=0.265s | ganho=0.006s
+   - [Agente RU] 0.007s · OK (1 trechos)
+   - [Agente Fluxo] 0.258s · OK (5 trechos)
+4. Validador factual:
+   - ru: APROVADO
+   - fluxo: APROVADO
+5. Composição (Sintetizador): 2 parte(s) · índices [n] isolados=True · degradado=False
+
+--- Parte 1 · Agente RU ---
+- Cardápio do RU Gama (FCTE) — Almoço de quarta-feira, 18/11/2026: [1]
+- Prato principal (ovolacto): Risoto de ervilha com queijo [Alergênicos: Leite e derivados, Trigo/Glúten] [1]
+Fonte: [1] F56 · Cardápio semanal do RU Gama (16/11 a 22/11/2026) · p. 2
+
+--- Parte 2 · Agente Fluxo ---
+- Para cursar Testes de Software (FGA0314), é preciso ter cursado antes: Requisitos de Software (FGA0313) (seta cheia); [1]
+- Para cursar Requisitos de Software (FGA0313), é preciso ter cursado antes: Métodos de Desenvolvimento de Software (FGA0312). [1]
+- o fluxograma também liga Métodos de Desenvolvimento de Software (FGA0312) a Testes de Software por seta tracejada. [1]
+Fonte: [1] F16 · Fluxograma de Engenharia de Software (235 créditos) — transcrição · p. 1
+```
+
 ??? abstract "Histórico de revisão"
     | Versão | Data | Autor | Descrição | Revisor |
     |---|---|---|---|---|
@@ -181,3 +242,4 @@ O conjunto completo de **12 perguntas múltiplas** (`rag/avaliacao/perguntas/per
     | 1.2 | 16/11/2026 | @GabrielMacielBR | Substituição de códigos de fontes e símbolos internos por descrições dos documentos reais nas explicações e tabelas | @maykonjuso |
     | 1.3 | 18/11/2026 | @GabrielMacielBR | Atualização do Caso 2 para retentativa com feedback e inclusão do Caso 5 com execução real no Ollama (`qwen2.5:7b`) | — |
     | 1.4 | 18/11/2026 | @GabrielMacielBR | Adição do Caso 6 com os resultados da avaliação fim-a-fim nas 12 perguntas múltiplas (duplas, triplas e quádruplas) | — |
+    | 1.5 | 20/11/2026 | @GabrielMacielBR | Inclusão da resposta final real de `M07` (pós-reparo do validador) e do Caso 7 com cardápio semanal estruturado e alergênicos (`F56`) | — |

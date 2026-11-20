@@ -86,7 +86,7 @@ A **Tabela 4** consolida as decisões arquiteturais tomadas na implantação do 
 
 | Mudança | Motivo | Efeito medido |
 |---|---|---|
-| Especialização `AgenteRU` + `AgenteFluxo` + `AgenteValidador` + `Sintetizador` | Consultas compostas competiam pelos mesmos *slots* e geravam alucinações ou citações misturadas | Citações `[n]` isoladas por parte, validação factual automática e devolução ao `Sintetizador` (`fallback_extrativo`) |
+| Especialização `AgenteRU` + `AgenteFluxo` + `AgenteValidador` + `Sintetizador` | Consultas compostas competiam pelos mesmos *slots* e geravam alucinações ou citações misturadas | Citações `[n]` isoladas por parte, validação factual automática e devolução ao `Sintetizador` (máx. 1 retentativa com feedback ou recusa padrão) |
 | Execução paralela via `ThreadPoolExecutor` com `_LOCK_BUSCA` | Chamadas em série dobravam a latência; consultas simultâneas ao `chromadb` colidiam no `RustBindingsAPI` | Ganho real de paralelismo (`3,68s` vs `7,27s`) sem colisão de índice e com degradação elegante em falhas (`--falhar-agente`) |
 | Calibração de `LIMIAR_COMPOSTA` (`0,50` → `0,39`) e estudo Teste 1 vs. Teste 2 | O limiar antigo falhava em acionar compostas (`p=0,39`) e o regex errava 4/17 formulações coloquiais naturais | Acurácia de roteamento nas subperguntas naturais sobe de `76,5%` (Regex) para `94,1%` (`d1-omni-600M`) e `100,0%` (`qwen2.5:7b` conjunto) |
 | Cardápio semanal estruturado com alergênicos + 18 fontes DDS (`#53`, `#54`, `#55`) | Cardápios antigos no RAG desatualizavam respostas e omitiam alergênicos | Base expandida para 54 fontes (53 em RAG = 1.954 chunks + `F56` em JSON semanal com alergênicos por prato) sem regressão no BM25 (`Hit@1=0,906`, `Hit@5=1,000`, `MRR=0,944`) |

@@ -3,7 +3,7 @@
 A **Entrega 4** (Épico `#37`) marca a evolução do **RUmo** de um fluxo único de busca e resposta para o primeiro **protótipo de Sistema Multiagente**. Em vez de um único bloco responder a tudo de forma linear, o sistema passa a identificar quando há mais de um assunto na mesma dúvida, distribuir cada parte ao especialista adequado em paralelo, auditar a fidelidade dos dados antes de exibi-los e montar a resposta final mantendo as fontes de cada parte isoladas.
 
 !!! info "Escopo atual do protótipo"
-    Esta documentação descreve estritamente o comportamento implementado e testado na arquitetura multiagente do RUmo, incluindo o contrato comum de comunicação entre agentes (`#40`), os especialistas de RU (`#41`) e Fluxo (`#42`) com prompts e guarda de domínio próprios, o validador ativo (`#43`) com limite de 1 retentativa e recusa final, e o suporte a APIs compatíveis com OpenAI/OpenRouter.
+    Esta documentação descreve estritamente o comportamento implementado e testado na arquitetura multiagente do RUmo, incluindo o contrato comum de comunicação entre agentes (`#40`), os especialistas de RU e Fluxo (`#41`) com prompts e guarda de domínio próprios, o Orquestrador (`#42`), o validador ativo (`#43`) com limite de 1 retentativa e recusa final, e o suporte a APIs compatíveis com OpenAI/OpenRouter.
 
 ---
 
@@ -11,7 +11,7 @@ A **Entrega 4** (Épico `#37`) marca a evolução do **RUmo** de um fluxo único
 
 O objetivo desta etapa é atender perguntas simples ou compostas de estudantes da UnB (Campus Gama / FCTE) sobre o **Restaurante Universitário (RU)** e o **Fluxo de Graduação** com colaboração coordenada entre agentes. A separação das fontes por bloco garante compatibilidade com o cliente do portal único da universidade, que exige que cada citação corresponda exatamente à lista de fontes daquela parte.
 
-A **Tabela 1** resume o que já funciona no protótipo, o que aguarda detalhamento e o que ficou fora do escopo desta semana.
+A **Tabela 1** resume o que já funciona no protótipo e o que ficou fora do escopo desta semana.
 
 | Categoria | Item / Capacidade | Situação | O que faz na prática |
 |---|---|---|---|
@@ -23,11 +23,12 @@ A **Tabela 1** resume o que já funciona no protótipo, o que aguarda detalhamen
 | **Implementado** | Validador ativo e devolução ao sintetizador (`#43`) | Concluído | Validador determinístico (sem LLM) reprova valores sem fonte ou falta de citação, devolve para no máximo **1 retentativa com feedback** e aplica recusa padrão se reprovar duas vezes |
 | **Implementado** | Suporte a provedor local ou API externa (OpenRouter/OpenAI) | Concluído | Permite executar decomposição e agentes via Ollama, HuggingFace local, modo extrativo ou API compatível com OpenAI mantendo o padrão local |
 | **Implementado** | Comparativo experimental de roteamento | Concluído | Avalia três estratégias de roteamento em um conjunto de 8 perguntas múltiplas (17 subperguntas) de linguagem natural |
-| **Implementado** | Cardápio estruturado por compartimento (`#54`) | Concluído | Converte as refeições dos cardápios em JSON por compartimento da bandeja e trilha alimentar (*padrão*, *ovolacto* e *vegano*), preservando documento e página de origem em cada opção |
+| **Implementado** | Cardápio semanal estruturado com alergênicos (`#54`, `#55`) | Concluído | Converte as refeições do cardápio corrente em `cardapio_semanal.json` por compartimento da bandeja, trilha alimentar (*padrão*, *ovolacto* e *vegano*) e alergênicos por prato, sendo consultado diretamente pelo Agente do RU |
+| **Implementado** | Exposição do fluxo multiagente na API v1.0 (`#44`) | Concluído | Expõe o `Orquestrador` em `POST /perguntar` mantendo o contrato v1.0 estrito com `trace` opcional e preparo leve para Vercel/Render |
 | **Fora de escopo** | Comunicação em tempo real com a API do Portal Único (Grupo 09) | Fora da entrega | Integração geral do sistema unificado descrita em [Divisão com o Grupo 09](../visao/escopo-grupos.md) |
 | **Fora de escopo** | Memória conversacional contínua e login autenticado | Fora da entrega | Cada pergunta é processada de forma independente, sem histórico pessoal de usuário |
 
-<p class="legenda">Tabela 1. Visão geral do que foi implementado, do que está pendente e do que ficou fora de escopo na Entrega 4.</p>
+<p class="legenda">Tabela 1. Visão geral do que foi implementado e do que ficou fora de escopo na Entrega 4.</p>
 
 !!! note "Apoio à montagem de prato — Cardápio estruturado (#54)"
     Como complemento da base de conhecimento para a interface do monta-prato, o módulo de coleta transforma os cardápios já extraídos da base em JSON organizado por compartimento da bandeja (incluindo almoço, jantar e café da manhã) e por trilha alimentar (*padrão*, *ovolactovegetariano* e *vegetariano estrito*). Cada opção mantém o documento e a página de origem, trata falhas de formatação do PDF com avisos e pode ser gerada em `rag/` via `python -m rumo_rag.coleta cardapio --estruturado --data 2026-11-09 --refeicao almoco`.
@@ -56,3 +57,4 @@ A documentação segue os três artefatos solicitados no enunciado e o registro 
     | 1.3 | 18/11/2026 | @GabrielMacielBR | Inclusão breve do cardápio estruturado por compartimento (`#54`, por @Kyara2) no resumo da Entrega 4 | — |
     | 1.4 | 18/11/2026 | @GabrielMacielBR | Atualização do panorama após conclusão do contrato (`#40`), especialização (`#41`/`#42`) e validador ativo (`#43`) | — |
     | 1.5 | 20/11/2026 | @GabrielMacielBR | Referência na navegação para a tabela consolidada de modelos e ferramentas em Arquitetura dos Agentes | — |
+    | 1.6 | 20/11/2026 | @GabrielMacielBR | Atualização da Tabela 1 com alergênicos (`#55`) e API multiagente (`#44`), remoção de menção a pendências e ajuste de issues `#41`/`#42` | — |

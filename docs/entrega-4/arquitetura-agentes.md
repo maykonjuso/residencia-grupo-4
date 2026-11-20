@@ -3,7 +3,7 @@
 A arquitetura multiagente do **RUmo** organiza o atendimento em uma esteira colaborativa implementada nos módulos de agentes e de reescrita de consultas do projeto. O desenho reúne **quatro agentes principais** — Orquestrador, Agente do RU, Agente de Fluxo e Agente Validador — apoiados pelo componente Sintetizador e pelo módulo de análise e divisão de perguntas.
 
 !!! info "Estado da implementação"
-    A arquitetura abaixo reflete a versão atual implementada: contrato unificado por mensagens e trace (`#40`), especialistas de RU (`#41`) e Fluxo (`#42`) com prompts dedicados e guarda de domínio, e validador ativo (`#43`) puramente determinístico (sem LLM) com limite de 1 retentativa com feedback e recusa final.
+    A arquitetura abaixo reflete a versão atual implementada: contrato unificado por mensagens e trace (`#40`), especialistas de RU e Fluxo (`#41`) com prompts dedicados e guarda de domínio, Orquestrador (`#42`) e validador ativo (`#43`) puramente determinístico (sem LLM) com limite de 1 retentativa com feedback e recusa final.
 
 ---
 
@@ -96,3 +96,4 @@ A arquitetura atual já separa claramente as fronteiras de responsabilidade para
     | 1.2 | 16/11/2026 | @GabrielMacielBR | Reescrita descritiva em linguagem natural no diagrama e tabelas | @maykonjuso |
     | 1.3 | 18/11/2026 | @GabrielMacielBR | Atualização para contrato unificado (`#40`), guarda e prompts por agente (`#41`/`#42`) e validador determinístico com 1 retentativa (`#43`) | — |
     | 1.4 | 20/11/2026 | @GabrielMacielBR | Inclusão da Tabela 2 consolidando modelos, RAG e ferramentas utilizadas em um único ponto | — |
+    | 1.5 | 20/11/2026 | @GabrielMacielBR | Ajuste da numeração de issues (`#41` RU/Fluxo, `#42` Orquestrador) no resumo inicial | — |
