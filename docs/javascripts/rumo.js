@@ -754,12 +754,11 @@
           secoes.map(function (s) { return '<li><a href="#rm-sec-' + esc(s.slug) + '">' + esc(s.titulo) + '</a></li>'; }).join("");
 
         var capa = '<div class="rm-capa-pdf">' +
-          '<p class="rm-capa-pdf__topo">Universidade de Brasília (UnB) · Faculdade de Ciências e Tecnologias em Engenharia (FCTE · Campus Gama)<br>Residência em Inteligência Artificial · Turma 1 · Challenge 2 (Big Idea: Qualidade de Vida)</p>' +
+          '<p class="rm-capa-pdf__topo">Universidade de Brasília (UnB)<br>Residência em Inteligência Artificial · Turma 1 · Challenge 2 (Big Idea: Qualidade de Vida)</p>' +
           '<h1 class="rm-capa-pdf__titulo">RUmo · Grupo 04</h1>' +
           '<p class="rm-capa-pdf__subtitulo">' + esc(tituloEntrega) + '</p>' +
           '<div class="rm-capa-pdf__meta">' +
-          '<div><strong>Integrantes (Grupo 04):</strong> Gabriel Maciel Araújo, Gabriella Oliveira de Souza Dias, Keila Alves Ferreira, Kyara Esteves de Sousa e Maykon Júnio dos Santos Soares</div>' +
-          '<div><strong>Mentor:</strong> Jefferson Viana Fonseca Abreu</div>' +
+          '<div><strong>Integrantes (Grupo 04):</strong><br>Gabriel Maciel Araújo<br>Gabriella Oliveira de Souza Dias<br>Keila Alves Ferreira<br>Kyara Esteves de Sousa<br>Maykon Júnio dos Santos Soares</div>' +
           '<div><strong>Fonte:</strong> Consolidado gerado automaticamente a partir da GitPage oficial</div>' +
           '</div></div>' +
           '<div class="rm-sumario-pdf"><h2>Sumário</h2><ol>' + sumarioItens + '</ol></div>';
