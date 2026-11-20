@@ -1,0 +1,4067 @@
+{
+  "unidade": "gama",
+  "semana": {
+    "inicio": "2026-11-16",
+    "fim": "2026-11-22"
+  },
+  "atualizado_em": "2026-11-20T12:35:57",
+  "fonte": {
+    "doc_id": "F56",
+    "url": "https://ru.unb.br/wp-content/uploads/2026/11/Gama-Semana-01-16-11-a-20-11-1.pdf",
+    "pagina_listagem": "https://ru.unb.br/cardapio-gama/"
+  },
+  "alergenicos": {
+    "disponivel": true,
+    "legenda": [
+      {
+        "id": "cogumelo",
+        "nome": "Cogumelo"
+      },
+      {
+        "id": "leite",
+        "nome": "Leite e derivados"
+      },
+      {
+        "id": "mel",
+        "nome": "Mel"
+      },
+      {
+        "id": "pimenta",
+        "nome": "Pimenta"
+      },
+      {
+        "id": "soja",
+        "nome": "Soja"
+      },
+      {
+        "id": "gluten",
+        "nome": "Trigo/Glúten"
+      },
+      {
+        "id": "amendoim",
+        "nome": "Amendoim"
+      },
+      {
+        "id": "oleaginosa",
+        "nome": "Oleaginosa"
+      },
+      {
+        "id": "ovo",
+        "nome": "Ovo"
+      },
+      {
+        "id": "suino",
+        "nome": "Suíno"
+      }
+    ]
+  },
+  "refeicoes": [
+    {
+      "unidade": "gama",
+      "data": "2026-11-16",
+      "refeicao": "cafe",
+      "compartimentos": [
+        {
+          "slot": "bebida",
+          "titulo": "Bebida",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "leite-integral",
+              "nome": "Leite Integral",
+              "trilha": "todas",
+              "alergenicos": [
+                "leite"
+              ],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 1,
+                "chunk_id": "F56-0001"
+              }
+            },
+            {
+              "id": "bebida-de-soja",
+              "nome": "Bebida de Soja",
+              "trilha": "todas",
+              "alergenicos": [
+                "soja"
+              ],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 1,
+                "chunk_id": "F56-0001"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "panificacao",
+          "titulo": "Panificação",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "pao-frances",
+              "nome": "Pão francês",
+              "trilha": "todas",
+              "alergenicos": [
+                "gluten"
+              ],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 1,
+                "chunk_id": "F56-0001"
+              }
+            },
+            {
+              "id": "pao-careca",
+              "nome": "Pão careca",
+              "trilha": "todas",
+              "alergenicos": [
+                "gluten"
+              ],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 1,
+                "chunk_id": "F56-0001"
+              }
+            },
+            {
+              "id": "pao-integral",
+              "nome": "Pão integral",
+              "trilha": "todas",
+              "alergenicos": [
+                "gluten"
+              ],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 1,
+                "chunk_id": "F56-0001"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "gordura",
+          "titulo": "Gordura",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "manteiga",
+              "nome": "Manteiga",
+              "trilha": "todas",
+              "alergenicos": [
+                "leite"
+              ],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 1,
+                "chunk_id": "F56-0001"
+              }
+            },
+            {
+              "id": "creme-vegetal",
+              "nome": "Creme Vegetal",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 1,
+                "chunk_id": "F56-0001"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "complemento",
+          "titulo": "Complemento",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "ovos-mexidos",
+              "nome": "Ovos mexidos",
+              "trilha": "padrao",
+              "alergenicos": [
+                "leite",
+                "ovo"
+              ],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 1,
+                "chunk_id": "F56-0001"
+              }
+            },
+            {
+              "id": "queijo-mucarela",
+              "nome": "Queijo muçarela",
+              "trilha": "ovolacto",
+              "alergenicos": [
+                "leite"
+              ],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 1,
+                "chunk_id": "F56-0001"
+              }
+            },
+            {
+              "id": "geleia-de-maca-com-chia-e-canela",
+              "nome": "Geléia de maçã com chia e canela",
+              "trilha": "vegano",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 1,
+                "chunk_id": "F56-0001"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "fruta",
+          "titulo": "Fruta",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "abacaxi",
+              "nome": "Abacaxi",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 1,
+                "chunk_id": "F56-0001"
+              }
+            }
+          ]
+        }
+      ],
+      "mesa_apoio": [
+        "água",
+        "achocolatado",
+        "açúcar",
+        "adoçante"
+      ],
+      "alergenicos": {
+        "disponivel": true,
+        "legenda": [
+          {
+            "id": "cogumelo",
+            "nome": "Cogumelo"
+          },
+          {
+            "id": "leite",
+            "nome": "Leite e derivados"
+          },
+          {
+            "id": "mel",
+            "nome": "Mel"
+          },
+          {
+            "id": "pimenta",
+            "nome": "Pimenta"
+          },
+          {
+            "id": "soja",
+            "nome": "Soja"
+          },
+          {
+            "id": "gluten",
+            "nome": "Trigo/Glúten"
+          },
+          {
+            "id": "amendoim",
+            "nome": "Amendoim"
+          },
+          {
+            "id": "oleaginosa",
+            "nome": "Oleaginosa"
+          },
+          {
+            "id": "ovo",
+            "nome": "Ovo"
+          },
+          {
+            "id": "suino",
+            "nome": "Suíno"
+          }
+        ],
+        "observacao": ""
+      },
+      "fonte": {
+        "doc_id": "F56",
+        "pagina": 1,
+        "chunk_id": "F56-0001",
+        "url": "https://ru.unb.br/wp-content/uploads/2026/11/Gama-Semana-01-16-11-a-20-11-1.pdf"
+      },
+      "avisos": []
+    },
+    {
+      "unidade": "gama",
+      "data": "2026-11-17",
+      "refeicao": "cafe",
+      "compartimentos": [
+        {
+          "slot": "bebida",
+          "titulo": "Bebida",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "leite-integral",
+              "nome": "Leite Integral",
+              "trilha": "todas",
+              "alergenicos": [
+                "leite"
+              ],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 1,
+                "chunk_id": "F56-0002"
+              }
+            },
+            {
+              "id": "bebida-de-soja",
+              "nome": "Bebida de Soja",
+              "trilha": "todas",
+              "alergenicos": [
+                "soja"
+              ],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 1,
+                "chunk_id": "F56-0002"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "panificacao",
+          "titulo": "Panificação",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "pao-frances",
+              "nome": "Pão francês",
+              "trilha": "todas",
+              "alergenicos": [
+                "gluten"
+              ],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 1,
+                "chunk_id": "F56-0002"
+              }
+            },
+            {
+              "id": "pao-careca",
+              "nome": "Pão careca",
+              "trilha": "todas",
+              "alergenicos": [
+                "gluten"
+              ],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 1,
+                "chunk_id": "F56-0002"
+              }
+            },
+            {
+              "id": "pao-integral",
+              "nome": "Pão integral",
+              "trilha": "todas",
+              "alergenicos": [
+                "gluten"
+              ],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 1,
+                "chunk_id": "F56-0002"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "gordura",
+          "titulo": "Gordura",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "manteiga",
+              "nome": "Manteiga",
+              "trilha": "todas",
+              "alergenicos": [
+                "leite"
+              ],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 1,
+                "chunk_id": "F56-0002"
+              }
+            },
+            {
+              "id": "creme-vegetal",
+              "nome": "Creme Vegetal",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 1,
+                "chunk_id": "F56-0002"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "complemento",
+          "titulo": "Complemento",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "pate-de-frango",
+              "nome": "Patê de frango",
+              "trilha": "padrao",
+              "alergenicos": [
+                "leite",
+                "ovo",
+                "gluten"
+              ],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 1,
+                "chunk_id": "F56-0002"
+              }
+            },
+            {
+              "id": "queijo-minas",
+              "nome": "Queijo minas",
+              "trilha": "ovolacto",
+              "alergenicos": [
+                "leite"
+              ],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 1,
+                "chunk_id": "F56-0002"
+              }
+            },
+            {
+              "id": "homus-de-grao-de-bico",
+              "nome": "Homus de grão de bico",
+              "trilha": "vegano",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 1,
+                "chunk_id": "F56-0002"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "fruta",
+          "titulo": "Fruta",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "melao",
+              "nome": "Melão",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 1,
+                "chunk_id": "F56-0002"
+              }
+            }
+          ]
+        }
+      ],
+      "mesa_apoio": [
+        "água",
+        "achocolatado",
+        "açúcar",
+        "adoçante"
+      ],
+      "alergenicos": {
+        "disponivel": true,
+        "legenda": [
+          {
+            "id": "cogumelo",
+            "nome": "Cogumelo"
+          },
+          {
+            "id": "leite",
+            "nome": "Leite e derivados"
+          },
+          {
+            "id": "mel",
+            "nome": "Mel"
+          },
+          {
+            "id": "pimenta",
+            "nome": "Pimenta"
+          },
+          {
+            "id": "soja",
+            "nome": "Soja"
+          },
+          {
+            "id": "gluten",
+            "nome": "Trigo/Glúten"
+          },
+          {
+            "id": "amendoim",
+            "nome": "Amendoim"
+          },
+          {
+            "id": "oleaginosa",
+            "nome": "Oleaginosa"
+          },
+          {
+            "id": "ovo",
+            "nome": "Ovo"
+          },
+          {
+            "id": "suino",
+            "nome": "Suíno"
+          }
+        ],
+        "observacao": ""
+      },
+      "fonte": {
+        "doc_id": "F56",
+        "pagina": 1,
+        "chunk_id": "F56-0002",
+        "url": "https://ru.unb.br/wp-content/uploads/2026/11/Gama-Semana-01-16-11-a-20-11-1.pdf"
+      },
+      "avisos": []
+    },
+    {
+      "unidade": "gama",
+      "data": "2026-11-18",
+      "refeicao": "cafe",
+      "compartimentos": [
+        {
+          "slot": "bebida",
+          "titulo": "Bebida",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "leite-integral",
+              "nome": "Leite Integral",
+              "trilha": "todas",
+              "alergenicos": [
+                "leite"
+              ],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 1,
+                "chunk_id": "F56-0003"
+              }
+            },
+            {
+              "id": "bebida-de-soja",
+              "nome": "Bebida de Soja",
+              "trilha": "todas",
+              "alergenicos": [
+                "soja"
+              ],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 1,
+                "chunk_id": "F56-0003"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "panificacao",
+          "titulo": "Panificação",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "pao-frances",
+              "nome": "Pão francês",
+              "trilha": "todas",
+              "alergenicos": [
+                "gluten"
+              ],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 1,
+                "chunk_id": "F56-0003"
+              }
+            },
+            {
+              "id": "pao-careca",
+              "nome": "Pão careca",
+              "trilha": "todas",
+              "alergenicos": [
+                "gluten"
+              ],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 1,
+                "chunk_id": "F56-0003"
+              }
+            },
+            {
+              "id": "pao-integral",
+              "nome": "Pão integral",
+              "trilha": "todas",
+              "alergenicos": [
+                "gluten"
+              ],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 1,
+                "chunk_id": "F56-0003"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "gordura",
+          "titulo": "Gordura",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "manteiga",
+              "nome": "Manteiga",
+              "trilha": "todas",
+              "alergenicos": [
+                "leite"
+              ],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 1,
+                "chunk_id": "F56-0003"
+              }
+            },
+            {
+              "id": "creme-vegetal",
+              "nome": "Creme Vegetal",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 1,
+                "chunk_id": "F56-0003"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "complemento",
+          "titulo": "Complemento",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "carne-bovina-desfiada",
+              "nome": "Carne bovina desfiada",
+              "trilha": "padrao",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 1,
+                "chunk_id": "F56-0003"
+              }
+            },
+            {
+              "id": "queijo-mucarela",
+              "nome": "Queijo muçarela",
+              "trilha": "ovolacto",
+              "alergenicos": [
+                "leite"
+              ],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 1,
+                "chunk_id": "F56-0003"
+              }
+            },
+            {
+              "id": "pasta-de-amendoim",
+              "nome": "Pasta de amendoim",
+              "trilha": "vegano",
+              "alergenicos": [
+                "amendoim"
+              ],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 1,
+                "chunk_id": "F56-0003"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "fruta",
+          "titulo": "Fruta",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "melancia",
+              "nome": "Melancia",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 1,
+                "chunk_id": "F56-0003"
+              }
+            }
+          ]
+        }
+      ],
+      "mesa_apoio": [
+        "água",
+        "achocolatado",
+        "açúcar",
+        "adoçante"
+      ],
+      "alergenicos": {
+        "disponivel": true,
+        "legenda": [
+          {
+            "id": "cogumelo",
+            "nome": "Cogumelo"
+          },
+          {
+            "id": "leite",
+            "nome": "Leite e derivados"
+          },
+          {
+            "id": "mel",
+            "nome": "Mel"
+          },
+          {
+            "id": "pimenta",
+            "nome": "Pimenta"
+          },
+          {
+            "id": "soja",
+            "nome": "Soja"
+          },
+          {
+            "id": "gluten",
+            "nome": "Trigo/Glúten"
+          },
+          {
+            "id": "amendoim",
+            "nome": "Amendoim"
+          },
+          {
+            "id": "oleaginosa",
+            "nome": "Oleaginosa"
+          },
+          {
+            "id": "ovo",
+            "nome": "Ovo"
+          },
+          {
+            "id": "suino",
+            "nome": "Suíno"
+          }
+        ],
+        "observacao": ""
+      },
+      "fonte": {
+        "doc_id": "F56",
+        "pagina": 1,
+        "chunk_id": "F56-0003",
+        "url": "https://ru.unb.br/wp-content/uploads/2026/11/Gama-Semana-01-16-11-a-20-11-1.pdf"
+      },
+      "avisos": []
+    },
+    {
+      "unidade": "gama",
+      "data": "2026-11-19",
+      "refeicao": "cafe",
+      "compartimentos": [
+        {
+          "slot": "bebida",
+          "titulo": "Bebida",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "leite-integral",
+              "nome": "Leite Integral",
+              "trilha": "todas",
+              "alergenicos": [
+                "leite"
+              ],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 1,
+                "chunk_id": "F56-0004"
+              }
+            },
+            {
+              "id": "bebida-de-soja",
+              "nome": "Bebida de Soja",
+              "trilha": "todas",
+              "alergenicos": [
+                "soja"
+              ],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 1,
+                "chunk_id": "F56-0004"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "panificacao",
+          "titulo": "Panificação",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "pao-frances",
+              "nome": "Pão francês",
+              "trilha": "todas",
+              "alergenicos": [
+                "gluten"
+              ],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 1,
+                "chunk_id": "F56-0004"
+              }
+            },
+            {
+              "id": "pao-careca",
+              "nome": "Pão careca",
+              "trilha": "todas",
+              "alergenicos": [
+                "gluten"
+              ],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 1,
+                "chunk_id": "F56-0004"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "extra",
+          "titulo": "Opção extra",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "milho-cozido",
+              "nome": "Milho cozido",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 1,
+                "chunk_id": "F56-0004"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "gordura",
+          "titulo": "Gordura",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "manteiga",
+              "nome": "Manteiga",
+              "trilha": "todas",
+              "alergenicos": [
+                "leite"
+              ],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 1,
+                "chunk_id": "F56-0004"
+              }
+            },
+            {
+              "id": "creme-vegetal",
+              "nome": "Creme Vegetal",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 1,
+                "chunk_id": "F56-0004"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "complemento",
+          "titulo": "Complemento",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "frango-desfiado",
+              "nome": "Frango desfiado",
+              "trilha": "padrao",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 1,
+                "chunk_id": "F56-0004"
+              }
+            },
+            {
+              "id": "ricota-temperada",
+              "nome": "Ricota temperada",
+              "trilha": "ovolacto",
+              "alergenicos": [
+                "leite"
+              ],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 1,
+                "chunk_id": "F56-0004"
+              }
+            },
+            {
+              "id": "homus-de-abobora",
+              "nome": "Homus de abóbora",
+              "trilha": "vegano",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 1,
+                "chunk_id": "F56-0004"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "fruta",
+          "titulo": "Fruta",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "banana",
+              "nome": "Banana",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 1,
+                "chunk_id": "F56-0004"
+              }
+            }
+          ]
+        }
+      ],
+      "mesa_apoio": [
+        "água",
+        "achocolatado",
+        "açúcar",
+        "adoçante"
+      ],
+      "alergenicos": {
+        "disponivel": true,
+        "legenda": [
+          {
+            "id": "cogumelo",
+            "nome": "Cogumelo"
+          },
+          {
+            "id": "leite",
+            "nome": "Leite e derivados"
+          },
+          {
+            "id": "mel",
+            "nome": "Mel"
+          },
+          {
+            "id": "pimenta",
+            "nome": "Pimenta"
+          },
+          {
+            "id": "soja",
+            "nome": "Soja"
+          },
+          {
+            "id": "gluten",
+            "nome": "Trigo/Glúten"
+          },
+          {
+            "id": "amendoim",
+            "nome": "Amendoim"
+          },
+          {
+            "id": "oleaginosa",
+            "nome": "Oleaginosa"
+          },
+          {
+            "id": "ovo",
+            "nome": "Ovo"
+          },
+          {
+            "id": "suino",
+            "nome": "Suíno"
+          }
+        ],
+        "observacao": ""
+      },
+      "fonte": {
+        "doc_id": "F56",
+        "pagina": 1,
+        "chunk_id": "F56-0004",
+        "url": "https://ru.unb.br/wp-content/uploads/2026/11/Gama-Semana-01-16-11-a-20-11-1.pdf"
+      },
+      "avisos": [
+        "F56-0004 · Panificação: separador solto no fim de 'Pão francês [Alergênicos: Trigo/Glúten] ou Pão careca [Alergênicos: Trigo/Glúten] ou' — alternativa vazia ignorada"
+      ]
+    },
+    {
+      "unidade": "gama",
+      "data": "2026-11-20",
+      "refeicao": "cafe",
+      "compartimentos": [
+        {
+          "slot": "bebida",
+          "titulo": "Bebida",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "leite-integral",
+              "nome": "Leite Integral",
+              "trilha": "todas",
+              "alergenicos": [
+                "leite"
+              ],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 1,
+                "chunk_id": "F56-0005"
+              }
+            },
+            {
+              "id": "bebida-de-soja",
+              "nome": "Bebida de Soja",
+              "trilha": "todas",
+              "alergenicos": [
+                "soja"
+              ],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 1,
+                "chunk_id": "F56-0005"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "panificacao",
+          "titulo": "Panificação",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "pao-frances",
+              "nome": "Pão francês",
+              "trilha": "todas",
+              "alergenicos": [
+                "gluten"
+              ],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 1,
+                "chunk_id": "F56-0005"
+              }
+            },
+            {
+              "id": "pao-careca",
+              "nome": "Pão careca",
+              "trilha": "todas",
+              "alergenicos": [
+                "gluten"
+              ],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 1,
+                "chunk_id": "F56-0005"
+              }
+            },
+            {
+              "id": "pao-integral",
+              "nome": "Pão integral",
+              "trilha": "todas",
+              "alergenicos": [
+                "gluten"
+              ],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 1,
+                "chunk_id": "F56-0005"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "gordura",
+          "titulo": "Gordura",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "manteiga",
+              "nome": "Manteiga",
+              "trilha": "todas",
+              "alergenicos": [
+                "leite"
+              ],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 1,
+                "chunk_id": "F56-0005"
+              }
+            },
+            {
+              "id": "creme-vegetal",
+              "nome": "Creme Vegetal",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 1,
+                "chunk_id": "F56-0005"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "complemento",
+          "titulo": "Complemento",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "carne-bovina-moida",
+              "nome": "Carne bovina moída",
+              "trilha": "padrao",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 1,
+                "chunk_id": "F56-0005"
+              }
+            },
+            {
+              "id": "queijo-minas",
+              "nome": "Queijo minas",
+              "trilha": "ovolacto",
+              "alergenicos": [
+                "leite"
+              ],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 1,
+                "chunk_id": "F56-0005"
+              }
+            },
+            {
+              "id": "pasta-de-ervilha",
+              "nome": "Pasta de ervilha",
+              "trilha": "vegano",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 1,
+                "chunk_id": "F56-0005"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "fruta",
+          "titulo": "Fruta",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "maca",
+              "nome": "Maçã",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 1,
+                "chunk_id": "F56-0005"
+              }
+            }
+          ]
+        }
+      ],
+      "mesa_apoio": [
+        "água",
+        "achocolatado",
+        "açúcar",
+        "adoçante"
+      ],
+      "alergenicos": {
+        "disponivel": true,
+        "legenda": [
+          {
+            "id": "cogumelo",
+            "nome": "Cogumelo"
+          },
+          {
+            "id": "leite",
+            "nome": "Leite e derivados"
+          },
+          {
+            "id": "mel",
+            "nome": "Mel"
+          },
+          {
+            "id": "pimenta",
+            "nome": "Pimenta"
+          },
+          {
+            "id": "soja",
+            "nome": "Soja"
+          },
+          {
+            "id": "gluten",
+            "nome": "Trigo/Glúten"
+          },
+          {
+            "id": "amendoim",
+            "nome": "Amendoim"
+          },
+          {
+            "id": "oleaginosa",
+            "nome": "Oleaginosa"
+          },
+          {
+            "id": "ovo",
+            "nome": "Ovo"
+          },
+          {
+            "id": "suino",
+            "nome": "Suíno"
+          }
+        ],
+        "observacao": ""
+      },
+      "fonte": {
+        "doc_id": "F56",
+        "pagina": 1,
+        "chunk_id": "F56-0005",
+        "url": "https://ru.unb.br/wp-content/uploads/2026/11/Gama-Semana-01-16-11-a-20-11-1.pdf"
+      },
+      "avisos": []
+    },
+    {
+      "unidade": "gama",
+      "data": "2026-11-16",
+      "refeicao": "almoco",
+      "compartimentos": [
+        {
+          "slot": "salada",
+          "titulo": "Salada",
+          "max": 2,
+          "opcoes": [
+            {
+              "id": "repolho-roxo",
+              "nome": "Repolho roxo",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 2,
+                "chunk_id": "F56-0006"
+              }
+            },
+            {
+              "id": "abobrinha-ralada",
+              "nome": "Abobrinha ralada",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 2,
+                "chunk_id": "F56-0006"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "molho",
+          "titulo": "Molho para salada",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "chipotle",
+              "nome": "Chipotle",
+              "trilha": "todas",
+              "alergenicos": [
+                "pimenta"
+              ],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 2,
+                "chunk_id": "F56-0006"
+              }
+            },
+            {
+              "id": "limao",
+              "nome": "Limão",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 2,
+                "chunk_id": "F56-0006"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "principal",
+          "titulo": "Prato principal",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "frango-com-creme-de-milho",
+              "nome": "Frango com creme de milho",
+              "trilha": "padrao",
+              "alergenicos": [
+                "leite"
+              ],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 2,
+                "chunk_id": "F56-0006"
+              }
+            },
+            {
+              "id": "quibe-de-legumes-com-quinoa-gratinado",
+              "nome": "Quibe de legumes com quinoa gratinado",
+              "trilha": "ovolacto",
+              "alergenicos": [
+                "leite",
+                "gluten"
+              ],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 2,
+                "chunk_id": "F56-0006"
+              }
+            },
+            {
+              "id": "tomate-recheado-com-quinoa",
+              "nome": "Tomate recheado com quinoa",
+              "trilha": "vegano",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 2,
+                "chunk_id": "F56-0006"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "guarnicao",
+          "titulo": "Guarnição",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "cenoura-cozida",
+              "nome": "Cenoura cozida",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 2,
+                "chunk_id": "F56-0006"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "arroz",
+          "titulo": "Arroz",
+          "max": 2,
+          "opcoes": [
+            {
+              "id": "arroz-branco",
+              "nome": "Arroz branco",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 2,
+                "chunk_id": "F56-0006"
+              }
+            },
+            {
+              "id": "arroz-integral",
+              "nome": "Arroz integral",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 2,
+                "chunk_id": "F56-0006"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "feijao",
+          "titulo": "Feijão",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "feijao-preto",
+              "nome": "Feijão preto",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 2,
+                "chunk_id": "F56-0006"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "sobremesa",
+          "titulo": "Sobremesa",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "maca",
+              "nome": "Maçã",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 2,
+                "chunk_id": "F56-0006"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "bebida",
+          "titulo": "Refresco",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "jabuticaba",
+              "nome": "Jabuticaba",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 2,
+                "chunk_id": "F56-0006"
+              }
+            }
+          ]
+        }
+      ],
+      "mesa_apoio": [
+        "água",
+        "farinha",
+        "molho de pimenta",
+        "vinagre",
+        "azeite",
+        "sal"
+      ],
+      "alergenicos": {
+        "disponivel": true,
+        "legenda": [
+          {
+            "id": "cogumelo",
+            "nome": "Cogumelo"
+          },
+          {
+            "id": "leite",
+            "nome": "Leite e derivados"
+          },
+          {
+            "id": "mel",
+            "nome": "Mel"
+          },
+          {
+            "id": "pimenta",
+            "nome": "Pimenta"
+          },
+          {
+            "id": "soja",
+            "nome": "Soja"
+          },
+          {
+            "id": "gluten",
+            "nome": "Trigo/Glúten"
+          },
+          {
+            "id": "amendoim",
+            "nome": "Amendoim"
+          },
+          {
+            "id": "oleaginosa",
+            "nome": "Oleaginosa"
+          },
+          {
+            "id": "ovo",
+            "nome": "Ovo"
+          },
+          {
+            "id": "suino",
+            "nome": "Suíno"
+          }
+        ],
+        "observacao": ""
+      },
+      "fonte": {
+        "doc_id": "F56",
+        "pagina": 2,
+        "chunk_id": "F56-0006",
+        "url": "https://ru.unb.br/wp-content/uploads/2026/11/Gama-Semana-01-16-11-a-20-11-1.pdf"
+      },
+      "avisos": []
+    },
+    {
+      "unidade": "gama",
+      "data": "2026-11-17",
+      "refeicao": "almoco",
+      "compartimentos": [
+        {
+          "slot": "salada",
+          "titulo": "Salada",
+          "max": 2,
+          "opcoes": [
+            {
+              "id": "alface-com-chicoria",
+              "nome": "Alface com chicória",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 2,
+                "chunk_id": "F56-0007"
+              }
+            },
+            {
+              "id": "tomate-cebola-pimentao-em-cubos",
+              "nome": "Tomate, cebola, pimentão em cubos",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 2,
+                "chunk_id": "F56-0007"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "molho",
+          "titulo": "Molho para salada",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "gengibre",
+              "nome": "Gengibre",
+              "trilha": "todas",
+              "alergenicos": [
+                "soja"
+              ],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 2,
+                "chunk_id": "F56-0007"
+              }
+            },
+            {
+              "id": "limao",
+              "nome": "Limão",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 2,
+                "chunk_id": "F56-0007"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "principal",
+          "titulo": "Prato principal",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "suino-com-cebola-caramelizada",
+              "nome": "Suíno com cebola caramelizada",
+              "trilha": "padrao",
+              "alergenicos": [
+                "suino"
+              ],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 2,
+                "chunk_id": "F56-0007"
+              }
+            },
+            {
+              "id": "ovos-mexidos-com-castanhas",
+              "nome": "Ovos mexidos com castanhas",
+              "trilha": "ovolacto",
+              "alergenicos": [
+                "ovo",
+                "leite"
+              ],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 2,
+                "chunk_id": "F56-0007"
+              }
+            },
+            {
+              "id": "bolinho-de-feijao-branco-com-couve",
+              "nome": "Bolinho de feijão branco com couve",
+              "trilha": "vegano",
+              "alergenicos": [
+                "gluten"
+              ],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 2,
+                "chunk_id": "F56-0007"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "guarnicao",
+          "titulo": "Guarnição",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "quibebe-de-mandioca",
+              "nome": "Quibebe de mandioca",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 2,
+                "chunk_id": "F56-0007"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "arroz",
+          "titulo": "Arroz",
+          "max": 2,
+          "opcoes": [
+            {
+              "id": "arroz-branco",
+              "nome": "Arroz branco",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 2,
+                "chunk_id": "F56-0007"
+              }
+            },
+            {
+              "id": "arroz-integral",
+              "nome": "Arroz integral",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 2,
+                "chunk_id": "F56-0007"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "feijao",
+          "titulo": "Feijão",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "feijao-carioca",
+              "nome": "Feijão carioca",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 2,
+                "chunk_id": "F56-0007"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "sobremesa",
+          "titulo": "Sobremesa",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "banana",
+              "nome": "Banana",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 2,
+                "chunk_id": "F56-0007"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "bebida",
+          "titulo": "Refresco",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "goiaba",
+              "nome": "Goiaba",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 2,
+                "chunk_id": "F56-0007"
+              }
+            }
+          ]
+        }
+      ],
+      "mesa_apoio": [
+        "água",
+        "farinha",
+        "molho de pimenta",
+        "vinagre",
+        "azeite",
+        "sal"
+      ],
+      "alergenicos": {
+        "disponivel": true,
+        "legenda": [
+          {
+            "id": "cogumelo",
+            "nome": "Cogumelo"
+          },
+          {
+            "id": "leite",
+            "nome": "Leite e derivados"
+          },
+          {
+            "id": "mel",
+            "nome": "Mel"
+          },
+          {
+            "id": "pimenta",
+            "nome": "Pimenta"
+          },
+          {
+            "id": "soja",
+            "nome": "Soja"
+          },
+          {
+            "id": "gluten",
+            "nome": "Trigo/Glúten"
+          },
+          {
+            "id": "amendoim",
+            "nome": "Amendoim"
+          },
+          {
+            "id": "oleaginosa",
+            "nome": "Oleaginosa"
+          },
+          {
+            "id": "ovo",
+            "nome": "Ovo"
+          },
+          {
+            "id": "suino",
+            "nome": "Suíno"
+          }
+        ],
+        "observacao": ""
+      },
+      "fonte": {
+        "doc_id": "F56",
+        "pagina": 2,
+        "chunk_id": "F56-0007",
+        "url": "https://ru.unb.br/wp-content/uploads/2026/11/Gama-Semana-01-16-11-a-20-11-1.pdf"
+      },
+      "avisos": []
+    },
+    {
+      "unidade": "gama",
+      "data": "2026-11-18",
+      "refeicao": "almoco",
+      "compartimentos": [
+        {
+          "slot": "salada",
+          "titulo": "Salada",
+          "max": 2,
+          "opcoes": [
+            {
+              "id": "mix-de-folhas",
+              "nome": "Mix de folhas",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 2,
+                "chunk_id": "F56-0008"
+              }
+            },
+            {
+              "id": "berinjela-com-pimentoes",
+              "nome": "Berinjela com pimentões",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 2,
+                "chunk_id": "F56-0008"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "molho",
+          "titulo": "Molho para salada",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "salsa",
+              "nome": "Salsa",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 2,
+                "chunk_id": "F56-0008"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "principal",
+          "titulo": "Prato principal",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "coxa-e-sobrecoxa-ao-molho-manjericao",
+              "nome": "Coxa e sobrecoxa ao molho manjericão",
+              "trilha": "padrao",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 2,
+                "chunk_id": "F56-0008"
+              }
+            },
+            {
+              "id": "risoto-de-ervilha-com-queijo",
+              "nome": "Risoto de ervilha com queijo",
+              "trilha": "ovolacto",
+              "alergenicos": [
+                "leite",
+                "gluten"
+              ],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 2,
+                "chunk_id": "F56-0008"
+              }
+            },
+            {
+              "id": "refogado-de-ervilha-couve-flor-e-vagem",
+              "nome": "Refogado de ervilha, couve- flor e vagem",
+              "trilha": "vegano",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 2,
+                "chunk_id": "F56-0008"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "guarnicao",
+          "titulo": "Guarnição",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "legumes-saute-batata-chuchu-e-cenoura",
+              "nome": "Legumes sauté (batata, chuchu e cenoura)",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 2,
+                "chunk_id": "F56-0008"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "arroz",
+          "titulo": "Arroz",
+          "max": 2,
+          "opcoes": [
+            {
+              "id": "arroz-branco",
+              "nome": "Arroz branco",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 2,
+                "chunk_id": "F56-0008"
+              }
+            },
+            {
+              "id": "arroz-integral",
+              "nome": "Arroz integral",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 2,
+                "chunk_id": "F56-0008"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "feijao",
+          "titulo": "Feijão",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "feijao-preto",
+              "nome": "Feijão preto",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 2,
+                "chunk_id": "F56-0008"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "sobremesa",
+          "titulo": "Sobremesa",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "abacaxi",
+              "nome": "Abacaxi",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 2,
+                "chunk_id": "F56-0008"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "bebida",
+          "titulo": "Refresco",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "caju",
+              "nome": "Caju",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 2,
+                "chunk_id": "F56-0008"
+              }
+            }
+          ]
+        }
+      ],
+      "mesa_apoio": [
+        "água",
+        "farinha",
+        "molho de pimenta",
+        "vinagre",
+        "azeite",
+        "sal"
+      ],
+      "alergenicos": {
+        "disponivel": true,
+        "legenda": [
+          {
+            "id": "cogumelo",
+            "nome": "Cogumelo"
+          },
+          {
+            "id": "leite",
+            "nome": "Leite e derivados"
+          },
+          {
+            "id": "mel",
+            "nome": "Mel"
+          },
+          {
+            "id": "pimenta",
+            "nome": "Pimenta"
+          },
+          {
+            "id": "soja",
+            "nome": "Soja"
+          },
+          {
+            "id": "gluten",
+            "nome": "Trigo/Glúten"
+          },
+          {
+            "id": "amendoim",
+            "nome": "Amendoim"
+          },
+          {
+            "id": "oleaginosa",
+            "nome": "Oleaginosa"
+          },
+          {
+            "id": "ovo",
+            "nome": "Ovo"
+          },
+          {
+            "id": "suino",
+            "nome": "Suíno"
+          }
+        ],
+        "observacao": ""
+      },
+      "fonte": {
+        "doc_id": "F56",
+        "pagina": 2,
+        "chunk_id": "F56-0008",
+        "url": "https://ru.unb.br/wp-content/uploads/2026/11/Gama-Semana-01-16-11-a-20-11-1.pdf"
+      },
+      "avisos": []
+    },
+    {
+      "unidade": "gama",
+      "data": "2026-11-19",
+      "refeicao": "almoco",
+      "compartimentos": [
+        {
+          "slot": "salada",
+          "titulo": "Salada",
+          "max": 2,
+          "opcoes": [
+            {
+              "id": "hakussai",
+              "nome": "Hakussai",
+              "trilha": "todas",
+              "alergenicos": [
+                "soja"
+              ],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 2,
+                "chunk_id": "F56-0009"
+              }
+            },
+            {
+              "id": "beterraba-ralada",
+              "nome": "Beterraba ralada",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 2,
+                "chunk_id": "F56-0009"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "molho",
+          "titulo": "Molho para salada",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "ervas-finas",
+              "nome": "Ervas finas",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 2,
+                "chunk_id": "F56-0009"
+              }
+            },
+            {
+              "id": "limao",
+              "nome": "Limão",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 2,
+                "chunk_id": "F56-0009"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "principal",
+          "titulo": "Prato principal",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "lagarto-ao-molho-escuro",
+              "nome": "Lagarto ao molho escuro",
+              "trilha": "padrao",
+              "alergenicos": [
+                "soja"
+              ],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 2,
+                "chunk_id": "F56-0009"
+              }
+            },
+            {
+              "id": "bife-de-soja-ao-sugo-gratinado",
+              "nome": "Bife de soja ao sugo gratinado",
+              "trilha": "ovolacto",
+              "alergenicos": [
+                "soja",
+                "leite"
+              ],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 2,
+                "chunk_id": "F56-0009"
+              }
+            },
+            {
+              "id": "soja-xadrez",
+              "nome": "Soja xadrez",
+              "trilha": "vegano",
+              "alergenicos": [
+                "soja",
+                "amendoim"
+              ],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 2,
+                "chunk_id": "F56-0009"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "guarnicao",
+          "titulo": "Guarnição",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "polenta-com-espinafre",
+              "nome": "Polenta com espinafre",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 2,
+                "chunk_id": "F56-0009"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "arroz",
+          "titulo": "Arroz",
+          "max": 2,
+          "opcoes": [
+            {
+              "id": "arroz-branco",
+              "nome": "Arroz branco",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 2,
+                "chunk_id": "F56-0009"
+              }
+            },
+            {
+              "id": "arroz-integral",
+              "nome": "Arroz integral",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 2,
+                "chunk_id": "F56-0009"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "feijao",
+          "titulo": "Feijão",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "feijao-carioca",
+              "nome": "Feijão carioca",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 2,
+                "chunk_id": "F56-0009"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "sobremesa",
+          "titulo": "Sobremesa",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "mix-de-doces",
+              "nome": "Mix de doces",
+              "trilha": "todas",
+              "alergenicos": [
+                "leite",
+                "amendoim"
+              ],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 2,
+                "chunk_id": "F56-0009"
+              }
+            },
+            {
+              "id": "fruta",
+              "nome": "Fruta",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 2,
+                "chunk_id": "F56-0009"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "bebida",
+          "titulo": "Refresco",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "uva",
+              "nome": "Uva",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 2,
+                "chunk_id": "F56-0009"
+              }
+            }
+          ]
+        }
+      ],
+      "mesa_apoio": [
+        "água",
+        "farinha",
+        "molho de pimenta",
+        "vinagre",
+        "azeite",
+        "sal"
+      ],
+      "alergenicos": {
+        "disponivel": true,
+        "legenda": [
+          {
+            "id": "cogumelo",
+            "nome": "Cogumelo"
+          },
+          {
+            "id": "leite",
+            "nome": "Leite e derivados"
+          },
+          {
+            "id": "mel",
+            "nome": "Mel"
+          },
+          {
+            "id": "pimenta",
+            "nome": "Pimenta"
+          },
+          {
+            "id": "soja",
+            "nome": "Soja"
+          },
+          {
+            "id": "gluten",
+            "nome": "Trigo/Glúten"
+          },
+          {
+            "id": "amendoim",
+            "nome": "Amendoim"
+          },
+          {
+            "id": "oleaginosa",
+            "nome": "Oleaginosa"
+          },
+          {
+            "id": "ovo",
+            "nome": "Ovo"
+          },
+          {
+            "id": "suino",
+            "nome": "Suíno"
+          }
+        ],
+        "observacao": ""
+      },
+      "fonte": {
+        "doc_id": "F56",
+        "pagina": 2,
+        "chunk_id": "F56-0009",
+        "url": "https://ru.unb.br/wp-content/uploads/2026/11/Gama-Semana-01-16-11-a-20-11-1.pdf"
+      },
+      "avisos": []
+    },
+    {
+      "unidade": "gama",
+      "data": "2026-11-20",
+      "refeicao": "almoco",
+      "compartimentos": [
+        {
+          "slot": "salada",
+          "titulo": "Salada",
+          "max": 2,
+          "opcoes": [
+            {
+              "id": "couve-manteiga",
+              "nome": "Couve-manteiga",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 2,
+                "chunk_id": "F56-0010"
+              }
+            },
+            {
+              "id": "abobora-ralada",
+              "nome": "Abóbora ralada",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 2,
+                "chunk_id": "F56-0010"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "molho",
+          "titulo": "Molho para salada",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "vinagrete",
+              "nome": "Vinagrete",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 2,
+                "chunk_id": "F56-0010"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "principal",
+          "titulo": "Prato principal",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "feijoada",
+              "nome": "Feijoada",
+              "trilha": "padrao",
+              "alergenicos": [
+                "suino",
+                "pimenta"
+              ],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 2,
+                "chunk_id": "F56-0010"
+              }
+            },
+            {
+              "id": "omelete-de-vegetais-com-queijo-gartinada",
+              "nome": "Omelete de vegetais com queijo gartinada",
+              "trilha": "ovolacto",
+              "alergenicos": [
+                "ovo",
+                "leite"
+              ],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 2,
+                "chunk_id": "F56-0010"
+              }
+            },
+            {
+              "id": "feijoada-vegetariana",
+              "nome": "Feijoada Vegetariana",
+              "trilha": "vegano",
+              "alergenicos": [
+                "soja"
+              ],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 2,
+                "chunk_id": "F56-0010"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "guarnicao",
+          "titulo": "Guarnição",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "farofa-de-cebola",
+              "nome": "Farofa de cebola",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 2,
+                "chunk_id": "F56-0010"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "arroz",
+          "titulo": "Arroz",
+          "max": 2,
+          "opcoes": [
+            {
+              "id": "arroz-branco",
+              "nome": "Arroz branco",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 2,
+                "chunk_id": "F56-0010"
+              }
+            },
+            {
+              "id": "arroz-integral",
+              "nome": "Arroz integral",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 2,
+                "chunk_id": "F56-0010"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "feijao",
+          "titulo": "Feijão",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "feijao-preto",
+              "nome": "Feijão preto",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 2,
+                "chunk_id": "F56-0010"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "sobremesa",
+          "titulo": "Sobremesa",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "laranja",
+              "nome": "Laranja",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 2,
+                "chunk_id": "F56-0010"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "bebida",
+          "titulo": "Refresco",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "morango",
+              "nome": "Morango",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 2,
+                "chunk_id": "F56-0010"
+              }
+            }
+          ]
+        }
+      ],
+      "mesa_apoio": [
+        "água",
+        "farinha",
+        "molho de pimenta",
+        "vinagre",
+        "azeite",
+        "sal"
+      ],
+      "alergenicos": {
+        "disponivel": true,
+        "legenda": [
+          {
+            "id": "cogumelo",
+            "nome": "Cogumelo"
+          },
+          {
+            "id": "leite",
+            "nome": "Leite e derivados"
+          },
+          {
+            "id": "mel",
+            "nome": "Mel"
+          },
+          {
+            "id": "pimenta",
+            "nome": "Pimenta"
+          },
+          {
+            "id": "soja",
+            "nome": "Soja"
+          },
+          {
+            "id": "gluten",
+            "nome": "Trigo/Glúten"
+          },
+          {
+            "id": "amendoim",
+            "nome": "Amendoim"
+          },
+          {
+            "id": "oleaginosa",
+            "nome": "Oleaginosa"
+          },
+          {
+            "id": "ovo",
+            "nome": "Ovo"
+          },
+          {
+            "id": "suino",
+            "nome": "Suíno"
+          }
+        ],
+        "observacao": ""
+      },
+      "fonte": {
+        "doc_id": "F56",
+        "pagina": 2,
+        "chunk_id": "F56-0010",
+        "url": "https://ru.unb.br/wp-content/uploads/2026/11/Gama-Semana-01-16-11-a-20-11-1.pdf"
+      },
+      "avisos": []
+    },
+    {
+      "unidade": "gama",
+      "data": "2026-11-16",
+      "refeicao": "jantar",
+      "compartimentos": [
+        {
+          "slot": "salada",
+          "titulo": "Salada",
+          "max": 2,
+          "opcoes": [
+            {
+              "id": "alface-crespa",
+              "nome": "Alface crespa",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 3,
+                "chunk_id": "F56-0011"
+              }
+            },
+            {
+              "id": "cenoura-ralada-com-passas",
+              "nome": "Cenoura ralada com passas",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 3,
+                "chunk_id": "F56-0011"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "molho",
+          "titulo": "Molho para salada",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "gengibre",
+              "nome": "Gengibre",
+              "trilha": "todas",
+              "alergenicos": [
+                "soja"
+              ],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 3,
+                "chunk_id": "F56-0011"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "principal",
+          "titulo": "Prato principal",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "bife-de-panela",
+              "nome": "Bife de panela",
+              "trilha": "padrao",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 3,
+                "chunk_id": "F56-0011"
+              }
+            },
+            {
+              "id": "strogonoff-de-berinjela-com-cogumelos",
+              "nome": "Strogonoff de berinjela com cogumelos",
+              "trilha": "ovolacto",
+              "alergenicos": [
+                "leite",
+                "cogumelo"
+              ],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 3,
+                "chunk_id": "F56-0011"
+              }
+            },
+            {
+              "id": "nhoque-a-bolonhesa-de-soja",
+              "nome": "Nhoque à bolonhesa de soja",
+              "trilha": "vegano",
+              "alergenicos": [
+                "soja",
+                "gluten"
+              ],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 3,
+                "chunk_id": "F56-0011"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "sopa",
+          "titulo": "Sopa",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "creme-de-cebola-com-alho-poro",
+              "nome": "Creme de cebola com alho poró",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 3,
+                "chunk_id": "F56-0011"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "torrada",
+          "titulo": "Torrada",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "torrada",
+              "nome": "Torrada",
+              "trilha": "todas",
+              "alergenicos": [
+                "gluten"
+              ],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 3,
+                "chunk_id": "F56-0011"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "arroz",
+          "titulo": "Arroz",
+          "max": 2,
+          "opcoes": [
+            {
+              "id": "arroz-branco",
+              "nome": "Arroz branco",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 3,
+                "chunk_id": "F56-0011"
+              }
+            },
+            {
+              "id": "arroz-integral",
+              "nome": "Arroz integral",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 3,
+                "chunk_id": "F56-0011"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "feijao",
+          "titulo": "Feijão",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "feijao-preto",
+              "nome": "Feijão preto",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 3,
+                "chunk_id": "F56-0011"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "sobremesa",
+          "titulo": "Sobremesa",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "mix-de-doces",
+              "nome": "Mix de doces",
+              "trilha": "todas",
+              "alergenicos": [
+                "leite",
+                "amendoim"
+              ],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 3,
+                "chunk_id": "F56-0011"
+              }
+            },
+            {
+              "id": "fruta",
+              "nome": "Fruta",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 3,
+                "chunk_id": "F56-0011"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "bebida",
+          "titulo": "Refresco",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "jabuticaba",
+              "nome": "Jabuticaba",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 3,
+                "chunk_id": "F56-0011"
+              }
+            }
+          ]
+        }
+      ],
+      "mesa_apoio": [
+        "água",
+        "farinha",
+        "molho de pimenta",
+        "vinagre",
+        "azeite",
+        "sal"
+      ],
+      "alergenicos": {
+        "disponivel": true,
+        "legenda": [
+          {
+            "id": "cogumelo",
+            "nome": "Cogumelo"
+          },
+          {
+            "id": "leite",
+            "nome": "Leite e derivados"
+          },
+          {
+            "id": "mel",
+            "nome": "Mel"
+          },
+          {
+            "id": "pimenta",
+            "nome": "Pimenta"
+          },
+          {
+            "id": "soja",
+            "nome": "Soja"
+          },
+          {
+            "id": "gluten",
+            "nome": "Trigo/Glúten"
+          },
+          {
+            "id": "amendoim",
+            "nome": "Amendoim"
+          },
+          {
+            "id": "oleaginosa",
+            "nome": "Oleaginosa"
+          },
+          {
+            "id": "ovo",
+            "nome": "Ovo"
+          },
+          {
+            "id": "suino",
+            "nome": "Suíno"
+          }
+        ],
+        "observacao": ""
+      },
+      "fonte": {
+        "doc_id": "F56",
+        "pagina": 3,
+        "chunk_id": "F56-0011",
+        "url": "https://ru.unb.br/wp-content/uploads/2026/11/Gama-Semana-01-16-11-a-20-11-1.pdf"
+      },
+      "avisos": []
+    },
+    {
+      "unidade": "gama",
+      "data": "2026-11-17",
+      "refeicao": "jantar",
+      "compartimentos": [
+        {
+          "slot": "salada",
+          "titulo": "Salada",
+          "max": 2,
+          "opcoes": [
+            {
+              "id": "acelga-com-agriao",
+              "nome": "Acelga com agrião",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 3,
+                "chunk_id": "F56-0012"
+              }
+            },
+            {
+              "id": "beterraba-cozida",
+              "nome": "Beterraba cozida",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 3,
+                "chunk_id": "F56-0012"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "molho",
+          "titulo": "Molho para salada",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "alho",
+              "nome": "Alho",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 3,
+                "chunk_id": "F56-0012"
+              }
+            },
+            {
+              "id": "limao",
+              "nome": "Limão",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 3,
+                "chunk_id": "F56-0012"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "principal",
+          "titulo": "Prato principal",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "frango-assado",
+              "nome": "Frango assado",
+              "trilha": "padrao",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 3,
+                "chunk_id": "F56-0012"
+              }
+            },
+            {
+              "id": "batalhoada",
+              "nome": "Batalhoada",
+              "trilha": "ovolacto",
+              "alergenicos": [
+                "ovo"
+              ],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 3,
+                "chunk_id": "F56-0012"
+              }
+            },
+            {
+              "id": "guisado-de-lentilha",
+              "nome": "Guisado de lentilha",
+              "trilha": "vegano",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 3,
+                "chunk_id": "F56-0012"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "sopa",
+          "titulo": "Sopa",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "creme-de-ervilha",
+              "nome": "Creme de ervilha",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 3,
+                "chunk_id": "F56-0012"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "torrada",
+          "titulo": "Torrada",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "torrada",
+              "nome": "Torrada",
+              "trilha": "todas",
+              "alergenicos": [
+                "gluten"
+              ],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 3,
+                "chunk_id": "F56-0012"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "arroz",
+          "titulo": "Arroz",
+          "max": 2,
+          "opcoes": [
+            {
+              "id": "arroz-branco",
+              "nome": "Arroz branco",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 3,
+                "chunk_id": "F56-0012"
+              }
+            },
+            {
+              "id": "arroz-integral",
+              "nome": "Arroz integral",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 3,
+                "chunk_id": "F56-0012"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "feijao",
+          "titulo": "Feijão",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "feijao-carioca",
+              "nome": "Feijão carioca",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 3,
+                "chunk_id": "F56-0012"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "sobremesa",
+          "titulo": "Sobremesa",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "laranja",
+              "nome": "Laranja",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 3,
+                "chunk_id": "F56-0012"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "bebida",
+          "titulo": "Refresco",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "goiaba",
+              "nome": "Goiaba",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 3,
+                "chunk_id": "F56-0012"
+              }
+            }
+          ]
+        }
+      ],
+      "mesa_apoio": [
+        "água",
+        "farinha",
+        "molho de pimenta",
+        "vinagre",
+        "azeite",
+        "sal"
+      ],
+      "alergenicos": {
+        "disponivel": true,
+        "legenda": [
+          {
+            "id": "cogumelo",
+            "nome": "Cogumelo"
+          },
+          {
+            "id": "leite",
+            "nome": "Leite e derivados"
+          },
+          {
+            "id": "mel",
+            "nome": "Mel"
+          },
+          {
+            "id": "pimenta",
+            "nome": "Pimenta"
+          },
+          {
+            "id": "soja",
+            "nome": "Soja"
+          },
+          {
+            "id": "gluten",
+            "nome": "Trigo/Glúten"
+          },
+          {
+            "id": "amendoim",
+            "nome": "Amendoim"
+          },
+          {
+            "id": "oleaginosa",
+            "nome": "Oleaginosa"
+          },
+          {
+            "id": "ovo",
+            "nome": "Ovo"
+          },
+          {
+            "id": "suino",
+            "nome": "Suíno"
+          }
+        ],
+        "observacao": ""
+      },
+      "fonte": {
+        "doc_id": "F56",
+        "pagina": 3,
+        "chunk_id": "F56-0012",
+        "url": "https://ru.unb.br/wp-content/uploads/2026/11/Gama-Semana-01-16-11-a-20-11-1.pdf"
+      },
+      "avisos": []
+    },
+    {
+      "unidade": "gama",
+      "data": "2026-11-18",
+      "refeicao": "jantar",
+      "compartimentos": [
+        {
+          "slot": "salada",
+          "titulo": "Salada",
+          "max": 2,
+          "opcoes": [
+            {
+              "id": "repolho-com-gergelim",
+              "nome": "Repolho com gergelim",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 3,
+                "chunk_id": "F56-0013"
+              }
+            },
+            {
+              "id": "rabanete",
+              "nome": "Rabanete",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 3,
+                "chunk_id": "F56-0013"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "molho",
+          "titulo": "Molho para salada",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "manjericao",
+              "nome": "Manjericão",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 3,
+                "chunk_id": "F56-0013"
+              }
+            },
+            {
+              "id": "limao",
+              "nome": "Limão",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 3,
+                "chunk_id": "F56-0013"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "principal",
+          "titulo": "Prato principal",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "peixe-ao-molho-de-moqueca",
+              "nome": "Peixe ao molho de moqueca",
+              "trilha": "padrao",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 3,
+                "chunk_id": "F56-0013"
+              }
+            },
+            {
+              "id": "omelete-de-legumes-com-soja-gratinado",
+              "nome": "Omelete de legumes com soja gratinado",
+              "trilha": "ovolacto",
+              "alergenicos": [
+                "ovo",
+                "leite"
+              ],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 3,
+                "chunk_id": "F56-0013"
+              }
+            },
+            {
+              "id": "mix-de-graos-soja-e-grao-de-bico",
+              "nome": "Mix de grãos (soja e grão de bico)",
+              "trilha": "vegano",
+              "alergenicos": [
+                "soja"
+              ],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 3,
+                "chunk_id": "F56-0013"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "sopa",
+          "titulo": "Sopa",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "creme-de-abobora-com-especiarias",
+              "nome": "Creme de abóbora com especiarias",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 3,
+                "chunk_id": "F56-0013"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "torrada",
+          "titulo": "Torrada",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "torrada",
+              "nome": "Torrada",
+              "trilha": "todas",
+              "alergenicos": [
+                "gluten"
+              ],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 3,
+                "chunk_id": "F56-0013"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "arroz",
+          "titulo": "Arroz",
+          "max": 2,
+          "opcoes": [
+            {
+              "id": "arroz-branco",
+              "nome": "Arroz branco",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 3,
+                "chunk_id": "F56-0013"
+              }
+            },
+            {
+              "id": "arroz-integral",
+              "nome": "Arroz integral",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 3,
+                "chunk_id": "F56-0013"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "feijao",
+          "titulo": "Feijão",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "feijao-preto",
+              "nome": "Feijão preto",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 3,
+                "chunk_id": "F56-0013"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "sobremesa",
+          "titulo": "Sobremesa",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "maca",
+              "nome": "Maçã",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 3,
+                "chunk_id": "F56-0013"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "bebida",
+          "titulo": "Refresco",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "caju",
+              "nome": "Caju",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 3,
+                "chunk_id": "F56-0013"
+              }
+            }
+          ]
+        }
+      ],
+      "mesa_apoio": [
+        "água",
+        "farinha",
+        "molho de pimenta",
+        "vinagre",
+        "azeite",
+        "sal"
+      ],
+      "alergenicos": {
+        "disponivel": true,
+        "legenda": [
+          {
+            "id": "cogumelo",
+            "nome": "Cogumelo"
+          },
+          {
+            "id": "leite",
+            "nome": "Leite e derivados"
+          },
+          {
+            "id": "mel",
+            "nome": "Mel"
+          },
+          {
+            "id": "pimenta",
+            "nome": "Pimenta"
+          },
+          {
+            "id": "soja",
+            "nome": "Soja"
+          },
+          {
+            "id": "gluten",
+            "nome": "Trigo/Glúten"
+          },
+          {
+            "id": "amendoim",
+            "nome": "Amendoim"
+          },
+          {
+            "id": "oleaginosa",
+            "nome": "Oleaginosa"
+          },
+          {
+            "id": "ovo",
+            "nome": "Ovo"
+          },
+          {
+            "id": "suino",
+            "nome": "Suíno"
+          }
+        ],
+        "observacao": ""
+      },
+      "fonte": {
+        "doc_id": "F56",
+        "pagina": 3,
+        "chunk_id": "F56-0013",
+        "url": "https://ru.unb.br/wp-content/uploads/2026/11/Gama-Semana-01-16-11-a-20-11-1.pdf"
+      },
+      "avisos": []
+    },
+    {
+      "unidade": "gama",
+      "data": "2026-11-19",
+      "refeicao": "jantar",
+      "compartimentos": [
+        {
+          "slot": "salada",
+          "titulo": "Salada",
+          "max": 2,
+          "opcoes": [
+            {
+              "id": "alface-roxa",
+              "nome": "Alface roxa",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 3,
+                "chunk_id": "F56-0014"
+              }
+            },
+            {
+              "id": "abobrinha-cozida-com-salsinha",
+              "nome": "Abobrinha cozida com salsinha",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 3,
+                "chunk_id": "F56-0014"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "molho",
+          "titulo": "Molho para salada",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "hortela",
+              "nome": "Hortelã",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 3,
+                "chunk_id": "F56-0014"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "principal",
+          "titulo": "Prato principal",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "strogonoff-de-frango",
+              "nome": "Strogonoff de frango",
+              "trilha": "padrao",
+              "alergenicos": [
+                "leite",
+                "gluten",
+                "cogumelo"
+              ],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 3,
+                "chunk_id": "F56-0014"
+              }
+            },
+            {
+              "id": "delicia-de-lentilha",
+              "nome": "Delícia de lentilha",
+              "trilha": "ovolacto",
+              "alergenicos": [
+                "leite",
+                "gluten"
+              ],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 3,
+                "chunk_id": "F56-0014"
+              }
+            },
+            {
+              "id": "charuto-de-couve-com-lentilha",
+              "nome": "Charuto de couve com lentilha",
+              "trilha": "vegano",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 3,
+                "chunk_id": "F56-0014"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "sopa",
+          "titulo": "Sopa",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "sopa-de-macarrao-com-legumes",
+              "nome": "Sopa de macarrão com legumes",
+              "trilha": "todas",
+              "alergenicos": [
+                "gluten"
+              ],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 3,
+                "chunk_id": "F56-0014"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "torrada",
+          "titulo": "Torrada",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "torrada",
+              "nome": "Torrada",
+              "trilha": "todas",
+              "alergenicos": [
+                "gluten"
+              ],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 3,
+                "chunk_id": "F56-0014"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "arroz",
+          "titulo": "Arroz",
+          "max": 2,
+          "opcoes": [
+            {
+              "id": "arroz-branco",
+              "nome": "Arroz branco",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 3,
+                "chunk_id": "F56-0014"
+              }
+            },
+            {
+              "id": "arroz-integral",
+              "nome": "Arroz integral",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 3,
+                "chunk_id": "F56-0014"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "feijao",
+          "titulo": "Feijão",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "feijao-carioca",
+              "nome": "Feijão carioca",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 3,
+                "chunk_id": "F56-0014"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "sobremesa",
+          "titulo": "Sobremesa",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "melao",
+              "nome": "Melão",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 3,
+                "chunk_id": "F56-0014"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "bebida",
+          "titulo": "Refresco",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "uva",
+              "nome": "Uva",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 3,
+                "chunk_id": "F56-0014"
+              }
+            }
+          ]
+        }
+      ],
+      "mesa_apoio": [
+        "água",
+        "farinha",
+        "molho de pimenta",
+        "vinagre",
+        "azeite",
+        "sal"
+      ],
+      "alergenicos": {
+        "disponivel": true,
+        "legenda": [
+          {
+            "id": "cogumelo",
+            "nome": "Cogumelo"
+          },
+          {
+            "id": "leite",
+            "nome": "Leite e derivados"
+          },
+          {
+            "id": "mel",
+            "nome": "Mel"
+          },
+          {
+            "id": "pimenta",
+            "nome": "Pimenta"
+          },
+          {
+            "id": "soja",
+            "nome": "Soja"
+          },
+          {
+            "id": "gluten",
+            "nome": "Trigo/Glúten"
+          },
+          {
+            "id": "amendoim",
+            "nome": "Amendoim"
+          },
+          {
+            "id": "oleaginosa",
+            "nome": "Oleaginosa"
+          },
+          {
+            "id": "ovo",
+            "nome": "Ovo"
+          },
+          {
+            "id": "suino",
+            "nome": "Suíno"
+          }
+        ],
+        "observacao": ""
+      },
+      "fonte": {
+        "doc_id": "F56",
+        "pagina": 3,
+        "chunk_id": "F56-0014",
+        "url": "https://ru.unb.br/wp-content/uploads/2026/11/Gama-Semana-01-16-11-a-20-11-1.pdf"
+      },
+      "avisos": []
+    },
+    {
+      "unidade": "gama",
+      "data": "2026-11-20",
+      "refeicao": "jantar",
+      "compartimentos": [
+        {
+          "slot": "salada",
+          "titulo": "Salada",
+          "max": 2,
+          "opcoes": [
+            {
+              "id": "mix-de-folhas",
+              "nome": "Mix de folhas",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 3,
+                "chunk_id": "F56-0015"
+              }
+            },
+            {
+              "id": "caponata-de-berinjela",
+              "nome": "Caponata de berinjela",
+              "trilha": "todas",
+              "alergenicos": [
+                "cogumelo"
+              ],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 3,
+                "chunk_id": "F56-0015"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "molho",
+          "titulo": "Molho para salada",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "maracuja",
+              "nome": "Maracujá",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 3,
+                "chunk_id": "F56-0015"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "principal",
+          "titulo": "Prato principal",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "isca-de-carne-acebolada",
+              "nome": "Isca de carne acebolada",
+              "trilha": "padrao",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 3,
+                "chunk_id": "F56-0015"
+              }
+            },
+            {
+              "id": "baiao-de-dois-com-queijo-coalho",
+              "nome": "Baião de dois com queijo coalho",
+              "trilha": "ovolacto",
+              "alergenicos": [
+                "gluten",
+                "leite"
+              ],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 3,
+                "chunk_id": "F56-0015"
+              }
+            },
+            {
+              "id": "moqueca-de-banana-da-terra-com-proteina-de-soja",
+              "nome": "Moqueca de banana da terra com proteína de soja",
+              "trilha": "vegano",
+              "alergenicos": [
+                "soja"
+              ],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 3,
+                "chunk_id": "F56-0015"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "sopa",
+          "titulo": "Sopa",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "sopa-de-tomate-com-aveia",
+              "nome": "Sopa de tomate com aveia",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 3,
+                "chunk_id": "F56-0015"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "torrada",
+          "titulo": "Torrada",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "torrada",
+              "nome": "Torrada",
+              "trilha": "todas",
+              "alergenicos": [
+                "gluten"
+              ],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 3,
+                "chunk_id": "F56-0015"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "arroz",
+          "titulo": "Arroz",
+          "max": 2,
+          "opcoes": [
+            {
+              "id": "arroz-branco",
+              "nome": "Arroz branco",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 3,
+                "chunk_id": "F56-0015"
+              }
+            },
+            {
+              "id": "arroz-integral",
+              "nome": "Arroz integral",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 3,
+                "chunk_id": "F56-0015"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "feijao",
+          "titulo": "Feijão",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "feijao-preto",
+              "nome": "Feijão preto",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 3,
+                "chunk_id": "F56-0015"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "sobremesa",
+          "titulo": "Sobremesa",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "mamao",
+              "nome": "Mamão",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 3,
+                "chunk_id": "F56-0015"
+              }
+            }
+          ]
+        },
+        {
+          "slot": "bebida",
+          "titulo": "Refresco",
+          "max": 1,
+          "opcoes": [
+            {
+              "id": "morango",
+              "nome": "Morango",
+              "trilha": "todas",
+              "alergenicos": [],
+              "fonte": {
+                "doc_id": "F56",
+                "pagina": 3,
+                "chunk_id": "F56-0015"
+              }
+            }
+          ]
+        }
+      ],
+      "mesa_apoio": [
+        "água",
+        "farinha",
+        "molho de pimenta",
+        "vinagre",
+        "azeite",
+        "sal"
+      ],
+      "alergenicos": {
+        "disponivel": true,
+        "legenda": [
+          {
+            "id": "cogumelo",
+            "nome": "Cogumelo"
+          },
+          {
+            "id": "leite",
+            "nome": "Leite e derivados"
+          },
+          {
+            "id": "mel",
+            "nome": "Mel"
+          },
+          {
+            "id": "pimenta",
+            "nome": "Pimenta"
+          },
+          {
+            "id": "soja",
+            "nome": "Soja"
+          },
+          {
+            "id": "gluten",
+            "nome": "Trigo/Glúten"
+          },
+          {
+            "id": "amendoim",
+            "nome": "Amendoim"
+          },
+          {
+            "id": "oleaginosa",
+            "nome": "Oleaginosa"
+          },
+          {
+            "id": "ovo",
+            "nome": "Ovo"
+          },
+          {
+            "id": "suino",
+            "nome": "Suíno"
+          }
+        ],
+        "observacao": ""
+      },
+      "fonte": {
+        "doc_id": "F56",
+        "pagina": 3,
+        "chunk_id": "F56-0015",
+        "url": "https://ru.unb.br/wp-content/uploads/2026/11/Gama-Semana-01-16-11-a-20-11-1.pdf"
+      },
+      "avisos": []
+    }
+  ]
+}

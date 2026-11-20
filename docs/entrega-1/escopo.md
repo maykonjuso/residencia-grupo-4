@@ -22,7 +22,7 @@ comando, com fontes, e recusa fora da base. O que vem depois são os entregávei
 ## Dentro do escopo
 
 - **RU do campus Gama:** preços por grupo de usuário, gratuidade e Auxílio Alimentação, horários, como acessar (carteirinha digital), cardápio semanal (café, almoço e jantar), regimento.
-- **Fluxo de disciplinas da FCTE:** grades e pré-requisitos das cinco engenharias de graduação, informações do PPGEB, ingresso pela ABI, calendário 2026.2, matrícula no SIGAA, trancamento, regimentos da UnB e da FCTE.
+- **Fluxo de disciplinas da FCTE:** grades e pré-requisitos das cinco engenharias de graduação, informações do PPGEB, calendário 2026.2, matrícula no SIGAA, trancamento, regimentos da UnB e da FCTE.
 - **Apoio:** Guia Alimentar para a População Brasileira e o guia da ANVISA sobre alergênicos, para perguntas gerais de alimentação.
 
 ## Fora do escopo (nesta fase)

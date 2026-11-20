@@ -53,7 +53,7 @@ _DOMINIO_AGENTE = {
             ),
             "fluxo": (
                 "Academic courses and curriculum (FCTE/UnB): classes, prerequisites, credits, semesters, "
-                "internship, dropping a class, major selection (ABI), graduate courses."
+                "internship, dropping a class, enrollment, graduate courses."
             ),
         },
     }
@@ -69,7 +69,7 @@ _SYSTEM_DECOMPOSICAO = (
     "(FCTE/UnB - campus Gama, cobrindo Restaurante Universitário/RU e fluxo de cursos).\n"
     "Domínios disponíveis para o campo eixo:\n"
     '- "ru": Restaurante Universitário (cardápio, refeições, preços, alergênicos/leite, auxílio/bolsa alimentação, horários, catraca).\n'
-    '- "fluxo": fluxo de disciplinas, cursos de engenharia da FCTE, pré-requisitos, créditos, estágio, trancamento/desistência, ABI, pós-graduação.\n'
+    '- "fluxo": fluxo de disciplinas, cursos de engenharia da FCTE, pré-requisitos, créditos, estágio, trancamento/desistência, matrícula, pós-graduação.\n'
     '- "ambos": somente quando uma subpergunta indivisível exigir os dois domínios.\n'
     "Sua tarefa é quebrar uma pergunta composta do estudante em 2 ou mais subperguntas independentes, diretas e autocontidas.\n"
     "Regras críticas:\n"
@@ -127,6 +127,8 @@ def classificar_composta(pergunta: str) -> tuple[bool, float]:
     if q.count("?") >= 2:
         return True, 0.95
     if not _CONECTIVOS.search(q):
+        return False, 0.0
+    if not config.USAR_D1:
         return False, 0.0
 
     try:
@@ -340,6 +342,8 @@ def _decompor_llm(pergunta: str, backend: str = "auto") -> tuple[str, ...]:
 
 def classificar_dominio_d1(subpergunta: str, limiar_confianca: float = 0.60) -> list[str]:
     """Teste 2 (System-1 zero-shot): classifica subpergunta ambígua entre 'ru' e 'fluxo' via d1-omni."""
+    if not config.USAR_D1:
+        return ["ru", "fluxo"]
     try:
         modelo = _carregar_decisor()
         res = modelo.system_one(subpergunta.strip(), _DOMINIO_AGENTE)

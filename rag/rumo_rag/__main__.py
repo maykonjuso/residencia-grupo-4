@@ -14,17 +14,28 @@ import time
 from . import agentes, chunking, config, extracao, geracao, indice
 
 
-def ingerir(_args):
+def ingerir(args):
     t0 = time.time()
-    docs = extracao.carregar_catalogo()
-    extracao.baixar(docs)
-    textos = extracao.extrair_todos(docs)
+    catalogo = extracao.carregar_catalogo()
+    ignorados = [d for d in catalogo if d.get("tipo") == "cardapio"]
+    docs = [d for d in catalogo if d.get("tipo") != "cardapio"]
+    if ignorados:
+        ids = ", ".join(d["id"] for d in ignorados)
+        print(f"ignorando {len(ignorados)} cardápio(s) ({ids}) — atendidos via cardapio_semanal.json")
+    rebaixar = getattr(args, "rebaixar", False)
+    extracao.baixar(docs, rebaixar=rebaixar)
+    textos = extracao.extrair_todos(docs, rebaixar=rebaixar)
     chunks = []
     for d in docs:
         chunks.extend(chunking.dividir(d, textos[d["id"]]))
     tamanhos = sorted(len(c["texto"]) for c in chunks)
-    print(f"{len(docs)} documentos → {len(chunks)} chunks · mediana {tamanhos[len(tamanhos)//2]} caracteres")
-    indice.indexar(chunks)
+    mediana = tamanhos[len(tamanhos) // 2] if tamanhos else 0
+    print(f"{len(docs)} documentos → {len(chunks)} chunks · mediana {mediana} caracteres")
+    if getattr(args, "somente_chunks", False):
+        indice.salvar_chunks(chunks)
+        print(f"chunks salvos em {config.CHUNKS} (sem indexação vetorial)")
+    else:
+        indice.indexar(chunks)
     print(f"ingestão concluída em {time.time() - t0:.0f}s")
 
 
@@ -254,12 +265,29 @@ def perguntar(args):
 def avaliar(args):
     with open(config.PERGUNTAS_AVALIACAO / "perguntas_ouro.jsonl", encoding="utf-8") as f:
         casos = [json.loads(l) for l in f]
-    linhas = []
-    for modo in ("bm25", "denso", "hibrido"):
+
+    modo_arg = getattr(args, "modo", None)
+    if modo_arg is None:
+        modos = ("bm25", "denso", "hibrido") if config.CHROMA.exists() else ("bm25",)
+        if not config.CHROMA.exists():
+            print(f"aviso: {config.CHROMA} ausente — avaliando apenas bm25 e preservando resultados anteriores de denso/hibrido")
+    elif modo_arg == "todos":
+        modos = ("bm25", "denso", "hibrido")
+    else:
+        modos = (modo_arg,)
+
+    destino = config.RESULTADOS_AVALIACAO / "resultado_recuperacao.json"
+    por_modo: dict[str, dict] = {}
+    if destino.exists():
+        for item in json.loads(destino.read_text(encoding="utf-8")):
+            if isinstance(item, dict) and "modo" in item:
+                por_modo[item["modo"]] = item
+
+    for modo in modos:
         hit1 = hitk = rr = 0.0
         detalhes = []
         for c in casos:
-            res = indice.buscar(c["pergunta"], k=args.k, modo=modo)
+            res = indice.buscar(c["pergunta"], k=args.k, modo=modo, decompor_pergunta=False)
             docs = [r["doc_id"] for r in res]
             pos = next((i for i, d in enumerate(docs) if d in c["docs_esperados"]), None)
             hit1 += pos == 0
@@ -267,12 +295,20 @@ def avaliar(args):
             rr += 1 / (pos + 1) if pos is not None else 0
             detalhes.append({"id": c["id"], "pos": pos, "top": docs})
         n = len(casos)
-        linhas.append({"modo": modo, "n": n, "hit@1": round(hit1 / n, 3), f"hit@{args.k}": round(hitk / n, 3),
-                       "mrr": round(rr / n, 3), "detalhes": detalhes})
+        por_modo[modo] = {
+            "modo": modo,
+            "n": n,
+            "hit@1": round(hit1 / n, 3),
+            f"hit@{args.k}": round(hitk / n, 3),
+            "mrr": round(rr / n, 3),
+            "detalhes": detalhes,
+        }
         print(f"{modo:8s} hit@1={hit1/n:.3f} hit@{args.k}={hitk/n:.3f} MRR={rr/n:.3f} (n={n})")
+
+    ordem = [m for m in ("bm25", "denso", "hibrido") if m in por_modo]
+    linhas = [por_modo[m] for m in ordem]
     config.RESULTADOS_AVALIACAO.mkdir(parents=True, exist_ok=True)
-    (config.RESULTADOS_AVALIACAO / "resultado_recuperacao.json").write_text(
-        json.dumps(linhas, ensure_ascii=False, indent=2), encoding="utf-8")
+    destino.write_text(json.dumps(linhas, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
 def demo(args):
@@ -294,7 +330,12 @@ def demo(args):
 def main(argv=None):
     ap = argparse.ArgumentParser(prog="rumo_rag")
     sub = ap.add_subparsers(dest="cmd", required=True)
-    sub.add_parser("ingerir").set_defaults(f=ingerir)
+    ing = sub.add_parser("ingerir")
+    ing.add_argument("--rebaixar", action="store_true",
+                     help="Força o download dos originais mesmo quando dados/texto/<id>.txt já existe")
+    ing.add_argument("--somente-chunks", action="store_true",
+                     help="Gera apenas dados/chunks.jsonl sem recriar os embeddings/ChromaDB")
+    ing.set_defaults(f=ingerir)
     p = sub.add_parser("perguntar")
     p.add_argument("pergunta", nargs="+")
     p.add_argument("--backend", default=config.BACKEND, choices=["hf", "ollama", "openai", "extrativo"])
@@ -309,6 +350,8 @@ def main(argv=None):
     p.set_defaults(f=perguntar)
     a = sub.add_parser("avaliar")
     a.add_argument("-k", type=int, default=config.TOP_K)
+    a.add_argument("--modo", choices=["bm25", "denso", "hibrido", "todos"], default=None,
+                   help="Modos de busca avaliados (padrão: todos se ChromaDB existir, senão bm25)")
     a.set_defaults(f=avaliar)
     d = sub.add_parser("demo")
     d.add_argument("--backend", default=config.BACKEND, choices=["hf", "ollama", "openai", "extrativo"])

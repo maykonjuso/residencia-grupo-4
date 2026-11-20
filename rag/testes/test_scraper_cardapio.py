@@ -47,6 +47,7 @@ class AmbienteIsolado(unittest.TestCase):
         self.catalogo.write_text(config.CATALOGO.read_text(encoding="utf-8"), encoding="utf-8")
         self.patches = [mock.patch.object(config, "CATALOGO", self.catalogo),
                         mock.patch.object(config, "ORIGINAIS", self.tmp / "originais"),
+                        mock.patch.object(config, "CARDAPIO_SEMANAL_JSON", self.tmp / "cardapio_semanal.json"),
                         mock.patch.object(scraper, "BRUTOS", self.tmp / "brutos")]
         for p in self.patches:
             p.start()
@@ -159,6 +160,7 @@ class TestGravacao(AmbienteIsolado):
         arquivos = self.arquivos()
         self.assertTrue(any(a.startswith("brutos/") and a.endswith(".html") for a in arquivos), arquivos)
         self.assertIn(f"originais/{PROXIMO}.pdf", arquivos)
+        self.assertIn("cardapio_semanal.json", arquivos)
         docs = yaml.safe_load(self.catalogo.read_text(encoding="utf-8"))["documentos"]
         novo = docs[-1]
         self.assertEqual(novo["id"], PROXIMO)
