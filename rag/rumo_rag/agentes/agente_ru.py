@@ -18,7 +18,10 @@ _TERMOS_RU = re.compile(
     r"\b(?:"
     r"ru|restaurante(?:\s+universit[aá]rio)?|almo[cç]o|jantar|caf[eé](?:\s+da\s+manh[aã])?|"
     r"desjejum|refei[cç][aã]o|refei[cç][oõ]es|card[aá]pio|prato|vegetariano|vegetariana|vegano|vegana|"
-    r"alerg[eê]nicos?|gl[uú]ten|lactose|aux[ií]lio\s+alimenta[cç][aã]o|pnaes|"
+    r"alerg[eê]nicos?|alergia|intoler[aâ]ncia|cel[ií]ac[oa]s?|gl[uú]ten|trigo|lactose|leite|"
+    r"soja|amendoim|oleaginosas?|cogumelos?|su[ií]n[oa]|ovos?|pimenta|mel|"
+    r"calorias?|kcal|nutricional|dietas?|"
+    r"aux[ií]lio\s+alimenta[cç][aã]o|pnaes|"
     r"grupo\s+(?:i{1,3}|iv)|isento|isen[cç][aã]o|bandej[aã]o|catraca"
     r")\b",
     re.IGNORECASE,
@@ -99,8 +102,18 @@ def executar_agente_dominio(agente: Any, mensagem: Mensagem) -> Resposta:
     contexto["tempo_geracao_s"] = round(t2 - t1, 3)
 
     alertas: list[str] = []
-    if not trechos:
+    if resultado.get("aviso_cardapio"):
+        alertas.append(resultado["aviso_cardapio"])
+    elif not trechos:
         alertas.append(f"Nenhum trecho encontrado no eixo {agente.eixo.upper()}.")
+
+    if not trechos and resultado.get("aviso_cardapio"):
+        return Resposta(
+            conteudo=geracao.RECUSA,
+            fontes=[],
+            confianca=0.0,
+            alertas=alertas,
+        )
 
     if geracao.eh_recusa(texto):
         return Resposta(
@@ -140,13 +153,80 @@ def executar_agente_dominio(agente: Any, mensagem: Mensagem) -> Resposta:
 
 
 INSTRUCOES_RU = f"""Você é o Agente RU do sistema RUmo, especialista exclusivo no Restaurante Universitário da UnB (campus Gama/FCTE).
-Seu domínio cobre APENAS cardápios semanais (café da manhã, almoço e jantar), opções vegetarianas/veganas, alergênicos (leite, glúten e derivados), valores das refeições, grupos de pagamento I a IV, isenção, auxílio alimentação (PNAES) e horários do RU.
+Seu domínio cobre APENAS cardápios semanais (café da manhã, almoço e jantar), opções vegetarianas/veganas, os 10 alergênicos oficiais (cogumelo, leite e derivados, mel, pimenta, soja, trigo/glúten, amendoim, oleaginosa, ovo e suíno), valores das refeições, grupos de pagamento I a IV, isenção, auxílio alimentação (PNAES) e horários do RU.
 Regras:
 1. Responda em português, de forma direta, usando SOMENTE as informações dos trechos numerados abaixo e APENAS sobre o Restaurante Universitário. Ignore ou recuse qualquer tema sobre disciplinas, pré-requisitos, fluxogramas ou cursos.
 2. OBRIGATÓRIO: depois de cada afirmação ou item de lista, termine com a citação do trecho entre colchetes, por exemplo [1] ou [2][3]. Nunca omita [n] em listas.
-3. Se os trechos não trazem a resposta sobre o RU, diga exatamente: "{geracao.RECUSA}" e não sugira assuntos fora do RU. Não invente pratos, ingredientes, valores ou datas.
-4. Quando o valor ou o acesso depender do grupo de pagamento (I, II, III ou IV) ou do vínculo do estudante, informe exatamente essa condição segundo os trechos.
+3. Se os trechos não trazem a resposta sobre o RU, diga exatamente: "{geracao.RECUSA}" e não sugira assuntos fora do RU. Não invente pratos, ingredientes, calorias, valores nutricionais ou datas; nunca estime informações não publicadas. Caso algum item tenha aviso "a conferir na distribuição", oriente a confirmar na linha de distribuição.
+4. Quando o valor ou o acesso depender do grupo de pagamento (I, II, III ou IV) ou do vínculo do estudante, informe exatamente essa condição segundo os trechos. Se a pergunta mencionar auxílio alimentação ou bolsa alimentação, destaque a gratuidade/isenção do Grupo I prevista nos trechos e NUNCA aplique os valores do Grupo II a beneficiários do auxílio.
 5. Seja conciso: no máximo 120 palavras. Copie datas, horários, preparações e valores exatamente como estão nos trechos."""
+
+
+_CONSULTA_CARDAPIO = re.compile(
+    r"\b(?:"
+    r"card[aá]pio|prato|pratos|prote[ií]na|salada|sobremesa|sopa|guarni[cç][aã]o|"
+    r"acompanhamento|fruta|bebida|refresco|panifica[cç][aã]o|vegetariano|vegetariana|"
+    r"vegano|vegana|ovolactovegetariano|alerg[eê]nicos?|gl[uú]ten|trigo|lactose|leite|"
+    r"soja|amendoim|oleaginosas?|cogumelos?|su[ií]n[oa]|ovos?|pimenta|mel|derivados\s+de\s+leite|"
+    r"o\s+que\s+tem|o\s+que\s+vai\s+ter|servid[oa]|"
+    r"(?:qual|que)\s+dia\s+(?:tem|vai\s+ter|servem)|"
+    r"(?:almo[cç]o|jantar|caf[eé](?:\s+da\s+manh[aã])?|desjejum)\s+de\s+(?:hoje|amanh[ãa])|"
+    r"servem\s+no\s+(?:almo[cç]o|jantar|caf[eé]|desjejum)|"
+    r"segunda|ter[cç]a|quarta|quinta|sexta"
+    r")\b",
+    re.IGNORECASE,
+)
+
+_CONSULTA_NAO_CARDAPIO = re.compile(
+    r"\b(?:"
+    r"quanto\s+custa|pre[cç]o|pre[cç]os|valor|valores|taxa|paga|grupo\s+(?:i{1,3}|iv)|"
+    r"isen[cç][aã]o|isento|aux[ií]lio|bolsa|pnaes|edital|catraca|carteirinha|qr\s*code|"
+    r"hor[aá]rio|que\s+horas|at[eé]\s+que\s+horas|abre|funciona|funcionamento|documentos"
+    r")\b",
+    re.IGNORECASE,
+)
+
+_CONSULTA_NUTRICIONAL = re.compile(
+    r"\b(?:calorias?|kcal|informa[cç][aã]o\s+nutricional|ficha\s+t[eé]cnica)\b",
+    re.IGNORECASE,
+)
+
+_CONSULTA_POLITICA_ALIMENTAR = re.compile(
+    r"\b(?:"
+    r"dietas?\s+(?:especializadas?|individualizadas?|restritivas?)|"
+    r"doen[cç]a\s+cel[ií]aca|cel[ií]ac[oa]s?|"
+    r"atende\s+(?:dieta|intolerante|cel[ií]ac[oa]s?)|"
+    r"servi[cç]o\s+de?\s*alimenta[cç][aã]o|restaurante\s+executivo|"
+    r"quais\s+alerg[eê]nicos\s+o\s+ru\s+(?:identifica|sinaliza|informa|lista)"
+    r")\b",
+    re.IGNORECASE,
+)
+
+_ESPECIFICA_DATA_OU_REFEICAO = re.compile(
+    r"\b(?:"
+    r"hoje|amanh[ãa]|segunda|ter[cç]a|quarta|quinta|sexta|s[aá]bado|domingo|"
+    r"almo[cç]o|jantar|janta|caf[eé](?:\s+da\s+manh[aã])?|desjejum"
+    r")\b|\b\d{1,2}/\d{1,2}\b",
+    re.IGNORECASE,
+)
+
+
+def _eh_pergunta_cardapio(pergunta: str) -> bool:
+    """Identifica perguntas sobre o cardápio/alergênicos (separando de preços, horários e normas)."""
+    if _CONSULTA_NUTRICIONAL.search(pergunta):
+        return False
+    if _CONSULTA_POLITICA_ALIMENTAR.search(pergunta) and not _ESPECIFICA_DATA_OU_REFEICAO.search(pergunta):
+        return False
+    if not _CONSULTA_CARDAPIO.search(pergunta):
+        return False
+    if _CONSULTA_NAO_CARDAPIO.search(pergunta) and not re.search(
+        r"\b(?:card[aá]pio|prato|prote[ií]na|alerg[eê]nicos?|gl[uú]ten|trigo|lactose|leite|"
+        r"soja|amendoim|oleaginosas?|cogumelos?|su[ií]n[oa]|ovos?|pimenta|mel|derivados\s+de\s+leite|o\s+que\s+tem)\b",
+        pergunta,
+        re.IGNORECASE,
+    ):
+        return False
+    return True
 
 
 class AgenteRU(Agente):
@@ -190,16 +270,53 @@ class AgenteRU(Agente):
 
         pergunta = pergunta.strip()
 
-        # Busca restrita aos documentos do eixo RU.
-        # A decomposição fica sob responsabilidade do Orquestrador.
-        with _LOCK_INDICE:
-            trechos = indice.buscar(
-                pergunta,
-                k=self.k,
-                modo=self.modo,
-                eixo=self.eixo,
-                decompor_pergunta=False,
+        if _eh_pergunta_cardapio(pergunta):
+            from ..coleta import cardapio
+
+            dados_semana, motivo = cardapio.carregar_semana_atual()
+            if dados_semana is None:
+                return {
+                    "agente": self.nome,
+                    "eixo": self.eixo,
+                    "pergunta": pergunta,
+                    "encontrou": False,
+                    "trechos": [],
+                    "fontes": [],
+                    "aviso_cardapio": motivo,
+                }
+            trechos = cardapio.trechos_da_semana(dados_semana, pergunta)
+        else:
+            eh_grupo_i = bool(
+                re.search(
+                    r"\b(?:(?:aux[ií]lio|bolsa)\s+alimenta[cç][aã]o|grupo\s+i(?![iv]))\b",
+                    pergunta,
+                    re.I,
+                )
+                and re.search(
+                    r"\b(?:pre[cç]o|valor|subsidiad[oa]|quanto\s+custa|paga|isento|isen[cç][aã]o)\b",
+                    pergunta,
+                    re.I,
+                )
             )
+            # Busca restrita aos documentos normativos/informativos do eixo RU.
+            with _LOCK_INDICE:
+                trechos = indice.buscar(
+                    pergunta,
+                    k=self.k,
+                    modo=self.modo,
+                    eixo=self.eixo,
+                    decompor_pergunta=False,
+                )
+                if eh_grupo_i:
+                    extras = indice.buscar(
+                        "Programa Auxílio Alimentação gratuidade isenção Grupo I",
+                        k=2,
+                        modo=self.modo,
+                        eixo=self.eixo,
+                        decompor_pergunta=False,
+                    )
+                    vistos = {t.get("chunk_id") for t in extras}
+                    trechos = (extras + [t for t in trechos if t.get("chunk_id") not in vistos])[:self.k]
 
         # Organiza as fontes sem duplicar a mesma página.
         fontes = []

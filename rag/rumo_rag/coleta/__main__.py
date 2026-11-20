@@ -37,7 +37,7 @@ def cmd_coleta(args) -> int:
     if args.dry_run:
         print("(dry-run: nada foi gravado)", file=sys.stderr)
         return 0
-    g = scraper.gravar(r["pagina"], r["pdf"], r["semana"], date.today())
+    g = scraper.gravar(r["pagina"], r["pdf"], r["semana"], date.today(), resultado=r)
     for arq in g["arquivos"]:
         print(f"gravado: {arq}", file=sys.stderr)
     if g["novo"]:
@@ -61,10 +61,18 @@ def cmd_cardapio(args) -> int:
         return 1
 
     if not args.estruturado:
-        ids = {r["fonte"]["chunk_id"] for r in resultados}
-        for c in cardapio.carregar_chunks_cardapio():
-            if c["chunk_id"] in ids:
-                print(f"[{c['chunk_id']} · p. {c['pagina']}]\n{c['texto']}\n")
+        ids = {r["fonte"].get("chunk_id") for r in resultados if r["fonte"].get("chunk_id")}
+        impressos = 0
+        if cardapio.config.CHUNKS.exists():
+            for c in cardapio.carregar_chunks_cardapio():
+                if c["chunk_id"] in ids:
+                    print(f"[{c['chunk_id']} · p. {c['pagina']}]\n{c['texto']}\n")
+                    impressos += 1
+        if not impressos:
+            for r in resultados:
+                cid = r["fonte"].get("chunk_id") or r["fonte"]["doc_id"]
+                pag = r["fonte"].get("pagina") or 1
+                print(f"[{cid} · p. {pag}]\n{cardapio._formatar_refeicao_texto(r)}\n")
         return 0
 
     for r in resultados:

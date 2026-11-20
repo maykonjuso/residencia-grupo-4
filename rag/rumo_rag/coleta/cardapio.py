@@ -72,6 +72,7 @@ ALERGENICOS_OFICIAIS: tuple[tuple[str, str], ...] = (
     ("ovo", "Ovo"),
     ("suino", "Suíno"),
 )
+_ROTULO_ALERGENICO: dict[str, str] = dict(ALERGENICOS_OFICIAIS)
 
 _SINONIMOS_ALERGENICO: dict[str, str] = {
     "cogumelo": "cogumelo",
@@ -127,22 +128,30 @@ def _separar_trilha(rotulo: str) -> tuple[str, str]:
     return r, "todas"
 
 
+def _dividir_preservando_anotacoes(texto: str, padrao: re.Pattern[str] | str) -> list[str]:
+    """Divide ``texto`` por ``padrao`` sem quebrar anotações entre colchetes ``[Alergênicos: ...]``."""
+    anotacoes: list[str] = []
+    mascarado = re.sub(
+        r"\[[^\]]+\]",
+        lambda m: f"__ANOT_{len(anotacoes) - (anotacoes.append(m.group(0)) is not None and 0)}__",
+        texto,
+    )
+    partes = re.split(padrao, mascarado) if isinstance(padrao, str) else padrao.split(mascarado)
+    saida: list[str] = []
+    for p in partes:
+        for idx, anot in enumerate(anotacoes):
+            p = p.replace(f"__ANOT_{idx}__", anot)
+        saida.append(p)
+    return saida
+
+
 def _alternativas(valor: str, avisos: list[str], contexto: str) -> list[str]:
     bruto = valor.strip()
     if re.search(r"\s(ou|OU|/)\s*$", bruto):
         avisos.append(f"{contexto}: separador solto no fim de {bruto!r} — alternativa vazia ignorada")
         bruto = re.sub(r"\s(ou|OU|/)\s*$", "", bruto)
-    # Protege anotações "[Alergênicos: Trigo/Glúten]" para que "/" dentro dos colchetes não divida a opção
-    anotacoes: list[str] = []
-    mascarado = re.sub(
-        r"\[[^\]]+\]",
-        lambda m: f"__ANOT_{len(anotacoes) - (anotacoes.append(m.group(0)) is not None and 0)}__",
-        bruto,
-    )
     partes = []
-    for p in SEPARADORES.split(mascarado):
-        for idx, anot in enumerate(anotacoes):
-            p = p.replace(f"__ANOT_{idx}__", anot)
+    for p in _dividir_preservando_anotacoes(bruto, SEPARADORES):
         p = p.strip(" .;,")
         if p:
             partes.append(p)
@@ -227,7 +236,8 @@ def estruturar_chunk(chunk: dict) -> dict:
             am = ACOMPANHAMENTOS.match(valor)
             if am:
                 arroz = am.group("arroz")
-                tipos = [t.strip() for t in re.split(r"\s+e\s+", re.sub(r"(?i)^arroz\s+", "", arroz))]
+                sem_prefixo = re.sub(r"(?i)^arroz\s+", "", arroz)
+                tipos = [t.strip() for t in _dividir_preservando_anotacoes(sem_prefixo, r"\s+e\s+")]
                 garantir("arroz", "Arroz", 2)
                 for t in tipos:
                     if t:
@@ -298,7 +308,20 @@ def buscar(data: str, refeicao: str | None = None, doc_id: str | None = None,
     """Cardápios estruturados da data (e refeição, se dada). Lista vazia se não houver."""
     date.fromisoformat(data)  # valida o formato AAAA-MM-DD
     ref = normalizar_refeicao(refeicao) if refeicao else None
-    chunks = carregar_chunks_cardapio() if chunks is None else chunks
+    if chunks is None:
+        if config.CARDAPIO_SEMANAL_JSON.exists():
+            dados = json.loads(config.CARDAPIO_SEMANAL_JSON.read_text(encoding="utf-8"))
+            semanais = [
+                r for r in dados.get("refeicoes", [])
+                if r.get("data") == data
+                and (not ref or r.get("refeicao") == ref)
+                and (not doc_id or (r.get("fonte") or {}).get("doc_id") == doc_id)
+            ]
+            if semanais:
+                return semanais
+        if not config.CHUNKS.exists():
+            return []
+        chunks = carregar_chunks_cardapio()
     saida = []
     for c in chunks:
         if doc_id and c["doc_id"] != doc_id:
@@ -314,6 +337,262 @@ def buscar(data: str, refeicao: str | None = None, doc_id: str | None = None,
 def semana(inicio: str) -> list[str]:
     d = date.fromisoformat(inicio)
     return [(d + timedelta(days=i)).isoformat() for i in range(7)]
+
+
+# ----------------------------------------------------------------------------- cardápio semanal (.json)
+
+_DIAS_SEMANA_PT = (
+    "segunda-feira", "terça-feira", "quarta-feira", "quinta-feira",
+    "sexta-feira", "sábado", "domingo",
+)
+_RE_PAGINA = re.compile(r"\[\[PAGINA (\d+)\]\]\s*\n(## [^\n]+)")
+
+
+def estruturar_semana(resultado_coleta: dict, doc_id: str = "F99") -> dict:
+    """Converte a coleta semanal (`scraper.coletar`) no JSON único `cardapio_semanal.json`."""
+    sem = resultado_coleta["semana"]
+    texto = resultado_coleta.get("texto", "")
+    blocos = re.split(r"(?=\[\[PAGINA \d+\]\])", texto)
+    refeicoes: list[dict] = []
+    for bloco in blocos:
+        bloco = bloco.strip()
+        if not bloco:
+            continue
+        m = _RE_PAGINA.match(bloco)
+        pagina = int(m.group(1)) if m else 1
+        secao = m.group(2).lstrip("# ").strip() if m else ""
+        chunk = {
+            "chunk_id": f"{doc_id}-{len(refeicoes) + 1:04d}",
+            "doc_id": doc_id,
+            "pagina": pagina,
+            "titulo": f"Cardápio semanal do RU Gama — {sem.inicio:%d/%m} a {sem.fim:%d/%m/%Y}",
+            "url": sem.url,
+            "secao": secao,
+            "texto": bloco,
+        }
+        est = estruturar_chunk(chunk)
+        if est["compartimentos"]:
+            refeicoes.append(est)
+    return {
+        "unidade": "gama",
+        "semana": {"inicio": sem.inicio.isoformat(), "fim": sem.fim.isoformat()},
+        "atualizado_em": datetime.now().isoformat(timespec="seconds"),
+        "fonte": {
+            "doc_id": doc_id,
+            "url": sem.url,
+            "pagina_listagem": "https://ru.unb.br/cardapio-gama/",
+        },
+        "alergenicos": {
+            "disponivel": any(r["alergenicos"]["disponivel"] for r in refeicoes),
+            "legenda": [{"id": aid, "nome": rotulo} for aid, rotulo in ALERGENICOS_OFICIAIS],
+        },
+        "refeicoes": refeicoes,
+    }
+
+
+def salvar_semana_json(
+    resultado_coleta: dict,
+    doc_id: str,
+    destino: Path | None = None,
+) -> Path:
+    """Valida cada refeição no schema e grava `cardapio_semanal.json` atomicamente."""
+    from .scraper import gravar_atomico
+
+    destino = destino or config.CARDAPIO_SEMANAL_JSON
+    dados = estruturar_semana(resultado_coleta, doc_id=doc_id)
+    for refeicao in dados["refeicoes"]:
+        validar(refeicao)
+    gravar_atomico(destino, json.dumps(dados, ensure_ascii=False, indent=2) + "\n")
+    return destino
+
+
+def carregar_semana_atual(
+    hoje: date | None = None,
+    caminho: Path = config.CARDAPIO_SEMANAL_JSON,
+) -> tuple[dict | None, str | None]:
+    """Carrega `cardapio_semanal.json` e valida se a semana bate com a data atual."""
+    ref = hoje or date.today()
+    if not caminho.exists():
+        return None, "Cardápio semanal (.json) não encontrado."
+    try:
+        dados = json.loads(caminho.read_text(encoding="utf-8"))
+        sem = dados.get("semana") or {}
+        inicio = date.fromisoformat(sem["inicio"])
+        fim = date.fromisoformat(sem["fim"])
+    except Exception:
+        return None, "Cardápio semanal (.json) inválido ou sem intervalo de semana."
+    if not (inicio <= ref <= fim):
+        return None, (
+            f"Cardápio semanal desatualizado ({inicio:%d/%m/%Y} a {fim:%d/%m/%Y}) "
+            f"para a data atual ({ref:%d/%m/%Y})."
+        )
+    return dados, None
+
+
+def _datas_da_pergunta(pergunta: str, inicio: date, fim: date, hoje: date) -> set[str]:
+    q = _sem_acento(pergunta)
+    datas: set[str] = set()
+    if re.search(r"\bhoje\b", q):
+        datas.add(hoje.isoformat())
+    if re.search(r"\bamanha\b", q):
+        datas.add((hoje + timedelta(days=1)).isoformat())
+    for idx, nome in enumerate(("segunda", "terca", "quarta", "quinta", "sexta", "sabado", "domingo")):
+        if re.search(rf"\b{nome}(?:-feira)?\b", q):
+            d = inicio + timedelta(days=(idx - inicio.weekday()) % 7)
+            if inicio <= d <= fim:
+                datas.add(d.isoformat())
+    for d_str, m_str in re.findall(r"\b(\d{1,2})/(\d{1,2})\b", q):
+        try:
+            d = date(inicio.year, int(m_str), int(d_str))
+            if inicio <= d <= fim:
+                datas.add(d.isoformat())
+        except ValueError:
+            pass
+    return datas
+
+
+def _refeicoes_da_pergunta(pergunta: str) -> set[str]:
+    q = _sem_acento(pergunta)
+    refs: set[str] = set()
+    if re.search(r"\b(?:cafe|desjejum)\b", q):
+        refs.add("cafe")
+    if re.search(r"\b(?:almoco|meio-dia)\b", q):
+        refs.add("almoco")
+    if re.search(r"\b(?:jantar|janta|noite)\b", q):
+        refs.add("jantar")
+    return refs
+
+
+def _formatar_refeicao_texto(r: dict) -> str:
+    d_iso = r.get("data", "")
+    try:
+        dt = date.fromisoformat(d_iso)
+        dia_nome = _DIAS_SEMANA_PT[dt.weekday()]
+        data_br = f"{dt:%d/%m/%Y}"
+    except ValueError:
+        dia_nome, data_br = "", d_iso
+    nome_ref = REFEICOES.get(r.get("refeicao", ""), r.get("refeicao", ""))
+    linhas = [f"Cardápio do RU Gama (FCTE) — {nome_ref} de {dia_nome}, {data_br}:"]
+    for comp in r.get("compartimentos", []):
+        for o in comp.get("opcoes", []):
+            trilha = f" ({o['trilha']})" if o.get("trilha") not in (None, "todas") else ""
+            nomes_alerg = [_ROTULO_ALERGENICO.get(aid, aid) for aid in o.get("alergenicos", [])]
+            alerg = f" [Alergênicos: {', '.join(nomes_alerg)}]" if nomes_alerg else ""
+            linhas.append(f"- {comp['titulo']}{trilha}: {o['nome']}{alerg}")
+    if r.get("mesa_apoio"):
+        linhas.append(f"Mesa de apoio: {', '.join(r['mesa_apoio'])}.")
+    if any("a conferir" in a.lower() for a in r.get("avisos", [])):
+        linhas.append("Aviso: há item(ns) com ícone de alergênico ambíguo — conferir na linha de distribuição.")
+    return "\n".join(linhas)
+
+
+_ORDEM_REFEICAO = {"cafe": 0, "almoco": 1, "jantar": 2}
+_STOPWORDS_CARDAPIO = frozenset({
+    "qual", "quais", "que", "tem", "semana", "esta", "essa", "este", "esse",
+    "cardapio", "prato", "pratos", "dia", "dias", "almoco", "jantar", "cafe",
+    "manha", "desjejum", "ru", "unb", "gama", "fcte", "com", "sem", "para",
+    "por", "dos", "das", "nos", "nas", "uma", "uns", "umas", "hoje", "amanha",
+    "segunda", "terca", "quarta", "quinta", "sexta", "sabado", "domingo",
+    "feira", "alimentacao", "alergenico", "alergenicos", "opcao", "opcoes",
+    "servido", "servida", "servem", "vai", "ter", "possui", "contem", "existe",
+    "comer", "algum", "alguma", "alguns", "algumas",
+})
+_SINONIMOS_EXTRA_PERGUNTA = {
+    "celiac": "gluten",
+    "porco": "suino",
+    "castanha": "oleaginosa",
+    "nozes": "oleaginosa",
+    "amendoa": "oleaginosa",
+}
+
+
+def _alergenicos_da_pergunta(pergunta_norm: str) -> set[str]:
+    ids: set[str] = set()
+    for termo, aid in _SINONIMOS_ALERGENICO.items():
+        if re.search(rf"\b{re.escape(termo)}\b", pergunta_norm):
+            ids.add(aid)
+    for prefixo, aid in _SINONIMOS_EXTRA_PERGUNTA.items():
+        if re.search(rf"\b{re.escape(prefixo)}", pergunta_norm):
+            ids.add(aid)
+    return ids
+
+
+def _ranquear_refeicoes(candidatas: list[dict], pergunta: str, ref_hoje: date) -> list[dict]:
+    if len(candidatas) <= config.TOP_K:
+        return candidatas
+    q_norm = _sem_acento(pergunta)
+    alerg_q = _alergenicos_da_pergunta(q_norm)
+    tokens = [
+        t for t in re.findall(r"[a-z0-9]{3,}", q_norm)
+        if t not in _STOPWORDS_CARDAPIO
+    ]
+
+    pontuadas: list[tuple[int, str, int, dict]] = []
+    for r in candidatas:
+        alerg_r = {
+            aid
+            for comp in r.get("compartimentos", [])
+            for o in comp.get("opcoes", [])
+            for aid in o.get("alergenicos", [])
+        }
+        texto_r = _sem_acento(_formatar_refeicao_texto(r))
+        score = 2 * len(alerg_q & alerg_r) + sum(
+            1 for tok in tokens if re.search(rf"\b{re.escape(tok)}", texto_r)
+        )
+        pontuadas.append((
+            score,
+            r.get("data", ""),
+            _ORDEM_REFEICAO.get(r.get("refeicao", ""), 9),
+            r,
+        ))
+
+    com_match = [item for item in pontuadas if item[0] > 0]
+    if com_match:
+        com_match.sort(key=lambda item: (-item[0], item[1], item[2]))
+        return [item[3] for item in com_match[:config.TOP_K]]
+
+    hoje_iso = ref_hoje.isoformat()
+    pontuadas.sort(key=lambda item: (0 if item[1] >= hoje_iso else 1, item[1], item[2]))
+    return [item[3] for item in pontuadas[:config.TOP_K]]
+
+
+def trechos_da_semana(dados: dict, pergunta: str, hoje: date | None = None) -> list[dict]:
+    """Filtra as refeições relevantes de `cardapio_semanal.json` e devolve trechos padronizados."""
+    ref_hoje = hoje or date.today()
+    inicio = date.fromisoformat(dados["semana"]["inicio"])
+    fim = date.fromisoformat(dados["semana"]["fim"])
+    datas_alvo = _datas_da_pergunta(pergunta, inicio, fim, ref_hoje)
+    refs_alvo = _refeicoes_da_pergunta(pergunta)
+    fonte_sem = dados.get("fonte") or {}
+
+    candidatas = [
+        r for r in dados.get("refeicoes", [])
+        if (not datas_alvo or r.get("data") in datas_alvo)
+        and (not refs_alvo or r.get("refeicao") in refs_alvo)
+    ]
+    selecionadas = _ranquear_refeicoes(candidatas, pergunta, ref_hoje)
+
+    trechos: list[dict] = []
+    for r in selecionadas:
+        f = r.get("fonte") or {}
+        d_iso = r.get("data", "")
+        try:
+            dt = date.fromisoformat(d_iso)
+            secao = f"{REFEICOES.get(r['refeicao'], r['refeicao'])} · {_DIAS_SEMANA_PT[dt.weekday()]} {dt:%d/%m/%Y}"
+        except ValueError:
+            secao = r.get("refeicao", "")
+        trechos.append({
+            "chunk_id": f.get("chunk_id") or "",
+            "doc_id": f.get("doc_id") or fonte_sem.get("doc_id") or "CARDAPIO",
+            "titulo": f"Cardápio semanal do RU Gama ({inicio:%d/%m} a {fim:%d/%m/%Y})",
+            "orgao": "UnB · Diretoria do RU",
+            "pagina": f.get("pagina") or 1,
+            "secao": secao,
+            "url": f.get("url") or fonte_sem.get("url") or "",
+            "texto": _formatar_refeicao_texto(r),
+            "similaridade": 1.0,
+        })
+    return trechos
 
 
 # ----------------------------------------------------------------------------- validação
