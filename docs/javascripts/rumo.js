@@ -782,7 +782,17 @@
           }
         });
         rotularAbas(wrap);
-        wrap.querySelectorAll("details").forEach(function (d) { d.open = true; });
+        wrap.querySelectorAll("details").forEach(function (d) {
+          var sum = d.querySelector("summary");
+          var titulo = sum ? sum.textContent.trim().toLowerCase() : "";
+          if (titulo.indexOf("histórico de revisão") !== -1 || titulo.indexOf("histórico de versão") !== -1) {
+            var prev = d.previousElementSibling;
+            if (prev && prev.tagName === "HR") prev.remove();
+            d.remove();
+            return;
+          }
+          d.open = true;
+        });
 
         wrap.querySelectorAll("a[href]").forEach(function (a) {
           var href = a.getAttribute("href") || "";
