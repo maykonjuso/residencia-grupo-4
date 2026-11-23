@@ -84,6 +84,8 @@ A página do RU (F37) diz que *"preparações que contenham leite de origem anim
 
 **Como foi conferido.** As 6 páginas dos cardápios da base (F08 e F09) foram conferidas à mão contra a imagem, opção por opção. Os casos conferidos viraram teste automático (`rag/testes/test_alergenos.py`). A primeira versão da leitura de ícones, que anotava a célula inteira, errava 87 das 306 opções comparáveis; a versão atual erra 0. Uma terceira semana, fora da base (16 a 20/11/2026), foi usada só como prova: no almoço e no jantar, todos os ícones bateram com a imagem.
 
+**Consulta formal ao RU.** O escopo da issue pedia perguntar formalmente se não houvesse ficha nutricional publicada. O grupo enviou e-mail à Diretoria do RU (falaru@unb.br) perguntando sobre a existência de ficha técnica ou informação nutricional por prato, sobre a ausência de ícone de peixe e frutos do mar na legenda do Gama e sobre a lactose. Até 23/11/2026 não houve resposta. A decisão vale com o que está publicado: calorias ficam fora da base, e, se o RU responder ou passar a publicar a informação, ela entra como nova fonte oficial, ligada ao `id` de cada opção do cardápio estruturado.
+
 **Limitações declaradas:**
 
 - A legenda do RU Gama **não tem ícone de peixe nem de frutos do mar**, embora a página do RU cite frutos do mar. O *Filé de peixe ao molho de ervas* (04/11) não tem nenhum ícone.
@@ -97,4 +99,4 @@ A página do RU (F37) diz que *"preparações que contenham leite de origem anim
     | :---: | :---: | --- | --- |
     | 09/11/2026 | 1.0 | Base com 36 documentos-fonte (Entrega 2) | Grupo 04 |
     | 18/11/2026 | 1.1 | 37 documentos: F37 (serviço de alimentação do RU), alergênicos por prato lidos dos ícones do cardápio, calorias declaradas como lacuna (Issue #55) | Grupo 04 |
-    | 23/11/2026 | 1.2 | Limitação do vocabulário "celíaca" confirmada na busca híbrida (Issue #55) | Gabriella Oliveira |
+    | 23/11/2026 | 1.2 | Limitação do vocabulário "celíaca" confirmada na busca híbrida (Issue #55); consulta ao RU por e-mail registrada, sem resposta até esta data (Issue #55) | Gabriella Oliveira |
