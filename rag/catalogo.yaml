@@ -248,9 +248,12 @@ documentos:
     orgao: "UnB · Secretaria de Administração Acadêmica"
     eixo: fluxo
     tipo: calendario
-    data: "2026-06-25"
-    url: "https://saa.unb.br/wp-content/uploads/2026/06/2026_2_Calend_Ativ_Grad_25_06_2026.pdf"
+    data: "2026-10-02"   # versão de 02/10/2026; substitui a de 25/06/2026
+    url: "https://saa.unb.br/wp-content/uploads/2026/10/2026_2_Calend_Ativ_Grad_02_10_2026.pdf"
     arquivo: originais/F29.pdf
+    coletado_em: "2026-11-23"
+    # calendário vencido é pior que nenhum: fora deste período, a fonte não vale (Issue #57)
+    vigencia: {inicio: "2026-07-22", fim: "2026-12-19"}
   - id: F30
     titulo: "Calendário de matrícula da graduação 2026.1"
     orgao: "UnB · Secretaria de Administração Acadêmica"
@@ -489,3 +492,25 @@ documentos:
     url: "https://ru.unb.br/wp-content/uploads/2026/11/Gama-Semana-01-16-11-a-20-11-1.pdf"
     arquivo: originais/F56.pdf
     coletado_em: "2026-11-20"  # scraper (#50), página https://ru.unb.br/cardapio-gama/
+
+  # --------------------------------------------- CALENDÁRIO (Issue #57, coletado em 23/11/2026)
+  - id: F57
+    titulo: "Feriados, pontos facultativos e período de aulas do 2026.2 — transcrição do calendário"
+    orgao: "UnB · Secretaria de Administração Acadêmica (transcrição do Grupo 04)"
+    eixo: fluxo
+    tipo: calendario
+    data: "2026-10-02"
+    url: "https://saa.unb.br/wp-content/uploads/2026/10/2026_2_Calend_Ativ_Grad_02_10_2026.pdf"
+    arquivo: curados/F57_feriados_calendario_2026_2.md
+    coletado_em: "2026-11-23"
+    vigencia: {inicio: "2026-07-22", fim: "2026-12-19"}
+  - id: F58
+    titulo: "Calendário especial de verão 2027 (2026.4) — turmas de férias"
+    orgao: "UnB · Secretaria de Administração Acadêmica"
+    eixo: fluxo
+    tipo: calendario
+    data: "2026-11-04"
+    url: "https://saa.unb.br/wp-content/uploads/2026/11/2026_4_Calend_Ativ_Grad_04_11_2026.pdf"
+    arquivo: originais/F58.pdf
+    coletado_em: "2026-11-23"
+    vigencia: {inicio: "2026-12-22", fim: "2027-02-22"}

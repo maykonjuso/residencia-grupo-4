@@ -1,6 +1,8 @@
 # Base de conhecimento
 
-A base tem **37 documentos-fonte**, todos públicos e de órgãos oficiais, coletados em **06/11/2026**. Na Entrega 2 eram 36; a página "Serviço alimentação" do RU (F37) entrou pela Issue #55 (18/11/2026). O catálogo completo, com metadados, está em [`rag/catalogo.yaml`](https://github.com/maykonjuso/residencia-grupo-4/blob/main/rag/catalogo.yaml); cada documento tem um ID estável (F01 a F37), usado nas citações das respostas.
+A base tem **56 documentos-fonte** no catálogo, todos públicos e de órgãos oficiais. Na Entrega 2 eram 36, coletados em 06/11/2026. Depois disso entraram: a página "Serviço alimentação" do RU (F37, Issue #55); os documentos de assistência estudantil (F38 a F55, da DDS/DAC e do Conselho de Administração) e o cardápio semanal coletado automaticamente (F56), com a saída dos cardápios antigos F08 e F09 (Issue #53); e o calendário 2026.2 atualizado, a transcrição dos feriados (F57) e o Calendário de Verão 2027 (F58), pela Issue #57 (23/11/2026). Dos 56, **55 estão no índice de busca**; o cardápio semanal (F56) é lido como dado estruturado. O catálogo completo, com metadados, está em [`rag/catalogo.yaml`](https://github.com/maykonjuso/residencia-grupo-4/blob/main/rag/catalogo.yaml); cada documento tem um ID estável (F01 a F58, sem F08 e F09), usado nas citações das respostas.
+
+Os calendários (F29, F57 e F58) têm no catálogo o campo `vigencia`, com o início e o fim do período que cobrem. Calendário vencido é pior que nenhum: fora desse período, a fonte não vale para dizer se há aula.
 
 ## Critérios de curadoria
 
@@ -35,7 +37,7 @@ A **Tabela 2** detalha como os documentos cobrem os cinco cursos de graduação 
 | Engenharia de Energia | Graduação | Informações gerais (F22), matriz (F23) | Imagem → transcrição do grupo |
 | Engenharia de Software | Graduação | Matriz e créditos (F15), fluxograma (F16) | Imagem → transcrição do grupo |
 | Engenharia Biomédica (PPGEB) | Mestrado | Apresentação, matriz, aluno de graduação, linhas, edital (F24–F28) | Página do programa |
-| Comum a todos | — | Ingresso e normas de curso (F14), calendário (F29, F30), trancamento (F31), matrícula (F32–F34), regimentos (F35, F36) | Texto |
+| Comum a todos | — | Ingresso e normas de curso (F14), calendário (F29, F30, F57, F58), trancamento (F31), matrícula (F32–F34), regimentos (F35, F36) | Texto |
 
 <p class="legenda">Tabela 2. Cobertura das engenharias e do PPGEB.</p>
 
@@ -60,6 +62,10 @@ Dois cursos publicam a grade **só como imagem**. O grupo transcreveu as duas pa
 
 - **F16 · Fluxograma de Engenharia de Software:** 10 semestres, 235 créditos, códigos, créditos T-P-E-Total, códigos antigos e uma linha de pré-requisito por disciplina, lida das setas (setas tracejadas marcadas como tais).
 - **F23 · Matriz de Engenharia de Energia:** 10 semestres, 251 créditos, ciclo de cada disciplina (básico, profissionalizante, específico, PI, TCC/estágio).
+
+Um terceiro caso não é imagem, mas perde informação na extração:
+
+- **F57 · Feriados e período de aulas do 2026.2:** no PDF do calendário (F29), os feriados e pontos facultativos são marcados por cor na legenda, e a cor some na extração. A transcrição repete as mesmas datas em frases completas, cada uma também por extenso ("20 de novembro de 2026 (20/11/2026)"), com o dia da semana e a indicação de *feriado* ou *ponto facultativo*. Ela não acrescenta informação ao F29 e deixa explícito o que o calendário **não** informa: datas de recesso, semana de provas e se há aula em ponto facultativo ou na Semana Universitária. Datas e dias da semana foram conferidos contra o PDF de 02/10/2026. Detalhes e medição em [Avaliação da recuperação](avaliacao.md#calendario-academico-feriados-e-vigencia-issue-57).
 
 ## Alergênicos e informação nutricional (Issue #55)
 
@@ -100,3 +106,4 @@ A página do RU (F37) diz que *"preparações que contenham leite de origem anim
     | 09/11/2026 | 1.0 | Base com 36 documentos-fonte (Entrega 2) | Grupo 04 |
     | 18/11/2026 | 1.1 | 37 documentos: F37 (serviço de alimentação do RU), alergênicos por prato lidos dos ícones do cardápio, calorias declaradas como lacuna (Issue #55) | Grupo 04 |
     | 23/11/2026 | 1.2 | Limitação do vocabulário "celíaca" confirmada na busca híbrida (Issue #55); consulta ao RU por e-mail registrada, sem resposta até esta data (Issue #55) | Gabriella Oliveira |
+    | 23/11/2026 | 1.3 | 56 documentos: calendário 2026.2 na versão de 02/10/2026, feriados (F57) e verão 2027 (F58), campo `vigencia` nos calendários; abertura atualizada com as fontes da #53 (Issue #57) | Gabriella Oliveira |
