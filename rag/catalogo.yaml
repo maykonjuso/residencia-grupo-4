@@ -260,6 +260,9 @@ documentos:
     eixo: fluxo
     tipo: calendario
     data: "2026-02-27"
+    vigencia:
+      inicio: "2026-02-23"
+      fim: "2026-07-18"
     url: "https://saa.unb.br/wp-content/uploads/2026/02/2026_1_Calend_Mat_Grad_27_02_2026.pdf"
     arquivo: originais/F30.pdf
   - id: F31

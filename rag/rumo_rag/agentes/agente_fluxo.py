@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 
-from .. import config, geracao, indice
+import time
+
+from .. import calendario, config, geracao, indice
 from .agente_ru import _LOCK_INDICE, executar_agente_dominio
 from .base import Agente
 from .mensagem import Mensagem, Resposta
@@ -84,5 +86,31 @@ class AgenteFluxo(Agente):
         return geracao.montar_mensagens(pergunta, trechos, instrucoes=self.instrucoes)
 
     def executar(self, mensagem: Mensagem) -> Resposta:
-        """Executa guarda de domínio, busca no eixo Fluxo e geração com prompt próprio."""
+        """Usa a base estruturada para calendário/feriados ou executa busca RAG no eixo Fluxo."""
+        contexto = mensagem.contexto if isinstance(mensagem.contexto, dict) else {}
+        data_ref_raw = contexto.get("data")
+        data_ref = None
+        if data_ref_raw is not None:
+            try:
+                data_ref = calendario._parse_data_flexivel(data_ref_raw)
+            except ValueError:
+                data_ref = None
+
+        t0 = time.monotonic()
+        resp_cal = calendario.carregar_calendario().consultar_pergunta(
+            mensagem.conteudo,
+            data_referencia=data_ref,
+        )
+        if resp_cal is not None:
+            contexto["trechos_recuperados"] = resp_cal["trechos"]
+            contexto["tempo_busca_s"] = round(time.monotonic() - t0, 3)
+            contexto["tempo_geracao_s"] = 0.0
+            if resp_cal.get("consulta_data") is not None:
+                contexto["calendario"] = resp_cal["consulta_data"]
+            return Resposta(
+                conteudo=resp_cal["resposta"],
+                fontes=resp_cal["fontes_citadas"],
+                confianca=1.0,
+                alertas=[],
+            )
         return executar_agente_dominio(self, mensagem)

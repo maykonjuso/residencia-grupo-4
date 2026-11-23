@@ -11,7 +11,7 @@ import json
 import sys
 import time
 
-from . import agentes, chunking, config, extracao, geracao, indice
+from . import agentes, calendario, chunking, config, extracao, geracao, indice
 
 
 def ingerir(args):
@@ -70,6 +70,27 @@ def responder(
             "backend": backend,
         }
     t0 = time.time()
+    if eixo in (None, "fluxo"):
+        resp_cal = calendario.carregar_calendario().consultar_pergunta(pergunta)
+        if resp_cal is not None:
+            trechos_cal = resp_cal["trechos"]
+            resposta_cal = resp_cal["resposta"]
+            return {
+                "pergunta": pergunta,
+                "subperguntas": [pergunta],
+                "resposta": resposta_cal,
+                "fontes_citadas": resp_cal["fontes_citadas"],
+                "valores_sem_fonte": geracao.valores_sem_fonte(resposta_cal, trechos_cal),
+                "sem_citacao": geracao.resposta_sem_citacao(resposta_cal, trechos_cal),
+                "trechos_recuperados": [
+                    {k2: t.get(k2) for k2 in ("chunk_id", "doc_id", "titulo", "pagina", "secao", "similaridade", "nota_rrf", "url", "texto")}
+                    for t in trechos_cal
+                ],
+                "tempo_decomposicao_s": 0.0,
+                "tempo_busca_s": round(time.time() - t0, 3),
+                "tempo_geracao_s": 0.0,
+                "backend": "calendario_estruturado",
+            }
     subperguntas = indice.decompor(
         pergunta,
         backend=backend if backend in ("ollama", "hf", "openai") else "auto",
