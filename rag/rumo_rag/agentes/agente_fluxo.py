@@ -30,6 +30,7 @@ class AgenteFluxo(Agente):
     )
     eixo = "fluxo"
     instrucoes = INSTRUCOES_FLUXO
+    ferramentas = ("grafo_fluxo", "minha_agenda")
 
     def __init__(self, k: int = config.TOP_K, modo: str = "hibrido"):
         if not isinstance(k, int) or isinstance(k, bool) or k <= 0:
@@ -87,34 +88,37 @@ class AgenteFluxo(Agente):
         return geracao.montar_mensagens(pergunta, trechos, instrucoes=self.instrucoes)
 
     def responder_grafo(self, mensagem: Mensagem) -> Resposta | None:
-        """Usa o grafo local para consultas suportadas, sem recorrer ao LLM."""
+        """Usa ferramentas locais (agenda ou grafo curricular) sem recorrer ao LLM."""
         if not pergunta_fora_do_dominio(mensagem.conteudo, self.eixo):
+            from . import ferramentas
+
+            contexto = mensagem.contexto if isinstance(mensagem.contexto, dict) else {}
+            mensagem.contexto = contexto
+            chamada = ferramentas.extrair_chamada_fluxo(mensagem.conteudo, contexto)
+            if chamada is None:
+                return None
+
+            nome_ferr, args = chamada
             t0 = time.monotonic()
-            consulta = carregar_grafo_f16().consultar(mensagem.conteudo)
+            res = getattr(ferramentas, nome_ferr)(**args)
             tempo_busca = round(time.monotonic() - t0, 3)
-            if consulta is not None:
-                contexto = mensagem.contexto if isinstance(mensagem.contexto, dict) else {}
-                mensagem.contexto = contexto
-                fonte = {
-                    "doc_id": "F16",
-                    "titulo": "Fluxograma de Engenharia de Software (235 créditos) — transcrição",
-                    "orgao": "UnB · FCTE · Engenharia de Software (transcrição do Grupo 04)",
-                    "pagina": 1,
-                    "secao": "Grafo de pré-requisitos",
-                    "url": "https://software.unb.br/matriz-curricular/",
-                    "chunk_id": "F16-grafo-curricular",
-                }
-                trecho = {**fonte, "texto": consulta.evidencia, "similaridade": 1.0}
-                contexto["trechos_recuperados"] = [trecho]
-                contexto["tempo_busca_s"] = tempo_busca
-                contexto["tempo_geracao_s"] = 0.0
-                return Resposta(
-                    conteudo=consulta.conteudo,
-                    fontes=[fonte],
-                    confianca=1.0,
-                    alertas=list(consulta.alertas),
-                )
+            if res.ferramenta == "grafo_fluxo" and res.recusado:
+                return None
+
+            contexto["ferramenta_chamada"] = res.para_trace()
+            contexto["dado_estruturado"] = res.dados
+            contexto["trechos_recuperados"] = list(res.trechos_evidencia)
+            contexto["tempo_busca_s"] = tempo_busca
+            contexto["tempo_geracao_s"] = 0.0
+            return Resposta(
+                conteudo=res.texto_base,
+                fontes=list(res.fontes),
+                confianca=0.0 if res.recusado else 1.0,
+                alertas=list(res.alertas),
+            )
         return None
+
+    responder_ferramenta = responder_grafo
 
     def executar(self, mensagem: Mensagem) -> Resposta:
         """Executa consulta determinística ao grafo ou usa a busca RAG especializada."""

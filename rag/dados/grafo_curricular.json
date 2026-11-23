@@ -1,0 +1,499 @@
+{
+  "curso": "Engenharia de Software",
+  "versao_curriculo": "após 2024/2",
+  "total_creditos": 235,
+  "fonte": {
+    "doc_id": "F16",
+    "titulo": "Fluxograma de Engenharia de Software (235 créditos) — transcrição",
+    "orgao": "UnB · FCTE · Engenharia de Software (transcrição do Grupo 04)",
+    "pagina": 1,
+    "url": "https://software.unb.br/matriz-curricular/"
+  },
+  "nos": [
+    {
+      "codigo": "CIC0004",
+      "nome": "Algoritmos e Programação de Computadores (APC)",
+      "creditos": 6,
+      "semestre": 1,
+      "evidencia": "CIC0004 Algoritmos e Programação de Computadores (APC) — 4-2-0-6 (comum)"
+    },
+    {
+      "codigo": "FGA0163",
+      "nome": "Introdução à Engenharia",
+      "creditos": 2,
+      "semestre": 1,
+      "evidencia": "FGA0163 Introdução à Engenharia — 2-0-0-2 (comum)"
+    },
+    {
+      "codigo": "FGA0168",
+      "nome": "Desenho Industrial Assistido por Computador",
+      "creditos": 6,
+      "semestre": 1,
+      "evidencia": "FGA0168 Desenho Industrial Assistido por Computador — 2-4-0-6 (comum)"
+    },
+    {
+      "codigo": "FGA0302",
+      "nome": "Engenharia e Ambiente",
+      "creditos": 4,
+      "semestre": 1,
+      "evidencia": "FGA0302 Engenharia e Ambiente — 3-0-1-4 (comum; antigo código FGA0161)"
+    },
+    {
+      "codigo": "MAT0025",
+      "nome": "Cálculo 1",
+      "creditos": 6,
+      "semestre": 1,
+      "evidencia": "MAT0025 Cálculo 1 — 2-4-0-6 (comum às engenharias)"
+    },
+    {
+      "codigo": "FGA0084",
+      "nome": "Desenvolvimento de Software",
+      "creditos": 4,
+      "semestre": 2,
+      "evidencia": "FGA0084 Desenvolvimento de Software — 2-2-0-4 (optativa no fluxograma, cor magenta)"
+    },
+    {
+      "codigo": "FGA0157",
+      "nome": "Probabilidade e Estatística Aplicada à Engenharia",
+      "creditos": 4,
+      "semestre": 2,
+      "evidencia": "FGA0157 Probabilidade e Estatística Aplicada à Engenharia — 4-0-0-4 (comum)"
+    },
+    {
+      "codigo": "IFD0171",
+      "nome": "Física 1",
+      "creditos": 4,
+      "semestre": 2,
+      "evidencia": "IFD0171 Física 1 — 4-0-0-4 (comum)"
+    },
+    {
+      "codigo": "IFD0173",
+      "nome": "Física 1 Experimental",
+      "creditos": 2,
+      "semestre": 2,
+      "evidencia": "IFD0173 Física 1 Experimental — 0-2-0-2 (comum)"
+    },
+    {
+      "codigo": "MAT0026",
+      "nome": "Cálculo 2",
+      "creditos": 6,
+      "semestre": 2,
+      "evidencia": "MAT0026 Cálculo 2 — 4-2-0-6 (comum)"
+    },
+    {
+      "codigo": "MAT0031",
+      "nome": "Introdução à Álgebra Linear",
+      "creditos": 4,
+      "semestre": 2,
+      "evidencia": "MAT0031 Introdução à Álgebra Linear — 2-2-0-4 (comum)"
+    },
+    {
+      "codigo": "FGA0071",
+      "nome": "Prática de Eletrônica Digital 1",
+      "creditos": 2,
+      "semestre": 3,
+      "evidencia": "FGA0071 Prática de Eletrônica Digital 1 — 0-2-0-2 (comum; correquisito de Teoria de Eletrônica Digital 1)"
+    },
+    {
+      "codigo": "FGA0073",
+      "nome": "Teoria de Eletrônica Digital 1",
+      "creditos": 4,
+      "semestre": 3,
+      "evidencia": "FGA0073 Teoria de Eletrônica Digital 1 — 4-0-0-4 (comum)"
+    },
+    {
+      "codigo": "FGA0085",
+      "nome": "Matemática Discreta 1",
+      "creditos": 4,
+      "semestre": 3,
+      "evidencia": "FGA0085 Matemática Discreta 1 — 4-0-0-4"
+    },
+    {
+      "codigo": "FGA0133",
+      "nome": "Engenharia Econômica",
+      "creditos": 4,
+      "semestre": 3,
+      "evidencia": "FGA0133 Engenharia Econômica — 4-0-0-4 (comum)"
+    },
+    {
+      "codigo": "FGA0158",
+      "nome": "Orientação a Objetos",
+      "creditos": 4,
+      "semestre": 3,
+      "evidencia": "FGA0158 Orientação a Objetos — 2-2-0-4"
+    },
+    {
+      "codigo": "FGA0160",
+      "nome": "Métodos Numéricos para Engenharia",
+      "creditos": 4,
+      "semestre": 3,
+      "evidencia": "FGA0160 Métodos Numéricos para Engenharia — 2-2-0-4 (comum)"
+    },
+    {
+      "codigo": "FGA0164",
+      "nome": "Humanidades e Cidadania",
+      "creditos": 4,
+      "semestre": 3,
+      "evidencia": "FGA0164 Humanidades e Cidadania — 4-0-0-4 (comum)"
+    },
+    {
+      "codigo": "FGA0108",
+      "nome": "Matemática Discreta 2",
+      "creditos": 4,
+      "semestre": 4,
+      "evidencia": "FGA0108 Matemática Discreta 2 — 4-0-0-4"
+    },
+    {
+      "codigo": "FGA0142",
+      "nome": "Fundamentos de Arquiteturas de Computadores",
+      "creditos": 4,
+      "semestre": 4,
+      "evidencia": "FGA0142 Fundamentos de Arquiteturas de Computadores — 2-2-0-4"
+    },
+    {
+      "codigo": "FGA0146",
+      "nome": "Estruturas de Dados 1",
+      "creditos": 4,
+      "semestre": 4,
+      "evidencia": "FGA0146 Estruturas de Dados 1 — 2-2-0-4 (antigo FGA0147)"
+    },
+    {
+      "codigo": "FGA0303",
+      "nome": "Projeto Integrador de Engenharia 1",
+      "creditos": 4,
+      "semestre": 4,
+      "evidencia": "FGA0303 Projeto Integrador de Engenharia 1 — 2-0-2-4 (antigo FGA0150)"
+    },
+    {
+      "codigo": "FGA0307",
+      "nome": "Gestão da Produção e Qualidade",
+      "creditos": 4,
+      "semestre": 4,
+      "evidencia": "FGA0307 Gestão da Produção e Qualidade — 3-0-1-4 (comum; antigo FGA0184)"
+    },
+    {
+      "codigo": "FGA0312",
+      "nome": "Métodos de Desenvolvimento de Software (MDS)",
+      "creditos": 4,
+      "semestre": 4,
+      "evidencia": "FGA0312 Métodos de Desenvolvimento de Software (MDS) — 1-1-2-4 (antigo FGA0138)"
+    },
+    {
+      "codigo": "FGA0003",
+      "nome": "Compiladores 1",
+      "creditos": 4,
+      "semestre": 5,
+      "evidencia": "FGA0003 Compiladores 1 — 2-2-0-4"
+    },
+    {
+      "codigo": "FGA0030",
+      "nome": "Estruturas de Dados 2",
+      "creditos": 4,
+      "semestre": 5,
+      "evidencia": "FGA0030 Estruturas de Dados 2 — 2-2-0-4"
+    },
+    {
+      "codigo": "FGA0137",
+      "nome": "Sistemas de Banco de Dados 1",
+      "creditos": 4,
+      "semestre": 5,
+      "evidencia": "FGA0137 Sistemas de Banco de Dados 1 — 2-2-0-4"
+    },
+    {
+      "codigo": "FGA0170",
+      "nome": "Fundamentos de Sistemas Operacionais",
+      "creditos": 4,
+      "semestre": 5,
+      "evidencia": "FGA0170 Fundamentos de Sistemas Operacionais — 2-2-0-4"
+    },
+    {
+      "codigo": "FGA0173",
+      "nome": "Interação Humano Computador",
+      "creditos": 4,
+      "semestre": 5,
+      "evidencia": "FGA0173 Interação Humano Computador — 2-2-0-4"
+    },
+    {
+      "codigo": "FGA0313",
+      "nome": "Requisitos de Software",
+      "creditos": 4,
+      "semestre": 5,
+      "evidencia": "FGA0313 Requisitos de Software — 1-1-2-4 (antigo FGA0172)"
+    },
+    {
+      "codigo": "FGA0060",
+      "nome": "Sistemas de Banco de Dados 2",
+      "creditos": 4,
+      "semestre": 6,
+      "evidencia": "FGA0060 Sistemas de Banco de Dados 2 — 2-2-0-4"
+    },
+    {
+      "codigo": "FGA0124",
+      "nome": "Projeto e Análise de Algoritmos",
+      "creditos": 4,
+      "semestre": 6,
+      "evidencia": "FGA0124 Projeto e Análise de Algoritmos — 4-0-0-4"
+    },
+    {
+      "codigo": "FGA0208",
+      "nome": "Arquitetura e Desenho de Software",
+      "creditos": 4,
+      "semestre": 6,
+      "evidencia": "FGA0208 Arquitetura e Desenho de Software — 2-2-0-4"
+    },
+    {
+      "codigo": "FGA0211",
+      "nome": "Fundamentos de Redes de Computadores",
+      "creditos": 4,
+      "semestre": 6,
+      "evidencia": "FGA0211 Fundamentos de Redes de Computadores — 2-2-0-4"
+    },
+    {
+      "codigo": "FGA0314",
+      "nome": "Testes de Software",
+      "creditos": 4,
+      "semestre": 6,
+      "evidencia": "FGA0314 Testes de Software — 1-1-2-4 (antigo FGA0238)"
+    },
+    {
+      "codigo": "FGA0315",
+      "nome": "Qualidade de Software 1",
+      "creditos": 4,
+      "semestre": 6,
+      "evidencia": "FGA0315 Qualidade de Software 1 — 1-1-2-4 (antigo FGA0278)"
+    },
+    {
+      "codigo": "FGA0103",
+      "nome": "Fundamentos de Sistemas Embarcados",
+      "creditos": 4,
+      "semestre": 7,
+      "evidencia": "FGA0103 Fundamentos de Sistemas Embarcados — 2-2-0-4"
+    },
+    {
+      "codigo": "FGA0210",
+      "nome": "Paradigmas de Programação",
+      "creditos": 4,
+      "semestre": 7,
+      "evidencia": "FGA0210 Paradigmas de Programação — 2-2-0-4"
+    },
+    {
+      "codigo": "FGA0242",
+      "nome": "Técnicas de Programação em Plataformas Emergentes",
+      "creditos": 4,
+      "semestre": 7,
+      "evidencia": "FGA0242 Técnicas de Programação em Plataformas Emergentes — 2-2-0-4"
+    },
+    {
+      "codigo": "FGA0244",
+      "nome": "Programação para Sistemas Paralelos e Distribuídos",
+      "creditos": 4,
+      "semestre": 7,
+      "evidencia": "FGA0244 Programação para Sistemas Paralelos e Distribuídos — 2-2-0-4"
+    },
+    {
+      "codigo": "FGA0288",
+      "nome": "Estágio Supervisionado",
+      "creditos": 14,
+      "semestre": 8,
+      "evidencia": "FGA0288 Estágio Supervisionado — 0-14-0-14"
+    },
+    {
+      "codigo": "FGA0316",
+      "nome": "Engenharia de Produto de Software",
+      "creditos": 4,
+      "semestre": 8,
+      "evidencia": "FGA0316 Engenharia de Produto de Software — 1-1-2-4 (antigo FGA0206)"
+    },
+    {
+      "codigo": "FGA0317",
+      "nome": "Gerência de Configuração e Evolução de Software (GCES)",
+      "creditos": 4,
+      "semestre": 8,
+      "evidencia": "FGA0317 Gerência de Configuração e Evolução de Software (GCES) — 1-0-3-4 (antigo FGA0240)"
+    },
+    {
+      "codigo": "FGA0287",
+      "nome": "Trabalho de Conclusão de Curso 1",
+      "creditos": 4,
+      "semestre": 9,
+      "evidencia": "FGA0287 Trabalho de Conclusão de Curso 1 — 0-4-0-4"
+    },
+    {
+      "codigo": "FGA0304",
+      "nome": "Projeto Integrador de Engenharia 2",
+      "creditos": 6,
+      "semestre": 9,
+      "evidencia": "FGA0304 Projeto Integrador de Engenharia 2 — 2-0-4-6 (antigo FGA0250)"
+    },
+    {
+      "codigo": "FGA0290",
+      "nome": "Trabalho de Conclusão de Curso 2",
+      "creditos": 6,
+      "semestre": 10,
+      "evidencia": "FGA0290 Trabalho de Conclusão de Curso 2 — 0-6-0-6"
+    },
+    {
+      "codigo": "FGA0318",
+      "nome": "Atividade de Extensão de Engenharia de Software",
+      "creditos": 3,
+      "semestre": 10,
+      "evidencia": "FGA0318 Atividade de Extensão de Engenharia de Software — 0-0-3-3"
+    }
+  ],
+  "arestas": [
+    {
+      "origem": "MAT0025",
+      "destino": "MAT0026",
+      "relacao": "pre_requisito",
+      "incerta": false,
+      "evidencia": "Para cursar Cálculo 2 (MAT0026), é preciso ter cursado antes: Cálculo 1 (MAT0025)."
+    },
+    {
+      "origem": "MAT0026",
+      "destino": "FGA0160",
+      "relacao": "pre_requisito",
+      "incerta": false,
+      "evidencia": "Para cursar Métodos Numéricos para Engenharia (FGA0160), é preciso ter cursado antes: Cálculo 2 (MAT0026)."
+    },
+    {
+      "origem": "FGA0133",
+      "destino": "FGA0307",
+      "relacao": "pre_requisito",
+      "incerta": false,
+      "evidencia": "Para cursar Gestão da Produção e Qualidade (FGA0307), é preciso ter cursado antes: Engenharia Econômica (FGA0133)."
+    },
+    {
+      "origem": "CIC0004",
+      "destino": "FGA0158",
+      "relacao": "pre_requisito",
+      "incerta": false,
+      "evidencia": "Para cursar Orientação a Objetos (FGA0158), é preciso ter cursado antes: Algoritmos e Programação de Computadores (CIC0004)."
+    },
+    {
+      "origem": "CIC0004",
+      "destino": "FGA0146",
+      "relacao": "pre_requisito",
+      "incerta": false,
+      "evidencia": "Para cursar Estruturas de Dados 1 (FGA0146), é preciso ter cursado antes: Algoritmos e Programação de Computadores (CIC0004)."
+    },
+    {
+      "origem": "FGA0158",
+      "destino": "FGA0312",
+      "relacao": "pre_requisito",
+      "incerta": false,
+      "evidencia": "Para cursar Métodos de Desenvolvimento de Software (FGA0312), é preciso ter cursado antes: Orientação a Objetos (FGA0158)."
+    },
+    {
+      "origem": "FGA0312",
+      "destino": "FGA0313",
+      "relacao": "pre_requisito",
+      "incerta": false,
+      "evidencia": "Para cursar Requisitos de Software (FGA0313), é preciso ter cursado antes: Métodos de Desenvolvimento de Software (FGA0312)."
+    },
+    {
+      "origem": "FGA0313",
+      "destino": "FGA0314",
+      "relacao": "pre_requisito",
+      "incerta": false,
+      "evidencia": "Para cursar Testes de Software (FGA0314), é preciso ter cursado antes: Requisitos de Software (FGA0313) (seta cheia); o fluxograma também liga Métodos de Desenvolvimento de Software (FGA0312) a Testes de Software por seta tracejada."
+    },
+    {
+      "origem": "FGA0312",
+      "destino": "FGA0314",
+      "relacao": "pre_requisito",
+      "incerta": true,
+      "evidencia": "Para cursar Testes de Software (FGA0314), é preciso ter cursado antes: Requisitos de Software (FGA0313) (seta cheia); o fluxograma também liga Métodos de Desenvolvimento de Software (FGA0312) a Testes de Software por seta tracejada."
+    },
+    {
+      "origem": "FGA0314",
+      "destino": "FGA0317",
+      "relacao": "pre_requisito",
+      "incerta": false,
+      "evidencia": "Para cursar Gerência de Configuração e Evolução de Software (FGA0317), é preciso ter cursado antes: Testes de Software (FGA0314)."
+    },
+    {
+      "origem": "FGA0242",
+      "destino": "FGA0316",
+      "relacao": "pre_requisito",
+      "incerta": false,
+      "evidencia": "Para cursar Engenharia de Produto de Software (FGA0316), é preciso ter cursado antes: Técnicas de Programação em Plataformas Emergentes (FGA0242)."
+    },
+    {
+      "origem": "FGA0146",
+      "destino": "FGA0030",
+      "relacao": "pre_requisito",
+      "incerta": false,
+      "evidencia": "Para cursar Estruturas de Dados 2 (FGA0030), é preciso ter cursado antes: Estruturas de Dados 1 (FGA0146)."
+    },
+    {
+      "origem": "FGA0030",
+      "destino": "FGA0124",
+      "relacao": "pre_requisito",
+      "incerta": false,
+      "evidencia": "Para cursar Projeto e Análise de Algoritmos (FGA0124), é preciso ter cursado antes: Estruturas de Dados 2 (FGA0030)."
+    },
+    {
+      "origem": "FGA0071",
+      "destino": "FGA0073",
+      "relacao": "correquisito",
+      "incerta": false,
+      "evidencia": "Prática de Eletrônica Digital 1 (FGA0071) é correquisito de Teoria de Eletrônica Digital 1 (FGA0073): as duas são cursadas no mesmo semestre."
+    },
+    {
+      "origem": "FGA0073",
+      "destino": "FGA0142",
+      "relacao": "pre_requisito",
+      "incerta": false,
+      "evidencia": "Para cursar Fundamentos de Arquiteturas de Computadores (FGA0142), é preciso ter cursado antes: Teoria de Eletrônica Digital 1 (FGA0073)."
+    },
+    {
+      "origem": "FGA0142",
+      "destino": "FGA0170",
+      "relacao": "pre_requisito",
+      "incerta": false,
+      "evidencia": "Para cursar Fundamentos de Sistemas Operacionais (FGA0170), é preciso ter cursado antes: Fundamentos de Arquiteturas de Computadores (FGA0142)."
+    },
+    {
+      "origem": "FGA0170",
+      "destino": "FGA0211",
+      "relacao": "pre_requisito",
+      "incerta": false,
+      "evidencia": "Para cursar Fundamentos de Redes de Computadores (FGA0211), é preciso ter cursado antes: Fundamentos de Sistemas Operacionais (FGA0170)."
+    },
+    {
+      "origem": "FGA0211",
+      "destino": "FGA0244",
+      "relacao": "pre_requisito",
+      "incerta": false,
+      "evidencia": "Para cursar Programação para Sistemas Paralelos e Distribuídos (FGA0244), é preciso ter cursado antes: Fundamentos de Redes de Computadores (FGA0211)."
+    },
+    {
+      "origem": "FGA0137",
+      "destino": "FGA0060",
+      "relacao": "pre_requisito",
+      "incerta": false,
+      "evidencia": "Para cursar Sistemas de Banco de Dados 2 (FGA0060), é preciso ter cursado antes: Sistemas de Banco de Dados 1 (FGA0137)."
+    },
+    {
+      "origem": "FGA0085",
+      "destino": "FGA0108",
+      "relacao": "pre_requisito",
+      "incerta": false,
+      "evidencia": "Para cursar Matemática Discreta 2 (FGA0108), é preciso ter cursado antes: Matemática Discreta 1 (FGA0085)."
+    },
+    {
+      "origem": "FGA0303",
+      "destino": "FGA0304",
+      "relacao": "pre_requisito",
+      "incerta": false,
+      "evidencia": "Para cursar Projeto Integrador de Engenharia 2 (FGA0304), é preciso ter cursado antes: Projeto Integrador de Engenharia 1 (FGA0303)."
+    },
+    {
+      "origem": "FGA0287",
+      "destino": "FGA0290",
+      "relacao": "pre_requisito",
+      "incerta": false,
+      "evidencia": "Para cursar Trabalho de Conclusão de Curso 2 (FGA0290), é preciso ter cursado antes: Trabalho de Conclusão de Curso 1 (FGA0287)."
+    }
+  ]
+}

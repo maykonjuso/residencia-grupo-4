@@ -8,17 +8,21 @@
 O orquestrador do portal (FcteMapping) e o OpenClaw chamam esta rota. A base, o índice e o
 prompt continuam só do Grupo 04.
 """
+import asyncio
 import logging
 import os
 import re
 import secrets
 import time
+from contextlib import asynccontextmanager
 from datetime import date
 
 from fastapi import FastAPI, Header, HTTPException
 from pydantic import BaseModel, ConfigDict, Field
 
 from . import config, geracao, indice
+from .agentes import ferramentas
+from .coleta import cardapio
 
 log = logging.getLogger("rumo.api")
 DIAS = ("segunda-feira", "terça-feira", "quarta-feira", "quinta-feira", "sexta-feira", "sábado", "domingo")
@@ -27,7 +31,33 @@ SEM_BASE = "Não encontrei essa informação nas fontes da base."
 # /perguntar exige "Authorization: Bearer <token>" (o mesmo valor em RUMO_API_TOKEN no FcteMapping).
 TOKEN = os.getenv("RUMO_API_TOKEN", "").strip()
 
-app = FastAPI(title="RUmo · Grupo 04", version="1.0.0")
+async def _loop_sincronizacao_cardapio() -> None:
+    """Mantém o cardápio da semana sincronizado em segundo plano sem bloquear o servidor."""
+    while True:
+        try:
+            await asyncio.to_thread(cardapio.sincronizar_semana_atual)
+        except Exception as exc:
+            log.warning("Erro inesperado no agendador de cardápio: %s", exc)
+        await asyncio.sleep(max(60, config.CARDAPIO_VERIFICAR_INTERVALO_SEGUNDOS))
+
+
+@asynccontextmanager
+async def lifespan(_app: FastAPI):
+    task: asyncio.Task | None = None
+    if config.CARDAPIO_AUTO_FETCH:
+        task = asyncio.create_task(_loop_sincronizacao_cardapio())
+    try:
+        yield
+    finally:
+        if task is not None:
+            task.cancel()
+            try:
+                await task
+            except asyncio.CancelledError:
+                pass
+
+
+app = FastAPI(title="RUmo · Grupo 04", version="1.0.0", lifespan=lifespan)
 
 
 class Contexto(BaseModel):
@@ -57,9 +87,36 @@ def com_data(pergunta: str, contexto: Contexto) -> str:
 @app.get("/saude")
 def saude():
     chunks, _ = indice._bm25()
-    return {"status": "ok", "grupo": "grupo04", "busca": config.BUSCA, "backend": config.BACKEND, "token": bool(TOKEN),
-            "modelo": {"hf": config.MODELO_HF, "ollama": config.MODELO_OLLAMA,
-                       "openai": config.OPENAI_MODEL}.get(config.BACKEND), "chunks": len(chunks)}
+    return {
+        "status": "ok",
+        "grupo": "grupo04",
+        "busca": config.BUSCA,
+        "backend": config.BACKEND,
+        "token": bool(TOKEN),
+        "modelo": {"hf": config.MODELO_HF, "ollama": config.MODELO_OLLAMA,
+                   "openai": config.OPENAI_MODEL}.get(config.BACKEND),
+        "chunks": len(chunks),
+        "cardapio": cardapio.estado_sincronizacao(),
+    }
+
+
+@app.get("/cardapio")
+def obter_cardapio(data: str | None = None, refeicao: str | None = None):
+    return ferramentas.cardapio_do_dia(data=data, refeicao=refeicao).para_dict()
+
+
+@app.post("/cardapio/atualizar")
+async def atualizar_cardapio(authorization: str | None = Header(default=None)):
+    exigir_token(authorization)
+    dados, info = await asyncio.to_thread(cardapio.sincronizar_semana_atual, forcar=True)
+    return {
+        "atualizado": dados is not None,
+        "status": info.get("status"),
+        "semana": dados["semana"] if dados else None,
+        "refeicoes_total": len(dados["refeicoes"]) if dados else 0,
+        "motivo": info.get("motivo"),
+        "estado": cardapio.estado_sincronizacao(),
+    }
 
 
 def exigir_token(authorization: str | None) -> None:

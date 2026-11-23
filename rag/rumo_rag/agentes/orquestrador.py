@@ -57,6 +57,8 @@ class RespostaAgente:
     tempo_total_s: float = 0.0
     erro: str | None = None
     validacao: dict | None = None
+    ferramenta_chamada: dict | None = None
+    dado_estruturado: dict | None = None
 
 
 def _resumir_trecho(t: dict) -> dict:
@@ -358,14 +360,21 @@ class Orquestrador:
         k: int,
         backend: str,
         falha_configurada: str | None,
+        data: str | None = None,
+        perfil: dict | None = None,
     ) -> tuple[int, Mensagem, Resposta, RespostaAgente]:
         ag = self.agentes[ag_id]
         nome_ag = getattr(ag, "nome", ag_id)
+        ctx_msg: dict[str, Any] = {"eixo": ag_id, "k": k, "backend": backend}
+        if data is not None:
+            ctx_msg["data"] = data
+        if perfil is not None:
+            ctx_msg["perfil"] = perfil
         msg = Mensagem(
             remetente="Orquestrador",
             destinatario=nome_ag,
             conteudo=sub,
-            contexto={"eixo": ag_id, "k": k, "backend": backend},
+            contexto=ctx_msg,
         )
         t_inicio = time.monotonic()
 
@@ -407,6 +416,8 @@ class Orquestrador:
                     tempo_busca_s=float(msg.contexto.get("tempo_busca_s", 0.0)),
                     tempo_geracao_s=float(msg.contexto.get("tempo_geracao_s", duracao)),
                     tempo_total_s=duracao,
+                    ferramenta_chamada=msg.contexto.get("ferramenta_chamada"),
+                    dado_estruturado=msg.contexto.get("dado_estruturado"),
                 )
                 # Sinaliza ausência explícita de trechos para o validador quando vieram de agente fake
                 if trechos_brutos is None:
@@ -633,6 +644,8 @@ class Orquestrador:
         backend: str = config.BACKEND,
         k: int = config.TOP_K,
         falhar_agente: str | None = None,
+        data: str | None = None,
+        perfil: dict | None = None,
     ) -> dict:
         """Executa o fluxo multiagentes com contrato `Mensagem`/`Resposta` e registra o `Trace`."""
         trace_etapas: list[dict] = []
@@ -685,7 +698,7 @@ class Orquestrador:
         brutos: dict[int, tuple[Mensagem, Resposta, RespostaAgente]] = {}
         with ThreadPoolExecutor(max_workers=max(1, len(tarefas))) as pool:
             futuros = [
-                pool.submit(self._invocar_agente, idx, sub, ag_id, k, backend, falha_configurada)
+                pool.submit(self._invocar_agente, idx, sub, ag_id, k, backend, falha_configurada, data, perfil)
                 for idx, sub, ag_id in tarefas
             ]
             for fut in as_completed(futuros):
@@ -718,6 +731,7 @@ class Orquestrador:
                     "tempo_total_s": p.tempo_total_s,
                     "n_trechos": len(p.trechos_recuperados),
                     "erro": p.erro,
+                    "ferramenta": p.ferramenta_chamada,
                 }
                 for p in partes_ordenadas
             ],
@@ -765,6 +779,20 @@ class Orquestrador:
         })
 
         trace_dict = trace_oficial.para_dict()
+        ferramentas_usadas = [
+            {"agente": p.agente, **p.ferramenta_chamada}
+            for p in partes_ordenadas
+            if p.ferramenta_chamada
+        ]
+        dados_estruturados = [
+            {
+                "agente": p.agente,
+                "ferramenta": p.ferramenta_chamada["nome"],
+                "dados": p.dado_estruturado,
+            }
+            for p in partes_ordenadas
+            if p.ferramenta_chamada and p.dado_estruturado is not None
+        ]
         return {
             "pergunta": pergunta,
             "subperguntas": subperguntas,
@@ -779,6 +807,8 @@ class Orquestrador:
             "backend": backend,
             "modo_agentes": True,
             "partes": composto["partes"],
+            "ferramentas_usadas": ferramentas_usadas,
+            "dados_estruturados": dados_estruturados,
             "degradado": composto["degradado"],
             "avisos": composto["avisos"],
             "tempo_paralelo_s": tempo_paralelo_s,

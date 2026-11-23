@@ -110,3 +110,38 @@ def test_cli_padrao_encaminha_perguntas_de_impacto_ao_grafo():
     assert "FGA0314" in resultado["resposta"]
     assert "FGA0317" in resultado["resposta"]
     assert resultado["fontes_citadas"][0]["doc_id"] == "F16"
+
+
+def test_grafo_usa_networkx_digraph_e_valida_schema_json():
+    import json
+    import networkx as nx
+    import pytest
+    from rumo_rag.grafo_curricular import Aresta, GRAFO_JSON
+
+    assert GRAFO_JSON.exists()
+    dados = json.loads(GRAFO_JSON.read_text(encoding="utf-8"))
+    GrafoCurricular.validar_json(dados)
+
+    grafo = GrafoCurricular.carregar_json(GRAFO_JSON)
+    assert isinstance(grafo.grafo, nx.DiGraph)
+    assert nx.is_directed_acyclic_graph(grafo.grafo)
+    assert grafo.grafo.number_of_nodes() == 47
+    assert grafo.caminho_critico() == list(nx.dag_longest_path(grafo.grafo))
+
+    estruturado = grafo.consultar_estruturado("Qual disciplina destrava mais matérias?")
+    assert estruturado is not None
+    assert estruturado["tipo_consulta"] == "gargalo"
+    assert estruturado["dados"]["gargalos"][0]["codigo"] == "CIC0004"
+
+    # Detecção de ciclo no DiGraph
+    with pytest.raises(ValueError, match="ciclo"):
+        GrafoCurricular(
+            disciplinas={
+                "CIC0004": grafo.disciplinas["CIC0004"],
+                "FGA0158": grafo.disciplinas["FGA0158"],
+            },
+            arestas=[
+                Aresta("CIC0004", "FGA0158", "pre_requisito", False, "teste"),
+                Aresta("FGA0158", "CIC0004", "pre_requisito", False, "teste"),
+            ],
+        )

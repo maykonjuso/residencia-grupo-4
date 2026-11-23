@@ -1,21 +1,34 @@
-"""Grafo curricular determinístico extraído da transcrição curada F16.
+"""Grafo curricular determinístico em `networkx.DiGraph` persistido em JSON (#61).
 
-As arestas sólidas representam pré-requisitos explícitos. Relações tracejadas
-continuam marcadas como incertas e não entram em cálculos de bloqueio confirmado.
+As arestas sólidas (`incerta=False`) representam pré-requisitos explícitos em `self.grafo` (DAG).
+Relações tracejadas (`incerta=True`) permanecem em `self.grafo_completo` e nunca entram em
+cálculos de bloqueio confirmado, sendo sinalizadas ao estudante para confirmação no SIGAA.
 """
 
 from __future__ import annotations
 
-from collections import deque
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass
 from functools import lru_cache
+import json
 from pathlib import Path
 import re
 import unicodedata
 
+import networkx as nx
+
 from . import config
 
 CODIGO = re.compile(r"\b[A-Z]{2,4}\d{3,4}\b")
+SCHEMA_GRAFO = Path(__file__).with_name("schema_grafo.json")
+GRAFO_JSON = config.DADOS / "grafo_curricular.json"
+FONTE_PADRAO_F16 = {
+    "doc_id": "F16",
+    "titulo": "Fluxograma de Engenharia de Software (235 créditos) — transcrição",
+    "orgao": "UnB · FCTE · Engenharia de Software (transcrição do Grupo 04)",
+    "pagina": 1,
+    "url": "https://software.unb.br/matriz-curricular/",
+}
+
 _CABECALHO_SEMESTRE = re.compile(r"^##\s+(\d+)[º°]\s+semestre.*\((\d+)\s+créditos\)", re.I)
 _DISCIPLINA = re.compile(
     r"^-\s+(?P<codigo>[A-Z]{2,4}\d{3,4})\s+(?P<nome>.+?)\s+—\s+"
@@ -69,11 +82,40 @@ class ConsultaGrafo:
 
 
 class GrafoCurricular:
-    """Consultas ao grafo de disciplinas descrito em `F16_fluxograma_software.md`."""
+    """Consultas em `networkx.DiGraph` ao grafo curricular de `F16_fluxograma_software.md`."""
 
-    def __init__(self, disciplinas: dict[str, Disciplina], arestas: list[Aresta]):
-        self.disciplinas = disciplinas
+    def __init__(
+        self,
+        disciplinas: dict[str, Disciplina],
+        arestas: list[Aresta],
+        metadados: dict | None = None,
+    ):
+        self.disciplinas = dict(disciplinas)
         self.arestas = tuple(arestas)
+        self.metadados = metadados or {
+            "curso": "Engenharia de Software",
+            "versao_curriculo": "após 2024/2",
+            "total_creditos": 235,
+            "fonte": dict(FONTE_PADRAO_F16),
+        }
+
+        self.grafo = nx.DiGraph()
+        self.grafo_completo = nx.DiGraph()
+        for codigo, disc in self.disciplinas.items():
+            attrs = asdict(disc)
+            self.grafo.add_node(codigo, **attrs)
+            self.grafo_completo.add_node(codigo, **attrs)
+
+        for aresta in self.arestas:
+            if aresta.relacao != "pre_requisito":
+                continue
+            attrs = {"relacao": aresta.relacao, "incerta": aresta.incerta, "evidencia": aresta.evidencia}
+            self.grafo_completo.add_edge(aresta.origem, aresta.destino, **attrs)
+            if not aresta.incerta:
+                self.grafo.add_edge(aresta.origem, aresta.destino, **attrs)
+
+        if not nx.is_directed_acyclic_graph(self.grafo):
+            raise ValueError("Grafo de pré-requisitos contém ciclo.")
 
     @classmethod
     def de_markdown(cls, texto: str) -> "GrafoCurricular":
@@ -102,8 +144,6 @@ class GrafoCurricular:
             prereq = _PRE_REQUISITO.match(linha)
             if prereq:
                 destino = prereq.group("codigo_destino").upper()
-                # A transcrição expressa a primeira relação entre parênteses,
-                # mas a ligação tracejada de Testes aparece como prosa após `;`.
                 for segmento in prereq.group("origens").split(";"):
                     incerta = "seta tracejada" in _normalizar(segmento)
                     for referencia in _REFERENCIA.finditer(segmento):
@@ -122,8 +162,6 @@ class GrafoCurricular:
 
             coreq = _CORREQUISITO.match(linha)
             if coreq:
-                # O texto descreve uma relação simultânea; a orientação é apenas
-                # de armazenamento e nunca é usada para inferir bloqueios.
                 arestas.append(
                     Aresta(
                         origem=coreq.group("codigo_a").upper(),
@@ -146,8 +184,57 @@ class GrafoCurricular:
             )
         return cls(disciplinas, arestas)
 
+    def para_dict(self) -> dict:
+        nos = [
+            asdict(self.disciplinas[c])
+            for c in sorted(self.disciplinas, key=lambda x: (self.disciplinas[x].semestre, x))
+        ]
+        arestas = [asdict(a) for a in self.arestas]
+        return {
+            "curso": self.metadados["curso"],
+            "versao_curriculo": self.metadados["versao_curriculo"],
+            "total_creditos": self.metadados["total_creditos"],
+            "fonte": dict(self.metadados["fonte"]),
+            "nos": nos,
+            "arestas": arestas,
+        }
+
+    @staticmethod
+    def validar_json(dados: dict) -> None:
+        import jsonschema
+
+        schema = json.loads(SCHEMA_GRAFO.read_text(encoding="utf-8"))
+        jsonschema.validate(dados, schema)
+
+    @classmethod
+    def de_dict(cls, dados: dict) -> "GrafoCurricular":
+        cls.validar_json(dados)
+        disciplinas = {n["codigo"]: Disciplina(**n) for n in dados["nos"]}
+        arestas = [Aresta(**a) for a in dados["arestas"]]
+        metadados = {
+            "curso": dados["curso"],
+            "versao_curriculo": dados["versao_curriculo"],
+            "total_creditos": dados["total_creditos"],
+            "fonte": dict(dados["fonte"]),
+        }
+        return cls(disciplinas, arestas, metadados=metadados)
+
+    def salvar_json(self, destino: Path = GRAFO_JSON) -> Path:
+        dados = self.para_dict()
+        self.validar_json(dados)
+        destino.parent.mkdir(parents=True, exist_ok=True)
+        destino.write_text(json.dumps(dados, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        return destino
+
+    @classmethod
+    def carregar_json(cls, caminho: Path = GRAFO_JSON) -> "GrafoCurricular":
+        dados = json.loads(caminho.read_text(encoding="utf-8"))
+        return cls.de_dict(dados)
+
     @classmethod
     def carregar_f16(cls, caminho: Path | None = None) -> "GrafoCurricular":
+        if caminho is None and GRAFO_JSON.exists():
+            return cls.carregar_json(GRAFO_JSON)
         fonte = caminho or (config.DADOS / "curados" / "F16_fluxograma_software.md")
         return cls.de_markdown(fonte.read_text(encoding="utf-8"))
 
@@ -166,69 +253,64 @@ class GrafoCurricular:
                 encontradas[disciplina.codigo] = disciplina
         return sorted(encontradas.values(), key=lambda d: (d.semestre, d.codigo))
 
+    def _to_aresta(self, origem: str, destino: str, attrs: dict) -> Aresta:
+        return Aresta(
+            origem=origem,
+            destino=destino,
+            relacao=attrs.get("relacao", "pre_requisito"),
+            incerta=bool(attrs.get("incerta", False)),
+            evidencia=attrs.get("evidencia", ""),
+        )
+
     def prerequisitos(self, codigo: str) -> tuple[list[Aresta], list[Aresta]]:
         codigo = codigo.upper()
-        confirmados = [
-            a for a in self.arestas
-            if a.destino == codigo and a.relacao == "pre_requisito" and not a.incerta
-        ]
-        incertos = [
-            a for a in self.arestas
-            if a.destino == codigo and a.relacao == "pre_requisito" and a.incerta
-        ]
+        if codigo not in self.grafo_completo:
+            return [], []
+        confirmados: list[Aresta] = []
+        incertos: list[Aresta] = []
+        for origem, destino, attrs in self.grafo_completo.in_edges(codigo, data=True):
+            aresta = self._to_aresta(origem, destino, attrs)
+            (incertos if aresta.incerta else confirmados).append(aresta)
         return confirmados, incertos
 
     def _evidencia(self, codigos: set[str], arestas: list[Aresta] | tuple[Aresta, ...]) -> str:
         linhas = [self.disciplinas[c].evidencia for c in sorted(codigos) if c in self.disciplinas]
-        linhas.extend(a.evidencia for a in arestas)
+        linhas.extend(a.evidencia for a in arestas if a.evidencia)
         return "\n".join(dict.fromkeys(linhas)) or "Consulta calculada pelas relações registradas no F16."
 
     def dependentes(self, codigo: str) -> tuple[list[str], list[str]]:
         """Retorna dependentes alcançáveis por arestas sólidas e por caminhos incertos."""
         codigo = codigo.upper()
-        fila = deque([(codigo, False)])
-        visitados = {(codigo, False)}
-        estado: dict[str, bool] = {}
-        while fila:
-            atual, caminho_incerto = fila.popleft()
-            for aresta in self.arestas:
-                if aresta.origem != atual or aresta.relacao != "pre_requisito":
-                    continue
-                incerto = caminho_incerto or aresta.incerta
-                estado[aresta.destino] = estado.get(aresta.destino, True) and incerto
-                par = (aresta.destino, incerto)
-                if par not in visitados:
-                    visitados.add(par)
-                    fila.append(par)
-        ordenar = lambda codigos: sorted(  # noqa: E731 - ordenação local simples
+        if codigo not in self.grafo:
+            return [], []
+        confirmados = nx.descendants(self.grafo, codigo)
+        todos = nx.descendants(self.grafo_completo, codigo)
+        incertos = todos - confirmados
+        ordenar = lambda codigos: sorted(  # noqa: E731
             codigos, key=lambda c: (self.disciplinas[c].semestre, c)
         )
-        return ordenar([c for c, incerto in estado.items() if not incerto]), ordenar(
-            [c for c, incerto in estado.items() if incerto]
-        )
+        return ordenar(confirmados), ordenar(incertos)
 
     def gargalos(self) -> list[tuple[Disciplina, int]]:
-        saidas = {codigo: 0 for codigo in self.disciplinas}
-        for aresta in self.arestas:
-            if aresta.relacao == "pre_requisito" and not aresta.incerta:
-                saidas[aresta.origem] += 1
+        saidas = dict(self.grafo.out_degree())
         maior = max(saidas.values(), default=0)
         if maior == 0:
             return []
         return sorted(
             [(self.disciplinas[c], n) for c, n in saidas.items() if n == maior],
-            key=lambda item: item[0].codigo,
+            key=lambda item: (item[0].semestre, item[0].codigo),
         )
 
     def disciplinas_que_abrem(self, aprovadas: set[str]) -> tuple[list[str], list[str]]:
         aprovadas = {c.upper() for c in aprovadas}
         abertas: list[str] = []
         incertas: list[str] = []
-        for codigo in self.disciplinas:
-            confirmados, duvidosos = self.prerequisitos(codigo)
+        for codigo in self.grafo:
+            confirmados = list(self.grafo.predecessors(codigo))
             if not confirmados or codigo in aprovadas:
                 continue
-            if all(a.origem in aprovadas for a in confirmados):
+            if all(orig in aprovadas for orig in confirmados):
+                _, duvidosos = self.prerequisitos(codigo)
                 (incertas if duvidosos else abertas).append(codigo)
         return (
             sorted(abertas, key=lambda c: (self.disciplinas[c].semestre, c)),
@@ -236,37 +318,37 @@ class GrafoCurricular:
         )
 
     def caminho_critico(self) -> list[str]:
-        """Maior cadeia de pré-requisitos confirmados, em quantidade de disciplinas."""
-        ordem = sorted(self.disciplinas, key=lambda c: (self.disciplinas[c].semestre, c))
-        melhor: dict[str, list[str]] = {c: [c] for c in ordem}
-        for codigo in ordem:
-            for aresta in self.arestas:
-                if (
-                    aresta.origem == codigo
-                    and aresta.relacao == "pre_requisito"
-                    and not aresta.incerta
-                    and len(melhor[aresta.origem]) + 1 > len(melhor[aresta.destino])
-                ):
-                    melhor[aresta.destino] = melhor[aresta.origem] + [aresta.destino]
-        return max(melhor.values(), key=len, default=[])
+        """Maior cadeia de pré-requisitos confirmados via `nx.dag_longest_path`."""
+        if not self.grafo.number_of_nodes():
+            return []
+        return list(nx.dag_longest_path(self.grafo))
 
-    def consultar(self, pergunta: str) -> ConsultaGrafo | None:
-        """Executa deterministicamente uma consulta reconhecida; None pede fallback RAG."""
+    def _fonte_dict(self) -> dict:
+        fonte = dict(self.metadados.get("fonte") or FONTE_PADRAO_F16)
+        fonte.setdefault("secao", "Grafo de pré-requisitos")
+        fonte.setdefault("chunk_id", "F16-grafo-curricular")
+        return fonte
+
+    def _no_resumo(self, codigo: str) -> dict:
+        d = self.disciplinas[codigo]
+        return {"codigo": d.codigo, "nome": d.nome, "semestre": d.semestre, "creditos": d.creditos}
+
+    def consultar_estruturado(self, pergunta: str) -> dict | None:
+        """Executa consulta no grafo e devolve payload estruturado + texto + evidência."""
         texto = _normalizar(pergunta)
         disciplinas = self.buscar_disciplinas(pergunta)
         codigos = {d.codigo for d in disciplinas}
+        fonte = self._fonte_dict()
 
         if re.search(r"caminho critico|quantos semestres.*formar|tempo.*formar", texto):
             caminho = self.caminho_critico()
             if not caminho:
                 return None
-            nomes = " → ".join(
-                f"{self.disciplinas[c].nome} ({c})" for c in caminho
-            )
+            nomes = " → ".join(f"{self.disciplinas[c].nome} ({c})" for c in caminho)
             arestas_caminho = [
-                a for a in self.arestas
-                if a.origem in caminho and a.destino in caminho
-                and a.relacao == "pre_requisito" and not a.incerta
+                self._to_aresta(u, v, attrs)
+                for u, v, attrs in self.grafo.edges(data=True)
+                if u in caminho and v in caminho
             ]
             evidencia = self._evidencia(set(caminho), arestas_caminho)
             resposta = (
@@ -276,32 +358,73 @@ class GrafoCurricular:
                 "devem ser confirmados no SIGAA. Esta transcrição vale para ingressantes após "
                 "2024/2. [1]"
             )
-            return ConsultaGrafo(resposta, evidencia)
+            return {
+                "tipo_consulta": "caminho_critico",
+                "dados": {
+                    "comprimento": len(caminho),
+                    "cadeia": [self._no_resumo(c) for c in caminho],
+                },
+                "texto": resposta,
+                "evidencia": evidencia,
+                "fonte": fonte,
+                "alertas": [],
+            }
 
-        if re.search(r"gargalo|destrava.*mais|mais (?:mat[eé]rias|disciplinas)|maior n[uú]mero", texto):
+        if re.search(r"gargalo|destrava.*mais|mais (?:materias|disciplinas)|maior numero", texto):
             ranking = self.gargalos()
             if not ranking:
                 return None
-            disciplina, quantidade = ranking[0]
-            arestas = [
-                a for a in self.arestas
-                if a.origem == disciplina.codigo
-                and a.relacao == "pre_requisito" and not a.incerta
-            ]
-            destinos = ", ".join(
-                f"{self.disciplinas[a.destino].nome} ({a.destino})" for a in arestas
-            )
-            evidencia = self._evidencia(
-                {disciplina.codigo, *(a.destino for a in arestas)}, arestas
-            )
-            resposta = (
-                f"Pelo número de dependências diretas confirmadas no F16, {disciplina.nome} "
-                f"({disciplina.codigo}) é o principal gargalo: destrava {quantidade} disciplina(s) "
-                f"diretamente ({destinos}). [1] A contagem considera apenas setas cheias; "
-                "ligações tracejadas não entram no ranking. Esta transcrição vale para "
-                "ingressantes após 2024/2. [1]"
-            )
-            return ConsultaGrafo(resposta, evidencia)
+            quantidade = ranking[0][1]
+            todas_arestas: list[Aresta] = []
+            itens_gargalo: list[dict] = []
+            partes_texto: list[str] = []
+            for disciplina, _ in ranking:
+                arestas = [
+                    self._to_aresta(u, v, attrs)
+                    for u, v, attrs in self.grafo.out_edges(disciplina.codigo, data=True)
+                ]
+                todas_arestas.extend(arestas)
+                destinos_nomes = ", ".join(
+                    f"{self.disciplinas[a.destino].nome} ({a.destino})" for a in arestas
+                )
+                itens_gargalo.append({
+                    **self._no_resumo(disciplina.codigo),
+                    "grau_saida": quantidade,
+                    "destinos": [self._no_resumo(a.destino) for a in arestas],
+                })
+                partes_texto.append(f"{disciplina.nome} ({disciplina.codigo}) → {destinos_nomes}")
+
+            cods_ev = {it["codigo"] for it in itens_gargalo} | {a.destino for a in todas_arestas}
+            evidencia = self._evidencia(cods_ev, todas_arestas)
+            if len(ranking) == 1:
+                d0 = ranking[0][0]
+                dest0 = ", ".join(
+                    f"{self.disciplinas[a.destino].nome} ({a.destino})"
+                    for a in self._to_aresta_out(d0.codigo)
+                )
+                resposta = (
+                    f"Pelo número de dependências diretas confirmadas no F16, {d0.nome} "
+                    f"({d0.codigo}) é o principal gargalo: destrava {quantidade} disciplina(s) "
+                    f"diretamente ({dest0}). [1] A contagem considera apenas setas cheias; "
+                    "ligações tracejadas não entram no ranking. Esta transcrição vale para "
+                    "ingressantes após 2024/2. [1]"
+                )
+            else:
+                resumo = "; ".join(partes_texto)
+                resposta = (
+                    f"Pelo número de dependências diretas confirmadas no F16, há empate no topo "
+                    f"com {quantidade} disciplina(s) destravada(s) diretamente cada: {resumo}. [1] "
+                    "A contagem considera apenas setas cheias; ligações tracejadas não entram no "
+                    "ranking. Esta transcrição vale para ingressantes após 2024/2. [1]"
+                )
+            return {
+                "tipo_consulta": "gargalo",
+                "dados": {"grau_saida_max": quantidade, "gargalos": itens_gargalo},
+                "texto": resposta,
+                "evidencia": evidencia,
+                "fonte": fonte,
+                "alertas": [],
+            }
 
         if re.search(r"passando|passei|aprovad[oa]s?|o que abre|quais.*abre", texto):
             if not codigos:
@@ -318,7 +441,10 @@ class GrafoCurricular:
                 nomes = ", ".join(f"{self.disciplinas[c].nome} ({c})" for c in abertas)
                 resposta = f"Com aprovação em {aprovadas_txt}, ficam liberadas pelo grafo: {nomes}. [1]"
             else:
-                resposta = f"Com aprovação em {aprovadas_txt}, não identifiquei novas disciplinas liberadas apenas por pré-requisitos confirmados no F16. [1]"
+                resposta = (
+                    f"Com aprovação em {aprovadas_txt}, não identifiquei novas disciplinas "
+                    "liberadas apenas por pré-requisitos confirmados no F16. [1]"
+                )
             if incertas:
                 nomes_inc = ", ".join(f"{self.disciplinas[c].nome} ({c})" for c in incertas)
                 resposta += (
@@ -333,17 +459,27 @@ class GrafoCurricular:
                     codigos | set(abertas) | set(incertas), arestas_usadas + arestas_tracejadas
                 )
             resposta += " Esta transcrição vale para ingressantes após 2024/2. [1]"
-            return ConsultaGrafo(resposta, evidencia or "Consulta calculada pelas relações registradas no F16.")
+            return {
+                "tipo_consulta": "disciplinas_que_abrem",
+                "dados": {
+                    "aprovadas": sorted(codigos),
+                    "abertas_confirmadas": [self._no_resumo(c) for c in abertas],
+                    "relacoes_incertas": [self._no_resumo(c) for c in incertas],
+                },
+                "texto": resposta,
+                "evidencia": evidencia,
+                "fonte": fonte,
+                "alertas": [],
+            }
 
         if re.search(r"reprov|trava|bloque|dependente|depende de", texto) and disciplinas:
             inicio = disciplinas[0]
             confirmados, incertos = self.dependentes(inicio.codigo)
-            arestas_usadas = [
-                a.evidencia for a in self.arestas
-                if a.relacao == "pre_requisito" and (
-                    (a.origem in {inicio.codigo, *confirmados, *incertos})
-                    and (a.destino in {*confirmados, *incertos})
-                )
+            nos_envolvidos = {inicio.codigo, *confirmados, *incertos}
+            arestas_usadas_obj = [
+                self._to_aresta(u, v, attrs)
+                for u, v, attrs in self.grafo_completo.edges(data=True)
+                if u in nos_envolvidos and v in nos_envolvidos
             ]
             if confirmados:
                 nomes = ", ".join(f"{self.disciplinas[c].nome} ({c})" for c in confirmados)
@@ -363,15 +499,21 @@ class GrafoCurricular:
                     "não é possível afirmar que bloqueia. Confirme no SIGAA. [1]"
                 )
             resposta += " Esta transcrição vale para ingressantes após 2024/2. [1]"
-            arestas_usadas_obj = [
-                a for a in self.arestas if a.evidencia in arestas_usadas
-            ]
-            evidencia = self._evidencia(
-                {inicio.codigo, *confirmados, *incertos}, arestas_usadas_obj
-            )
-            return ConsultaGrafo(resposta, evidencia)
+            evidencia = self._evidencia(nos_envolvidos, arestas_usadas_obj)
+            return {
+                "tipo_consulta": "dependentes",
+                "dados": {
+                    "origem": self._no_resumo(inicio.codigo),
+                    "dependentes_confirmados": [self._no_resumo(c) for c in confirmados],
+                    "dependentes_incertos": [self._no_resumo(c) for c in incertos],
+                },
+                "texto": resposta,
+                "evidencia": evidencia,
+                "fonte": fonte,
+                "alertas": [],
+            }
 
-        if re.search(r"pr[eé]-?requisito", texto) and disciplinas:
+        if re.search(r"pre-?requisito", texto) and disciplinas:
             alvo = disciplinas[-1]
             confirmados, incertos = self.prerequisitos(alvo.codigo)
             partes: list[str] = []
@@ -381,7 +523,10 @@ class GrafoCurricular:
                 )
                 partes.append(f"Pré-requisitos confirmados de {alvo.nome} ({alvo.codigo}): {nomes}.")
             else:
-                partes.append(f"A transcrição F16 não registra seta cheia de pré-requisito para {alvo.nome} ({alvo.codigo}).")
+                partes.append(
+                    f"A transcrição F16 não registra seta cheia de pré-requisito para "
+                    f"{alvo.nome} ({alvo.codigo})."
+                )
             if incertos:
                 nomes_inc = ", ".join(
                     f"{self.disciplinas[a.origem].nome} ({a.origem})" for a in incertos
@@ -395,12 +540,36 @@ class GrafoCurricular:
                 {alvo.codigo, *(a.origem for a in confirmados + incertos)},
                 confirmados + incertos,
             )
-            return ConsultaGrafo(" ".join(p + " [1]" for p in partes), evidencia or "Consulta feita na transcrição F16.")
+            return {
+                "tipo_consulta": "prerequisitos",
+                "dados": {
+                    "disciplina": self._no_resumo(alvo.codigo),
+                    "confirmados": [self._no_resumo(a.origem) for a in confirmados],
+                    "incertos": [self._no_resumo(a.origem) for a in incertos],
+                },
+                "texto": " ".join(p + " [1]" for p in partes),
+                "evidencia": evidencia,
+                "fonte": fonte,
+                "alertas": [],
+            }
 
         return None
+
+    def _to_aresta_out(self, codigo: str) -> list[Aresta]:
+        return [
+            self._to_aresta(u, v, attrs)
+            for u, v, attrs in self.grafo.out_edges(codigo, data=True)
+        ]
+
+    def consultar(self, pergunta: str) -> ConsultaGrafo | None:
+        """Executa deterministicamente uma consulta reconhecida; None pede fallback RAG."""
+        res = self.consultar_estruturado(pergunta)
+        if res is None:
+            return None
+        return ConsultaGrafo(res["texto"], res["evidencia"], tuple(res["alertas"]))
 
 
 @lru_cache(maxsize=1)
 def carregar_grafo_f16() -> GrafoCurricular:
-    """Carrega uma única vez por processo a transcrição curada F16."""
+    """Carrega uma única vez por processo o grafo curricular (JSON persistido ou F16)."""
     return GrafoCurricular.carregar_f16()

@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "rumo/grafo-curricular.json",
+  "title": "Grafo curricular dirigido de pré-requisitos e correquisitos",
+  "type": "object",
+  "required": ["curso", "versao_curriculo", "total_creditos", "fonte", "nos", "arestas"],
+  "additionalProperties": false,
+  "properties": {
+    "curso": {"type": "string", "minLength": 1},
+    "versao_curriculo": {"type": "string", "minLength": 1},
+    "total_creditos": {"type": "integer", "minimum": 1},
+    "fonte": {
+      "type": "object",
+      "required": ["doc_id", "titulo", "orgao", "pagina", "url"],
+      "additionalProperties": false,
+      "properties": {
+        "doc_id": {"type": "string", "pattern": "^F\\d{2}$"},
+        "titulo": {"type": "string", "minLength": 1},
+        "orgao": {"type": "string", "minLength": 1},
+        "pagina": {"type": "integer", "minimum": 1},
+        "url": {"type": "string", "minLength": 1}
+      }
+    },
+    "nos": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["codigo", "nome", "creditos", "semestre", "evidencia"],
+        "additionalProperties": false,
+        "properties": {
+          "codigo": {"type": "string", "pattern": "^[A-Z]{2,4}\\d{3,4}$"},
+          "nome": {"type": "string", "minLength": 1},
+          "creditos": {"type": "integer", "minimum": 0},
+          "semestre": {"type": "integer", "minimum": 1},
+          "evidencia": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "arestas": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["origem", "destino", "relacao", "incerta", "evidencia"],
+        "additionalProperties": false,
+        "properties": {
+          "origem": {"type": "string", "pattern": "^[A-Z]{2,4}\\d{3,4}$"},
+          "destino": {"type": "string", "pattern": "^[A-Z]{2,4}\\d{3,4}$"},
+          "relacao": {"enum": ["pre_requisito", "correquisito"]},
+          "incerta": {"type": "boolean"},
+          "evidencia": {"type": "string", "minLength": 1}
+        }
+      }
+    }
+  }
+}

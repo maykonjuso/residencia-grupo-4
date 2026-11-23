@@ -36,10 +36,12 @@ def responder(
     sem_rag: bool = False,
     usar_agentes: bool = False,
     falhar_agente: str | None = None,
+    data: str | None = None,
+    perfil: dict | None = None,
 ) -> dict:
     if usar_agentes:
         return agentes.Orquestrador().executar(
-            pergunta, backend=backend, k=k, falhar_agente=falhar_agente
+            pergunta, backend=backend, k=k, falhar_agente=falhar_agente, data=data, perfil=perfil
         )
     # Consultas curriculares suportadas pelo grafo são resolvidas pelo algoritmo
     # mesmo no modo CLI padrão (os comandos da task não exigem --agentes).
@@ -172,7 +174,13 @@ def imprimir_agentes(r: dict, mostrar_trace: bool = False):
                 )
                 for ex in passo.get("execucoes", []):
                     status = f"ERRO ({ex['erro']})" if ex.get("erro") else f"OK ({ex['n_trechos']} trechos)"
-                    print(f"   - [{ex['nome_agente']}] {ex['tempo_total_s']}s · {status}")
+                    ferr = ex.get("ferramenta")
+                    ferr_txt = ""
+                    if ferr:
+                        args_txt = json.dumps(ferr.get("argumentos", {}), ensure_ascii=False)
+                        estado_f = " · RECUSADO" if ferr.get("recusado") else ""
+                        ferr_txt = f" · ferramenta={ferr['nome']}({args_txt}){estado_f}"
+                    print(f"   - [{ex['nome_agente']}] {ex['tempo_total_s']}s · {status}{ferr_txt}")
             elif etapa == "validacao_factual":
                 print("4. Validador factual:")
                 for res in passo.get("resultados", []):
@@ -248,6 +256,10 @@ def imprimir_agentes(r: dict, mostrar_trace: bool = False):
         print("Fontes citadas:")
         for f in parte.get("fontes_citadas", []):
             print(f"  [{f['n']}] {f['doc_id']} · {f['titulo']} · p.{f['pagina']} · {f['url']}")
+        if parte.get("dado_estruturado") is not None and parte.get("ferramenta_chamada"):
+            nome_f = parte["ferramenta_chamada"]["nome"]
+            print(f"\nDado estruturado ({nome_f}):")
+            print(json.dumps(parte["dado_estruturado"], ensure_ascii=False, indent=2))
         val = parte.get("validacao") or {}
         if val.get("motivos"):
             print(f"⚠ Validador: {'; '.join(val['motivos'])}")
@@ -266,6 +278,7 @@ def perguntar(args):
     sem_rag = getattr(args, "sem_rag", False)
     usar_agentes = getattr(args, "agentes", False)
     falhar_agente = getattr(args, "falhar_agente", None)
+    data = getattr(args, "data", None)
     r = responder(
         " ".join(args.pergunta),
         args.backend,
@@ -274,6 +287,7 @@ def perguntar(args):
         sem_rag=sem_rag,
         usar_agentes=usar_agentes,
         falhar_agente=falhar_agente,
+        data=data,
     )
     if getattr(args, "saida", "texto") == "json":
         saida_dict = dict(r)
@@ -338,6 +352,7 @@ def main(argv=None):
     p.add_argument("--sem-rag", action="store_true", help="Executa apenas com LLM puro, sem busca ou recuperação na base")
     p.add_argument("--agentes", action="store_true", help="Usa o orquestrador multiagentes (RU, Fluxo e Validador)")
     p.add_argument("--trace", action="store_true", help="Exibe o rastreamento completo da orquestração multiagentes")
+    p.add_argument("--data", default=None, help="Data de referência AAAA-MM-DD para ferramentas de cardápio")
     p.add_argument("--falhar-agente", choices=["ru", "fluxo", "validador"], default=None,
                    help="Simula queda de um agente para testar degradação elegante")
     p.add_argument("--saida", choices=["texto", "json"], default="texto", help="Formato de saída (texto ou json)")
