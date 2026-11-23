@@ -1,54 +1,139 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "rumo/grafo-curricular.json",
-  "title": "Grafo curricular dirigido de pré-requisitos e correquisitos",
-  "type": "object",
-  "required": ["curso", "versao_curriculo", "total_creditos", "fonte", "nos", "arestas"],
-  "additionalProperties": false,
-  "properties": {
-    "curso": {"type": "string", "minLength": 1},
-    "versao_curriculo": {"type": "string", "minLength": 1},
-    "total_creditos": {"type": "integer", "minimum": 1},
-    "fonte": {
+  "title": "Grafo curricular multi-curso da FCTE (pré-requisitos, correquisitos, vigência e equivalências)",
+  "oneOf": [
+    {"$ref": "#/$defs/repositorio"},
+    {"$ref": "#/$defs/curriculo"}
+  ],
+  "$defs": {
+    "repositorio": {
       "type": "object",
-      "required": ["doc_id", "titulo", "orgao", "pagina", "url"],
+      "required": ["versao_schema", "instituicao", "curriculos"],
       "additionalProperties": false,
       "properties": {
-        "doc_id": {"type": "string", "pattern": "^F\\d{2}$"},
-        "titulo": {"type": "string", "minLength": 1},
-        "orgao": {"type": "string", "minLength": 1},
-        "pagina": {"type": "integer", "minimum": 1},
-        "url": {"type": "string", "minLength": 1}
-      }
-    },
-    "nos": {
-      "type": "array",
-      "minItems": 1,
-      "items": {
-        "type": "object",
-        "required": ["codigo", "nome", "creditos", "semestre", "evidencia"],
-        "additionalProperties": false,
-        "properties": {
-          "codigo": {"type": "string", "pattern": "^[A-Z]{2,4}\\d{3,4}$"},
-          "nome": {"type": "string", "minLength": 1},
-          "creditos": {"type": "integer", "minimum": 0},
-          "semestre": {"type": "integer", "minimum": 1},
-          "evidencia": {"type": "string", "minLength": 1}
+        "versao_schema": {"type": "string", "const": "2.0"},
+        "instituicao": {"type": "string", "minLength": 1},
+        "curriculos": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "#/$defs/curriculo"}
         }
       }
     },
-    "arestas": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "required": ["origem", "destino", "relacao", "incerta", "evidencia"],
-        "additionalProperties": false,
-        "properties": {
-          "origem": {"type": "string", "pattern": "^[A-Z]{2,4}\\d{3,4}$"},
-          "destino": {"type": "string", "pattern": "^[A-Z]{2,4}\\d{3,4}$"},
-          "relacao": {"enum": ["pre_requisito", "correquisito"]},
-          "incerta": {"type": "boolean"},
-          "evidencia": {"type": "string", "minLength": 1}
+    "vigencia": {
+      "type": "object",
+      "required": ["inicio", "fim", "ativa", "descricao"],
+      "additionalProperties": false,
+      "properties": {
+        "inicio": {"type": "string", "minLength": 1},
+        "fim": {"type": ["string", "null"]},
+        "ativa": {"type": "boolean"},
+        "descricao": {"type": "string", "minLength": 1}
+      }
+    },
+    "curriculo": {
+      "type": "object",
+      "required": [
+        "curriculo_id",
+        "curso_slug",
+        "curso",
+        "vigencia",
+        "versao_curriculo",
+        "total_creditos",
+        "carga_horaria_total",
+        "cobertura_prerequisitos",
+        "cobertura_equivalencias",
+        "fonte",
+        "nos",
+        "arestas",
+        "equivalencias"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "curriculo_id": {"type": "string", "minLength": 1},
+        "curso_slug": {
+          "enum": ["software", "aeroespacial", "eletronica", "automotiva", "energia"]
+        },
+        "curso": {"type": "string", "minLength": 1},
+        "vigencia": {"$ref": "#/$defs/vigencia"},
+        "versao_curriculo": {"type": "string", "minLength": 1},
+        "total_creditos": {"type": ["integer", "null"], "minimum": 1},
+        "carga_horaria_total": {"type": ["integer", "null"], "minimum": 1},
+        "cobertura_prerequisitos": {
+          "enum": ["completa", "parcial", "indisponivel_na_base"]
+        },
+        "cobertura_equivalencias": {
+          "enum": ["completa", "parcial", "indisponivel_na_base"]
+        },
+        "fonte": {
+          "type": "object",
+          "required": ["doc_id", "titulo", "orgao", "pagina", "url"],
+          "additionalProperties": false,
+          "properties": {
+            "doc_id": {"type": "string", "pattern": "^F\\d{2}$"},
+            "titulo": {"type": "string", "minLength": 1},
+            "orgao": {"type": "string", "minLength": 1},
+            "pagina": {"type": "integer", "minimum": 1},
+            "url": {"type": "string", "minLength": 1}
+          }
+        },
+        "nos": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["codigo", "nome", "creditos", "carga_horaria", "semestre", "codigo_oficial", "evidencia"],
+            "additionalProperties": false,
+            "properties": {
+              "codigo": {"type": "string", "pattern": "^(?:[A-Z]{2,4}\\d{3,4}|SEM-CODIGO:[a-z0-9-]+)$"},
+              "nome": {"type": "string", "minLength": 1},
+              "creditos": {"type": "integer", "minimum": 0},
+              "carga_horaria": {"type": ["integer", "null"], "minimum": 0},
+              "semestre": {"type": "integer", "minimum": 1},
+              "codigo_oficial": {"type": "boolean"},
+              "evidencia": {"type": "string", "minLength": 1}
+            }
+          }
+        },
+        "arestas": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["origem", "destino", "relacao", "incerta", "alternativas", "evidencia"],
+            "additionalProperties": false,
+            "properties": {
+              "origem": {"type": "string", "pattern": "^[A-Z]{2,4}\\d{3,4}$"},
+              "destino": {"type": "string", "pattern": "^[A-Z]{2,4}\\d{3,4}$"},
+              "relacao": {"enum": ["pre_requisito", "correquisito"]},
+              "incerta": {"type": "boolean"},
+              "alternativas": {
+                "type": "array",
+                "items": {"type": "string", "pattern": "^[A-Z]{2,4}\\d{3,4}$"}
+              },
+              "evidencia": {"type": "string", "minLength": 1}
+            }
+          }
+        },
+        "equivalencias": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["codigo", "equivalentes", "tipo", "bidirecional", "observacao", "evidencia"],
+            "additionalProperties": false,
+            "properties": {
+              "codigo": {"type": "string", "pattern": "^(?:[A-Z]{2,4}\\d{3,4}|SEM-CODIGO:[a-z0-9-]+)$"},
+              "equivalentes": {
+                "type": "array",
+                "minItems": 1,
+                "items": {"type": "string", "pattern": "^[A-Z]{2,4}\\d{3,4}$"}
+              },
+              "tipo": {"enum": ["codigo_antigo", "equivalencia_oficial", "substituicao_ppc"]},
+              "bidirecional": {"type": "boolean"},
+              "observacao": {"type": "string"},
+              "evidencia": {"type": "string", "minLength": 1}
+            }
+          }
         }
       }
     }

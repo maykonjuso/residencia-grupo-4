@@ -102,7 +102,7 @@ class AgenteFluxo(Agente):
             t0 = time.monotonic()
             res = getattr(ferramentas, nome_ferr)(**args)
             tempo_busca = round(time.monotonic() - t0, 3)
-            if res.ferramenta == "grafo_fluxo" and res.recusado:
+            if res.ferramenta == "grafo_fluxo" and res.recusado and res.dados.get("fallback_rag", True):
                 return None
 
             contexto["ferramenta_chamada"] = res.para_trace()

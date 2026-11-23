@@ -17,7 +17,7 @@ import unicodedata
 
 from .. import config, geracao
 from ..coleta import cardapio
-from ..grafo_curricular import carregar_grafo_f16
+from ..grafo_curricular import carregar_grafo_f16, carregar_repositorio_grafos
 
 _DIAS_SEMANA = (
     "segunda-feira",
@@ -569,12 +569,26 @@ def montar_prato(
     )
 
 
-def grafo_fluxo(consulta: str) -> ResultadoFerramenta:
-    """Consulta determinística ao grafo curricular de pré-requisitos (`F16`)."""
-    args = {"consulta": consulta}
-    res = carregar_grafo_f16().consultar_estruturado(consulta)
+def grafo_fluxo(
+    consulta: str,
+    curso: str | None = None,
+    curriculo_id: str | None = None,
+    vigencia: str | None = None,
+) -> ResultadoFerramenta:
+    """Consulta determinística ao grafo curricular multi-curso da FCTE."""
+    args: dict[str, Any] = {"consulta": consulta}
+    if curso:
+        args["curso"] = curso
+    if curriculo_id:
+        args["curriculo_id"] = curriculo_id
+    if vigencia:
+        args["vigencia"] = vigencia
+
+    res = carregar_repositorio_grafos().consultar_estruturado(
+        consulta, curso=curso, curriculo_id=curriculo_id, vigencia=vigencia
+    )
     if res is None:
-        motivo = "Consulta fora das operações suportadas pelo grafo curricular do F16."
+        motivo = "Consulta fora das operações suportadas pelo grafo curricular da FCTE."
         return ResultadoFerramenta(
             ferramenta="grafo_fluxo",
             argumentos=args,
@@ -582,7 +596,7 @@ def grafo_fluxo(consulta: str) -> ResultadoFerramenta:
             sucesso=False,
             recusado=True,
             motivo_recusa=motivo,
-            dados={},
+            dados={"fallback_rag": True},
             texto_base=geracao.RECUSA,
             alertas=[motivo],
         )
@@ -790,7 +804,19 @@ def extrair_chamada_fluxo(pergunta: str, contexto: dict[str, Any] | None = None)
                     break
         return ("minha_agenda", {"dia": dia_arg, "perfil": ctx.get("perfil")})
 
-    if carregar_grafo_f16().consultar_estruturado(pergunta) is not None:
-        return ("grafo_fluxo", {"consulta": pergunta})
+    curso = ctx.get("curso")
+    curriculo_id = ctx.get("curriculo_id")
+    vigencia = ctx.get("vigencia")
+    if carregar_repositorio_grafos().consultar_estruturado(
+        pergunta, curso=curso, curriculo_id=curriculo_id, vigencia=vigencia
+    ) is not None:
+        args_grafo: dict[str, Any] = {"consulta": pergunta}
+        if curso:
+            args_grafo["curso"] = curso
+        if curriculo_id:
+            args_grafo["curriculo_id"] = curriculo_id
+        if vigencia:
+            args_grafo["vigencia"] = vigencia
+        return ("grafo_fluxo", args_grafo)
 
     return None

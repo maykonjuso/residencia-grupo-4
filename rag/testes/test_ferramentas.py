@@ -254,6 +254,30 @@ class TestGrafoEMinhaAgenda(unittest.TestCase):
         self.assertEqual(res.fontes[0]["doc_id"], "F16")
         self.assertIn("confirme no SIGAA", res.texto_base)
 
+    def test_grafo_fluxo_suporta_curso_vigencia_e_equivalencia(self):
+        res_aero = ferramentas.grafo_fluxo(
+            "Qual disciplina destrava mais matérias?",
+            curso="aeroespacial",
+        )
+        self.assertTrue(res_aero.sucesso)
+        self.assertEqual(res_aero.dados["curriculo_id"], "aeroespacial-2025")
+        self.assertEqual(res_aero.fontes[0]["doc_id"], "F17")
+
+        res_eq = ferramentas.grafo_fluxo("Qual a equivalência de FGA0308 em Eletrônica?")
+        self.assertTrue(res_eq.sucesso)
+        self.assertEqual(res_eq.dados["tipo_consulta"], "equivalencias")
+        self.assertEqual(res_eq.dados["equivalencias"][0]["equivalentes"], ["FGA0096"])
+
+        orq = agentes.Orquestrador()
+        with mock.patch.object(agentes.reescrita, "classificar_composta", return_value=(False, 0.05)):
+            res_orq = orq.executar(
+                "Quais os pré-requisitos de Cálculo 2?",
+                backend="extrativo",
+                curso="aeroespacial",
+            )
+        self.assertEqual(res_orq["fontes_citadas"][0]["doc_id"], "F17")
+        self.assertEqual(res_orq["dados_estruturados"][0]["dados"]["curriculo_id"], "aeroespacial-2025")
+
     def test_minha_agenda_com_perfil_e_sem_perfil(self):
         res_sem = ferramentas.minha_agenda("terça", perfil=None)
         self.assertFalse(res_sem.sucesso)

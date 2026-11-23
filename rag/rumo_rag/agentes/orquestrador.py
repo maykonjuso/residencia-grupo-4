@@ -362,6 +362,9 @@ class Orquestrador:
         falha_configurada: str | None,
         data: str | None = None,
         perfil: dict | None = None,
+        curso: str | None = None,
+        curriculo_id: str | None = None,
+        vigencia: str | None = None,
     ) -> tuple[int, Mensagem, Resposta, RespostaAgente]:
         ag = self.agentes[ag_id]
         nome_ag = getattr(ag, "nome", ag_id)
@@ -370,6 +373,12 @@ class Orquestrador:
             ctx_msg["data"] = data
         if perfil is not None:
             ctx_msg["perfil"] = perfil
+        if curso is not None:
+            ctx_msg["curso"] = curso
+        if curriculo_id is not None:
+            ctx_msg["curriculo_id"] = curriculo_id
+        if vigencia is not None:
+            ctx_msg["vigencia"] = vigencia
         msg = Mensagem(
             remetente="Orquestrador",
             destinatario=nome_ag,
@@ -646,6 +655,9 @@ class Orquestrador:
         falhar_agente: str | None = None,
         data: str | None = None,
         perfil: dict | None = None,
+        curso: str | None = None,
+        curriculo_id: str | None = None,
+        vigencia: str | None = None,
     ) -> dict:
         """Executa o fluxo multiagentes com contrato `Mensagem`/`Resposta` e registra o `Trace`."""
         trace_etapas: list[dict] = []
@@ -698,7 +710,20 @@ class Orquestrador:
         brutos: dict[int, tuple[Mensagem, Resposta, RespostaAgente]] = {}
         with ThreadPoolExecutor(max_workers=max(1, len(tarefas))) as pool:
             futuros = [
-                pool.submit(self._invocar_agente, idx, sub, ag_id, k, backend, falha_configurada, data, perfil)
+                pool.submit(
+                    self._invocar_agente,
+                    idx,
+                    sub,
+                    ag_id,
+                    k,
+                    backend,
+                    falha_configurada,
+                    data,
+                    perfil,
+                    curso,
+                    curriculo_id,
+                    vigencia,
+                )
                 for idx, sub, ag_id in tarefas
             ]
             for fut in as_completed(futuros):

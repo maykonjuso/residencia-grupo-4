@@ -145,3 +145,114 @@ def test_grafo_usa_networkx_digraph_e_valida_schema_json():
                 Aresta("FGA0158", "CIC0004", "pre_requisito", False, "teste"),
             ],
         )
+
+
+def test_repositorio_cobre_todos_os_5_cursos_fcte_com_dags_validos():
+    import networkx as nx
+    from rumo_rag.grafo_curricular import GRAFO_JSON, RepositorioGrafos
+
+    repo = RepositorioGrafos.carregar_json(GRAFO_JSON)
+    resumos = repo.listar_curriculos()
+    cursos_slug = {r["curso_slug"] for r in resumos}
+    ids = {r["curriculo_id"] for r in resumos}
+
+    assert cursos_slug == {"software", "aeroespacial", "eletronica", "automotiva", "energia"}
+    assert {
+        "software-2024-2",
+        "aeroespacial-2025",
+        "eletronica-2023",
+        "automotiva-2018-2026",
+        "automotiva-2027",
+        "energia-2024",
+    } <= ids
+
+    for cid, grafo in repo.curriculos.items():
+        assert nx.is_directed_acyclic_graph(grafo.grafo), cid
+        assert grafo.vigencia["inicio"]
+        assert grafo.vigencia["descricao"]
+
+
+def test_aeroespacial_e_eletronica_respondem_prerequisitos_corequisitos_e_gargalos():
+    from rumo_rag.grafo_curricular import carregar_repositorio_grafos
+
+    repo = carregar_repositorio_grafos()
+
+    res_aero = repo.consultar_estruturado("Quais os pré-requisitos de Mecânica do Voo em Aeroespacial?")
+    assert res_aero is not None
+    assert res_aero["dados"]["curriculo_id"] == "aeroespacial-2025"
+    cods_aero = {c["codigo"] for c in res_aero["dados"]["confirmados"]}
+    assert cods_aero == {"FGA0008", "FGA0038"}
+    assert res_aero["fonte"]["doc_id"] == "F17"
+    assert "PPC 2025" in res_aero["texto"]
+
+    res_el = repo.consultar_estruturado(
+        "Quais os pré-requisitos e correquisitos de Teoria de Eletrônica Digital 1 em Eletrônica?"
+    )
+    assert res_el is not None
+    assert res_el["dados"]["curriculo_id"] == "eletronica-2023"
+    assert res_el["dados"]["confirmados"][0]["codigo"] == "MAT0031"
+    assert res_el["dados"]["correquisitos"][0]["codigo"] == "FGA0071"
+    assert res_el["fonte"]["doc_id"] == "F21"
+    assert "PPC 2023" in res_el["texto"]
+
+
+def test_automotiva_coexiste_com_duas_vigencias_e_recusa_prerequisitos_sem_inventar():
+    from rumo_rag.grafo_curricular import carregar_repositorio_grafos
+
+    repo = carregar_repositorio_grafos()
+
+    res_2027 = repo.consultar_estruturado(
+        "Quais os pré-requisitos de Dinâmica de Veículos em Automotiva 2027?"
+    )
+    assert res_2027 is not None
+    assert res_2027["tipo_consulta"] == "prerequisitos_indisponiveis"
+    assert res_2027["dados"]["curriculo_id"] == "automotiva-2027"
+    assert res_2027["dados"]["cobertura_prerequisitos"] == "indisponivel_na_base"
+    assert any(o["curriculo_id"] == "automotiva-2018-2026" for o in res_2027["dados"]["outras_vigencias"])
+    assert res_2027["fonte"]["doc_id"] == "F19"
+
+    res_2018 = repo.consultar_estruturado(
+        "Disciplinas do 3º nível de Engenharia Automotiva para ingressantes de 2020"
+    )
+    assert res_2018 is not None
+    assert res_2018["tipo_consulta"] == "vigencia_curriculo"
+    assert res_2018["dados"]["curriculo_id"] == "automotiva-2018-2026"
+    assert any("Ergonomia" in d["nome"] or "Ondulatória" in d["nome"] for d in res_2018["dados"]["disciplinas"])
+    assert all(not d["codigo_oficial"] for d in res_2018["dados"]["disciplinas"])
+
+
+def test_energia_responde_grade_e_nao_inventa_prerequisitos():
+    from rumo_rag.grafo_curricular import carregar_repositorio_grafos
+
+    repo = carregar_repositorio_grafos()
+    res_pre = repo.consultar_estruturado("Quais os pré-requisitos de Biorrefinarias em Engenharia de Energia?")
+    assert res_pre is not None
+    assert res_pre["tipo_consulta"] == "prerequisitos_indisponiveis"
+    assert res_pre["dados"]["curriculo_id"] == "energia-2024"
+    assert res_pre["fonte"]["doc_id"] == "F23"
+
+
+def test_equivalencias_e_resolucao_por_codigo_antigo():
+    from rumo_rag.grafo_curricular import carregar_repositorio_grafos
+
+    repo = carregar_repositorio_grafos()
+
+    res_eq_sw = repo.consultar_estruturado("Qual a equivalência de FGA0172?")
+    assert res_eq_sw is not None
+    assert res_eq_sw["tipo_consulta"] == "equivalencias"
+    assert res_eq_sw["dados"]["curriculo_id"] == "software-2024-2"
+    assert res_eq_sw["dados"]["equivalencias"][0]["codigo"] == "FGA0313"
+    assert "FGA0172" in res_eq_sw["dados"]["equivalencias"][0]["equivalentes"]
+
+    res_eq_el = repo.consultar_estruturado("Qual a equivalência de FGA0308 em Engenharia Eletrônica?")
+    assert res_eq_el is not None
+    assert res_eq_el["dados"]["curriculo_id"] == "eletronica-2023"
+    assert res_eq_el["dados"]["equivalencias"][0]["equivalentes"] == ["FGA0096"]
+    assert res_eq_el["fonte"]["doc_id"] == "F21"
+
+    # Perguntar pré-requisitos usando código antigo (FGA0238 -> FGA0314 Testes de Software)
+    res_antigo = repo.consultar_estruturado("Quais os pré-requisitos de FGA0238?")
+    assert res_antigo is not None
+    assert res_antigo["tipo_consulta"] == "prerequisitos"
+    assert res_antigo["dados"]["disciplina"]["codigo"] == "FGA0314"
+    assert "FGA0238" in res_antigo["texto"]

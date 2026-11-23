@@ -38,18 +38,36 @@ def responder(
     falhar_agente: str | None = None,
     data: str | None = None,
     perfil: dict | None = None,
+    curso: str | None = None,
+    curriculo_id: str | None = None,
+    vigencia: str | None = None,
 ) -> dict:
     if usar_agentes:
         return agentes.Orquestrador().executar(
-            pergunta, backend=backend, k=k, falhar_agente=falhar_agente, data=data, perfil=perfil
+            pergunta,
+            backend=backend,
+            k=k,
+            falhar_agente=falhar_agente,
+            data=data,
+            perfil=perfil,
+            curso=curso,
+            curriculo_id=curriculo_id,
+            vigencia=vigencia,
         )
     # Consultas curriculares suportadas pelo grafo são resolvidas pelo algoritmo
     # mesmo no modo CLI padrão (os comandos da task não exigem --agentes).
+    ctx_grafo = {"backend": backend}
+    if curso:
+        ctx_grafo["curso"] = curso
+    if curriculo_id:
+        ctx_grafo["curriculo_id"] = curriculo_id
+    if vigencia:
+        ctx_grafo["vigencia"] = vigencia
     mensagem_grafo = agentes.Mensagem(
         remetente="CLI",
         destinatario="Agente Fluxo",
         conteudo=pergunta,
-        contexto={"backend": backend},
+        contexto=ctx_grafo,
     )
     resposta_grafo = agentes.AgenteFluxo(k=k, modo=config.BUSCA).responder_grafo(mensagem_grafo)
     if resposta_grafo is not None:
@@ -279,6 +297,9 @@ def perguntar(args):
     usar_agentes = getattr(args, "agentes", False)
     falhar_agente = getattr(args, "falhar_agente", None)
     data = getattr(args, "data", None)
+    curso = getattr(args, "curso", None)
+    curriculo_id = getattr(args, "curriculo", None)
+    vigencia = getattr(args, "vigencia", None)
     r = responder(
         " ".join(args.pergunta),
         args.backend,
@@ -288,6 +309,9 @@ def perguntar(args):
         usar_agentes=usar_agentes,
         falhar_agente=falhar_agente,
         data=data,
+        curso=curso,
+        curriculo_id=curriculo_id,
+        vigencia=vigencia,
     )
     if getattr(args, "saida", "texto") == "json":
         saida_dict = dict(r)
@@ -353,6 +377,9 @@ def main(argv=None):
     p.add_argument("--agentes", action="store_true", help="Usa o orquestrador multiagentes (RU, Fluxo e Validador)")
     p.add_argument("--trace", action="store_true", help="Exibe o rastreamento completo da orquestração multiagentes")
     p.add_argument("--data", default=None, help="Data de referência AAAA-MM-DD para ferramentas de cardápio")
+    p.add_argument("--curso", default=None, help="Curso da FCTE para consulta curricular (ex.: software, aeroespacial, eletronica, automotiva, energia)")
+    p.add_argument("--curriculo", default=None, help="ID exato do currículo/vigência (ex.: automotiva-2018-2026, automotiva-2027)")
+    p.add_argument("--vigencia", default=None, help="Ano/período de vigência do currículo (ex.: 2027, 2018)")
     p.add_argument("--falhar-agente", choices=["ru", "fluxo", "validador"], default=None,
                    help="Simula queda de um agente para testar degradação elegante")
     p.add_argument("--saida", choices=["texto", "json"], default="texto", help="Formato de saída (texto ou json)")
