@@ -69,11 +69,11 @@ Um terceiro caso não é imagem, mas perde informação na extração:
 
 ## Alergênicos e informação nutricional (Issue #55)
 
-Perguntas como *"a lasanha tem glúten?"* ou *"qual o prato menos calórico?"* dependem de dados por prato. A **Tabela 4** resume o que o RU publica, conferido em 18/11/2026 no site do RU e nos PDFs dos cardápios do Gama.
+Perguntas como *"a lasanha tem glúten?"* ou *"qual o prato menos calórico?"* dependem de dados por prato. A **Tabela 4** resume o que o RU publica, conferido em 18/11/2026 no site do RU e nos PDFs dos cardápios do Gama e completado pela resposta da Diretoria do RU de 23/11/2026.
 
 | Informação | O RU publica? | Onde |
 |---|---|---|
-| Calorias e nutrientes por prato | **Não** | Nem no site nem no PDF do cardápio |
+| Calorias e nutrientes por prato | **Não** | As Fichas Técnicas de Preparação existem, com a empresa contratada, mas não são publicadas (resposta da DRU, 23/11/2026) |
 | Alergênicos por prato | **Sim**, por ícones | PDF do cardápio semanal, com legenda no rodapé de cada página |
 | Atendimento a dietas especiais | **Não**, por declaração oficial | Página "Serviço alimentação" (F37) |
 
@@ -90,13 +90,20 @@ A página do RU (F37) diz que *"preparações que contenham leite de origem anim
 
 **Como foi conferido.** As 6 páginas dos cardápios da base (F08 e F09) foram conferidas à mão contra a imagem, opção por opção. Os casos conferidos viraram teste automático (`rag/testes/test_alergenos.py`). A primeira versão da leitura de ícones, que anotava a célula inteira, errava 87 das 306 opções comparáveis; a versão atual erra 0. Uma terceira semana, fora da base (16 a 20/11/2026), foi usada só como prova: no almoço e no jantar, todos os ícones bateram com a imagem.
 
-**Consulta formal ao RU.** O escopo da issue pedia perguntar formalmente se não houvesse ficha nutricional publicada. O grupo enviou e-mail à Diretoria do RU (falaru@unb.br) perguntando sobre a existência de ficha técnica ou informação nutricional por prato, sobre a ausência de ícone de peixe e frutos do mar na legenda do Gama e sobre a lactose. Até 23/11/2026 não houve resposta. A decisão vale com o que está publicado: calorias ficam fora da base, e, se o RU responder ou passar a publicar a informação, ela entra como nova fonte oficial, ligada ao `id` de cada opção do cardápio estruturado.
+**Consulta formal ao RU.** O escopo da issue pedia perguntar formalmente se não houvesse ficha nutricional publicada. O grupo enviou e-mail à Diretoria do RU (falaru@unb.br) sobre a ficha técnica ou informação nutricional por prato, a ausência de ícone de peixe e frutos do mar na legenda do Gama e a lactose. A DRU respondeu em 23/11/2026:
+
+1. **Ficha nutricional.** Existem as Fichas Técnicas de Preparação (FTP), elaboradas e mantidas pela empresa contratada conforme o Termo de Referência do contrato, com ingredientes, modo de preparo, rendimento e composição nutricional. Pelo volume de preparações, não são publicadas no site; a DRU encaminha as de preparações específicas, se solicitadas.
+2. **Peixe e frutos do mar.** Preparações à base de peixe são identificadas pelo nome do prato (*"peixe ao molho de moqueca"*, *"peixe ao molho de ervas"*). A DRU reconhece que a legenda não tem ícone de frutos do mar; os demais frutos do mar (camarão, mariscos, lula) não integram habitualmente o cardápio e, se usados, devem ser identificados expressamente pela empresa.
+3. **Lactose.** O ícone "Leite e derivados" indica o uso desses ingredientes, sem identificar nem quantificar lactose. A opção **vegetariana estrita** não usa leite e derivados. O contrato prevê atendimento à coletividade, sem oferta destinada a intolerâncias e alergias, e o RU **não garante que uma refeição seja totalmente isenta**, por causa de insumos industrializados e das condições compartilhadas de preparo e distribuição.
+
+Em seguida, o grupo solicitou as FTP de todas as preparações servidas no RU Gama entre 02/11 e 29/11/2026, com prioridade para os itens diários e os mais recorrentes, e perguntou se seria possível publicá-las no site. A resposta é correspondência, não documento publicado: ela orienta esta documentação, mas **não entra na base** e o RUmo não a cita. Calorias continuam fora da base. Se as FTP forem publicadas no site do RU, entram como fonte oficial com URL, ligadas ao `id` de cada opção do cardápio estruturado; se chegarem só por e-mail, o grupo decide se aceita um documento formal da DRU sem URL como fonte.
 
 **Limitações declaradas:**
 
-- A legenda do RU Gama **não tem ícone de peixe nem de frutos do mar**, embora a página do RU cite frutos do mar. O *Filé de peixe ao molho de ervas* (04/11) não tem nenhum ícone.
+- A legenda do RU Gama **não tem ícone de peixe nem de frutos do mar**, embora a página do RU cite frutos do mar. O peixe é identificado só pelo nome do prato, como confirmou a DRU: o *Filé de peixe ao molho de ervas* (04/11) não tem nenhum ícone. Quem tem alergia a peixe precisa ler o nome do prato, e o RUmo não tem um alergênico "peixe" para filtrar.
 - O cardápio está sujeito a alterações sem aviso prévio. Os ícones valem para o cardápio publicado, não para o que foi servido.
-- "Leite e derivados" é a categoria do RU. O cardápio não diz se há opção sem lactose.
+- "Leite e derivados" indica o uso do ingrediente e não mede lactose. A DRU informa que a opção vegetariana estrita não usa leite e derivados, mas que nenhuma refeição tem garantia de ser totalmente isenta.
+- **Ausência de ícone não é garantia de ausência do alergênico.** O cardápio marca os ingredientes usados, e o RU não garante isenção por causa de insumos industrializados e do preparo compartilhado. O RUmo diz o que o cardápio indica; não deve dizer que um prato é seguro para quem tem alergia ou intolerância.
 - Na busca só por palavras (BM25, o modo usado em produção), *"o RU tem opção para quem tem doença celíaca?"* não recupera a F37, porque a página fala em *"dietas especializadas"* e não em *celíaca*. Na busca híbrida (BGE-M3), medida em 23/11/2026, o resultado é o mesmo: a F37 só aparece quando a pergunta usa a palavra "dieta" (ver [Avaliação](avaliacao.md#alergenicos-por-prato-issue-55)).
 
 ??? abstract "Histórico de revisão"
@@ -107,3 +114,4 @@ A página do RU (F37) diz que *"preparações que contenham leite de origem anim
     | 18/11/2026 | 1.1 | 37 documentos: F37 (serviço de alimentação do RU), alergênicos por prato lidos dos ícones do cardápio, calorias declaradas como lacuna (Issue #55) | Grupo 04 |
     | 23/11/2026 | 1.2 | Limitação do vocabulário "celíaca" confirmada na busca híbrida (Issue #55); consulta ao RU por e-mail registrada, sem resposta até esta data (Issue #55) | Gabriella Oliveira |
     | 23/11/2026 | 1.3 | 56 documentos: calendário 2026.2 na versão de 02/10/2026, feriados (F57) e verão 2027 (F58), campo `vigencia` nos calendários; abertura atualizada com as fontes da #53 (Issue #57) | Gabriella Oliveira |
+    | 23/11/2026 | 1.4 | Resposta da Diretoria do RU registrada (fichas técnicas existem e não são publicadas; peixe identificado pelo nome; ausência de ícone não garante isenção) e pedido das fichas das preparações de 02/11 a 29/11 (Issue #55) | Gabriella Oliveira |
