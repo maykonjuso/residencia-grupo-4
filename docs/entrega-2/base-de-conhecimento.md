@@ -89,7 +89,7 @@ A página do RU (F37) diz que *"preparações que contenham leite de origem anim
 - A legenda do RU Gama **não tem ícone de peixe nem de frutos do mar**, embora a página do RU cite frutos do mar. O *Filé de peixe ao molho de ervas* (04/11) não tem nenhum ícone.
 - O cardápio está sujeito a alterações sem aviso prévio. Os ícones valem para o cardápio publicado, não para o que foi servido.
 - "Leite e derivados" é a categoria do RU. O cardápio não diz se há opção sem lactose.
-- Na busca só por palavras (BM25, o modo usado em produção), *"o RU tem opção para quem tem doença celíaca?"* não recupera a F37, porque a página fala em *"dietas especializadas"* e não em *celíaca*. A medição com a busca híbrida está pendente (ver [Avaliação](avaliacao.md#alergenicos-por-prato-issue-55)).
+- Na busca só por palavras (BM25, o modo usado em produção), *"o RU tem opção para quem tem doença celíaca?"* não recupera a F37, porque a página fala em *"dietas especializadas"* e não em *celíaca*. Na busca híbrida (BGE-M3), medida em 23/11/2026, o resultado é o mesmo: a F37 só aparece quando a pergunta usa a palavra "dieta" (ver [Avaliação](avaliacao.md#alergenicos-por-prato-issue-55)).
 
 ??? abstract "Histórico de revisão"
 
@@ -97,3 +97,4 @@ A página do RU (F37) diz que *"preparações que contenham leite de origem anim
     | :---: | :---: | --- | --- |
     | 09/11/2026 | 1.0 | Base com 36 documentos-fonte (Entrega 2) | Grupo 04 |
     | 18/11/2026 | 1.1 | 37 documentos: F37 (serviço de alimentação do RU), alergênicos por prato lidos dos ícones do cardápio, calorias declaradas como lacuna (Issue #55) | Grupo 04 |
+    | 23/11/2026 | 1.2 | Limitação do vocabulário "celíaca" confirmada na busca híbrida (Issue #55) | Gabriella Oliveira |

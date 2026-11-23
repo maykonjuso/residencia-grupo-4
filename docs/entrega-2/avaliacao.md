@@ -101,7 +101,7 @@ As perguntas de prato abaixo (Tabela 5) registram a verificação histórica sob
 
 <p class="legenda">Tabela 5. Perguntas de alergênicos no modo BM25 (medição histórica da Issue #55 sobre F09/F37).</p>
 
-As duas últimas linhas mostram uma limitação de vocabulário. A F37 fala em *"dietas especializadas"*, e não em *celíaca*: a fonte só aparece quando a pergunta usa a palavra "dieta", e mesmo assim o modelo recusa, porque a página não fala de doença celíaca. A busca densa deve aproximar os termos pelo significado, mas isso só pode ser confirmado rodando `python -m rumo_rag avaliar` com o BGE-M3.
+As duas últimas linhas mostram uma limitação de vocabulário. A F37 fala em *"dietas especializadas"*, e não em *celíaca*: a fonte só aparece quando a pergunta usa a palavra "dieta", e mesmo assim o modelo recusa, porque a página não fala de doença celíaca. A medição com a busca híbrida está logo abaixo.
 
 **Medição com o BGE-M3 (busca densa e híbrida).** Em 23/11/2026, `python -m rumo_rag avaliar` foi executado no Google Colab (GPU T4) duas vezes na mesma sessão: na `main` imediatamente anterior à #55 e na branch do PR #78, cada uma com o índice ChromaDB montado a partir do próprio `chunks.jsonl` (36 fontes e 1.738 chunks antes; 37 fontes e 1.742 chunks depois), sem baixar as fontes de novo. A reescrita de perguntas compostas foi desligada (`RUMO_DECISION_THRESHOLD=1.01`) para medir só a recuperação; nenhuma das 32 perguntas-ouro tem duas interrogações, então nenhuma é decomposta.
 
@@ -112,6 +112,17 @@ As duas últimas linhas mostram uma limitação de vocabulário. A F37 fala em *
 | **Híbrida** · `BAAI/bge-m3` | **0,938 / 1,000 / 0,969** | **0,938 / 1,000 / 0,969** |
 
 <p class="legenda">Tabela 6. Recuperação nas 32 perguntas-ouro antes e depois da Issue #55, nas três configurações.</p>
+
+**Perguntas sobre celíaco na busca híbrida.** Na mesma sessão do Colab, com o índice da #55, a busca híbrida (top 5) devolveu:
+
+| Pergunta | Documentos recuperados |
+|---|---|
+| *"O RU tem opção para quem tem doença celíaca?"* | F09, F12, F08, F08, F09 (**sem a F37**) |
+| *"O RU atende dieta para celíaco?"* | **F37**, **F37**, F09, F08, F09 |
+
+<p class="legenda">Tabela 6b. Perguntas sobre celíaco na busca híbrida (base da #55).</p>
+
+A limitação de vocabulário **continua** na busca híbrida: com a palavra "dieta", a F37 vem em 1º lugar; com "doença celíaca", não aparece, e o RUmo cai no guia da ANVISA (F12) e nos cardápios. A busca por significado não resolveu sozinha. A F37 só diz que o RU não atende dietas especializadas, e não cita celíacos, então a recusa continua correta quando ela não é recuperada. O conjunto-ouro não cobre alergênicos; a proposta de incluir perguntas do tema fica para uma próxima revisão.
 
 As três configurações ficaram **idênticas**: as etiquetas de alergênicos e a F37 não deslocaram nenhum documento esperado. Esta medição vale para a base do PR #78; a base atual, com 54 fontes, é tratada na seção seguinte (Issue #53).
 
@@ -147,4 +158,4 @@ Os modos `denso` e `hibrido` permanecem preservados com a medição da Entrega 3
     | 16/11/2026 | 1.1 | Medição BM25 × híbrido e normalização léxica para preços do RU (Issue #51) | Grupo 04 |
     | 18/11/2026 | 1.2 | Alergênicos por prato: BM25 idêntico nas 32 perguntas-ouro e perguntas novas de alergênicos; medição híbrida pendente (Issue #55) | Grupo 04 |
     | 20/11/2026 | 1.3 | Reconciliação #53: F08/F09 substituídos por F56 em cardapio_semanal.json, Q08/Q09 atualizadas para F37, expansão para 53 fontes indexadas (1.954 chunks) e BM25 em 0,906 / 1,000 / 0,944 (denso/híbrido preservados da Entrega 3) | Grupo 04 |
-    | 23/11/2026 | 1.4 | Medição densa e híbrida (BGE-M3, Colab) antes e depois da Issue #55: idênticas nas 32 perguntas-ouro (Tabela 6) | Gabriella Oliveira |
+    | 23/11/2026 | 1.4 | Medição densa e híbrida (BGE-M3, Colab) antes e depois da Issue #55: idênticas nas 32 perguntas-ouro (Tabela 6) e perguntas sobre celíaco na híbrida (Tabela 6b) | Gabriella Oliveira |
