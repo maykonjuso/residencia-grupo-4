@@ -67,6 +67,17 @@ def test_passar_em_requisitos_sinaliza_testes_como_relacao_incerta():
     assert "confirme no SIGAA" in consulta.conteudo
 
 
+def test_passar_em_tres_disciplinas_calcula_o_conjunto_que_abre():
+    consulta = carregar_grafo().consultar(
+        "Passei em MAT0025, CIC0004 e FGA0168; o que abre?"
+    )
+
+    assert consulta is not None
+    assert "Cálculo 2 (MAT0026)" in consulta.conteudo
+    assert "Orientação a Objetos (FGA0158)" in consulta.conteudo
+    assert "Estruturas de Dados 1 (FGA0146)" in consulta.conteudo
+
+
 def test_caminho_critico_e_a_cadeia_mais_longa_de_setas_cheias():
     consulta = carregar_grafo().consultar("Qual é o caminho crítico de pré-requisitos?")
 
