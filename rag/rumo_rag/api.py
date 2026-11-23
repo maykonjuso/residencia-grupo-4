@@ -92,14 +92,35 @@ class Pergunta(BaseModel):
     incluir_trace: bool = False
 
 
+from .calendario import carregar_calendario, verificar_vigencia_catalogo
+
+
+def _rotulo_calendario(d: date) -> str:
+    """Resume a situação acadêmica da data consultando o calendário estruturado vigente."""
+    info = carregar_calendario().consultar_data(d)
+    status = info["status"]
+    if status == "feriado" and info.get("feriado"):
+        return f"feriado: {info['feriado']['nome']}; sem aula/expediente"
+    if status == "fora_periodo_aulas":
+        return "fora do período de aulas"
+    if status == "ponto_facultativo" and info.get("ponto_facultativo"):
+        return f"ponto facultativo: {info['ponto_facultativo']['nome']}; confirmar aula"
+    if status == "domingo":
+        return "domingo; sem aula regular"
+    if status == "sem_calendario_vigente":
+        return "sem calendário vigente no catálogo"
+    return "dia letivo regular"
+
+
 def com_data(pergunta: str, contexto: Contexto) -> str:
-    """'hoje' e 'amanhã' viram a data: o cardápio é indexado por dia (dd/mm), e o BM25 acha a data exata."""
+    """'hoje' e 'amanhã' viram a data e a situação no calendário acadêmico vigente."""
     if not contexto.data or not re.search(r"\b(hoje|amanh[ãa])\b", pergunta, re.I):
         return pergunta
     d = contexto.data
     if re.search(r"\bamanh[ãa]\b", pergunta, re.I):
         d = date.fromordinal(d.toordinal() + 1)
-    return f"{pergunta} ({DIAS[d.weekday()]}, {d:%d/%m/%Y})"
+    rotulo = _rotulo_calendario(d)
+    return f"{pergunta} ({DIAS[d.weekday()]}, {d:%d/%m/%Y} — {rotulo})"
 
 
 def _criar_orquestrador() -> Orquestrador:
@@ -151,7 +172,21 @@ def raiz():
         "servico": "RUmo · Grupo 04",
         "status": "ok",
         "multiagente": True,
-        "rotas": ["/saude", "/perguntar", "/cardapio", "/cardapio/atualizar"],
+        "rotas": ["/saude", "/perguntar", "/calendario", "/cardapio", "/cardapio/atualizar"],
+    }
+
+
+@app.get("/calendario")
+def consultar_calendario(data: date | None = None):
+    """Consulta determinística do calendário acadêmico e vigência no catálogo (Issue #57)."""
+    cal = carregar_calendario()
+    if data is not None:
+        return cal.consultar_data(data)
+    return {
+        "versao": cal.dados["versao"],
+        "semestres": cal.semestres,
+        "documentos_calendario": cal.documentos_calendario,
+        "vigencia_referencia": verificar_vigencia_catalogo(date.today(), cal.documentos_calendario),
     }
 
 

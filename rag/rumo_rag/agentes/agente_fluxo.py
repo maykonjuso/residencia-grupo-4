@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import time
 
-from .. import config, geracao, indice
+from .. import calendario, config, geracao, indice
 from .agente_ru import _LOCK_INDICE, executar_agente_dominio, pergunta_fora_do_dominio
 from .base import Agente
 from ..grafo_curricular import carregar_grafo_f16
@@ -132,7 +132,34 @@ class AgenteFluxo(Agente):
     responder_ferramenta = responder_grafo
 
     def executar(self, mensagem: Mensagem) -> Resposta:
-        """Executa consulta determinística ao grafo ou usa a busca RAG especializada."""
+        """Usa calendário estruturado, grafo curricular ou busca RAG especializada no eixo Fluxo."""
+        contexto = mensagem.contexto if isinstance(mensagem.contexto, dict) else {}
+        data_ref_raw = contexto.get("data")
+        data_ref = None
+        if data_ref_raw is not None:
+            try:
+                data_ref = calendario._parse_data_flexivel(data_ref_raw)
+            except ValueError:
+                data_ref = None
+
+        t0 = time.monotonic()
+        resp_cal = calendario.carregar_calendario().consultar_pergunta(
+            mensagem.conteudo,
+            data_referencia=data_ref,
+        )
+        if resp_cal is not None:
+            contexto["trechos_recuperados"] = resp_cal["trechos"]
+            contexto["tempo_busca_s"] = round(time.monotonic() - t0, 3)
+            contexto["tempo_geracao_s"] = 0.0
+            if resp_cal.get("consulta_data") is not None:
+                contexto["calendario"] = resp_cal["consulta_data"]
+            return Resposta(
+                conteudo=resp_cal["resposta"],
+                fontes=resp_cal["fontes_citadas"],
+                confianca=1.0,
+                alertas=[],
+            )
+
         resposta_grafo = self.responder_grafo(mensagem)
         if resposta_grafo is not None:
             return resposta_grafo
