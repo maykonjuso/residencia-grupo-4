@@ -31,7 +31,7 @@
 
   /* ---------- Fundo do hero: fichas com termos da base ---------- */
   var TERMOS = ["RU Gama", "R$ 4,50", "Grupo II", "CAD 37/2025", "almoço 11h–14h30", "vegetariano estrito",
-    "FGA0314", "Cálculo 1", "MDS → Requisitos", "ABI Engenharia", "PPGEB", "2026.2", "trancamento",
+    "FGA0314", "Cálculo 1", "MDS → Requisitos", "Engenharia de Software", "PPGEB", "2026.2", "trancamento",
     "SIGAA", "ChromaDB", "e5-base", "BM25", "RRF", "top-5", "[1][2]", "Energia · 251 cr", "Software · 235 cr",
     "Aeroespacial", "Automotiva", "Eletrônica", "Edital 24/2026", "PNAES"];
 
@@ -752,15 +752,16 @@
         var tituloEntrega = h1.textContent.replace("¶", "").trim();
         var sumarioItens = '<li><a href="#rm-sec-index">Visão geral (' + esc(tituloEntrega) + ')</a></li>' +
           secoes.map(function (s) { return '<li><a href="#rm-sec-' + esc(s.slug) + '">' + esc(s.titulo) + '</a></li>'; }).join("");
+        var mEntrega = path.match(/\/(entrega-\d+)\/?$/);
+        var urlGitPage = "https://maykonjuso.github.io/residencia-grupo-4/" + (mEntrega ? mEntrega[1] + "/" : "");
 
         var capa = '<div class="rm-capa-pdf">' +
-          '<p class="rm-capa-pdf__topo">Universidade de Brasília (UnB) · Faculdade de Ciências e Tecnologias em Engenharia (FCTE · Campus Gama)<br>Residência em Inteligência Artificial · Turma 1 · Challenge 2 (Big Idea: Qualidade de Vida)</p>' +
+          '<p class="rm-capa-pdf__topo">Universidade de Brasília (UnB)<br>Residência em Inteligência Artificial · Turma 1 · Challenge 2 (Big Idea: Qualidade de Vida)</p>' +
           '<h1 class="rm-capa-pdf__titulo">RUmo · Grupo 04</h1>' +
           '<p class="rm-capa-pdf__subtitulo">' + esc(tituloEntrega) + '</p>' +
           '<div class="rm-capa-pdf__meta">' +
-          '<div><strong>Integrantes (Grupo 04):</strong> Gabriel Maciel Araújo, Gabriella Oliveira de Souza Dias, Keila Alves Ferreira, Kyara Esteves de Sousa e Maykon Júnio dos Santos Soares</div>' +
-          '<div><strong>Mentor:</strong> Jefferson Viana Fonseca Abreu</div>' +
-          '<div><strong>Fonte:</strong> Consolidado gerado automaticamente a partir da GitPage oficial</div>' +
+          '<div><strong>Integrantes (Grupo 04):</strong><br>Gabriel Maciel Araújo<br>Gabriella Oliveira de Souza Dias<br>Keila Alves Ferreira<br>Kyara Esteves de Sousa<br>Maykon Júnio dos Santos Soares</div>' +
+          '<div><strong>GitPage oficial:</strong> <a href="' + urlGitPage + '">' + urlGitPage + '</a></div>' +
           '</div></div>' +
           '<div class="rm-sumario-pdf"><h2>Sumário</h2><ol>' + sumarioItens + '</ol></div>';
 
@@ -783,7 +784,17 @@
           }
         });
         rotularAbas(wrap);
-        wrap.querySelectorAll("details").forEach(function (d) { d.open = true; });
+        wrap.querySelectorAll("details").forEach(function (d) {
+          var sum = d.querySelector("summary");
+          var titulo = sum ? sum.textContent.trim().toLowerCase() : "";
+          if (titulo.indexOf("histórico de revisão") !== -1 || titulo.indexOf("histórico de versão") !== -1) {
+            var prev = d.previousElementSibling;
+            if (prev && prev.tagName === "HR") prev.remove();
+            d.remove();
+            return;
+          }
+          d.open = true;
+        });
 
         wrap.querySelectorAll("a[href]").forEach(function (a) {
           var href = a.getAttribute("href") || "";

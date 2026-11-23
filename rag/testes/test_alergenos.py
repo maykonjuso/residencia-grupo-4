@@ -7,6 +7,7 @@ a leitura dos ícones mudou: confira a página renderizada antes de mudar o test
 Os casos são verificados no JSON de montagem de prato (coleta/cardapio.py, #54),
 que é o que a interface e o monta-prato (#63) consomem.
 """
+import json
 import re
 import sys
 import unittest
@@ -14,16 +15,16 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from rumo_rag import alergenos, config  # noqa: E402
+from rumo_rag import alergenos, config, extracao  # noqa: E402
 from rumo_rag.coleta import cardapio  # noqa: E402
 
 IDS = {aid for aid, _ in cardapio.ALERGENICOS_OFICIAIS}
-FIXTURE_CHUNKS = Path(__file__).resolve().parent / "fixtures" / "cardapio_gama" / "chunks_f08_f09.jsonl"
-CHUNKS_CARDAPIO = cardapio.carregar_chunks_cardapio(FIXTURE_CHUNKS)
+FIX_F08_F09 = Path(__file__).resolve().parent / "fixtures" / "cardapio_gama" / "f08_f09_chunks.jsonl"
+CHUNKS_F08_F09 = cardapio.carregar_chunks_cardapio(FIX_F08_F09)
 
 
 def _alergenicos(data, refeicao, nome):
-    for r in cardapio.buscar(data, refeicao, chunks=CHUNKS_CARDAPIO):
+    for r in cardapio.buscar(data, refeicao, chunks=CHUNKS_F08_F09):
         for comp in r["compartimentos"]:
             for o in comp["opcoes"]:
                 if o["nome"] == nome:
@@ -140,7 +141,7 @@ class TestCardapiosConferidos(unittest.TestCase):
 
     def test_nenhum_valor_inventado(self):
         etiqueta = re.compile(r"\[Alergênicos: ([^\]]*)\]")
-        for c in CHUNKS_CARDAPIO:
+        for c in CHUNKS_F08_F09:
             for lista in etiqueta.findall(c["texto"]):
                 with self.subTest(chunk=c["chunk_id"]):
                     self.assertNotRegex(lista, r"\d")                   # nada de número (calorias etc.)
@@ -151,10 +152,78 @@ class TestCardapiosConferidos(unittest.TestCase):
                     self.assertTrue(set(o["alergenicos"]) <= IDS, o)
 
 
-@unittest.skip("F09 foi removido do catalogo da RAG; cardápios são processados via coleta/cardapio.py.")
+class TestCardapioSemanalAtual(unittest.TestCase):
+    """Regressão sobre rag/dados/cardapio_semanal.json (semana 16–20/11) gerado com alergenos.py."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.dados = json.loads(config.CARDAPIO_SEMANAL_JSON.read_text(encoding="utf-8"))
+
+    def _opcoes(self, data: str, refeicao: str) -> dict[str, set[str]]:
+        for r in self.dados["refeicoes"]:
+            if r["data"] == data and r["refeicao"] == refeicao:
+                return {
+                    o["nome"]: set(o["alergenicos"])
+                    for comp in r["compartimentos"]
+                    for o in comp["opcoes"]
+                }
+        raise AssertionError(f"refeição não encontrada: {data} {refeicao}")
+
+    def test_todas_refeicoes_validam_sem_opcoes_vazias(self):
+        self.assertTrue(self.dados["refeicoes"])
+        for r in self.dados["refeicoes"]:
+            with self.subTest(data=r["data"], refeicao=r["refeicao"]):
+                cardapio.validar(r)
+                for comp in r["compartimentos"]:
+                    for o in comp["opcoes"]:
+                        self.assertTrue(o["nome"].strip())
+                        self.assertTrue(set(o["alergenicos"]) <= IDS, o)
+
+    def test_sem_inversoes_em_celulas_multiopcao_e_icones_compostos(self):
+        cafe_16 = self._opcoes("2026-11-16", "cafe")
+        self.assertEqual(cafe_16["Leite Integral"], {"leite"})
+        self.assertEqual(cafe_16["Bebida de Soja"], {"soja"})
+        self.assertEqual(cafe_16["Pão francês"], {"gluten"})
+        self.assertEqual(cafe_16["Pão careca"], {"gluten"})
+        self.assertEqual(cafe_16["Manteiga"], {"leite"})
+        self.assertEqual(cafe_16["Creme Vegetal"], set())
+        self.assertEqual(cafe_16["Ovos mexidos"], {"leite", "ovo"})
+
+        cafe_19 = [r for r in self.dados["refeicoes"] if r["data"] == "2026-11-19" and r["refeicao"] == "cafe"][0]
+        self.assertTrue(any("separador solto" in a for a in cafe_19["avisos"]))
+        self.assertEqual(self._opcoes("2026-11-19", "cafe")["Pão francês"], {"gluten"})
+
+        alm_16 = self._opcoes("2026-11-16", "almoco")
+        self.assertEqual(alm_16["Chipotle"], {"pimenta"})
+        self.assertEqual(alm_16["Limão"], set())
+
+        alm_17 = self._opcoes("2026-11-17", "almoco")
+        self.assertEqual(alm_17["Gengibre"], {"soja"})
+        self.assertEqual(alm_17["Limão"], set())
+
+        alm_19 = self._opcoes("2026-11-19", "almoco")
+        self.assertEqual(alm_19["Mix de doces"], {"leite", "amendoim"})
+        self.assertEqual(alm_19["Fruta"], set())
+
+        alm_20 = self._opcoes("2026-11-20", "almoco")
+        self.assertEqual(alm_20["Feijoada"], {"suino", "pimenta"})
+
+        jan_16 = self._opcoes("2026-11-16", "jantar")
+        self.assertEqual(jan_16["Strogonoff de berinjela com cogumelos"], {"leite", "cogumelo"})
+        self.assertEqual(jan_16["Mix de doces"], {"leite", "amendoim"})
+        self.assertEqual(jan_16["Fruta"], set())
+
+
+_TEM_F09 = (
+    (config.ORIGINAIS / "F09.pdf").exists()
+    and (config.TEXTO / "F09.txt").exists()
+    and any(d["id"] == "F09" for d in extracao.carregar_catalogo())
+)
+
+
+@unittest.skipUnless(_TEM_F09, "F09 original ausente do catálogo atual (movido para fixture congelada)")
 class TestReextracao(unittest.TestCase):
     def test_reler_o_pdf_reproduz_o_texto_da_base(self):
-        from rumo_rag import extracao
         doc = next(d for d in extracao.carregar_catalogo() if d["id"] == "F09")
         self.assertEqual(extracao.extrair(doc), (config.TEXTO / "F09.txt").read_text(encoding="utf-8"))
 

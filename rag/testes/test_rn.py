@@ -136,6 +136,22 @@ class RN03RecusaForaDaBase(unittest.TestCase):
         self.assertEqual(geracao.valores_sem_fonte("Custa R$ 10,50 [1].", TRECHOS), ["R$ 10,50"])
         self.assertEqual(geracao.valores_sem_fonte("Custa R$ 5,20 [1].", TRECHOS), [])
 
+    def test_data_do_titulo_do_trecho_nao_gera_falso_positivo(self):
+        trechos_titulo = [{
+            "doc_id": "F56",
+            "titulo": "Cardápio semanal do RU Gama (16/11 a 22/11/2026)",
+            "secao": "Almoço · sexta-feira 20/11/2026",
+            "texto": "Cardápio do RU Gama (FCTE) — Almoço de sexta-feira, 20/11/2026:\n- Prato principal: Feijoada",
+        }]
+        self.assertEqual(
+            geracao.valores_sem_fonte("Na semana de 16/11 a 22/11/2026, tem feijoada em 20/11/2026 [1].", trechos_titulo),
+            [],
+        )
+        self.assertEqual(
+            geracao.valores_sem_fonte("Tem feijoada em 25/12/2026 [1].", trechos_titulo),
+            ["25/12/2026"],
+        )
+
 
 class RN04NadaSaiPorPadrao(unittest.TestCase):
     """RN-04 · Nenhuma pergunta sai para serviço externo por padrão."""

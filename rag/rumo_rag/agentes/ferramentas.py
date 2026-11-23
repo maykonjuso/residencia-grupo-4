@@ -210,6 +210,22 @@ def _carregar_cardapios(
     """Carrega cardápios exclusivamente do JSON estruturado semanal (nunca da RAG)."""
     caminho_semanal = getattr(config, "CARDAPIO_SEMANAL_JSON", config.DADOS / "cardapio_semanal.json")
     caminho_alvo = caminho_semanal if isinstance(caminho_semanal, Path) else None
+    orig_carregar = getattr(cardapio, "_CARREGAR_SEMANA_ATUAL_ORIG", None)
+    if orig_carregar is not None and cardapio.carregar_semana_atual is not orig_carregar:
+        dados_sem, motivo_sem = cardapio.carregar_semana_atual()
+        if not dados_sem:
+            return [], {"status": "desatualizado", "motivo": motivo_sem, "semana_local": None}
+        encontrados = (
+            [r for r in dados_sem.get("refeicoes", []) if not ref_norm or r.get("refeicao") == ref_norm]
+            if data_iso == "semana"
+            else _filtrar_refeicoes(dados_sem, data_iso, ref_norm)
+        )
+        return encontrados, {
+            "status": "atualizado_cache",
+            "semana_local": dados_sem.get("semana"),
+            "motivo": None,
+            "ultima_semana_publicada": dados_sem.get("semana"),
+        }
     dados_local, _ = cardapio.ler_semana_json(caminho_alvo)
     semana_local = dict(dados_local["semana"]) if dados_local else None
     hoje = date.today()

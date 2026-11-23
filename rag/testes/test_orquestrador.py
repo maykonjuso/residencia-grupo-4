@@ -130,9 +130,11 @@ class TestRoteamentoELimiar(unittest.TestCase):
             agentes.reescrita, "classificar_dominio_d1", return_value=["ru"]
         ) as m_d1:
             rotas = agentes.rotear_subpergunta(
-                "Onde vejo se a comida de hoje tem derivados de leite?"
+                "Onde encontro informações sobre atendimento hoje no campus?"
             )
-        m_d1.assert_called_once_with("Onde vejo se a comida de hoje tem derivados de leite?")
+        m_d1.assert_called_once_with(
+            "Onde encontro informações sobre atendimento hoje no campus?"
+        )
         self.assertEqual(rotas, ["ru"])
 
     def test_roteamento_aproveita_eixo_do_teste1_sem_depender_de_regex(self):

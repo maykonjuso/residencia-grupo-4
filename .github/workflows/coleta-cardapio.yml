@@ -74,7 +74,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add rag/catalogo.yaml rag/dados/originais/ rag/dados/brutos/cardapio-gama/
+          git add rag/catalogo.yaml rag/dados/cardapio_semanal.json rag/dados/originais/ rag/dados/brutos/cardapio-gama/
           if git diff --cached --quiet; then
             echo "Nenhuma alteração nova para commitar."
           else

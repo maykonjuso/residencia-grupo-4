@@ -2,7 +2,7 @@
 # Cada documento-fonte tem um identificador estável (F01, F02, ...) usado nas citações.
 # eixo: ru (alimentação no campus) | fluxo (cursos, disciplinas e vida acadêmica) | apoio (saúde e normas gerais)
 # tipo: norma | edital | pagina | cardapio | ppc | matriz | guia | manual | calendario
-# Data de coleta de todos os itens: 2026-11-06 (salvo indicação em contrário).
+# Data de coleta padrão (F01–F36): 2026-11-06 (itens posteriores trazem coletado_em próprio).
 
 coleta: "2026-11-06"
 
@@ -75,9 +75,6 @@ documentos:
     data: "2026"
     url: "https://dds.dac.unb.br/wp-content/uploads/2026/08/Edital_24_alimentacao.pdf"
     arquivo: originais/F07.pdf
-  # Cardápios semanais (ex-F08/F09) NÃO ficam na RAG vetorial/BM25:
-  # são sincronizados pelo backend em dados/cardapio_semanal.json e servidos
-  # exclusivamente pelas ferramentas estruturadas do Agente RU.
   - id: F10
     titulo: "Lei nº 14.914/2024 — Política Nacional de Assistência Estudantil (PNAES)"
     orgao: "Presidência da República"
@@ -310,7 +307,6 @@ documentos:
     data: "2024-05"
     url: "http://fcte.unb.br/wp-content/uploads/2024/05/Regimento_Interno_FGA_-_aprovado.pdf"
     arquivo: originais/F36.pdf
-
   # --------------------------------------------- RU · alergênicos (Issue #55, coletado em 18/11/2026)
   - id: F37
     titulo: "Serviço de alimentação do RU — cardápio, opções vegetarianas e identificação de alergênicos"
@@ -320,3 +316,176 @@ documentos:
     data: "s.d."
     url: "https://ru.unb.br/servico-alimentacao/"
     arquivo: originais/F37.html
+    coletado_em: "2026-11-18"
+  # ------------------------------------------------------------------ DDS / Assistência Estudantil (coletado em 18/11/2026)
+  - id: F38
+    titulo: "Programa Auxílio Alimentação (DDS/DAC)"
+    orgao: "UnB · DDS/DAC"
+    eixo: ru
+    tipo: pagina
+    data: "2026"
+    url: "https://dds.dac.unb.br/programa-auxilio-alimentacao/"
+    arquivo: originais/F38.html
+    coletado_em: "2026-11-18"
+  - id: F39
+    titulo: "Programa Auxílio Socioeconômico (DDS/DAC)"
+    orgao: "UnB · DDS/DAC"
+    eixo: apoio
+    tipo: pagina
+    data: "2026"
+    url: "https://dds.dac.unb.br/auxilio-socioeconomico/"
+    arquivo: originais/F39.html
+    coletado_em: "2026-11-18"
+  - id: F40
+    titulo: "Programa Moradia Estudantil — Graduação Pecúnia (DDS/DAC)"
+    orgao: "UnB · DDS/DAC"
+    eixo: apoio
+    tipo: pagina
+    data: "2026"
+    url: "https://dds.dac.unb.br/programa-moradia-graduacao-pecunia/"
+    arquivo: originais/F40.html
+    coletado_em: "2026-11-18"
+  - id: F41
+    titulo: "Programa Moradia Estudantil — Pós-Graduação Vaga (DDS/DAC)"
+    orgao: "UnB · DDS/DAC"
+    eixo: apoio
+    tipo: pagina
+    data: "2026"
+    url: "https://dds.dac.unb.br/moradia-pos-graduacao/"
+    arquivo: originais/F41.html
+    coletado_em: "2026-11-18"
+  - id: F42
+    titulo: "Programa Auxílio Creche (DDS/DAC)"
+    orgao: "UnB · DDS/DAC"
+    eixo: apoio
+    tipo: pagina
+    data: "2026"
+    url: "https://dds.dac.unb.br/auxilio-creche/"
+    arquivo: originais/F42.html
+    coletado_em: "2026-11-18"
+  - id: F43
+    titulo: "Programa Auxílio Emergencial (DDS/DAC)"
+    orgao: "UnB · DDS/DAC"
+    eixo: apoio
+    tipo: pagina
+    data: "2026"
+    url: "https://dds.dac.unb.br/auxilio-emergencial/"
+    arquivo: originais/F43.html
+    coletado_em: "2026-11-18"
+  - id: F44
+    titulo: "Programa Auxílio para Apoio à Inclusão Digital (DDS/DAC)"
+    orgao: "UnB · DDS/DAC"
+    eixo: apoio
+    tipo: pagina
+    data: "2026"
+    url: "https://dds.dac.unb.br/auxilio-para-apoio-a-inclusao-digital/"
+    arquivo: originais/F44.html
+    coletado_em: "2026-11-18"
+  - id: F45
+    titulo: "Programa de Acesso à Língua Estrangeira (DDS/DAC)"
+    orgao: "UnB · DDS/DAC"
+    eixo: apoio
+    tipo: pagina
+    data: "2026"
+    url: "https://dds.dac.unb.br/programa-de-acesso-a-lingua-estrangeira/"
+    arquivo: originais/F45.html
+    coletado_em: "2026-11-18"
+  - id: F46
+    titulo: "Programa Vale Livro (DDS/DAC)"
+    orgao: "UnB · DDS/DAC"
+    eixo: apoio
+    tipo: pagina
+    data: "2026"
+    url: "https://dds.dac.unb.br/programa-vale-livro/"
+    arquivo: originais/F46.html
+    coletado_em: "2026-11-18"
+  - id: F47
+    titulo: "Política da Assistência Estudantil na UnB (DDS/DAC)"
+    orgao: "UnB · DDS/DAC"
+    eixo: apoio
+    tipo: pagina
+    data: "2026"
+    url: "https://dds.dac.unb.br/politica-da-assistencia-estudantil/"
+    arquivo: originais/F47.html
+    coletado_em: "2026-11-18"
+  - id: F48
+    titulo: "Resolução do CAD nº 0025/2023 — Política de Assistência Estudantil da UnB"
+    orgao: "UnB · Conselho de Administração"
+    eixo: apoio
+    tipo: norma
+    data: "2023"
+    url: "https://dds.dac.unb.br/wp-content/uploads/2026/08/SEI_9731932_Resolucao_do_CAD_n._0025_2023.pdf"
+    arquivo: originais/F48.pdf
+    coletado_em: "2026-11-18"
+  - id: F49
+    titulo: "Guia do Estudante — Avaliação Socioeconômica UnB 2026"
+    orgao: "UnB · DDS/DAC"
+    eixo: apoio
+    tipo: guia
+    data: "2026-08"
+    url: "https://dds.dac.unb.br/wp-content/uploads/2026/08/Guia_do_Estudante___Avaliacao_Socioeconomica_UnB_2026_compressed.pdf"
+    arquivo: originais/F49.pdf
+    coletado_em: "2026-11-18"
+  - id: F50
+    titulo: "Edital nº 23/2026 DDS/DAC — Avaliação Socioeconômica para Assistência Estudantil"
+    orgao: "UnB · DDS/DAC"
+    eixo: apoio
+    tipo: edital
+    data: "2026-07"
+    url: "https://dds.dac.unb.br/wp-content/uploads/2026/07/SEI_14554454_Edital_23.pdf"
+    arquivo: originais/F50.pdf
+    coletado_em: "2026-11-18"
+  - id: F51
+    titulo: "Edital nº 25/2026 DDS/DAC — Renovação e Permanência nos Programas de Assistência Estudantil"
+    orgao: "UnB · DDS/DAC"
+    eixo: apoio
+    tipo: edital
+    data: "2026-08"
+    url: "https://dds.dac.unb.br/wp-content/uploads/2026/08/SEI_14620930_Edital_25.pdf"
+    arquivo: originais/F51.pdf
+    coletado_em: "2026-11-18"
+  - id: F52
+    titulo: "Edital nº 26/2026 DDS/DAC — Programa Bolsa Permanência do MEC (PBPMEC)"
+    orgao: "UnB · DDS/DAC"
+    eixo: apoio
+    tipo: edital
+    data: "2026-10"
+    url: "https://dds.dac.unb.br/wp-content/uploads/2026/10/SEI_14999179_Edital_26.pdf"
+    arquivo: originais/F52.pdf
+    coletado_em: "2026-11-18"
+  - id: F53
+    titulo: "Edital nº 27/2026 DDS/DAC — Auxílio Temporário de Apoio à Inclusão Digital"
+    orgao: "UnB · DDS/DAC"
+    eixo: apoio
+    tipo: edital
+    data: "2026-10"
+    url: "https://dds.dac.unb.br/wp-content/uploads/2026/10/SEI_14999286_Edital_27.pdf"
+    arquivo: originais/F53.pdf
+    coletado_em: "2026-11-18"
+  - id: F54
+    titulo: "Edital nº 28/2026 DDS/DAC — Auxílio Socioeconômico, Moradia Pecúnia, Creche e Transporte"
+    orgao: "UnB · DDS/DAC"
+    eixo: apoio
+    tipo: edital
+    data: "2026-10"
+    url: "https://dds.dac.unb.br/wp-content/uploads/2026/10/SEI_14999346_Edital_28-1.pdf"
+    arquivo: originais/F54.pdf
+    coletado_em: "2026-11-18"
+  - id: F55
+    titulo: "Edital nº 30/2026 DDS/DAC — Moradia Estudantil na Casa do Estudante Universitário (CEU)"
+    orgao: "UnB · DDS/DAC"
+    eixo: apoio
+    tipo: edital
+    data: "2026-10"
+    url: "https://dds.dac.unb.br/wp-content/uploads/2026/10/SEI_14999576_Edital_30.pdf"
+    arquivo: originais/F55.pdf
+    coletado_em: "2026-11-18"
+  - id: F56
+    titulo: "Cardápio semanal do RU Gama — 16/11 a 22/11/2026"
+    orgao: "UnB · Diretoria do RU"
+    eixo: ru
+    tipo: cardapio
+    data: "2026-11-16"
+    url: "https://ru.unb.br/wp-content/uploads/2026/11/Gama-Semana-01-16-11-a-20-11-1.pdf"
+    arquivo: originais/F56.pdf
+    coletado_em: "2026-11-20"  # scraper (#50), página https://ru.unb.br/cardapio-gama/

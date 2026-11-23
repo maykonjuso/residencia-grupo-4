@@ -22,12 +22,14 @@ def caminho_local(doc: dict) -> Path:
     return config.DADOS / doc["arquivo"]
 
 
-def baixar(docs: list[dict]) -> None:
-    """Baixa os originais que ainda não existem em dados/originais/."""
+def baixar(docs: list[dict], rebaixar: bool = False) -> None:
+    """Baixa os originais que ainda não existem em dados/originais/ (ou dados/texto/)."""
     config.ORIGINAIS.mkdir(parents=True, exist_ok=True)
     for d in docs:
         destino = caminho_local(d)
-        if destino.exists() or not d["arquivo"].startswith("originais/"):
+        if not d["arquivo"].startswith("originais/"):
+            continue
+        if not rebaixar and (destino.exists() or (config.TEXTO / f"{d['id']}.txt").exists()):
             continue
         print(f"baixando {d['id']} {d['url']}")
         req = urllib.request.Request(d["url"], headers={"User-Agent": "Mozilla/5.0 (RUmo/UnB)"})
@@ -173,12 +175,21 @@ def extrair(doc: dict) -> str:
     return limpar(bruto)
 
 
-def extrair_todos(docs: list[dict]) -> dict[str, str]:
+def extrair_todos(docs: list[dict], rebaixar: bool = False) -> dict[str, str]:
     config.TEXTO.mkdir(parents=True, exist_ok=True)
     textos = {}
     for d in docs:
-        t = extrair(d)
-        (config.TEXTO / f"{d['id']}.txt").write_text(t, encoding="utf-8")
+        texto_salvo = config.TEXTO / f"{d['id']}.txt"
+        if (
+            not rebaixar
+            and d["arquivo"].startswith("originais/")
+            and not caminho_local(d).exists()
+            and texto_salvo.exists()
+        ):
+            t = texto_salvo.read_text(encoding="utf-8")
+        else:
+            t = extrair(d)
+            texto_salvo.write_text(t, encoding="utf-8")
         textos[d["id"]] = t
         print(f"{d['id']}: {len(t):>7} caracteres · {d['titulo'][:70]}")
     return textos

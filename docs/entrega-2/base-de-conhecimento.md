@@ -35,7 +35,7 @@ A **Tabela 2** detalha como os documentos cobrem os cinco cursos de graduação 
 | Engenharia de Energia | Graduação | Informações gerais (F22), matriz (F23) | Imagem → transcrição do grupo |
 | Engenharia de Software | Graduação | Matriz e créditos (F15), fluxograma (F16) | Imagem → transcrição do grupo |
 | Engenharia Biomédica (PPGEB) | Mestrado | Apresentação, matriz, aluno de graduação, linhas, edital (F24–F28) | Página do programa |
-| Comum a todos | — | ABI (F14), calendário (F29, F30), trancamento (F31), matrícula (F32–F34), regimentos (F35, F36) | Texto |
+| Comum a todos | — | Ingresso e normas de curso (F14), calendário (F29, F30), trancamento (F31), matrícula (F32–F34), regimentos (F35, F36) | Texto |
 
 <p class="legenda">Tabela 2. Cobertura das engenharias e do PPGEB.</p>
 
@@ -84,12 +84,14 @@ A página do RU (F37) diz que *"preparações que contenham leite de origem anim
 
 **Como foi conferido.** As 6 páginas dos cardápios da base (F08 e F09) foram conferidas à mão contra a imagem, opção por opção. Os casos conferidos viraram teste automático (`rag/testes/test_alergenos.py`). A primeira versão da leitura de ícones, que anotava a célula inteira, errava 87 das 306 opções comparáveis; a versão atual erra 0. Uma terceira semana, fora da base (16 a 20/11/2026), foi usada só como prova: no almoço e no jantar, todos os ícones bateram com a imagem.
 
+**Consulta formal ao RU.** O escopo da issue pedia perguntar formalmente se não houvesse ficha nutricional publicada. O grupo enviou e-mail à Diretoria do RU (falaru@unb.br) perguntando sobre a existência de ficha técnica ou informação nutricional por prato, sobre a ausência de ícone de peixe e frutos do mar na legenda do Gama e sobre a lactose. Até 23/11/2026 não houve resposta. A decisão vale com o que está publicado: calorias ficam fora da base, e, se o RU responder ou passar a publicar a informação, ela entra como nova fonte oficial, ligada ao `id` de cada opção do cardápio estruturado.
+
 **Limitações declaradas:**
 
 - A legenda do RU Gama **não tem ícone de peixe nem de frutos do mar**, embora a página do RU cite frutos do mar. O *Filé de peixe ao molho de ervas* (04/11) não tem nenhum ícone.
 - O cardápio está sujeito a alterações sem aviso prévio. Os ícones valem para o cardápio publicado, não para o que foi servido.
 - "Leite e derivados" é a categoria do RU. O cardápio não diz se há opção sem lactose.
-- Na busca só por palavras (BM25, o modo usado em produção), *"o RU tem opção para quem tem doença celíaca?"* não recupera a F37, porque a página fala em *"dietas especializadas"* e não em *celíaca*. A medição com a busca híbrida está pendente (ver [Avaliação](avaliacao.md#alergenicos-por-prato-issue-55)).
+- Na busca só por palavras (BM25, o modo usado em produção), *"o RU tem opção para quem tem doença celíaca?"* não recupera a F37, porque a página fala em *"dietas especializadas"* e não em *celíaca*. Na busca híbrida (BGE-M3), medida em 23/11/2026, o resultado é o mesmo: a F37 só aparece quando a pergunta usa a palavra "dieta" (ver [Avaliação](avaliacao.md#alergenicos-por-prato-issue-55)).
 
 ??? abstract "Histórico de revisão"
 
@@ -97,3 +99,4 @@ A página do RU (F37) diz que *"preparações que contenham leite de origem anim
     | :---: | :---: | --- | --- |
     | 09/11/2026 | 1.0 | Base com 36 documentos-fonte (Entrega 2) | Grupo 04 |
     | 18/11/2026 | 1.1 | 37 documentos: F37 (serviço de alimentação do RU), alergênicos por prato lidos dos ícones do cardápio, calorias declaradas como lacuna (Issue #55) | Grupo 04 |
+    | 23/11/2026 | 1.2 | Limitação do vocabulário "celíaca" confirmada na busca híbrida (Issue #55); consulta ao RU por e-mail registrada, sem resposta até esta data (Issue #55) | Gabriella Oliveira |

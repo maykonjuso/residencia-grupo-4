@@ -269,15 +269,17 @@ class TestCardapioEMontarPrato(unittest.TestCase):
         import yaml
 
         catalogo = yaml.safe_load(config.CATALOGO.read_text(encoding="utf-8"))["documentos"]
-        self.assertEqual([d for d in catalogo if d.get("tipo") == "cardapio"], [])
+        ids_cardapio = {d["id"] for d in catalogo if d.get("tipo") == "cardapio"}
+        self.assertFalse({"F08", "F09"} & ids_cardapio)
 
         chunks = [json.loads(l) for l in config.CHUNKS.read_text(encoding="utf-8").splitlines() if l.strip()]
         self.assertEqual([c for c in chunks if c.get("tipo") == "cardapio"], [])
-        self.assertEqual([c for c in chunks if c.get("doc_id") in ("F08", "F09")], [])
+        self.assertEqual([c for c in chunks if c.get("doc_id") in (ids_cardapio | {"F08", "F09", "F56"})], [])
 
         indice._bm25.cache_clear()
         achados = indice.buscar("qual o cardápio do almoço?", k=5, modo="bm25", eixo="ru")
         self.assertTrue(all(t.get("tipo") != "cardapio" for t in achados))
+        self.assertTrue(all(t.get("doc_id") not in (ids_cardapio | {"F08", "F09", "F56"}) for t in achados))
 
     def test_toda_pergunta_de_cardapio_usa_ferramenta_nunca_rag(self):
         perguntas_cardapio = [

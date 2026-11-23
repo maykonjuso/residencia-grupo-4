@@ -1,7 +1,13 @@
 """Testes da calibração do limiar do Estágio 1 (sem carregar modelo)."""
 import json
+import sys
 import unittest
+from pathlib import Path
 from unittest import mock
+
+_RAIZ = Path(__file__).resolve().parents[2]
+if str(_RAIZ) not in sys.path:
+    sys.path.insert(0, str(_RAIZ))
 
 from rag import calibrar_limiar
 from rag.rumo_rag import config

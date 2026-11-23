@@ -85,12 +85,33 @@ def colecao(recriar: bool = False):
     return cliente.get_or_create_collection(config.COLECAO, metadata={"hnsw:space": "cosine"})
 
 
-def indexar(chunks: list[dict]) -> None:
-    # Cardápios semanais não entram na RAG (são servidos via cardapio_semanal.json + ferramentas).
+def salvar_chunks(chunks: list[dict]) -> None:
+    """Grava os chunks em JSONL de forma atômica (sem cardápios e sem tocar no ChromaDB)."""
     chunks = [c for c in chunks if c.get("tipo") != "cardapio"]
-    with open(config.CHUNKS, "w", encoding="utf-8") as f:
+    config.CHUNKS.parent.mkdir(parents=True, exist_ok=True)
+    tmp = config.CHUNKS.with_suffix(".jsonl.tmp")
+    with open(tmp, "w", encoding="utf-8") as f:
         for c in chunks:
             f.write(json.dumps(c, ensure_ascii=False) + "\n")
+    tmp.replace(config.CHUNKS)
+
+
+def indexar(chunks: list[dict]) -> None:
+    import importlib.util
+    import sys
+
+    faltando = [
+        pkg for pkg in ("sentence_transformers", "chromadb")
+        if sys.modules.get(pkg) is None and importlib.util.find_spec(pkg) is None
+    ]
+    if faltando:
+        raise ImportError(
+            f"Dependências ausentes para indexação vetorial ({', '.join(faltando)}). "
+            "Use `ingerir --somente-chunks` ou instale requirements.txt."
+        )
+    # Cardápios semanais não entram na RAG (são servidos via cardapio_semanal.json + ferramentas).
+    chunks = [c for c in chunks if c.get("tipo") != "cardapio"]
+    salvar_chunks(chunks)
     vetores = embed_passagens([c["texto_indexado"] for c in chunks])
     col = colecao(recriar=True)
     campos = ("doc_id", "titulo", "orgao", "eixo", "curso", "tipo", "url", "data", "pagina", "secao")

@@ -6,14 +6,16 @@ import sys
 import unittest
 from contextlib import redirect_stderr, redirect_stdout
 from pathlib import Path
+from unittest import mock
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
+from rumo_rag import config  # noqa: E402
 from rumo_rag.coleta import cardapio  # noqa: E402
 from rumo_rag.coleta.__main__ import main  # noqa: E402
 
-FIXTURE_CHUNKS = Path(__file__).resolve().parent / "fixtures" / "cardapio_gama" / "chunks_f08_f09.jsonl"
-CHUNKS = cardapio.carregar_chunks_cardapio(FIXTURE_CHUNKS)
+FIX_F09 = Path(__file__).resolve().parent / "fixtures" / "cardapio_gama" / "f09_chunks.jsonl"
+CHUNKS = cardapio.carregar_chunks_cardapio(FIX_F09)
 F09 = [c for c in CHUNKS if c["doc_id"] == "F09"]
 
 
@@ -25,7 +27,21 @@ def _norm(s: str) -> str:
     return re.sub(r"\s+", " ", cardapio._sem_acento(s))
 
 
-class TestEsquema(unittest.TestCase):
+class _ComFixtureF09(unittest.TestCase):
+    def setUp(self):
+        self._patches = [
+            mock.patch.object(cardapio, "carregar_chunks_cardapio", return_value=CHUNKS),
+            mock.patch.object(config, "CARDAPIO_SEMANAL_JSON", Path("/nao/existe/cardapio.json")),
+        ]
+        for p in self._patches:
+            p.start()
+
+    def tearDown(self):
+        for p in self._patches:
+            p.stop()
+
+
+class TestEsquema(_ComFixtureF09):
     def test_almoco_09_11_bate_com_exemplo_da_issue(self):
         r = _buscar_fixture("2026-11-09", "almoco")[0]
         cardapio.validar(r)
@@ -127,7 +143,7 @@ class TestFidelidadeAoChunk(unittest.TestCase):
                     self.assertIn(primeira.replace("arroz ", ""), nomes)
 
 
-class TestMalformado(unittest.TestCase):
+class TestMalformado(_ComFixtureF09):
     def _chunk(self, linhas: str) -> dict:
         return {"chunk_id": "F99-0000", "doc_id": "F99", "pagina": 1, "titulo": "RU Gama", "url": "",
                 "secao": "Café da manhã · segunda-feira 09/11/2026",
@@ -158,7 +174,7 @@ class TestMalformado(unittest.TestCase):
         self.assertTrue(r["avisos"])
 
 
-class TestDecisoes(unittest.TestCase):
+class TestDecisoes(_ComFixtureF09):
     def test_acompanhamentos_viram_arroz_e_feijao(self):
         r = _buscar_fixture("2026-11-12", "jantar")[0]          # "Arroz branco e Integral Feijão preto"
         slots = {c["slot"]: [o["nome"] for o in c["opcoes"]] for c in r["compartimentos"]}
@@ -179,7 +195,7 @@ class TestDecisoes(unittest.TestCase):
         self.assertEqual([o["nome"] for o in molho["opcoes"]], ["Alho e limão"])
 
 
-class TestCLI(unittest.TestCase):
+class TestCLI(_ComFixtureF09):
     def _rodar(self, *args):
         out, err = io.StringIO(), io.StringIO()
         with redirect_stdout(out), redirect_stderr(err):
@@ -215,6 +231,37 @@ class TestCLI(unittest.TestCase):
         self.assertEqual(codigo, 1)
         self.assertIn("Não encontrei", err)
         self.assertEqual(out, "")
+
+
+class TestCardapioSemanalReal(unittest.TestCase):
+    def test_buscar_semana_atual_le_json_semanal_e_valida(self):
+        resultados = cardapio.buscar("2026-11-20", "almoco")
+        self.assertEqual(len(resultados), 1)
+        r = resultados[0]
+        cardapio.validar(r)
+        self.assertEqual((r["data"], r["refeicao"]), ("2026-11-20", "almoco"))
+        nomes = [o["nome"] for c in r["compartimentos"] for o in c["opcoes"]]
+        self.assertIn("Feijoada", nomes)
+
+    def test_acompanhamento_com_anotacao_e_preservado_no_arroz(self):
+        c = {
+            "chunk_id": "F98-0002",
+            "doc_id": "F98",
+            "pagina": 2,
+            "titulo": "RU Gama",
+            "url": "",
+            "secao": "Almoço · segunda-feira 16/11/2026",
+            "texto": (
+                "## Almoço · segunda-feira 16/11/2026\n"
+                "- Acompanhamentos: Arroz branco e integral [Alergênicos: Leite e derivados] Feijão preto"
+            ),
+        }
+        r = cardapio.estruturar_chunk(c)
+        cardapio.validar(r)
+        slots = {comp["slot"]: comp for comp in r["compartimentos"]}
+        self.assertEqual([o["nome"] for o in slots["arroz"]["opcoes"]], ["Arroz branco", "Arroz integral"])
+        self.assertEqual(slots["arroz"]["opcoes"][1]["alergenicos"], ["leite"])
+        self.assertEqual([o["nome"] for o in slots["feijao"]["opcoes"]], ["Feijão preto"])
 
 
 if __name__ == "__main__":

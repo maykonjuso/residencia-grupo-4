@@ -7,11 +7,11 @@ A **Tabela 1** apresenta o histórico de versões e entregas publicadas nesta Gi
 | 1.0 | Semana 1 | [Entrega 1 · Definições do projeto](../entrega-1/index.md) | Problema, partes interessadas, escopo, riscos, métricas, Essential Question e divisão com o Grupo 09 |
 | 2.0 | 09/11/2026 | [Entrega 2 · Base de conhecimento + protótipo de RAG](../entrega-2/index.md) | 36 fontes, chunking, embeddings, ChromaDB, busca híbrida, LLM local, demonstração com fontes, avaliação e diagrama animado de integração |
 | 3.0 | 13/11/2026 | [Entrega 3 · Respostas baseadas em evidências](../entrega-3/index.md) | Comparação empírica com e sem RAG nas 32 perguntas-ouro, fidelidade, alucinação, análise de falha e reescrita de consulta |
-| 4.0 | 16/11/2026 | [Entrega 4 · Primeiro Protótipo Multiagente](../entrega-4/index.md) | Orquestrador, Agente RU, Agente Fluxo, Agente Validador, Sintetizador, paralelismo e estudo comparativo de roteamento |
+| 4.0 | 20/11/2026 | [Entrega 4 · Primeiro Protótipo Multiagente](../entrega-4/index.md) | Orquestrador, Agente RU, Agente Fluxo, Agente Validador, Sintetizador, paralelismo, estudo comparativo de roteamento, integração do cardápio semanal com alergênicos e API v1.0 multiagente |
 
 <p class="legenda">Tabela 1. Histórico de versões desta GitPage.</p>
 
-Envio: os artefatos também vão para a pasta da equipe no Teams, canal **Segundo Desafio**, como pede o enunciado.
+Envio: os artefatos também vão para a pasta da equipe no Teams, canal **`4_Second Challenge`** (Segundo Desafio), como pede o enunciado.
 
 ## Como gerar o PDF de cada entrega (para o Teams)
 
@@ -35,6 +35,9 @@ Ao clicar no botão, o script [`rumo.js`](../javascripts/rumo.js) lê automatica
 
 !!! info "Exportação consolidada da Entrega 3 para o Teams (Issue #21)"
     Para o envio no canal **Segundo Desafio** do Microsoft Teams, o mecanismo do `rumo.js` compila automaticamente as quatro páginas da Entrega 3 ([`index.md`](../entrega-3/index.md), [`llm-vs-rag.md`](../entrega-3/llm-vs-rag.md), [`fidelidade-e-alucinacao.md`](../entrega-3/fidelidade-e-alucinacao.md) e [`reescrita-de-consulta.md`](../entrega-3/reescrita-de-consulta.md)) em um único documento paginado contínuo. Ele expande automaticamente a tabela de 32 perguntas pareadas (Tabela 5), desdobra blocos recolhidos (`details`), ajusta diagramas de arquitetura Mermaid e preserva cabeçalhos e formatações A4 sem exigir qualquer edição manual externa.
+
+!!! info "Exportação consolidada da Entrega 4 para o Teams (Issue #48)"
+    Para o envio no canal **`4_Second Challenge`** (Segundo Desafio) do Microsoft Teams, o botão na página [`/entrega-4/`](../entrega-4/index.md) compila automaticamente as cinco páginas da Entrega 4 ([`index.md`](../entrega-4/index.md), [`arquitetura-agentes.md`](../entrega-4/arquitetura-agentes.md), [`responsabilidades.md`](../entrega-4/responsabilidades.md), [`fluxo-de-interacao.md`](../entrega-4/fluxo-de-interacao.md) e [`demonstracao.md`](../entrega-4/demonstracao.md)) em um documento A4 contínuo com capa, sumário, diagramas Mermaid dimensionados e blocos recolhidos abertos.
 
 !!! warning "Regra de fonte única"
     O PDF enviado ao Teams é sempre **derivado** do Markdown desta GitPage. Nunca edite o PDF ou um arquivo Word separadamente: qualquer correção deve ser feita nos arquivos `.md` da entrega e reexportada pelo botão da página inicial da entrega.
@@ -83,9 +86,11 @@ A **Tabela 4** consolida as decisões arquiteturais tomadas na implantação do 
 
 | Mudança | Motivo | Efeito medido |
 |---|---|---|
-| Especialização `AgenteRU` + `AgenteFluxo` + `AgenteValidador` + `Sintetizador` | Consultas compostas competiam pelos mesmos *slots* e geravam alucinações ou citações misturadas | Citações `[n]` isoladas por parte, validação factual automática e devolução ao `Sintetizador` (`fallback_extrativo`) |
+| Especialização `AgenteRU` + `AgenteFluxo` + `AgenteValidador` + `Sintetizador` | Consultas compostas competiam pelos mesmos *slots* e geravam alucinações ou citações misturadas | Citações `[n]` isoladas por parte, validação factual automática e devolução ao `Sintetizador` (máx. 1 retentativa com feedback ou recusa padrão) |
 | Execução paralela via `ThreadPoolExecutor` com `_LOCK_BUSCA` | Chamadas em série dobravam a latência; consultas simultâneas ao `chromadb` colidiam no `RustBindingsAPI` | Ganho real de paralelismo (`3,68s` vs `7,27s`) sem colisão de índice e com degradação elegante em falhas (`--falhar-agente`) |
 | Calibração de `LIMIAR_COMPOSTA` (`0,50` → `0,39`) e estudo Teste 1 vs. Teste 2 | O limiar antigo falhava em acionar compostas (`p=0,39`) e o regex errava 4/17 formulações coloquiais naturais | Acurácia de roteamento nas subperguntas naturais sobe de `76,5%` (Regex) para `94,1%` (`d1-omni-600M`) e `100,0%` (`qwen2.5:7b` conjunto) |
+| Cardápio semanal estruturado com alergênicos + 18 fontes DDS (`#53`, `#54`, `#55`) | Cardápios antigos no RAG desatualizavam respostas e omitiam alergênicos | Base expandida para 54 fontes (53 em RAG = 1.954 chunks + `F56` em JSON semanal com alergênicos por prato) sem regressão no BM25 (`Hit@1=0,906`, `Hit@5=1,000`, `MRR=0,944`) |
+| Exposição do fluxo multiagente na API v1.0 e preparo para Vercel (`#44`) | API anterior usava busca simples e dependia de ambiente pesado (Render) | `POST /perguntar` integra `Orquestrador` mantendo contrato v1.0 estrito (`trace` opcional), fallback automático e deploy leve em Vercel (`rag/api/index.py`) |
 
 <p class="legenda">Tabela 4. Decisões tomadas ao longo da Entrega 4, cada uma com motivo e efeito.</p>
 
@@ -97,3 +102,4 @@ A **Tabela 4** consolida as decisões arquiteturais tomadas na implantação do 
     | 11/11/2026 | 3.0 | Inclusão da versão 3.0 (Entrega 3) e registro de decisões técnicas | Grupo 04 |
     | 13/11/2026 | 3.0 | Consolidação das decisões da Entrega 3, guia de exportação em PDF único (Issue #21) e purga de latência (R3) | Grupo 04 |
     | 16/11/2026 | 4.0 | Inclusão da versão 4.0 (Entrega 4 · Primeiro Protótipo Multiagente) e registro de decisões arquiteturais | Grupo 04 |
+    | 20/11/2026 | 4.0 | Fechamento da Entrega 4 (guia de exportação PDF A4 da Issue #48 e consolidação das mudanças finais) | Grupo 04 |
