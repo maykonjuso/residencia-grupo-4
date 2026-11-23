@@ -2,6 +2,15 @@
 
 Esta página registra execuções reais do protótipo multiagente via terminal, comprovando a execução em paralelo entre especialistas, o isolamento das citações por assunto, a correção automática quando o validador reprova um dado, a entrega parcial quando um agente falha e o encaminhamento em linguagem natural.
 
+## Vídeo demonstrativo
+
+<video controls preload="metadata" width="100%">
+  <source src="../assets/video-com-perguntas.mp4" type="video/mp4">
+  Seu navegador não conseguiu reproduzir o vídeo.
+</video>
+
+<p class="legenda">Vídeo demonstrativo do fluxo RUmo com perguntas e trace dos agentes.</p>
+
 !!! info "Execuções reproduzíveis e evidência generativa"
     Os Casos 1, 3 e 4 abaixo foram executados no modo extrativo (`--backend extrativo`) com modelos locais offline (`HF_HUB_OFFLINE=1`) para validação determinística do roteamento, paralelismo e degradação. O Caso 2 e o Caso 5 registram o comportamento atual do **Agente Validador ativo** (`#43`) e a execução real com modelo generativo (`qwen2.5:7b` via Ollama) após o fechamento de `#40`–`#43`.
 
@@ -261,3 +270,4 @@ Registro completo e consolidado das **12 consultas múltiplas** (**31 subpergunt
     | 1.5 | 20/11/2026 | @GabrielMacielBR | Inclusão da resposta final real de `M07` (pós-reparo do validador) e do Caso 7 com cardápio semanal estruturado e alergênicos (`F56`) | — |
     | 1.6 | 20/11/2026 | @GabrielMacielBR | Inclusão da Tabela 3 recolhível com as respostas completas da LLM (`qwen2.5:7b`) e fontes citadas nas 12 perguntas múltiplas (`M01`–`M12`) | — |
     | 1.7 | 20/11/2026 | @GabrielMacielBR | Seleção de 4 destaques no corpo do Caso 6 (`Tabela 2`) e consolidação das 12 consultas completas (métricas + respostas da LLM) no Apêndice ao final do documento | — |
+    | 1.8 | 23/11/2026 | Grupo 04 | Inclusão e destaque do vídeo demonstrativo da Task #47 no início da página | — |
