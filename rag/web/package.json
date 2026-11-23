@@ -1,0 +1,5 @@
+{
+  "private": true,
+  "type": "module",
+  "scripts": { "test": "node --test rumo-perfil.test.mjs" }
+}
