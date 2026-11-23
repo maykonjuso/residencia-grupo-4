@@ -11,6 +11,20 @@ Esta página registra execuções reais do protótipo multiagente via terminal, 
 
 <p class="legenda">Vídeo demonstrativo do fluxo RUmo com perguntas e trace dos agentes.</p>
 
+## Consultas determinísticas ao grafo curricular
+
+O Agente Fluxo também responde consultas de impacto curricular diretamente a partir do grafo extraído da transcrição F16. Para perguntas reconhecidas pelo grafo, a resposta é calculada por código, sem busca no índice ou chamada ao LLM; a fonte é apresentada como F16. O fluxograma vale para ingressantes após 2024/2, e os pré-requisitos oficiais devem ser confirmados no SIGAA.
+
+```bash
+cd rag
+python -m rumo_rag "Se eu reprovar em Requisitos de Software, quais disciplinas travam?"
+python -m rumo_rag "Qual disciplina de Engenharia de Software destrava mais matérias?"
+```
+
+Na primeira consulta, a busca de alcançabilidade pelas setas cheias identifica Testes de Software (FGA0314) e Gerência de Configuração e Evolução de Software (FGA0317) como dependentes de Requisitos de Software (FGA0313). Na segunda, o grau de saída das setas cheias identifica Algoritmos e Programação de Computadores (CIC0004), com duas dependências diretas no grafo.
+
+Setas tracejadas não são tratadas como pré-requisitos confirmados. Ao consultar pré-requisitos ou disciplinas que podem abrir por uma relação tracejada, a resposta marca a incerteza e orienta confirmar no SIGAA. O caminho crítico informa a cadeia mais longa de pré-requisitos confirmados registrada no grafo; não é uma previsão de semestres até a formatura, pois a transcrição não informa oferta de turmas nem o ritmo individual do estudante.
+
 !!! info "Execuções reproduzíveis e evidência generativa"
     Os Casos 1, 3 e 4 abaixo foram executados no modo extrativo (`--backend extrativo`) com modelos locais offline (`HF_HUB_OFFLINE=1`) para validação determinística do roteamento, paralelismo e degradação. O Caso 2 e o Caso 5 registram o comportamento atual do **Agente Validador ativo** (`#43`) e a execução real com modelo generativo (`qwen2.5:7b` via Ollama) após o fechamento de `#40`–`#43`.
 
@@ -271,3 +285,4 @@ Registro completo e consolidado das **12 consultas múltiplas** (**31 subpergunt
     | 1.6 | 20/11/2026 | @GabrielMacielBR | Inclusão da Tabela 3 recolhível com as respostas completas da LLM (`qwen2.5:7b`) e fontes citadas nas 12 perguntas múltiplas (`M01`–`M12`) | — |
     | 1.7 | 20/11/2026 | @GabrielMacielBR | Seleção de 4 destaques no corpo do Caso 6 (`Tabela 2`) e consolidação das 12 consultas completas (métricas + respostas da LLM) no Apêndice ao final do documento | — |
     | 1.8 | 23/11/2026 | Grupo 04 | Inclusão e destaque do vídeo demonstrativo da Task #47 no início da página | — |
+    | 1.9 | 23/11/2026 | @keilogger | Documentação das consultas determinísticas ao grafo curricular (Task #61) | — |
