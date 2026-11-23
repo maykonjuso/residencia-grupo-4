@@ -261,18 +261,28 @@ class AgenteRU(Agente):
         t0 = time.monotonic()
         fn = getattr(ferramentas, nome_ferr)
         res = fn(**args)
-        duracao = round(time.monotonic() - t0, 3)
+        duracao_ferr = round(time.monotonic() - t0, 3)
 
-        contexto["ferramenta_chamada"] = res.para_trace()
+        backend = contexto.get("backend", config.BACKEND)
+        texto_final, duracao_ger, alertas_final, redigido_llm = ferramentas.redigir_com_ferramenta(
+            mensagem.conteudo,
+            res,
+            self.instrucoes,
+            backend,
+        )
+
+        trace_ferr = res.para_trace()
+        trace_ferr["redigido_por_llm"] = redigido_llm
+        contexto["ferramenta_chamada"] = trace_ferr
         contexto["dado_estruturado"] = res.dados
         contexto["trechos_recuperados"] = list(res.trechos_evidencia)
-        contexto["tempo_busca_s"] = duracao
-        contexto["tempo_geracao_s"] = 0.0
+        contexto["tempo_busca_s"] = duracao_ferr
+        contexto["tempo_geracao_s"] = duracao_ger
         return Resposta(
-            conteudo=res.texto_base,
+            conteudo=texto_final,
             fontes=list(res.fontes),
             confianca=0.0 if res.recusado else 1.0,
-            alertas=list(res.alertas),
+            alertas=alertas_final,
         )
 
     def executar(self, mensagem: Mensagem) -> Resposta:

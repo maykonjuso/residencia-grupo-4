@@ -300,10 +300,19 @@ def _data_do_chunk(chunk: dict) -> str | None:
 
 def buscar(data: str, refeicao: str | None = None, doc_id: str | None = None,
            chunks: list[dict] | None = None) -> list[dict]:
-    """Cardápios estruturados da data (e refeição, se dada). Lista vazia se não houver."""
+    """Cardápios estruturados da data (e refeição, se dada). Sem `chunks` explícito, lê `cardapio_semanal.json`."""
     date.fromisoformat(data)  # valida o formato AAAA-MM-DD
     ref = normalizar_refeicao(refeicao) if refeicao else None
-    chunks = carregar_chunks_cardapio() if chunks is None else chunks
+    if chunks is None:
+        dados, _ = ler_semana_json()
+        if not dados:
+            return []
+        return [
+            r for r in dados.get("refeicoes", [])
+            if r.get("data") == data
+            and (not ref or r.get("refeicao") == ref)
+            and (not doc_id or (r.get("fonte") or {}).get("doc_id") == doc_id)
+        ]
     saida = []
     for c in chunks:
         if doc_id and c["doc_id"] != doc_id:

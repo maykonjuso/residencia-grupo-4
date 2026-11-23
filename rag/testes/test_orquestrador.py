@@ -36,6 +36,19 @@ TRECHO_RU = {
     "texto": "No almoço de quarta-feira será servido frango grelhado, arroz, feijão e proteína de soja ao molho.",
 }
 
+TRECHO_RU_NORMA = {
+    "chunk_id": "F01-0003",
+    "doc_id": "F01",
+    "titulo": "Resolução do CAD nº 0037/2025 — valores das refeições do RU",
+    "orgao": "UnB · Conselho de Administração",
+    "pagina": 2,
+    "secao": "Grupo II · Graduação",
+    "similaridade": 0.85,
+    "nota_rrf": 0.033,
+    "url": "https://ru.unb.br/wp-content/uploads/2026/02/SEI_13513000_Resolucao_do_CAD_n__0037_2025-ATT.pdf",
+    "texto": "Estudantes de graduação do Grupo II pagam R$ 6,10 pelo almoço no RU.",
+}
+
 TRECHO_FLUXO = {
     "chunk_id": "F20-0012",
     "doc_id": "F20",
@@ -360,7 +373,7 @@ class TestCliAgentesTrace(unittest.TestCase):
     def test_cli_direta_com_agentes_e_trace(self):
         def fake_buscar(pergunta, k=config.TOP_K, modo="hibrido", eixo=None):
             if eixo == "ru":
-                return [TRECHO_RU]
+                return [TRECHO_RU_NORMA]
             return [TRECHO_FLUXO]
 
         buf = io.StringIO()
@@ -369,14 +382,14 @@ class TestCliAgentesTrace(unittest.TestCase):
                  cli.agentes.reescrita,
                  "decompor_com_roteamento",
                  return_value=[
-                     {"pergunta": "O que tem no almoço?", "eixo": "ru"},
+                     {"pergunta": "Qual o preço do almoço para Grupo II?", "eixo": "ru"},
                      {"pergunta": "Quais os pré-requisitos de Testes de Software?", "eixo": "fluxo"},
                  ],
              ), \
              mock.patch.object(cli.agentes.indice, "_buscar_simples", side_effect=fake_buscar), \
              mock.patch("sys.stdout", buf):
             cli.main([
-                "O que tem no almoço e quais os pré-requisitos de Testes de Software?",
+                "Qual o preço do almoço para Grupo II e quais os pré-requisitos de Testes de Software?",
                 "--agentes",
                 "--trace",
                 "--backend",
@@ -385,14 +398,14 @@ class TestCliAgentesTrace(unittest.TestCase):
 
         saida = buf.getvalue()
         self.assertIn("[TRACE · Orquestrador Multiagentes]", saida)
-        self.assertIn("Subpergunta 1: O que tem no almoço?", saida)
+        self.assertIn("Subpergunta 1: Qual o preço do almoço para Grupo II?", saida)
         self.assertIn("Subpergunta 2: Quais os pré-requisitos de Testes de Software?", saida)
         self.assertIn("[Agente RU]", saida)
         self.assertIn("[Agente Fluxo]", saida)
         self.assertIn("3. Execução em paralelo:", saida)
         self.assertIn("4. Validador factual:", saida)
         self.assertIn("5. Composição (Sintetizador):", saida)
-        self.assertIn("F09", saida)
+        self.assertIn("F01", saida)
         self.assertIn("F16", saida)
         self.assertIn("confirme no SIGAA", saida)
 
@@ -405,27 +418,27 @@ class TestContratoAgentesEValidacao(unittest.TestCase):
         msg = agentes.Mensagem(
             remetente="Orquestrador",
             destinatario=agente.nome,
-            conteudo="O que tem no almoço?",
+            conteudo="Qual o preço do almoço para Grupo II?",
             contexto={"backend": "extrativo"},
         )
-        with mock.patch.object(agentes.indice, "buscar", return_value=[TRECHO_RU]) as m_buscar:
+        with mock.patch.object(agentes.indice, "buscar", return_value=[TRECHO_RU_NORMA]) as m_buscar:
             resp = agente.executar(msg)
 
         m_buscar.assert_called_once_with(
-            "O que tem no almoço?",
+            "Qual o preço do almoço para Grupo II?",
             k=3,
             modo="bm25",
             eixo="ru",
             decompor_pergunta=False,
         )
         self.assertIsInstance(resp, agentes.Resposta)
-        self.assertIn("frango grelhado", resp.conteudo.lower())
+        self.assertIn("6,10", resp.conteudo)
         self.assertIn("[1]", resp.conteudo)
         self.assertEqual(len(resp.fontes), 1)
-        self.assertEqual(resp.fontes[0]["doc_id"], "F09")
-        self.assertAlmostEqual(resp.confianca, 0.82)
+        self.assertEqual(resp.fontes[0]["doc_id"], "F01")
+        self.assertAlmostEqual(resp.confianca, 0.85)
         self.assertEqual(resp.alertas, [])
-        self.assertEqual(msg.contexto["trechos_recuperados"], [TRECHO_RU])
+        self.assertEqual(msg.contexto["trechos_recuperados"], [TRECHO_RU_NORMA])
 
     def test_orquestrador_comunica_por_mensagem_resposta_e_trace_oficial(self):
         class _AgenteFakePuro(agentes.Agente):
@@ -532,12 +545,12 @@ class TestContratoAgentesEValidacao(unittest.TestCase):
         self.assertIsInstance(orq.agentes["fluxo"], agentes.AgenteFluxo)
 
         with mock.patch.object(agentes.reescrita, "classificar_composta", return_value=(False, 0.05)), \
-             mock.patch.object(agentes.indice, "buscar", return_value=[TRECHO_RU]):
-            res = orq.executar("O que tem no almoço do RU hoje?", backend="extrativo")
+             mock.patch.object(agentes.indice, "buscar", return_value=[TRECHO_RU_NORMA]):
+            res = orq.executar("Qual o preço do almoço do RU para o Grupo II?", backend="extrativo")
 
         self.assertFalse(res["degradado"])
-        self.assertIn("frango grelhado", res["resposta"].lower())
-        self.assertEqual(res["fontes_citadas"][0]["doc_id"], "F09")
+        self.assertIn("6,10", res["resposta"])
+        self.assertEqual(res["fontes_citadas"][0]["doc_id"], "F01")
 
     def test_validador_executar_via_contrato_mensagem_resposta(self):
         validador = agentes.AgenteValidador()
@@ -616,12 +629,12 @@ class TestContratoAgentesEValidacao(unittest.TestCase):
             return "Resposta fundamentada [1]."
 
         with mock.patch.object(agentes.geracao, "_gerar_ollama", side_effect=fake_ollama):
-            with mock.patch.object(agentes.indice, "buscar", return_value=[TRECHO_RU]):
+            with mock.patch.object(agentes.indice, "buscar", return_value=[TRECHO_RU_NORMA]):
                 ag_ru.executar(
                     agentes.Mensagem(
                         remetente="Orquestrador",
                         destinatario=ag_ru.nome,
-                        conteudo="O que tem no almoço?",
+                        conteudo="Qual o preço do almoço para o Grupo II?",
                         contexto={"backend": "ollama"},
                     )
                 )
@@ -718,14 +731,17 @@ class TestContratoAgentesEValidacao(unittest.TestCase):
             if "módulo de reescrita e decomposição" in system_msg:
                 conteudo = json.dumps({
                     "subperguntas": [
-                        {"pergunta": "O que tem no almoço do RU?", "eixo": "ru"},
+                        {"pergunta": "Qual o preço do almoço no RU para Grupo II?", "eixo": "ru"},
                         {"pergunta": "Quais os pré-requisitos de Testes de Software?", "eixo": "fluxo"},
                     ]
                 })
             elif "Agente RU" in system_msg:
-                conteudo = "No almoço será servido frango grelhado [1]."
+                conteudo = "O almoço custa R$ 6,10 para o Grupo II [1]."
             else:
-                conteudo = "Requer Métodos de Desenvolvimento de Software [1]."
+                conteudo = (
+                    "Testes de Software (FGA0314) requer Requisitos de Software (FGA0313) e possui "
+                    "ligação tracejada com Métodos de Desenvolvimento de Software (MDS) (FGA0312). [1]"
+                )
             payload = json.dumps({"choices": [{"message": {"content": conteudo}}]}).encode("utf-8")
             resp_http = io.BytesIO(payload)
             resp_http.__enter__ = lambda s: s
@@ -733,7 +749,7 @@ class TestContratoAgentesEValidacao(unittest.TestCase):
             return resp_http
 
         def fake_buscar(pergunta, k=config.TOP_K, modo="hibrido", eixo=None, decompor_pergunta=False):
-            return [TRECHO_RU] if eixo == "ru" else [TRECHO_FLUXO]
+            return [TRECHO_RU_NORMA] if eixo == "ru" else [TRECHO_FLUXO]
 
         with mock.patch.dict("os.environ", {"OPENROUTER_API_KEY": "sk-or-teste"}, clear=False), \
              mock.patch.object(agentes.config, "OPENAI_URL", "https://openrouter.ai/api/v1/"), \
@@ -746,20 +762,21 @@ class TestContratoAgentesEValidacao(unittest.TestCase):
              mock.patch.object(agentes.geracao, "_gerar_ollama", side_effect=AssertionError), \
              mock.patch.object(agentes.geracao, "_gerar_hf", side_effect=AssertionError):
             res = orq.executar(
-                "O que tem no almoço e quais os pré-requisitos de Testes de Software?",
+                "Qual o preço do almoço para Grupo II e quais os pré-requisitos de Testes de Software?",
                 backend="openai",
             )
 
-        self.assertEqual(len(requisicoes), 2)  # decomposição + geração RU; Fluxo usa o grafo local
+        self.assertEqual(len(requisicoes), 3)  # decomposição + Agente RU (RAG) + redação do Agente Fluxo (grafo)
         for url, headers, body in requisicoes:
             self.assertEqual(url, "https://openrouter.ai/api/v1/chat/completions")
             self.assertEqual(headers.get("Authorization"), "Bearer sk-or-teste")
             self.assertEqual(headers.get("User-agent"), "RUmo-UnB/1.0")
             self.assertEqual(body["model"], "qwen/qwen-2.5-72b-instruct")
         self.assertEqual([p["agente"] for p in res["partes"]], ["ru", "fluxo"])
-        self.assertIn("frango grelhado [1]", res["resposta"])
+        self.assertIn("6,10", res["resposta"])
         self.assertIn("Métodos de Desenvolvimento de Software (MDS) (FGA0312)", res["resposta"])
         self.assertIn("ligação tracejada", res["resposta"])
+        self.assertIn("Confirme no SIGAA", res["resposta"])
         self.assertFalse(res["degradado"])
 
 

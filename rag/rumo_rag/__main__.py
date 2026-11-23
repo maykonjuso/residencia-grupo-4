@@ -16,7 +16,7 @@ from . import agentes, chunking, config, extracao, geracao, indice
 
 def ingerir(_args):
     t0 = time.time()
-    docs = extracao.carregar_catalogo()
+    docs = [d for d in extracao.carregar_catalogo() if d.get("tipo") != "cardapio"]
     extracao.baixar(docs)
     textos = extracao.extrair_todos(docs)
     chunks = []
@@ -93,7 +93,7 @@ def responder(
             ],
             "tempo_decomposicao_s": 0.0,
             "tempo_busca_s": mensagem_grafo.contexto.get("tempo_busca_s", 0.0),
-            "tempo_geracao_s": 0.0,
+            "tempo_geracao_s": mensagem_grafo.contexto.get("tempo_geracao_s", 0.0),
             "backend": "grafo",
         }
     if sem_rag:
@@ -197,7 +197,10 @@ def imprimir_agentes(r: dict, mostrar_trace: bool = False):
                     if ferr:
                         args_txt = json.dumps(ferr.get("argumentos", {}), ensure_ascii=False)
                         estado_f = " · RECUSADO" if ferr.get("recusado") else ""
-                        ferr_txt = f" · ferramenta={ferr['nome']}({args_txt}){estado_f}"
+                        modo_red = ""
+                        if not ferr.get("recusado") and "redigido_por_llm" in ferr:
+                            modo_red = " · redação=LLM" if ferr["redigido_por_llm"] else " · redação=determinística"
+                        ferr_txt = f" · ferramenta={ferr['nome']}({args_txt}){estado_f}{modo_red}"
                     print(f"   - [{ex['nome_agente']}] {ex['tempo_total_s']}s · {status}{ferr_txt}")
             elif etapa == "validacao_factual":
                 print("4. Validador factual:")

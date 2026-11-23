@@ -77,30 +77,52 @@ def test_caminho_critico_e_a_cadeia_mais_longa_de_setas_cheias():
 
 
 def test_agente_fluxo_responde_consulta_do_grafo_sem_chamar_llm_ou_indice():
-    mensagem = Mensagem(
+    msg_det = Mensagem(
+        remetente="Orquestrador",
+        destinatario="Agente Fluxo",
+        conteudo="Se eu reprovar em Requisitos de Software, quais disciplinas travam?",
+        contexto={"backend": "extrativo"},
+    )
+
+    with patch("rumo_rag.geracao.gerar_com_instrucoes") as gerar, patch(
+        "rumo_rag.agentes.agente_fluxo.indice.buscar"
+    ) as buscar:
+        resp_det = AgenteFluxo().executar(msg_det)
+
+    gerar.assert_not_called()
+    buscar.assert_not_called()
+    assert "FGA0314" in resp_det.conteudo
+    assert resp_det.fontes[0]["doc_id"] == "F16"
+    assert msg_det.contexto["trechos_recuperados"][0]["doc_id"] == "F16"
+    assert msg_det.contexto["tempo_geracao_s"] == 0.0
+    assert msg_det.contexto["ferramenta_chamada"]["redigido_por_llm"] is False
+
+    msg_llm = Mensagem(
         remetente="Orquestrador",
         destinatario="Agente Fluxo",
         conteudo="Se eu reprovar em Requisitos de Software, quais disciplinas travam?",
         contexto={"backend": "ollama"},
     )
+    with patch(
+        "rumo_rag.geracao.gerar_com_instrucoes",
+        return_value="Reprovando em Requisitos de Software, travam FGA0314 e FGA0317. [1]",
+    ) as gerar_llm, patch("rumo_rag.agentes.agente_fluxo.indice.buscar") as buscar_llm:
+        resp_llm = AgenteFluxo().executar(msg_llm)
 
-    with patch("rumo_rag.agentes.agente_fluxo.geracao.gerar_com_instrucoes") as gerar, patch(
-        "rumo_rag.agentes.agente_fluxo.indice.buscar"
-    ) as buscar:
-        resposta = AgenteFluxo().executar(mensagem)
-
-    gerar.assert_not_called()
-    buscar.assert_not_called()
-    assert "FGA0314" in resposta.conteudo
-    assert resposta.fontes[0]["doc_id"] == "F16"
-    assert mensagem.contexto["trechos_recuperados"][0]["doc_id"] == "F16"
-    assert mensagem.contexto["tempo_geracao_s"] == 0.0
+    gerar_llm.assert_called_once()
+    buscar_llm.assert_not_called()
+    assert "FGA0314" in resp_llm.conteudo
+    assert "FGA0317" in resp_llm.conteudo
+    assert msg_llm.contexto["ferramenta_chamada"]["redigido_por_llm"] is True
 
 
 def test_cli_padrao_encaminha_perguntas_de_impacto_ao_grafo():
     with patch("rumo_rag.__main__.indice.decompor", side_effect=AssertionError), patch(
         "rumo_rag.__main__.indice.buscar_com_subperguntas", side_effect=AssertionError
-    ), patch("rumo_rag.__main__.geracao.gerar", side_effect=AssertionError):
+    ), patch("rumo_rag.__main__.geracao.gerar", side_effect=AssertionError), patch(
+        "rumo_rag.geracao.gerar_com_instrucoes",
+        return_value="Travam Testes de Software (FGA0314) e GCES (FGA0317). [1]",
+    ):
         resultado = cli.responder(
             "Se eu reprovar em Requisitos de Software, quais disciplinas travam?",
             backend="ollama",

@@ -105,16 +105,26 @@ class AgenteFluxo(Agente):
             if res.ferramenta == "grafo_fluxo" and res.recusado and res.dados.get("fallback_rag", True):
                 return None
 
-            contexto["ferramenta_chamada"] = res.para_trace()
+            backend = contexto.get("backend", config.BACKEND)
+            texto_final, tempo_ger, alertas_final, redigido_llm = ferramentas.redigir_com_ferramenta(
+                mensagem.conteudo,
+                res,
+                self.instrucoes,
+                backend,
+            )
+
+            trace_ferr = res.para_trace()
+            trace_ferr["redigido_por_llm"] = redigido_llm
+            contexto["ferramenta_chamada"] = trace_ferr
             contexto["dado_estruturado"] = res.dados
             contexto["trechos_recuperados"] = list(res.trechos_evidencia)
             contexto["tempo_busca_s"] = tempo_busca
-            contexto["tempo_geracao_s"] = 0.0
+            contexto["tempo_geracao_s"] = tempo_ger
             return Resposta(
-                conteudo=res.texto_base,
+                conteudo=texto_final,
                 fontes=list(res.fontes),
                 confianca=0.0 if res.recusado else 1.0,
-                alertas=list(res.alertas),
+                alertas=alertas_final,
             )
         return None
 

@@ -11,19 +11,41 @@ from unittest import mock
 RAG = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(RAG))
 
-from rumo_rag import agentes, config, geracao  # noqa: E402
+from rumo_rag import agentes, config, geracao, indice  # noqa: E402
 from rumo_rag.agentes import ferramentas  # noqa: E402
 from rumo_rag.coleta import cardapio, scraper  # noqa: E402
+
+FIXTURE_CHUNKS = RAG / "testes" / "fixtures" / "cardapio_gama" / "chunks_f08_f09.jsonl"
+
+
+def _escrever_semanal_f09(tmp_dir: Path) -> Path:
+    f09 = [c for c in cardapio.carregar_chunks_cardapio(FIXTURE_CHUNKS) if c["doc_id"] == "F09"]
+    dados = {
+        "unidade": "gama",
+        "semana": {"inicio": "2026-11-09", "fim": "2026-11-15"},
+        "atualizado_em": "2026-11-09T08:00:00",
+        "fonte": {"doc_id": "F09", "url": f09[0]["url"], "pagina_listagem": "https://ru.unb.br/cardapio-gama/"},
+        "refeicoes": [cardapio.estruturar_chunk(c) for c in f09],
+    }
+    destino = tmp_dir / "cardapio_semanal.json"
+    destino.write_text(json.dumps(dados, ensure_ascii=False), encoding="utf-8")
+    return destino
 
 
 class TestCardapioEMontarPrato(unittest.TestCase):
     def setUp(self):
         cardapio.resetar_estado_sincronizacao()
+        self._tmp_dir = tempfile.TemporaryDirectory()
+        self._json_f09 = _escrever_semanal_f09(Path(self._tmp_dir.name))
         self._patch_auto = mock.patch.object(config, "CARDAPIO_AUTO_FETCH", False)
+        self._patch_json = mock.patch.object(config, "CARDAPIO_SEMANAL_JSON", self._json_f09)
         self._patch_auto.start()
+        self._patch_json.start()
 
     def tearDown(self):
+        self._patch_json.stop()
         self._patch_auto.stop()
+        self._tmp_dir.cleanup()
         cardapio.resetar_estado_sincronizacao()
     def test_cardapio_do_dia_devolve_compartimentos_e_fonte_f09(self):
         res = ferramentas.cardapio_do_dia("2026-11-09", "almoco")
@@ -243,6 +265,56 @@ class TestCardapioEMontarPrato(unittest.TestCase):
         self.assertTrue(res.recusado)
         self.assertEqual(res.texto_base, geracao.RECUSA)
 
+    def test_rag_nao_contem_nenhum_cardapio(self):
+        import yaml
+
+        catalogo = yaml.safe_load(config.CATALOGO.read_text(encoding="utf-8"))["documentos"]
+        self.assertEqual([d for d in catalogo if d.get("tipo") == "cardapio"], [])
+
+        chunks = [json.loads(l) for l in config.CHUNKS.read_text(encoding="utf-8").splitlines() if l.strip()]
+        self.assertEqual([c for c in chunks if c.get("tipo") == "cardapio"], [])
+        self.assertEqual([c for c in chunks if c.get("doc_id") in ("F08", "F09")], [])
+
+        indice._bm25.cache_clear()
+        achados = indice.buscar("qual o cardápio do almoço?", k=5, modo="bm25", eixo="ru")
+        self.assertTrue(all(t.get("tipo") != "cardapio" for t in achados))
+
+    def test_toda_pergunta_de_cardapio_usa_ferramenta_nunca_rag(self):
+        perguntas_cardapio = [
+            "qual o cardápio de hoje?",
+            "o que tem no almoço?",
+            "qual o cardápio da semana?",
+            "o que vai ser servido no jantar de amanhã?",
+            "tem opção vegana no almoço de segunda?",
+            "monta um prato vegano pra hoje",
+        ]
+        agente = agentes.AgenteRU(modo="bm25")
+        with mock.patch.object(indice, "buscar", side_effect=AssertionError("Cardápio nunca deve ir à RAG")):
+            for pergunta in perguntas_cardapio:
+                with self.subTest(pergunta=pergunta):
+                    msg = agentes.Mensagem(
+                        remetente="Orquestrador",
+                        destinatario=agente.nome,
+                        conteudo=pergunta,
+                        contexto={"backend": "extrativo", "data": "2026-11-09"},
+                    )
+                    resp = agente.executar(msg)
+                    self.assertIn("ferramenta_chamada", msg.contexto)
+                    self.assertIn(msg.contexto["ferramenta_chamada"]["nome"], ("cardapio_do_dia", "montar_prato"))
+                    self.assertTrue(resp.fontes)
+
+    def test_perguntas_de_normas_e_precos_ru_nao_disparam_cardapio_do_dia(self):
+        perguntas_norma = [
+            "qual é o preço do almoço no RU para grupo II?",
+            "que horas abre o RU no almoço?",
+            "como funciona o auxílio alimentação?",
+            "como funciona a sinalização de alergênicos no cardápio?",
+            "estudante isento paga quanto no jantar?",
+        ]
+        for pergunta in perguntas_norma:
+            with self.subTest(pergunta=pergunta):
+                self.assertIsNone(ferramentas.extrair_chamada_ru(pergunta))
+
 
 class TestGrafoEMinhaAgenda(unittest.TestCase):
     def test_grafo_fluxo_devolve_dado_estruturado_e_seta_tracejada(self):
@@ -299,6 +371,21 @@ class TestGrafoEMinhaAgenda(unittest.TestCase):
 
 
 class TestOrquestradorComFerramentas(unittest.TestCase):
+    def setUp(self):
+        cardapio.resetar_estado_sincronizacao()
+        self._tmp_dir = tempfile.TemporaryDirectory()
+        self._json_f09 = _escrever_semanal_f09(Path(self._tmp_dir.name))
+        self._patch_auto = mock.patch.object(config, "CARDAPIO_AUTO_FETCH", False)
+        self._patch_json = mock.patch.object(config, "CARDAPIO_SEMANAL_JSON", self._json_f09)
+        self._patch_auto.start()
+        self._patch_json.start()
+
+    def tearDown(self):
+        self._patch_json.stop()
+        self._patch_auto.stop()
+        self._tmp_dir.cleanup()
+        cardapio.resetar_estado_sincronizacao()
+
     def test_orquestrador_montar_prato_vegano_registra_ferramenta_no_trace(self):
         orq = agentes.Orquestrador()
         with mock.patch.object(agentes.reescrita, "classificar_composta", return_value=(False, 0.05)):
@@ -329,6 +416,66 @@ class TestOrquestradorComFerramentas(unittest.TestCase):
         self.assertTrue(res["ferramentas_usadas"][0]["recusado"])
         etapa_val = next(p for p in res["trace"] if p["etapa"] == "validacao_factual")
         self.assertTrue(etapa_val["resultados"][0]["aprovado"])
+
+    def test_agente_ru_redige_com_llm_sobre_cardapio_e_montar_prato(self):
+        ag = agentes.AgenteRU(modo="bm25")
+        msg = agentes.Mensagem(
+            remetente="Orquestrador",
+            destinatario=ag.nome,
+            conteudo="Qual o cardápio do almoço?",
+            contexto={"backend": "ollama", "data": "2026-11-09"},
+        )
+        with mock.patch.object(
+            geracao, "gerar_com_instrucoes", return_value="Hoje no almoço há soja refogada e salada. [1]"
+        ) as m_gerar:
+            resp = ag.executar(msg)
+
+        m_gerar.assert_called_once()
+        self.assertEqual(m_gerar.call_args.kwargs["backend"], "ollama")
+        self.assertIn("soja refogada", resp.conteudo)
+        self.assertTrue(msg.contexto["ferramenta_chamada"]["redigido_por_llm"])
+
+    def test_recusa_de_ferramenta_nunca_chama_llm_e_queda_de_llm_degrada_com_seguranca(self):
+        ag = agentes.AgenteRU(modo="bm25")
+        msg_recusa = agentes.Mensagem(
+            remetente="Orquestrador",
+            destinatario=ag.nome,
+            conteudo="monta um prato com menos de 500 calorias",
+            contexto={"backend": "ollama", "data": "2026-11-09"},
+        )
+        with mock.patch.object(geracao, "gerar_com_instrucoes") as m_gerar:
+            resp_recusa = ag.executar(msg_recusa)
+        m_gerar.assert_not_called()
+        self.assertEqual(resp_recusa.conteudo, geracao.RECUSA)
+        self.assertFalse(msg_recusa.contexto["ferramenta_chamada"]["redigido_por_llm"])
+
+        msg_queda = agentes.Mensagem(
+            remetente="Orquestrador",
+            destinatario=ag.nome,
+            conteudo="Qual o cardápio do almoço?",
+            contexto={"backend": "ollama", "data": "2026-11-09"},
+        )
+        with mock.patch.object(geracao, "gerar_com_instrucoes", side_effect=RuntimeError("Ollama offline")):
+            resp_queda = ag.executar(msg_queda)
+        self.assertIn("Soja refogada", resp_queda.conteudo)
+        self.assertFalse(msg_queda.contexto["ferramenta_chamada"]["redigido_por_llm"])
+        self.assertTrue(any("fallback" in a.lower() or "falhou" in a.lower() for a in resp_queda.alertas))
+
+    def test_guardiao_preserva_confirme_no_sigaa_quando_llm_omite(self):
+        res = ferramentas.grafo_fluxo("Quais os pré-requisitos de Testes de Software?")
+        with mock.patch.object(
+            geracao,
+            "gerar_com_instrucoes",
+            return_value="Exige FGA0313 e tem ligação tracejada com FGA0312. [1]",
+        ):
+            texto, _, _, redigido = ferramentas.redigir_com_ferramenta(
+                "Quais os pré-requisitos de Testes de Software?",
+                res,
+                agentes.AgenteFluxo.instrucoes,
+                "ollama",
+            )
+        self.assertTrue(redigido)
+        self.assertIn("Confirme no SIGAA", texto)
 
 
 if __name__ == "__main__":

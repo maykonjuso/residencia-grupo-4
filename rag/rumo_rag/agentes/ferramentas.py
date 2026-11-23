@@ -12,6 +12,7 @@ from datetime import date, timedelta
 import json
 from pathlib import Path
 import re
+import time
 from typing import Any
 import unicodedata
 
@@ -111,6 +112,57 @@ class ResultadoFerramenta:
         return asdict(self)
 
 
+BACKENDS_LLM = ("ollama", "hf", "openai")
+
+
+def redigir_com_ferramenta(
+    pergunta: str,
+    res: ResultadoFerramenta,
+    instrucoes_agente: str,
+    backend: str = config.BACKEND,
+) -> tuple[str, float, list[str], bool]:
+    """Redige resposta natural via LLM sobre a saída estruturada da ferramenta, quando aplicável."""
+    alertas = list(res.alertas)
+    backend_efetivo = config.BACKEND if backend == "auto" else backend
+    if res.recusado or not res.trechos_evidencia or backend_efetivo not in BACKENDS_LLM:
+        return res.texto_base, 0.0, alertas, False
+
+    instrucoes_ferr = (
+        f"{instrucoes_agente}\n\n"
+        f"USO DA FERRAMENTA '{res.ferramenta}':\n"
+        "- Você recebeu os dados oficiais recuperados pela ferramenta nos trechos numerados [1], [2], ...\n"
+        f"- Síntese exata já calculada pela ferramenta (use como referência obrigatória):\n{res.texto_base}\n\n"
+        "Diretrizes de redação:\n"
+        "- Redija uma resposta natural, clara e organizada em português com base EXCLUSIVA nesses trechos.\n"
+        "- NUNCA invente pratos, ingredientes, alergênicos, calorias, preços, horários, códigos ou disciplinas.\n"
+        "- Cite [1] (ou [n] correspondente) ao final de cada afirmação ou item.\n"
+        "- Quando precisar listar refeições, opções de prato ou cadeias de disciplinas da ferramenta, "
+        "você pode exceder 120 palavras para não omitir itens nem alertas devolvidos pela ferramenta.\n"
+        "- Preserve obrigatoriamente qualquer aviso de incerteza ('ligação tracejada' / 'confirme no SIGAA') "
+        "e a vigência do currículo."
+    )
+    t0 = time.monotonic()
+    try:
+        texto = geracao.gerar_com_instrucoes(
+            pergunta,
+            res.trechos_evidencia,
+            instrucoes=instrucoes_ferr,
+            backend=backend_efetivo,
+        )
+    except Exception as exc:
+        alertas.append(f"Redação via LLM falhou ({type(exc).__name__}); exibindo saída determinística da ferramenta.")
+        return res.texto_base, 0.0, alertas, False
+
+    duracao = round(time.monotonic() - t0, 3)
+    if not texto or not texto.strip() or geracao.eh_recusa(texto):
+        return res.texto_base, duracao, alertas, False
+
+    texto_limpo = texto.strip()
+    if "confirme no sigaa" in res.texto_base.lower() and "sigaa" not in texto_limpo.lower():
+        texto_limpo += " Confirme no SIGAA. [1]"
+    return texto_limpo, duracao, alertas, True
+
+
 def _normalizar_data(valor: str | date | None, hoje: date | None = None) -> str:
     ref = hoje or date.today()
     if valor is None:
@@ -155,36 +207,44 @@ def _carregar_cardapios(
     ref_norm: str | None,
     atualizar_se_ausente: bool | None = None,
 ) -> tuple[list[dict], dict | None]:
+    """Carrega cardápios exclusivamente do JSON estruturado semanal (nunca da RAG)."""
     caminho_semanal = getattr(config, "CARDAPIO_SEMANAL_JSON", config.DADOS / "cardapio_semanal.json")
-    dados_local, _ = cardapio.ler_semana_json(caminho_semanal if isinstance(caminho_semanal, Path) else None)
+    caminho_alvo = caminho_semanal if isinstance(caminho_semanal, Path) else None
+    dados_local, _ = cardapio.ler_semana_json(caminho_alvo)
     semana_local = dict(dados_local["semana"]) if dados_local else None
+    hoje = date.today()
+
+    def _extrair(dados: dict) -> list[dict]:
+        if data_iso == "semana":
+            return [
+                r for r in dados.get("refeicoes", [])
+                if not ref_norm or r.get("refeicao") == ref_norm
+            ]
+        return _filtrar_refeicoes(dados, data_iso, ref_norm)
+
     if dados_local:
-        encontrados = _filtrar_refeicoes(dados_local, data_iso, ref_norm)
-        if encontrados:
-            return encontrados, {
-                "status": "atualizado_cache",
-                "semana_local": semana_local,
-                "motivo": None,
-                "ultima_semana_publicada": semana_local,
-            }
+        if data_iso != "semana" or cardapio.semana_contem_data(dados_local, hoje):
+            encontrados = _extrair(dados_local)
+            if encontrados:
+                return encontrados, {
+                    "status": "atualizado_cache",
+                    "semana_local": semana_local,
+                    "motivo": None,
+                    "ultima_semana_publicada": semana_local,
+                }
 
     deve_atualizar = getattr(config, "CARDAPIO_AUTO_FETCH", True) if atualizar_se_ausente is None else atualizar_se_ausente
     info_sync: dict | None = None
-    if deve_atualizar and _na_semana_atual(data_iso):
+    alvo_sync = hoje if data_iso == "semana" else date.fromisoformat(data_iso)
+    if deve_atualizar and (data_iso == "semana" or _na_semana_atual(data_iso)):
         dados_novos, info_sync = cardapio.sincronizar_semana_atual(
-            referencia=date.fromisoformat(data_iso),
-            caminho=caminho_semanal if isinstance(caminho_semanal, Path) else None,
+            referencia=alvo_sync,
+            caminho=caminho_alvo,
         )
         if dados_novos:
-            encontrados = _filtrar_refeicoes(dados_novos, data_iso, ref_norm)
+            encontrados = _extrair(dados_novos)
             if encontrados:
                 return encontrados, info_sync
-
-    if config.CHUNKS.exists():
-        chunks = cardapio.carregar_chunks_cardapio()
-        encontrados = cardapio.buscar(data_iso, ref_norm, chunks=chunks)
-        if encontrados:
-            return encontrados, info_sync
 
     if not info_sync and semana_local:
         info_sync = {
@@ -200,11 +260,12 @@ def _fontes_e_trechos_cardapio(resultados: list[dict], data_iso: str) -> tuple[l
     fontes: list[dict] = []
     trechos: list[dict] = []
     linhas_texto: list[str] = []
-    dt = date.fromisoformat(data_iso)
-    data_br = f"{dt:%d/%m/%Y}"
-    dia_nome = _DIAS_SEMANA[dt.weekday()]
 
     for idx, r in enumerate(resultados, start=1):
+        d_item = r.get("data") or (data_iso if data_iso != "semana" else date.today().isoformat())
+        dt = date.fromisoformat(d_item)
+        data_br = f"{dt:%d/%m/%Y}"
+        dia_nome = _DIAS_SEMANA[dt.weekday()]
         f = dict(r.get("fonte") or {})
         ref_nome = cardapio.REFEICOES.get(r.get("refeicao", ""), r.get("refeicao", ""))
         secao = f"{ref_nome} · {dia_nome} {data_br}"
@@ -250,6 +311,7 @@ def _formatar_intervalo_br(sem: dict | None) -> str | None:
 
 def _motivo_ausencia_cardapio(data_iso: str, ref_norm: str | None, info_sync: dict | None) -> str:
     sufixo_ref = f" ({ref_norm})" if ref_norm else ""
+    alvo_txt = "a semana atual" if data_iso == "semana" else data_iso
     if info_sync:
         status = info_sync.get("status")
         origem = info_sync.get("status_origem")
@@ -259,21 +321,21 @@ def _motivo_ausencia_cardapio(data_iso: str, ref_norm: str | None, info_sync: di
         if efetivo == "unb_nao_publicou":
             detalhe = f" Última semana publicada: {intervalo_pub}." if intervalo_pub else ""
             return (
-                f"A UnB ainda não publicou o cardápio oficial do RU Gama para a semana de "
-                f"{data_iso}{sufixo_ref}.{detalhe}"
+                f"A UnB ainda não publicou o cardápio oficial do RU Gama para {alvo_txt}"
+                f"{sufixo_ref}.{detalhe}"
             )
         if efetivo == "erro_coleta":
             motivo = info_sync.get("motivo") or "falha de rede ao consultar o site da UnB"
             return (
-                f"Não há cardápio registrado na base para {data_iso}{sufixo_ref} e não foi possível "
+                f"Não há cardápio registrado na base para {alvo_txt}{sufixo_ref} e não foi possível "
                 f"consultar o site da UnB ({motivo})."
             )
         if intervalo_loc:
             return (
-                f"Não há cardápio registrado na base para {data_iso}{sufixo_ref} "
+                f"Não há cardápio registrado na base para {alvo_txt}{sufixo_ref} "
                 f"(o cardápio local disponível cobre {intervalo_loc})."
             )
-    return f"Não há cardápio registrado na base para {data_iso}" + (f" ({ref_norm})." if ref_norm else ".")
+    return f"Não há cardápio registrado na base para {alvo_txt}" + (f" ({ref_norm})." if ref_norm else ".")
 
 
 def cardapio_do_dia(
@@ -281,9 +343,12 @@ def cardapio_do_dia(
     refeicao: str | None = None,
     atualizar_se_ausente: bool | None = None,
 ) -> ResultadoFerramenta:
-    """Devolve compartimentos, opções estruturadas e procedência para `data` e `refeicao`."""
+    """Devolve compartimentos, opções estruturadas e procedência para `data` (ou `'semana'`) e `refeicao`."""
     try:
-        data_iso = _normalizar_data(data)
+        if isinstance(data, str) and _norm(data.strip()) in ("semana", "nesta semana", "esta semana"):
+            data_iso = "semana"
+        else:
+            data_iso = _normalizar_data(data)
         ref_norm = cardapio.normalizar_refeicao(refeicao) if refeicao else None
     except ValueError as exc:
         msg = str(exc)
@@ -751,8 +816,27 @@ def _extrair_restricoes_arg(pergunta: str) -> list[str]:
     return restricoes
 
 
+_PERGUNTA_NORMA_RU = re.compile(
+    r"\b(?:prec[oó]s?|valores?|valor|custa\w*|tarifas?|pagar?|pagam|paga|isenc[aã]o|isent[oa]s?"
+    r"|gratuit[oa]s?|grupo\s*(?:[1-4]|i{1,3}v?)|aux[ií]lio|pnaes|edital|resolu[cç][aã]o"
+    r"|regimento|hor[aá]rios?|que\s+horas|abre|fecha|funciona\w*|carteirinha|catraca"
+    r"|cr[eé]ditos?|recarreg\w*|como\s+acessar|como\s+funciona|quais\s+s[aã]o\s+os\s+\d+\s+alerg[eê]nicos)\b",
+    re.I,
+)
+
+_PERGUNTA_CARDAPIO = re.compile(
+    r"\b(?:cardapio\w*|menu"
+    r"|o\s+que\s+(?:tem|ha|vai\s+ter|sera\s+servid[oa]|servem)"
+    r"|qual\s+(?:e\s+)?(?:o\s+prato|a\s+sobremesa|a\s+salada|a\s+guarnicao|a\s+bebida|o\s+refresco|o\s+almoco|o\s+jantar|o\s+cafe)"
+    r"|prato\s+principal|sobremesa|guarnicao|salada|refresco|sopa|mesa\s+de\s+apoio"
+    r"|opca[oõ]\w*\s+(?:vegan\w*|vegetarian\w*|ovolacto\w*)"
+    r"|almoco|jantar|janta|cafe\s+da\s+manha|desjejum)\b",
+    re.I,
+)
+
+
 def extrair_chamada_ru(pergunta: str, contexto: dict[str, Any] | None = None) -> tuple[str, dict[str, Any]] | None:
-    """Seleciona a ferramenta do Agente RU quando aplicável."""
+    """Seleciona a ferramenta do Agente RU: qualquer pergunta de cardápio usa ferramenta, nunca RAG."""
     ctx = contexto or {}
     ferr_forcada = ctx.get("ferramenta")
     q = _norm(pergunta)
@@ -772,13 +856,20 @@ def extrair_chamada_ru(pergunta: str, contexto: dict[str, Any] | None = None) ->
             },
         )
 
+    menciona_cardapio_explicito = bool(re.search(r"\b(?:cardapio\w*|menu)\b", q))
+    eh_norma = bool(_PERGUNTA_NORMA_RU.search(q))
+    eh_cardapio = bool(_PERGUNTA_CARDAPIO.search(q))
     if ferr_forcada == "cardapio_do_dia" or (
-        re.search(r"\bcardapio\b", q) and re.search(r"\b(?:\d{4}-\d{2}-\d{2}|\d{1,2}/\d{1,2}(?:/\d{4})?)\b", q)
+        (menciona_cardapio_explicito and not re.search(r"\bcomo\s+funciona\b", q))
+        or (eh_cardapio and not eh_norma)
     ):
+        data_arg = _extrair_data_arg(pergunta, ctx)
+        if data_arg is None and re.search(r"\b(?:semana|quais\s+dias)\b", q):
+            data_arg = "semana"
         return (
             "cardapio_do_dia",
             {
-                "data": _extrair_data_arg(pergunta, ctx),
+                "data": data_arg,
                 "refeicao": _extrair_refeicao_arg(pergunta) if re.search(r"\b(cafe|desjejum|almoco|jantar|janta)\b", q) else None,
             },
         )

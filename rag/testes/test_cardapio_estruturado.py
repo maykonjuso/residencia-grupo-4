@@ -12,8 +12,13 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from rumo_rag.coleta import cardapio  # noqa: E402
 from rumo_rag.coleta.__main__ import main  # noqa: E402
 
-CHUNKS = cardapio.carregar_chunks_cardapio()
+FIXTURE_CHUNKS = Path(__file__).resolve().parent / "fixtures" / "cardapio_gama" / "chunks_f08_f09.jsonl"
+CHUNKS = cardapio.carregar_chunks_cardapio(FIXTURE_CHUNKS)
 F09 = [c for c in CHUNKS if c["doc_id"] == "F09"]
+
+
+def _buscar_fixture(data, refeicao=None):
+    return cardapio.buscar(data, refeicao, chunks=CHUNKS)
 
 
 def _norm(s: str) -> str:
@@ -22,7 +27,7 @@ def _norm(s: str) -> str:
 
 class TestEsquema(unittest.TestCase):
     def test_almoco_09_11_bate_com_exemplo_da_issue(self):
-        r = cardapio.buscar("2026-11-09", "almoco")[0]
+        r = _buscar_fixture("2026-11-09", "almoco")[0]
         cardapio.validar(r)
         self.assertEqual((r["unidade"], r["data"], r["refeicao"]), ("gama", "2026-11-09", "almoco"))
         slots = {c["slot"]: c for c in r["compartimentos"]}
@@ -76,7 +81,7 @@ class TestEsquema(unittest.TestCase):
                 cardapio.validar(cardapio.estruturar_chunk(c))
 
     def test_cafe_tem_compartimentos_proprios(self):
-        r = cardapio.buscar("2026-11-09", "cafe")[0]
+        r = _buscar_fixture("2026-11-09", "cafe")[0]
         slots = {c["slot"] for c in r["compartimentos"]}
         self.assertTrue({"panificacao", "gordura", "fruta", "complemento", "bebida"} <= slots)
         bebidas = [o["nome"] for c in r["compartimentos"] if c["slot"] == "bebida" for o in c["opcoes"]]
@@ -135,7 +140,7 @@ class TestMalformado(unittest.TestCase):
         self.assertTrue(any("solto" in a for a in r["avisos"]))
 
     def test_o_caso_real_do_f09_gera_aviso(self):
-        r = cardapio.buscar("2026-11-09", "cafe")[0]
+        r = _buscar_fixture("2026-11-09", "cafe")[0]
         self.assertTrue(any("Panificação" in a for a in r["avisos"]))
 
     def test_rotulo_desconhecido_e_celula_vazia_nao_quebram(self):
@@ -155,21 +160,21 @@ class TestMalformado(unittest.TestCase):
 
 class TestDecisoes(unittest.TestCase):
     def test_acompanhamentos_viram_arroz_e_feijao(self):
-        r = cardapio.buscar("2026-11-12", "jantar")[0]          # "Arroz branco e Integral Feijão preto"
+        r = _buscar_fixture("2026-11-12", "jantar")[0]          # "Arroz branco e Integral Feijão preto"
         slots = {c["slot"]: [o["nome"] for o in c["opcoes"]] for c in r["compartimentos"]}
         self.assertEqual(slots["arroz"], ["Arroz branco", "Arroz integral"])
         self.assertEqual(slots["feijao"], ["Feijão preto"])
 
     def test_opcao_e_barra_separam_alternativas(self):
-        r = cardapio.buscar("2026-11-10", "almoco")[0]          # "Mix de doces OPÇÃO: Frutas"
+        r = _buscar_fixture("2026-11-10", "almoco")[0]          # "Mix de doces OPÇÃO: Frutas"
         sobremesa = next(c for c in r["compartimentos"] if c["slot"] == "sobremesa")
         self.assertEqual([o["nome"] for o in sobremesa["opcoes"]], ["Mix de doces", "Frutas"])
-        r = cardapio.buscar("2026-11-11", "almoco")[0]          # "Manjericão / Limão"
+        r = _buscar_fixture("2026-11-11", "almoco")[0]          # "Manjericão / Limão"
         molho = next(c for c in r["compartimentos"] if c["slot"] == "molho")
         self.assertEqual(len(molho["opcoes"]), 2)
 
     def test_e_nao_separa(self):
-        r = cardapio.buscar("2026-11-11", "jantar")[0]          # "Alho e limão" é um molho só
+        r = _buscar_fixture("2026-11-11", "jantar")[0]          # "Alho e limão" é um molho só
         molho = next(c for c in r["compartimentos"] if c["slot"] == "molho")
         self.assertEqual([o["nome"] for o in molho["opcoes"]], ["Alho e limão"])
 
@@ -182,12 +187,31 @@ class TestCLI(unittest.TestCase):
         return codigo, out.getvalue(), err.getvalue()
 
     def test_comando_do_criterio_de_aceite(self):
-        codigo, out, _ = self._rodar("cardapio", "--estruturado", "--data", "2026-11-09", "--refeicao", "almoco")
+        import tempfile
+        from unittest import mock
+        from rumo_rag import config
+
+        refeicoes = [cardapio.estruturar_chunk(c) for c in F09]
+        with tempfile.TemporaryDirectory() as tmp:
+            arq = Path(tmp) / "cardapio_semanal.json"
+            arq.write_text(
+                json.dumps({"semana": {"inicio": "2026-11-09", "fim": "2026-11-15"}, "refeicoes": refeicoes}),
+                encoding="utf-8",
+            )
+            with mock.patch.object(config, "CARDAPIO_SEMANAL_JSON", arq):
+                codigo, out, _ = self._rodar("cardapio", "--estruturado", "--data", "2026-11-09", "--refeicao", "almoco")
         self.assertEqual(codigo, 0)
         cardapio.validar(json.loads(out))
 
     def test_data_sem_cardapio_recusa(self):
-        codigo, out, err = self._rodar("cardapio", "--estruturado", "--data", "2030-01-01", "--refeicao", "almoco")
+        import tempfile
+        from unittest import mock
+        from rumo_rag import config
+
+        with tempfile.TemporaryDirectory() as tmp:
+            arq = Path(tmp) / "ausente.json"
+            with mock.patch.object(config, "CARDAPIO_SEMANAL_JSON", arq):
+                codigo, out, err = self._rodar("cardapio", "--estruturado", "--data", "2030-01-01", "--refeicao", "almoco")
         self.assertEqual(codigo, 1)
         self.assertIn("Não encontrei", err)
         self.assertEqual(out, "")

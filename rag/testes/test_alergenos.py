@@ -18,10 +18,12 @@ from rumo_rag import alergenos, config  # noqa: E402
 from rumo_rag.coleta import cardapio  # noqa: E402
 
 IDS = {aid for aid, _ in cardapio.ALERGENICOS_OFICIAIS}
+FIXTURE_CHUNKS = Path(__file__).resolve().parent / "fixtures" / "cardapio_gama" / "chunks_f08_f09.jsonl"
+CHUNKS_CARDAPIO = cardapio.carregar_chunks_cardapio(FIXTURE_CHUNKS)
 
 
 def _alergenicos(data, refeicao, nome):
-    for r in cardapio.buscar(data, refeicao):
+    for r in cardapio.buscar(data, refeicao, chunks=CHUNKS_CARDAPIO):
         for comp in r["compartimentos"]:
             for o in comp["opcoes"]:
                 if o["nome"] == nome:
@@ -138,7 +140,7 @@ class TestCardapiosConferidos(unittest.TestCase):
 
     def test_nenhum_valor_inventado(self):
         etiqueta = re.compile(r"\[Alergênicos: ([^\]]*)\]")
-        for c in cardapio.carregar_chunks_cardapio():
+        for c in CHUNKS_CARDAPIO:
             for lista in etiqueta.findall(c["texto"]):
                 with self.subTest(chunk=c["chunk_id"]):
                     self.assertNotRegex(lista, r"\d")                   # nada de número (calorias etc.)
@@ -149,7 +151,7 @@ class TestCardapiosConferidos(unittest.TestCase):
                     self.assertTrue(set(o["alergenicos"]) <= IDS, o)
 
 
-@unittest.skipUnless((config.ORIGINAIS / "F09.pdf").exists(), "PDF original ausente (rode `ingerir`)")
+@unittest.skip("F09 foi removido do catalogo da RAG; cardápios são processados via coleta/cardapio.py.")
 class TestReextracao(unittest.TestCase):
     def test_reler_o_pdf_reproduz_o_texto_da_base(self):
         from rumo_rag import extracao
