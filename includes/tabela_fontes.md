@@ -35,13 +35,15 @@
 | F26 | [PPGEB (Mestrado em Engenharia Biomédica) — como aluno de graduação cursa disciplinas do mestrado](https://ppgeb.unb.br/aluno-de-graduacao/) | UnB · FCTE · PPGEB | pagina | 2026 | 2 |
 | F27 | [PPGEB (Mestrado em Engenharia Biomédica) — áreas de concentração e linhas de pesquisa](https://ppgeb.unb.br/areas-de-concentracao-e-linhas-de-pesquisa/) | UnB · FCTE · PPGEB | pagina | 2026 | 5 |
 | F28 | [PPGEB (Mestrado em Engenharia Biomédica) — edital de seleção do mestrado (ingresso em 2027/1)](https://ppgeb.unb.br/2026/10/08/edital-de-selecao-para-o-mestrado-em-engenharia-biomedica-1-2026/) | UnB · FCTE · PPGEB | edital | 2026-10-08 | 2 |
-| F29 | [Calendário universitário de graduação 2026.2 por atividades](https://saa.unb.br/wp-content/uploads/2026/06/2026_2_Calend_Ativ_Grad_25_06_2026.pdf) | UnB · Secretaria de Administração Acadêmica | calendario | 2026-06-25 | 13 |
+| F29 | [Calendário universitário de graduação 2026.2 por atividades](https://saa.unb.br/wp-content/uploads/2026/10/2026_2_Calend_Ativ_Grad_02_10_2026.pdf) | UnB · Secretaria de Administração Acadêmica | calendario | 2026-10-02 | 15 |
 | F30 | [Calendário de matrícula da graduação 2026.1](https://saa.unb.br/wp-content/uploads/2026/02/2026_1_Calend_Mat_Grad_27_02_2026.pdf) | UnB · Secretaria de Administração Acadêmica | calendario | 2026-02-27 | 2 |
 | F31 | [Resolução CEPE nº 93/2018 — trancamento de matrícula na graduação](https://deg.unb.br/wp-content/uploads/resolucao_cepe_93_2018_trancamentos.pdf) | UnB · CEPE | norma | 2018 | 27 |
 | F32 | [Tutorial de matrícula no SIGAA (DEG)](https://deg.unb.br/wp-content/uploads/tutorial_matricula_texto.pdf) | UnB · Decanato de Ensino de Graduação | manual | s.d. | 64 |
 | F33 | [FAQ — Matrícula no SIGAA](https://noticias.unb.br/images/Noticias/2021/01-Jan/FAQ__MATRICULA_NO_SIGAA__11-1-2021_4.pdf) | UnB | manual | 2021-01-06 | 7 |
 | F34 | [Manual do discente — aba Ensino do SIGAA](https://portalsig.unb.br/wp-content/uploads/2025/02/manual_discente_abaensino.pdf) | UnB · Portal SIG | manual | 2025-02 | 29 |
 | F36 | [Regimento Interno da Faculdade UnB Gama (FCTE)](http://fcte.unb.br/wp-content/uploads/2024/05/Regimento_Interno_FGA_-_aprovado.pdf) | UnB · FCTE | norma | 2024-05 | 84 |
+| F57 | [Feriados, pontos facultativos e período de aulas do 2026.2 — transcrição do calendário](https://saa.unb.br/wp-content/uploads/2026/10/2026_2_Calend_Ativ_Grad_02_10_2026.pdf) | UnB · Secretaria de Administração Acadêmica (transcrição do Grupo 04) | calendario | 2026-10-02 | 5 |
+| F58 | [Calendário especial de verão 2027 (2026.4) — turmas de férias](https://saa.unb.br/wp-content/uploads/2026/11/2026_4_Calend_Ativ_Grad_04_11_2026.pdf) | UnB · Secretaria de Administração Acadêmica | calendario | 2026-11-04 | 3 |
 
 ### Apoio {#eixo-apoio}
 

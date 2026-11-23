@@ -24,7 +24,7 @@
 {"id": "Q24", "eixo": "fluxo", "pergunta": "Quantas vagas a FCTE oferta para Engenharia de Software?", "docs_esperados": ["F14"]}
 {"id": "Q25", "eixo": "fluxo", "pergunta": "Aluno de graduação pode cursar disciplina do mestrado em Engenharia Biomédica?", "docs_esperados": ["F26"]}
 {"id": "Q26", "eixo": "fluxo", "pergunta": "Quais são as linhas de pesquisa do PPGEB?", "docs_esperados": ["F27", "F28"]}
-{"id": "Q27", "eixo": "fluxo", "pergunta": "Quando é o último dia de aulas do semestre 2026.2?", "docs_esperados": ["F29"]}
+{"id": "Q27", "eixo": "fluxo", "pergunta": "Quando é o último dia de aulas do semestre 2026.2?", "docs_esperados": ["F29", "F57"]}
 {"id": "Q28", "eixo": "fluxo", "pergunta": "Qual o período de matrícula do 2026.2?", "docs_esperados": ["F29"]}
 {"id": "Q29", "eixo": "fluxo", "pergunta": "Qual a diferença entre trancamento de disciplina e trancamento justificado?", "docs_esperados": ["F31"]}
 {"id": "Q30", "eixo": "fluxo", "pergunta": "Calouro pode alterar a própria matrícula no SIGAA?", "docs_esperados": ["F33", "F32"]}

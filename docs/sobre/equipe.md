@@ -23,7 +23,7 @@ sistema, para que nenhuma parte fique sem responsável.
 
 | Componente | Responsabilidade | Onde fica |
 |---|---|---|
-| Base de conhecimento | Catálogo das 54 fontes oficiais (53 indexadas em RAG + cardápio semanal estruturado), extração dos PDFs e estratégia de chunking | `rag/catalogo.yaml`, `rag/rumo_rag/extracao.py`, `chunking.py`, `cardapio.py` |
+| Base de conhecimento | Catálogo das 56 fontes oficiais (55 indexadas em RAG + cardápio semanal estruturado), extração dos PDFs e estratégia de chunking | `rag/catalogo.yaml`, `rag/rumo_rag/extracao.py`, `chunking.py`, `cardapio.py` |
 | Recuperação | Embeddings, banco vetorial e busca híbrida | `rag/rumo_rag/indice.py` |
 | Geração | Prompt, LLM (local ou OpenRouter), citação das fontes e recusa fora da base | `rag/rumo_rag/geracao.py` |
 | Avaliação | Perguntas-ouro, métricas de recuperação, fidelidade e alucinação | `rag/avaliacao/` |
@@ -62,3 +62,4 @@ Mentor do Challenge 2: Jefferson Viana Fonseca Abreu.
     | 09/11/2026 | 1.1 | Papéis e componentes definidos; tabela de contribuições por entrega | Maykon Soares |
     | 18/11/2026 | 1.2 | Catálogo passa a 37 fontes (Issue #55) | Grupo 04 |
     | 20/11/2026 | 1.3 | Preenchimento da Tabela 3 (Entregas 1 a 4) e atualização da base para 54 fontes (Issue #48) | Grupo 04 |
+    | 23/11/2026 | 1.4 | Catálogo passa a 56 fontes: calendário 2026.2 atualizado, feriados (F57) e verão 2027 (F58) (Issue #57) | Gabriella Oliveira |

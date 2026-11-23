@@ -26,4 +26,4 @@
 
 ## Fontes da base de conhecimento
 
-As 37 fontes, com URL e data, estão em [Base de conhecimento](../entrega-2/base-de-conhecimento.md) e em `rag/catalogo.yaml`.
+As 56 fontes, com URL e data, estão em [Base de conhecimento](../entrega-2/base-de-conhecimento.md) e em `rag/catalogo.yaml`.
