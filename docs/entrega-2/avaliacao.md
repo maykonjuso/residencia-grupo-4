@@ -177,7 +177,28 @@ Duas perguntas mudaram de posição:
 
 As datas da F57 aparecem também por extenso ("20 de novembro de 2026 (20/11/2026)"), porque as perguntas costumam usar o nome do mês e a busca por palavras não liga "20 de novembro" a "20/11". Na primeira e nas duas últimas linhas, o trecho certo e explícito chega ao modelo e o erro está na redação da resposta, que é do componente de geração. Os três casos ficam registrados para a próxima revisão do prompt.
 
-**Pendente:** medir as configurações densa e híbrida (BGE-M3) antes e depois da #57, como foi feito para a #55.
+**Medição com o BGE-M3.** Em 23/11/2026, `python -m rumo_rag avaliar` foi executado no Google Colab (GPU T4) na `main` (commit `a5d67be`, 54 fontes, 1.954 chunks) e na branch da #57 (commit `54dc916`, 56 fontes, 1.964 chunks), na mesma sessão. Cada índice foi montado com `indexar_chunks.py` a partir do próprio `chunks.jsonl`, e a reescrita de perguntas compostas foi desligada (`RUMO_DECISION_THRESHOLD=1.01`).
+
+| Configuração | Antes da #57 (Hit@1 / Hit@5 / MRR) | Depois da #57 (Hit@1 / Hit@5 / MRR) |
+|---|---|---|
+| BM25 | 0,906 / 1,000 / 0,944 | 0,906 / 1,000 / 0,936 |
+| Densa · `BAAI/bge-m3` | 0,938 / 0,969 / 0,953 | 0,938 / 0,969 / 0,953 |
+| **Híbrida** · `BAAI/bge-m3` | **0,969 / 1,000 / 0,979** | **0,969 / 1,000 / 0,975** |
+
+<p class="legenda">Tabela 10. Recuperação nas três configurações antes e depois da Issue #57.</p>
+
+A busca densa não mudou. Na híbrida, Hit@1 e Hit@5 ficaram iguais e o MRR caiu 0,004, o equivalente a uma pergunta descendo uma posição. Na busca híbrida, a Q31 traz o F32 nas cinco primeiras posições, sem o Calendário de Verão, e as perguntas de calendário recuperam a F57 em 1º lugar:
+
+| Pergunta | Documentos recuperados (híbrida, top 5) |
+|---|---|
+| *"Tem aula no dia 20 de novembro?"* | **F57**, F57, F57, F21, F29 |
+| *"O dia 28 de outubro é feriado na UnB?"* | **F57**, F57, F58, F58, F29 |
+| *"Quando é o último dia de aulas do semestre 2026.2?"* (Q27) | **F57**, F29, F57, F57, F29 |
+| *"Como faço a matrícula on-line no SIGAA?"* (Q31) | F32, F32, F32, F32, F32 |
+
+<p class="legenda">Tabela 11. Perguntas de calendário na busca híbrida (base da #57).</p>
+
+Os números "antes" são a primeira medição densa e híbrida da base de 54 fontes: a Tabela 7 ainda traz os preservados da Entrega 3. Na base atual, a híbrida tem Hit@1 **maior** que a densa (0,969 contra 0,938), o contrário do que acontecia na Entrega 3.
 
 **Limitações:**
 
@@ -200,4 +221,4 @@ As datas da F57 aparecem também por extenso ("20 de novembro de 2026 (20/11/202
     | 18/11/2026 | 1.2 | Alergênicos por prato: BM25 idêntico nas 32 perguntas-ouro e perguntas novas de alergênicos; medição híbrida pendente (Issue #55) | Grupo 04 |
     | 20/11/2026 | 1.3 | Reconciliação #53: F08/F09 substituídos por F56 em cardapio_semanal.json, Q08/Q09 atualizadas para F37, expansão para 53 fontes indexadas (1.954 chunks) e BM25 em 0,906 / 1,000 / 0,944 (denso/híbrido preservados da Entrega 3) | Grupo 04 |
     | 23/11/2026 | 1.4 | Medição densa e híbrida (BGE-M3, Colab) antes e depois da Issue #55: idênticas nas 32 perguntas-ouro (Tabela 6) e perguntas sobre celíaco na híbrida (Tabela 6b) | Gabriella Oliveira |
-    | 23/11/2026 | 1.5 | Calendário acadêmico: BM25 antes e depois da Issue #57, gabarito da Q27 aceita F57, perguntas de feriado com geração local; medição híbrida pendente | Gabriella Oliveira |
+    | 23/11/2026 | 1.5 | Calendário acadêmico: BM25 antes e depois da Issue #57, gabarito da Q27 aceita F57, perguntas de feriado com geração local; densa e híbrida (BGE-M3, Colab) antes e depois (Tabelas 10 e 11) | Gabriella Oliveira |
