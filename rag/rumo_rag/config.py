@@ -7,6 +7,7 @@ DADOS = RAIZ / "dados"
 ORIGINAIS = DADOS / "originais"     # arquivos baixados (PDF/HTML), fora do git
 TEXTO = DADOS / "texto"             # texto extraído e limpo, um .txt por documento
 CHUNKS = DADOS / "chunks.jsonl"     # chunks com metadados (também alimenta o BM25)
+CARDAPIO_SEMANAL_JSON = DADOS / "cardapio_semanal.json"  # cardápio semanal estruturado (fonte única do Agente RU)
 CATALOGO = RAIZ / "catalogo.yaml"
 AVALIACAO = RAIZ / "avaliacao"
 PERGUNTAS_AVALIACAO = AVALIACAO / "perguntas"
@@ -44,8 +45,10 @@ MODELO_OLLAMA = os.getenv("RUMO_OLLAMA_MODEL", "qwen2.5:7b")
 OLLAMA_URL = os.getenv("OLLAMA_URL", "http://localhost:11434")
 OPENAI_URL = os.getenv("RUMO_OPENAI_URL", "https://api.openai.com/v1")
 OPENAI_MODEL = os.getenv("RUMO_OPENAI_MODEL", "gpt-4o-mini")
+OPENAI_TIMEOUT = float(os.getenv("RUMO_OPENAI_TIMEOUT", "180"))
 
 # Reescrita de consultas compostas: Estágio 1 (LiquidAI/d1-omni-600M em GPU) + Estágio 2 (LLM Decomposer)
 MODELO_DECISAO = os.getenv("RUMO_DECISION_MODEL", "LiquidAI/d1-omni-600M")
 LIMIAR_COMPOSTA = float(os.getenv("RUMO_DECISION_THRESHOLD", "0.39"))
 MODELO_DECOMPOSITOR = os.getenv("RUMO_DECOMP_MODEL", MODELO_OLLAMA)
+USAR_D1 = os.getenv("RUMO_USAR_D1", "1") != "0"

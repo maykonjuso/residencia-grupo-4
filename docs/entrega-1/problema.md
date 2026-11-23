@@ -4,7 +4,7 @@
 
 A FCTE (antiga FGA, campus Gama da UnB) oferece cinco engenharias de graduação (Aeroespacial, Automotiva, Eletrônica, Energia e Software) e o mestrado em Engenharia Biomédica (PPGEB). O campus tem um Restaurante Universitário próprio, no prédio do MESP, que serve café da manhã, almoço e jantar de segunda a sexta.
 
-O ingresso nas engenharias é feito por **Área Básica de Ingresso (ABI)**: o estudante indica, em ordem de preferência, os cursos da ABI Engenharia ou o curso da área de Computação (Resolução FCTE nº 01/2025). Os primeiros semestres têm disciplinas comuns, e as grades se separam depois.
+Os cinco cursos de engenharia da FCTE compartilham disciplinas do núcleo básico nos semestres iniciais e seguem com grades específicas de cada habilitação nos períodos seguintes.
 
 ## O problema
 

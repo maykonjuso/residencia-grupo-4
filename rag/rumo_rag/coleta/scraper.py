@@ -240,8 +240,14 @@ def entrada_do_catalogo(catalogo_texto: str, semana: Semana, coletado_em: date) 
     return novo, bloco
 
 
-def gravar(pagina_html: bytes | None, pdf: bytes, semana: Semana, hoje: date) -> dict:
-    """Guarda o HTML bruto, o PDF em originais/ e registra a semana no catálogo. Devolve o que gravou."""
+def gravar(
+    pagina_html: bytes | None,
+    pdf: bytes,
+    semana: Semana,
+    hoje: date,
+    resultado: dict | None = None,
+) -> dict:
+    """Guarda o HTML bruto, o PDF em originais/, registra a semana no catálogo e gera o JSON semanal."""
     catalogo = config.CATALOGO.read_text(encoding="utf-8")
     doc_id, bloco = entrada_do_catalogo(catalogo, semana, hoje)
     gravados = {"doc_id": doc_id, "arquivos": []}
@@ -257,6 +263,11 @@ def gravar(pagina_html: bytes | None, pdf: bytes, semana: Semana, hoje: date) ->
             catalogo += "\n"
         gravar_atomico(config.CATALOGO, catalogo + bloco)
         gravados["arquivos"].append(config.CATALOGO)
+    if resultado is not None:
+        from . import cardapio
+
+        json_destino = cardapio.salvar_semana_json(resultado, doc_id=doc_id)
+        gravados["arquivos"].append(json_destino)
     gravados["novo"] = bloco is not None
     return gravados
 

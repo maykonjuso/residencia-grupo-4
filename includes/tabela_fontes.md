@@ -10,11 +10,11 @@
 | F05 | [Como acessar o RU (carteirinha digital, créditos e catraca)](https://ru.unb.br/como-acessar/) | UnB · Diretoria do RU | pagina | 2026 | 3 |
 | F06 | [Programa Auxílio Alimentação — regras de uso](https://ru.unb.br/programa-auxilio-alimentacao/) | UnB · Diretoria do RU | pagina | 2026 | 4 |
 | F07 | [Edital nº 24/2026 DDS/DAC — Auxílio Alimentação para estudantes em vulnerabilidade](https://dds.dac.unb.br/wp-content/uploads/2026/08/Edital_24_alimentacao.pdf) | UnB · DDS/DAC | edital | 2026 | 8 |
-| F08 | [Cardápio semanal do RU Gama — 02/11 a 08/11/2026](https://ru.unb.br/wp-content/uploads/2026/10/Gama-Semana-03-02-11-a-08-11-1.pdf) | UnB · Diretoria do RU | cardapio | 2026-11-02 | 15 |
-| F09 | [Cardápio semanal do RU Gama — 09/11 a 15/11/2026](https://ru.unb.br/wp-content/uploads/2026/11/Gama-Semana-04-09-11-a-15-11.pdf) | UnB · Diretoria do RU | cardapio | 2026-11-09 | 15 |
 | F10 | [Lei nº 14.914/2024 — Política Nacional de Assistência Estudantil (PNAES)](https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2024/lei/l14914.htm) | Presidência da República | norma | 2024-07-03 | 33 |
 | F13 | [Assistência estudantil na FCTE](https://fcte.unb.br/assistencia-estudantil/) | UnB · FCTE | pagina | 2026 | 5 |
 | F37 | [Serviço de alimentação do RU — cardápio, opções vegetarianas e identificação de alergênicos](https://ru.unb.br/servico-alimentacao/) | UnB · Diretoria do RU | pagina | s.d. | 4 |
+| F38 | [Programa Auxílio Alimentação (DDS/DAC)](https://dds.dac.unb.br/programa-auxilio-alimentacao/) | UnB · DDS/DAC | pagina | 2026 | 4 |
+| F56 | [Cardápio semanal do RU Gama — 16/11 a 22/11/2026](https://ru.unb.br/wp-content/uploads/2026/11/Gama-Semana-01-16-11-a-20-11-1.pdf) | UnB · Diretoria do RU | cardapio | 2026-11-16 | 0 |
 
 ### Eixo fluxo de disciplinas {#eixo-fluxo}
 
@@ -50,3 +50,20 @@
 | F11 | [Guia Alimentar para a População Brasileira (2ª ed.)](https://bvsms.saude.gov.br/bvs/publicacoes/guia_alimentar_populacao_brasileira_2ed.pdf) | Ministério da Saúde | guia | 2014 | 242 |
 | F12 | [Perguntas e respostas sobre rotulagem de alimentos alergênicos (5ª ed.)](https://bibliotecadigital.anvisa.gov.br/jspui/bitstream/anvisa/213/1/Rotulagem%20de%20alimentos%20alerg%c3%aanicos_5ed_2017.pdf) | ANVISA | guia | 2017 | 80 |
 | F35 | [Estatuto e Regimento Geral da UnB](https://unb.br/images/Documentos/Estatuto_e_Regimento_Geral_UnB.pdf) | UnB | norma | s.d. | 146 |
+| F39 | [Programa Auxílio Socioeconômico (DDS/DAC)](https://dds.dac.unb.br/auxilio-socioeconomico/) | UnB · DDS/DAC | pagina | 2026 | 6 |
+| F40 | [Programa Moradia Estudantil — Graduação Pecúnia (DDS/DAC)](https://dds.dac.unb.br/programa-moradia-graduacao-pecunia/) | UnB · DDS/DAC | pagina | 2026 | 2 |
+| F41 | [Programa Moradia Estudantil — Pós-Graduação Vaga (DDS/DAC)](https://dds.dac.unb.br/moradia-pos-graduacao/) | UnB · DDS/DAC | pagina | 2026 | 6 |
+| F42 | [Programa Auxílio Creche (DDS/DAC)](https://dds.dac.unb.br/auxilio-creche/) | UnB · DDS/DAC | pagina | 2026 | 4 |
+| F43 | [Programa Auxílio Emergencial (DDS/DAC)](https://dds.dac.unb.br/auxilio-emergencial/) | UnB · DDS/DAC | pagina | 2026 | 4 |
+| F44 | [Programa Auxílio para Apoio à Inclusão Digital (DDS/DAC)](https://dds.dac.unb.br/auxilio-para-apoio-a-inclusao-digital/) | UnB · DDS/DAC | pagina | 2026 | 2 |
+| F45 | [Programa de Acesso à Língua Estrangeira (DDS/DAC)](https://dds.dac.unb.br/programa-de-acesso-a-lingua-estrangeira/) | UnB · DDS/DAC | pagina | 2026 | 1 |
+| F46 | [Programa Vale Livro (DDS/DAC)](https://dds.dac.unb.br/programa-vale-livro/) | UnB · DDS/DAC | pagina | 2026 | 1 |
+| F47 | [Política da Assistência Estudantil na UnB (DDS/DAC)](https://dds.dac.unb.br/politica-da-assistencia-estudantil/) | UnB · DDS/DAC | pagina | 2026 | 1 |
+| F48 | [Resolução do CAD nº 0025/2023 — Política de Assistência Estudantil da UnB](https://dds.dac.unb.br/wp-content/uploads/2026/08/SEI_9731932_Resolucao_do_CAD_n._0025_2023.pdf) | UnB · Conselho de Administração | norma | 2023 | 32 |
+| F49 | [Guia do Estudante — Avaliação Socioeconômica UnB 2026](https://dds.dac.unb.br/wp-content/uploads/2026/08/Guia_do_Estudante___Avaliacao_Socioeconomica_UnB_2026_compressed.pdf) | UnB · DDS/DAC | guia | 2026-08 | 43 |
+| F50 | [Edital nº 23/2026 DDS/DAC — Avaliação Socioeconômica para Assistência Estudantil](https://dds.dac.unb.br/wp-content/uploads/2026/07/SEI_14554454_Edital_23.pdf) | UnB · DDS/DAC | edital | 2026-07 | 46 |
+| F51 | [Edital nº 25/2026 DDS/DAC — Renovação e Permanência nos Programas de Assistência Estudantil](https://dds.dac.unb.br/wp-content/uploads/2026/08/SEI_14620930_Edital_25.pdf) | UnB · DDS/DAC | edital | 2026-08 | 30 |
+| F52 | [Edital nº 26/2026 DDS/DAC — Programa Bolsa Permanência do MEC (PBPMEC)](https://dds.dac.unb.br/wp-content/uploads/2026/10/SEI_14999179_Edital_26.pdf) | UnB · DDS/DAC | edital | 2026-10 | 11 |
+| F53 | [Edital nº 27/2026 DDS/DAC — Auxílio Temporário de Apoio à Inclusão Digital](https://dds.dac.unb.br/wp-content/uploads/2026/10/SEI_14999286_Edital_27.pdf) | UnB · DDS/DAC | edital | 2026-10 | 14 |
+| F54 | [Edital nº 28/2026 DDS/DAC — Auxílio Socioeconômico, Moradia Pecúnia, Creche e Transporte](https://dds.dac.unb.br/wp-content/uploads/2026/10/SEI_14999346_Edital_28-1.pdf) | UnB · DDS/DAC | edital | 2026-10 | 20 |
+| F55 | [Edital nº 30/2026 DDS/DAC — Moradia Estudantil na Casa do Estudante Universitário (CEU)](https://dds.dac.unb.br/wp-content/uploads/2026/10/SEI_14999576_Edital_30.pdf) | UnB · DDS/DAC | edital | 2026-10 | 15 |

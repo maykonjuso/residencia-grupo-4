@@ -86,22 +86,39 @@ Antes da correção, perguntas como *"qual o preço da refeição no RU para est
 
 ## Alergênicos por prato (Issue #55)
 
-A Issue #55 acrescentou ao texto dos cardápios (F08 e F09) a etiqueta de alergênicos de cada opção de prato, lida dos ícones, e incluiu a F37, página "Serviço alimentação" do RU. Nas 32 perguntas-ouro, o BM25 ficou **idêntico**: mesmos documentos nas mesmas posições, com Hit@1 0,906, Hit@5 0,969 e MRR 0,932. Fora dos dois cardápios e da F37, nenhum chunk mudou.
+A Issue #55 acrescentou ao texto dos cardápios (então `F08` e `F09`, posteriormente substituídos pela coleta semanal estruturada `F56` em `rag/dados/cardapio_semanal.json`) a etiqueta de alergênicos de cada opção de prato, lida dos ícones, e incluiu a `F37`, página "Serviço alimentação" do RU. Na medição original da Entrega 3 sobre as 32 perguntas-ouro, o BM25 ficou **idêntico**: mesmos documentos nas mesmas posições, com Hit@1 0,906, Hit@5 0,969 e MRR 0,932. Fora dos dois cardápios e da `F37`, nenhum chunk havia mudado naquele momento.
 
-As perguntas novas não fazem parte do conjunto-ouro. Elas foram verificadas no BM25 e respondidas com o Qwen2.5-7B local (Ollama):
+As perguntas de prato abaixo (Tabela 5) registram a verificação histórica sobre `F09` em BM25 e Qwen2.5-7B local (Ollama); hoje o atendimento ao cardápio semanal e seus alergênicos ocorre via `cardapio_semanal.json` (`#54`):
 
 | Pergunta | 1º trecho recuperado | Resposta |
 |---|---|---|
-| *"A lasanha de frango do dia 10/11 tem glúten?"* | `F09-0006`, com *"Lasanha de frango [Alergênicos: Trigo/Glúten, Leite e derivados]"* | Sim, citando o cardápio. Antes da #55, recusava |
-| *"O strogonoff de frango do jantar de 11/11 tem leite?"* | `F09-0012`, com leite, glúten e cogumelo | Sim, citando o cardápio |
-| *"O mix de doces do almoço de 10/11 tem amendoim?"* | `F09-0006` | Sim, citando o cardápio |
+| *"A lasanha de frango do dia 10/11 tem glúten?"* | `F09-0006` (histórico), com *"Lasanha de frango [Alergênicos: Trigo/Glúten, Leite e derivados]"* | Sim, citando o cardápio. Antes da #55, recusava |
+| *"O strogonoff de frango do jantar de 11/11 tem leite?"* | `F09-0012` (histórico), com leite, glúten e cogumelo | Sim, citando o cardápio |
+| *"O mix de doces do almoço de 10/11 tem amendoim?"* | `F09-0006` (histórico) | Sim, citando o cardápio |
 | *"Quantas calorias tem o almoço do RU?"* | Nenhum trecho com calorias | Recusa |
 | *"O RU tem opção para quem tem doença celíaca?"* | Trechos do guia da ANVISA (F12), **sem a F37** | — |
 | *"O RU atende dieta para celíaco?"* | F37 em 3º lugar | Recusa |
 
-<p class="legenda">Tabela 5. Perguntas de alergênicos no modo BM25.</p>
+<p class="legenda">Tabela 5. Perguntas de alergênicos no modo BM25 (medição histórica da Issue #55 sobre F09/F37).</p>
 
-As duas últimas linhas mostram uma limitação de vocabulário. A F37 fala em *"dietas especializadas"*, e não em *celíaca*: a fonte só aparece quando a pergunta usa a palavra "dieta", e mesmo assim o modelo recusa, porque a página não fala de doença celíaca. A busca densa deve aproximar os termos pelo significado, mas isso só pode ser confirmado rodando `python -m rumo_rag avaliar` com o BGE-M3. A proposta é incluir perguntas de alergênicos no conjunto-ouro numa próxima revisão.
+As duas últimas linhas mostram uma limitação de vocabulário. A F37 fala em *"dietas especializadas"*, e não em *celíaca*: a fonte só aparece quando a pergunta usa a palavra "dieta", e mesmo assim o modelo recusa, porque a página não fala de doença celíaca. A busca densa deve aproximar os termos pelo significado, mas isso só pode ser confirmado rodando `python -m rumo_rag avaliar` com o BGE-M3.
+
+## Reconciliação do corpus e conjunto-ouro (Issue #53)
+
+Após a remoção dos cardápios semanais antigos (`F08` e `F09`), a separação do cardápio semanal vigente (`F56`) exclusivamente em `rag/dados/cardapio_semanal.json` (`#54`, sem indexação em `chunks.jsonl`) e a inclusão dos documentos de assistência estudantil da DDS/DAC (`F38`–`F55`), o catálogo passou de `37` fontes (`1.742` chunks) para **`54` fontes (`F01`–`F07`, `F10`–`F56`)**, sendo **`53` fontes permanentes indexadas (`1.954` chunks)** em `rag/dados/chunks.jsonl`.
+
+Para manter o conjunto-ouro alinhado a fontes permanentes, `Q08` e `Q09` (que apontavam para o removido `F09`) foram substituídas em `perguntas_ouro.jsonl` e `perguntas_benchmark.jsonl` por duas perguntas permanentes do eixo `ru` ancoradas na `F37` (identificação de alergênicos no RU e funcionamento do Restaurante Executivo).
+
+| Configuração | Corpus | Hit@1 | Hit@5 | MRR | Situação |
+|---|---|---|---|---|---|
+| BM25 (Entrega 3, referência anterior) | 37 fontes (`1.742` chunks) | 0,906 | 0,969 | 0,932 | Baseline histórico |
+| **BM25 (pós-#53, `avaliar --modo bm25`)** | **53 fontes (`1.954` chunks)** | **0,906** | **1,000** | **0,944** | **Sem regressão** (`Q01` `2→0`, `Q24` `fora→4`, `Q10` `0→1`, `Q31` `1`) |
+| Vetorial · `BAAI/bge-m3` | 37 fontes (Entrega 3) | 0,969 | 1,000 | 0,984 | Preservado em `resultado_recuperacao.json` (pendente reindexação ChromaDB) |
+| Híbrida · `BAAI/bge-m3` | 37 fontes (Entrega 3) | 0,938 | 1,000 | 0,969 | Preservado em `resultado_recuperacao.json` (pendente reindexação ChromaDB) |
+
+<p class="legenda">Tabela 6. Comparativo BM25 pós-reconciliação (#53) frente ao baseline da Entrega 3 e status das medições vetorial/híbrida.</p>
+
+Os modos `denso` e `hibrido` permanecem preservados com a medição da Entrega 3 em `rag/avaliacao/resultados/resultado_recuperacao.json` porque o índice local `rag/dados/chroma_bge-m3` (ignorado no Git) não estava construído neste ambiente; sua reavaliação sobre os `1.954` chunks requer executar `python indexar_chunks.py` seguido de `python -m rumo_rag avaliar --modo todos`.
 
 ## Limitações da avaliação
 
@@ -117,3 +134,4 @@ As duas últimas linhas mostram uma limitação de vocabulário. A F37 fala em *
     | 09/11/2026 | 1.0 | Avaliação inicial da recuperação (32 perguntas-ouro) | Grupo 04 |
     | 16/11/2026 | 1.1 | Medição BM25 × híbrido e normalização léxica para preços do RU (Issue #51) | Grupo 04 |
     | 18/11/2026 | 1.2 | Alergênicos por prato: BM25 idêntico nas 32 perguntas-ouro e perguntas novas de alergênicos; medição híbrida pendente (Issue #55) | Grupo 04 |
+    | 20/11/2026 | 1.3 | Reconciliação #53: F08/F09 substituídos por F56 em cardapio_semanal.json, Q08/Q09 atualizadas para F37, expansão para 53 fontes indexadas (1.954 chunks) e BM25 em 0,906 / 1,000 / 0,944 (denso/híbrido preservados da Entrega 3) | Grupo 04 |
