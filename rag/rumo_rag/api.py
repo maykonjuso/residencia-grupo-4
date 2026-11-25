@@ -22,7 +22,7 @@ from fastapi import FastAPI, Header, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, ConfigDict, Field
 
-from . import config, indice
+from . import config, indice, privacidade
 from .agentes import AgenteFluxo, AgenteRU, Orquestrador, ferramentas
 from .coleta import cardapio
 
@@ -172,8 +172,21 @@ def raiz():
         "servico": "RUmo · Grupo 04",
         "status": "ok",
         "multiagente": True,
-        "rotas": ["/saude", "/perguntar", "/calendario", "/cardapio", "/cardapio/atualizar"],
+        "rotas": [
+            "/saude",
+            "/perguntar",
+            "/calendario",
+            "/cardapio",
+            "/cardapio/atualizar",
+            "/privacidade/documento",
+        ],
     }
+
+
+@app.get("/privacidade/documento")
+def obter_politica_privacidade_documento():
+    """Contrato oficial de privacidade e aviso pré-upload para documentos pessoais (#59)."""
+    return privacidade.politica_privacidade_documento()
 
 
 @app.get("/calendario")
@@ -253,13 +266,14 @@ def perguntar(
         pergunta += f" (curso: {entrada.contexto.curso})"
 
     orq = _criar_orquestrador()
+    perfil_sanitizado = privacidade.sanitizar_perfil_contexto(entrada.contexto.perfil)
     resultado, backend = _executar_com_fallback(
         orq,
         pergunta=pergunta,
         max_trechos=entrada.max_trechos,
         backend=config.BACKEND,
         data=entrada.contexto.data.isoformat() if entrada.contexto.data else None,
-        perfil=entrada.contexto.perfil,
+        perfil=perfil_sanitizado,
         curso=entrada.contexto.curso,
         curriculo_id=entrada.contexto.curriculo_id,
         vigencia=entrada.contexto.vigencia,

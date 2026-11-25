@@ -21,7 +21,7 @@ e para o teste automático que acusa quando ela deixa de valer.
 | RN-02 | Toda afirmação da resposta cita o trecho usado, e cada citação leva a documento, página e URL | Resposta sem fonte não é verificável pelo estudante | RF03 |
 | RN-03 | Quando os trechos não trazem a resposta, o RUmo diz "Não encontrei essa informação nas fontes da base." e não inventa valor, data, código nem pré-requisito | Inventar o preço de uma refeição ou um pré-requisito causa dano real a quem perguntou | RF04 |
 | RN-04 | Por padrão, nenhuma pergunta sai da máquina: LLM e embeddings rodam localmente, e API externa só é usada se alguém configurar isso de propósito | Privacidade de quem pergunta e independência de serviço pago | RNF02 |
-| RN-05 | O RUmo não coleta dado pessoal: não pede login, não acessa o SIGAA e não associa pergunta a pessoa | LGPD e escopo do produto | RNF06 |
+| RN-05 | O RUmo não coleta dado pessoal: não pede login, não acessa o SIGAA e não associa pergunta a pessoa; documentos pessoais enviados pelo usuário no fluxo de "Minha Semana" (`#59`) têm política própria ([Privacidade e LGPD](../entrega-5/privacidade-documentos.md)) — retenção estrita a 4 campos (`codigo`, `turma`, `horario`, `sala`), descarte imediato do arquivo, armazenamento apenas no navegador e bloqueio de envio a LLM externo | LGPD e escopo do produto | RNF06 |
 
 <p class="legenda">Tabela 1. Regras de negócio do RUmo e o requisito de onde cada uma vem (<a href="../escopo/">Escopo e requisitos</a>).</p>
 
@@ -103,3 +103,4 @@ no mesmo PR. Regra que muda só no código volta a ser regra não escrita.
     | Data | Versão | Descrição | Autor |
     | :---: | :---: | --- | --- |
     | 11/11/2026 | 1.0 | Formaliza RN-01 a RN-05, liga cada regra ao código e aos testes, registra as lacunas e a candidata RN-06 (issue #9) | Kyara Esteves |
+    | 25/11/2026 | 1.1 | Vincula RN-05 à política bloqueante de tratamento efêmero de documentos pessoais (#59 / Entrega 5) | Grupo 04 |

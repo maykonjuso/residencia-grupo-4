@@ -13,7 +13,7 @@ Probabilidade (P) e impacto (I) em escala de 1 a 3. Exposição = P × I.
 | R05 | **Pré-requisito errado** leva o estudante a planejar mal o semestre | 2 | 3 | 6 | Aviso fixo: a fonte final é o SIGAA; mostrar a fonte de cada pré-requisito | Aviso nas transcrições |
 | R06 | **Integração com o Grupo 09 atrasa as entregas** (alerta do mentor) | 2 | 3 | 6 | Sistemas independentes; contrato simples; integração só na Semana 6 | Contrato proposto; nenhuma dependência criada |
 | R07 | **Hardware limitado** (GPU de 8 GB) | 2 | 2 | 4 | Quantização em 4 bits; opção de Ollama ou API externa | 7B em 4 bits funcionando |
-| R08 | **Dados pessoais / LGPD** | 1 | 3 | 3 | Sem login; sem acesso ao SIGAA; perguntas não ficam associadas a pessoas | Atendido |
+| R08 | **Dados pessoais / LGPD** | 1 | 3 | 3 | Sem login; sem acesso ao SIGAA; perguntas não ficam associadas a pessoas; para documentos pessoais em `#59`, descarte em RAM sem disco/banco, retenção só de 4 campos no navegador, aviso pré-upload e bloqueio de LLM externo ([detalhes](../entrega-5/privacidade-documentos.md)) | Atendido (núcleo `#59` preparado na Entrega 5) |
 | R09 | **Viés de cobertura:** cursos com documentos melhores recebem respostas melhores | 2 | 2 | 4 | Medir acerto por curso; completar fontes (Energia e Software têm grade só em imagem) | A medir na Semana 3 |
 | R10 | **Direitos de uso das fontes** | 1 | 2 | 2 | Só documentos públicos de órgãos oficiais, sempre citados | Atendido |
 
@@ -32,3 +32,4 @@ Probabilidade (P) e impacto (I) em escala de 1 a 3. Exposição = P × I.
     | :---: | :---: | --- | --- |
     | 06/11/2026 | 1.0 | Riscos e limitações da Entrega 1 | Maykon Soares |
     | 18/11/2026 | 1.1 | Limitação dos alergênicos atualizada: ícones lidos por prato (Issue #55) | Grupo 04 |
+    | 25/11/2026 | 1.2 | Atualiza mitigação de R08 com a política LGPD para documentos pessoais (#59 / Entrega 5) | Grupo 04 |

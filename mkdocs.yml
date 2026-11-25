@@ -8,7 +8,7 @@ repo_name: maykonjuso/residencia-grupo-4
 edit_uri: ""
 
 # Versão e data da GitPage. Atualizar a cada entrega ou mudança relevante.
-copyright: "Residência em IA · UnB/FCTE · Turma 1 · Challenge 2 · Grupo 04 | Entregas 1, 2, 3 e 4 | Versão 4.0 · 20/11/2026"
+copyright: "Residência em IA · UnB/FCTE · Turma 1 · Challenge 2 · Grupo 04 | Entregas 1, 2, 3, 4 e 5 | Versão 5.0 · 25/11/2026"
 
 theme:
   name: material
@@ -154,6 +154,12 @@ nav:
       - Responsabilidades: entrega-4/responsabilidades.md
       - Fluxo de interação: entrega-4/fluxo-de-interacao.md
       - Demonstração: entrega-4/demonstracao.md
+  - Entrega 5:
+      - entrega-5/index.md
+      - Modalidades suportadas: entrega-5/modalidades.md
+      - Privacidade e LGPD: entrega-5/privacidade-documentos.md
+      - Limitações e casos de falha: entrega-5/limitacoes-e-falhas.md
+      - Demonstração: entrega-5/demonstracao.md
   - Sobre:
       - sobre/index.md
       - Processo de trabalho: sobre/processo.md
