@@ -19,21 +19,42 @@ def test_extrai_nos_e_relacoes_da_transcricao_f16():
     assert any(
         aresta.origem == "FGA0312"
         and aresta.destino == "FGA0314"
-        and aresta.incerta
+        and not aresta.incerta
+        and aresta.alternativas == ("FGA0313",)
         for aresta in grafo.arestas
     )
+    assert grafo.grafo.has_edge("FGA0312", "FGA0314")
+    assert grafo.grafo.has_edge("FGA0314", "FGA0317")
     assert any(aresta.relacao == "correquisito" for aresta in grafo.arestas)
 
 
-def test_reprovar_em_requisitos_retorna_dependentes_transitivos_confirmados():
-    consulta = carregar_grafo().consultar(
+def test_reprovar_em_requisitos_nao_bloqueia_testes_por_conta_do_ou_e_mds_bloqueia_cadeia():
+    consulta_req = carregar_grafo().consultar(
         "Se eu reprovar em Requisitos de Software, quais disciplinas travam?"
     )
 
-    assert consulta is not None
-    assert "Testes de Software (FGA0314)" in consulta.conteudo
-    assert "Gerência de Configuração e Evolução de Software (GCES) (FGA0317)" in consulta.conteudo
-    assert "[1]" in consulta.conteudo
+    assert consulta_req is not None
+    assert "não encontrei dependentes alcançáveis por bloqueio direto" in consulta_req.conteudo.lower()
+    assert "aceita pré-requisito alternativo" in consulta_req.conteudo.lower()
+    assert "FGA0312" in consulta_req.conteudo
+    assert "FGA0314" in consulta_req.conteudo
+    assert "[1]" in consulta_req.conteudo
+
+    # Consulta curta usando apelido dinâmico ("Requisitos") sem escrever "Requisitos de Software"
+    consulta_curta = carregar_grafo().consultar(
+        "Se eu reprovar em Requisitos, o que trava?"
+    )
+    assert consulta_curta is not None
+    assert "FGA0313" in consulta_curta.conteudo
+
+    # Reprovar em MDS (FGA0312) trava Requisitos (FGA0313), ambas as opções do OU de Testes (FGA0314), e GCES (FGA0317)
+    consulta_mds = carregar_grafo().consultar(
+        "Se eu reprovar em MDS, o que trava?"
+    )
+    assert consulta_mds is not None
+    assert "Requisitos de Software (FGA0313)" in consulta_mds.conteudo
+    assert "Testes de Software (FGA0314)" in consulta_mds.conteudo
+    assert "Gerência de Configuração e Evolução de Software (GCES) (FGA0317)" in consulta_mds.conteudo
 
 
 def test_gargalo_e_calculado_pelo_grau_de_saida_do_grafo():
@@ -43,28 +64,60 @@ def test_gargalo_e_calculado_pelo_grau_de_saida_do_grafo():
 
     assert consulta is not None
     assert "CIC0004" in consulta.conteudo
+    assert "FGA0312" in consulta.conteudo
     assert "FGA0158" in consulta.conteudo
     assert "FGA0146" in consulta.conteudo
+    assert "FGA0313" in consulta.conteudo
+    assert "FGA0314" in consulta.conteudo
     assert "setas cheias" in consulta.conteudo
 
 
-def test_pre_requisito_tracejado_permanece_incerto_e_pede_confirmacao_sigaa():
-    consulta = carregar_grafo().consultar("Quais os pré-requisitos de Testes de Software?")
+def test_prerequisito_alternativo_ou_de_testes_de_software():
+    grafo = carregar_grafo()
+    confirmados, incertos = grafo.prerequisitos("FGA0314")
+    assert incertos == []
+    assert len(confirmados) == 1
+    assert confirmados[0].origem == "FGA0312"
+    assert confirmados[0].alternativas == ("FGA0313",)
 
+    consulta = grafo.consultar("Quais os pré-requisitos de Testes de Software?")
     assert consulta is not None
-    assert "Requisitos de Software (FGA0313)" in consulta.conteudo
-    assert "Métodos de Desenvolvimento de Software (MDS) (FGA0312)" in consulta.conteudo
+    assert "Métodos de Desenvolvimento de Software (MDS) (FGA0312) ou Requisitos de Software (FGA0313)" in consulta.conteudo
+
+
+def test_passar_em_requisitos_ou_mds_abre_testes_de_software():
+    consulta_req = carregar_grafo().consultar("Passando em Requisitos de Software, o que abre?")
+    assert consulta_req is not None
+    assert "ficam liberadas pelo grafo: Testes de Software (FGA0314)" in consulta_req.conteudo
+
+    consulta_mds = carregar_grafo().consultar("Passando em MDS, o que abre?")
+    assert consulta_mds is not None
+    assert "Requisitos de Software (FGA0313)" in consulta_mds.conteudo
+    assert "Testes de Software (FGA0314)" in consulta_mds.conteudo
+
+
+def test_aresta_tracejada_permanece_incerta_e_pede_confirmacao_sigaa():
+    md_tracejada = """# Fluxograma — Teste
+## 1º semestre de Engenharia de Software (8 créditos)
+- FGA0312 Métodos de Desenvolvimento de Software (MDS) — 1-1-2-4
+- FGA0313 Requisitos de Software — 1-1-2-4
+## Pré-requisitos
+- Para cursar Requisitos de Software (FGA0313), é preciso ter cursado antes: Métodos de Desenvolvimento de Software (MDS) (FGA0312) (seta tracejada).
+"""
+    grafo = GrafoCurricular.de_markdown(md_tracejada)
+    confirmados, incertos = grafo.prerequisitos("FGA0313")
+    assert confirmados == []
+    assert len(incertos) == 1 and incertos[0].origem == "FGA0312"
+
+    consulta = grafo.consultar("Quais os pré-requisitos de Requisitos de Software?")
+    assert consulta is not None
     assert "ligação tracejada" in consulta.conteudo
     assert "confirme no SIGAA" in consulta.conteudo
 
-
-def test_passar_em_requisitos_sinaliza_testes_como_relacao_incerta():
-    consulta = carregar_grafo().consultar("Passando em Requisitos de Software, o que abre?")
-
-    assert consulta is not None
-    assert "Testes de Software (FGA0314)" in consulta.conteudo
-    assert "ligação é tracejada" in consulta.conteudo
-    assert "confirme no SIGAA" in consulta.conteudo
+    abrem = grafo.consultar("Passei em FGA0312; o que abre?")
+    assert abrem is not None
+    assert "ligação é tracejada" in abrem.conteudo
+    assert "confirme no SIGAA" in abrem.conteudo
 
 
 def test_passar_em_tres_disciplinas_calcula_o_conjunto_que_abre():
@@ -76,6 +129,27 @@ def test_passar_em_tres_disciplinas_calcula_o_conjunto_que_abre():
     assert "Cálculo 2 (MAT0026)" in consulta.conteudo
     assert "Orientação a Objetos (FGA0158)" in consulta.conteudo
     assert "Estruturas de Dados 1 (FGA0146)" in consulta.conteudo
+
+
+def test_siglas_derivadas_dinamicamente_e_ausencia_de_falsos_positivos():
+    grafo = carregar_grafo()
+
+    # Siglas derivadas dinamicamente das disciplinas existentes em F16
+    assert [d.codigo for d in grafo.buscar_disciplinas("Quais os pré-requisitos de MDS?")] == ["FGA0312"]
+    assert [d.codigo for d in grafo.buscar_disciplinas("Se eu reprovar em FSO, o que trava?")] == ["FGA0170"]
+    assert [d.codigo for d in grafo.buscar_disciplinas("Quais os pré-requisitos de SBD1?")] == ["FGA0137"]
+    assert [d.codigo for d in grafo.buscar_disciplinas("Se eu reprovar em GCES, o que trava?")] == ["FGA0317"]
+    assert [d.codigo for d in grafo.buscar_disciplinas("Se eu reprovar em OO, o que trava?")] == ["FGA0158"]
+    cods_misto = {
+        d.codigo
+        for d in grafo.buscar_disciplinas("Passando em Cálculo 1, APC e FAC, o que abre?")
+    }
+    assert cods_misto == {"MAT0025", "CIC0004", "FGA0142"}
+
+    # Não deve confundir "pré-requisitos" com "Requisitos" nem aceitar 2 letras minúsculas ("oo")
+    assert [d.codigo for d in grafo.buscar_disciplinas("Quais os pré-requisitos de Cálculo 2?")] == ["MAT0026"]
+    assert grafo.buscar_disciplinas("Se eu reprovar em oo minúsculo ou pré-requisitos?") == []
+    assert grafo.buscar_disciplinas("Qual o desenvolvimento do curso e quais testes existem?") == []
 
 
 def test_caminho_critico_e_a_cadeia_mais_longa_de_setas_cheias():
@@ -91,7 +165,7 @@ def test_agente_fluxo_responde_consulta_do_grafo_sem_chamar_llm_ou_indice():
     msg_det = Mensagem(
         remetente="Orquestrador",
         destinatario="Agente Fluxo",
-        conteudo="Se eu reprovar em Requisitos de Software, quais disciplinas travam?",
+        conteudo="Se eu reprovar em MDS, quais disciplinas travam?",
         contexto={"backend": "extrativo"},
     )
 
@@ -102,7 +176,9 @@ def test_agente_fluxo_responde_consulta_do_grafo_sem_chamar_llm_ou_indice():
 
     gerar.assert_not_called()
     buscar.assert_not_called()
+    assert "FGA0313" in resp_det.conteudo
     assert "FGA0314" in resp_det.conteudo
+    assert "FGA0317" in resp_det.conteudo
     assert resp_det.fontes[0]["doc_id"] == "F16"
     assert msg_det.contexto["trechos_recuperados"][0]["doc_id"] == "F16"
     assert msg_det.contexto["tempo_geracao_s"] == 0.0
@@ -111,12 +187,12 @@ def test_agente_fluxo_responde_consulta_do_grafo_sem_chamar_llm_ou_indice():
     msg_llm = Mensagem(
         remetente="Orquestrador",
         destinatario="Agente Fluxo",
-        conteudo="Se eu reprovar em Requisitos de Software, quais disciplinas travam?",
+        conteudo="Se eu reprovar em MDS, quais disciplinas travam?",
         contexto={"backend": "ollama"},
     )
     with patch(
         "rumo_rag.geracao.gerar_com_instrucoes",
-        return_value="Reprovando em Requisitos de Software, travam FGA0314 e FGA0317. [1]",
+        return_value="Reprovando em MDS (FGA0312), travam FGA0313, FGA0314 e FGA0317. [1]",
     ) as gerar_llm, patch("rumo_rag.agentes.agente_fluxo.indice.buscar") as buscar_llm:
         resp_llm = AgenteFluxo().executar(msg_llm)
 
@@ -132,7 +208,10 @@ def test_cli_padrao_encaminha_perguntas_de_impacto_ao_grafo():
         "rumo_rag.__main__.indice.buscar_com_subperguntas", side_effect=AssertionError
     ), patch("rumo_rag.__main__.geracao.gerar", side_effect=AssertionError), patch(
         "rumo_rag.geracao.gerar_com_instrucoes",
-        return_value="Travam Testes de Software (FGA0314) e GCES (FGA0317). [1]",
+        return_value=(
+            "Por pré-requisito alternativo (OU) em FGA0314, reprovar apenas em Requisitos "
+            "não bloqueia Testes de Software se MDS já tiver sido cursada. [1]"
+        ),
     ):
         resultado = cli.responder(
             "Se eu reprovar em Requisitos de Software, quais disciplinas travam?",
@@ -140,8 +219,10 @@ def test_cli_padrao_encaminha_perguntas_de_impacto_ao_grafo():
         )
 
     assert resultado["backend"] == "grafo"
+    assert resultado["redigido_por_llm"] is True
+    assert resultado["valores_sem_fonte"] == []
+    assert resultado["sem_citacao"] is False
     assert "FGA0314" in resultado["resposta"]
-    assert "FGA0317" in resultado["resposta"]
     assert resultado["fontes_citadas"][0]["doc_id"] == "F16"
 
 
@@ -160,6 +241,8 @@ def test_grafo_usa_networkx_digraph_e_valida_schema_json():
     assert nx.is_directed_acyclic_graph(grafo.grafo)
     assert grafo.grafo.number_of_nodes() == 47
     assert grafo.caminho_critico() == list(nx.dag_longest_path(grafo.grafo))
+    assert len(grafo.caminho_critico()) == 5
+    assert set(grafo.caminho_critico()) == {"CIC0004", "FGA0158", "FGA0312", "FGA0314", "FGA0317"}
 
     estruturado = grafo.consultar_estruturado("Qual disciplina destrava mais matérias?")
     assert estruturado is not None

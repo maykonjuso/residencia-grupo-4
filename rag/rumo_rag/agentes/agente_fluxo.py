@@ -88,7 +88,7 @@ class AgenteFluxo(Agente):
         return geracao.montar_mensagens(pergunta, trechos, instrucoes=self.instrucoes)
 
     def responder_grafo(self, mensagem: Mensagem) -> Resposta | None:
-        """Usa ferramentas locais (agenda ou grafo curricular) sem recorrer ao LLM."""
+        """Executa ferramenta local (agenda ou grafo curricular) e delega a redação (com guardião) ao backend ativo."""
         if not pergunta_fora_do_dominio(mensagem.conteudo, self.eixo):
             from . import ferramentas
 

@@ -371,7 +371,11 @@ def _decompor_fallback(pergunta: str) -> list[str]:
         p_limpa = p.strip(" ?.")
         if len(p_limpa.split()) < 3:
             continue
-        if idx == 0 and not eh_pergunta.search(p.strip()) and ("estudante" in p.lower() or "graduação" in p.lower()):
+        if idx == 0 and not eh_pergunta.search(p.strip()) and re.search(
+            r"\b(?:estudante|gradua[cç][aã]o|passei|passando|aprovad[oa]s?|reprovei|reprovar|cursei|fiz|se\s+eu)\b",
+            p,
+            re.I,
+        ):
             contexto = p_limpa
         else:
             perguntas.append(p_limpa)

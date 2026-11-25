@@ -30,10 +30,11 @@ _TERMOS_RU = re.compile(
 _TERMOS_FLUXO = re.compile(
     r"\b(?:"
     r"fluxo|fluxograma|disciplina|disciplinas|mat[eé]ria|mat[eé]rias|"
-    r"pr[eé]-?requisitos?|requisito|cr[eé]ditos?|semestre|semestres|grade|matriz|curricular|"
+    r"pr[eé]-?requisitos?|co-?requisitos?|requisito|cr[eé]ditos?|semestre|semestres|grade|matriz|curricular|"
     r"ppc|curso|cursos|engenharia|software|aeroespacial|automotiva|eletr[oô]nica|energia|"
     r"biom[eé]dica|ppgeb|mestrado|matr[ií]cula|trancamento|sigaa|ira|est[aá]gio|tcc|"
     r"optativa|obrigat[oó]ria|abi|c[aá]lculo|f[ií]sica|testes\s+de\s+software|termodin[aâ]mica|"
+    r"reprov\w*|trava\w*|destrava\w*|gargalo|caminho\s+cr[ií]tico|"
     r"minha\s+agenda|minhas?\s+aulas?|agenda\s+de\s+aulas?|sala\s+d[ae]\s+aula|"
     r"calend[aá]rio(?:\s+acad[eê]mico)?|feriados?|pontos?\s+facultativos?|recesso|"
     r"semana\s+universit[aá]ria|semana\s+de\s+provas|per[ií]odo\s+letivo|"

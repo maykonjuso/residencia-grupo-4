@@ -83,6 +83,7 @@ def responder(
     resposta_grafo = agentes.AgenteFluxo(k=k, modo=config.BUSCA).responder_grafo(mensagem_grafo)
     if resposta_grafo is not None:
         trechos = mensagem_grafo.contexto.get("trechos_recuperados", [])
+        trace_ferr = mensagem_grafo.contexto.get("ferramenta_chamada") or {}
         return {
             "pergunta": pergunta,
             "subperguntas": [],
@@ -90,8 +91,8 @@ def responder(
             "fontes_citadas": [
                 {"n": i, **fonte} for i, fonte in enumerate(resposta_grafo.fontes, start=1)
             ],
-            "valores_sem_fonte": [],
-            "sem_citacao": False,
+            "valores_sem_fonte": geracao.valores_sem_fonte(resposta_grafo.conteudo, trechos),
+            "sem_citacao": geracao.resposta_sem_citacao(resposta_grafo.conteudo, trechos),
             "trechos_recuperados": [
                 {
                     chave: trecho.get(chave)
@@ -106,6 +107,8 @@ def responder(
             "tempo_busca_s": mensagem_grafo.contexto.get("tempo_busca_s", 0.0),
             "tempo_geracao_s": mensagem_grafo.contexto.get("tempo_geracao_s", 0.0),
             "backend": "grafo",
+            "redigido_por_llm": trace_ferr.get("redigido_por_llm", False),
+            "ferramenta_chamada": trace_ferr,
         }
     if sem_rag:
         t0 = time.time()
