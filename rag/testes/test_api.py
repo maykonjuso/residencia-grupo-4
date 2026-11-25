@@ -191,3 +191,70 @@ def test_entrypoint_vercel_expoe_app(client):
     r = vc_client.get("/saude")
     assert r.status_code == 200
     assert r.json()["multiagente"] is True
+
+
+def test_calendario_sem_d1_roteia_somente_fluxo_com_orgao_preenchido(client):
+    r = client.post(
+        "/perguntar?trace=true",
+        json={"pergunta": "Tem aula no dia 20 de novembro?", "contexto": {"campus": "gama"}},
+    )
+    assert r.status_code == 200
+    dados = r.json()
+    assert set(dados.keys()) == CHAVES_V1 | {"trace"}
+    assert dados["encontrou_base"] is True
+    assert len(dados["fontes"]) == 1
+    assert dados["fontes"][0]["doc_id"] == "F57"
+    assert dados["fontes"][0]["orgao"]
+    etapa_roteamento = next(e for e in dados["trace"]["etapas"] if e["etapa"] == "roteamento")
+    assert len(etapa_roteamento["rotas"]) == 1
+    assert etapa_roteamento["rotas"][0]["agentes"] == ["fluxo"]
+
+
+def test_ru_com_hoje_em_feriado_nao_vaza_para_agente_fluxo(client):
+    r = client.post(
+        "/perguntar?trace=true",
+        json={
+            "pergunta": "O que tem no almoço hoje?",
+            "contexto": {"campus": "gama", "data": "2026-11-20"},
+        },
+    )
+    assert r.status_code == 200
+    dados = r.json()
+    assert set(dados.keys()) == CHAVES_V1 | {"trace"}
+    assert dados["encontrou_base"] is True
+    assert all(f["doc_id"] == "F56" for f in dados["fontes"])
+    etapa_roteamento = next(e for e in dados["trace"]["etapas"] if e["etapa"] == "roteamento")
+    assert len(etapa_roteamento["rotas"]) == 1
+    assert etapa_roteamento["rotas"][0]["agentes"] == ["ru"]
+
+
+def test_contrato_v1_validacao_pydantic_estrita(client):
+    from pydantic import BaseModel, ConfigDict
+
+    class FonteV1Estrita(BaseModel):
+        model_config = ConfigDict(extra="forbid", strict=True)
+        n: int
+        doc_id: str
+        titulo: str
+        orgao: str
+        pagina: int
+        url: str
+
+    class RespostaV1Estrita(BaseModel):
+        model_config = ConfigDict(extra="forbid", strict=True)
+        grupo: str
+        resposta: str
+        encontrou_base: bool
+        fontes: list[FonteV1Estrita]
+        valores_sem_fonte: list[str]
+        backend: str
+        tempo_ms: int
+
+    r = client.post(
+        "/perguntar",
+        json={"pergunta": "Quais os pré-requisitos de Testes de Software?", "contexto": {"campus": "gama"}},
+    )
+    assert r.status_code == 200
+    modelo = RespostaV1Estrita.model_validate(r.json())
+    assert modelo.grupo == "grupo04"
+    assert modelo.encontrou_base is True

@@ -50,7 +50,7 @@ async def _loop_sincronizacao_cardapio() -> None:
 @asynccontextmanager
 async def lifespan(_app: FastAPI):
     task: asyncio.Task | None = None
-    if config.CARDAPIO_AUTO_FETCH:
+    if config.CARDAPIO_AUTO_FETCH and not os.getenv("VERCEL"):
         task = asyncio.create_task(_loop_sincronizacao_cardapio())
     try:
         yield

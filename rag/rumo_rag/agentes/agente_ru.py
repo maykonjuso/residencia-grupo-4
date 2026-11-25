@@ -35,18 +35,32 @@ _TERMOS_FLUXO = re.compile(
     r"biom[eé]dica|ppgeb|mestrado|matr[ií]cula|trancamento|sigaa|ira|est[aá]gio|tcc|"
     r"optativa|obrigat[oó]ria|abi|c[aá]lculo|f[ií]sica|testes\s+de\s+software|termodin[aâ]mica|"
     r"minha\s+agenda|minhas?\s+aulas?|agenda\s+de\s+aulas?|sala\s+d[ae]\s+aula|"
+    r"calend[aá]rio(?:\s+acad[eê]mico)?|feriados?|pontos?\s+facultativos?|recesso|"
+    r"semana\s+universit[aá]ria|semana\s+de\s+provas|per[ií]odo\s+letivo|"
+    r"tem\s+aula|h[aá]\s+aula|vai\s+ter\s+aula|in[ií]cio\s+das\s+aulas|t[eé]rmino\s+das\s+aulas|"
     r"[a-z]{2,4}\d{3,4}"
     r")\b",
     re.IGNORECASE,
 )
+
+_ANOTACAO_DATA_API = re.compile(
+    r"\s*\((?:segunda|ter[cç]a|quarta|quinta|sexta|s[aá]bado|domingo)[^)]*\d{2}/\d{2}/\d{4}[^)]*\)\s*$",
+    re.IGNORECASE,
+)
+
+
+def _sem_anotacao_data(texto: str) -> str:
+    """Remove o sufixo parentético de `api.com_data()` para evitar falsos cruzamentos de domínio."""
+    return _ANOTACAO_DATA_API.sub("", texto).strip()
 
 
 def pergunta_fora_do_dominio(pergunta: str, eixo: str) -> bool:
     """Retorna True quando a pergunta pertence claramente ao outro domínio especializado."""
     if not isinstance(pergunta, str) or not pergunta.strip():
         return False
-    casa_ru = bool(_TERMOS_RU.search(pergunta))
-    casa_fluxo = bool(_TERMOS_FLUXO.search(pergunta))
+    base = _sem_anotacao_data(pergunta)
+    casa_ru = bool(_TERMOS_RU.search(base))
+    casa_fluxo = bool(_TERMOS_FLUXO.search(base))
     if eixo == "ru":
         return casa_fluxo and not casa_ru
     if eixo == "fluxo":
