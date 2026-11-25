@@ -115,6 +115,105 @@ class ResultadoFerramenta:
 BACKENDS_LLM = ("ollama", "hf", "openai")
 
 
+_PADRAO_INCERTEZA_GRAFO = re.compile(r"tracejad|incert", re.I)
+
+
+def _extrair_codigos_lista(dados: dict[str, Any], chave: str, incluir_alternativas: bool = False) -> list[str]:
+    itens = dados.get(chave) or []
+    codigos: list[str] = []
+    for item in itens:
+        if isinstance(item, dict) and item.get("codigo"):
+            codigos.append(str(item["codigo"]).upper())
+            if incluir_alternativas:
+                for alt in item.get("alternativas") or []:
+                    if isinstance(alt, dict) and alt.get("codigo"):
+                        codigos.append(str(alt["codigo"]).upper())
+                    elif isinstance(alt, str) and alt.strip():
+                        codigos.append(alt.strip().upper())
+    return codigos
+
+
+def _validar_redacao_grafo(texto_limpo: str, res: ResultadoFerramenta) -> list[str]:
+    """Garante que a redação via LLM para `grafo_fluxo` preserve códigos, números e incertezas."""
+    violacoes: list[str] = []
+    if geracao.valores_sem_fonte(texto_limpo, res.trechos_evidencia):
+        violacoes.append("valores_sem_fonte")
+    if geracao.resposta_sem_citacao(texto_limpo, res.trechos_evidencia):
+        violacoes.append("sem_citacao")
+
+    dados = res.dados or {}
+    tipo = dados.get("tipo_consulta")
+    texto_norm = _norm(texto_limpo)
+    texto_upper = texto_limpo.upper()
+
+    codigos_obrigatorios: list[str] = []
+    precisa_incerteza = False
+    precisa_sigaa = False
+
+    if tipo == "prerequisitos":
+        confirmados = _extrair_codigos_lista(dados, "confirmados", incluir_alternativas=True)
+        incertos = _extrair_codigos_lista(dados, "incertos")
+        coreqs = _extrair_codigos_lista(dados, "correquisitos")
+        codigos_obrigatorios = [*confirmados, *incertos, *coreqs]
+        if incertos:
+            precisa_incerteza = True
+            precisa_sigaa = True
+        if not confirmados and re.search(
+            r"\bpre-?requisitos?\s+confirmad|\bseta\s+cheia\b",
+            texto_norm,
+        ) and not re.search(r"\bnao\b|\bnenhum\b", texto_norm):
+            violacoes.append("confirmado_inexistente")
+    elif tipo == "dependentes":
+        conf = _extrair_codigos_lista(dados, "dependentes_confirmados")
+        inc = _extrair_codigos_lista(dados, "dependentes_incertos")
+        codigos_obrigatorios = [*conf, *inc]
+        if inc:
+            precisa_incerteza = True
+            precisa_sigaa = True
+        if (
+            not conf
+            and not inc
+            and re.search(r"\b(?:trava|bloqueia|bloqueiam|impede|impedem)\b", texto_norm)
+            and not re.search(r"\bnao\b|\bnenhum|\bsem\s+(?:bloqueio|dependentes)", texto_norm)
+        ):
+            violacoes.append("bloqueio_inexistente")
+    elif tipo == "disciplinas_que_abrem":
+        abertas = _extrair_codigos_lista(dados, "abertas_confirmadas")
+        incertas = _extrair_codigos_lista(dados, "relacoes_incertas")
+        codigos_obrigatorios = [*abertas, *incertas]
+        if incertas:
+            precisa_incerteza = True
+            precisa_sigaa = True
+        if not abertas and re.search(
+            r"\bseta\s+cheia\b|\bficam?\s+liberad|\blibera\s+[A-Z0-9]",
+            texto_norm,
+        ) and not re.search(r"\bnao\b|\bnenhum|\bincert|\btracejad", texto_norm):
+            violacoes.append("abertura_confirmada_inexistente")
+    elif tipo == "gargalo":
+        gargalos = dados.get("gargalos") or []
+        for g in gargalos:
+            if isinstance(g, dict) and g.get("codigo"):
+                codigos_obrigatorios.append(str(g["codigo"]).upper())
+                codigos_obrigatorios.extend(_extrair_codigos_lista(g, "destinos"))
+        grau = dados.get("grau_saida_max")
+        if grau is not None and not re.search(rf"\b{re.escape(str(grau))}\b", texto_limpo):
+            violacoes.append(f"faltou_grau_{grau}")
+    elif tipo == "caminho_critico":
+        codigos_obrigatorios = _extrair_codigos_lista(dados, "cadeia")
+        precisa_sigaa = True
+
+    for cod in dict.fromkeys(codigos_obrigatorios):
+        if cod not in texto_upper:
+            violacoes.append(f"faltou_codigo_{cod}")
+
+    if precisa_incerteza and not _PADRAO_INCERTEZA_GRAFO.search(texto_limpo):
+        violacoes.append("faltou_termo_incerteza")
+    if precisa_sigaa and "sigaa" not in texto_norm:
+        violacoes.append("faltou_sigaa")
+
+    return violacoes
+
+
 def redigir_com_ferramenta(
     pergunta: str,
     res: ResultadoFerramenta,
@@ -126,6 +225,17 @@ def redigir_com_ferramenta(
     backend_efetivo = config.BACKEND if backend == "auto" else backend
     if res.recusado or not res.trechos_evidencia or backend_efetivo not in BACKENDS_LLM:
         return res.texto_base, 0.0, alertas, False
+
+    extra_grafo = ""
+    if res.ferramenta == "grafo_fluxo":
+        extra_grafo = (
+            "- NUNCA responda com recusa quando houver uma síntese acima.\n"
+            "- Preserve TODOS os códigos de disciplinas, quantidades numéricas e opções alternativas (OU) presentes na síntese.\n"
+            "- Mantenha a distinção exata entre pré-requisitos confirmados (ou alternativos OU) e ligações "
+            "incertas/tracejadas, mantendo 'confirme no SIGAA' quando aplicável.\n"
+            "- Se confirmados ou abertas_confirmadas estiver vazio, NUNCA afirme que a disciplina é "
+            "pré-requisito confirmado nem que ela está liberada por seta cheia.\n"
+        )
 
     instrucoes_ferr = (
         f"{instrucoes_agente}\n\n"
@@ -139,7 +249,8 @@ def redigir_com_ferramenta(
         "- Quando precisar listar refeições, opções de prato ou cadeias de disciplinas da ferramenta, "
         "você pode exceder 120 palavras para não omitir itens nem alertas devolvidos pela ferramenta.\n"
         "- Preserve obrigatoriamente qualquer aviso de incerteza ('ligação tracejada' / 'confirme no SIGAA') "
-        "e a vigência do currículo."
+        "e a vigência do currículo.\n"
+        f"{extra_grafo}"
     )
     t0 = time.monotonic()
     try:
@@ -160,6 +271,16 @@ def redigir_com_ferramenta(
     texto_limpo = texto.strip()
     if "confirme no sigaa" in res.texto_base.lower() and "sigaa" not in texto_limpo.lower():
         texto_limpo += " Confirme no SIGAA. [1]"
+
+    if res.ferramenta == "grafo_fluxo":
+        violacoes = _validar_redacao_grafo(texto_limpo, res)
+        if violacoes:
+            alertas.append(
+                f"Redação da LLM omitiu ou contrariou dados do grafo ({', '.join(violacoes)}); "
+                "exibindo saída determinística da ferramenta."
+            )
+            return res.texto_base, duracao, alertas, False
+
     return texto_limpo, duracao, alertas, True
 
 

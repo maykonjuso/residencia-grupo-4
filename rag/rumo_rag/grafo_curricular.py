@@ -77,11 +77,11 @@ _DISCIPLINA = re.compile(
 _ANTIGO_CODIGO = re.compile(r"\bantigo(?:\s+c[oó]digo)?\s+(?P<codigo>[A-Z]{2,4}\d{3,4})\b", re.I)
 _PRE_REQUISITO = re.compile(
     r"^-\s+Para cursar (?P<destino>.+?)\s+\((?P<codigo_destino>[A-Z]{2,4}\d{3,4})\),"
-    r"\s+é preciso ter cursado antes:\s+(?P<origens>.+)\.$",
+    r"\s+é preciso ter cursado antes(?:\s+\([^)]+\))?:\s+(?P<origens>.+)\.$",
     re.I,
 )
 _REFERENCIA = re.compile(
-    r"(?P<nome>[^;()]+?)\s+\((?P<codigo>[A-Z]{2,4}\d{3,4})\)"
+    r"(?P<nome>[^;()]+?(?:\s+\([^()]+\))?)\s+\((?P<codigo>[A-Z]{2,4}\d{3,4})\)"
     r"(?:\s+\((?P<marca>seta cheia|seta tracejada)\))?",
     re.I,
 )
@@ -89,6 +89,30 @@ _CORREQUISITO = re.compile(
     r"^-\s+(?P<nome_a>.+?)\s+\((?P<codigo_a>[A-Z]{2,4}\d{3,4})\)"
     r"\s+é correquisito de\s+(?P<nome_b>.+?)\s+\((?P<codigo_b>[A-Z]{2,4}\d{3,4})\):",
     re.I,
+)
+
+_STOPWORDS_SIGLA = frozenset({
+    "a", "as", "o", "os", "de", "da", "das", "do", "dos", "e", "em", "na", "nas",
+    "no", "nos", "para", "por", "com", "ao", "aos", "um", "uma",
+})
+_SIGLAS_BLOQUEADAS = frozenset({
+    "de", "da", "do", "em", "no", "na", "se", "ou", "os", "as", "um", "ao",
+    "eu", "me", "te", "ja", "so", "ha", "ir", "ru", "unb", "fga", "fcte",
+    "ppc", "sigaa", "ira", "sim", "nao", "que", "com", "por", "sem", "mas",
+    "mais", "tem", "ter", "ser", "ver", "vez", "dia", "mes", "ano", "ate",
+    "qual", "quais", "como", "onde", "para", "pela", "pelo", "esta", "este",
+    "essa", "esse", "isso", "tudo", "cada", "aqui", "hoje", "curso", "grade",
+    "fluxo", "matriz", "nome", "nota", "data", "hora",
+    "desenvolvimento", "teste", "testes", "projeto", "sistema", "sistemas",
+    "engenharia", "computacao", "computadores", "software", "pratica", "teoria",
+})
+_SUFIXOS_CURTOS = (
+    " aplicada a engenharia",
+    " aplicado a engenharia",
+    " de software",
+    " para engenharia",
+    " de engenharia",
+    " de computadores",
 )
 
 # Aeroespacial (F17) e Eletrônica (F21)
@@ -279,6 +303,8 @@ class GrafoCurricular:
                 if eq.bidirecional:
                     self._equiv_por_codigo.setdefault(alt, []).append(eq)
 
+        self._construir_indices_busca()
+
     @property
     def curriculo_id(self) -> str:
         return self.metadados["curriculo_id"]
@@ -352,20 +378,37 @@ class GrafoCurricular:
             prereq = _PRE_REQUISITO.match(linha)
             if prereq:
                 destino = prereq.group("codigo_destino").upper()
+                eh_ou_linha = "alternativo ou" in _normalizar(linha)
                 for segmento in prereq.group("origens").split(";"):
-                    incerta = "seta tracejada" in _normalizar(segmento)
-                    for referencia in _REFERENCIA.finditer(segmento):
-                        marca = (referencia.group("marca") or "").casefold()
-                        codigo_origem = referencia.group("codigo").upper()
+                    seg_norm = _normalizar(segmento)
+                    incerta_seg = "seta tracejada" in seg_norm
+                    refs = list(_REFERENCIA.finditer(segmento))
+                    if len(refs) >= 2 and (eh_ou_linha or re.search(r"\bou\b", seg_norm)):
+                        cod_prim = refs[0].group("codigo").upper()
+                        cod_alts = tuple(r.group("codigo").upper() for r in refs[1:])
                         arestas.append(
                             Aresta(
-                                origem=codigo_origem,
+                                origem=cod_prim,
                                 destino=destino,
                                 relacao="pre_requisito",
-                                incerta=incerta or marca == "seta tracejada",
+                                incerta=incerta_seg,
+                                alternativas=cod_alts,
                                 evidencia=linha.removeprefix("- ").strip(),
                             )
                         )
+                    else:
+                        for referencia in refs:
+                            marca = _normalizar(referencia.group("marca") or "")
+                            codigo_origem = referencia.group("codigo").upper()
+                            arestas.append(
+                                Aresta(
+                                    origem=codigo_origem,
+                                    destino=destino,
+                                    relacao="pre_requisito",
+                                    incerta=incerta_seg or marca == "seta tracejada",
+                                    evidencia=linha.removeprefix("- ").strip(),
+                                )
+                            )
                 continue
 
             coreq = _CORREQUISITO.match(linha)
@@ -901,6 +944,74 @@ class GrafoCurricular:
 
     # ------------------------------------------------------------------ consultas
 
+    def _construir_indices_busca(self) -> None:
+        """Deriva dinamicamente siglas e nomes curtos únicos a partir das disciplinas do currículo."""
+        candidatos_sigla: dict[str, set[str]] = {}
+        candidatos_curto: dict[str, set[str]] = {}
+        originais_sigla: dict[str, str] = {}
+
+        def _reg_sigla(chave: str, cod: str, texto_orig: str | None = None) -> None:
+            chave_norm = " ".join(chave.lower().split())
+            if len(chave_norm) < 2 or chave_norm in _SIGLAS_BLOQUEADAS:
+                return
+            candidatos_sigla.setdefault(chave_norm, set()).add(cod)
+            if texto_orig:
+                originais_sigla[chave_norm] = texto_orig
+
+        def _reg_curto(chave: str, cod: str) -> None:
+            chave_norm = " ".join(chave.strip().split())
+            if len(chave_norm) < 5 or chave_norm in _SIGLAS_BLOQUEADAS:
+                return
+            candidatos_curto.setdefault(chave_norm, set()).add(cod)
+
+        for cod, disc in self.disciplinas.items():
+            # 1) Siglas explícitas entre parênteses, ex.: "(APC)", "(MDS)", "(GCES)"
+            for m_par in re.finditer(r"\(([A-Za-z0-9]{2,8})\)", disc.nome):
+                tok = m_par.group(1)
+                _reg_sigla(tok, cod, texto_orig=tok)
+
+            sem_paren = re.sub(r"\([^)]*\)", "", disc.nome).strip()
+            sem_paren_norm = _normalizar(sem_paren)
+            if sem_paren_norm and sem_paren_norm != _normalizar(disc.nome):
+                _reg_curto(sem_paren_norm, cod)
+
+            # 2) Nomes curtos removendo sufixos genéricos no final quando únicos no currículo
+            for suf in _SUFIXOS_CURTOS:
+                if sem_paren_norm.endswith(suf):
+                    prefixo = sem_paren_norm[: -len(suf)].strip()
+                    _reg_curto(prefixo, cod)
+
+            # 3) Siglas derivadas pelas iniciais de palavras significativas (ignorando stopwords)
+            palavras = [p for p in sem_paren_norm.split() if p not in _STOPWORDS_SIGLA]
+            if len(palavras) >= 2:
+                letras_sigla: list[str] = []
+                sufixo_digito = ""
+                for idx_p, p in enumerate(palavras):
+                    if idx_p == len(palavras) - 1 and re.fullmatch(r"\d+", p):
+                        sufixo_digito = p
+                    elif p:
+                        letras_sigla.append(p[0])
+                base_sigla = "".join(letras_sigla)
+                if sufixo_digito and base_sigla:
+                    _reg_sigla(base_sigla + sufixo_digito, cod)
+                    _reg_sigla(f"{base_sigla} {sufixo_digito}", cod)
+                elif len(base_sigla) >= 2:
+                    _reg_sigla(base_sigla, cod, texto_orig=base_sigla.upper())
+
+        self._siglas_curtas: dict[str, tuple[str, bool]] = {
+            chave: (
+                next(iter(cods)),
+                len(chave) == 2 and not any(ch.isdigit() for ch in chave),
+            )
+            for chave, cods in candidatos_sigla.items()
+            if len(cods) == 1
+        }
+        self._nomes_curtos: dict[str, str] = {
+            chave: next(iter(cods))
+            for chave, cods in candidatos_curto.items()
+            if len(cods) == 1
+        }
+
     def equivalentes_de(self, codigo: str) -> list[Equivalencia]:
         return list(self._equiv_por_codigo.get(codigo.upper(), []))
 
@@ -922,6 +1033,45 @@ class GrafoCurricular:
             if nome and nome in restante:
                 encontradas[disciplina.codigo] = disciplina
                 restante = restante.replace(nome, " ")
+
+        restante_apelidos = re.sub(
+            r"\b(?:pre|co)-?requisitos?\b|\b(?:teste|testes)\s+de\s+(?:mesa|unidade|sistema)\b",
+            " ",
+            restante,
+        )
+        for curto in sorted(self._nomes_curtos, key=len, reverse=True):
+            if re.search(rf"(?<![a-z0-9-]){re.escape(curto)}(?![a-z0-9-])", restante_apelidos):
+                cod_alvo = self._nomes_curtos[curto]
+                encontradas.setdefault(cod_alvo, self.disciplinas[cod_alvo])
+                restante_apelidos = re.sub(
+                    rf"(?<![a-z0-9-]){re.escape(curto)}(?![a-z0-9-])",
+                    " ",
+                    restante_apelidos,
+                )
+
+        # Siglas derivadas dinamicamente (siglas de 2 letras sem dígito exigem MAIÚSCULAS no texto original)
+        consulta_mascarada_orig = re.sub(
+            r"\b(?:pr[eé]|co)-?requisitos?\b",
+            " ",
+            consulta,
+            flags=re.I,
+        )
+        for sigla, (cod_alvo, exige_maiuscula) in sorted(
+            self._siglas_curtas.items(), key=lambda item: len(item[0]), reverse=True
+        ):
+            if exige_maiuscula:
+                sigla_upper = sigla.upper()
+                if re.search(rf"(?<![A-Za-zÀ-ÿ0-9]){re.escape(sigla_upper)}(?![A-Za-zÀ-ÿ0-9])", consulta_mascarada_orig):
+                    encontradas.setdefault(cod_alvo, self.disciplinas[cod_alvo])
+            else:
+                if re.search(rf"(?<![a-z0-9]){re.escape(sigla)}(?![a-z0-9])", restante_apelidos):
+                    encontradas.setdefault(cod_alvo, self.disciplinas[cod_alvo])
+                    restante_apelidos = re.sub(
+                        rf"(?<![a-z0-9]){re.escape(sigla)}(?![a-z0-9])",
+                        " ",
+                        restante_apelidos,
+                    )
+
         return sorted(encontradas.values(), key=lambda d: (d.semestre, d.codigo))
 
     def _to_aresta(self, origem: str, destino: str, attrs: dict) -> Aresta:
@@ -975,12 +1125,30 @@ class GrafoCurricular:
         linhas.append(f"Currículo: {self.curso} ({doc_id}) — vigência: {self.vigencia['descricao']}.")
         return "\n".join(dict.fromkeys(linhas))
 
+    def _dependentes_no_grafo(self, grafo_alvo: nx.DiGraph, codigo: str) -> set[str]:
+        bloqueados = {codigo}
+        mudou = True
+        while mudou:
+            mudou = False
+            for destino in grafo_alvo.nodes():
+                if destino in bloqueados:
+                    continue
+                for orig, _, attrs in grafo_alvo.in_edges(destino, data=True):
+                    grupo = {orig} | {
+                        alt for alt in (attrs.get("alternativas") or ()) if alt in self.disciplinas
+                    }
+                    if grupo <= bloqueados:
+                        bloqueados.add(destino)
+                        mudou = True
+                        break
+        return bloqueados - {codigo}
+
     def dependentes(self, codigo: str) -> tuple[list[str], list[str]]:
         codigo = codigo.upper()
         if codigo not in self.grafo:
             return [], []
-        confirmados = nx.descendants(self.grafo, codigo)
-        todos = nx.descendants(self.grafo_completo, codigo)
+        confirmados = self._dependentes_no_grafo(self.grafo, codigo)
+        todos = self._dependentes_no_grafo(self.grafo_completo, codigo)
         incertos = todos - confirmados
         ordenar = lambda codigos: sorted(  # noqa: E731
             codigos, key=lambda c: (self.disciplinas[c].semestre, c)
@@ -997,17 +1165,23 @@ class GrafoCurricular:
             key=lambda item: (item[0].semestre, item[0].codigo),
         )
 
+    def _clausula_satisfeita(self, aresta: Aresta, aprovadas: set[str]) -> bool:
+        opcoes = {aresta.origem, *aresta.alternativas}
+        return bool(opcoes & aprovadas)
+
     def disciplinas_que_abrem(self, aprovadas: set[str]) -> tuple[list[str], list[str]]:
         aprovadas = {c.upper() for c in aprovadas}
         abertas: list[str] = []
         incertas: list[str] = []
-        for codigo in self.grafo:
-            confirmados = list(self.grafo.predecessors(codigo))
-            if not confirmados or codigo in aprovadas:
+        for codigo in self.grafo_completo:
+            if codigo in aprovadas:
                 continue
-            if all(orig in aprovadas for orig in confirmados):
-                _, duvidosos = self.prerequisitos(codigo)
-                (incertas if duvidosos else abertas).append(codigo)
+            confirmados, duvidosos = self.prerequisitos(codigo)
+            if confirmados:
+                if all(self._clausula_satisfeita(a, aprovadas) for a in confirmados):
+                    (incertas if duvidosos else abertas).append(codigo)
+            elif duvidosos and any(self._clausula_satisfeita(a, aprovadas) for a in duvidosos):
+                incertas.append(codigo)
         return (
             sorted(abertas, key=lambda c: (self.disciplinas[c].semestre, c)),
             sorted(incertas, key=lambda c: (self.disciplinas[c].semestre, c)),
@@ -1283,8 +1457,9 @@ class GrafoCurricular:
             aprovadas_txt = ", ".join(sorted(codigos))
             arestas_usadas = [
                 a for a in self.arestas
-                if a.destino in abertas + incertas and a.origem in codigos
+                if a.destino in abertas + incertas
                 and a.relacao == "pre_requisito"
+                and (a.origem in codigos or bool(set(a.alternativas) & codigos))
             ]
             evidencia = self._evidencia(codigos | set(abertas) | set(incertas), arestas_usadas)
             if abertas:
@@ -1335,6 +1510,17 @@ class GrafoCurricular:
                 for u, v, attrs in self.grafo_completo.edges(data=True)
                 if u in nos_envolvidos and v in nos_envolvidos
             ]
+            arestas_ou_rel = [
+                a for a in self.arestas
+                if a.relacao == "pre_requisito"
+                and not a.incerta
+                and a.alternativas
+                and (a.origem == inicio.codigo or inicio.codigo in a.alternativas)
+                and a.destino not in confirmados
+            ]
+            for a_ou in arestas_ou_rel:
+                nos_envolvidos.update((a_ou.origem, a_ou.destino, *a_ou.alternativas))
+                arestas_usadas_obj.append(a_ou)
             if confirmados:
                 nomes = ", ".join(f"{self.disciplinas[c].nome} ({c})" for c in confirmados)
                 resposta = (
@@ -1343,9 +1529,21 @@ class GrafoCurricular:
                 )
             else:
                 resposta = (
-                    f"Não encontrei dependentes alcançáveis por setas cheias a partir de "
+                    f"Não encontrei dependentes alcançáveis por bloqueio direto a partir de "
                     f"{inicio.nome} ({inicio.codigo}) em {self.curso} ({doc_id}). [1]"
                 )
+            if arestas_ou_rel:
+                notas_ou = []
+                for a_ou in arestas_ou_rel:
+                    dest_disc = self.disciplinas[a_ou.destino]
+                    opcoes = [a_ou.origem, *(alt for alt in a_ou.alternativas if alt in self.disciplinas)]
+                    opcoes_txt = " ou ".join(f"{self.disciplinas[c].nome} ({c})" for c in opcoes)
+                    notas_ou.append(
+                        f"Nota: {dest_disc.nome} ({dest_disc.codigo}) aceita pré-requisito alternativo "
+                        f"({opcoes_txt}), portanto reprovar apenas em {inicio.nome} ({inicio.codigo}) "
+                        "não a bloqueia se a alternativa já tiver sido cursada. [1]"
+                    )
+                resposta += " " + " ".join(notas_ou)
             if incertos:
                 nomes_inc = ", ".join(f"{self.disciplinas[c].nome} ({c})" for c in incertos)
                 resposta += (
@@ -1381,7 +1579,13 @@ class GrafoCurricular:
                 for a in confirmados:
                     txt_orig = f"{self.disciplinas[a.origem].nome} ({a.origem})"
                     if a.alternativas:
-                        txt_orig += f" (ou {'/'.join(a.alternativas)})"
+                        alts_txt = " ou ".join(
+                            f"{self.disciplinas[alt].nome} ({alt})"
+                            if alt in self.disciplinas
+                            else alt
+                            for alt in a.alternativas
+                        )
+                        txt_orig += f" ou {alts_txt}"
                     nomes_list.append(txt_orig)
                 partes.append(f"Pré-requisitos confirmados de {alvo.nome} ({alvo.codigo}) em {self.curso}: {', '.join(nomes_list)}.")
             else:
@@ -1410,15 +1614,26 @@ class GrafoCurricular:
                 partes.append(nota_eq)
             partes.append(self._texto_vigencia())
             cods_ev = {alvo.codigo, *(a.origem for a in confirmados + incertos)}
+            for a in confirmados + incertos:
+                cods_ev.update(a.alternativas)
             for c in coreqs:
                 cods_ev.update((c.origem, c.destino))
             evidencia = self._evidencia(cods_ev, confirmados + incertos + coreqs)
+            confirmados_payload = []
+            for a in confirmados:
+                item_conf = self._no_resumo(a.origem)
+                if a.alternativas:
+                    item_conf["alternativas"] = [
+                        self._no_resumo(alt) if alt in self.disciplinas else {"codigo": alt}
+                        for alt in a.alternativas
+                    ]
+                confirmados_payload.append(item_conf)
             return {
                 "tipo_consulta": "prerequisitos",
                 "dados": {
                     **self._metadados_consulta(),
                     "disciplina": self._no_resumo(alvo.codigo),
-                    "confirmados": [self._no_resumo(a.origem) for a in confirmados],
+                    "confirmados": confirmados_payload,
                     "incertos": [self._no_resumo(a.origem) for a in incertos],
                     "correquisitos": [
                         self._no_resumo(c.destino if c.origem == alvo.codigo else c.origem)

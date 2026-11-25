@@ -319,14 +319,67 @@ class TestCardapioEMontarPrato(unittest.TestCase):
 
 
 class TestGrafoEMinhaAgenda(unittest.TestCase):
-    def test_grafo_fluxo_devolve_dado_estruturado_e_seta_tracejada(self):
+    def test_grafo_fluxo_devolve_dado_estruturado_com_ou_alternativo(self):
         res = ferramentas.grafo_fluxo("Quais os pré-requisitos de Testes de Software?")
         self.assertTrue(res.sucesso)
         self.assertEqual(res.dados["tipo_consulta"], "prerequisitos")
-        self.assertEqual(res.dados["confirmados"][0]["codigo"], "FGA0313")
-        self.assertEqual(res.dados["incertos"][0]["codigo"], "FGA0312")
+        self.assertEqual(res.dados["confirmados"][0]["codigo"], "FGA0312")
+        self.assertEqual(res.dados["confirmados"][0]["alternativas"][0]["codigo"], "FGA0313")
+        self.assertEqual(res.dados["incertos"], [])
         self.assertEqual(res.fontes[0]["doc_id"], "F16")
-        self.assertIn("confirme no SIGAA", res.texto_base)
+        self.assertIn("ou", res.texto_base.lower())
+
+    def test_guardiao_grafo_faz_fallback_quando_llm_omite_ou_contradiz_ou_alucina_numero(self):
+        # 1) LLM omite uma das alternativas (FGA0312) do pré-requisito OU -> fallback determinístico
+        res = ferramentas.grafo_fluxo("Quais os pré-requisitos de Testes de Software?")
+        with mock.patch.object(
+            geracao,
+            "gerar_com_instrucoes",
+            return_value="Os pré-requisitos confirmados de Testes de Software são Requisitos de Software (FGA0313). [1]",
+        ):
+            texto, _, alertas, redigido = ferramentas.redigir_com_ferramenta(
+                "Quais os pré-requisitos de Testes de Software?",
+                res,
+                agentes.AgenteFluxo.instrucoes,
+                "ollama",
+            )
+        self.assertFalse(redigido)
+        self.assertIn("FGA0312", texto)
+        self.assertIn("FGA0313", texto)
+        self.assertTrue(any("omit" in a.lower() or "contrariou" in a.lower() for a in alertas))
+        self.assertFalse(any("Redação via LLM falhou" in a for a in alertas))
+
+        # 2) LLM afirma bloqueio quando dependentes_confirmados == [] (reprovar em Requisitos) -> fallback
+        res_dep = ferramentas.grafo_fluxo("Se eu reprovar em Requisitos de Software, o que trava?")
+        with mock.patch.object(
+            geracao,
+            "gerar_com_instrucoes",
+            return_value="Se reprovar em Requisitos (FGA0313), Testes de Software (FGA0314) trava. [1]",
+        ):
+            texto_dep, _, _, redigido_dep = ferramentas.redigir_com_ferramenta(
+                "Se eu reprovar em Requisitos de Software, o que trava?",
+                res_dep,
+                agentes.AgenteFluxo.instrucoes,
+                "ollama",
+            )
+        self.assertFalse(redigido_dep)
+        self.assertEqual(texto_dep, res_dep.texto_base)
+
+        # 3) LLM inventa número que não existe no grafo -> fallback determinístico
+        res_gargalo = ferramentas.grafo_fluxo("Qual disciplina destrava mais matérias?")
+        with mock.patch.object(
+            geracao,
+            "gerar_com_instrucoes",
+            return_value="CIC0004 e FGA0312 destravam FGA0158, FGA0146, FGA0313 e FGA0314 (total 99 matérias). [1]",
+        ):
+            texto_num, _, _, redigido_num = ferramentas.redigir_com_ferramenta(
+                "Qual disciplina destrava mais matérias?",
+                res_gargalo,
+                agentes.AgenteFluxo.instrucoes,
+                "ollama",
+            )
+        self.assertFalse(redigido_num)
+        self.assertEqual(texto_num, res_gargalo.texto_base)
 
     def test_grafo_fluxo_suporta_curso_vigencia_e_equivalencia(self):
         res_aero = ferramentas.grafo_fluxo(
@@ -464,14 +517,31 @@ class TestOrquestradorComFerramentas(unittest.TestCase):
         self.assertTrue(any("fallback" in a.lower() or "falhou" in a.lower() for a in resp_queda.alertas))
 
     def test_guardiao_preserva_confirme_no_sigaa_quando_llm_omite(self):
-        res = ferramentas.grafo_fluxo("Quais os pré-requisitos de Testes de Software?")
+        from rumo_rag.grafo_curricular import GrafoCurricular
+
+        grafo_tracej = GrafoCurricular.de_markdown(
+            "# Fluxograma — Teste\n"
+            "## 1º semestre de Engenharia de Software (8 créditos)\n"
+            "- FGA0312 Métodos de Desenvolvimento de Software (MDS) — 1-1-2-4\n"
+            "- FGA0313 Requisitos de Software — 1-1-2-4\n"
+            "## Pré-requisitos\n"
+            "- Para cursar Requisitos de Software (FGA0313), é preciso ter cursado antes: Métodos de Desenvolvimento de Software (MDS) (FGA0312) (seta tracejada).\n"
+        )
+
+        class _RepoStub:
+            def consultar_estruturado(self, consulta, **_):
+                return grafo_tracej.consultar_estruturado(consulta)
+
+        with mock.patch.object(ferramentas, "carregar_repositorio_grafos", return_value=_RepoStub()):
+            res = ferramentas.grafo_fluxo("Quais os pré-requisitos de Requisitos de Software?")
+
         with mock.patch.object(
             geracao,
             "gerar_com_instrucoes",
-            return_value="Exige FGA0313 e tem ligação tracejada com FGA0312. [1]",
+            return_value="Há apenas ligação tracejada com MDS (FGA0312). [1]",
         ):
             texto, _, _, redigido = ferramentas.redigir_com_ferramenta(
-                "Quais os pré-requisitos de Testes de Software?",
+                "Quais os pré-requisitos de Requisitos de Software?",
                 res,
                 agentes.AgenteFluxo.instrucoes,
                 "ollama",
