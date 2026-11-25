@@ -507,20 +507,14 @@
           "evidencia": "Para cursar Requisitos de Software (FGA0313), é preciso ter cursado antes: Métodos de Desenvolvimento de Software (FGA0312)."
         },
         {
-          "origem": "FGA0313",
-          "destino": "FGA0314",
-          "relacao": "pre_requisito",
-          "incerta": false,
-          "alternativas": [],
-          "evidencia": "Para cursar Testes de Software (FGA0314), é preciso ter cursado antes: Requisitos de Software (FGA0313) (seta cheia); o fluxograma também liga Métodos de Desenvolvimento de Software (FGA0312) a Testes de Software por seta tracejada."
-        },
-        {
           "origem": "FGA0312",
           "destino": "FGA0314",
           "relacao": "pre_requisito",
-          "incerta": true,
-          "alternativas": [],
-          "evidencia": "Para cursar Testes de Software (FGA0314), é preciso ter cursado antes: Requisitos de Software (FGA0313) (seta cheia); o fluxograma também liga Métodos de Desenvolvimento de Software (FGA0312) a Testes de Software por seta tracejada."
+          "incerta": false,
+          "alternativas": [
+            "FGA0313"
+          ],
+          "evidencia": "Para cursar Testes de Software (FGA0314), é preciso ter cursado antes (pré-requisito alternativo OU): Métodos de Desenvolvimento de Software (MDS) (FGA0312) ou Requisitos de Software (FGA0313)."
         },
         {
           "origem": "FGA0314",

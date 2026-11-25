@@ -329,6 +329,12 @@ def rotear_subpergunta(
         return ["fluxo"]
     if casa_ru and casa_fluxo:
         return ["ru", "fluxo"]
+    from . import ferramentas
+
+    if ferramentas.extrair_chamada_fluxo(subpergunta) is not None:
+        return ["fluxo"]
+    if ferramentas.extrair_chamada_ru(subpergunta) is not None:
+        return ["ru"]
     if usar_d1_fallback:
         return reescrita.classificar_dominio_d1(subpergunta)
     return ["ru", "fluxo"]
@@ -473,14 +479,21 @@ class Orquestrador:
 
     def _classificar_e_decompor(self, pergunta: str, backend: str) -> tuple[bool, float, list[dict[str, str]], float]:
         t0 = time.monotonic()
+        cruzamento_dominios = bool(_TERMOS_RU.search(pergunta) and _TERMOS_FLUXO.search(pergunta))
+        partes_fallback = reescrita._decompor_fallback(pergunta)
+
+        if not cruzamento_dominios and pergunta.count("?") <= 1 and len(partes_fallback) < 2:
+            from . import ferramentas
+
+            if ferramentas.extrair_chamada_fluxo(pergunta) is not None:
+                return False, 0.0, [], round(time.monotonic() - t0, 3)
+
         eh_composta, prob_composta = reescrita.classificar_composta(pergunta)
         backend_decomp = (
             backend
             if backend in ("ollama", "hf", "openai")
             else ("fallback" if backend == "extrativo" else "auto")
         )
-        cruzamento_dominios = bool(_TERMOS_RU.search(pergunta) and _TERMOS_FLUXO.search(pergunta))
-        partes_fallback = reescrita._decompor_fallback(pergunta)
 
         if not eh_composta and (cruzamento_dominios or len(partes_fallback) >= 2):
             eh_composta = True

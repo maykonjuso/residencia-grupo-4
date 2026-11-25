@@ -114,6 +114,10 @@ class TestRoteamentoELimiar(unittest.TestCase):
             agentes.rotear_subpergunta("Quais os pré-requisitos de Testes de Software?"),
             ["fluxo"],
         )
+        self.assertEqual(
+            agentes.rotear_subpergunta("Passando em MDS, o que abre?", usar_d1_fallback=False),
+            ["fluxo"],
+        )
 
     def test_rotear_subpergunta_ambigua_aciona_ambos(self):
         self.assertEqual(
@@ -409,7 +413,7 @@ class TestCliAgentesTrace(unittest.TestCase):
         self.assertIn("5. Composição (Sintetizador):", saida)
         self.assertIn("F01", saida)
         self.assertIn("F16", saida)
-        self.assertIn("confirme no SIGAA", saida)
+        self.assertIn("Métodos de Desenvolvimento de Software (MDS) (FGA0312) ou Requisitos de Software (FGA0313)", saida)
 
 
 class TestContratoAgentesEValidacao(unittest.TestCase):
@@ -741,8 +745,9 @@ class TestContratoAgentesEValidacao(unittest.TestCase):
                 conteudo = "O almoço custa R$ 6,10 para o Grupo II [1]."
             else:
                 conteudo = (
-                    "Testes de Software (FGA0314) requer Requisitos de Software (FGA0313) e possui "
-                    "ligação tracejada com Métodos de Desenvolvimento de Software (MDS) (FGA0312). [1]"
+                    "Para cursar Testes de Software (FGA0314), é necessário ter cursado "
+                    "Métodos de Desenvolvimento de Software (MDS) (FGA0312) ou "
+                    "Requisitos de Software (FGA0313). [1]"
                 )
             payload = json.dumps({"choices": [{"message": {"content": conteudo}}]}).encode("utf-8")
             resp_http = io.BytesIO(payload)
@@ -777,9 +782,28 @@ class TestContratoAgentesEValidacao(unittest.TestCase):
         self.assertEqual([p["agente"] for p in res["partes"]], ["ru", "fluxo"])
         self.assertIn("6,10", res["resposta"])
         self.assertIn("Métodos de Desenvolvimento de Software (MDS) (FGA0312)", res["resposta"])
-        self.assertIn("ligação tracejada", res["resposta"])
-        self.assertIn("Confirme no SIGAA", res["resposta"])
+        self.assertIn("Requisitos de Software (FGA0313)", res["resposta"])
         self.assertFalse(res["degradado"])
+
+    def test_orquestrador_nao_decompoe_consulta_de_conjunto_do_grafo(self):
+        orq = agentes.Orquestrador()
+        with mock.patch.object(
+            agentes.reescrita, "classificar_composta", side_effect=AssertionError("Não deve decompor conjunto")
+        ), mock.patch.object(
+            agentes.reescrita, "decompor_com_roteamento", side_effect=AssertionError("Não deve chamar LLM de decomposição")
+        ):
+            res = orq.executar(
+                "Passei em MAT0025, CIC0004 e FGA0168; o que abre?",
+                backend="extrativo",
+            )
+
+        self.assertEqual(len(res["partes"]), 1)
+        self.assertEqual(res["partes"][0]["agente"], "fluxo")
+        self.assertIn("MAT0026", res["resposta"])
+        self.assertIn("FGA0158", res["resposta"])
+        self.assertIn("FGA0146", res["resposta"])
+        etapa_decomp = next(e for e in res["trace"] if e["etapa"] == "classificacao_decomposicao")
+        self.assertFalse(etapa_decomp["eh_composta"])
 
 
 if __name__ == "__main__":

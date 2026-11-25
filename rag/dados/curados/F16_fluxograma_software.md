@@ -77,7 +77,7 @@ Os quatro números de cada disciplina são: créditos teóricos, créditos prát
 - FGA0290 Trabalho de Conclusão de Curso 2 — 0-6-0-6
 
 ## Pré-requisitos de cada disciplina de Engenharia de Software (lidos das setas do fluxograma)
-Seta cheia = pré-requisito indicado no fluxograma. Seta tracejada = ligação indicada de forma tracejada no fluxograma (confirmar no SIGAA se é pré-requisito ou correquisito).
+Seta cheia = pré-requisito indicado no fluxograma. Seta tracejada = ligação indicada de forma tracejada no fluxograma (confirmar no SIGAA se é pré-requisito ou correquisito). Pré-requisito alternativo (OU) = basta ter cursado qualquer uma das disciplinas indicadas.
 - Para cursar Cálculo 2 (MAT0026), é preciso ter cursado antes: Cálculo 1 (MAT0025).
 - Para cursar Métodos Numéricos para Engenharia (FGA0160), é preciso ter cursado antes: Cálculo 2 (MAT0026).
 - Para cursar Gestão da Produção e Qualidade (FGA0307), é preciso ter cursado antes: Engenharia Econômica (FGA0133).
@@ -85,7 +85,7 @@ Seta cheia = pré-requisito indicado no fluxograma. Seta tracejada = ligação i
 - Para cursar Estruturas de Dados 1 (FGA0146), é preciso ter cursado antes: Algoritmos e Programação de Computadores (CIC0004).
 - Para cursar Métodos de Desenvolvimento de Software (FGA0312), é preciso ter cursado antes: Orientação a Objetos (FGA0158).
 - Para cursar Requisitos de Software (FGA0313), é preciso ter cursado antes: Métodos de Desenvolvimento de Software (FGA0312).
-- Para cursar Testes de Software (FGA0314), é preciso ter cursado antes: Requisitos de Software (FGA0313) (seta cheia); o fluxograma também liga Métodos de Desenvolvimento de Software (FGA0312) a Testes de Software por seta tracejada.
+- Para cursar Testes de Software (FGA0314), é preciso ter cursado antes (pré-requisito alternativo OU): Métodos de Desenvolvimento de Software (MDS) (FGA0312) ou Requisitos de Software (FGA0313).
 - Para cursar Gerência de Configuração e Evolução de Software (FGA0317), é preciso ter cursado antes: Testes de Software (FGA0314).
 - Para cursar Engenharia de Produto de Software (FGA0316), é preciso ter cursado antes: Técnicas de Programação em Plataformas Emergentes (FGA0242).
 - Para cursar Estruturas de Dados 2 (FGA0030), é preciso ter cursado antes: Estruturas de Dados 1 (FGA0146).

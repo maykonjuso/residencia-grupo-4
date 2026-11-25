@@ -202,6 +202,10 @@ class TestDecompor(unittest.TestCase):
         self.assertEqual(subs[0], "O estudante de graduação paga taxa")
         self.assertEqual(subs[1], "Como solicitar isenção")
 
+    def test_decompor_fallback_premissa_aprovacao_nao_fragmenta_conjunto(self):
+        subs = reescrita._decompor_fallback("Passei em MAT0025, CIC0004 e FGA0168; o que abre?")
+        self.assertEqual(subs, [])
+
     def test_decompor_sem_limite_de_duas_subperguntas_tres_e_quatro(self):
         resposta_ollama_4 = {
             "message": {
