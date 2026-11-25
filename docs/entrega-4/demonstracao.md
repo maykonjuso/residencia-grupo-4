@@ -11,6 +11,21 @@ Esta página registra execuções reais do protótipo multiagente via terminal, 
 
 <p class="legenda">Vídeo demonstrativo do fluxo RUmo com perguntas e trace dos agentes.</p>
 
+## Consultas determinísticas ao grafo curricular
+
+O **Agente Fluxo** também responde consultas de impacto curricular diretamente a partir do grafo estruturado multi-curso da FCTE (`rag/dados/grafo_curricular.json`, carregado em `networkx.DiGraph`), abrangendo os 5 cursos de engenharia (6 currículos com controle explícito de vigência e equivalências). Para perguntas reconhecidas pela ferramenta `grafo_fluxo`, o cálculo de pré-requisitos, dependentes transitivos, gargalos e caminho crítico é feito deterministicamente por algoritmo de grafos, sem busca vetorial na RAG; quando um backend LLM está ativo (`ollama`, `hf` ou `openai`), o LLM apenas redige a resposta sobre o JSON calculado, preservando citações e alertas.
+
+```bash
+cd rag
+python -m rumo_rag "Se eu reprovar em Requisitos de Software, quais disciplinas travam?"
+python -m rumo_rag "Qual disciplina de Engenharia de Software destrava mais matérias?"
+python -m rumo_rag "Passei em MAT0025, CIC0004 e FGA0168; o que abre?"
+```
+
+Na primeira consulta, a busca de alcançabilidade pelas setas cheias identifica **Testes de Software (FGA0314)** e **Gerência de Configuração e Evolução de Software (GCES) (FGA0317)** como dependentes de **Requisitos de Software (FGA0313)**. Na segunda, o grau de saída das setas cheias identifica **Algoritmos e Programação de Computadores (CIC0004)** como principal gargalo do fluxograma. Já em cursos cujas matrizes oficiais não trazem códigos SIGAA nem pré-requisitos explícitos (Engenharia de Energia e Automotiva), a ferramenta recusa a inferência conforme a RN-03.
+
+Setas tracejadas não são tratadas como pré-requisitos confirmados: ao consultar pré-requisitos ou disciplinas liberadas por ligação tracejada, a resposta mantém o alerta de incerteza e orienta confirmar no SIGAA. O caminho crítico informa a maior cadeia de pré-requisitos confirmados registrada no grafo — não representa uma previsão de semestres até a formatura, pois não há dados de oferta de turmas nem do ritmo individual do estudante.
+
 !!! info "Execuções reproduzíveis e evidência generativa"
     Os Casos 1, 3 e 4 abaixo foram executados no modo extrativo (`--backend extrativo`) com modelos locais offline (`HF_HUB_OFFLINE=1`) para validação determinística do roteamento, paralelismo e degradação. O Caso 2 e o Caso 5 registram o comportamento atual do **Agente Validador ativo** (`#43`) e a execução real com modelo generativo (`qwen2.5:7b` via Ollama) após o fechamento de `#40`–`#43`.
 
@@ -271,3 +286,4 @@ Registro completo e consolidado das **12 consultas múltiplas** (**31 subpergunt
     | 1.6 | 20/11/2026 | @GabrielMacielBR | Inclusão da Tabela 3 recolhível com as respostas completas da LLM (`qwen2.5:7b`) e fontes citadas nas 12 perguntas múltiplas (`M01`–`M12`) | — |
     | 1.7 | 20/11/2026 | @GabrielMacielBR | Seleção de 4 destaques no corpo do Caso 6 (`Tabela 2`) e consolidação das 12 consultas completas (métricas + respostas da LLM) no Apêndice ao final do documento | — |
     | 1.8 | 23/11/2026 | Grupo 04 | Inclusão e destaque do vídeo demonstrativo da Task #47 no início da página | — |
+    | 1.9 | 23/11/2026 | @keilogger, @GabrielMacielBR | Documentação das consultas determinísticas ao grafo curricular (`grafo_fluxo` / `grafo_curricular.json`, Issues #61 e #62) | — |

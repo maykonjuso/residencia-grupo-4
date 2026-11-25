@@ -57,6 +57,23 @@ class ErroColeta(Exception):
     """Falha esperada da coleta (rede, página sem semanas, PDF ilegível). Mensagem para humanos."""
 
 
+class SemanaNaoPublicada(ErroColeta):
+    """A página respondeu, mas a UnB ainda não publicou o PDF da semana pedida."""
+
+    def __init__(self, referencia: date, ultima_semana: Semana | None = None):
+        self.referencia = referencia
+        self.ultima_semana = ultima_semana
+        if ultima_semana is not None:
+            msg = (
+                f"A UnB ainda não publicou o cardápio da semana de {referencia:%d/%m/%Y} "
+                f"em {PAGINA} (última semana publicada: "
+                f"{ultima_semana.inicio:%d/%m/%Y} a {ultima_semana.fim:%d/%m/%Y})."
+            )
+        else:
+            msg = f"A UnB ainda não publicou o cardápio da semana de {referencia:%d/%m/%Y} em {PAGINA}."
+        super().__init__(msg)
+
+
 @dataclass(frozen=True)
 class Semana:
     inicio: date
@@ -275,7 +292,8 @@ def gravar(
 # ----------------------------------------------------------------------------- orquestração
 
 def coletar(referencia: date, pagina_local: Path | None = None, pdf_local: Path | None = None,
-            url_pdf: str | None = None) -> dict:
+            url_pdf: str | None = None, exigir_semana: bool = False,
+            timeout: int = TIMEOUT) -> dict:
     """Baixa (ou lê do disco) a página e o PDF da semana e devolve tudo em memória, sem gravar."""
     avisos: list[str] = []
     pagina = None
@@ -286,13 +304,15 @@ def coletar(referencia: date, pagina_local: Path | None = None, pdf_local: Path 
         semana = Semana(inicio, intervalo[1] if intervalo else inicio + timedelta(days=6),
                         url_pdf or pdf_local.resolve().as_uri(), "informado na linha de comando")
     else:
-        pagina = pagina_local.read_bytes() if pagina_local else baixar(PAGINA)
+        pagina = pagina_local.read_bytes() if pagina_local else baixar(PAGINA, timeout=timeout)
         semanas, avisos_links = listar_semanas(pagina.decode("utf-8", errors="replace"))
         avisos += avisos_links
         semana, aviso = escolher_semana(semanas, referencia)
+        if exigir_semana and not semana.contem(referencia):
+            raise SemanaNaoPublicada(referencia, ultima_semana=semana)
         if aviso:
             avisos.append(aviso)
-    pdf = pdf_local.read_bytes() if pdf_local else baixar(semana.url)
+    pdf = pdf_local.read_bytes() if pdf_local else baixar(semana.url, timeout=timeout)
     texto, avisos_pdf = ler_pdf(pdf, semana)
     return {"semana": semana, "pagina": pagina, "pdf": pdf, "texto": texto,
             "dias": dias(texto), "avisos": avisos + avisos_pdf}

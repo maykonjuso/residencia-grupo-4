@@ -17,10 +17,10 @@ _LOCK_INDICE = threading.Lock()
 _TERMOS_RU = re.compile(
     r"\b(?:"
     r"ru|restaurante(?:\s+universit[aá]rio)?|almo[cç]o|jantar|caf[eé](?:\s+da\s+manh[aã])?|"
-    r"desjejum|refei[cç][aã]o|refei[cç][oõ]es|card[aá]pio|prato|vegetariano|vegetariana|vegano|vegana|"
-    r"alerg[eê]nicos?|alergia|intoler[aâ]ncia|cel[ií]ac[oa]s?|gl[uú]ten|trigo|lactose|leite|"
-    r"soja|amendoim|oleaginosas?|cogumelos?|su[ií]n[oa]|ovos?|pimenta|mel|"
-    r"calorias?|kcal|nutricional|dietas?|"
+    r"desjejum|refei[cç][aã]o|refei[cç][oõ]es|card[aá]pio|prato|monta(?:r|gem)?\s+(?:um\s+)?prato|"
+    r"vegetariano|vegetariana|vegano|vegana|alerg[eê]nicos?|alergia|intoler[aâ]ncia|cel[ií]ac[oa]s?|"
+    r"gl[uú]ten|trigo|lactose|leite|soja|amendoim|oleaginosas?|cogumelos?|su[ií]n[oa]|ovos?|pimenta|mel|"
+    r"calorias?|cal[oó]ric[ao]|kcal|nutricional|dietas?|sem\s+(?:leite|gl[uú]ten|lactose)|"
     r"aux[ií]lio\s+alimenta[cç][aã]o|pnaes|"
     r"grupo\s+(?:i{1,3}|iv)|isento|isen[cç][aã]o|bandej[aã]o|catraca"
     r")\b",
@@ -34,6 +34,7 @@ _TERMOS_FLUXO = re.compile(
     r"ppc|curso|cursos|engenharia|software|aeroespacial|automotiva|eletr[oô]nica|energia|"
     r"biom[eé]dica|ppgeb|mestrado|matr[ií]cula|trancamento|sigaa|ira|est[aá]gio|tcc|"
     r"optativa|obrigat[oó]ria|abi|c[aá]lculo|f[ií]sica|testes\s+de\s+software|termodin[aâ]mica|"
+    r"minha\s+agenda|minhas?\s+aulas?|agenda\s+de\s+aulas?|sala\s+d[ae]\s+aula|"
     r"[a-z]{2,4}\d{3,4}"
     r")\b",
     re.IGNORECASE,
@@ -239,6 +240,7 @@ class AgenteRU(Agente):
     )
     eixo = "ru"
     instrucoes = INSTRUCOES_RU
+    ferramentas = ("cardapio_do_dia", "montar_prato")
 
     def __init__(
         self,
@@ -359,6 +361,50 @@ class AgenteRU(Agente):
         """Monta as mensagens para o LLM usando o prompt especializado do Agente RU."""
         return geracao.montar_mensagens(pergunta, trechos, instrucoes=self.instrucoes)
 
+    def responder_ferramenta(self, mensagem: Mensagem) -> Resposta | None:
+        """Executa ferramenta estruturada do Agente RU quando a consulta pede cardápio/montagem."""
+        if pergunta_fora_do_dominio(mensagem.conteudo, self.eixo):
+            return None
+        from . import ferramentas
+
+        contexto = mensagem.contexto if isinstance(mensagem.contexto, dict) else {}
+        mensagem.contexto = contexto
+        chamada = ferramentas.extrair_chamada_ru(mensagem.conteudo, contexto)
+        if chamada is None:
+            return None
+
+        nome_ferr, args = chamada
+        t0 = time.monotonic()
+        fn = getattr(ferramentas, nome_ferr)
+        res = fn(**args)
+        duracao_ferr = round(time.monotonic() - t0, 3)
+
+        backend = contexto.get("backend", config.BACKEND)
+        texto_final, duracao_ger, alertas_final, redigido_llm = ferramentas.redigir_com_ferramenta(
+            mensagem.conteudo,
+            res,
+            self.instrucoes,
+            backend,
+        )
+
+        trace_ferr = res.para_trace()
+        trace_ferr["redigido_por_llm"] = redigido_llm
+        trace_ferr["llm_falhou"] = any("Redação via LLM falhou" in a for a in alertas_final)
+        contexto["ferramenta_chamada"] = trace_ferr
+        contexto["dado_estruturado"] = res.dados
+        contexto["trechos_recuperados"] = list(res.trechos_evidencia)
+        contexto["tempo_busca_s"] = duracao_ferr
+        contexto["tempo_geracao_s"] = duracao_ger
+        return Resposta(
+            conteudo=texto_final,
+            fontes=list(res.fontes),
+            confianca=0.0 if res.recusado else 1.0,
+            alertas=alertas_final,
+        )
+
     def executar(self, mensagem: Mensagem) -> Resposta:
-        """Executa guarda de domínio, busca no eixo RU e geração com prompt próprio."""
+        """Executa ferramenta estruturada quando aplicável ou segue busca RAG + geração."""
+        resposta_ferr = self.responder_ferramenta(mensagem)
+        if resposta_ferr is not None:
+            return resposta_ferr
         return executar_agente_dominio(self, mensagem)

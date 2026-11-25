@@ -47,11 +47,66 @@ def responder(
     sem_rag: bool = False,
     usar_agentes: bool = False,
     falhar_agente: str | None = None,
+    data: str | None = None,
+    perfil: dict | None = None,
+    curso: str | None = None,
+    curriculo_id: str | None = None,
+    vigencia: str | None = None,
 ) -> dict:
     if usar_agentes:
         return agentes.Orquestrador().executar(
-            pergunta, backend=backend, k=k, falhar_agente=falhar_agente
+            pergunta,
+            backend=backend,
+            k=k,
+            falhar_agente=falhar_agente,
+            data=data,
+            perfil=perfil,
+            curso=curso,
+            curriculo_id=curriculo_id,
+            vigencia=vigencia,
         )
+    # Consultas curriculares suportadas pelo grafo são resolvidas pelo algoritmo
+    # mesmo no modo CLI padrão (os comandos da task não exigem --agentes).
+    ctx_grafo = {"backend": backend}
+    if curso:
+        ctx_grafo["curso"] = curso
+    if curriculo_id:
+        ctx_grafo["curriculo_id"] = curriculo_id
+    if vigencia:
+        ctx_grafo["vigencia"] = vigencia
+    mensagem_grafo = agentes.Mensagem(
+        remetente="CLI",
+        destinatario="Agente Fluxo",
+        conteudo=pergunta,
+        contexto=ctx_grafo,
+    )
+    resposta_grafo = agentes.AgenteFluxo(k=k, modo=config.BUSCA).responder_grafo(mensagem_grafo)
+    if resposta_grafo is not None:
+        trechos = mensagem_grafo.contexto.get("trechos_recuperados", [])
+        return {
+            "pergunta": pergunta,
+            "subperguntas": [],
+            "resposta": resposta_grafo.conteudo,
+            "fontes_citadas": [
+                {"n": i, **fonte} for i, fonte in enumerate(resposta_grafo.fontes, start=1)
+            ],
+            "valores_sem_fonte": [],
+            "sem_citacao": False,
+            "trechos_recuperados": [
+                {
+                    chave: trecho.get(chave)
+                    for chave in (
+                        "chunk_id", "doc_id", "titulo", "pagina", "secao",
+                        "similaridade", "url", "texto",
+                    )
+                }
+                for trecho in trechos
+            ],
+            "tempo_decomposicao_s": 0.0,
+            "tempo_busca_s": mensagem_grafo.contexto.get("tempo_busca_s", 0.0),
+            "tempo_geracao_s": mensagem_grafo.contexto.get("tempo_geracao_s", 0.0),
+            "backend": "grafo",
+        }
     if sem_rag:
         t0 = time.time()
         resposta = geracao.gerar_sem_rag(pergunta, backend=backend)
@@ -169,7 +224,16 @@ def imprimir_agentes(r: dict, mostrar_trace: bool = False):
                 )
                 for ex in passo.get("execucoes", []):
                     status = f"ERRO ({ex['erro']})" if ex.get("erro") else f"OK ({ex['n_trechos']} trechos)"
-                    print(f"   - [{ex['nome_agente']}] {ex['tempo_total_s']}s · {status}")
+                    ferr = ex.get("ferramenta")
+                    ferr_txt = ""
+                    if ferr:
+                        args_txt = json.dumps(ferr.get("argumentos", {}), ensure_ascii=False)
+                        estado_f = " · RECUSADO" if ferr.get("recusado") else ""
+                        modo_red = ""
+                        if not ferr.get("recusado") and "redigido_por_llm" in ferr:
+                            modo_red = " · redação=LLM" if ferr["redigido_por_llm"] else " · redação=determinística"
+                        ferr_txt = f" · ferramenta={ferr['nome']}({args_txt}){estado_f}{modo_red}"
+                    print(f"   - [{ex['nome_agente']}] {ex['tempo_total_s']}s · {status}{ferr_txt}")
             elif etapa == "validacao_factual":
                 print("4. Validador factual:")
                 for res in passo.get("resultados", []):
@@ -245,6 +309,10 @@ def imprimir_agentes(r: dict, mostrar_trace: bool = False):
         print("Fontes citadas:")
         for f in parte.get("fontes_citadas", []):
             print(f"  [{f['n']}] {f['doc_id']} · {f['titulo']} · p.{f['pagina']} · {f['url']}")
+        if parte.get("dado_estruturado") is not None and parte.get("ferramenta_chamada"):
+            nome_f = parte["ferramenta_chamada"]["nome"]
+            print(f"\nDado estruturado ({nome_f}):")
+            print(json.dumps(parte["dado_estruturado"], ensure_ascii=False, indent=2))
         val = parte.get("validacao") or {}
         if val.get("motivos"):
             print(f"⚠ Validador: {'; '.join(val['motivos'])}")
@@ -263,6 +331,10 @@ def perguntar(args):
     sem_rag = getattr(args, "sem_rag", False)
     usar_agentes = getattr(args, "agentes", False)
     falhar_agente = getattr(args, "falhar_agente", None)
+    data = getattr(args, "data", None)
+    curso = getattr(args, "curso", None)
+    curriculo_id = getattr(args, "curriculo", None)
+    vigencia = getattr(args, "vigencia", None)
     r = responder(
         " ".join(args.pergunta),
         args.backend,
@@ -271,6 +343,10 @@ def perguntar(args):
         sem_rag=sem_rag,
         usar_agentes=usar_agentes,
         falhar_agente=falhar_agente,
+        data=data,
+        curso=curso,
+        curriculo_id=curriculo_id,
+        vigencia=vigencia,
     )
     if getattr(args, "saida", "texto") == "json":
         saida_dict = dict(r)
@@ -365,6 +441,10 @@ def main(argv=None):
     p.add_argument("--sem-rag", action="store_true", help="Executa apenas com LLM puro, sem busca ou recuperação na base")
     p.add_argument("--agentes", action="store_true", help="Usa o orquestrador multiagentes (RU, Fluxo e Validador)")
     p.add_argument("--trace", action="store_true", help="Exibe o rastreamento completo da orquestração multiagentes")
+    p.add_argument("--data", default=None, help="Data de referência AAAA-MM-DD para ferramentas de cardápio")
+    p.add_argument("--curso", default=None, help="Curso da FCTE para consulta curricular (ex.: software, aeroespacial, eletronica, automotiva, energia)")
+    p.add_argument("--curriculo", default=None, help="ID exato do currículo/vigência (ex.: automotiva-2018-2026, automotiva-2027)")
+    p.add_argument("--vigencia", default=None, help="Ano/período de vigência do currículo (ex.: 2027, 2018)")
     p.add_argument("--falhar-agente", choices=["ru", "fluxo", "validador"], default=None,
                    help="Simula queda de um agente para testar degradação elegante")
     p.add_argument("--saida", choices=["texto", "json"], default="texto", help="Formato de saída (texto ou json)")

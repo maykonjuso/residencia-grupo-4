@@ -8,6 +8,11 @@ ORIGINAIS = DADOS / "originais"     # arquivos baixados (PDF/HTML), fora do git
 TEXTO = DADOS / "texto"             # texto extraído e limpo, um .txt por documento
 CHUNKS = DADOS / "chunks.jsonl"     # chunks com metadados (também alimenta o BM25)
 CARDAPIO_SEMANAL_JSON = DADOS / "cardapio_semanal.json"  # cardápio semanal estruturado (fonte única do Agente RU)
+CARDAPIO_SEMANAL_JSON = DADOS / "cardapio_semanal.json"  # cardápio semanal estruturado (fonte única do Agente RU)
+CARDAPIO_AUTO_FETCH = os.getenv("RUMO_CARDAPIO_AUTO_FETCH", "1") != "0"
+CARDAPIO_COOLDOWN_SEGUNDOS = int(os.getenv("RUMO_CARDAPIO_COOLDOWN_SEGUNDOS", "3600"))
+CARDAPIO_VERIFICAR_INTERVALO_SEGUNDOS = int(os.getenv("RUMO_CARDAPIO_INTERVALO_SEGUNDOS", "3600"))
+CARDAPIO_FETCH_TIMEOUT = int(os.getenv("RUMO_CARDAPIO_TIMEOUT", "15"))
 CALENDARIO_JSON = DADOS / "calendario_academico.json"     # calendário acadêmico estruturado (feriados, recesso, vigência)
 CATALOGO = RAIZ / "catalogo.yaml"
 AVALIACAO = RAIZ / "avaliacao"

@@ -9,11 +9,13 @@
 O orquestrador do portal (FcteMapping) e o OpenClaw chamam esta rota. A base, o índice e os
 prompts dos agentes continuam exclusivos do Grupo 04.
 """
+import asyncio
 import logging
 import os
 import re
 import secrets
 import time
+from contextlib import asynccontextmanager
 from datetime import date
 
 from fastapi import FastAPI, Header, HTTPException
@@ -21,7 +23,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, ConfigDict, Field
 
 from . import config, indice
-from .agentes import AgenteFluxo, AgenteRU, Orquestrador
+from .agentes import AgenteFluxo, AgenteRU, Orquestrador, ferramentas
 from .coleta import cardapio
 
 log = logging.getLogger("rumo.api")
@@ -35,7 +37,33 @@ _CORS_ORIGINS = [
     o.strip() for o in os.getenv("RUMO_CORS_ORIGINS", "*").split(",") if o.strip()
 ] or ["*"]
 
-app = FastAPI(title="RUmo · Grupo 04", version="1.0.0")
+async def _loop_sincronizacao_cardapio() -> None:
+    """Mantém o cardápio da semana sincronizado em segundo plano sem bloquear o servidor."""
+    while True:
+        try:
+            await asyncio.to_thread(cardapio.sincronizar_semana_atual)
+        except Exception as exc:
+            log.warning("Erro inesperado no agendador de cardápio: %s", exc)
+        await asyncio.sleep(max(60, config.CARDAPIO_VERIFICAR_INTERVALO_SEGUNDOS))
+
+
+@asynccontextmanager
+async def lifespan(_app: FastAPI):
+    task: asyncio.Task | None = None
+    if config.CARDAPIO_AUTO_FETCH:
+        task = asyncio.create_task(_loop_sincronizacao_cardapio())
+    try:
+        yield
+    finally:
+        if task is not None:
+            task.cancel()
+            try:
+                await task
+            except asyncio.CancelledError:
+                pass
+
+
+app = FastAPI(title="RUmo · Grupo 04", version="1.0.0", lifespan=lifespan)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=_CORS_ORIGINS,
@@ -50,6 +78,9 @@ class Contexto(BaseModel):
     campus: str = "gama"
     data: date | None = None
     curso: str | None = Field(default=None, max_length=60)
+    perfil: dict | None = None
+    curriculo_id: str | None = Field(default=None, max_length=60)
+    vigencia: str | None = Field(default=None, max_length=20)
 
 
 class Pergunta(BaseModel):
@@ -113,11 +144,13 @@ def _executar_com_fallback(
     pergunta: str,
     max_trechos: int,
     backend: str,
+    **extras,
 ) -> tuple[dict, str]:
     try:
-        resultado = orq.executar(pergunta, k=max_trechos, backend=backend)
+        resultado = orq.executar(pergunta, k=max_trechos, backend=backend, **extras)
         if backend != "extrativo" and any(
-            p.get("erro") for p in resultado.get("partes", [])
+            p.get("erro") or (p.get("ferramenta_chamada") or {}).get("llm_falhou")
+            for p in resultado.get("partes", [])
         ):
             raise RuntimeError("Falha de geração em parte multiagente")
         return resultado, backend
@@ -129,7 +162,7 @@ def _executar_com_fallback(
             backend,
             type(exc).__name__,
         )
-        resultado = orq.executar(pergunta, k=max_trechos, backend="extrativo")
+        resultado = orq.executar(pergunta, k=max_trechos, backend="extrativo", **extras)
         return resultado, "extrativo"
 
 
@@ -139,7 +172,7 @@ def raiz():
         "servico": "RUmo · Grupo 04",
         "status": "ok",
         "multiagente": True,
-        "rotas": ["/saude", "/perguntar", "/calendario"],
+        "rotas": ["/saude", "/perguntar", "/calendario", "/cardapio", "/cardapio/atualizar"],
     }
 
 
@@ -176,6 +209,26 @@ def saude():
         "multiagente": True,
         "agentes": list(AGENTES_ATIVOS),
         "cardapio_semanal": dados_semana is not None,
+        "cardapio": cardapio.estado_sincronizacao(),
+    }
+
+
+@app.get("/cardapio")
+def obter_cardapio(data: str | None = None, refeicao: str | None = None):
+    return ferramentas.cardapio_do_dia(data=data, refeicao=refeicao).para_dict()
+
+
+@app.post("/cardapio/atualizar")
+async def atualizar_cardapio(authorization: str | None = Header(default=None)):
+    exigir_token(authorization)
+    dados, info = await asyncio.to_thread(cardapio.sincronizar_semana_atual, forcar=True)
+    return {
+        "atualizado": dados is not None,
+        "status": info.get("status"),
+        "semana": dados["semana"] if dados else None,
+        "refeicoes_total": len(dados["refeicoes"]) if dados else 0,
+        "motivo": info.get("motivo"),
+        "estado": cardapio.estado_sincronizacao(),
     }
 
 
@@ -205,6 +258,11 @@ def perguntar(
         pergunta=pergunta,
         max_trechos=entrada.max_trechos,
         backend=config.BACKEND,
+        data=entrada.contexto.data.isoformat() if entrada.contexto.data else None,
+        perfil=entrada.contexto.perfil,
+        curso=entrada.contexto.curso,
+        curriculo_id=entrada.contexto.curriculo_id,
+        vigencia=entrada.contexto.vigencia,
     )
 
     fontes_v1 = [

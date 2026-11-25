@@ -5,8 +5,9 @@ from __future__ import annotations
 import time
 
 from .. import calendario, config, geracao, indice
-from .agente_ru import _LOCK_INDICE, executar_agente_dominio
+from .agente_ru import _LOCK_INDICE, executar_agente_dominio, pergunta_fora_do_dominio
 from .base import Agente
+from ..grafo_curricular import carregar_grafo_f16
 from .mensagem import Mensagem, Resposta
 
 INSTRUCOES_FLUXO = f"""Você é o Agente Fluxo do sistema RUmo, especialista exclusivo nos fluxos de disciplinas, cursos de engenharia e normas acadêmicas da FCTE/UnB (campus Gama).
@@ -29,6 +30,7 @@ class AgenteFluxo(Agente):
     )
     eixo = "fluxo"
     instrucoes = INSTRUCOES_FLUXO
+    ferramentas = ("grafo_fluxo", "minha_agenda")
 
     def __init__(self, k: int = config.TOP_K, modo: str = "hibrido"):
         if not isinstance(k, int) or isinstance(k, bool) or k <= 0:
@@ -85,8 +87,52 @@ class AgenteFluxo(Agente):
         """Monta as mensagens para o LLM usando o prompt especializado do Agente Fluxo."""
         return geracao.montar_mensagens(pergunta, trechos, instrucoes=self.instrucoes)
 
+    def responder_grafo(self, mensagem: Mensagem) -> Resposta | None:
+        """Usa ferramentas locais (agenda ou grafo curricular) sem recorrer ao LLM."""
+        if not pergunta_fora_do_dominio(mensagem.conteudo, self.eixo):
+            from . import ferramentas
+
+            contexto = mensagem.contexto if isinstance(mensagem.contexto, dict) else {}
+            mensagem.contexto = contexto
+            chamada = ferramentas.extrair_chamada_fluxo(mensagem.conteudo, contexto)
+            if chamada is None:
+                return None
+
+            nome_ferr, args = chamada
+            t0 = time.monotonic()
+            res = getattr(ferramentas, nome_ferr)(**args)
+            tempo_busca = round(time.monotonic() - t0, 3)
+            if res.ferramenta == "grafo_fluxo" and res.recusado and res.dados.get("fallback_rag", True):
+                return None
+
+            backend = contexto.get("backend", config.BACKEND)
+            texto_final, tempo_ger, alertas_final, redigido_llm = ferramentas.redigir_com_ferramenta(
+                mensagem.conteudo,
+                res,
+                self.instrucoes,
+                backend,
+            )
+
+            trace_ferr = res.para_trace()
+            trace_ferr["redigido_por_llm"] = redigido_llm
+            trace_ferr["llm_falhou"] = any("Redação via LLM falhou" in a for a in alertas_final)
+            contexto["ferramenta_chamada"] = trace_ferr
+            contexto["dado_estruturado"] = res.dados
+            contexto["trechos_recuperados"] = list(res.trechos_evidencia)
+            contexto["tempo_busca_s"] = tempo_busca
+            contexto["tempo_geracao_s"] = tempo_ger
+            return Resposta(
+                conteudo=texto_final,
+                fontes=list(res.fontes),
+                confianca=0.0 if res.recusado else 1.0,
+                alertas=alertas_final,
+            )
+        return None
+
+    responder_ferramenta = responder_grafo
+
     def executar(self, mensagem: Mensagem) -> Resposta:
-        """Usa a base estruturada para calendário/feriados ou executa busca RAG no eixo Fluxo."""
+        """Usa calendário estruturado, grafo curricular ou busca RAG especializada no eixo Fluxo."""
         contexto = mensagem.contexto if isinstance(mensagem.contexto, dict) else {}
         data_ref_raw = contexto.get("data")
         data_ref = None
@@ -113,4 +159,8 @@ class AgenteFluxo(Agente):
                 confianca=1.0,
                 alertas=[],
             )
+
+        resposta_grafo = self.responder_grafo(mensagem)
+        if resposta_grafo is not None:
+            return resposta_grafo
         return executar_agente_dominio(self, mensagem)

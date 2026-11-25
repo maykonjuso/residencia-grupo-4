@@ -19,12 +19,17 @@ Decisões de parsing (resumidas em docs/entrega-4/index.md; issue #54):
 from __future__ import annotations
 
 import json
+import logging
 import re
+import threading
+import time
 import unicodedata
 from datetime import date, datetime, timedelta
 from pathlib import Path
 
 from .. import config
+
+log = logging.getLogger("rumo.cardapio")
 
 SCHEMA = Path(__file__).with_name("schema_cardapio.json")
 
@@ -305,12 +310,12 @@ def _data_do_chunk(chunk: dict) -> str | None:
 
 def buscar(data: str, refeicao: str | None = None, doc_id: str | None = None,
            chunks: list[dict] | None = None) -> list[dict]:
-    """Cardápios estruturados da data (e refeição, se dada). Lista vazia se não houver."""
+    """Cardápios estruturados da data (e refeição, se dada). Sem `chunks` explícito, lê `cardapio_semanal.json`."""
     date.fromisoformat(data)  # valida o formato AAAA-MM-DD
     ref = normalizar_refeicao(refeicao) if refeicao else None
     if chunks is None:
-        if config.CARDAPIO_SEMANAL_JSON.exists():
-            dados = json.loads(config.CARDAPIO_SEMANAL_JSON.read_text(encoding="utf-8"))
+        dados, _ = ler_semana_json()
+        if dados:
             semanais = [
                 r for r in dados.get("refeicoes", [])
                 if r.get("data") == data
@@ -339,13 +344,54 @@ def semana(inicio: str) -> list[str]:
     return [(d + timedelta(days=i)).isoformat() for i in range(7)]
 
 
-# ----------------------------------------------------------------------------- cardápio semanal (.json)
+# ----------------------------------------------------------------------------- cardápio semanal e sincronização
 
 _DIAS_SEMANA_PT = (
     "segunda-feira", "terça-feira", "quarta-feira", "quinta-feira",
     "sexta-feira", "sábado", "domingo",
 )
 _RE_PAGINA = re.compile(r"\[\[PAGINA (\d+)\]\]\s*\n(## [^\n]+)")
+_LOCK_SYNC = threading.Lock()
+
+
+def _estado_inicial() -> dict:
+    return {
+        "status": "pendente",
+        "motivo": None,
+        "ultima_tentativa_monotonic": None,
+        "ultima_tentativa_em": None,
+        "ultima_semana_tentada": None,
+        "ultima_semana_publicada": None,
+        "ultimo_erro": None,
+        "status_anterior": None,
+    }
+
+
+_ESTADO_SYNC: dict = _estado_inicial()
+
+
+def resetar_estado_sincronizacao() -> None:
+    """Reinicia o estado em memória da sincronização (usado nos testes)."""
+    with _LOCK_SYNC:
+        _ESTADO_SYNC.clear()
+        _ESTADO_SYNC.update(_estado_inicial())
+
+
+def _doc_id_para_url(url: str) -> str:
+    """Consulta somente-leitura do catalogo.yaml; usa 'F99' como fallback válido no schema."""
+    try:
+        if config.CATALOGO.exists():
+            txt = config.CATALOGO.read_text(encoding="utf-8")
+            m = re.search(
+                r'^\s*-\s*id:\s*(F\d+)\s*\n(?:(?!^\s*-\s*id:).*\n)*?\s*url:\s*"?' + re.escape(url) + r'"?\s*$',
+                txt,
+                re.M,
+            )
+            if m:
+                return m.group(1)
+    except Exception:
+        pass
+    return "F99"
 
 
 def estruturar_semana(resultado_coleta: dict, doc_id: str = "F99") -> dict:
@@ -392,41 +438,203 @@ def estruturar_semana(resultado_coleta: dict, doc_id: str = "F99") -> dict:
 
 def salvar_semana_json(
     resultado_coleta: dict,
-    doc_id: str,
+    doc_id: str = "F99",
     destino: Path | None = None,
 ) -> Path:
     """Valida cada refeição no schema e grava `cardapio_semanal.json` atomicamente."""
     from .scraper import gravar_atomico
 
-    destino = destino or config.CARDAPIO_SEMANAL_JSON
+    alvo = destino or config.CARDAPIO_SEMANAL_JSON
     dados = estruturar_semana(resultado_coleta, doc_id=doc_id)
     for refeicao in dados["refeicoes"]:
         validar(refeicao)
-    gravar_atomico(destino, json.dumps(dados, ensure_ascii=False, indent=2) + "\n")
-    return destino
+    gravar_atomico(alvo, json.dumps(dados, ensure_ascii=False, indent=2) + "\n")
+    return alvo
+
+
+def ler_semana_json(caminho: Path | None = None) -> tuple[dict | None, str | None]:
+    """Lê `cardapio_semanal.json` e valida o intervalo `semana.inicio`/`semana.fim`."""
+    alvo = caminho or config.CARDAPIO_SEMANAL_JSON
+    if not isinstance(alvo, Path) or not alvo.exists():
+        return None, "Cardápio semanal (.json) não encontrado."
+    try:
+        dados = json.loads(alvo.read_text(encoding="utf-8"))
+        sem = dados.get("semana") or {}
+        date.fromisoformat(sem["inicio"])
+        date.fromisoformat(sem["fim"])
+        return dados, None
+    except Exception:
+        return None, "Cardápio semanal (.json) inválido ou sem intervalo de semana."
+
+
+def semana_contem_data(dados: dict, alvo: date) -> bool:
+    """Retorna True se `alvo` estiver dentro de `dados['semana']['inicio'..'fim']`."""
+    try:
+        sem = dados.get("semana") or {}
+        inicio = date.fromisoformat(sem["inicio"])
+        fim = date.fromisoformat(sem["fim"])
+        return inicio <= alvo <= fim
+    except Exception:
+        return False
 
 
 def carregar_semana_atual(
     hoje: date | None = None,
-    caminho: Path = config.CARDAPIO_SEMANAL_JSON,
+    caminho: Path | None = None,
 ) -> tuple[dict | None, str | None]:
     """Carrega `cardapio_semanal.json` e valida se a semana bate com a data atual."""
     ref = hoje or date.today()
-    if not caminho.exists():
-        return None, "Cardápio semanal (.json) não encontrado."
-    try:
-        dados = json.loads(caminho.read_text(encoding="utf-8"))
-        sem = dados.get("semana") or {}
-        inicio = date.fromisoformat(sem["inicio"])
-        fim = date.fromisoformat(sem["fim"])
-    except Exception:
-        return None, "Cardápio semanal (.json) inválido ou sem intervalo de semana."
+    dados, erro = ler_semana_json(caminho)
+    if not dados:
+        return None, erro
+    sem = dados["semana"]
+    inicio = date.fromisoformat(sem["inicio"])
+    fim = date.fromisoformat(sem["fim"])
     if not (inicio <= ref <= fim):
         return None, (
             f"Cardápio semanal desatualizado ({inicio:%d/%m/%Y} a {fim:%d/%m/%Y}) "
             f"para a data atual ({ref:%d/%m/%Y})."
         )
     return dados, None
+
+
+_CARREGAR_SEMANA_ATUAL_ORIG = carregar_semana_atual
+
+
+def estado_sincronizacao(
+    hoje: date | None = None,
+    caminho: Path | None = None,
+) -> dict:
+    """Snapshot JSON-serializável do estado atual do cardápio para /saude."""
+    ref = hoje or date.today()
+    dados_local, _ = ler_semana_json(caminho)
+    semana_local = dict(dados_local["semana"]) if dados_local else None
+    atualizado = bool(dados_local and semana_contem_data(dados_local, ref))
+    with _LOCK_SYNC:
+        snap = dict(_ESTADO_SYNC)
+    return {
+        "atualizado": atualizado,
+        "semana_local": semana_local,
+        "status": "atualizado_cache" if (atualizado and snap["status"] == "pendente") else snap["status"],
+        "ultima_verificacao_em": snap["ultima_tentativa_em"],
+        "ultimo_erro": snap["ultimo_erro"],
+        "ultima_semana_publicada": snap["ultima_semana_publicada"],
+    }
+
+
+def _registrar_info(status: str, motivo: str | None, semana_local: dict | None, snap: dict) -> dict:
+    return {
+        "status": status,
+        "status_origem": snap.get("status_anterior"),
+        "motivo": motivo,
+        "ultima_semana_publicada": snap.get("ultima_semana_publicada"),
+        "semana_local": semana_local,
+        "ultima_verificacao_em": snap.get("ultima_tentativa_em"),
+    }
+
+
+def sincronizar_semana_atual(
+    referencia: date | None = None,
+    caminho: Path | None = None,
+    forcar: bool = False,
+    cooldown_segundos: int | None = None,
+    timeout: int | None = None,
+) -> tuple[dict | None, dict]:
+    """Garante o cardápio semanal vigente no JSON local, com lock + cooldown e fallback seguro."""
+    from . import scraper
+
+    ref = referencia or date.today()
+    destino = caminho or config.CARDAPIO_SEMANAL_JSON
+    cooldown = config.CARDAPIO_COOLDOWN_SEGUNDOS if cooldown_segundos is None else cooldown_segundos
+    t_out = config.CARDAPIO_FETCH_TIMEOUT if timeout is None else timeout
+
+    if not forcar:
+        dados_cache, _ = ler_semana_json(destino)
+        if dados_cache and semana_contem_data(dados_cache, ref):
+            with _LOCK_SYNC:
+                _ESTADO_SYNC.update({
+                    "status": "atualizado_cache",
+                    "motivo": None,
+                    "ultimo_erro": None,
+                    "ultima_semana_publicada": dict(dados_cache["semana"]),
+                })
+                snap = dict(_ESTADO_SYNC)
+            return dados_cache, _registrar_info("atualizado_cache", None, dict(dados_cache["semana"]), snap)
+
+    with _LOCK_SYNC:
+        dados_local, _ = ler_semana_json(destino)
+        semana_local = dict(dados_local["semana"]) if dados_local else None
+        if not forcar and dados_local and semana_contem_data(dados_local, ref):
+            _ESTADO_SYNC.update({
+                "status": "atualizado_cache",
+                "motivo": None,
+                "ultimo_erro": None,
+                "ultima_semana_publicada": semana_local,
+            })
+            snap = dict(_ESTADO_SYNC)
+            return dados_local, _registrar_info("atualizado_cache", None, semana_local, snap)
+
+        chave_semana = tuple(ref.isocalendar()[:2])
+        agora_mono = time.monotonic()
+        if (
+            not forcar
+            and _ESTADO_SYNC["ultima_tentativa_monotonic"] is not None
+            and _ESTADO_SYNC["ultima_semana_tentada"] == chave_semana
+            and (agora_mono - _ESTADO_SYNC["ultima_tentativa_monotonic"]) < cooldown
+        ):
+            snap = dict(_ESTADO_SYNC)
+            return None, _registrar_info("em_cooldown", snap["motivo"], semana_local, snap)
+
+        _ESTADO_SYNC["ultima_tentativa_monotonic"] = agora_mono
+        _ESTADO_SYNC["ultima_tentativa_em"] = datetime.now().isoformat(timespec="seconds")
+        _ESTADO_SYNC["ultima_semana_tentada"] = chave_semana
+
+        try:
+            resultado = scraper.coletar(ref, exigir_semana=True, timeout=t_out)
+            doc_id = _doc_id_para_url(resultado["semana"].url)
+            salvar_semana_json(resultado, doc_id=doc_id, destino=destino)
+            dados_novos, erro_leitura = ler_semana_json(destino)
+            if not dados_novos:
+                raise RuntimeError(erro_leitura or "Falha ao reler o cardápio semanal gravado.")
+            sem_pub = dict(dados_novos["semana"])
+            _ESTADO_SYNC.update({
+                "status": "atualizado_remoto",
+                "status_anterior": "atualizado_remoto",
+                "motivo": None,
+                "ultimo_erro": None,
+                "ultima_semana_publicada": sem_pub,
+            })
+            snap = dict(_ESTADO_SYNC)
+            log.info("Cardápio semanal atualizado automaticamente: %s a %s", sem_pub["inicio"], sem_pub["fim"])
+            return dados_novos, _registrar_info("atualizado_remoto", None, sem_pub, snap)
+        except scraper.SemanaNaoPublicada as exc:
+            sem_pub = (
+                {"inicio": exc.ultima_semana.inicio.isoformat(), "fim": exc.ultima_semana.fim.isoformat()}
+                if exc.ultima_semana is not None
+                else _ESTADO_SYNC.get("ultima_semana_publicada")
+            )
+            msg = str(exc)
+            _ESTADO_SYNC.update({
+                "status": "unb_nao_publicou",
+                "status_anterior": "unb_nao_publicou",
+                "motivo": msg,
+                "ultimo_erro": msg,
+                "ultima_semana_publicada": sem_pub,
+            })
+            snap = dict(_ESTADO_SYNC)
+            log.info("Cardápio semanal ainda não publicado pela UnB: %s", msg)
+            return None, _registrar_info("unb_nao_publicou", msg, semana_local, snap)
+        except (scraper.ErroColeta, Exception) as exc:
+            msg = str(exc)
+            _ESTADO_SYNC.update({
+                "status": "erro_coleta",
+                "status_anterior": "erro_coleta",
+                "motivo": msg,
+                "ultimo_erro": msg,
+            })
+            snap = dict(_ESTADO_SYNC)
+            log.warning("Falha na coleta automática do cardápio semanal: %s", msg)
+            return None, _registrar_info("erro_coleta", msg, semana_local, snap)
 
 
 def _datas_da_pergunta(pergunta: str, inicio: date, fim: date, hoje: date) -> set[str]:

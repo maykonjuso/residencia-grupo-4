@@ -86,7 +86,8 @@ def colecao(recriar: bool = False):
 
 
 def salvar_chunks(chunks: list[dict]) -> None:
-    """Grava os chunks em JSONL de forma atômica (sem tocar no ChromaDB)."""
+    """Grava os chunks em JSONL de forma atômica (sem cardápios e sem tocar no ChromaDB)."""
+    chunks = [c for c in chunks if c.get("tipo") != "cardapio"]
     config.CHUNKS.parent.mkdir(parents=True, exist_ok=True)
     tmp = config.CHUNKS.with_suffix(".jsonl.tmp")
     with open(tmp, "w", encoding="utf-8") as f:
@@ -108,6 +109,8 @@ def indexar(chunks: list[dict]) -> None:
             f"Dependências ausentes para indexação vetorial ({', '.join(faltando)}). "
             "Use `ingerir --somente-chunks` ou instale requirements.txt."
         )
+    # Cardápios semanais não entram na RAG (são servidos via cardapio_semanal.json + ferramentas).
+    chunks = [c for c in chunks if c.get("tipo") != "cardapio"]
     salvar_chunks(chunks)
     vetores = embed_passagens([c["texto_indexado"] for c in chunks])
     col = colecao(recriar=True)
@@ -124,8 +127,10 @@ def indexar(chunks: list[dict]) -> None:
 @lru_cache(maxsize=1)
 def _bm25():
     from rank_bm25 import BM25Okapi
-    with open(config.CHUNKS, encoding="utf-8") as f:
-        chunks = [json.loads(l) for l in f]
+    chunks = [
+        c for c in (json.loads(l) for l in open(config.CHUNKS, encoding="utf-8") if l.strip())
+        if c.get("tipo") != "cardapio"
+    ]
     return chunks, BM25Okapi([tokenizar(c["texto_indexado"]) for c in chunks])
 
 
@@ -163,6 +168,8 @@ def _buscar_simples(pergunta: str, k: int = config.TOP_K, modo: str = "hibrido",
 
     resultado = []
     for cid, nota in sorted(fusao.items(), key=lambda x: -x[1])[:k]:
+        if cid not in por_id:
+            continue
         c = dict(por_id[cid])
         c["nota_rrf"] = round(nota, 5)
         if cid in distancias:
