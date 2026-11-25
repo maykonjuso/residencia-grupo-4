@@ -9,26 +9,15 @@ from __future__ import annotations
 
 from dataclasses import asdict, dataclass, field
 from datetime import date, timedelta
-import json
 from pathlib import Path
 import re
 import time
 from typing import Any
-import unicodedata
 
 from .. import config, geracao
 from ..coleta import cardapio
-from ..grafo_curricular import carregar_grafo_f16, carregar_repositorio_grafos
-
-_DIAS_SEMANA = (
-    "segunda-feira",
-    "terça-feira",
-    "quarta-feira",
-    "quinta-feira",
-    "sexta-feira",
-    "sábado",
-    "domingo",
-)
+from ..grafo_curricular import carregar_repositorio_grafos
+from ..texto import DIAS_SEMANA as _DIAS_SEMANA, normalizar_texto as _norm
 
 _DIAS_CURTOS = {
     "segunda": "segunda-feira",
@@ -75,11 +64,6 @@ _EXCLUSAO_ALERGENICOS = (
     (re.compile(r"\b(?:sem|nao\s+contem|livre\s+de)\s+mel\b", re.I), "mel"),
     (re.compile(r"\b(?:sem|nao\s+contem|livre\s+de|alergi\w*\s+a)\s+oleaginosas?\b", re.I), "oleaginosa"),
 )
-
-
-def _norm(texto: str) -> str:
-    sem = unicodedata.normalize("NFKD", texto.casefold())
-    return " ".join("".join(c for c in sem if not unicodedata.combining(c)).split())
 
 
 @dataclass

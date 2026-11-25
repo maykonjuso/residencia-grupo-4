@@ -23,11 +23,11 @@ import logging
 import re
 import threading
 import time
-import unicodedata
 from datetime import date, datetime, timedelta
 from pathlib import Path
 
 from .. import config
+from ..texto import DIAS_SEMANA as _DIAS_SEMANA_PT, sem_acentos as _sem_acento, slugify
 
 log = logging.getLogger("rumo.cardapio")
 
@@ -104,12 +104,7 @@ _SINONIMOS_ALERGENICO: dict[str, str] = {
 # ----------------------------------------------------------------------------- utilidades
 
 def slug(texto: str) -> str:
-    s = unicodedata.normalize("NFKD", texto).encode("ascii", "ignore").decode().lower()
-    return re.sub(r"[^a-z0-9]+", "-", s).strip("-") or "item"
-
-
-def _sem_acento(texto: str) -> str:
-    return unicodedata.normalize("NFKD", texto).encode("ascii", "ignore").decode().lower()
+    return slugify(texto, padrao="item")
 
 
 def normalizar_refeicao(valor: str) -> str:
@@ -346,10 +341,6 @@ def semana(inicio: str) -> list[str]:
 
 # ----------------------------------------------------------------------------- cardápio semanal e sincronização
 
-_DIAS_SEMANA_PT = (
-    "segunda-feira", "terça-feira", "quarta-feira", "quinta-feira",
-    "sexta-feira", "sábado", "domingo",
-)
 _RE_PAGINA = re.compile(r"\[\[PAGINA (\d+)\]\]\s*\n(## [^\n]+)")
 _LOCK_SYNC = threading.Lock()
 

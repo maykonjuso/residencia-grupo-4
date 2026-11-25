@@ -25,9 +25,9 @@ from pydantic import BaseModel, ConfigDict, Field
 from . import config, indice
 from .agentes import AgenteFluxo, AgenteRU, Orquestrador, ferramentas
 from .coleta import cardapio
+from .texto import DIAS_SEMANA as DIAS
 
 log = logging.getLogger("rumo.api")
-DIAS = ("segunda-feira", "terça-feira", "quarta-feira", "quinta-feira", "sexta-feira", "sábado", "domingo")
 SEM_BASE = "Não encontrei essa informação nas fontes da base."
 AGENTES_ATIVOS = ("Agente RU", "Agente Fluxo", "Agente Validador", "Sintetizador")
 # Publicada na internet, a API gastaria a cota do LLM de quem chamasse. Com RUMO_API_TOKEN definido,

@@ -21,7 +21,8 @@ def main() -> int:
     if not config.CHUNKS.exists():
         print(f"{config.CHUNKS} não existe — rode 'python -m rumo_rag ingerir'", file=sys.stderr)
         return 1
-    chunks = [json.loads(linha) for linha in open(config.CHUNKS, encoding="utf-8")]
+    with open(config.CHUNKS, encoding="utf-8") as f:
+        chunks = [json.loads(linha) for linha in f if linha.strip()]
     print(f"{len(chunks)} chunks · embeddings com {config.MODELO_EMBEDDING}", flush=True)
     t0 = time.time()
     indice.indexar(chunks)

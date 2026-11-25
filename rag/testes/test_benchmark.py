@@ -18,7 +18,7 @@ if str(_RAIZ) not in sys.path:
     sys.path.insert(0, str(_RAIZ))
 
 from rag import benchmark
-from rag.rumo_rag import config, geracao
+from rag.rumo_rag import geracao
 
 
 class TestDatasetBenchmark:

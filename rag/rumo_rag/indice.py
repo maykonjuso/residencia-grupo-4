@@ -1,13 +1,12 @@
 """Etapas 4 e 5 da ingestão (embeddings + banco vetorial) e a busca híbrida."""
+import heapq
 import json
 import re
 from functools import lru_cache
 
-# chromadb e rank_bm25 importados sob demanda para compatibilidade com ambientes sem GPU/índice
-from rank_bm25 import BM25Okapi
-
+# chromadb e rank_bm25 são importados sob demanda para compatibilidade com ambientes sem GPU/índice vetorial
 from . import config
-from .reescrita import classificar_composta, decompor
+from .reescrita import decompor
 
 STOPWORDS = set("""a o as os de da do das dos e é em no na nos nas um uma para por com que se ao à
 às como mais ou qual quais quando onde ser sua seu meu minha eu tem há""".split())
@@ -76,7 +75,12 @@ def embed_consulta(q: str):
 
 def colecao(recriar: bool = False):
     import chromadb  # só a busca densa precisa; o modo bm25 roda sem chromadb/torch
-    cliente = chromadb.PersistentClient(path=str(config.CHROMA))
+    from chromadb.config import Settings
+
+    cliente = chromadb.PersistentClient(
+        path=str(config.CHROMA),
+        settings=Settings(anonymized_telemetry=False),
+    )
     if recriar:
         try:
             cliente.delete_collection(config.COLECAO)
@@ -124,21 +128,37 @@ def indexar(chunks: list[dict]) -> None:
     print(f"{col.count()} chunks indexados em {config.CHROMA}")
 
 
+_POR_ID_CACHE: tuple[int, dict[str, dict]] | None = None
+
+
 @lru_cache(maxsize=1)
 def _bm25():
     from rank_bm25 import BM25Okapi
-    chunks = [
-        c for c in (json.loads(l) for l in open(config.CHUNKS, encoding="utf-8") if l.strip())
-        if c.get("tipo") != "cardapio"
-    ]
+
+    with open(config.CHUNKS, encoding="utf-8") as f:
+        chunks = [
+            c for c in (json.loads(l) for l in f if l.strip())
+            if c.get("tipo") != "cardapio"
+        ]
     return chunks, BM25Okapi([tokenizar(c["texto_indexado"]) for c in chunks])
+
+
+def _mapa_por_id(chunks: list[dict]) -> dict[str, dict]:
+    """Cacheia `chunk_id -> chunk` ligado à identidade da lista retornada por `_bm25()`."""
+    global _POR_ID_CACHE
+    chave = id(chunks)
+    if _POR_ID_CACHE is not None and _POR_ID_CACHE[0] == chave:
+        return _POR_ID_CACHE[1]
+    por_id = {c["chunk_id"]: c for c in chunks}
+    _POR_ID_CACHE = (chave, por_id)
+    return por_id
 
 
 def _buscar_simples(pergunta: str, k: int = config.TOP_K, modo: str = "hibrido",
                     eixo: str | None = None) -> list[dict]:
     """Executa busca (denso | bm25 | hibrido) para uma única consulta sem decomposição."""
     chunks, bm25 = _bm25()
-    por_id = {c["chunk_id"]: c for c in chunks}
+    por_id = _mapa_por_id(chunks)
     rankings: list[list[str]] = []
     distancias: dict[str, float] = {}
     pesos: list[float] = []
@@ -156,9 +176,13 @@ def _buscar_simples(pergunta: str, k: int = config.TOP_K, modo: str = "hibrido",
 
     if modo in ("bm25", "hibrido"):
         notas = bm25.get_scores(tokenizar(pergunta))
-        ordem = sorted(range(len(chunks)), key=lambda i: -notas[i])
-        ids = [chunks[i]["chunk_id"] for i in ordem if not eixo or chunks[i]["eixo"] == eixo]
-        rankings.append(ids[:config.CANDIDATOS])
+        elegiveis = (
+            range(len(chunks))
+            if not eixo
+            else (i for i, c in enumerate(chunks) if c["eixo"] == eixo)
+        )
+        top_indices = heapq.nlargest(config.CANDIDATOS, elegiveis, key=notas.__getitem__)
+        rankings.append([chunks[i]["chunk_id"] for i in top_indices])
         pesos.append(config.PESO_BM25_IDENTIFICADOR if tem_identificador else 1.0)
 
     fusao: dict[str, float] = {}

@@ -126,6 +126,19 @@ def _gerar_extrativo(pergunta, trechos):
     return "\n".join(f"- {f} [{i}]" for _, i, f in candidatas[:4])
 
 
+def _despachar_llm(msgs: list[dict], backend: str) -> str | None:
+    """Executa a geração no backend de LLM configurado; retorna None para modo extrativo."""
+    if backend == "auto":
+        backend = config.BACKEND
+    if backend == "hf":
+        return _gerar_hf(msgs)
+    if backend == "ollama":
+        return _gerar_ollama(msgs)
+    if backend == "openai":
+        return _gerar_openai(msgs)
+    return None
+
+
 def gerar_com_instrucoes(
     pergunta: str,
     trechos: list[dict],
@@ -136,15 +149,8 @@ def gerar_com_instrucoes(
     if not trechos:                     # RN-03: sem trecho recuperado, nem chama o LLM
         return RECUSA
     msgs = montar_mensagens(pergunta, trechos, instrucoes=instrucoes)
-    if backend == "auto":
-        backend = config.BACKEND
-    if backend == "hf":
-        return _gerar_hf(msgs)
-    if backend == "ollama":
-        return _gerar_ollama(msgs)
-    if backend == "openai":
-        return _gerar_openai(msgs)
-    return _gerar_extrativo(pergunta, trechos)
+    resposta = _despachar_llm(msgs, backend)
+    return resposta if resposta is not None else _gerar_extrativo(pergunta, trechos)
 
 
 def gerar(pergunta: str, trechos: list[dict], backend: str = config.BACKEND) -> str:
@@ -154,15 +160,8 @@ def gerar(pergunta: str, trechos: list[dict], backend: str = config.BACKEND) -> 
 def gerar_sem_rag(pergunta: str, backend: str = config.BACKEND) -> str:
     """Gera resposta com LLM puro (Sem RAG), sem contexto documental ou busca vetorial."""
     msgs = montar_mensagens_sem_rag(pergunta)
-    if backend == "auto":
-        backend = config.BACKEND
-    if backend == "hf":
-        return _gerar_hf(msgs)
-    if backend == "ollama":
-        return _gerar_ollama(msgs)
-    if backend == "openai":
-        return _gerar_openai(msgs)
-    return "Modo sem RAG requer backend de LLM (hf, ollama ou openai)."
+    resposta = _despachar_llm(msgs, backend)
+    return resposta if resposta is not None else "Modo sem RAG requer backend de LLM (hf, ollama ou openai)."
 
 
 def _numeros_citados(resposta: str, n_trechos: int) -> list[int]:

@@ -6,7 +6,8 @@ import yaml
 
 raiz = Path(__file__).resolve().parent
 docs = yaml.safe_load((raiz / "catalogo.yaml").read_text(encoding="utf-8"))["documentos"]
-n = Counter(json.loads(l)["doc_id"] for l in (raiz / "dados" / "chunks.jsonl").open(encoding="utf-8"))
+with (raiz / "dados" / "chunks.jsonl").open(encoding="utf-8") as f:
+    n = Counter(json.loads(l)["doc_id"] for l in f if l.strip())
 nomes = {"ru": "Eixo RU", "fluxo": "Eixo fluxo de disciplinas", "apoio": "Apoio"}
 saida = []
 for eixo in ("ru", "fluxo", "apoio"):

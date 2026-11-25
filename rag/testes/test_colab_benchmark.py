@@ -7,7 +7,6 @@ Verifica:
 - Execução do benchmark com auditoria estrita de zero latência (R3)
 - Geração correta dos artefatos JSON e Markdown
 """
-import json
 import os
 import sys
 import tempfile

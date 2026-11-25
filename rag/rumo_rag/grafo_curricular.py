@@ -13,16 +13,17 @@ Regras inegociáveis:
 
 from __future__ import annotations
 
+import copy
 from dataclasses import asdict, dataclass
 from functools import lru_cache
 import json
 from pathlib import Path
 import re
-import unicodedata
 
 import networkx as nx
 
 from . import config
+from .texto import normalizar_texto as _normalizar, slugify
 
 CODIGO = re.compile(r"\b[A-Z]{2,4}\d{3,4}\b")
 SCHEMA_GRAFO = Path(__file__).with_name("schema_grafo.json")
@@ -156,18 +157,8 @@ _PADROES_CURSO: tuple[tuple[str, re.Pattern[str]], ...] = (
 )
 
 
-def _normalizar(texto: str) -> str:
-    sem_acentos = unicodedata.normalize("NFKD", texto.casefold())
-    return " ".join("".join(c for c in sem_acentos if not unicodedata.combining(c)).split())
-
-
 def _slug(texto: str) -> str:
-    norm = _normalizar(texto)
-    return re.sub(r"[^a-z0-9]+", "-", norm).strip("-") or "disciplina"
-
-
-def _int_ou_zero(token: str) -> int:
-    return 0 if token == "-" else int(token)
+    return slugify(texto, padrao="disciplina")
 
 
 @dataclass(frozen=True)
@@ -1263,93 +1254,448 @@ class GrafoCurricular:
             ],
         }
 
+    def _consultar_equivalencias(
+        self,
+        disciplinas: list[Disciplina],
+        codigos_consulta: list[str],
+    ) -> dict:
+        doc_id = self.metadados["fonte"]["doc_id"]
+        fonte = self._fonte_dict()
+        codigos = {d.codigo for d in disciplinas}
+        itens_eq: list[Equivalencia] = []
+        if disciplinas or codigos_consulta:
+            vistos: set[tuple[str, tuple[str, ...]]] = set()
+            for cod in [d.codigo for d in disciplinas] + codigos_consulta:
+                for eq in self.equivalentes_de(cod):
+                    chave = (eq.codigo, eq.equivalentes)
+                    if chave not in vistos:
+                        vistos.add(chave)
+                        itens_eq.append(eq)
+        else:
+            itens_eq = list(self.equivalencias)
+
+        if not itens_eq:
+            alerta = (
+                f"Nenhuma equivalência encontrada para a consulta em {self.curso} "
+                f"({doc_id}, cobertura: {self.cobertura_equivalencias})."
+            )
+            return {
+                "tipo_consulta": "equivalencias",
+                "dados": {
+                    **self._metadados_consulta(),
+                    "equivalencias": [],
+                    "fallback_rag": False,
+                },
+                "texto": (
+                    f"A fonte oficial de {self.curso} na base ({doc_id}, vigência: {self.vigencia['descricao']}) "
+                    f"não registra equivalência para os termos informados (cobertura na base: "
+                    f"{self.cobertura_equivalencias}). [1] Confirme a tabela completa de equivalências no SIGAA. [1]"
+                ),
+                "evidencia": self._evidencia(codigos, [], extras=[eq.evidencia for eq in self.equivalencias[:5]]),
+                "fonte": fonte,
+                "alertas": [alerta],
+            }
+
+        partes_eq: list[str] = []
+        payload_eq: list[dict] = []
+        evid_cods: set[str] = set()
+        for eq in itens_eq:
+            evid_cods.add(eq.codigo)
+            disc = self.disciplinas.get(eq.codigo)
+            nome_disc = f"{disc.nome} ({eq.codigo})" if disc else eq.codigo
+            equivs_txt = ", ".join(eq.equivalentes)
+            seta = "↔" if eq.bidirecional else "→"
+            partes_eq.append(f"{nome_disc} {seta} {equivs_txt} ({eq.observacao})")
+            payload_eq.append({
+                "codigo": eq.codigo,
+                "nome": disc.nome if disc else eq.codigo,
+                "equivalentes": list(eq.equivalentes),
+                "tipo": eq.tipo,
+                "bidirecional": eq.bidirecional,
+                "observacao": eq.observacao,
+            })
+
+        aviso_cobertura = (
+            " Como o documento traz apenas as equivalências destacadas na reforma/fluxograma, "
+            "confirme outras equivalências no SIGAA. [1]"
+            if self.cobertura_equivalencias != "completa"
+            else ""
+        )
+        resposta = (
+            f"Equivalências registradas para {self.curso} ({doc_id}, vigência: {self.vigencia['descricao']}): "
+            + "; ".join(partes_eq)
+            + ". [1]"
+            + aviso_cobertura
+        )
+        alertas = (
+            []
+            if self.cobertura_equivalencias == "completa"
+            else ["Cobertura parcial de equivalências; confirmar tabela completa no SIGAA."]
+        )
+        return {
+            "tipo_consulta": "equivalencias",
+            "dados": {
+                **self._metadados_consulta(),
+                "equivalencias": payload_eq,
+            },
+            "texto": resposta,
+            "evidencia": self._evidencia(evid_cods, [], extras=[eq.evidencia for eq in itens_eq]),
+            "fonte": fonte,
+            "alertas": alertas,
+        }
+
+    def _consultar_caminho_critico(self) -> dict | None:
+        caminho = self.caminho_critico()
+        if not caminho:
+            return None
+        doc_id = self.metadados["fonte"]["doc_id"]
+        nomes = " → ".join(f"{self.disciplinas[c].nome} ({c})" for c in caminho)
+        arestas_caminho = [
+            self._to_aresta(u, v, attrs)
+            for u, v, attrs in self.grafo.edges(data=True)
+            if u in caminho and v in caminho
+        ]
+        evidencia = self._evidencia(set(caminho), arestas_caminho)
+        resposta = (
+            f"A maior cadeia de pré-requisitos confirmados em {self.curso} ({doc_id}) é: {nomes}. [1] "
+            "Isso representa a cadeia mais longa registrada no grafo, não uma previsão "
+            "de semestres até a formatura; oferta de turmas e requisitos fora do documento "
+            f"devem ser confirmados no SIGAA. {self._texto_vigencia()} [1]"
+        )
+        return {
+            "tipo_consulta": "caminho_critico",
+            "dados": {
+                **self._metadados_consulta(),
+                "comprimento": len(caminho),
+                "cadeia": [self._no_resumo(c) for c in caminho],
+            },
+            "texto": resposta,
+            "evidencia": evidencia,
+            "fonte": self._fonte_dict(),
+            "alertas": [],
+        }
+
+    def _consultar_gargalos(self) -> dict | None:
+        ranking = self.gargalos()
+        if not ranking:
+            return None
+        doc_id = self.metadados["fonte"]["doc_id"]
+        quantidade = ranking[0][1]
+        todas_arestas: list[Aresta] = []
+        itens_gargalo: list[dict] = []
+        partes_texto: list[str] = []
+        for disciplina, _ in ranking:
+            arestas = self._to_aresta_out(disciplina.codigo)
+            todas_arestas.extend(arestas)
+            destinos_nomes = ", ".join(
+                f"{self.disciplinas[a.destino].nome} ({a.destino})" for a in arestas
+            )
+            itens_gargalo.append({
+                **self._no_resumo(disciplina.codigo),
+                "grau_saida": quantidade,
+                "destinos": [self._no_resumo(a.destino) for a in arestas],
+            })
+            partes_texto.append(f"{disciplina.nome} ({disciplina.codigo}) → {destinos_nomes}")
+
+        cods_ev = {it["codigo"] for it in itens_gargalo} | {a.destino for a in todas_arestas}
+        evidencia = self._evidencia(cods_ev, todas_arestas)
+        if len(ranking) == 1:
+            d0 = ranking[0][0]
+            dest0 = ", ".join(
+                f"{self.disciplinas[a.destino].nome} ({a.destino})"
+                for a in self._to_aresta_out(d0.codigo)
+            )
+            resposta = (
+                f"Pelo número de dependências diretas confirmadas em {self.curso} ({doc_id}), {d0.nome} "
+                f"({d0.codigo}) é o principal gargalo: destrava {quantidade} disciplina(s) "
+                f"diretamente ({dest0}). [1] A contagem considera apenas setas cheias; "
+                f"ligações tracejadas não entram no ranking. {self._texto_vigencia()} [1]"
+            )
+        else:
+            resumo = "; ".join(partes_texto)
+            resposta = (
+                f"Pelo número de dependências diretas confirmadas em {self.curso} ({doc_id}), há empate no topo "
+                f"com {quantidade} disciplina(s) destravada(s) diretamente cada: {resumo}. [1] "
+                "A contagem considera apenas setas cheias; ligações tracejadas não entram no "
+                f"ranking. {self._texto_vigencia()} [1]"
+            )
+        return {
+            "tipo_consulta": "gargalo",
+            "dados": {
+                **self._metadados_consulta(),
+                "grau_saida_max": quantidade,
+                "gargalos": itens_gargalo,
+            },
+            "texto": resposta,
+            "evidencia": evidencia,
+            "fonte": self._fonte_dict(),
+            "alertas": [],
+        }
+
+    def _consultar_disciplinas_que_abrem(
+        self,
+        codigos: set[str],
+        codigos_consulta: list[str],
+    ) -> dict:
+        doc_id = self.metadados["fonte"]["doc_id"]
+        abertas, incertas = self.disciplinas_que_abrem(codigos)
+        aprovadas_txt = ", ".join(sorted(codigos))
+        arestas_usadas = [
+            a for a in self.arestas
+            if a.destino in abertas + incertas
+            and a.relacao == "pre_requisito"
+            and (a.origem in codigos or bool(set(a.alternativas) & codigos))
+        ]
+        evidencia = self._evidencia(codigos | set(abertas) | set(incertas), arestas_usadas)
+        if abertas:
+            nomes = ", ".join(f"{self.disciplinas[c].nome} ({c})" for c in abertas)
+            resposta = f"Com aprovação em {aprovadas_txt} ({self.curso}), ficam liberadas pelo grafo: {nomes}. [1]"
+        else:
+            resposta = (
+                f"Com aprovação em {aprovadas_txt} ({self.curso}), não identifiquei novas disciplinas "
+                f"liberadas apenas por pré-requisitos confirmados no {doc_id}. [1]"
+            )
+        if incertas:
+            nomes_inc = ", ".join(f"{self.disciplinas[c].nome} ({c})" for c in incertas)
+            resposta += (
+                f" Há também possível relação com {nomes_inc}, mas a ligação é tracejada; "
+                "confirme no SIGAA se é pré-requisito ou correquisito. [1]"
+            )
+            arestas_tracejadas = [
+                a for a in self.arestas
+                if a.destino in incertas and a.incerta and a.relacao == "pre_requisito"
+            ]
+            evidencia = self._evidencia(
+                codigos | set(abertas) | set(incertas), arestas_usadas + arestas_tracejadas
+            )
+        nota_eq = self._nota_resolucao_equivalencia(codigos_consulta)
+        if nota_eq:
+            resposta += f" {nota_eq}"
+        resposta += f" {self._texto_vigencia()} [1]"
+        return {
+            "tipo_consulta": "disciplinas_que_abrem",
+            "dados": {
+                **self._metadados_consulta(),
+                "aprovadas": sorted(codigos),
+                "abertas_confirmadas": [self._no_resumo(c) for c in abertas],
+                "relacoes_incertas": [self._no_resumo(c) for c in incertas],
+            },
+            "texto": resposta,
+            "evidencia": evidencia,
+            "fonte": self._fonte_dict(),
+            "alertas": [],
+        }
+
+    def _consultar_dependentes(
+        self,
+        inicio: Disciplina,
+        codigos_consulta: list[str],
+    ) -> dict:
+        doc_id = self.metadados["fonte"]["doc_id"]
+        confirmados, incertos = self.dependentes(inicio.codigo)
+        nos_envolvidos = {inicio.codigo, *confirmados, *incertos}
+        arestas_usadas_obj = [
+            self._to_aresta(u, v, attrs)
+            for u, v, attrs in self.grafo_completo.edges(data=True)
+            if u in nos_envolvidos and v in nos_envolvidos
+        ]
+        arestas_ou_rel = [
+            a for a in self.arestas
+            if a.relacao == "pre_requisito"
+            and not a.incerta
+            and a.alternativas
+            and (a.origem == inicio.codigo or inicio.codigo in a.alternativas)
+            and a.destino not in confirmados
+        ]
+        for a_ou in arestas_ou_rel:
+            nos_envolvidos.update((a_ou.origem, a_ou.destino, *a_ou.alternativas))
+            arestas_usadas_obj.append(a_ou)
+        if confirmados:
+            nomes = ", ".join(f"{self.disciplinas[c].nome} ({c})" for c in confirmados)
+            resposta = (
+                f"Se você reprovar em {inicio.nome} ({inicio.codigo}) em {self.curso}, as disciplinas "
+                f"alcançáveis por uma cadeia de pré-requisitos confirmados são: {nomes}. [1]"
+            )
+        else:
+            resposta = (
+                f"Não encontrei dependentes alcançáveis por bloqueio direto a partir de "
+                f"{inicio.nome} ({inicio.codigo}) em {self.curso} ({doc_id}). [1]"
+            )
+        if arestas_ou_rel:
+            notas_ou = []
+            for a_ou in arestas_ou_rel:
+                dest_disc = self.disciplinas[a_ou.destino]
+                opcoes = [a_ou.origem, *(alt for alt in a_ou.alternativas if alt in self.disciplinas)]
+                opcoes_txt = " ou ".join(f"{self.disciplinas[c].nome} ({c})" for c in opcoes)
+                notas_ou.append(
+                    f"Nota: {dest_disc.nome} ({dest_disc.codigo}) aceita pré-requisito alternativo "
+                    f"({opcoes_txt}), portanto reprovar apenas em {inicio.nome} ({inicio.codigo}) "
+                    "não a bloqueia se a alternativa já tiver sido cursada. [1]"
+                )
+            resposta += " " + " ".join(notas_ou)
+        if incertos:
+            nomes_inc = ", ".join(f"{self.disciplinas[c].nome} ({c})" for c in incertos)
+            resposta += (
+                f" A cadeia também pode alcançar {nomes_inc} por ligação tracejada; "
+                "não é possível afirmar que bloqueia. Confirme no SIGAA. [1]"
+            )
+        nota_eq = self._nota_resolucao_equivalencia(codigos_consulta)
+        if nota_eq:
+            resposta += f" {nota_eq}"
+        resposta += f" {self._texto_vigencia()} [1]"
+        return {
+            "tipo_consulta": "dependentes",
+            "dados": {
+                **self._metadados_consulta(),
+                "origem": self._no_resumo(inicio.codigo),
+                "dependentes_confirmados": [self._no_resumo(c) for c in confirmados],
+                "dependentes_incertos": [self._no_resumo(c) for c in incertos],
+            },
+            "texto": resposta,
+            "evidencia": self._evidencia(nos_envolvidos, arestas_usadas_obj),
+            "fonte": self._fonte_dict(),
+            "alertas": [],
+        }
+
+    def _consultar_prerequisitos(
+        self,
+        alvo: Disciplina,
+        codigos_consulta: list[str],
+    ) -> dict:
+        doc_id = self.metadados["fonte"]["doc_id"]
+        confirmados, incertos = self.prerequisitos(alvo.codigo)
+        coreqs = self.correquisitos_de(alvo.codigo)
+        partes: list[str] = []
+        if confirmados:
+            nomes_list = []
+            for a in confirmados:
+                txt_orig = f"{self.disciplinas[a.origem].nome} ({a.origem})"
+                if a.alternativas:
+                    alts_txt = " ou ".join(
+                        f"{self.disciplinas[alt].nome} ({alt})"
+                        if alt in self.disciplinas
+                        else alt
+                        for alt in a.alternativas
+                    )
+                    txt_orig += f" ou {alts_txt}"
+                nomes_list.append(txt_orig)
+            partes.append(f"Pré-requisitos confirmados de {alvo.nome} ({alvo.codigo}) em {self.curso}: {', '.join(nomes_list)}.")
+        else:
+            partes.append(
+                f"A fonte {doc_id} ({self.curso}) não registra seta cheia de pré-requisito para "
+                f"{alvo.nome} ({alvo.codigo})."
+            )
+        if incertos:
+            nomes_inc = ", ".join(
+                f"{self.disciplinas[a.origem].nome} ({a.origem})" for a in incertos
+            )
+            partes.append(
+                f"O fluxograma também mostra ligação tracejada com {nomes_inc}; confirme no SIGAA "
+                "se é pré-requisito ou correquisito."
+            )
+        if coreqs:
+            pares_cr = [
+                f"{self.disciplinas[outro].nome} ({outro})"
+                for c in coreqs
+                if (outro := c.destino if c.origem == alvo.codigo else c.origem) in self.disciplinas
+            ]
+            if pares_cr:
+                partes.append(f"Correquisito(s): {', '.join(pares_cr)}.")
+        nota_eq = self._nota_resolucao_equivalencia(codigos_consulta)
+        if nota_eq:
+            partes.append(nota_eq)
+        partes.append(self._texto_vigencia())
+
+        cods_ev = {alvo.codigo, *(a.origem for a in confirmados + incertos)}
+        for a in confirmados + incertos:
+            cods_ev.update(a.alternativas)
+        for c in coreqs:
+            cods_ev.update((c.origem, c.destino))
+        confirmados_payload = []
+        for a in confirmados:
+            item_conf = self._no_resumo(a.origem)
+            if a.alternativas:
+                item_conf["alternativas"] = [
+                    self._no_resumo(alt) if alt in self.disciplinas else {"codigo": alt}
+                    for alt in a.alternativas
+                ]
+            confirmados_payload.append(item_conf)
+        return {
+            "tipo_consulta": "prerequisitos",
+            "dados": {
+                **self._metadados_consulta(),
+                "disciplina": self._no_resumo(alvo.codigo),
+                "confirmados": confirmados_payload,
+                "incertos": [self._no_resumo(a.origem) for a in incertos],
+                "correquisitos": [
+                    self._no_resumo(c.destino if c.origem == alvo.codigo else c.origem)
+                    for c in coreqs
+                    if (c.destino if c.origem == alvo.codigo else c.origem) in self.disciplinas
+                ],
+            },
+            "texto": " ".join(p + " [1]" for p in partes),
+            "evidencia": self._evidencia(cods_ev, confirmados + incertos + coreqs),
+            "fonte": self._fonte_dict(),
+            "alertas": [],
+        }
+
+    def _consultar_vigencia_ou_semestre(self, sem_num: int | None) -> dict:
+        doc_id = self.metadados["fonte"]["doc_id"]
+        fonte = self._fonte_dict()
+        if sem_num is not None:
+            do_sem = sorted(
+                [d for d in self.disciplinas.values() if d.semestre == sem_num],
+                key=lambda d: d.codigo,
+            )
+            nomes = ", ".join(self._rotulo_disciplina(d) for d in do_sem)
+            resposta = (
+                f"No {sem_num}º semestre/nível de {self.curso} ({doc_id}, vigência: {self.vigencia['descricao']}), "
+                f"constam {len(do_sem)} componente(s): {nomes or 'nenhum registrado'}. [1]"
+            )
+            return {
+                "tipo_consulta": "vigencia_curriculo",
+                "dados": {
+                    **self._metadados_consulta(),
+                    "semestre": sem_num,
+                    "disciplinas": [self._no_resumo(d.codigo) for d in do_sem],
+                },
+                "texto": resposta,
+                "evidencia": self._evidencia({d.codigo for d in do_sem}, []),
+                "fonte": fonte,
+                "alertas": [],
+            }
+
+        evidencia = f"{self.curso} ({doc_id}) — vigência: {self.vigencia['descricao']} · {len(self.disciplinas)} disciplinas obrigatórias."
+        ch = f", carga horária total {self.metadados['carga_horaria_total']}h" if self.metadados["carga_horaria_total"] else ""
+        cred = f", {self.metadados['total_creditos']} créditos" if self.metadados["total_creditos"] else ""
+        resposta = (
+            f"Currículo de {self.curso} ({self.curriculo_id}, {doc_id}): vigência '{self.vigencia['descricao']}' "
+            f"(início {self.vigencia['inicio']}"
+            + (f", fim {self.vigencia['fim']}" if self.vigencia.get("fim") else ", sem data de término")
+            + f"{cred}{ch}), com {len(self.disciplinas)} disciplinas obrigatórias, cobertura de pré-requisitos "
+            f"'{self.cobertura_prerequisitos}' e de equivalências '{self.cobertura_equivalencias}'. [1]"
+        )
+        return {
+            "tipo_consulta": "vigencia_curriculo",
+            "dados": {
+                **self._metadados_consulta(),
+                "total_disciplinas": len(self.disciplinas),
+            },
+            "texto": resposta,
+            "evidencia": evidencia,
+            "fonte": fonte,
+            "alertas": [],
+        }
+
     def consultar_estruturado(self, pergunta: str) -> dict | None:
         """Executa consulta no grafo e devolve payload estruturado + texto + evidência."""
         texto = _normalizar(pergunta)
         disciplinas = self.buscar_disciplinas(pergunta)
         codigos_consulta = [c.upper() for c in CODIGO.findall(pergunta)]
         codigos = {d.codigo for d in disciplinas}
-        doc_id = self.metadados["fonte"]["doc_id"]
-        fonte = self._fonte_dict()
 
-        # 1. Equivalências explícitas
         if re.search(r"\bequival[eê]nc|c[oó]digo\s+antigo|substitu", texto):
-            itens_eq: list[Equivalencia] = []
-            if disciplinas or codigos_consulta:
-                vistos: set[tuple[str, tuple[str, ...]]] = set()
-                for cod in [d.codigo for d in disciplinas] + codigos_consulta:
-                    for eq in self.equivalentes_de(cod):
-                        chave = (eq.codigo, eq.equivalentes)
-                        if chave not in vistos:
-                            vistos.add(chave)
-                            itens_eq.append(eq)
-            else:
-                itens_eq = list(self.equivalencias)
-
-            if not itens_eq:
-                alerta = (
-                    f"Nenhuma equivalência encontrada para a consulta em {self.curso} "
-                    f"({doc_id}, cobertura: {self.cobertura_equivalencias})."
-                )
-                return {
-                    "tipo_consulta": "equivalencias",
-                    "dados": {
-                        **self._metadados_consulta(),
-                        "equivalencias": [],
-                        "fallback_rag": False,
-                    },
-                    "texto": (
-                        f"A fonte oficial de {self.curso} na base ({doc_id}, vigência: {self.vigencia['descricao']}) "
-                        f"não registra equivalência para os termos informados (cobertura na base: "
-                        f"{self.cobertura_equivalencias}). [1] Confirme a tabela completa de equivalências no SIGAA. [1]"
-                    ),
-                    "evidencia": self._evidencia(codigos, [], extras=[eq.evidencia for eq in self.equivalencias[:5]]),
-                    "fonte": fonte,
-                    "alertas": [alerta],
-                }
-
-            partes_eq: list[str] = []
-            payload_eq: list[dict] = []
-            evid_cods: set[str] = set()
-            for eq in itens_eq:
-                evid_cods.add(eq.codigo)
-                disc = self.disciplinas.get(eq.codigo)
-                nome_disc = f"{disc.nome} ({eq.codigo})" if disc else eq.codigo
-                equivs_txt = ", ".join(eq.equivalentes)
-                seta = "↔" if eq.bidirecional else "→"
-                partes_eq.append(f"{nome_disc} {seta} {equivs_txt} ({eq.observacao})")
-                payload_eq.append({
-                    "codigo": eq.codigo,
-                    "nome": disc.nome if disc else eq.codigo,
-                    "equivalentes": list(eq.equivalentes),
-                    "tipo": eq.tipo,
-                    "bidirecional": eq.bidirecional,
-                    "observacao": eq.observacao,
-                })
-
-            aviso_cobertura = (
-                " Como o documento traz apenas as equivalências destacadas na reforma/fluxograma, "
-                "confirme outras equivalências no SIGAA. [1]"
-                if self.cobertura_equivalencias != "completa"
-                else ""
-            )
-            resposta = (
-                f"Equivalências registradas para {self.curso} ({doc_id}, vigência: {self.vigencia['descricao']}): "
-                + "; ".join(partes_eq)
-                + ". [1]"
-                + aviso_cobertura
-            )
-            return {
-                "tipo_consulta": "equivalencias",
-                "dados": {
-                    **self._metadados_consulta(),
-                    "equivalencias": payload_eq,
-                },
-                "texto": resposta,
-                "evidencia": self._evidencia(evid_cods, [], extras=[eq.evidencia for eq in itens_eq]),
-                "fonte": fonte,
-                "alertas": [] if self.cobertura_equivalencias == "completa" else ["Cobertura parcial de equivalências; confirmar tabela completa no SIGAA."],
-            }
+            return self._consultar_equivalencias(disciplinas, codigos_consulta)
 
         eh_prereq_op = bool(
             re.search(
@@ -1365,338 +1711,22 @@ class GrafoCurricular:
             return self._resposta_prerequisitos_indisponiveis(pergunta, disciplinas)
 
         if re.search(r"caminho critico|quantos semestres.*formar|tempo.*formar", texto):
-            caminho = self.caminho_critico()
-            if not caminho:
-                return None
-            nomes = " → ".join(f"{self.disciplinas[c].nome} ({c})" for c in caminho)
-            arestas_caminho = [
-                self._to_aresta(u, v, attrs)
-                for u, v, attrs in self.grafo.edges(data=True)
-                if u in caminho and v in caminho
-            ]
-            evidencia = self._evidencia(set(caminho), arestas_caminho)
-            resposta = (
-                f"A maior cadeia de pré-requisitos confirmados em {self.curso} ({doc_id}) é: {nomes}. [1] "
-                "Isso representa a cadeia mais longa registrada no grafo, não uma previsão "
-                "de semestres até a formatura; oferta de turmas e requisitos fora do documento "
-                f"devem ser confirmados no SIGAA. {self._texto_vigencia()} [1]"
-            )
-            return {
-                "tipo_consulta": "caminho_critico",
-                "dados": {
-                    **self._metadados_consulta(),
-                    "comprimento": len(caminho),
-                    "cadeia": [self._no_resumo(c) for c in caminho],
-                },
-                "texto": resposta,
-                "evidencia": evidencia,
-                "fonte": fonte,
-                "alertas": [],
-            }
-
+            return self._consultar_caminho_critico()
         if re.search(r"gargalo|destrava.*mais|mais (?:materias|disciplinas)|maior numero", texto):
-            ranking = self.gargalos()
-            if not ranking:
-                return None
-            quantidade = ranking[0][1]
-            todas_arestas: list[Aresta] = []
-            itens_gargalo: list[dict] = []
-            partes_texto: list[str] = []
-            for disciplina, _ in ranking:
-                arestas = self._to_aresta_out(disciplina.codigo)
-                todas_arestas.extend(arestas)
-                destinos_nomes = ", ".join(
-                    f"{self.disciplinas[a.destino].nome} ({a.destino})" for a in arestas
-                )
-                itens_gargalo.append({
-                    **self._no_resumo(disciplina.codigo),
-                    "grau_saida": quantidade,
-                    "destinos": [self._no_resumo(a.destino) for a in arestas],
-                })
-                partes_texto.append(f"{disciplina.nome} ({disciplina.codigo}) → {destinos_nomes}")
-
-            cods_ev = {it["codigo"] for it in itens_gargalo} | {a.destino for a in todas_arestas}
-            evidencia = self._evidencia(cods_ev, todas_arestas)
-            if len(ranking) == 1:
-                d0 = ranking[0][0]
-                dest0 = ", ".join(
-                    f"{self.disciplinas[a.destino].nome} ({a.destino})"
-                    for a in self._to_aresta_out(d0.codigo)
-                )
-                resposta = (
-                    f"Pelo número de dependências diretas confirmadas em {self.curso} ({doc_id}), {d0.nome} "
-                    f"({d0.codigo}) é o principal gargalo: destrava {quantidade} disciplina(s) "
-                    f"diretamente ({dest0}). [1] A contagem considera apenas setas cheias; "
-                    f"ligações tracejadas não entram no ranking. {self._texto_vigencia()} [1]"
-                )
-            else:
-                resumo = "; ".join(partes_texto)
-                resposta = (
-                    f"Pelo número de dependências diretas confirmadas em {self.curso} ({doc_id}), há empate no topo "
-                    f"com {quantidade} disciplina(s) destravada(s) diretamente cada: {resumo}. [1] "
-                    "A contagem considera apenas setas cheias; ligações tracejadas não entram no "
-                    f"ranking. {self._texto_vigencia()} [1]"
-                )
-            return {
-                "tipo_consulta": "gargalo",
-                "dados": {
-                    **self._metadados_consulta(),
-                    "grau_saida_max": quantidade,
-                    "gargalos": itens_gargalo,
-                },
-                "texto": resposta,
-                "evidencia": evidencia,
-                "fonte": fonte,
-                "alertas": [],
-            }
-
+            return self._consultar_gargalos()
         if re.search(r"passando|passei|aprovad[oa]s?|o que abre|quais.*abre", texto):
-            if not codigos:
-                return None
-            abertas, incertas = self.disciplinas_que_abrem(codigos)
-            aprovadas_txt = ", ".join(sorted(codigos))
-            arestas_usadas = [
-                a for a in self.arestas
-                if a.destino in abertas + incertas
-                and a.relacao == "pre_requisito"
-                and (a.origem in codigos or bool(set(a.alternativas) & codigos))
-            ]
-            evidencia = self._evidencia(codigos | set(abertas) | set(incertas), arestas_usadas)
-            if abertas:
-                nomes = ", ".join(f"{self.disciplinas[c].nome} ({c})" for c in abertas)
-                resposta = f"Com aprovação em {aprovadas_txt} ({self.curso}), ficam liberadas pelo grafo: {nomes}. [1]"
-            else:
-                resposta = (
-                    f"Com aprovação em {aprovadas_txt} ({self.curso}), não identifiquei novas disciplinas "
-                    f"liberadas apenas por pré-requisitos confirmados no {doc_id}. [1]"
-                )
-            if incertas:
-                nomes_inc = ", ".join(f"{self.disciplinas[c].nome} ({c})" for c in incertas)
-                resposta += (
-                    f" Há também possível relação com {nomes_inc}, mas a ligação é tracejada; "
-                    "confirme no SIGAA se é pré-requisito ou correquisito. [1]"
-                )
-                arestas_tracejadas = [
-                    a for a in self.arestas
-                    if a.destino in incertas and a.incerta and a.relacao == "pre_requisito"
-                ]
-                evidencia = self._evidencia(
-                    codigos | set(abertas) | set(incertas), arestas_usadas + arestas_tracejadas
-                )
-            nota_eq = self._nota_resolucao_equivalencia(codigos_consulta)
-            if nota_eq:
-                resposta += f" {nota_eq}"
-            resposta += f" {self._texto_vigencia()} [1]"
-            return {
-                "tipo_consulta": "disciplinas_que_abrem",
-                "dados": {
-                    **self._metadados_consulta(),
-                    "aprovadas": sorted(codigos),
-                    "abertas_confirmadas": [self._no_resumo(c) for c in abertas],
-                    "relacoes_incertas": [self._no_resumo(c) for c in incertas],
-                },
-                "texto": resposta,
-                "evidencia": evidencia,
-                "fonte": fonte,
-                "alertas": [],
-            }
-
+            return self._consultar_disciplinas_que_abrem(codigos, codigos_consulta) if codigos else None
         if re.search(r"reprov|trava|bloque|dependente|depende de", texto) and disciplinas:
-            inicio = disciplinas[0]
-            confirmados, incertos = self.dependentes(inicio.codigo)
-            nos_envolvidos = {inicio.codigo, *confirmados, *incertos}
-            arestas_usadas_obj = [
-                self._to_aresta(u, v, attrs)
-                for u, v, attrs in self.grafo_completo.edges(data=True)
-                if u in nos_envolvidos and v in nos_envolvidos
-            ]
-            arestas_ou_rel = [
-                a for a in self.arestas
-                if a.relacao == "pre_requisito"
-                and not a.incerta
-                and a.alternativas
-                and (a.origem == inicio.codigo or inicio.codigo in a.alternativas)
-                and a.destino not in confirmados
-            ]
-            for a_ou in arestas_ou_rel:
-                nos_envolvidos.update((a_ou.origem, a_ou.destino, *a_ou.alternativas))
-                arestas_usadas_obj.append(a_ou)
-            if confirmados:
-                nomes = ", ".join(f"{self.disciplinas[c].nome} ({c})" for c in confirmados)
-                resposta = (
-                    f"Se você reprovar em {inicio.nome} ({inicio.codigo}) em {self.curso}, as disciplinas "
-                    f"alcançáveis por uma cadeia de pré-requisitos confirmados são: {nomes}. [1]"
-                )
-            else:
-                resposta = (
-                    f"Não encontrei dependentes alcançáveis por bloqueio direto a partir de "
-                    f"{inicio.nome} ({inicio.codigo}) em {self.curso} ({doc_id}). [1]"
-                )
-            if arestas_ou_rel:
-                notas_ou = []
-                for a_ou in arestas_ou_rel:
-                    dest_disc = self.disciplinas[a_ou.destino]
-                    opcoes = [a_ou.origem, *(alt for alt in a_ou.alternativas if alt in self.disciplinas)]
-                    opcoes_txt = " ou ".join(f"{self.disciplinas[c].nome} ({c})" for c in opcoes)
-                    notas_ou.append(
-                        f"Nota: {dest_disc.nome} ({dest_disc.codigo}) aceita pré-requisito alternativo "
-                        f"({opcoes_txt}), portanto reprovar apenas em {inicio.nome} ({inicio.codigo}) "
-                        "não a bloqueia se a alternativa já tiver sido cursada. [1]"
-                    )
-                resposta += " " + " ".join(notas_ou)
-            if incertos:
-                nomes_inc = ", ".join(f"{self.disciplinas[c].nome} ({c})" for c in incertos)
-                resposta += (
-                    f" A cadeia também pode alcançar {nomes_inc} por ligação tracejada; "
-                    "não é possível afirmar que bloqueia. Confirme no SIGAA. [1]"
-                )
-            nota_eq = self._nota_resolucao_equivalencia(codigos_consulta)
-            if nota_eq:
-                resposta += f" {nota_eq}"
-            resposta += f" {self._texto_vigencia()} [1]"
-            evidencia = self._evidencia(nos_envolvidos, arestas_usadas_obj)
-            return {
-                "tipo_consulta": "dependentes",
-                "dados": {
-                    **self._metadados_consulta(),
-                    "origem": self._no_resumo(inicio.codigo),
-                    "dependentes_confirmados": [self._no_resumo(c) for c in confirmados],
-                    "dependentes_incertos": [self._no_resumo(c) for c in incertos],
-                },
-                "texto": resposta,
-                "evidencia": evidencia,
-                "fonte": fonte,
-                "alertas": [],
-            }
-
+            return self._consultar_dependentes(disciplinas[0], codigos_consulta)
         if re.search(r"pre-?requisito|co-?requisito", texto) and disciplinas:
-            alvo = disciplinas[-1]
-            confirmados, incertos = self.prerequisitos(alvo.codigo)
-            coreqs = self.correquisitos_de(alvo.codigo)
-            partes: list[str] = []
-            if confirmados:
-                nomes_list = []
-                for a in confirmados:
-                    txt_orig = f"{self.disciplinas[a.origem].nome} ({a.origem})"
-                    if a.alternativas:
-                        alts_txt = " ou ".join(
-                            f"{self.disciplinas[alt].nome} ({alt})"
-                            if alt in self.disciplinas
-                            else alt
-                            for alt in a.alternativas
-                        )
-                        txt_orig += f" ou {alts_txt}"
-                    nomes_list.append(txt_orig)
-                partes.append(f"Pré-requisitos confirmados de {alvo.nome} ({alvo.codigo}) em {self.curso}: {', '.join(nomes_list)}.")
-            else:
-                partes.append(
-                    f"A fonte {doc_id} ({self.curso}) não registra seta cheia de pré-requisito para "
-                    f"{alvo.nome} ({alvo.codigo})."
-                )
-            if incertos:
-                nomes_inc = ", ".join(
-                    f"{self.disciplinas[a.origem].nome} ({a.origem})" for a in incertos
-                )
-                partes.append(
-                    f"O fluxograma também mostra ligação tracejada com {nomes_inc}; confirme no SIGAA "
-                    "se é pré-requisito ou correquisito."
-                )
-            if coreqs:
-                pares_cr = []
-                for c in coreqs:
-                    outro = c.destino if c.origem == alvo.codigo else c.origem
-                    if outro in self.disciplinas:
-                        pares_cr.append(f"{self.disciplinas[outro].nome} ({outro})")
-                if pares_cr:
-                    partes.append(f"Correquisito(s): {', '.join(pares_cr)}.")
-            nota_eq = self._nota_resolucao_equivalencia(codigos_consulta)
-            if nota_eq:
-                partes.append(nota_eq)
-            partes.append(self._texto_vigencia())
-            cods_ev = {alvo.codigo, *(a.origem for a in confirmados + incertos)}
-            for a in confirmados + incertos:
-                cods_ev.update(a.alternativas)
-            for c in coreqs:
-                cods_ev.update((c.origem, c.destino))
-            evidencia = self._evidencia(cods_ev, confirmados + incertos + coreqs)
-            confirmados_payload = []
-            for a in confirmados:
-                item_conf = self._no_resumo(a.origem)
-                if a.alternativas:
-                    item_conf["alternativas"] = [
-                        self._no_resumo(alt) if alt in self.disciplinas else {"codigo": alt}
-                        for alt in a.alternativas
-                    ]
-                confirmados_payload.append(item_conf)
-            return {
-                "tipo_consulta": "prerequisitos",
-                "dados": {
-                    **self._metadados_consulta(),
-                    "disciplina": self._no_resumo(alvo.codigo),
-                    "confirmados": confirmados_payload,
-                    "incertos": [self._no_resumo(a.origem) for a in incertos],
-                    "correquisitos": [
-                        self._no_resumo(c.destino if c.origem == alvo.codigo else c.origem)
-                        for c in coreqs
-                        if (c.destino if c.origem == alvo.codigo else c.origem) in self.disciplinas
-                    ],
-                },
-                "texto": " ".join(p + " [1]" for p in partes),
-                "evidencia": evidencia,
-                "fonte": fonte,
-                "alertas": [],
-            }
+            return self._consultar_prerequisitos(disciplinas[-1], codigos_consulta)
 
         m_sem_grade = re.search(
             r"\b(?:disciplinas?|materias?|grade)\s+do\s+(\d+)[º°o]?\s*(?:semestre|nivel)\b",
             texto,
         )
         if m_sem_grade or re.search(r"\bvig[eê]nc|\bqual\s+curr[ií]culo\b|\bcurr[ií]culo\s+(?:antigo|novo|vigente|atual)\b", texto):
-            sem_num = int(m_sem_grade.group(1)) if m_sem_grade else None
-            if sem_num is not None:
-                do_sem = sorted(
-                    [d for d in self.disciplinas.values() if d.semestre == sem_num],
-                    key=lambda d: d.codigo,
-                )
-                nomes = ", ".join(self._rotulo_disciplina(d) for d in do_sem)
-                evidencia = self._evidencia({d.codigo for d in do_sem}, [])
-                resposta = (
-                    f"No {sem_num}º semestre/nível de {self.curso} ({doc_id}, vigência: {self.vigencia['descricao']}), "
-                    f"constam {len(do_sem)} componente(s): {nomes or 'nenhum registrado'}. [1]"
-                )
-                return {
-                    "tipo_consulta": "vigencia_curriculo",
-                    "dados": {
-                        **self._metadados_consulta(),
-                        "semestre": sem_num,
-                        "disciplinas": [self._no_resumo(d.codigo) for d in do_sem],
-                    },
-                    "texto": resposta,
-                    "evidencia": evidencia,
-                    "fonte": fonte,
-                    "alertas": [],
-                }
-            evidencia = f"{self.curso} ({doc_id}) — vigência: {self.vigencia['descricao']} · {len(self.disciplinas)} disciplinas obrigatórias."
-            ch = f", carga horária total {self.metadados['carga_horaria_total']}h" if self.metadados["carga_horaria_total"] else ""
-            cred = f", {self.metadados['total_creditos']} créditos" if self.metadados["total_creditos"] else ""
-            resposta = (
-                f"Currículo de {self.curso} ({self.curriculo_id}, {doc_id}): vigência '{self.vigencia['descricao']}' "
-                f"(início {self.vigencia['inicio']}"
-                + (f", fim {self.vigencia['fim']}" if self.vigencia.get("fim") else ", sem data de término")
-                + f"{cred}{ch}), com {len(self.disciplinas)} disciplinas obrigatórias, cobertura de pré-requisitos "
-                f"'{self.cobertura_prerequisitos}' e de equivalências '{self.cobertura_equivalencias}'. [1]"
-            )
-            return {
-                "tipo_consulta": "vigencia_curriculo",
-                "dados": {
-                    **self._metadados_consulta(),
-                    "total_disciplinas": len(self.disciplinas),
-                },
-                "texto": resposta,
-                "evidencia": evidencia,
-                "fonte": fonte,
-                "alertas": [],
-            }
+            return self._consultar_vigencia_ou_semestre(int(m_sem_grade.group(1)) if m_sem_grade else None)
 
         return None
 
@@ -1716,6 +1746,7 @@ class RepositorioGrafos:
             if g.curriculo_id in self.curriculos:
                 raise ValueError(f"curriculo_id duplicado: {g.curriculo_id}")
             self.curriculos[g.curriculo_id] = g
+        self._consultar_cache = lru_cache(maxsize=128)(self._consultar_estruturado_uncached)
 
     def por_id(self, curriculo_id: str) -> GrafoCurricular:
         if curriculo_id not in self.curriculos:
@@ -1862,7 +1893,7 @@ class RepositorioGrafos:
             return [self.curriculos["software-2024-2"]]
         return list(self.curriculos.values())[:1]
 
-    def consultar_estruturado(
+    def _consultar_estruturado_uncached(
         self,
         pergunta: str,
         curso: str | None = None,
@@ -1891,6 +1922,16 @@ class RepositorioGrafos:
                 )
             return res
         return None
+
+    def consultar_estruturado(
+        self,
+        pergunta: str,
+        curso: str | None = None,
+        curriculo_id: str | None = None,
+        vigencia: str | None = None,
+    ) -> dict | None:
+        res = self._consultar_cache(pergunta, curso, curriculo_id, vigencia)
+        return copy.deepcopy(res) if res is not None else None
 
 
 def _resolver_slug_curso(texto: str | None) -> str | None:

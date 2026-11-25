@@ -12,19 +12,10 @@ import jsonschema
 import yaml
 
 from . import config
+from .texto import DIAS_SEMANA
 
 _SCHEMA_PATH = Path(__file__).resolve().with_name("schema_calendario.json")
 _CACHE: dict[tuple[str, float], CalendarioAcademico] = {}
-
-DIAS_SEMANA = (
-    "segunda-feira",
-    "terça-feira",
-    "quarta-feira",
-    "quinta-feira",
-    "sexta-feira",
-    "sábado",
-    "domingo",
-)
 
 _MESES = {
     "janeiro": 1,

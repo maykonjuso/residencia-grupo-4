@@ -10,6 +10,7 @@ from typing import Any
 from .. import config, geracao, indice
 from .base import Agente
 from .mensagem import Mensagem, Resposta
+from .validador import normalizar_trecho_validacao
 
 # Protege chamadas simultâneas ao índice vetorial/BM25 em execução paralela (ChromaDB RustBindingsAPI).
 _LOCK_INDICE = threading.Lock()
@@ -69,6 +70,69 @@ def pergunta_fora_do_dominio(pergunta: str, eixo: str) -> bool:
     return False
 
 
+def deduplicar_fontes(trechos: list[dict]) -> list[dict]:
+    """Extrai metadados únicos de fontes preservando a primeira ocorrência por página/URL."""
+    campos = ("doc_id", "titulo", "orgao", "pagina", "secao", "url", "chunk_id")
+    fontes: list[dict] = []
+    vistas: set[tuple] = set()
+    for trecho in trechos:
+        chave = (trecho.get("doc_id"), trecho.get("pagina"), trecho.get("url"))
+        if chave in vistas:
+            continue
+        vistas.add(chave)
+        fontes.append({campo: trecho.get(campo) for campo in campos})
+    return fontes
+
+
+def executar_ferramenta_estruturada(
+    agente: Any,
+    mensagem: Mensagem,
+    extrator: Any,
+    *,
+    permitir_fallback_rag: bool = False,
+) -> Resposta | None:
+    """Executa uma ferramenta estruturada de domínio, redige via LLM e preenche trace/contexto."""
+    if pergunta_fora_do_dominio(mensagem.conteudo, agente.eixo):
+        return None
+    from . import ferramentas
+
+    contexto = mensagem.contexto if isinstance(mensagem.contexto, dict) else {}
+    mensagem.contexto = contexto
+    chamada = extrator(mensagem.conteudo, contexto)
+    if chamada is None:
+        return None
+
+    nome_ferr, args = chamada
+    t0 = time.monotonic()
+    res = getattr(ferramentas, nome_ferr)(**args)
+    duracao_ferr = round(time.monotonic() - t0, 3)
+    if permitir_fallback_rag and res.recusado and res.dados.get("fallback_rag", True):
+        return None
+
+    backend = contexto.get("backend", config.BACKEND)
+    texto_final, duracao_ger, alertas_final, redigido_llm = ferramentas.redigir_com_ferramenta(
+        mensagem.conteudo,
+        res,
+        agente.instrucoes,
+        backend,
+    )
+
+    trace_ferr = res.para_trace()
+    trace_ferr["redigido_por_llm"] = redigido_llm
+    trace_ferr["llm_falhou"] = any("Redação via LLM falhou" in a for a in alertas_final)
+    contexto["ferramenta_chamada"] = trace_ferr
+    contexto["dado_estruturado"] = res.dados
+    contexto["trechos_recuperados"] = list(res.trechos_evidencia)
+    contexto["tempo_busca_s"] = duracao_ferr
+    contexto["tempo_geracao_s"] = duracao_ger
+    return Resposta(
+        conteudo=texto_final,
+        fontes=list(res.fontes),
+        confianca=0.0 if res.recusado else 1.0,
+        alertas=alertas_final,
+    )
+
+
 def executar_agente_dominio(agente: Any, mensagem: Mensagem) -> Resposta:
     """Fluxo compartilhado (Opção A): guarda de domínio, busca via pesquisar(), geração e higienização."""
     contexto = mensagem.contexto if isinstance(mensagem.contexto, dict) else {}
@@ -92,19 +156,7 @@ def executar_agente_dominio(agente: Any, mensagem: Mensagem) -> Resposta:
     trechos = resultado["trechos"]
     contexto["trechos_recuperados"] = trechos
 
-    trechos_norm = [
-        {
-            "chunk_id": t.get("chunk_id") or "",
-            "doc_id": t.get("doc_id") or "",
-            "titulo": t.get("titulo") or "",
-            "orgao": t.get("orgao") or "",
-            "pagina": t.get("pagina") if t.get("pagina") is not None else "",
-            "secao": t.get("secao") or "",
-            "url": t.get("url") or "",
-            "texto": t.get("texto") or "",
-        }
-        for t in trechos
-    ]
+    trechos_norm = [normalizar_trecho_validacao(t) for t in trechos]
 
     texto = geracao.gerar_com_instrucoes(
         resultado["pergunta"],
@@ -335,41 +387,13 @@ class AgenteRU(Agente):
                     vistos = {t.get("chunk_id") for t in extras}
                     trechos = (extras + [t for t in trechos if t.get("chunk_id") not in vistos])[:self.k]
 
-        # Organiza as fontes sem duplicar a mesma página.
-        fontes = []
-        fontes_vistas = set()
-
-        for trecho in trechos:
-            chave = (
-                trecho.get("doc_id"),
-                trecho.get("pagina"),
-                trecho.get("url"),
-            )
-
-            if chave not in fontes_vistas:
-                fontes_vistas.add(chave)
-
-                fontes.append({
-                    campo: trecho.get(campo)
-                    for campo in (
-                        "doc_id",
-                        "titulo",
-                        "orgao",
-                        "pagina",
-                        "secao",
-                        "url",
-                        "chunk_id",
-                    )
-                })
-
-        # Retorna os resultados para o Orquestrador.
         return {
             "agente": self.nome,
             "eixo": self.eixo,
             "pergunta": pergunta,
             "encontrou": bool(trechos),
             "trechos": trechos,
-            "fontes": fontes,
+            "fontes": deduplicar_fontes(trechos),
         }
 
     def montar_mensagens(self, pergunta: str, trechos: list[dict]) -> list[dict]:
@@ -378,44 +402,9 @@ class AgenteRU(Agente):
 
     def responder_ferramenta(self, mensagem: Mensagem) -> Resposta | None:
         """Executa ferramenta estruturada do Agente RU quando a consulta pede cardápio/montagem."""
-        if pergunta_fora_do_dominio(mensagem.conteudo, self.eixo):
-            return None
         from . import ferramentas
 
-        contexto = mensagem.contexto if isinstance(mensagem.contexto, dict) else {}
-        mensagem.contexto = contexto
-        chamada = ferramentas.extrair_chamada_ru(mensagem.conteudo, contexto)
-        if chamada is None:
-            return None
-
-        nome_ferr, args = chamada
-        t0 = time.monotonic()
-        fn = getattr(ferramentas, nome_ferr)
-        res = fn(**args)
-        duracao_ferr = round(time.monotonic() - t0, 3)
-
-        backend = contexto.get("backend", config.BACKEND)
-        texto_final, duracao_ger, alertas_final, redigido_llm = ferramentas.redigir_com_ferramenta(
-            mensagem.conteudo,
-            res,
-            self.instrucoes,
-            backend,
-        )
-
-        trace_ferr = res.para_trace()
-        trace_ferr["redigido_por_llm"] = redigido_llm
-        trace_ferr["llm_falhou"] = any("Redação via LLM falhou" in a for a in alertas_final)
-        contexto["ferramenta_chamada"] = trace_ferr
-        contexto["dado_estruturado"] = res.dados
-        contexto["trechos_recuperados"] = list(res.trechos_evidencia)
-        contexto["tempo_busca_s"] = duracao_ferr
-        contexto["tempo_geracao_s"] = duracao_ger
-        return Resposta(
-            conteudo=texto_final,
-            fontes=list(res.fontes),
-            confianca=0.0 if res.recusado else 1.0,
-            alertas=alertas_final,
-        )
+        return executar_ferramenta_estruturada(self, mensagem, ferramentas.extrair_chamada_ru)
 
     def executar(self, mensagem: Mensagem) -> Resposta:
         """Executa ferramenta estruturada quando aplicável ou segue busca RAG + geração."""

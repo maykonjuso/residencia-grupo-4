@@ -5,9 +5,13 @@ from __future__ import annotations
 import time
 
 from .. import calendario, config, geracao, indice
-from .agente_ru import _LOCK_INDICE, executar_agente_dominio, pergunta_fora_do_dominio
+from .agente_ru import (
+    _LOCK_INDICE,
+    deduplicar_fontes,
+    executar_agente_dominio,
+    executar_ferramenta_estruturada,
+)
 from .base import Agente
-from ..grafo_curricular import carregar_grafo_f16
 from .mensagem import Mensagem, Resposta
 
 INSTRUCOES_FLUXO = f"""Você é o Agente Fluxo do sistema RUmo, especialista exclusivo nos fluxos de disciplinas, cursos de engenharia e normas acadêmicas da FCTE/UnB (campus Gama).
@@ -55,32 +59,13 @@ class AgenteFluxo(Agente):
                 decompor_pergunta=False,
             )
 
-        fontes = []
-        fontes_vistas = set()
-
-        for trecho in trechos:
-            chave = (
-                trecho.get("doc_id"),
-                trecho.get("pagina"),
-                trecho.get("url"),
-            )
-            if chave not in fontes_vistas:
-                fontes_vistas.add(chave)
-                fontes.append({
-                    campo: trecho.get(campo)
-                    for campo in (
-                        "doc_id", "titulo", "orgao", "pagina",
-                        "secao", "url", "chunk_id",
-                    )
-                })
-
         return {
             "agente": self.nome,
             "eixo": self.eixo,
             "pergunta": pergunta,
             "encontrou": bool(trechos),
             "trechos": trechos,
-            "fontes": fontes,
+            "fontes": deduplicar_fontes(trechos),
         }
 
     def montar_mensagens(self, pergunta: str, trechos: list[dict]) -> list[dict]:
@@ -89,45 +74,14 @@ class AgenteFluxo(Agente):
 
     def responder_grafo(self, mensagem: Mensagem) -> Resposta | None:
         """Executa ferramenta local (agenda ou grafo curricular) e delega a redação (com guardião) ao backend ativo."""
-        if not pergunta_fora_do_dominio(mensagem.conteudo, self.eixo):
-            from . import ferramentas
+        from . import ferramentas
 
-            contexto = mensagem.contexto if isinstance(mensagem.contexto, dict) else {}
-            mensagem.contexto = contexto
-            chamada = ferramentas.extrair_chamada_fluxo(mensagem.conteudo, contexto)
-            if chamada is None:
-                return None
-
-            nome_ferr, args = chamada
-            t0 = time.monotonic()
-            res = getattr(ferramentas, nome_ferr)(**args)
-            tempo_busca = round(time.monotonic() - t0, 3)
-            if res.ferramenta == "grafo_fluxo" and res.recusado and res.dados.get("fallback_rag", True):
-                return None
-
-            backend = contexto.get("backend", config.BACKEND)
-            texto_final, tempo_ger, alertas_final, redigido_llm = ferramentas.redigir_com_ferramenta(
-                mensagem.conteudo,
-                res,
-                self.instrucoes,
-                backend,
-            )
-
-            trace_ferr = res.para_trace()
-            trace_ferr["redigido_por_llm"] = redigido_llm
-            trace_ferr["llm_falhou"] = any("Redação via LLM falhou" in a for a in alertas_final)
-            contexto["ferramenta_chamada"] = trace_ferr
-            contexto["dado_estruturado"] = res.dados
-            contexto["trechos_recuperados"] = list(res.trechos_evidencia)
-            contexto["tempo_busca_s"] = tempo_busca
-            contexto["tempo_geracao_s"] = tempo_ger
-            return Resposta(
-                conteudo=texto_final,
-                fontes=list(res.fontes),
-                confianca=0.0 if res.recusado else 1.0,
-                alertas=alertas_final,
-            )
-        return None
+        return executar_ferramenta_estruturada(
+            self,
+            mensagem,
+            ferramentas.extrair_chamada_fluxo,
+            permitir_fallback_rag=True,
+        )
 
     responder_ferramenta = responder_grafo
 
