@@ -18,7 +18,7 @@ from typing import Any
 
 from .. import config, geracao, reescrita
 from .agente_fluxo import AgenteFluxo
-from .agente_ru import AgenteRU, _TERMOS_FLUXO, _TERMOS_RU
+from .agente_ru import AgenteRU, _TERMOS_FLUXO, _TERMOS_RU, _sem_anotacao_data
 from .base import Agente
 from .mensagem import Mensagem, Resposta
 from .trace import Trace
@@ -321,8 +321,9 @@ def rotear_subpergunta(
     if eixo_norm == "ambos":
         return ["ru", "fluxo"]
 
-    casa_ru = bool(_TERMOS_RU.search(subpergunta))
-    casa_fluxo = bool(_TERMOS_FLUXO.search(subpergunta))
+    base = _sem_anotacao_data(subpergunta)
+    casa_ru = bool(_TERMOS_RU.search(base))
+    casa_fluxo = bool(_TERMOS_FLUXO.search(base))
     if casa_ru and not casa_fluxo:
         return ["ru"]
     if casa_fluxo and not casa_ru:
@@ -331,9 +332,9 @@ def rotear_subpergunta(
         return ["ru", "fluxo"]
     from . import ferramentas
 
-    if ferramentas.extrair_chamada_fluxo(subpergunta) is not None:
+    if ferramentas.extrair_chamada_fluxo(base) is not None:
         return ["fluxo"]
-    if ferramentas.extrair_chamada_ru(subpergunta) is not None:
+    if ferramentas.extrair_chamada_ru(base) is not None:
         return ["ru"]
     if usar_d1_fallback:
         return reescrita.classificar_dominio_d1(subpergunta)
@@ -479,13 +480,14 @@ class Orquestrador:
 
     def _classificar_e_decompor(self, pergunta: str, backend: str) -> tuple[bool, float, list[dict[str, str]], float]:
         t0 = time.monotonic()
-        cruzamento_dominios = bool(_TERMOS_RU.search(pergunta) and _TERMOS_FLUXO.search(pergunta))
-        partes_fallback = reescrita._decompor_fallback(pergunta)
+        base = _sem_anotacao_data(pergunta)
+        cruzamento_dominios = bool(_TERMOS_RU.search(base) and _TERMOS_FLUXO.search(base))
+        partes_fallback = reescrita._decompor_fallback(base)
 
-        if not cruzamento_dominios and pergunta.count("?") <= 1 and len(partes_fallback) < 2:
+        if not cruzamento_dominios and base.count("?") <= 1 and len(partes_fallback) < 2:
             from . import ferramentas
 
-            if ferramentas.extrair_chamada_fluxo(pergunta) is not None:
+            if ferramentas.extrair_chamada_fluxo(base) is not None:
                 return False, 0.0, [], round(time.monotonic() - t0, 3)
 
         eh_composta, prob_composta = reescrita.classificar_composta(pergunta)
