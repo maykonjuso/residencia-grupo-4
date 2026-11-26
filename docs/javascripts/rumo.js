@@ -287,7 +287,7 @@
           texto: "Rota dentro do campus é do Grupo 09; cardápio é do Grupo 04." },
         { nos: ["orq"], arestas: ["a_po"], quem: "comum", titulo: "O orquestrador divide a pergunta",
           texto: "O LLM roteador quebra a pergunta em subperguntas e escolhe o destino de cada uma.",
-          carga: "{\n  \"subperguntas\": [\n    { \"texto\": \"Como chegar da UAC ao RU (MESP)?\", \"destino\": \"grupo09\" },\n    { \"texto\": \"O que tem no almoço do RU Gama em 11/11/2026?\", \"destino\": \"grupo04\" }\n  ]\n}" },
+          carga: "{\n  \"subperguntas\": [\n    { \"texto\": \"Como chegar da UAC ao RU?\", \"destino\": \"grupo09\" },\n    { \"texto\": \"O que tem no almoço do RU Gama em 11/11/2026?\", \"destino\": \"grupo04\" }\n  ]\n}" },
         { nos: ["api04", "api09"], arestas: ["a_o4", "a_o9"], quem: "comum", titulo: "Chamadas em paralelo",
           texto: "Os dois sistemas recebem o mesmo formato de requisição. Cada grupo continua dono do próprio código, base e entregáveis." },
         { nos: ["busca", "indice", "llm04", "resp04", "rag09", "base09", "resp09"],
@@ -295,7 +295,7 @@
           texto: "Grupo 04: cardápio do dia com fontes do RU. Grupo 09: rota com base no mapeamento das plantas da FCTE (implementação do Grupo 09)." },
         { nos: ["orq"], arestas: ["a_ro", "a_r9"], quem: "comum", titulo: "As respostas voltam etiquetadas",
           texto: "Cada resposta traz o campo \"grupo\" e as próprias fontes, para o estudante saber de onde veio cada parte.",
-          carga: "[\n  { \"grupo\": \"grupo09\", \"resposta\": \"Saia da UAC pelo ... até o MESP.\", \"fontes\": [\"planta MESP\"] },\n  { \"grupo\": \"grupo04\", \"resposta\": \"Almoço de 11/11: ... [1]\", \"fontes\": [\"F09 p.2\"] }\n]" },
+          carga: "[\n  { \"grupo\": \"grupo09\", \"resposta\": \"Saia da UAC pelo ... até o RU.\", \"fontes\": [\"planta do RU\"] },\n  { \"grupo\": \"grupo04\", \"resposta\": \"Almoço de 11/11: ... [1]\", \"fontes\": [\"F09 p.2\"] }\n]" },
         { nos: ["portal", "usuario"], arestas: ["a_op", "a_pu"], quem: "comum", titulo: "Resposta única, fontes separadas",
           texto: "O orquestrador junta as duas partes sem misturar as fontes: \"Como chegar (Grupo 09)\" e \"O que tem no almoço (Grupo 04)\"." }
       ]

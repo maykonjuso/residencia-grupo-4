@@ -23,7 +23,7 @@ Os Grupos 04 e 09 começaram com ideias que se encostam: o Grupo 09 já vinha ma
 |---|---|---|
 | Tema | Restaurante Universitário e fluxo de disciplinas | Mapeamento da FCTE (salas, prédios, acessos) |
 | Base de conhecimento | Resoluções e páginas do RU, cardápios, editais DDS, PPCs, fluxogramas, calendário, normas acadêmicas | Plantas e mapeamento dos prédios do campus Gama |
-| Pergunta típica | "O que tem no almoço de quarta?", "O que preciso cursar antes de Testes de Software?" | "Onde fica a sala I-10?", "Como chego ao MESP?" |
+| Pergunta típica | "O que tem no almoço de quarta?", "O que preciso cursar antes de Testes de Software?" | "Onde fica a sala I-10?", "Como chego ao RU?" |
 | Entregáveis | Completos, nesta GitPage | Completos, na documentação do Grupo 09 |
 
 <p class="legenda">Tabela 1. Responsabilidades de cada grupo.</p>
@@ -53,7 +53,7 @@ sequenceDiagram
         O->>G4: POST /perguntar<br/>"O que tem no almoço do RU Gama hoje?"
         G4-->>O: resposta + fontes (F09 p.2)<br/>grupo = grupo04
     and
-        O->>G9: POST /perguntar<br/>"Como chegar da UAC ao RU (MESP)?"
+        O->>G9: POST /perguntar<br/>"Como chegar da UAC ao RU?"
         G9-->>O: rota + fontes<br/>grupo = grupo09
     end
     O->>O: compõe a resposta sem misturar as fontes
