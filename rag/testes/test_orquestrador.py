@@ -275,6 +275,24 @@ class TestParalelismoEComposicao(unittest.TestCase):
         # Nenhuma parte teve o [1] renumerado para [2]
         self.assertNotIn("[2]", res["resposta"])
 
+        # Para a API (contrato v1.0, lista única de fontes), cada fonte tem n único (#91)
+        self.assertEqual([f["n"] for f in res["fontes_contrato"]], [1, 2])
+        self.assertEqual([f["doc_id"] for f in res["fontes_contrato"]], ["F09", "F20"])
+        self.assertIn("frango grelhado [1]", res["resposta_contrato"])
+        self.assertIn("Desenvolvimento [2]", res["resposta_contrato"])
+
+    def test_numeracao_unica_reaproveita_fonte_repetida(self):
+        from rumo_rag.agentes.orquestrador import numeracao_unica
+
+        fonte = {"n": 1, "doc_id": "F99", "pagina": 2, "url": "u", "chunk_id": "F99-0009"}
+        outra = {"n": 2, "doc_id": "F56", "pagina": 1, "url": "v", "chunk_id": "F56-0001"}
+        textos, fontes = numeracao_unica([("Almoço [1]", [fonte]), ("Jantar [1] e café [2]", [fonte, outra])])
+        self.assertEqual(textos, ["Almoço [1]", "Jantar [1] e café [2]"])
+        self.assertEqual([(f["n"], f["doc_id"]) for f in fontes], [(1, "F99"), (2, "F56")])
+
+        textos, _ = numeracao_unica([("A [1]", [outra | {"n": 1}]), ("B [1]", [fonte])])
+        self.assertEqual(textos, ["A [1]", "B [2]"])
+
 
 class TestValidadorEDegradacao(unittest.TestCase):
     def test_validador_reprova_valor_inventado_e_devolve_ao_sintetizador(self):

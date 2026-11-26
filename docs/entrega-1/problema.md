@@ -2,7 +2,7 @@
 
 ## Contexto
 
-A FCTE (antiga FGA, campus Gama da UnB) oferece cinco engenharias de graduação (Aeroespacial, Automotiva, Eletrônica, Energia e Software) e o mestrado em Engenharia Biomédica (PPGEB). O campus tem um Restaurante Universitário próprio, no prédio do MESP, que serve café da manhã, almoço e jantar de segunda a sexta.
+A FCTE (antiga FGA, campus Gama da UnB) oferece cinco engenharias de graduação (Aeroespacial, Automotiva, Eletrônica, Energia e Software) e o mestrado em Engenharia Biomédica (PPGEB). O campus tem um Restaurante Universitário próprio, o RU Gama, que serve café da manhã, almoço e jantar de segunda a sexta.
 
 Os cinco cursos de engenharia da FCTE compartilham disciplinas do núcleo básico nos semestres iniciais e seguem com grades específicas de cada habilitação nos períodos seguintes.
 

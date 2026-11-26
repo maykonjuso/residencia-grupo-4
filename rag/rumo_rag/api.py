@@ -265,6 +265,9 @@ def perguntar(
         vigencia=entrada.contexto.vigencia,
     )
 
+    # O contrato v1.0 tem uma lista só de fontes, com `n` único. Com várias partes, o
+    # orquestrador entrega a versão renumerada em resposta_contrato/fontes_contrato (#91).
+    contrato = "fontes_contrato" in resultado
     fontes_v1 = [
         {
             "n": int(f.get("n") or idx),
@@ -274,9 +277,9 @@ def perguntar(
             "pagina": _pagina_int(f.get("pagina")),
             "url": f.get("url") or "",
         }
-        for idx, f in enumerate(resultado.get("fontes_citadas", []), start=1)
+        for idx, f in enumerate(resultado.get("fontes_contrato" if contrato else "fontes_citadas", []), start=1)
     ]
-    resposta = resultado.get("resposta") or SEM_BASE
+    resposta = (resultado.get("resposta_contrato") if contrato else resultado.get("resposta")) or SEM_BASE
     encontrou = bool(fontes_v1) and not resposta.strip().startswith(SEM_BASE)
     corpo = {
         "grupo": "grupo04",

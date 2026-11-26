@@ -13,6 +13,7 @@ from __future__ import annotations
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import asdict, dataclass, field
 import os
+import re
 import time
 from typing import Any
 
@@ -83,6 +84,33 @@ def _normalizar_fontes(fontes: list[dict] | None, texto: str, trechos: list[dict
     if trechos:
         return geracao.citacoes_usadas(texto, [_normalizar_trecho_validacao(t) for t in trechos])
     return []
+
+
+_CITACAO = re.compile(r"\[(\d{1,3})\]")
+
+
+def numeracao_unica(blocos: list[tuple[str, list[dict]]]) -> tuple[list[str], list[dict]]:
+    """Renumera as citações de várias partes para uma lista única de fontes (contrato v1.0).
+
+    Cada parte cita a partir de [1]. Para o CLI isso é o certo, porque as partes aparecem
+    separadas. Na API, a lista `fontes` é uma só, e o contrato exige `n` único: com `[1]`
+    repetido, o FcteMapping rejeita a resposta inteira ("Referências inválidas") e a tela /ru
+    mostra o RUmo como fora do ar (#91). A mesma fonte citada por duas partes recebe o mesmo
+    número.
+    """
+    fontes: list[dict] = []
+    por_chave: dict[tuple, int] = {}
+    textos: list[str] = []
+    for texto, citadas in blocos:
+        mapa: dict[int, int] = {}
+        for i, f in enumerate(citadas, start=1):
+            chave = (f.get("doc_id"), f.get("chunk_id") or f.get("pagina"), f.get("url"))
+            if chave not in por_chave:
+                por_chave[chave] = len(fontes) + 1
+                fontes.append({**f, "n": por_chave[chave]})
+            mapa[int(f.get("n") or i)] = por_chave[chave]
+        textos.append(_CITACAO.sub(lambda m: f"[{mapa.get(int(m.group(1)), m.group(1))}]", texto) if mapa else texto)
+    return textos, fontes
 
 
 class Sintetizador(Agente):
@@ -207,6 +235,8 @@ class Sintetizador(Agente):
         sem_citacao_geral = False
         degradado = False
 
+        blocos_contrato: list[tuple[str, list[dict]]] = []
+
         mult = len(partes) > 1 or any(p.erro for p in partes)
         for parte in partes:
             if parte.erro:
@@ -216,12 +246,14 @@ class Sintetizador(Agente):
                 )
                 avisos.append(aviso)
                 blocos_texto.append(f"[{parte.nome_agente}] {parte.subpergunta}\n{aviso}")
+                blocos_contrato.append((blocos_texto[-1], []))
                 continue
 
             if mult:
                 blocos_texto.append(f"[{parte.nome_agente}] {parte.subpergunta}\n{parte.resposta}")
             else:
                 blocos_texto.append(parte.resposta)
+            blocos_contrato.append((blocos_texto[-1], parte.fontes_citadas))
 
             val = parte.validacao or {}
             if val.get("indisponivel"):
@@ -248,8 +280,11 @@ class Sintetizador(Agente):
                 fontes_agregadas.append(fonte_com_agente)
 
         resposta_final = "\n\n".join(blocos_texto) if blocos_texto else geracao.RECUSA
+        textos_contrato, fontes_contrato = numeracao_unica(blocos_contrato)
         return {
             "resposta": resposta_final,
+            "resposta_contrato": "\n\n".join(textos_contrato) if textos_contrato else geracao.RECUSA,
+            "fontes_contrato": fontes_contrato,
             "partes": [asdict(p) for p in partes],
             "fontes_citadas": fontes_agregadas,
             "trechos_recuperados": trechos_agregados,
@@ -838,6 +873,8 @@ class Orquestrador:
             "subperguntas": subperguntas,
             "resposta": composto["resposta"],
             "fontes_citadas": composto["fontes_citadas"],
+            "resposta_contrato": composto["resposta_contrato"],
+            "fontes_contrato": composto["fontes_contrato"],
             "valores_sem_fonte": composto["valores_sem_fonte"],
             "sem_citacao": composto["sem_citacao"],
             "trechos_recuperados": composto["trechos_recuperados"],
