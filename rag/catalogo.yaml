@@ -517,3 +517,12 @@ documentos:
     arquivo: originais/F58.pdf
     coletado_em: "2026-11-23"
     vigencia: {inicio: "2026-12-22", fim: "2027-02-22"}
+  - id: F59
+    titulo: "Horários e salas das turmas do campus Gama — 2026.2 (SIGAA, consulta pública)"
+    orgao: "UnB · SIGAA (consulta pública)"
+    eixo: fluxo
+    tipo: pagina
+    data: "2026-11-26"
+    url: "https://sigaa.unb.br/sigaa/public/turmas/listar.jsf"
+    arquivo: curados/oferta_turmas_fcte_2026-2.md
+    coletado_em: "2026-11-26"  # python -m rumo_rag.coleta turmas (#56)

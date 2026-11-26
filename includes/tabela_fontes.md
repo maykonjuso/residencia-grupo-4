@@ -44,6 +44,7 @@
 | F36 | [Regimento Interno da Faculdade UnB Gama (FCTE)](http://fcte.unb.br/wp-content/uploads/2024/05/Regimento_Interno_FGA_-_aprovado.pdf) | UnB · FCTE | norma | 2024-05 | 84 |
 | F57 | [Feriados, pontos facultativos e período de aulas do 2026.2 — transcrição do calendário](https://saa.unb.br/wp-content/uploads/2026/10/2026_2_Calend_Ativ_Grad_02_10_2026.pdf) | UnB · Secretaria de Administração Acadêmica (transcrição do Grupo 04) | calendario | 2026-10-02 | 5 |
 | F58 | [Calendário especial de verão 2027 (2026.4) — turmas de férias](https://saa.unb.br/wp-content/uploads/2026/11/2026_4_Calend_Ativ_Grad_04_11_2026.pdf) | UnB · Secretaria de Administração Acadêmica | calendario | 2026-11-04 | 3 |
+| F59 | [Horários e salas das turmas do campus Gama — 2026.2 (SIGAA, consulta pública)](https://sigaa.unb.br/sigaa/public/turmas/listar.jsf) | UnB · SIGAA (consulta pública) | pagina | 2026-11-26 | 37 |
 
 ### Apoio {#eixo-apoio}
 

@@ -27,7 +27,7 @@ comando, com fontes, e recusa fora da base. O que vem depois são os entregávei
 
 ## Fora do escopo (nesta fase)
 
-- Dados pessoais do estudante (histórico, IRA, matrícula): o RUmo **não acessa o SIGAA** nem pede login.
+- Dados pessoais do estudante (histórico, IRA, matrícula): o RUmo **não entra na área do SIGAA que exige login** nem pede login. Das páginas do SIGAA, usa só as consultas públicas de turmas e de componentes ([RN-05](regras-de-negocio.md)).
 - Outros campi: o RU Darcy Ribeiro, Ceilândia e Planaltina aparecem na base só porque estão nos mesmos documentos.
 - Recomendação nutricional individual ou dieta: o RUmo informa o cardápio, não prescreve.
 - Mapeamento de salas e rotas: é do [Grupo 09](../visao/escopo-grupos.md).
@@ -68,3 +68,4 @@ O RF06 está no ar desde a Entrega 4: a API responde `POST /perguntar` no contra
     | :---: | :---: | --- | --- |
     | 09/11/2026 | 1.1 | Declara o MVP, prioriza RF01–RF08 e separa valor de produto de obrigação de cronograma | Maykon Soares |
     | 26/11/2026 | 1.2 | Atualiza a situação de RF06 (entregue) e RF08 (parcial, `#100`) | Maykon Soares |
+    | 26/11/2026 | 1.3 | Fora do escopo: SIGAA só na área autenticada; as consultas públicas viram fonte (#52, #56) | Maykon Soares |

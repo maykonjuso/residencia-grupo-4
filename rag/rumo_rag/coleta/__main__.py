@@ -6,6 +6,10 @@
   python -m rumo_rag.coleta cardapio --estruturado --data 2026-11-09 --refeicao almoco
   python -m rumo_rag.coleta cardapio --estruturado --data 2026-11-09          # todas as refeições do dia
   python -m rumo_rag.coleta cardapio --data 2026-11-09 --refeicao almoco      # texto do chunk, para conferir
+  python -m rumo_rag.coleta turmas --ano 2026 --periodo 2 --dry-run           # oferta da FCTE no SIGAA público (#56)
+  python -m rumo_rag.coleta turmas --ano 2026 --periodo 2                     # idem, e grava JSON, texto curado e catálogo
+  python -m rumo_rag.coleta prerequisitos --curriculo software-2024-2          # fichas do SIGAA × grafo (#52)
+  python -m rumo_rag.coleta prerequisitos --local dados/sigaa/prerequisitos_software-2024-2.json  # recompara sem rede
 """
 import argparse
 import json
@@ -13,7 +17,81 @@ import sys
 from datetime import date
 from pathlib import Path
 
-from . import cardapio, scraper
+from . import cardapio, scraper, sigaa
+
+
+def cmd_turmas(args) -> int:
+    """Oferta de turmas de graduação da FCTE na consulta pública do SIGAA (#56)."""
+    try:
+        if args.pagina_local:
+            bruto = Path(args.pagina_local).read_text(encoding="utf-8", errors="replace")
+            turmas = sigaa.ler_turmas(bruto)
+            if not turmas:
+                raise sigaa.ErroSigaa(f"Nenhuma turma em {args.pagina_local}.")
+        else:
+            turmas, bruto = sigaa.coletar_turmas(args.ano, args.periodo)
+    except sigaa.ErroSigaa as e:
+        print(f"erro: {e}\nNada foi gravado.", file=sys.stderr)
+        return 3
+    oferta = sigaa.montar_oferta(turmas, args.ano, args.periodo, date.today().isoformat())
+    sigaa.validar_oferta(oferta)
+    disciplinas = len({t["codigo"] for t in turmas})
+    sem_local = sum(1 for t in turmas if not t["salas"])
+    sem_horario = sum(1 for t in turmas if not t["aulas"])
+    print(f"{len(turmas)} turmas de {disciplinas} disciplinas em {args.ano}.{args.periodo} "
+          f"({sem_local} sem local, {sem_horario} sem horário por extenso)")
+    if args.dry_run:
+        print(sigaa.gerar_markdown(oferta)[:3000])
+        print("(dry-run: nada foi gravado)", file=sys.stderr)
+        return 0
+    g = sigaa.gravar_oferta(oferta, None if args.pagina_local else bruto)
+    for arq in g["arquivos"]:
+        print(f"gravado: {arq}", file=sys.stderr)
+    for aviso in g["avisos"]:
+        print(f"aviso: {aviso}", file=sys.stderr)
+    estado = "registrada no catálogo" if g["novo"] else "já estava no catálogo"
+    print(f"{g['doc_id']} {estado}. Para indexar: python -m rumo_rag ingerir", file=sys.stderr)
+    return 0
+
+
+def cmd_prerequisitos(args) -> int:
+    """Pré-requisitos das fichas públicas do SIGAA comparados com o grafo curricular (#52)."""
+    grafo = json.loads((sigaa.config.DADOS / "grafo_curricular.json").read_text(encoding="utf-8"))
+    curriculos = {c["curriculo_id"]: c for c in grafo["curriculos"]}
+    if args.local:
+        anterior = json.loads(Path(args.local).read_text(encoding="utf-8"))
+        curriculo = curriculos[anterior["curriculo_id"]]
+        relatorio = sigaa.montar_relatorio_componentes(curriculo, anterior["componentes"],
+                                                       anterior["fonte"]["coletado_em"],
+                                                       anterior.get("falhas_de_coleta", []))
+    else:
+        if args.curriculo not in curriculos:
+            print(f"erro: currículo {args.curriculo!r} não está no grafo ({', '.join(curriculos)})", file=sys.stderr)
+            return 2
+        curriculo = curriculos[args.curriculo]
+        sessao = sigaa.Sessao()
+        componentes, faltando = [], []
+        for no in curriculo["nos"]:
+            try:
+                ficha, _ = sigaa.coletar_componente(no["codigo"], sessao)
+                componentes.append(ficha)
+                print(f"ok {no['codigo']}: {ficha['pre_requisitos']['expressao'] or '-'}", file=sys.stderr)
+            except (sigaa.ErroSigaa, ValueError) as e:
+                faltando.append({"codigo": no["codigo"], "erro": str(e)})
+                print(f"falhou {no['codigo']}: {e}", file=sys.stderr)
+        relatorio = sigaa.montar_relatorio_componentes(curriculo, componentes, date.today().isoformat(), faltando)
+    r = relatorio["resumo"]
+    print(f"{relatorio['curriculo_id']}: {r['fichas']} fichas de {r['disciplinas']} disciplinas · "
+          f"{r['iguais']} relações iguais, {r['divergentes']} divergentes, {r['sem_ficha']} sem ficha")
+    for linha in relatorio["comparacao"]:
+        if linha["situacao"] == "diverge":
+            print(f"  {linha['codigo']} ({linha['relacao']}): SIGAA {linha['sigaa']} "
+                  f"[{linha['expressao_sigaa']}] × grafo {linha['grafo']}")
+    if args.saida and not args.local:
+        destino = Path(args.saida)
+        scraper.gravar_atomico(destino, json.dumps(relatorio, ensure_ascii=False, indent=2) + "\n")
+        print(f"gravado: {destino}", file=sys.stderr)
+    return 1 if (args.falhar_se_divergir and r["divergentes"]) else 0
 
 
 def cmd_coleta(args) -> int:
@@ -107,6 +185,21 @@ def main(argv=None) -> int:
     c.add_argument("--doc", help="restringe a um documento do catálogo, ex.: F09")
     c.add_argument("--saida", help="grava o JSON em arquivo em vez de imprimir")
     c.set_defaults(func=cmd_cardapio)
+
+    t = sub.add_parser("turmas", help="oferta de turmas da FCTE na consulta pública do SIGAA (#56)")
+    t.add_argument("--ano", type=int, required=True)
+    t.add_argument("--periodo", type=int, choices=[1, 2, 3, 4], required=True)
+    t.add_argument("--dry-run", action="store_true", help="baixa e imprime, sem gravar nada")
+    t.add_argument("--pagina-local", help="lê um HTML salvo da consulta em vez de baixar")
+    t.set_defaults(func=cmd_turmas)
+
+    pr = sub.add_parser("prerequisitos", help="fichas públicas do SIGAA comparadas com o grafo curricular (#52)")
+    pr.add_argument("--curriculo", default="software-2024-2", help="curriculo_id do grafo_curricular.json")
+    pr.add_argument("--saida", help="grava o relatório JSON (fichas + comparação)")
+    pr.add_argument("--local", help="recompara um relatório já gravado, sem acessar o SIGAA")
+    pr.add_argument("--falhar-se-divergir", action="store_true", help="sai com código 1 se houver divergência")
+    pr.set_defaults(func=cmd_prerequisitos)
+
     args = p.parse_args(argv)
     return args.func(args)
 

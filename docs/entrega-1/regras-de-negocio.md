@@ -21,7 +21,7 @@ e para o teste automático que acusa quando ela deixa de valer.
 | RN-02 | Toda afirmação da resposta cita o trecho usado, e cada citação leva a documento, página e URL | Resposta sem fonte não é verificável pelo estudante | RF03 |
 | RN-03 | Quando os trechos não trazem a resposta, o RUmo diz "Não encontrei essa informação nas fontes da base." e não inventa valor, data, código nem pré-requisito | Inventar o preço de uma refeição ou um pré-requisito causa dano real a quem perguntou | RF04 |
 | RN-04 | Por padrão, nenhuma pergunta sai da máquina: LLM e embeddings rodam localmente, e API externa só é usada se alguém configurar isso de propósito | Privacidade de quem pergunta e independência de serviço pago | RNF02 |
-| RN-05 | O RUmo não coleta dado pessoal: não pede login, não acessa o SIGAA e não associa pergunta a pessoa | LGPD e escopo do produto | RNF06 |
+| RN-05 | O RUmo não coleta dado pessoal: não pede login, não entra na área autenticada do SIGAA e não associa pergunta a pessoa. Do SIGAA, só as consultas públicas de turmas e de componentes podem ser fonte, sem nome de docente | LGPD e escopo do produto | RNF06 |
 
 <p class="legenda">Tabela 1. Regras de negócio do RUmo e o requisito de onde cada uma vem (<a href="../escopo/">Escopo e requisitos</a>).</p>
 
@@ -32,6 +32,14 @@ e para o teste automático que acusa quando ela deixa de valer.
     ANVISA (F12). Por isso a RN-01 passou a dizer "da UnB ou de órgão do governo federal". Se o
     grupo preferir a versão restrita, essas três fontes saem da base.
 
+!!! note "Mudança na RN-05 (issues #52 e #56)"
+    A versão 1.0 dizia que o RUmo "não acessa o SIGAA". A intenção era não tocar em dado
+    pessoal: histórico, IRA, matrícula, tudo atrás do login. A oferta de turmas e as fichas
+    das disciplinas, com os pré-requisitos, ficam em consultas públicas do SIGAA, abertas a
+    qualquer visitante e sem dado de estudante. A regra passou a proibir a área autenticada e
+    a permitir só essas consultas. O nome do docente, que a consulta de turmas mostra, não é
+    guardado. Detalhes em [Coleta no SIGAA público](../entrega-2/coleta-sigaa.md).
+
 ## O que garante cada regra
 
 | Regra | Comportamento do código que a garante | Onde | Teste |
@@ -40,7 +48,7 @@ e para o teste automático que acusa quando ela deixa de valer.
 | RN-02 | A regra 2 do prompt exige `[n]` depois de cada afirmação. `montar_contexto` entrega ao LLM cada trecho numerado com documento, órgão e página. `citacoes_usadas` transforma cada `[n]` em documento, página e URL. `resposta_sem_citacao` acusa a resposta que não cita nada, e a linha de comando mostra o alerta | `geracao.py`, `__main__.py` | `RN02CitaFonte` |
 | RN-03 | A frase de recusa é uma constante só, `RECUSA`, usada pelo prompt e pelo código. A regra 3 do prompt manda usá-la exatamente e proíbe inventar valores. Sem trechos, `gerar` recusa sem chamar o LLM; o modo extrativo recusa quando nenhuma frase casa com a pergunta. `valores_sem_fonte` alerta quando a resposta traz preço, data, horário ou código que não está nos trechos | `geracao.py` | `RN03RecusaForaDaBase` |
 | RN-04 | O backend padrão é `hf`: Qwen2.5-7B em 4 bits pela biblioteca `transformers`, na própria máquina. O Ollama aponta para `localhost`. `_gerar_openai` só é chamado com `RUMO_LLM_BACKEND=openai` e uma chave em `RUMO_OPENAI_KEY`. Os embeddings (bge-m3) também rodam localmente. O `demo_offline.sh --prova` roda com a rede externa bloqueada | `config.py`, `geracao.py`, `indice.py`, `demo_offline.sh` | `RN04NadaSaiPorPadrao` |
-| RN-05 | `gerar` recebe só a pergunta e os trechos, nada sobre quem perguntou. A saída de `responder` não tem campo de identidade. Nenhuma fonte é o próprio SIGAA (F34 é o manual público do portal). Nenhum módulo pede senha ou credencial | `geracao.py`, `__main__.py`, `catalogo.yaml` | `RN05SemDadoPessoal` |
+| RN-05 | `gerar` recebe só a pergunta e os trechos, nada sobre quem perguntou. A saída de `responder` não tem campo de identidade. Fonte com endereço do SIGAA só é aceita sob `/sigaa/public/` (F59, oferta de turmas). O coletor `coleta/sigaa.py` não guarda docente nem vagas. Nenhum módulo pede senha ou credencial | `geracao.py`, `__main__.py`, `catalogo.yaml`, `coleta/sigaa.py` | `RN05SemDadoPessoal` |
 
 <p class="legenda">Tabela 2. Comportamento que garante cada regra. Os arquivos ficam em <code>rag/rumo_rag/</code>, salvo indicação; os testes, em <code>rag/testes/test_regras_negocio.py</code>.</p>
 
@@ -103,3 +111,4 @@ no mesmo PR. Regra que muda só no código volta a ser regra não escrita.
     | Data | Versão | Descrição | Autor |
     | :---: | :---: | --- | --- |
     | 11/11/2026 | 1.0 | Formaliza RN-01 a RN-05, liga cada regra ao código e aos testes, registra as lacunas e a candidata RN-06 (issue #9) | Kyara Esteves |
+    | 26/11/2026 | 1.1 | RN-05 passa a permitir só as consultas públicas do SIGAA (turmas e componentes), sem nome de docente (#52, #56) | Maykon Soares |

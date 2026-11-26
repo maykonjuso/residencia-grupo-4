@@ -178,15 +178,26 @@ class RN04NadaSaiPorPadrao(unittest.TestCase):
 
 
 class RN05SemDadoPessoal(unittest.TestCase):
-    """RN-05 · Não coleta dado pessoal, não pede login, não acessa o SIGAA."""
+    """RN-05 · Não coleta dado pessoal, não pede login, não entra na área autenticada do SIGAA."""
 
     def test_geracao_recebe_so_pergunta_e_trechos(self):
         self.assertEqual(list(inspect.signature(geracao.gerar).parameters), ["pergunta", "trechos", "backend"])
 
-    def test_nenhuma_fonte_e_o_proprio_sigaa(self):
+    def test_fonte_do_sigaa_so_da_consulta_publica(self):
+        # Desde #52/#56, as consultas públicas (turmas e componentes) podem ser fonte: não pedem
+        # login nem trazem dado de estudante. Qualquer outra página do SIGAA continua proibida.
         for id_, d in DOCS.items():
-            with self.subTest(doc=id_):
-                self.assertNotEqual(urlparse(d["url"]).hostname, "sigaa.unb.br")
+            url = urlparse(d["url"])
+            if url.hostname == "sigaa.unb.br":
+                with self.subTest(doc=id_):
+                    self.assertTrue(url.path.startswith("/sigaa/public/"), d["url"])
+
+    def test_coleta_do_sigaa_nao_guarda_docente(self):
+        from rumo_rag.coleta import sigaa
+
+        pagina = (RAG / "testes" / "fixtures" / "sigaa" / "turmas_fcte_2026-2.html").read_text(encoding="utf-8")
+        for turma in sigaa.ler_turmas(pagina):
+            self.assertFalse({"docente", "docentes", "professor"} & set(turma))
 
     def test_codigo_nao_pede_credencial(self):
         proibido = re.compile(r"\b(senha|password|getpass|matr[ií]cula_do_usu|login\()", re.I)
