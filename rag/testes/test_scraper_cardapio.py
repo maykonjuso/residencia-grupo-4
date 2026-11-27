@@ -47,6 +47,7 @@ class AmbienteIsolado(unittest.TestCase):
         self.catalogo.write_text(config.CATALOGO.read_text(encoding="utf-8"), encoding="utf-8")
         self.patches = [mock.patch.object(config, "CATALOGO", self.catalogo),
                         mock.patch.object(config, "ORIGINAIS", self.tmp / "originais"),
+                        mock.patch.object(config, "CARDAPIO_SEMANAL_JSON", self.tmp / "cardapio_semanal.json"),
                         mock.patch.object(scraper, "BRUTOS", self.tmp / "brutos")]
         for p in self.patches:
             p.start()
@@ -143,6 +144,11 @@ class TestSemRede(AmbienteIsolado):
         self.assertEqual(self.arquivos(), ["catalogo.yaml"])
 
 
+# o coletor usa o próximo número livre do catálogo; calculado aqui para o teste não depender de
+# quantas fontes a base tem hoje
+PROXIMO = f"F{max(int(d['id'][1:]) for d in extracao.carregar_catalogo()) + 1:02d}"
+
+
 class TestGravacao(AmbienteIsolado):
     def _coletar(self):
         with mock.patch.object(scraper, "baixar", side_effect=[PAGINA.read_bytes(), PDF.read_bytes()]):
@@ -153,10 +159,11 @@ class TestGravacao(AmbienteIsolado):
         self.assertEqual(codigo, 0, err)
         arquivos = self.arquivos()
         self.assertTrue(any(a.startswith("brutos/") and a.endswith(".html") for a in arquivos), arquivos)
-        self.assertIn("originais/F37.pdf", arquivos)
+        self.assertIn(f"originais/{PROXIMO}.pdf", arquivos)
+        self.assertIn("cardapio_semanal.json", arquivos)
         docs = yaml.safe_load(self.catalogo.read_text(encoding="utf-8"))["documentos"]
         novo = docs[-1]
-        self.assertEqual(novo["id"], "F37")
+        self.assertEqual(novo["id"], PROXIMO)
         self.assertEqual(novo["tipo"], "cardapio")
         self.assertEqual(novo["orgao"], "UnB · Diretoria do RU")
         self.assertEqual(novo["data"], "2026-08-31")
@@ -167,9 +174,9 @@ class TestGravacao(AmbienteIsolado):
         self._coletar()
         codigo, _, err = self._coletar()
         self.assertEqual(codigo, 0, err)
-        self.assertIn("já estava no catálogo como F37", err)
+        self.assertIn(f"já estava no catálogo como {PROXIMO}", err)
         docs = yaml.safe_load(self.catalogo.read_text(encoding="utf-8"))["documentos"]
-        self.assertEqual(sum(1 for d in docs if d["id"] == "F37"), 1)
+        self.assertEqual(sum(1 for d in docs if d["id"] == PROXIMO), 1)
 
     def test_comentarios_do_catalogo_sao_preservados(self):
         self._coletar()

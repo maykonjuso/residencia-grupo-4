@@ -1,0 +1,9 @@
+# Dependências leves da API do RUmo para deploy serverless no Vercel (Root Directory: rag/).
+# Busca BM25 + cardapio_semanal.json + LLM via API externa (ex.: OpenRouter). Sem torch nem ChromaDB.
+fastapi>=0.110
+uvicorn>=0.29
+rank_bm25>=0.2
+pyyaml>=6
+networkx>=3.0
+jsonschema>=4
+certifi>=2024.0.0

@@ -11,20 +11,31 @@ import json
 import sys
 import time
 
-from . import agentes, chunking, config, extracao, geracao, indice
+from . import agentes, calendario, chunking, config, extracao, geracao, indice
 
 
-def ingerir(_args):
+def ingerir(args):
     t0 = time.time()
-    docs = extracao.carregar_catalogo()
-    extracao.baixar(docs)
-    textos = extracao.extrair_todos(docs)
+    catalogo = extracao.carregar_catalogo()
+    ignorados = [d for d in catalogo if d.get("tipo") == "cardapio"]
+    docs = [d for d in catalogo if d.get("tipo") != "cardapio"]
+    if ignorados:
+        ids = ", ".join(d["id"] for d in ignorados)
+        print(f"ignorando {len(ignorados)} cardápio(s) ({ids}) — atendidos via cardapio_semanal.json")
+    rebaixar = getattr(args, "rebaixar", False)
+    extracao.baixar(docs, rebaixar=rebaixar)
+    textos = extracao.extrair_todos(docs, rebaixar=rebaixar)
     chunks = []
     for d in docs:
         chunks.extend(chunking.dividir(d, textos[d["id"]]))
     tamanhos = sorted(len(c["texto"]) for c in chunks)
-    print(f"{len(docs)} documentos → {len(chunks)} chunks · mediana {tamanhos[len(tamanhos)//2]} caracteres")
-    indice.indexar(chunks)
+    mediana = tamanhos[len(tamanhos) // 2] if tamanhos else 0
+    print(f"{len(docs)} documentos → {len(chunks)} chunks · mediana {mediana} caracteres")
+    if getattr(args, "somente_chunks", False):
+        indice.salvar_chunks(chunks)
+        print(f"chunks salvos em {config.CHUNKS} (sem indexação vetorial)")
+    else:
+        indice.indexar(chunks)
     print(f"ingestão concluída em {time.time() - t0:.0f}s")
 
 
@@ -36,22 +47,43 @@ def responder(
     sem_rag: bool = False,
     usar_agentes: bool = False,
     falhar_agente: str | None = None,
+    data: str | None = None,
+    perfil: dict | None = None,
+    curso: str | None = None,
+    curriculo_id: str | None = None,
+    vigencia: str | None = None,
 ) -> dict:
     if usar_agentes:
         return agentes.Orquestrador().executar(
-            pergunta, backend=backend, k=k, falhar_agente=falhar_agente
+            pergunta,
+            backend=backend,
+            k=k,
+            falhar_agente=falhar_agente,
+            data=data,
+            perfil=perfil,
+            curso=curso,
+            curriculo_id=curriculo_id,
+            vigencia=vigencia,
         )
     # Consultas curriculares suportadas pelo grafo são resolvidas pelo algoritmo
     # mesmo no modo CLI padrão (os comandos da task não exigem --agentes).
+    ctx_grafo = {"backend": backend}
+    if curso:
+        ctx_grafo["curso"] = curso
+    if curriculo_id:
+        ctx_grafo["curriculo_id"] = curriculo_id
+    if vigencia:
+        ctx_grafo["vigencia"] = vigencia
     mensagem_grafo = agentes.Mensagem(
         remetente="CLI",
         destinatario="Agente Fluxo",
         conteudo=pergunta,
-        contexto={"backend": backend},
+        contexto=ctx_grafo,
     )
     resposta_grafo = agentes.AgenteFluxo(k=k, modo=config.BUSCA).responder_grafo(mensagem_grafo)
     if resposta_grafo is not None:
         trechos = mensagem_grafo.contexto.get("trechos_recuperados", [])
+        trace_ferr = mensagem_grafo.contexto.get("ferramenta_chamada") or {}
         return {
             "pergunta": pergunta,
             "subperguntas": [],
@@ -59,8 +91,8 @@ def responder(
             "fontes_citadas": [
                 {"n": i, **fonte} for i, fonte in enumerate(resposta_grafo.fontes, start=1)
             ],
-            "valores_sem_fonte": [],
-            "sem_citacao": False,
+            "valores_sem_fonte": geracao.valores_sem_fonte(resposta_grafo.conteudo, trechos),
+            "sem_citacao": geracao.resposta_sem_citacao(resposta_grafo.conteudo, trechos),
             "trechos_recuperados": [
                 {
                     chave: trecho.get(chave)
@@ -73,8 +105,10 @@ def responder(
             ],
             "tempo_decomposicao_s": 0.0,
             "tempo_busca_s": mensagem_grafo.contexto.get("tempo_busca_s", 0.0),
-            "tempo_geracao_s": 0.0,
+            "tempo_geracao_s": mensagem_grafo.contexto.get("tempo_geracao_s", 0.0),
             "backend": "grafo",
+            "redigido_por_llm": trace_ferr.get("redigido_por_llm", False),
+            "ferramenta_chamada": trace_ferr,
         }
     if sem_rag:
         t0 = time.time()
@@ -94,6 +128,27 @@ def responder(
             "backend": backend,
         }
     t0 = time.time()
+    if eixo in (None, "fluxo"):
+        resp_cal = calendario.carregar_calendario().consultar_pergunta(pergunta)
+        if resp_cal is not None:
+            trechos_cal = resp_cal["trechos"]
+            resposta_cal = resp_cal["resposta"]
+            return {
+                "pergunta": pergunta,
+                "subperguntas": [pergunta],
+                "resposta": resposta_cal,
+                "fontes_citadas": resp_cal["fontes_citadas"],
+                "valores_sem_fonte": geracao.valores_sem_fonte(resposta_cal, trechos_cal),
+                "sem_citacao": geracao.resposta_sem_citacao(resposta_cal, trechos_cal),
+                "trechos_recuperados": [
+                    {k2: t.get(k2) for k2 in ("chunk_id", "doc_id", "titulo", "pagina", "secao", "similaridade", "nota_rrf", "url", "texto")}
+                    for t in trechos_cal
+                ],
+                "tempo_decomposicao_s": 0.0,
+                "tempo_busca_s": round(time.time() - t0, 3),
+                "tempo_geracao_s": 0.0,
+                "backend": "calendario_estruturado",
+            }
     subperguntas = indice.decompor(
         pergunta,
         backend=backend if backend in ("ollama", "hf", "openai") else "auto",
@@ -172,7 +227,16 @@ def imprimir_agentes(r: dict, mostrar_trace: bool = False):
                 )
                 for ex in passo.get("execucoes", []):
                     status = f"ERRO ({ex['erro']})" if ex.get("erro") else f"OK ({ex['n_trechos']} trechos)"
-                    print(f"   - [{ex['nome_agente']}] {ex['tempo_total_s']}s · {status}")
+                    ferr = ex.get("ferramenta")
+                    ferr_txt = ""
+                    if ferr:
+                        args_txt = json.dumps(ferr.get("argumentos", {}), ensure_ascii=False)
+                        estado_f = " · RECUSADO" if ferr.get("recusado") else ""
+                        modo_red = ""
+                        if not ferr.get("recusado") and "redigido_por_llm" in ferr:
+                            modo_red = " · redação=LLM" if ferr["redigido_por_llm"] else " · redação=determinística"
+                        ferr_txt = f" · ferramenta={ferr['nome']}({args_txt}){estado_f}{modo_red}"
+                    print(f"   - [{ex['nome_agente']}] {ex['tempo_total_s']}s · {status}{ferr_txt}")
             elif etapa == "validacao_factual":
                 print("4. Validador factual:")
                 for res in passo.get("resultados", []):
@@ -248,6 +312,10 @@ def imprimir_agentes(r: dict, mostrar_trace: bool = False):
         print("Fontes citadas:")
         for f in parte.get("fontes_citadas", []):
             print(f"  [{f['n']}] {f['doc_id']} · {f['titulo']} · p.{f['pagina']} · {f['url']}")
+        if parte.get("dado_estruturado") is not None and parte.get("ferramenta_chamada"):
+            nome_f = parte["ferramenta_chamada"]["nome"]
+            print(f"\nDado estruturado ({nome_f}):")
+            print(json.dumps(parte["dado_estruturado"], ensure_ascii=False, indent=2))
         val = parte.get("validacao") or {}
         if val.get("motivos"):
             print(f"⚠ Validador: {'; '.join(val['motivos'])}")
@@ -266,6 +334,10 @@ def perguntar(args):
     sem_rag = getattr(args, "sem_rag", False)
     usar_agentes = getattr(args, "agentes", False)
     falhar_agente = getattr(args, "falhar_agente", None)
+    data = getattr(args, "data", None)
+    curso = getattr(args, "curso", None)
+    curriculo_id = getattr(args, "curriculo", None)
+    vigencia = getattr(args, "vigencia", None)
     r = responder(
         " ".join(args.pergunta),
         args.backend,
@@ -274,6 +346,10 @@ def perguntar(args):
         sem_rag=sem_rag,
         usar_agentes=usar_agentes,
         falhar_agente=falhar_agente,
+        data=data,
+        curso=curso,
+        curriculo_id=curriculo_id,
+        vigencia=vigencia,
     )
     if getattr(args, "saida", "texto") == "json":
         saida_dict = dict(r)
@@ -289,12 +365,29 @@ def perguntar(args):
 def avaliar(args):
     with open(config.PERGUNTAS_AVALIACAO / "perguntas_ouro.jsonl", encoding="utf-8") as f:
         casos = [json.loads(l) for l in f]
-    linhas = []
-    for modo in ("bm25", "denso", "hibrido"):
+
+    modo_arg = getattr(args, "modo", None)
+    if modo_arg is None:
+        modos = ("bm25", "denso", "hibrido") if config.CHROMA.exists() else ("bm25",)
+        if not config.CHROMA.exists():
+            print(f"aviso: {config.CHROMA} ausente — avaliando apenas bm25 e preservando resultados anteriores de denso/hibrido")
+    elif modo_arg == "todos":
+        modos = ("bm25", "denso", "hibrido")
+    else:
+        modos = (modo_arg,)
+
+    destino = config.RESULTADOS_AVALIACAO / "resultado_recuperacao.json"
+    por_modo: dict[str, dict] = {}
+    if destino.exists():
+        for item in json.loads(destino.read_text(encoding="utf-8")):
+            if isinstance(item, dict) and "modo" in item:
+                por_modo[item["modo"]] = item
+
+    for modo in modos:
         hit1 = hitk = rr = 0.0
         detalhes = []
         for c in casos:
-            res = indice.buscar(c["pergunta"], k=args.k, modo=modo)
+            res = indice.buscar(c["pergunta"], k=args.k, modo=modo, decompor_pergunta=False)
             docs = [r["doc_id"] for r in res]
             pos = next((i for i, d in enumerate(docs) if d in c["docs_esperados"]), None)
             hit1 += pos == 0
@@ -302,12 +395,20 @@ def avaliar(args):
             rr += 1 / (pos + 1) if pos is not None else 0
             detalhes.append({"id": c["id"], "pos": pos, "top": docs})
         n = len(casos)
-        linhas.append({"modo": modo, "n": n, "hit@1": round(hit1 / n, 3), f"hit@{args.k}": round(hitk / n, 3),
-                       "mrr": round(rr / n, 3), "detalhes": detalhes})
+        por_modo[modo] = {
+            "modo": modo,
+            "n": n,
+            "hit@1": round(hit1 / n, 3),
+            f"hit@{args.k}": round(hitk / n, 3),
+            "mrr": round(rr / n, 3),
+            "detalhes": detalhes,
+        }
         print(f"{modo:8s} hit@1={hit1/n:.3f} hit@{args.k}={hitk/n:.3f} MRR={rr/n:.3f} (n={n})")
+
+    ordem = [m for m in ("bm25", "denso", "hibrido") if m in por_modo]
+    linhas = [por_modo[m] for m in ordem]
     config.RESULTADOS_AVALIACAO.mkdir(parents=True, exist_ok=True)
-    (config.RESULTADOS_AVALIACAO / "resultado_recuperacao.json").write_text(
-        json.dumps(linhas, ensure_ascii=False, indent=2), encoding="utf-8")
+    destino.write_text(json.dumps(linhas, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
 def demo(args):
@@ -329,7 +430,12 @@ def demo(args):
 def main(argv=None):
     ap = argparse.ArgumentParser(prog="rumo_rag")
     sub = ap.add_subparsers(dest="cmd", required=True)
-    sub.add_parser("ingerir").set_defaults(f=ingerir)
+    ing = sub.add_parser("ingerir")
+    ing.add_argument("--rebaixar", action="store_true",
+                     help="Força o download dos originais mesmo quando dados/texto/<id>.txt já existe")
+    ing.add_argument("--somente-chunks", action="store_true",
+                     help="Gera apenas dados/chunks.jsonl sem recriar os embeddings/ChromaDB")
+    ing.set_defaults(f=ingerir)
     p = sub.add_parser("perguntar")
     p.add_argument("pergunta", nargs="+")
     p.add_argument("--backend", default=config.BACKEND, choices=["hf", "ollama", "openai", "extrativo"])
@@ -338,12 +444,18 @@ def main(argv=None):
     p.add_argument("--sem-rag", action="store_true", help="Executa apenas com LLM puro, sem busca ou recuperação na base")
     p.add_argument("--agentes", action="store_true", help="Usa o orquestrador multiagentes (RU, Fluxo e Validador)")
     p.add_argument("--trace", action="store_true", help="Exibe o rastreamento completo da orquestração multiagentes")
+    p.add_argument("--data", default=None, help="Data de referência AAAA-MM-DD para ferramentas de cardápio")
+    p.add_argument("--curso", default=None, help="Curso da FCTE para consulta curricular (ex.: software, aeroespacial, eletronica, automotiva, energia)")
+    p.add_argument("--curriculo", default=None, help="ID exato do currículo/vigência (ex.: automotiva-2018-2026, automotiva-2027)")
+    p.add_argument("--vigencia", default=None, help="Ano/período de vigência do currículo (ex.: 2027, 2018)")
     p.add_argument("--falhar-agente", choices=["ru", "fluxo", "validador"], default=None,
                    help="Simula queda de um agente para testar degradação elegante")
     p.add_argument("--saida", choices=["texto", "json"], default="texto", help="Formato de saída (texto ou json)")
     p.set_defaults(f=perguntar)
     a = sub.add_parser("avaliar")
     a.add_argument("-k", type=int, default=config.TOP_K)
+    a.add_argument("--modo", choices=["bm25", "denso", "hibrido", "todos"], default=None,
+                   help="Modos de busca avaliados (padrão: todos se ChromaDB existir, senão bm25)")
     a.set_defaults(f=avaliar)
     d = sub.add_parser("demo")
     d.add_argument("--backend", default=config.BACKEND, choices=["hf", "ollama", "openai", "extrativo"])

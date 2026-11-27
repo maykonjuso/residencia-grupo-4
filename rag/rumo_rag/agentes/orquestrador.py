@@ -13,12 +13,13 @@ from __future__ import annotations
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import asdict, dataclass, field
 import os
+import re
 import time
 from typing import Any
 
 from .. import config, geracao, reescrita
 from .agente_fluxo import AgenteFluxo
-from .agente_ru import AgenteRU, _TERMOS_FLUXO, _TERMOS_RU
+from .agente_ru import AgenteRU, _TERMOS_FLUXO, _TERMOS_RU, _sem_anotacao_data
 from .base import Agente
 from .mensagem import Mensagem, Resposta
 from .trace import Trace
@@ -57,6 +58,8 @@ class RespostaAgente:
     tempo_total_s: float = 0.0
     erro: str | None = None
     validacao: dict | None = None
+    ferramenta_chamada: dict | None = None
+    dado_estruturado: dict | None = None
 
 
 def _resumir_trecho(t: dict) -> dict:
@@ -81,6 +84,33 @@ def _normalizar_fontes(fontes: list[dict] | None, texto: str, trechos: list[dict
     if trechos:
         return geracao.citacoes_usadas(texto, [_normalizar_trecho_validacao(t) for t in trechos])
     return []
+
+
+_CITACAO = re.compile(r"\[(\d{1,3})\]")
+
+
+def numeracao_unica(blocos: list[tuple[str, list[dict]]]) -> tuple[list[str], list[dict]]:
+    """Renumera as citações de várias partes para uma lista única de fontes (contrato v1.0).
+
+    Cada parte cita a partir de [1]. Para o CLI isso é o certo, porque as partes aparecem
+    separadas. Na API, a lista `fontes` é uma só, e o contrato exige `n` único: com `[1]`
+    repetido, o FcteMapping rejeita a resposta inteira ("Referências inválidas") e a tela /ru
+    mostra o RUmo como fora do ar (#91). A mesma fonte citada por duas partes recebe o mesmo
+    número.
+    """
+    fontes: list[dict] = []
+    por_chave: dict[tuple, int] = {}
+    textos: list[str] = []
+    for texto, citadas in blocos:
+        mapa: dict[int, int] = {}
+        for i, f in enumerate(citadas, start=1):
+            chave = (f.get("doc_id"), f.get("chunk_id") or f.get("pagina"), f.get("url"))
+            if chave not in por_chave:
+                por_chave[chave] = len(fontes) + 1
+                fontes.append({**f, "n": por_chave[chave]})
+            mapa[int(f.get("n") or i)] = por_chave[chave]
+        textos.append(_CITACAO.sub(lambda m: f"[{mapa.get(int(m.group(1)), m.group(1))}]", texto) if mapa else texto)
+    return textos, fontes
 
 
 class Sintetizador(Agente):
@@ -205,6 +235,8 @@ class Sintetizador(Agente):
         sem_citacao_geral = False
         degradado = False
 
+        blocos_contrato: list[tuple[str, list[dict]]] = []
+
         mult = len(partes) > 1 or any(p.erro for p in partes)
         for parte in partes:
             if parte.erro:
@@ -214,12 +246,14 @@ class Sintetizador(Agente):
                 )
                 avisos.append(aviso)
                 blocos_texto.append(f"[{parte.nome_agente}] {parte.subpergunta}\n{aviso}")
+                blocos_contrato.append((blocos_texto[-1], []))
                 continue
 
             if mult:
                 blocos_texto.append(f"[{parte.nome_agente}] {parte.subpergunta}\n{parte.resposta}")
             else:
                 blocos_texto.append(parte.resposta)
+            blocos_contrato.append((blocos_texto[-1], parte.fontes_citadas))
 
             val = parte.validacao or {}
             if val.get("indisponivel"):
@@ -246,8 +280,11 @@ class Sintetizador(Agente):
                 fontes_agregadas.append(fonte_com_agente)
 
         resposta_final = "\n\n".join(blocos_texto) if blocos_texto else geracao.RECUSA
+        textos_contrato, fontes_contrato = numeracao_unica(blocos_contrato)
         return {
             "resposta": resposta_final,
+            "resposta_contrato": "\n\n".join(textos_contrato) if textos_contrato else geracao.RECUSA,
+            "fontes_contrato": fontes_contrato,
             "partes": [asdict(p) for p in partes],
             "fontes_citadas": fontes_agregadas,
             "trechos_recuperados": trechos_agregados,
@@ -319,14 +356,21 @@ def rotear_subpergunta(
     if eixo_norm == "ambos":
         return ["ru", "fluxo"]
 
-    casa_ru = bool(_TERMOS_RU.search(subpergunta))
-    casa_fluxo = bool(_TERMOS_FLUXO.search(subpergunta))
+    base = _sem_anotacao_data(subpergunta)
+    casa_ru = bool(_TERMOS_RU.search(base))
+    casa_fluxo = bool(_TERMOS_FLUXO.search(base))
     if casa_ru and not casa_fluxo:
         return ["ru"]
     if casa_fluxo and not casa_ru:
         return ["fluxo"]
     if casa_ru and casa_fluxo:
         return ["ru", "fluxo"]
+    from . import ferramentas
+
+    if ferramentas.extrair_chamada_fluxo(base) is not None:
+        return ["fluxo"]
+    if ferramentas.extrair_chamada_ru(base) is not None:
+        return ["ru"]
     if usar_d1_fallback:
         return reescrita.classificar_dominio_d1(subpergunta)
     return ["ru", "fluxo"]
@@ -358,14 +402,30 @@ class Orquestrador:
         k: int,
         backend: str,
         falha_configurada: str | None,
+        data: str | None = None,
+        perfil: dict | None = None,
+        curso: str | None = None,
+        curriculo_id: str | None = None,
+        vigencia: str | None = None,
     ) -> tuple[int, Mensagem, Resposta, RespostaAgente]:
         ag = self.agentes[ag_id]
         nome_ag = getattr(ag, "nome", ag_id)
+        ctx_msg: dict[str, Any] = {"eixo": ag_id, "k": k, "backend": backend}
+        if data is not None:
+            ctx_msg["data"] = data
+        if perfil is not None:
+            ctx_msg["perfil"] = perfil
+        if curso is not None:
+            ctx_msg["curso"] = curso
+        if curriculo_id is not None:
+            ctx_msg["curriculo_id"] = curriculo_id
+        if vigencia is not None:
+            ctx_msg["vigencia"] = vigencia
         msg = Mensagem(
             remetente="Orquestrador",
             destinatario=nome_ag,
             conteudo=sub,
-            contexto={"eixo": ag_id, "k": k, "backend": backend},
+            contexto=ctx_msg,
         )
         t_inicio = time.monotonic()
 
@@ -407,6 +467,8 @@ class Orquestrador:
                     tempo_busca_s=float(msg.contexto.get("tempo_busca_s", 0.0)),
                     tempo_geracao_s=float(msg.contexto.get("tempo_geracao_s", duracao)),
                     tempo_total_s=duracao,
+                    ferramenta_chamada=msg.contexto.get("ferramenta_chamada"),
+                    dado_estruturado=msg.contexto.get("dado_estruturado"),
                 )
                 # Sinaliza ausência explícita de trechos para o validador quando vieram de agente fake
                 if trechos_brutos is None:
@@ -453,14 +515,22 @@ class Orquestrador:
 
     def _classificar_e_decompor(self, pergunta: str, backend: str) -> tuple[bool, float, list[dict[str, str]], float]:
         t0 = time.monotonic()
+        base = _sem_anotacao_data(pergunta)
+        cruzamento_dominios = bool(_TERMOS_RU.search(base) and _TERMOS_FLUXO.search(base))
+        partes_fallback = reescrita._decompor_fallback(base)
+
+        if not cruzamento_dominios and base.count("?") <= 1 and len(partes_fallback) < 2:
+            from . import ferramentas
+
+            if ferramentas.extrair_chamada_fluxo(base) is not None:
+                return False, 0.0, [], round(time.monotonic() - t0, 3)
+
         eh_composta, prob_composta = reescrita.classificar_composta(pergunta)
         backend_decomp = (
             backend
             if backend in ("ollama", "hf", "openai")
             else ("fallback" if backend == "extrativo" else "auto")
         )
-        cruzamento_dominios = bool(_TERMOS_RU.search(pergunta) and _TERMOS_FLUXO.search(pergunta))
-        partes_fallback = reescrita._decompor_fallback(pergunta)
 
         if not eh_composta and (cruzamento_dominios or len(partes_fallback) >= 2):
             eh_composta = True
@@ -633,6 +703,11 @@ class Orquestrador:
         backend: str = config.BACKEND,
         k: int = config.TOP_K,
         falhar_agente: str | None = None,
+        data: str | None = None,
+        perfil: dict | None = None,
+        curso: str | None = None,
+        curriculo_id: str | None = None,
+        vigencia: str | None = None,
     ) -> dict:
         """Executa o fluxo multiagentes com contrato `Mensagem`/`Resposta` e registra o `Trace`."""
         trace_etapas: list[dict] = []
@@ -685,7 +760,20 @@ class Orquestrador:
         brutos: dict[int, tuple[Mensagem, Resposta, RespostaAgente]] = {}
         with ThreadPoolExecutor(max_workers=max(1, len(tarefas))) as pool:
             futuros = [
-                pool.submit(self._invocar_agente, idx, sub, ag_id, k, backend, falha_configurada)
+                pool.submit(
+                    self._invocar_agente,
+                    idx,
+                    sub,
+                    ag_id,
+                    k,
+                    backend,
+                    falha_configurada,
+                    data,
+                    perfil,
+                    curso,
+                    curriculo_id,
+                    vigencia,
+                )
                 for idx, sub, ag_id in tarefas
             ]
             for fut in as_completed(futuros):
@@ -718,6 +806,7 @@ class Orquestrador:
                     "tempo_total_s": p.tempo_total_s,
                     "n_trechos": len(p.trechos_recuperados),
                     "erro": p.erro,
+                    "ferramenta": p.ferramenta_chamada,
                 }
                 for p in partes_ordenadas
             ],
@@ -765,11 +854,27 @@ class Orquestrador:
         })
 
         trace_dict = trace_oficial.para_dict()
+        ferramentas_usadas = [
+            {"agente": p.agente, **p.ferramenta_chamada}
+            for p in partes_ordenadas
+            if p.ferramenta_chamada
+        ]
+        dados_estruturados = [
+            {
+                "agente": p.agente,
+                "ferramenta": p.ferramenta_chamada["nome"],
+                "dados": p.dado_estruturado,
+            }
+            for p in partes_ordenadas
+            if p.ferramenta_chamada and p.dado_estruturado is not None
+        ]
         return {
             "pergunta": pergunta,
             "subperguntas": subperguntas,
             "resposta": composto["resposta"],
             "fontes_citadas": composto["fontes_citadas"],
+            "resposta_contrato": composto["resposta_contrato"],
+            "fontes_contrato": composto["fontes_contrato"],
             "valores_sem_fonte": composto["valores_sem_fonte"],
             "sem_citacao": composto["sem_citacao"],
             "trechos_recuperados": composto["trechos_recuperados"],
@@ -779,6 +884,8 @@ class Orquestrador:
             "backend": backend,
             "modo_agentes": True,
             "partes": composto["partes"],
+            "ferramentas_usadas": ferramentas_usadas,
+            "dados_estruturados": dados_estruturados,
             "degradado": composto["degradado"],
             "avisos": composto["avisos"],
             "tempo_paralelo_s": tempo_paralelo_s,

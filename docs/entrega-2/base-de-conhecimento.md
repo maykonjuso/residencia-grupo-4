@@ -1,6 +1,8 @@
 # Base de conhecimento
 
-A base tem **36 documentos-fonte**, todos públicos e de órgãos oficiais, coletados em **06/11/2026**. O catálogo completo, com metadados, está em [`rag/catalogo.yaml`](https://github.com/maykonjuso/residencia-grupo-4/blob/main/rag/catalogo.yaml); cada documento tem um ID estável (F01 a F36), usado nas citações das respostas.
+A base tem **56 documentos-fonte** no catálogo, todos públicos e de órgãos oficiais. Na Entrega 2 eram 36, coletados em 06/11/2026. Depois disso entraram: a página "Serviço alimentação" do RU (F37, Issue #55); os documentos de assistência estudantil (F38 a F55, da DDS/DAC e do Conselho de Administração) e o cardápio semanal coletado automaticamente (F56), com a saída dos cardápios antigos F08 e F09 (Issue #53); e o calendário 2026.2 atualizado, a transcrição dos feriados (F57) e o Calendário de Verão 2027 (F58), pela Issue #57 (23/11/2026). Dos 56, **55 estão no índice de busca**; o cardápio semanal (F56) é lido como dado estruturado. O catálogo completo, com metadados, está em [`rag/catalogo.yaml`](https://github.com/maykonjuso/residencia-grupo-4/blob/main/rag/catalogo.yaml); cada documento tem um ID estável (F01 a F58, sem F08 e F09), usado nas citações das respostas.
+
+Os calendários (F29, F57 e F58) têm no catálogo o campo `vigencia`, com o início e o fim do período que cobrem. Calendário vencido é pior que nenhum: fora desse período, a fonte não vale para dizer se há aula.
 
 ## Critérios de curadoria
 
@@ -35,7 +37,7 @@ A **Tabela 2** detalha como os documentos cobrem os cinco cursos de graduação 
 | Engenharia de Energia | Graduação | Informações gerais (F22), matriz (F23) | Imagem → transcrição do grupo |
 | Engenharia de Software | Graduação | Matriz e créditos (F15), fluxograma (F16) | Imagem → transcrição do grupo |
 | Engenharia Biomédica (PPGEB) | Mestrado | Apresentação, matriz, aluno de graduação, linhas, edital (F24–F28) | Página do programa |
-| Comum a todos | — | ABI (F14), calendário (F29, F30), trancamento (F31), matrícula (F32–F34), regimentos (F35, F36) | Texto |
+| Comum a todos | — | Ingresso e normas de curso (F14), calendário (F29, F30, F57, F58), trancamento (F31), matrícula (F32–F34), regimentos (F35, F36) | Texto |
 
 <p class="legenda">Tabela 2. Cobertura das engenharias e do PPGEB.</p>
 
@@ -60,3 +62,56 @@ Dois cursos publicam a grade **só como imagem**. O grupo transcreveu as duas pa
 
 - **F16 · Fluxograma de Engenharia de Software:** 10 semestres, 235 créditos, códigos, créditos T-P-E-Total, códigos antigos e uma linha de pré-requisito por disciplina, lida das setas (setas tracejadas marcadas como tais).
 - **F23 · Matriz de Engenharia de Energia:** 10 semestres, 251 créditos, ciclo de cada disciplina (básico, profissionalizante, específico, PI, TCC/estágio).
+
+Um terceiro caso não é imagem, mas perde informação na extração:
+
+- **F57 · Feriados e período de aulas do 2026.2:** no PDF do calendário (F29), os feriados e pontos facultativos são marcados por cor na legenda, e a cor some na extração. A transcrição repete as mesmas datas em frases completas, cada uma também por extenso ("20 de novembro de 2026 (20/11/2026)"), com o dia da semana e a indicação de *feriado* ou *ponto facultativo*. Ela não acrescenta informação ao F29 e deixa explícito o que o calendário **não** informa: datas de recesso, semana de provas e se há aula em ponto facultativo ou na Semana Universitária. Datas e dias da semana foram conferidos contra o PDF de 02/10/2026. Detalhes e medição em [Avaliação da recuperação](avaliacao.md#calendario-academico-feriados-e-vigencia-issue-57).
+
+## Alergênicos e informação nutricional (Issue #55)
+
+Perguntas como *"a lasanha tem glúten?"* ou *"qual o prato menos calórico?"* dependem de dados por prato. A **Tabela 4** resume o que o RU publica, conferido em 18/11/2026 no site do RU e nos PDFs dos cardápios do Gama e completado pela resposta da Diretoria do RU de 23/11/2026.
+
+| Informação | O RU publica? | Onde |
+|---|---|---|
+| Calorias e nutrientes por prato | **Não** | As Fichas Técnicas de Preparação existem, com a empresa contratada, mas não são publicadas (resposta da DRU, 23/11/2026) |
+| Alergênicos por prato | **Sim**, por ícones | PDF do cardápio semanal, com legenda no rodapé de cada página |
+| Atendimento a dietas especiais | **Não**, por declaração oficial | Página "Serviço alimentação" (F37) |
+
+<p class="legenda">Tabela 4. Informação nutricional e de alergênicos publicada pelo RU.</p>
+
+A página do RU (F37) diz que *"preparações que contenham leite de origem animal, ovos, glúten, cogumelo, mel, soja, pimenta, sementes oleaginosas, carne suína e/ou frutos do mar em seus ingredientes estão identificadas no cardápio e na distribuição aos usuários"* e que *"não há previsão de atendimento para usuários com necessidade de dietas especializadas e/ou individualizadas"*.
+
+**Decisões tomadas:**
+
+- **Calorias não entram na base.** O RU não publica calorias, e nenhum valor é estimado. Para *"qual o prato menos calórico?"*, o RUmo recusa. Declarar a limitação é aceitável; inventar um número é defeito.
+- **Alergênicos vêm dos ícones do cardápio oficial, sem inferência pelo nome do prato.** O cardápio marca cada preparação com ícones (Cogumelo, Leite e derivados, Mel, Pimenta, Soja, Trigo/Glúten, Amendoim, Oleaginosa, Ovo, Suíno). O módulo `rag/rumo_rag/alergenos.py` compara cada ícone da tabela com os da legenda da própria página e o liga à **opção de prato** dentro da célula, e não à célula inteira: em *"Rosé / Limão"*, os ícones de leite e ovo são do Rosé. Inferir pelo nome teria errado: o *Requeijão de ervas* (vegetariano estrito) não tem ícone de leite no cardápio oficial.
+- **Um formato só, o do cardápio estruturado (#54).** No texto do cardápio, cada opção ganha a etiqueta logo depois do nome, por exemplo *"Rosé [Alergênicos: Leite e derivados, Ovo] / Limão"*. O RUmo responde citando o cardápio, e `rag/rumo_rag/coleta/cardapio.py` transforma a etiqueta no campo `alergenicos` de cada opção do JSON de montagem de prato, usado pelo monta-prato (#63) e pela interface.
+- **Ícone duvidoso não vira afirmação.** Se a comparação com a legenda não for clara, a etiqueta diz *"a conferir na distribuição"*, o alergênico duvidoso não é afirmado e o JSON registra um aviso. Nas semanas da base, nenhum ícone ficou duvidoso.
+
+**Como foi conferido.** As 6 páginas dos cardápios da base (F08 e F09) foram conferidas à mão contra a imagem, opção por opção. Os casos conferidos viraram teste automático (`rag/testes/test_alergenos.py`). A primeira versão da leitura de ícones, que anotava a célula inteira, errava 87 das 306 opções comparáveis; a versão atual erra 0. Uma terceira semana, fora da base (16 a 20/11/2026), foi usada só como prova: no almoço e no jantar, todos os ícones bateram com a imagem.
+
+**Consulta formal ao RU.** O escopo da issue pedia perguntar formalmente se não houvesse ficha nutricional publicada. O grupo enviou e-mail à Diretoria do RU (falaru@unb.br) sobre a ficha técnica ou informação nutricional por prato, a ausência de ícone de peixe e frutos do mar na legenda do Gama e a lactose. A DRU respondeu em 23/11/2026:
+
+1. **Ficha nutricional.** Existem as Fichas Técnicas de Preparação (FTP), elaboradas e mantidas pela empresa contratada conforme o Termo de Referência do contrato, com ingredientes, modo de preparo, rendimento e composição nutricional. Pelo volume de preparações, não são publicadas no site; a DRU encaminha as de preparações específicas, se solicitadas.
+2. **Peixe e frutos do mar.** Preparações à base de peixe são identificadas pelo nome do prato (*"peixe ao molho de moqueca"*, *"peixe ao molho de ervas"*). A DRU reconhece que a legenda não tem ícone de frutos do mar; os demais frutos do mar (camarão, mariscos, lula) não integram habitualmente o cardápio e, se usados, devem ser identificados expressamente pela empresa.
+3. **Lactose.** O ícone "Leite e derivados" indica o uso desses ingredientes, sem identificar nem quantificar lactose. A opção **vegetariana estrita** não usa leite e derivados. O contrato prevê atendimento à coletividade, sem oferta destinada a intolerâncias e alergias, e o RU **não garante que uma refeição seja totalmente isenta**, por causa de insumos industrializados e das condições compartilhadas de preparo e distribuição.
+
+Em seguida, o grupo solicitou as FTP de todas as preparações servidas no RU Gama entre 02/11 e 29/11/2026, com prioridade para os itens diários e os mais recorrentes, e perguntou se seria possível publicá-las no site. A resposta é correspondência, não documento publicado: ela orienta esta documentação, mas **não entra na base** e o RUmo não a cita. Calorias continuam fora da base. Se as FTP forem publicadas no site do RU, entram como fonte oficial com URL, ligadas ao `id` de cada opção do cardápio estruturado; se chegarem só por e-mail, o grupo decide se aceita um documento formal da DRU sem URL como fonte.
+
+**Limitações declaradas:**
+
+- A legenda do RU Gama **não tem ícone de peixe nem de frutos do mar**, embora a página do RU cite frutos do mar. O peixe é identificado só pelo nome do prato, como confirmou a DRU: o *Filé de peixe ao molho de ervas* (04/11) não tem nenhum ícone. Quem tem alergia a peixe precisa ler o nome do prato, e o RUmo não tem um alergênico "peixe" para filtrar.
+- O cardápio está sujeito a alterações sem aviso prévio. Os ícones valem para o cardápio publicado, não para o que foi servido.
+- "Leite e derivados" indica o uso do ingrediente e não mede lactose. A DRU informa que a opção vegetariana estrita não usa leite e derivados, mas que nenhuma refeição tem garantia de ser totalmente isenta.
+- **Ausência de ícone não é garantia de ausência do alergênico.** O cardápio marca os ingredientes usados, e o RU não garante isenção por causa de insumos industrializados e do preparo compartilhado. O RUmo diz o que o cardápio indica; não deve dizer que um prato é seguro para quem tem alergia ou intolerância.
+- Na busca só por palavras (BM25, o modo usado em produção), *"o RU tem opção para quem tem doença celíaca?"* não recupera a F37, porque a página fala em *"dietas especializadas"* e não em *celíaca*. Na busca híbrida (BGE-M3), medida em 23/11/2026, o resultado é o mesmo: a F37 só aparece quando a pergunta usa a palavra "dieta" (ver [Avaliação](avaliacao.md#alergenicos-por-prato-issue-55)).
+
+??? abstract "Histórico de revisão"
+
+    | Data | Versão | Descrição | Autor |
+    | :---: | :---: | --- | --- |
+    | 09/11/2026 | 1.0 | Base com 36 documentos-fonte (Entrega 2) | Grupo 04 |
+    | 18/11/2026 | 1.1 | 37 documentos: F37 (serviço de alimentação do RU), alergênicos por prato lidos dos ícones do cardápio, calorias declaradas como lacuna (Issue #55) | Grupo 04 |
+    | 23/11/2026 | 1.2 | Limitação do vocabulário "celíaca" confirmada na busca híbrida (Issue #55); consulta ao RU por e-mail registrada, sem resposta até esta data (Issue #55) | Gabriella Oliveira |
+    | 23/11/2026 | 1.3 | 56 documentos: calendário 2026.2 na versão de 02/10/2026, feriados (F57) e verão 2027 (F58), campo `vigencia` nos calendários; abertura atualizada com as fontes da #53 (Issue #57) | Gabriella Oliveira |
+    | 23/11/2026 | 1.4 | Resposta da Diretoria do RU registrada (fichas técnicas existem e não são publicadas; peixe identificado pelo nome; ausência de ícone não garante isenção) e pedido das fichas das preparações de 02/11 a 29/11 (Issue #55) | Gabriella Oliveira |

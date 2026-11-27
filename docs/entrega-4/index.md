@@ -1,57 +1,68 @@
-# Entrega 4 — Primeiro Protótipo Multiagente
+# Entrega 4 · Primeiro protótipo multiagente
 
-A **Entrega 4** (Épico `#37`) marca a evolução do **RUmo** de um fluxo único de busca e resposta para o primeiro **protótipo de Sistema Multiagente**. Em vez de um único bloco responder a tudo de forma linear, o sistema passa a identificar quando há mais de um assunto na mesma dúvida, distribuir cada parte ao especialista adequado em paralelo, auditar a fidelidade dos dados antes de exibi-los e montar a resposta final mantendo as fontes de cada parte isoladas.
-
-!!! info "Escopo atual do protótipo"
-    Esta documentação descreve estritamente o comportamento implementado e testado na arquitetura multiagente do RUmo, incluindo o contrato comum de comunicação entre agentes (`#40`), os especialistas de RU (`#41`) e Fluxo (`#42`) com prompts e guarda de domínio próprios, o validador ativo (`#43`) com limite de 1 retentativa e recusa final, e o suporte a APIs compatíveis com OpenAI/OpenRouter.
+**Semana 4 do Challenge 2.** Prazo: sexta-feira, 20/11/2026. Foco desta etapa, segundo o enunciado: *colaboração entre agentes, definição clara de responsabilidades e qualidade das interações entre eles*.
 
 ---
 
-## O que é a Entrega 4
+## 1. Escopo e checklist do que foi pedido
 
-O objetivo desta etapa é atender perguntas simples ou compostas de estudantes da UnB (Campus Gama / FCTE) sobre o **Restaurante Universitário (RU)** e o **Fluxo de Graduação** com colaboração coordenada entre agentes. A separação das fontes por bloco garante compatibilidade com o cliente do portal único da universidade, que exige que cada citação corresponda exatamente à lista de fontes daquela parte.
+A Entrega 4 evolui o fluxo único da Entrega 3 para o primeiro **sistema multiagente do RUmo** (Épico `#37`), mantendo a fidelidade às fontes e o isolamento das citações exigido pelo portal único.
 
-A **Tabela 1** resume o que já funciona no protótipo, o que aguarda detalhamento e o que ficou fora do escopo desta semana.
+### Agentes
 
-| Categoria | Item / Capacidade | Situação | O que faz na prática |
-|---|---|---|---|
-| **Implementado** | Contrato comum e rastreamento entre agentes (`#40`) | Concluído | Padroniza a comunicação via mensagens e respostas tipadas e registra todas as interações em ordem cronológica |
-| **Implementado** | Especialização do Agente do RU (`#41`) e do Agente de Fluxo (`#42`) | Concluído | Cada agente possui prompt de sistema próprio, guarda preventiva contra perguntas fora do seu domínio e higienização automática de recusas |
-| **Implementado** | Classificação e divisão de perguntas compostas | Concluído | Detecta múltiplos tópicos via limiar neural calibrado (`0,39`) ou cruzamento explícito entre RU e Fluxo, dividindo em subperguntas independentes |
-| **Implementado** | Roteamento híbrido por assunto | Concluído | Escolhe o agente adequado combinando a sugestão gerada na divisão da pergunta, regras diretas por palavras-chave e um classificador neural de apoio |
-| **Implementado** | Execução simultânea e tolerância a falhas | Concluído | Dispara consultas ao RU e ao Fluxo de Graduação ao mesmo tempo e permite simular queda de um agente sem derrubar a parte saudável |
-| **Implementado** | Validador ativo e devolução ao sintetizador (`#43`) | Concluído | Validador determinístico (sem LLM) reprova valores sem fonte ou falta de citação, devolve para no máximo **1 retentativa com feedback** e aplica recusa padrão se reprovar duas vezes |
-| **Implementado** | Suporte a provedor local ou API externa (OpenRouter/OpenAI) | Concluído | Permite executar decomposição e agentes via Ollama, HuggingFace local, modo extrativo ou API compatível com OpenAI mantendo o padrão local |
-| **Implementado** | Comparativo experimental de roteamento | Concluído | Avalia três estratégias de roteamento em um conjunto de 8 perguntas múltiplas (17 subperguntas) de linguagem natural |
-| **Implementado** | Cardápio estruturado por compartimento (`#54`) | Concluído | Converte as refeições dos cardápios em JSON por compartimento da bandeja e trilha alimentar (*padrão*, *ovolacto* e *vegano*), preservando documento e página de origem em cada opção |
-| **Fora de escopo** | Comunicação em tempo real com a API do Portal Único (Grupo 09) | Fora da entrega | Integração geral do sistema unificado descrita em [Divisão com o Grupo 09](../visao/escopo-grupos.md) |
-| **Fora de escopo** | Memória conversacional contínua e login autenticado | Fora da entrega | Cada pergunta é processada de forma independente, sem histórico pessoal de usuário |
+- [x] **Mínimo de dois agentes especializados:** `Agente do RU` e `Agente de Fluxo` com prompts dedicados, guarda preventiva de domínio e consulta sincronizada à base (`#41`).
+- [x] **Agentes adicionais de coordenação e validação:** `Orquestrador` com decomposição/roteamento híbrido e execução em paralelo (`#42`), `Agente Validador` determinístico sem LLM com até 1 retentativa (`#43`) e `Sintetizador` de resposta.
+- [x] **Contrato unificado e rastreio:** comunicação tipada via mensagens, respostas e histórico cronológico de interações (`#40`).
 
-<p class="legenda">Tabela 1. Visão geral do que foi implementado, do que está pendente e do que ficou fora de escopo na Entrega 4.</p>
+### Documentação
 
-!!! note "Apoio à montagem de prato — Cardápio estruturado (#54)"
-    Como complemento da base de conhecimento para a interface do monta-prato, o módulo de coleta transforma os cardápios já extraídos da base em JSON organizado por compartimento da bandeja (incluindo almoço, jantar e café da manhã) e por trilha alimentar (*padrão*, *ovolactovegetariano* e *vegetariano estrito*). Cada opção mantém o documento e a página de origem, trata falhas de formatação do PDF com avisos e pode ser gerada em `rag/` via `python -m rumo_rag.coleta cardapio --estruturado --data 2026-11-09 --refeicao almoco`.
+- [x] **Diagrama da arquitetura dos agentes:** fluxo verticalizado, conexões entre componentes e tabela consolidada de modelos, RAG e ferramentas. ([Ver arquitetura](arquitetura-agentes.md))
+- [x] **Descrição das responsabilidades:** matriz do que cada agente pode e não pode fazer e garantias operacionais. ([Ver responsabilidades](responsabilidades.md))
+- [x] **Fluxo de interação e colaboração:** diagrama de sequência para perguntas compostas, tratamento de falhas e comparativo das estratégias de roteamento. ([Ver fluxo](fluxo-de-interacao.md))
+
+### Demonstração
+
+- [x] **Fluxo completo com os agentes colaborando:** execução paralela, devolução com reparo do validador (`qwen2.5:7b`), degradação graciosa, roteamento neural, avaliação nas 12 perguntas múltiplas e consulta ao cardápio semanal estruturado com alergênicos (`F56`). ([Ver demonstração](demonstracao.md))
+
+### Além do pedido
+
+- [x] **Cardápio semanal estruturado com alergênicos (`#54`, `#55`):** `cardapio_semanal.json` organizado por compartimento, trilha alimentar e alergênicos por prato como fonte direta do Agente do RU.
+- [x] **API v1.0 multiagente e nuvem (`#44`, `#53`):** `POST /perguntar` integrado ao `Orquestrador` mantendo o contrato v1.0 estrito (`trace` opcional), base expandida para 54 fontes e preparo leve para deploy na Vercel e no Render.
 
 ---
 
-## Navegação da Entrega 4
+## 2. Resultado em números
 
-A documentação segue os três artefatos solicitados no enunciado e o registro da execução do sistema, conforme a **Tabela 2**.
+A **Tabela 1** sintetiza as principais decisões, volumes e métricas alcançados no protótipo desta entrega.
 
-| Página | O que você encontra |
+| Dimensão | Resultado no protótipo |
 |---|---|
-| [Arquitetura dos Agentes](arquitetura-agentes.md) | Diagrama verticalizado com os quatro agentes, o sintetizador, as conexões entre eles e os pontos de extensão |
-| [Responsabilidades dos Agentes](responsabilidades.md) | Tabela descrevendo o papel, as responsabilidades, o que cada componente **pode** e **não pode** fazer e as regras garantidas |
-| [Fluxo de Interação e Roteamento](fluxo-de-interacao.md) | Diagrama de sequência em linguagem direta para uma pergunta composta e o comparativo das estratégias de classificação e roteamento |
-| [Demonstração Executada](demonstracao.md) | Execuções reais em terminal comprovando paralelismo, isolamento de citações, retorno do validador e degradação graciosa |
+| Agentes e papéis | `4` agentes (`Orquestrador`, `Agente do RU`, `Agente de Fluxo`, `Agente Validador`) + `Sintetizador` |
+| Base de conhecimento | `54` fontes oficiais (`53` indexadas no RAG = `1.954` chunks + `F56` em `cardapio_semanal.json` com alergênicos) |
+| Decomposição e roteamento (12 múltiplas) | `12/12` (`100%`) das consultas quebradas e roteadas nas `31` subperguntas esperadas |
+| Acurácia em linguagem natural (`17` subperguntas) | `76,5%` (Regex) → `94,1%` (`d1-omni-600M`) → `100,0%` (`qwen2.5:7b` conjunto) |
+| Ganho de execução em paralelo | Economia de `48,6%` no tempo dos agentes (`264,50 s` paralelos vs `514,13 s` individuais) |
+| Validação factual ativa (`Agente Validador`) | `31/31` partes aprovadas no desfecho (`2` desvios interceptados: `M07` corrigida; `M04` recusada) |
+| Suíte automatizada e API | `233` testes aprovados (`1` ignorado) e `POST /perguntar` compatível com contrato v1.0 |
+| Fora de escopo nesta semana | Comunicação em tempo real com o portal do [Grupo 09](../visao/escopo-grupos.md) e memória conversacional contínua |
 
-<p class="legenda">Tabela 2. Guia de navegação da documentação da Entrega 4.</p>
+<p class="legenda">Tabela 1. Resumo técnico e métricas consolidadas da Entrega 4.</p>
+
+---
+
+## 3. Navegação da Entrega 4
+
+1. [Arquitetura dos Agentes](arquitetura-agentes.md): Diagrama verticalizado com os quatro agentes, conexões entre componentes, tabela consolidada de modelos e ferramentas utilizadas e pontos de extensão.
+2. [Responsabilidades dos Agentes](responsabilidades.md): Matriz do que cada agente e o sintetizador podem e não podem fazer, além das garantias operacionais.
+3. [Fluxo de Interação e Roteamento](fluxo-de-interacao.md): Diagrama de sequência para perguntas compostas, tratamento de falhas e síntese comparativa de roteamento.
+4. [Demonstração Executada](demonstracao.md): Execuções reais comprovando paralelismo, reparo do validador, degradação graciosa, cardápio semanal com alergênicos e apêndice completo (`M01`–`M12`).
+
+---
 
 ??? abstract "Histórico de revisão"
-    | Versão | Data | Autor | Descrição | Revisor |
-    |---|---|---|---|---|
-    | 1.0 | 16/11/2026 | @GabrielMacielBR | Versão inicial da documentação da Entrega 4 | @keilogger |
-    | 1.1 | 16/11/2026 | @GabrielMacielBR | Refatoração para a estrutura padronizada com marcação explícita de pendências | @maykonjuso |
-    | 1.2 | 16/11/2026 | @GabrielMacielBR | Adequação para leitura descritiva sem siglas nem jargões de código internos | @maykonjuso |
-    | 1.3 | 18/11/2026 | @GabrielMacielBR | Inclusão breve do cardápio estruturado por compartimento (`#54`, por @Kyara2) no resumo da Entrega 4 | — |
-    | 1.4 | 18/11/2026 | @GabrielMacielBR | Atualização do panorama após conclusão do contrato (`#40`), especialização (`#41`/`#42`) e validador ativo (`#43`) | — |
+
+    | Data | Versão | Descrição | Autor |
+    | :---: | :---: | --- | --- |
+    | 16/11/2026 | 1.0 | Estrutura inicial da Entrega 4 (Épico #37) | @GabrielMacielBR |
+    | 18/11/2026 | 1.4 | Atualização após conclusão do contrato (`#40`), especialistas (`#41`), `Orquestrador` (`#42`), validador ativo (`#43`) e cardápio estruturado (`#54`, por @Kyara2) | @GabrielMacielBR |
+    | 20/11/2026 | 2.0 | Alinhamento editorial ao estilo das Entregas 1–3 e consolidação de alergênicos (`#55`), API multiagente (`#44`), pilha técnica e apêndice `M01`–`M12` | @GabrielMacielBR |

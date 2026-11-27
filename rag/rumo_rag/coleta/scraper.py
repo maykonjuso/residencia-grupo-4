@@ -57,6 +57,23 @@ class ErroColeta(Exception):
     """Falha esperada da coleta (rede, página sem semanas, PDF ilegível). Mensagem para humanos."""
 
 
+class SemanaNaoPublicada(ErroColeta):
+    """A página respondeu, mas a UnB ainda não publicou o PDF da semana pedida."""
+
+    def __init__(self, referencia: date, ultima_semana: Semana | None = None):
+        self.referencia = referencia
+        self.ultima_semana = ultima_semana
+        if ultima_semana is not None:
+            msg = (
+                f"A UnB ainda não publicou o cardápio da semana de {referencia:%d/%m/%Y} "
+                f"em {PAGINA} (última semana publicada: "
+                f"{ultima_semana.inicio:%d/%m/%Y} a {ultima_semana.fim:%d/%m/%Y})."
+            )
+        else:
+            msg = f"A UnB ainda não publicou o cardápio da semana de {referencia:%d/%m/%Y} em {PAGINA}."
+        super().__init__(msg)
+
+
 @dataclass(frozen=True)
 class Semana:
     inicio: date
@@ -240,8 +257,14 @@ def entrada_do_catalogo(catalogo_texto: str, semana: Semana, coletado_em: date) 
     return novo, bloco
 
 
-def gravar(pagina_html: bytes | None, pdf: bytes, semana: Semana, hoje: date) -> dict:
-    """Guarda o HTML bruto, o PDF em originais/ e registra a semana no catálogo. Devolve o que gravou."""
+def gravar(
+    pagina_html: bytes | None,
+    pdf: bytes,
+    semana: Semana,
+    hoje: date,
+    resultado: dict | None = None,
+) -> dict:
+    """Guarda o HTML bruto, o PDF em originais/, registra a semana no catálogo e gera o JSON semanal."""
     catalogo = config.CATALOGO.read_text(encoding="utf-8")
     doc_id, bloco = entrada_do_catalogo(catalogo, semana, hoje)
     gravados = {"doc_id": doc_id, "arquivos": []}
@@ -257,6 +280,11 @@ def gravar(pagina_html: bytes | None, pdf: bytes, semana: Semana, hoje: date) ->
             catalogo += "\n"
         gravar_atomico(config.CATALOGO, catalogo + bloco)
         gravados["arquivos"].append(config.CATALOGO)
+    if resultado is not None:
+        from . import cardapio
+
+        json_destino = cardapio.salvar_semana_json(resultado, doc_id=doc_id)
+        gravados["arquivos"].append(json_destino)
     gravados["novo"] = bloco is not None
     return gravados
 
@@ -264,7 +292,8 @@ def gravar(pagina_html: bytes | None, pdf: bytes, semana: Semana, hoje: date) ->
 # ----------------------------------------------------------------------------- orquestração
 
 def coletar(referencia: date, pagina_local: Path | None = None, pdf_local: Path | None = None,
-            url_pdf: str | None = None) -> dict:
+            url_pdf: str | None = None, exigir_semana: bool = False,
+            timeout: int = TIMEOUT) -> dict:
     """Baixa (ou lê do disco) a página e o PDF da semana e devolve tudo em memória, sem gravar."""
     avisos: list[str] = []
     pagina = None
@@ -275,13 +304,15 @@ def coletar(referencia: date, pagina_local: Path | None = None, pdf_local: Path 
         semana = Semana(inicio, intervalo[1] if intervalo else inicio + timedelta(days=6),
                         url_pdf or pdf_local.resolve().as_uri(), "informado na linha de comando")
     else:
-        pagina = pagina_local.read_bytes() if pagina_local else baixar(PAGINA)
+        pagina = pagina_local.read_bytes() if pagina_local else baixar(PAGINA, timeout=timeout)
         semanas, avisos_links = listar_semanas(pagina.decode("utf-8", errors="replace"))
         avisos += avisos_links
         semana, aviso = escolher_semana(semanas, referencia)
+        if exigir_semana and not semana.contem(referencia):
+            raise SemanaNaoPublicada(referencia, ultima_semana=semana)
         if aviso:
             avisos.append(aviso)
-    pdf = pdf_local.read_bytes() if pdf_local else baixar(semana.url)
+    pdf = pdf_local.read_bytes() if pdf_local else baixar(semana.url, timeout=timeout)
     texto, avisos_pdf = ler_pdf(pdf, semana)
     return {"semana": semana, "pagina": pagina, "pdf": pdf, "texto": texto,
             "dias": dias(texto), "avisos": avisos + avisos_pdf}
@@ -294,9 +325,9 @@ def imprimir(resultado: dict) -> str:
     legenda = ", ".join(rotulo for _, rotulo in ALERGENICOS_OFICIAIS)
     extraidos = "[Alergênicos:" in resultado.get("texto", "")
     obs = (
-        "Extraídos automaticamente dos ícones do PDF por célula (auto-calibrados pela legenda do rodapé)."
+        "Lidos dos ícones do PDF, prato a prato, comparados com a legenda do rodapé de cada página (Issue #55)."
         if extraidos
-        else "Notações de alergênicos por prato no PDF oficial são ícones (imagens) não extraídos como texto."
+        else "Nenhum ícone de alergênico identificado no PDF oficial para esta refeição. Confirme na linha de distribuição."
     )
     linhas = [
         f"Cardápio do RU Gama · semana de {s.inicio:%d/%m/%Y} a {s.fim:%d/%m/%Y}",

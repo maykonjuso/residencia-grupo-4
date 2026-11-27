@@ -19,7 +19,11 @@ services:
       - key: RUMO_OPENAI_URL
         value: https://openrouter.ai/api/v1
       - key: RUMO_OPENAI_MODEL
-        value: "nvidia/nemotron-3-ultra-550b-a55b:free"
+        value: "nvidia/nemotron-3.5-lightning:free"
+      - key: RUMO_OPENAI_TIMEOUT
+        value: "25"
+      - key: RUMO_USAR_D1
+        value: "0"
       # Chave do OpenRouter (https://openrouter.ai/keys). Só no painel do Render, nunca no Git.
       - key: RUMO_OPENAI_KEY
         sync: false

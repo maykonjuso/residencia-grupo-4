@@ -85,10 +85,33 @@ def colecao(recriar: bool = False):
     return cliente.get_or_create_collection(config.COLECAO, metadata={"hnsw:space": "cosine"})
 
 
-def indexar(chunks: list[dict]) -> None:
-    with open(config.CHUNKS, "w", encoding="utf-8") as f:
+def salvar_chunks(chunks: list[dict]) -> None:
+    """Grava os chunks em JSONL de forma atômica (sem cardápios e sem tocar no ChromaDB)."""
+    chunks = [c for c in chunks if c.get("tipo") != "cardapio"]
+    config.CHUNKS.parent.mkdir(parents=True, exist_ok=True)
+    tmp = config.CHUNKS.with_suffix(".jsonl.tmp")
+    with open(tmp, "w", encoding="utf-8") as f:
         for c in chunks:
             f.write(json.dumps(c, ensure_ascii=False) + "\n")
+    tmp.replace(config.CHUNKS)
+
+
+def indexar(chunks: list[dict]) -> None:
+    import importlib.util
+    import sys
+
+    faltando = [
+        pkg for pkg in ("sentence_transformers", "chromadb")
+        if sys.modules.get(pkg) is None and importlib.util.find_spec(pkg) is None
+    ]
+    if faltando:
+        raise ImportError(
+            f"Dependências ausentes para indexação vetorial ({', '.join(faltando)}). "
+            "Use `ingerir --somente-chunks` ou instale requirements.txt."
+        )
+    # Cardápios semanais não entram na RAG (são servidos via cardapio_semanal.json + ferramentas).
+    chunks = [c for c in chunks if c.get("tipo") != "cardapio"]
+    salvar_chunks(chunks)
     vetores = embed_passagens([c["texto_indexado"] for c in chunks])
     col = colecao(recriar=True)
     campos = ("doc_id", "titulo", "orgao", "eixo", "curso", "tipo", "url", "data", "pagina", "secao")
@@ -104,7 +127,10 @@ def indexar(chunks: list[dict]) -> None:
 @lru_cache(maxsize=1)
 def _bm25():
     from rank_bm25 import BM25Okapi
-    chunks = [json.loads(l) for l in open(config.CHUNKS, encoding="utf-8")]
+    chunks = [
+        c for c in (json.loads(l) for l in open(config.CHUNKS, encoding="utf-8") if l.strip())
+        if c.get("tipo") != "cardapio"
+    ]
     return chunks, BM25Okapi([tokenizar(c["texto_indexado"]) for c in chunks])
 
 
@@ -142,6 +168,8 @@ def _buscar_simples(pergunta: str, k: int = config.TOP_K, modo: str = "hibrido",
 
     resultado = []
     for cid, nota in sorted(fusao.items(), key=lambda x: -x[1])[:k]:
+        if cid not in por_id:
+            continue
         c = dict(por_id[cid])
         c["nota_rrf"] = round(nota, 5)
         if cid in distancias:

@@ -1,0 +1,27 @@
+# Feriados, pontos facultativos e períodos do calendário de graduação 2026.2 — UnB
+
+Fonte: "2026.2 Calendário Universitário de Graduação por Atividades", versão de 02/10/2026 publicada pela Secretaria de Administração Acadêmica (SAA/UnB) em https://saa.unb.br/wp-content/uploads/2026/10/2026_2_Calend_Ativ_Grad_02_10_2026.pdf (documento F29 da base). Transcrição das datas da legenda do calendário (página 5), feita pelo Grupo 04 em 16/11/2026 e conferida de novo contra o PDF em 23/11/2026, em frases completas para facilitar a consulta. O calendário vale para o semestre 2026.2 (22/07/2026 a 19/12/2026). Fora desse período, consulte o calendário do semestre seguinte.
+
+## Período letivo e período de aulas do semestre 2026.2
+- O período letivo do 2026.2 vai de 22/07/2026 (primeiro dia letivo) a 19/12/2026 (último dia letivo).
+- O período de aulas começa em 10/08/2026, segunda-feira (primeiro dia de aulas), e termina em 14/12/2026, segunda-feira (último dia de aulas).
+- Marcos do período de aulas: 25% de realização em 09/09/2026, 50% em 09/10/2026 e 75% em 12/11/2026.
+- O calendário por atividades não informa datas de recesso nem de semana de provas. Essas informações não constam nesta fonte.
+- Depois do último dia de aulas (14/12/2026) não há aulas regulares do 2026.2. As turmas de férias seguem o Calendário de Verão 2027 (documento F58 da base).
+
+## Feriados no calendário acadêmico 2026.2
+- 7 de setembro de 2026 (07/09/2026), segunda-feira: feriado da Independência do Brasil.
+- 12 de outubro de 2026 (12/10/2026), segunda-feira: feriado de Nossa Senhora Aparecida.
+- 2 de novembro de 2026 (02/11/2026), segunda-feira: feriado de Finados.
+- 15 de novembro de 2026 (15/11/2026), domingo: feriado da Proclamação da República.
+- 20 de novembro de 2026 (20/11/2026), sexta-feira: feriado do Dia de Zumbi e Consciência Negra.
+- 25 de dezembro de 2026 (25/12/2026), sexta-feira: feriado de Natal (depois do último dia de aulas, 14/12/2026).
+
+## Pontos facultativos no calendário acadêmico 2026.2
+- 28 de outubro de 2026 (28/10/2026), quarta-feira: Dia do Servidor. Não é feriado no calendário: é ponto facultativo.
+- 24 de dezembro de 2026 (24/12/2026), quinta-feira: ponto facultativo após as 13h. A data já está fora do período de aulas do 2026.2, que termina em 14/12/2026.
+- 31 de dezembro de 2026 (31/12/2026), quinta-feira: ponto facultativo após as 13h. A data já está fora do período de aulas do 2026.2, que termina em 14/12/2026.
+- Ponto facultativo não é feriado. O calendário não diz se as aulas são suspensas nesses dias. Para saber se há aula em 28/10/2026, consulte o professor ou a coordenação do curso.
+
+## Semana Universitária 2026
+- 20 a 25 de setembro de 2026 (20/09/2026 a 25/09/2026): Semana Universitária 2026 (DEX). O calendário não diz se as aulas são suspensas nessa semana.

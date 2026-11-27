@@ -20,11 +20,11 @@ Clique em **▶ Reproduzir** para ver as duas fases em sequência, ou clique em 
 
     | Passo | O que acontece | Código |
     |---|---|---|
-    | 1. Fontes oficiais | 36 documentos da UnB registrados com órgão, data, URL e eixo | `rag/catalogo.yaml` |
+    | 1. Fontes oficiais | 56 documentos da UnB registrados com órgão, data, URL e eixo | `rag/catalogo.yaml` |
     | 2. Extração | PDF/HTML → texto limpo; marca `[[PAGINA n]]` para citar a página | `rag/rumo_rag/extracao.py` |
     | 3. Chunking | Corte por estrutura (títulos, artigos, itens), ~900 caracteres, cabeçalho de contexto | `rag/rumo_rag/chunking.py` |
     | 4. Embeddings | BAAI/bge-m3 transforma cada chunk em 1.024 números | `rag/rumo_rag/indice.py` |
-    | 5. Banco vetorial | 1.738 vetores no ChromaDB (HNSW, cosseno) + índice BM25 das palavras | `rag/rumo_rag/indice.py` |
+    | 5. Banco vetorial | 1.964 vetores no ChromaDB (HNSW, cosseno) + índice BM25 das palavras | `rag/rumo_rag/indice.py` |
 
 === "Fase 2 · Pergunta (online)"
 

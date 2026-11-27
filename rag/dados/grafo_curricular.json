@@ -1,0 +1,4273 @@
+{
+  "versao_schema": "2.0",
+  "instituicao": "UnB · Faculdade de Ciências e Tecnologias em Engenharia (FCTE)",
+  "curriculos": [
+    {
+      "curriculo_id": "software-2024-2",
+      "curso_slug": "software",
+      "curso": "Engenharia de Software",
+      "vigencia": {
+        "inicio": "2024/2",
+        "fim": null,
+        "ativa": true,
+        "descricao": "Ingressantes após 2024/2 (235 créditos)"
+      },
+      "versao_curriculo": "após 2024/2",
+      "total_creditos": 235,
+      "carga_horaria_total": 3525,
+      "cobertura_prerequisitos": "completa",
+      "cobertura_equivalencias": "parcial",
+      "fonte": {
+        "doc_id": "F16",
+        "titulo": "Fluxograma de Engenharia de Software (235 créditos) — transcrição",
+        "orgao": "UnB · FCTE · Engenharia de Software (transcrição do Grupo 04)",
+        "pagina": 1,
+        "url": "https://software.unb.br/matriz-curricular/"
+      },
+      "nos": [
+        {
+          "codigo": "CIC0004",
+          "nome": "Algoritmos e Programação de Computadores (APC)",
+          "creditos": 6,
+          "semestre": 1,
+          "evidencia": "CIC0004 Algoritmos e Programação de Computadores (APC) — 4-2-0-6 (comum)",
+          "carga_horaria": 90,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0163",
+          "nome": "Introdução à Engenharia",
+          "creditos": 2,
+          "semestre": 1,
+          "evidencia": "FGA0163 Introdução à Engenharia — 2-0-0-2 (comum)",
+          "carga_horaria": 30,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0168",
+          "nome": "Desenho Industrial Assistido por Computador",
+          "creditos": 6,
+          "semestre": 1,
+          "evidencia": "FGA0168 Desenho Industrial Assistido por Computador — 2-4-0-6 (comum)",
+          "carga_horaria": 90,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0302",
+          "nome": "Engenharia e Ambiente",
+          "creditos": 4,
+          "semestre": 1,
+          "evidencia": "FGA0302 Engenharia e Ambiente — 3-0-1-4 (comum; antigo código FGA0161)",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "MAT0025",
+          "nome": "Cálculo 1",
+          "creditos": 6,
+          "semestre": 1,
+          "evidencia": "MAT0025 Cálculo 1 — 2-4-0-6 (comum às engenharias)",
+          "carga_horaria": 90,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0084",
+          "nome": "Desenvolvimento de Software",
+          "creditos": 4,
+          "semestre": 2,
+          "evidencia": "FGA0084 Desenvolvimento de Software — 2-2-0-4 (optativa no fluxograma, cor magenta)",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0157",
+          "nome": "Probabilidade e Estatística Aplicada à Engenharia",
+          "creditos": 4,
+          "semestre": 2,
+          "evidencia": "FGA0157 Probabilidade e Estatística Aplicada à Engenharia — 4-0-0-4 (comum)",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "IFD0171",
+          "nome": "Física 1",
+          "creditos": 4,
+          "semestre": 2,
+          "evidencia": "IFD0171 Física 1 — 4-0-0-4 (comum)",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "IFD0173",
+          "nome": "Física 1 Experimental",
+          "creditos": 2,
+          "semestre": 2,
+          "evidencia": "IFD0173 Física 1 Experimental — 0-2-0-2 (comum)",
+          "carga_horaria": 30,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "MAT0026",
+          "nome": "Cálculo 2",
+          "creditos": 6,
+          "semestre": 2,
+          "evidencia": "MAT0026 Cálculo 2 — 4-2-0-6 (comum)",
+          "carga_horaria": 90,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "MAT0031",
+          "nome": "Introdução à Álgebra Linear",
+          "creditos": 4,
+          "semestre": 2,
+          "evidencia": "MAT0031 Introdução à Álgebra Linear — 2-2-0-4 (comum)",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0071",
+          "nome": "Prática de Eletrônica Digital 1",
+          "creditos": 2,
+          "semestre": 3,
+          "evidencia": "FGA0071 Prática de Eletrônica Digital 1 — 0-2-0-2 (comum; correquisito de Teoria de Eletrônica Digital 1)",
+          "carga_horaria": 30,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0073",
+          "nome": "Teoria de Eletrônica Digital 1",
+          "creditos": 4,
+          "semestre": 3,
+          "evidencia": "FGA0073 Teoria de Eletrônica Digital 1 — 4-0-0-4 (comum)",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0085",
+          "nome": "Matemática Discreta 1",
+          "creditos": 4,
+          "semestre": 3,
+          "evidencia": "FGA0085 Matemática Discreta 1 — 4-0-0-4",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0133",
+          "nome": "Engenharia Econômica",
+          "creditos": 4,
+          "semestre": 3,
+          "evidencia": "FGA0133 Engenharia Econômica — 4-0-0-4 (comum)",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0158",
+          "nome": "Orientação a Objetos",
+          "creditos": 4,
+          "semestre": 3,
+          "evidencia": "FGA0158 Orientação a Objetos — 2-2-0-4",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0160",
+          "nome": "Métodos Numéricos para Engenharia",
+          "creditos": 4,
+          "semestre": 3,
+          "evidencia": "FGA0160 Métodos Numéricos para Engenharia — 2-2-0-4 (comum)",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0164",
+          "nome": "Humanidades e Cidadania",
+          "creditos": 4,
+          "semestre": 3,
+          "evidencia": "FGA0164 Humanidades e Cidadania — 4-0-0-4 (comum)",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0108",
+          "nome": "Matemática Discreta 2",
+          "creditos": 4,
+          "semestre": 4,
+          "evidencia": "FGA0108 Matemática Discreta 2 — 4-0-0-4",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0142",
+          "nome": "Fundamentos de Arquiteturas de Computadores",
+          "creditos": 4,
+          "semestre": 4,
+          "evidencia": "FGA0142 Fundamentos de Arquiteturas de Computadores — 2-2-0-4",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0146",
+          "nome": "Estruturas de Dados 1",
+          "creditos": 4,
+          "semestre": 4,
+          "evidencia": "FGA0146 Estruturas de Dados 1 — 2-2-0-4 (antigo FGA0147)",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0303",
+          "nome": "Projeto Integrador de Engenharia 1",
+          "creditos": 4,
+          "semestre": 4,
+          "evidencia": "FGA0303 Projeto Integrador de Engenharia 1 — 2-0-2-4 (antigo FGA0150)",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0307",
+          "nome": "Gestão da Produção e Qualidade",
+          "creditos": 4,
+          "semestre": 4,
+          "evidencia": "FGA0307 Gestão da Produção e Qualidade — 3-0-1-4 (comum; antigo FGA0184)",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0312",
+          "nome": "Métodos de Desenvolvimento de Software (MDS)",
+          "creditos": 4,
+          "semestre": 4,
+          "evidencia": "FGA0312 Métodos de Desenvolvimento de Software (MDS) — 1-1-2-4 (antigo FGA0138)",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0003",
+          "nome": "Compiladores 1",
+          "creditos": 4,
+          "semestre": 5,
+          "evidencia": "FGA0003 Compiladores 1 — 2-2-0-4",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0030",
+          "nome": "Estruturas de Dados 2",
+          "creditos": 4,
+          "semestre": 5,
+          "evidencia": "FGA0030 Estruturas de Dados 2 — 2-2-0-4",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0137",
+          "nome": "Sistemas de Banco de Dados 1",
+          "creditos": 4,
+          "semestre": 5,
+          "evidencia": "FGA0137 Sistemas de Banco de Dados 1 — 2-2-0-4",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0170",
+          "nome": "Fundamentos de Sistemas Operacionais",
+          "creditos": 4,
+          "semestre": 5,
+          "evidencia": "FGA0170 Fundamentos de Sistemas Operacionais — 2-2-0-4",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0173",
+          "nome": "Interação Humano Computador",
+          "creditos": 4,
+          "semestre": 5,
+          "evidencia": "FGA0173 Interação Humano Computador — 2-2-0-4",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0313",
+          "nome": "Requisitos de Software",
+          "creditos": 4,
+          "semestre": 5,
+          "evidencia": "FGA0313 Requisitos de Software — 1-1-2-4 (antigo FGA0172)",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0060",
+          "nome": "Sistemas de Banco de Dados 2",
+          "creditos": 4,
+          "semestre": 6,
+          "evidencia": "FGA0060 Sistemas de Banco de Dados 2 — 2-2-0-4",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0124",
+          "nome": "Projeto e Análise de Algoritmos",
+          "creditos": 4,
+          "semestre": 6,
+          "evidencia": "FGA0124 Projeto e Análise de Algoritmos — 4-0-0-4",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0208",
+          "nome": "Arquitetura e Desenho de Software",
+          "creditos": 4,
+          "semestre": 6,
+          "evidencia": "FGA0208 Arquitetura e Desenho de Software — 2-2-0-4",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0211",
+          "nome": "Fundamentos de Redes de Computadores",
+          "creditos": 4,
+          "semestre": 6,
+          "evidencia": "FGA0211 Fundamentos de Redes de Computadores — 2-2-0-4",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0314",
+          "nome": "Testes de Software",
+          "creditos": 4,
+          "semestre": 6,
+          "evidencia": "FGA0314 Testes de Software — 1-1-2-4 (antigo FGA0238)",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0315",
+          "nome": "Qualidade de Software 1",
+          "creditos": 4,
+          "semestre": 6,
+          "evidencia": "FGA0315 Qualidade de Software 1 — 1-1-2-4 (antigo FGA0278)",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0103",
+          "nome": "Fundamentos de Sistemas Embarcados",
+          "creditos": 4,
+          "semestre": 7,
+          "evidencia": "FGA0103 Fundamentos de Sistemas Embarcados — 2-2-0-4",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0210",
+          "nome": "Paradigmas de Programação",
+          "creditos": 4,
+          "semestre": 7,
+          "evidencia": "FGA0210 Paradigmas de Programação — 2-2-0-4",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0242",
+          "nome": "Técnicas de Programação em Plataformas Emergentes",
+          "creditos": 4,
+          "semestre": 7,
+          "evidencia": "FGA0242 Técnicas de Programação em Plataformas Emergentes — 2-2-0-4",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0244",
+          "nome": "Programação para Sistemas Paralelos e Distribuídos",
+          "creditos": 4,
+          "semestre": 7,
+          "evidencia": "FGA0244 Programação para Sistemas Paralelos e Distribuídos — 2-2-0-4",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0288",
+          "nome": "Estágio Supervisionado",
+          "creditos": 14,
+          "semestre": 8,
+          "evidencia": "FGA0288 Estágio Supervisionado — 0-14-0-14",
+          "carga_horaria": 210,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0316",
+          "nome": "Engenharia de Produto de Software",
+          "creditos": 4,
+          "semestre": 8,
+          "evidencia": "FGA0316 Engenharia de Produto de Software — 1-1-2-4 (antigo FGA0206)",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0317",
+          "nome": "Gerência de Configuração e Evolução de Software (GCES)",
+          "creditos": 4,
+          "semestre": 8,
+          "evidencia": "FGA0317 Gerência de Configuração e Evolução de Software (GCES) — 1-0-3-4 (antigo FGA0240)",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0287",
+          "nome": "Trabalho de Conclusão de Curso 1",
+          "creditos": 4,
+          "semestre": 9,
+          "evidencia": "FGA0287 Trabalho de Conclusão de Curso 1 — 0-4-0-4",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0304",
+          "nome": "Projeto Integrador de Engenharia 2",
+          "creditos": 6,
+          "semestre": 9,
+          "evidencia": "FGA0304 Projeto Integrador de Engenharia 2 — 2-0-4-6 (antigo FGA0250)",
+          "carga_horaria": 90,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0290",
+          "nome": "Trabalho de Conclusão de Curso 2",
+          "creditos": 6,
+          "semestre": 10,
+          "evidencia": "FGA0290 Trabalho de Conclusão de Curso 2 — 0-6-0-6",
+          "carga_horaria": 90,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0318",
+          "nome": "Atividade de Extensão de Engenharia de Software",
+          "creditos": 3,
+          "semestre": 10,
+          "evidencia": "FGA0318 Atividade de Extensão de Engenharia de Software — 0-0-3-3",
+          "carga_horaria": 45,
+          "codigo_oficial": true
+        }
+      ],
+      "arestas": [
+        {
+          "origem": "MAT0025",
+          "destino": "MAT0026",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "Para cursar Cálculo 2 (MAT0026), é preciso ter cursado antes: Cálculo 1 (MAT0025)."
+        },
+        {
+          "origem": "MAT0026",
+          "destino": "FGA0160",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "Para cursar Métodos Numéricos para Engenharia (FGA0160), é preciso ter cursado antes: Cálculo 2 (MAT0026)."
+        },
+        {
+          "origem": "FGA0133",
+          "destino": "FGA0307",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "Para cursar Gestão da Produção e Qualidade (FGA0307), é preciso ter cursado antes: Engenharia Econômica (FGA0133)."
+        },
+        {
+          "origem": "CIC0004",
+          "destino": "FGA0158",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "Para cursar Orientação a Objetos (FGA0158), é preciso ter cursado antes: Algoritmos e Programação de Computadores (CIC0004)."
+        },
+        {
+          "origem": "CIC0004",
+          "destino": "FGA0146",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "Para cursar Estruturas de Dados 1 (FGA0146), é preciso ter cursado antes: Algoritmos e Programação de Computadores (CIC0004)."
+        },
+        {
+          "origem": "FGA0158",
+          "destino": "FGA0312",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "Para cursar Métodos de Desenvolvimento de Software (FGA0312), é preciso ter cursado antes: Orientação a Objetos (FGA0158)."
+        },
+        {
+          "origem": "FGA0312",
+          "destino": "FGA0313",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "Para cursar Requisitos de Software (FGA0313), é preciso ter cursado antes: Métodos de Desenvolvimento de Software (FGA0312)."
+        },
+        {
+          "origem": "FGA0312",
+          "destino": "FGA0314",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [
+            "FGA0313"
+          ],
+          "evidencia": "Para cursar Testes de Software (FGA0314), é preciso ter cursado antes (pré-requisito alternativo OU): Métodos de Desenvolvimento de Software (MDS) (FGA0312) ou Requisitos de Software (FGA0313)."
+        },
+        {
+          "origem": "FGA0314",
+          "destino": "FGA0317",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "Para cursar Gerência de Configuração e Evolução de Software (FGA0317), é preciso ter cursado antes: Testes de Software (FGA0314)."
+        },
+        {
+          "origem": "FGA0242",
+          "destino": "FGA0316",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "Para cursar Engenharia de Produto de Software (FGA0316), é preciso ter cursado antes: Técnicas de Programação em Plataformas Emergentes (FGA0242)."
+        },
+        {
+          "origem": "FGA0146",
+          "destino": "FGA0030",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "Para cursar Estruturas de Dados 2 (FGA0030), é preciso ter cursado antes: Estruturas de Dados 1 (FGA0146)."
+        },
+        {
+          "origem": "FGA0030",
+          "destino": "FGA0124",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "Para cursar Projeto e Análise de Algoritmos (FGA0124), é preciso ter cursado antes: Estruturas de Dados 2 (FGA0030)."
+        },
+        {
+          "origem": "FGA0071",
+          "destino": "FGA0073",
+          "relacao": "correquisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "Prática de Eletrônica Digital 1 (FGA0071) é correquisito de Teoria de Eletrônica Digital 1 (FGA0073): as duas são cursadas no mesmo semestre."
+        },
+        {
+          "origem": "FGA0073",
+          "destino": "FGA0142",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "Para cursar Fundamentos de Arquiteturas de Computadores (FGA0142), é preciso ter cursado antes: Teoria de Eletrônica Digital 1 (FGA0073)."
+        },
+        {
+          "origem": "FGA0142",
+          "destino": "FGA0170",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "Para cursar Fundamentos de Sistemas Operacionais (FGA0170), é preciso ter cursado antes: Fundamentos de Arquiteturas de Computadores (FGA0142)."
+        },
+        {
+          "origem": "FGA0170",
+          "destino": "FGA0211",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "Para cursar Fundamentos de Redes de Computadores (FGA0211), é preciso ter cursado antes: Fundamentos de Sistemas Operacionais (FGA0170)."
+        },
+        {
+          "origem": "FGA0211",
+          "destino": "FGA0244",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "Para cursar Programação para Sistemas Paralelos e Distribuídos (FGA0244), é preciso ter cursado antes: Fundamentos de Redes de Computadores (FGA0211)."
+        },
+        {
+          "origem": "FGA0137",
+          "destino": "FGA0060",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "Para cursar Sistemas de Banco de Dados 2 (FGA0060), é preciso ter cursado antes: Sistemas de Banco de Dados 1 (FGA0137)."
+        },
+        {
+          "origem": "FGA0085",
+          "destino": "FGA0108",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "Para cursar Matemática Discreta 2 (FGA0108), é preciso ter cursado antes: Matemática Discreta 1 (FGA0085)."
+        },
+        {
+          "origem": "FGA0303",
+          "destino": "FGA0304",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "Para cursar Projeto Integrador de Engenharia 2 (FGA0304), é preciso ter cursado antes: Projeto Integrador de Engenharia 1 (FGA0303)."
+        },
+        {
+          "origem": "FGA0287",
+          "destino": "FGA0290",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "Para cursar Trabalho de Conclusão de Curso 2 (FGA0290), é preciso ter cursado antes: Trabalho de Conclusão de Curso 1 (FGA0287)."
+        }
+      ],
+      "equivalencias": [
+        {
+          "codigo": "FGA0302",
+          "equivalentes": [
+            "FGA0161"
+          ],
+          "tipo": "codigo_antigo",
+          "bidirecional": true,
+          "observacao": "Código atualizado após inclusão de extensão (FGA0161 → FGA0302).",
+          "evidencia": "FGA0302 Engenharia e Ambiente — 3-0-1-4 (comum; antigo código FGA0161)"
+        },
+        {
+          "codigo": "FGA0307",
+          "equivalentes": [
+            "FGA0184"
+          ],
+          "tipo": "codigo_antigo",
+          "bidirecional": true,
+          "observacao": "Código atualizado após inclusão de extensão (FGA0184 → FGA0307).",
+          "evidencia": "FGA0307 Gestão da Produção e Qualidade — 3-0-1-4 (comum; antigo FGA0184)"
+        },
+        {
+          "codigo": "FGA0312",
+          "equivalentes": [
+            "FGA0138"
+          ],
+          "tipo": "codigo_antigo",
+          "bidirecional": true,
+          "observacao": "Código atualizado após inclusão de extensão (FGA0138 → FGA0312).",
+          "evidencia": "FGA0312 Métodos de Desenvolvimento de Software (MDS) — 1-1-2-4 (antigo FGA0138)"
+        },
+        {
+          "codigo": "FGA0146",
+          "equivalentes": [
+            "FGA0147"
+          ],
+          "tipo": "codigo_antigo",
+          "bidirecional": true,
+          "observacao": "Código atualizado após inclusão de extensão (FGA0147 → FGA0146).",
+          "evidencia": "FGA0146 Estruturas de Dados 1 — 2-2-0-4 (antigo FGA0147)"
+        },
+        {
+          "codigo": "FGA0303",
+          "equivalentes": [
+            "FGA0150"
+          ],
+          "tipo": "codigo_antigo",
+          "bidirecional": true,
+          "observacao": "Código atualizado após inclusão de extensão (FGA0150 → FGA0303).",
+          "evidencia": "FGA0303 Projeto Integrador de Engenharia 1 — 2-0-2-4 (antigo FGA0150)"
+        },
+        {
+          "codigo": "FGA0313",
+          "equivalentes": [
+            "FGA0172"
+          ],
+          "tipo": "codigo_antigo",
+          "bidirecional": true,
+          "observacao": "Código atualizado após inclusão de extensão (FGA0172 → FGA0313).",
+          "evidencia": "FGA0313 Requisitos de Software — 1-1-2-4 (antigo FGA0172)"
+        },
+        {
+          "codigo": "FGA0315",
+          "equivalentes": [
+            "FGA0278"
+          ],
+          "tipo": "codigo_antigo",
+          "bidirecional": true,
+          "observacao": "Código atualizado após inclusão de extensão (FGA0278 → FGA0315).",
+          "evidencia": "FGA0315 Qualidade de Software 1 — 1-1-2-4 (antigo FGA0278)"
+        },
+        {
+          "codigo": "FGA0314",
+          "equivalentes": [
+            "FGA0238"
+          ],
+          "tipo": "codigo_antigo",
+          "bidirecional": true,
+          "observacao": "Código atualizado após inclusão de extensão (FGA0238 → FGA0314).",
+          "evidencia": "FGA0314 Testes de Software — 1-1-2-4 (antigo FGA0238)"
+        },
+        {
+          "codigo": "FGA0316",
+          "equivalentes": [
+            "FGA0206"
+          ],
+          "tipo": "codigo_antigo",
+          "bidirecional": true,
+          "observacao": "Código atualizado após inclusão de extensão (FGA0206 → FGA0316).",
+          "evidencia": "FGA0316 Engenharia de Produto de Software — 1-1-2-4 (antigo FGA0206)"
+        },
+        {
+          "codigo": "FGA0317",
+          "equivalentes": [
+            "FGA0240"
+          ],
+          "tipo": "codigo_antigo",
+          "bidirecional": true,
+          "observacao": "Código atualizado após inclusão de extensão (FGA0240 → FGA0317).",
+          "evidencia": "FGA0317 Gerência de Configuração e Evolução de Software (GCES) — 1-0-3-4 (antigo FGA0240)"
+        },
+        {
+          "codigo": "FGA0304",
+          "equivalentes": [
+            "FGA0250"
+          ],
+          "tipo": "codigo_antigo",
+          "bidirecional": true,
+          "observacao": "Código atualizado após inclusão de extensão (FGA0250 → FGA0304).",
+          "evidencia": "FGA0304 Projeto Integrador de Engenharia 2 — 2-0-4-6 (antigo FGA0250)"
+        }
+      ]
+    },
+    {
+      "curriculo_id": "aeroespacial-2025",
+      "curso_slug": "aeroespacial",
+      "curso": "Engenharia Aeroespacial",
+      "vigencia": {
+        "inicio": "2025/1",
+        "fim": null,
+        "ativa": true,
+        "descricao": "Nova Matriz Curricular — PPC 2025 (3.900h)"
+      },
+      "versao_curriculo": "PPC 2025 (3.900h)",
+      "total_creditos": 260,
+      "carga_horaria_total": 3900,
+      "cobertura_prerequisitos": "completa",
+      "cobertura_equivalencias": "parcial",
+      "fonte": {
+        "doc_id": "F17",
+        "titulo": "Projeto Pedagógico do Curso de Engenharia Aeroespacial (PPC 2025)",
+        "orgao": "UnB · FCTE · Engenharia Aeroespacial",
+        "pagina": 74,
+        "url": "https://aeroespacial.unb.br/wp-content/uploads/2026/05/PPC_Aero_2025.pdf"
+      },
+      "nos": [
+        {
+          "codigo": "CIC0004",
+          "nome": "Algoritmos E Programação De Computadores",
+          "creditos": 6,
+          "semestre": 1,
+          "evidencia": "CIC0004 ALGORITMOS E PROGRAMAÇÃO DE COMPUTADORES DISCIPLINA 60 30 0 90 -",
+          "carga_horaria": 90,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0161",
+          "nome": "Engenharia E Ambiente",
+          "creditos": 4,
+          "semestre": 1,
+          "evidencia": "FGA0161 ENGENHARIA E AMBIENTE DISCIPLINA 45 0 15 60 -",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0163",
+          "nome": "Introdução À Engenharia",
+          "creditos": 2,
+          "semestre": 1,
+          "evidencia": "FGA0163 INTRODUÇÃO À ENGENHARIA DISCIPLINA 30 0 0 30 -",
+          "carga_horaria": 30,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0168",
+          "nome": "Desenho Industrial Assistido Por Computador",
+          "creditos": 6,
+          "semestre": 1,
+          "evidencia": "FGA0168 DESENHO INDUSTRIAL ASSISTIDO POR COMPUTADOR DISCIPLINA 30 60 0 90 -",
+          "carga_horaria": 90,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "MAT0025",
+          "nome": "Cálculo 1",
+          "creditos": 6,
+          "semestre": 1,
+          "evidencia": "MAT0025 CÁLCULO 1 DISCIPLINA 30 60 0 90 -",
+          "carga_horaria": 90,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0157",
+          "nome": "Probabilidade E Estatística Aplicado A Engenharia",
+          "creditos": 4,
+          "semestre": 2,
+          "evidencia": "FGA0157 PROBABILIDADE E ESTATÍSTICA APLICADO A ENGENHARIA DISCIPLINA 60 0 0 60 MAT0025",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0254",
+          "nome": "Ciências Aeroespaciais",
+          "creditos": 4,
+          "semestre": 2,
+          "evidencia": "FGA0254 CIÊNCIAS AEROESPACIAIS DISCIPLINA 30 30 0 60 -",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0295",
+          "nome": "Atividade De Extensao 1",
+          "creditos": 4,
+          "semestre": 2,
+          "evidencia": "FGA0295 ATIVIDADE DE EXTENSAO 1 ATIVIDADE 0 0 60 60 -",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "IFD0171",
+          "nome": "Fisica 1",
+          "creditos": 4,
+          "semestre": 2,
+          "evidencia": "IFD0171 FISICA 1 DISCIPLINA 60 0 0 60 -",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "IFD0173",
+          "nome": "Fisica 1 Experimental",
+          "creditos": 2,
+          "semestre": 2,
+          "evidencia": "IFD0173 FISICA 1 EXPERIMENTAL DISCIPLINA 0 30 0 30 -",
+          "carga_horaria": 30,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "MAT0026",
+          "nome": "Cálculo 2",
+          "creditos": 6,
+          "semestre": 2,
+          "evidencia": "MAT0026 CÁLCULO 2 DISCIPLINA 60 30 0 90 MAT0025",
+          "carga_horaria": 90,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "MAT0031",
+          "nome": "Introducao A Algebra Linear",
+          "creditos": 4,
+          "semestre": 2,
+          "evidencia": "MAT0031 INTRODUCAO A ALGEBRA LINEAR DISCIPLINA 30 30 0 60 -",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0008",
+          "nome": "Sistemas Aeroespaciais",
+          "creditos": 4,
+          "semestre": 3,
+          "evidencia": "FGA0008 SISTEMAS AEROESPACIAIS DISCIPLINA 60 0 0 60 IFD0171 E FGA0254",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0133",
+          "nome": "Engenharia Econômica",
+          "creditos": 4,
+          "semestre": 3,
+          "evidencia": "FGA0133 ENGENHARIA ECONÔMICA DISCIPLINA 60 0 0 60 -",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0154",
+          "nome": "Mecanica Dos Sólidos 1 Para Engenharia",
+          "creditos": 4,
+          "semestre": 3,
+          "evidencia": "FGA0154 MECANICA DOS SÓLIDOS 1 PARA ENGENHARIA DISCIPLINA 60 0 0 60 IFD0171",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0160",
+          "nome": "Métodos Numéricos Para Engenharia",
+          "creditos": 4,
+          "semestre": 3,
+          "evidencia": "FGA0160 MÉTODOS NUMÉRICOS PARA ENGENHARIA DISCIPLINA 30 30 0 60 MAT0026",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "IQD0125",
+          "nome": "Quimica Geral Teorica",
+          "creditos": 4,
+          "semestre": 3,
+          "evidencia": "IQD0125 QUIMICA GERAL TEORICA DISCIPLINA 60 0 0 60 -",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "IQD0126",
+          "nome": "Quimica Geral Experimental",
+          "creditos": 2,
+          "semestre": 3,
+          "evidencia": "IQD0126 QUIMICA GERAL EXPERIMENTAL DISCIPLINA 0 30 0 30 -",
+          "carga_horaria": 30,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "MAT0027",
+          "nome": "Cálculo 3",
+          "creditos": 6,
+          "semestre": 3,
+          "evidencia": "MAT0027 CÁLCULO 3 DISCIPLINA 60 30 0 90 MAT0026",
+          "carga_horaria": 90,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "ENM0080",
+          "nome": "Fenomenos De Transporte",
+          "creditos": 5,
+          "semestre": 4,
+          "evidencia": "ENM0080 FENOMENOS DE TRANSPORTE DISCIPLINA 60 15 0 75 MAT0027 E FGA0154",
+          "carga_horaria": 75,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0102",
+          "nome": "Sinais E Sistemas Para Engenharia",
+          "creditos": 6,
+          "semestre": 4,
+          "evidencia": "FGA0102 SINAIS E SISTEMAS PARA ENGENHARIA DISCIPLINA 60 30 0 90 MAT0027 E CIC0004",
+          "carga_horaria": 90,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0150",
+          "nome": "Projeto Integrador De Engenharia 1",
+          "creditos": 4,
+          "semestre": 4,
+          "evidencia": "FGA0150 PROJETO INTEGRADOR DE ENGENHARIA 1 DISCIPLINA 0 30 30 60 -",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0179",
+          "nome": "Mecanica Dos Sólidos 2 Para Engenharia",
+          "creditos": 4,
+          "semestre": 4,
+          "evidencia": "FGA0179 MECANICA DOS SÓLIDOS 2 PARA ENGENHARIA DISCIPLINA 60 0 0 60 FGA0154",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0296",
+          "nome": "Atividade De Extensao 2",
+          "creditos": 4,
+          "semestre": 4,
+          "evidencia": "FGA0296 ATIVIDADE DE EXTENSAO 2 ATIVIDADE 0 0 60 60 -",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "ENM0068",
+          "nome": "Termodinamica 1",
+          "creditos": 4,
+          "semestre": 5,
+          "evidencia": "ENM0068 TERMODINAMICA 1 DISCIPLINA 60 0 0 60 ENM0080",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0075",
+          "nome": "Laboratório De Materiais De Construção",
+          "creditos": 1,
+          "semestre": 5,
+          "evidencia": "FGA0075 LABORATÓRIO DE MATERIAIS DE CONSTRUÇÃO DISCIPLINA 0 15 0 15 IQD0125 E IQD0126",
+          "carga_horaria": 15,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0078",
+          "nome": "Teoria De Materiais De Construção",
+          "creditos": 3,
+          "semestre": 5,
+          "evidencia": "FGA0078 TEORIA DE MATERIAIS DE CONSTRUÇÃO DISCIPLINA 45 0 0 45 IQD0125 E IQD0126",
+          "carga_horaria": 45,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0086",
+          "nome": "Teoria De Eletricidade Aplicada",
+          "creditos": 4,
+          "semestre": 5,
+          "evidencia": "FGA0086 TEORIA DE ELETRICIDADE APLICADA DISCIPLINA 60 0 0 60 FGA0102",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0087",
+          "nome": "Laboratório De Eletricidade Aplicada",
+          "creditos": 2,
+          "semestre": 5,
+          "evidencia": "FGA0087 LABORATÓRIO DE ELETRICIDADE APLICADA DISCIPLINA 0 30 0 30 FGA0102",
+          "carga_horaria": 30,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0119",
+          "nome": "Teoria De Eletromagnetismo",
+          "creditos": 4,
+          "semestre": 5,
+          "evidencia": "FGA0119 TEORIA DE ELETROMAGNETISMO DISCIPLINA 60 0 0 60 IFD0171 E MAT0027",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0120",
+          "nome": "Prática De Eletromagnetismo",
+          "creditos": 2,
+          "semestre": 5,
+          "evidencia": "FGA0120 PRÁTICA DE ELETROMAGNETISMO DISCIPLINA 0 30 0 30 IFD0171 E MAT0027",
+          "carga_horaria": 30,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0204",
+          "nome": "Dinâmica Dos Fluídos",
+          "creditos": 5,
+          "semestre": 5,
+          "evidencia": "FGA0204 DINÂMICA DOS FLUÍDOS DISCIPLINA 60 15 0 75 ENM0080",
+          "carga_horaria": 75,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "ENM0071",
+          "nome": "Transferência De Calor",
+          "creditos": 6,
+          "semestre": 6,
+          "evidencia": "ENM0071 TRANSFERÊNCIA DE CALOR DISCIPLINA 75 15 0 90 ENM0068 E FGA0204",
+          "carga_horaria": 90,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0038",
+          "nome": "Aerodinâmica De Sistemas Aeroespaciais",
+          "creditos": 5,
+          "semestre": 6,
+          "evidencia": "FGA0038 AERODINÂMICA DE SISTEMAS AEROESPACIAIS DISCIPLINA 60 15 0 75 FGA0204",
+          "carga_horaria": 75,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0093",
+          "nome": "Princípios De Controle",
+          "creditos": 5,
+          "semestre": 6,
+          "evidencia": "FGA0093 PRINCÍPIOS DE CONTROLE DISCIPLINA 60 15 0 75 FGA0102",
+          "carga_horaria": 75,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0164",
+          "nome": "Humanidades E Cidadania",
+          "creditos": 4,
+          "semestre": 6,
+          "evidencia": "FGA0164 HUMANIDADES E CIDADANIA DISCIPLINA 60 0 0 60 -",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0184",
+          "nome": "Gestão Da Produção E Qualidade",
+          "creditos": 4,
+          "semestre": 6,
+          "evidencia": "FGA0184 GESTÃO DA PRODUÇÃO E QUALIDADE DISCIPLINA 45 0 15 60 FGA0133",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0297",
+          "nome": "Atividade De Extensão 3",
+          "creditos": 4,
+          "semestre": 6,
+          "evidencia": "FGA0297 ATIVIDADE DE EXTENSÃO 3 ATIVIDADE 0 0 60 60 -",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0039",
+          "nome": "Mecânica De Estruturas Aeroespaciais",
+          "creditos": 5,
+          "semestre": 7,
+          "evidencia": "FGA0039 MECÂNICA DE ESTRUTURAS AEROESPACIAIS DISCIPLINA 60 15 0 75 FGA0179",
+          "carga_horaria": 75,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0043",
+          "nome": "Dinâmica Dos Gases Para Sistemas Aeroespaciais",
+          "creditos": 4,
+          "semestre": 7,
+          "evidencia": "FGA0043 DINÂMICA DOS GASES PARA SISTEMAS AEROESPACIAIS DISCIPLINA 60 0 0 60 FGA0038",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0045",
+          "nome": "Mecânica Do Vôo",
+          "creditos": 4,
+          "semestre": 7,
+          "evidencia": "FGA0045 MECÂNICA DO VÔO DISCIPLINA 60 0 0 60 FGA0008 E FGA0038",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0148",
+          "nome": "Engenharia De Segurança Do Trabalho",
+          "creditos": 2,
+          "semestre": 7,
+          "evidencia": "FGA0148 ENGENHARIA DE SEGURANÇA DO TRABALHO DISCIPLINA 15 15 0 30 -",
+          "carga_horaria": 30,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0298",
+          "nome": "Atividade De Extensao 4",
+          "creditos": 4,
+          "semestre": 7,
+          "evidencia": "FGA0298 ATIVIDADE DE EXTENSAO 4 ATIVIDADE 0 0 60 60 -",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0048",
+          "nome": "Mecânica Do Voo Espacial",
+          "creditos": 4,
+          "semestre": 8,
+          "evidencia": "FGA0048 MECÂNICA DO VOO ESPACIAL DISCIPLINA 60 0 0 60 FGA0045",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0050",
+          "nome": "Dinâmica De Estruturas Aeroespaciais",
+          "creditos": 4,
+          "semestre": 8,
+          "evidencia": "FGA0050 DINÂMICA DE ESTRUTURAS AEROESPACIAIS DISCIPLINA 60 0 0 60 FGA0039 E FGA0102",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0052",
+          "nome": "Propulsão Aeroespacial",
+          "creditos": 6,
+          "semestre": 8,
+          "evidencia": "FGA0052 PROPULSÃO AEROESPACIAL DISCIPLINA 75 15 0 90 FGA0043",
+          "carga_horaria": 90,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0250",
+          "nome": "Projeto Integrador De Engenharia 2",
+          "creditos": 6,
+          "semestre": 8,
+          "evidencia": "FGA0250 PROJETO INTEGRADOR DE ENGENHARIA 2 DISCIPLINA 0 30 60 90 FGA0150",
+          "carga_horaria": 90,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0294",
+          "nome": "Impactos Sociais Da Engenharia Aeroespacial",
+          "creditos": 2,
+          "semestre": 8,
+          "evidencia": "FGA0294 IMPACTOS SOCIAIS DA ENGENHARIA AEROESPACIAL DISCIPLINA 0 0 30 30 -",
+          "carga_horaria": 30,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0009",
+          "nome": "Trabalho De Conclusão De Curso 1",
+          "creditos": 4,
+          "semestre": 9,
+          "evidencia": "FGA0009 TRABALHO DE CONCLUSÃO DE CURSO 1 ATIVIDADE 0 60 0 60 -",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0021",
+          "nome": "Estágio Supervisionado",
+          "creditos": 14,
+          "semestre": 9,
+          "evidencia": "FGA0021 ESTÁGIO SUPERVISIONADO ATIVIDADE 0 210 0 210 -",
+          "carga_horaria": 210,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0011",
+          "nome": "Trabalho De Conclusão De Curso 2",
+          "creditos": 6,
+          "semestre": 10,
+          "evidencia": "FGA0011 TRABALHO DE CONCLUSÃO DE CURSO 2 ATIVIDADE 0 90 0 90 FGA0009",
+          "carga_horaria": 90,
+          "codigo_oficial": true
+        }
+      ],
+      "arestas": [
+        {
+          "origem": "MAT0025",
+          "destino": "MAT0026",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "MAT0026 CÁLCULO 2 DISCIPLINA 60 30 0 90 MAT0025"
+        },
+        {
+          "origem": "MAT0025",
+          "destino": "FGA0157",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0157 PROBABILIDADE E ESTATÍSTICA APLICADO A ENGENHARIA DISCIPLINA 60 0 0 60 MAT0025"
+        },
+        {
+          "origem": "MAT0026",
+          "destino": "MAT0027",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "MAT0027 CÁLCULO 3 DISCIPLINA 60 30 0 90 MAT0026"
+        },
+        {
+          "origem": "IFD0171",
+          "destino": "FGA0154",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0154 MECANICA DOS SÓLIDOS 1 PARA ENGENHARIA DISCIPLINA 60 0 0 60 IFD0171"
+        },
+        {
+          "origem": "MAT0026",
+          "destino": "FGA0160",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0160 MÉTODOS NUMÉRICOS PARA ENGENHARIA DISCIPLINA 30 30 0 60 MAT0026"
+        },
+        {
+          "origem": "IFD0171",
+          "destino": "FGA0008",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0008 SISTEMAS AEROESPACIAIS DISCIPLINA 60 0 0 60 IFD0171 E FGA0254"
+        },
+        {
+          "origem": "FGA0254",
+          "destino": "FGA0008",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0008 SISTEMAS AEROESPACIAIS DISCIPLINA 60 0 0 60 IFD0171 E FGA0254"
+        },
+        {
+          "origem": "MAT0027",
+          "destino": "FGA0102",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0102 SINAIS E SISTEMAS PARA ENGENHARIA DISCIPLINA 60 30 0 90 MAT0027 E CIC0004"
+        },
+        {
+          "origem": "CIC0004",
+          "destino": "FGA0102",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0102 SINAIS E SISTEMAS PARA ENGENHARIA DISCIPLINA 60 30 0 90 MAT0027 E CIC0004"
+        },
+        {
+          "origem": "MAT0027",
+          "destino": "ENM0080",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "ENM0080 FENOMENOS DE TRANSPORTE DISCIPLINA 60 15 0 75 MAT0027 E FGA0154"
+        },
+        {
+          "origem": "FGA0154",
+          "destino": "ENM0080",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "ENM0080 FENOMENOS DE TRANSPORTE DISCIPLINA 60 15 0 75 MAT0027 E FGA0154"
+        },
+        {
+          "origem": "FGA0154",
+          "destino": "FGA0179",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0179 MECANICA DOS SÓLIDOS 2 PARA ENGENHARIA DISCIPLINA 60 0 0 60 FGA0154"
+        },
+        {
+          "origem": "FGA0102",
+          "destino": "FGA0086",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0086 TEORIA DE ELETRICIDADE APLICADA DISCIPLINA 60 0 0 60 FGA0102"
+        },
+        {
+          "origem": "FGA0102",
+          "destino": "FGA0087",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0087 LABORATÓRIO DE ELETRICIDADE APLICADA DISCIPLINA 0 30 0 30 FGA0102"
+        },
+        {
+          "origem": "IFD0171",
+          "destino": "FGA0119",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0119 TEORIA DE ELETROMAGNETISMO DISCIPLINA 60 0 0 60 IFD0171 E MAT0027"
+        },
+        {
+          "origem": "MAT0027",
+          "destino": "FGA0119",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0119 TEORIA DE ELETROMAGNETISMO DISCIPLINA 60 0 0 60 IFD0171 E MAT0027"
+        },
+        {
+          "origem": "IFD0171",
+          "destino": "FGA0120",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0120 PRÁTICA DE ELETROMAGNETISMO DISCIPLINA 0 30 0 30 IFD0171 E MAT0027"
+        },
+        {
+          "origem": "MAT0027",
+          "destino": "FGA0120",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0120 PRÁTICA DE ELETROMAGNETISMO DISCIPLINA 0 30 0 30 IFD0171 E MAT0027"
+        },
+        {
+          "origem": "IQD0125",
+          "destino": "FGA0078",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0078 TEORIA DE MATERIAIS DE CONSTRUÇÃO DISCIPLINA 45 0 0 45 IQD0125 E IQD0126"
+        },
+        {
+          "origem": "IQD0126",
+          "destino": "FGA0078",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0078 TEORIA DE MATERIAIS DE CONSTRUÇÃO DISCIPLINA 45 0 0 45 IQD0125 E IQD0126"
+        },
+        {
+          "origem": "IQD0125",
+          "destino": "FGA0075",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0075 LABORATÓRIO DE MATERIAIS DE CONSTRUÇÃO DISCIPLINA 0 15 0 15 IQD0125 E IQD0126"
+        },
+        {
+          "origem": "IQD0126",
+          "destino": "FGA0075",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0075 LABORATÓRIO DE MATERIAIS DE CONSTRUÇÃO DISCIPLINA 0 15 0 15 IQD0125 E IQD0126"
+        },
+        {
+          "origem": "ENM0080",
+          "destino": "FGA0204",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0204 DINÂMICA DOS FLUÍDOS DISCIPLINA 60 15 0 75 ENM0080"
+        },
+        {
+          "origem": "ENM0080",
+          "destino": "ENM0068",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "ENM0068 TERMODINAMICA 1 DISCIPLINA 60 0 0 60 ENM0080"
+        },
+        {
+          "origem": "FGA0133",
+          "destino": "FGA0184",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0184 GESTÃO DA PRODUÇÃO E QUALIDADE DISCIPLINA 45 0 15 60 FGA0133"
+        },
+        {
+          "origem": "FGA0204",
+          "destino": "FGA0038",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0038 AERODINÂMICA DE SISTEMAS AEROESPACIAIS DISCIPLINA 60 15 0 75 FGA0204"
+        },
+        {
+          "origem": "ENM0068",
+          "destino": "ENM0071",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "ENM0071 TRANSFERÊNCIA DE CALOR DISCIPLINA 75 15 0 90 ENM0068 E FGA0204"
+        },
+        {
+          "origem": "FGA0204",
+          "destino": "ENM0071",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "ENM0071 TRANSFERÊNCIA DE CALOR DISCIPLINA 75 15 0 90 ENM0068 E FGA0204"
+        },
+        {
+          "origem": "FGA0102",
+          "destino": "FGA0093",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0093 PRINCÍPIOS DE CONTROLE DISCIPLINA 60 15 0 75 FGA0102"
+        },
+        {
+          "origem": "FGA0038",
+          "destino": "FGA0043",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0043 DINÂMICA DOS GASES PARA SISTEMAS AEROESPACIAIS DISCIPLINA 60 0 0 60 FGA0038"
+        },
+        {
+          "origem": "FGA0008",
+          "destino": "FGA0045",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0045 MECÂNICA DO VÔO DISCIPLINA 60 0 0 60 FGA0008 E FGA0038"
+        },
+        {
+          "origem": "FGA0038",
+          "destino": "FGA0045",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0045 MECÂNICA DO VÔO DISCIPLINA 60 0 0 60 FGA0008 E FGA0038"
+        },
+        {
+          "origem": "FGA0179",
+          "destino": "FGA0039",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0039 MECÂNICA DE ESTRUTURAS AEROESPACIAIS DISCIPLINA 60 15 0 75 FGA0179"
+        },
+        {
+          "origem": "FGA0150",
+          "destino": "FGA0250",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0250 PROJETO INTEGRADOR DE ENGENHARIA 2 DISCIPLINA 0 30 60 90 FGA0150"
+        },
+        {
+          "origem": "FGA0043",
+          "destino": "FGA0052",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0052 PROPULSÃO AEROESPACIAL DISCIPLINA 75 15 0 90 FGA0043"
+        },
+        {
+          "origem": "FGA0045",
+          "destino": "FGA0048",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0048 MECÂNICA DO VOO ESPACIAL DISCIPLINA 60 0 0 60 FGA0045"
+        },
+        {
+          "origem": "FGA0039",
+          "destino": "FGA0050",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0050 DINÂMICA DE ESTRUTURAS AEROESPACIAIS DISCIPLINA 60 0 0 60 FGA0039 E FGA0102"
+        },
+        {
+          "origem": "FGA0102",
+          "destino": "FGA0050",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0050 DINÂMICA DE ESTRUTURAS AEROESPACIAIS DISCIPLINA 60 0 0 60 FGA0039 E FGA0102"
+        },
+        {
+          "origem": "FGA0009",
+          "destino": "FGA0011",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0011 TRABALHO DE CONCLUSÃO DE CURSO 2 ATIVIDADE 0 90 0 90 FGA0009"
+        },
+        {
+          "origem": "FGA0087",
+          "destino": "FGA0086",
+          "relacao": "correquisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "Teoria e Laboratório de Eletricidade Aplicada (F17, p. 72)."
+        },
+        {
+          "origem": "FGA0120",
+          "destino": "FGA0119",
+          "relacao": "correquisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "Teoria e Prática de Eletromagnetismo (F17, p. 72)."
+        },
+        {
+          "origem": "FGA0075",
+          "destino": "FGA0078",
+          "relacao": "correquisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "Teoria e Laboratório de Materiais de Construção (F17, p. 72)."
+        }
+      ],
+      "equivalencias": [
+        {
+          "codigo": "FGA0102",
+          "equivalentes": [
+            "FGA0187"
+          ],
+          "tipo": "substituicao_ppc",
+          "bidirecional": true,
+          "observacao": "Sinais e Sistemas (90h) substitui Métodos Matemáticos para Engenharia (60h) no PPC 2025.",
+          "evidencia": "Sinais e Sistemas para Engenharia substitui a disciplina Métodos Matemáticos para Engenharia e amplia o seu escopo com o aumento de 30 horas (F17, p. 72)."
+        },
+        {
+          "codigo": "FGA0093",
+          "equivalentes": [
+            "FGA0197"
+          ],
+          "tipo": "substituicao_ppc",
+          "bidirecional": true,
+          "observacao": "Princípios de Controle (75h) substitui Sistemas de Controle (60h) no PPC 2025.",
+          "evidencia": "Sistemas de Controle é substituída por Princípios de Controle com a inclusão de 15 horas de laboratório, e passa do sexto semestre para o quinto semestre (F17, p. 73)."
+        }
+      ]
+    },
+    {
+      "curriculo_id": "eletronica-2023",
+      "curso_slug": "eletronica",
+      "curso": "Engenharia Eletrônica",
+      "vigencia": {
+        "inicio": "2023/1",
+        "fim": null,
+        "ativa": true,
+        "descricao": "Matriz Curricular com Extensão — PPC 2023 (3.795h)"
+      },
+      "versao_curriculo": "PPC 2023 (3.795h)",
+      "total_creditos": 253,
+      "carga_horaria_total": 3795,
+      "cobertura_prerequisitos": "completa",
+      "cobertura_equivalencias": "parcial",
+      "fonte": {
+        "doc_id": "F21",
+        "titulo": "Projeto Pedagógico do Curso de Engenharia Eletrônica (PPC 2023)",
+        "orgao": "UnB · FCTE · Engenharia Eletrônica",
+        "pagina": 60,
+        "url": "https://eletronica.unb.br/wp-content/uploads/2025/03/PPC_eletronica2023_2.pdf"
+      },
+      "nos": [
+        {
+          "codigo": "CIC0004",
+          "nome": "Algoritmos E Programação De Computadores",
+          "creditos": 6,
+          "semestre": 1,
+          "evidencia": "CIC0004 ALGORITMOS E PROGRAMAÇÃO DE COMPUTADORES DISCIPLINA 0 60 30 90 -",
+          "carga_horaria": 90,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0163",
+          "nome": "Introdução À Engenharia",
+          "creditos": 2,
+          "semestre": 1,
+          "evidencia": "FGA0163 INTRODUÇÃO À ENGENHARIA DISCIPLINA 0 30 0 30 -",
+          "carga_horaria": 30,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0168",
+          "nome": "Desenho Industrial Assistido Por Computador",
+          "creditos": 6,
+          "semestre": 1,
+          "evidencia": "FGA0168 DESENHO INDUSTRIAL ASSISTIDO POR COMPUTADOR DISCIPLINA 0 30 60 90 -",
+          "carga_horaria": 90,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0302",
+          "nome": "Engenharia E Ambiente",
+          "creditos": 4,
+          "semestre": 1,
+          "evidencia": "FGA0302 ENGENHARIA E AMBIENTE DISCIPLINA 15 45 0 60 -",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "MAT0025",
+          "nome": "Cálculo 1",
+          "creditos": 6,
+          "semestre": 1,
+          "evidencia": "MAT0025 CÁLCULO 1 DISCIPLINA 0 30 60 90 -",
+          "carga_horaria": 90,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0133",
+          "nome": "Engenharia Econômica",
+          "creditos": 4,
+          "semestre": 2,
+          "evidencia": "FGA0133 ENGENHARIA ECONÔMICA DISCIPLINA 0 60 0 60 -",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0157",
+          "nome": "Probabilidade E Estatística Aplicado A Engenharia",
+          "creditos": 4,
+          "semestre": 2,
+          "evidencia": "FGA0157 PROBABILIDADE E ESTATÍSTICA APLICADO A ENGENHARIA DISCIPLINA 0 60 0 60 MAT0025",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "IFD0171",
+          "nome": "Fisica 1",
+          "creditos": 4,
+          "semestre": 2,
+          "evidencia": "IFD0171 FISICA 1 DISCIPLINA 0 60 0 60 -",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "IFD0173",
+          "nome": "Fisica 1 Experimental",
+          "creditos": 2,
+          "semestre": 2,
+          "evidencia": "IFD0173 FISICA 1 EXPERIMENTAL DISCIPLINA 0 0 30 30 -",
+          "carga_horaria": 30,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "MAT0026",
+          "nome": "Cálculo 2",
+          "creditos": 6,
+          "semestre": 2,
+          "evidencia": "MAT0026 CÁLCULO 2 DISCIPLINA 0 60 30 90 MAT0025 OU MAT0024",
+          "carga_horaria": 90,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "MAT0031",
+          "nome": "Introducao A Algebra Linear",
+          "creditos": 4,
+          "semestre": 2,
+          "evidencia": "MAT0031 INTRODUCAO A ALGEBRA LINEAR DISCIPLINA 0 30 30 60 -",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0071",
+          "nome": "Prática De Eletrônica Digital 1",
+          "creditos": 2,
+          "semestre": 3,
+          "evidencia": "FGA0071 PRÁTICA DE ELETRÔNICA DIGITAL 1 DISCIPLINA 0 0 30 30 MAT0031 E FGA0073",
+          "carga_horaria": 30,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0073",
+          "nome": "Teoria De Eletrônica Digital 1",
+          "creditos": 4,
+          "semestre": 3,
+          "evidencia": "FGA0073 TEORIA DE ELETRÔNICA DIGITAL 1 DISCIPLINA 0 60 0 60 MAT0031 E FGA0071",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0154",
+          "nome": "Mecanica Dos Sólidos 1 Para Engenharia",
+          "creditos": 4,
+          "semestre": 3,
+          "evidencia": "FGA0154 MECANICA DOS SÓLIDOS 1 PARA ENGENHARIA DISCIPLINA 0 60 0 60 IFD0171",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0160",
+          "nome": "Métodos Numéricos Para Engenharia",
+          "creditos": 4,
+          "semestre": 3,
+          "evidencia": "FGA0160 MÉTODOS NUMÉRICOS PARA ENGENHARIA DISCIPLINA 0 30 30 60 MAT0026",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "IQD0125",
+          "nome": "Quimica Geral Teorica",
+          "creditos": 4,
+          "semestre": 3,
+          "evidencia": "IQD0125 QUIMICA GERAL TEORICA DISCIPLINA 0 60 0 60 -",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "IQD0126",
+          "nome": "Quimica Geral Experimental",
+          "creditos": 2,
+          "semestre": 3,
+          "evidencia": "IQD0126 QUIMICA GERAL EXPERIMENTAL DISCIPLINA 0 0 30 30 -",
+          "carga_horaria": 30,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "MAT0027",
+          "nome": "Cálculo 3",
+          "creditos": 6,
+          "semestre": 3,
+          "evidencia": "MAT0027 CÁLCULO 3 DISCIPLINA 0 60 30 90 MAT0026",
+          "carga_horaria": 90,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "ENM0080",
+          "nome": "Fenomenos De Transporte",
+          "creditos": 5,
+          "semestre": 4,
+          "evidencia": "ENM0080 FENOMENOS DE TRANSPORTE DISCIPLINA 0 60 15 75 MAT0027 E FGA0154",
+          "carga_horaria": 75,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0067",
+          "nome": "Teoria De Circuitos Eletrônicos 1",
+          "creditos": 4,
+          "semestre": 4,
+          "evidencia": "FGA0067 TEORIA DE CIRCUITOS ELETRÔNICOS 1 DISCIPLINA 0 60 0 60 MAT0048 OU MAT0026",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0069",
+          "nome": "Prática De Circuitos Eletrônicos 1",
+          "creditos": 2,
+          "semestre": 4,
+          "evidencia": "FGA0069 PRÁTICA DE CIRCUITOS ELETRÔNICOS 1 DISCIPLINA 0 0 30 30 MAT0048 OU MAT0026",
+          "carga_horaria": 30,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0072",
+          "nome": "Prática De Eletrônica Digital 2",
+          "creditos": 2,
+          "semestre": 4,
+          "evidencia": "FGA0072 PRÁTICA DE ELETRÔNICA DIGITAL 2 DISCIPLINA 0 0 30 30 FGA0073 E FGA0071",
+          "carga_horaria": 30,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0074",
+          "nome": "Teoria De Eletrônica Digital 2",
+          "creditos": 4,
+          "semestre": 4,
+          "evidencia": "FGA0074 TEORIA DE ELETRÔNICA DIGITAL 2 DISCIPLINA 0 60 0 60 FGA0073 E FGA0071",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0119",
+          "nome": "Teoria De Eletromagnetismo",
+          "creditos": 4,
+          "semestre": 4,
+          "evidencia": "FGA0119 TEORIA DE ELETROMAGNETISMO DISCIPLINA 0 60 0 60 IFD0171 E MAT0027 E FGA0120",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0120",
+          "nome": "Prática De Eletromagnetismo",
+          "creditos": 2,
+          "semestre": 4,
+          "evidencia": "FGA0120 PRÁTICA DE ELETROMAGNETISMO DISCIPLINA 0 0 30 30 IFD0171 E MAT0027 E FGA0119",
+          "carga_horaria": 30,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0303",
+          "nome": "Projeto Integrador De Engenharia 1",
+          "creditos": 4,
+          "semestre": 4,
+          "evidencia": "FGA0303 PROJETO INTEGRADOR DE ENGENHARIA 1 DISCIPLINA 30 0 30 60 -",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0075",
+          "nome": "Laboratório De Materiais De Construção",
+          "creditos": 1,
+          "semestre": 5,
+          "evidencia": "FGA0075 LABORATÓRIO DE MATERIAIS DE CONSTRUÇÃO DISCIPLINA 0 15 0 15 IQD0125 E IQD0126 E FGA0078",
+          "carga_horaria": 15,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0078",
+          "nome": "Teoria De Materiais De Construção",
+          "creditos": 3,
+          "semestre": 5,
+          "evidencia": "FGA0078 TEORIA DE MATERIAIS DE CONSTRUÇÃO DISCIPLINA 0 45 0 45 IQD0125 E IQD0126 E FGA0075",
+          "carga_horaria": 45,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0086",
+          "nome": "Teoria De Eletricidade Aplicada",
+          "creditos": 4,
+          "semestre": 5,
+          "evidencia": "FGA0086 TEORIA DE ELETRICIDADE APLICADA DISCIPLINA 0 60 0 60 FGA0067 E FGA0069",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0087",
+          "nome": "Laboratório De Eletricidade Aplicada",
+          "creditos": 2,
+          "semestre": 5,
+          "evidencia": "FGA0087 LABORATÓRIO DE ELETRICIDADE APLICADA DISCIPLINA 0 0 30 30 FGA0067 E FGA0069",
+          "carga_horaria": 30,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0100",
+          "nome": "Prática De Física Dos Dispositivos Eletrônicos",
+          "creditos": 2,
+          "semestre": 5,
+          "evidencia": "FGA0100 PRÁTICA DE FÍSICA DOS DISPOSITIVOS ELETRÔNICOS DISCIPLINA 0 0 30 30 FGA0119 E FGA0120",
+          "carga_horaria": 30,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0101",
+          "nome": "Teoria De Física Dos Dispositivos Eletrônicos",
+          "creditos": 4,
+          "semestre": 5,
+          "evidencia": "FGA0101 TEORIA DE FÍSICA DOS DISPOSITIVOS ELETRÔNICOS DISCIPLINA 0 60 0 60 FGA0119 E FGA0120",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0102",
+          "nome": "Sinais E Sistemas Para Engenharia",
+          "creditos": 6,
+          "semestre": 5,
+          "evidencia": "FGA0102 SINAIS E SISTEMAS PARA ENGENHARIA DISCIPLINA 0 60 30 90 MAT0027 E CIC0004",
+          "carga_horaria": 90,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0308",
+          "nome": "Eletrônica Embarcada",
+          "creditos": 6,
+          "semestre": 5,
+          "evidencia": "FGA0308 ELETRÔNICA EMBARCADA DISCIPLINA 15 60 15 90 FGA0074 E FGA0072",
+          "carga_horaria": 90,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0068",
+          "nome": "Teoria De Circuitos Eletrônicos 2",
+          "creditos": 4,
+          "semestre": 6,
+          "evidencia": "FGA0068 TEORIA DE CIRCUITOS ELETRÔNICOS 2 DISCIPLINA 0 60 0 60 FGA0067 E FGA0069 E FGA0101 E FGA0100 E FGA0070",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0070",
+          "nome": "Prática De Circuitos Eletrônicos 2",
+          "creditos": 2,
+          "semestre": 6,
+          "evidencia": "FGA0070 PRÁTICA DE CIRCUITOS ELETRÔNICOS 2 DISCIPLINA 0 0 30 30 FGA0067 E FGA0069 E FGA0101 E FGA0100 E FGA0068",
+          "carga_horaria": 30,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0092",
+          "nome": "Princípios De Comunicação Para Engenharia",
+          "creditos": 5,
+          "semestre": 6,
+          "evidencia": "FGA0092 PRINCÍPIOS DE COMUNICAÇÃO PARA ENGENHARIA DISCIPLINA 0 60 15 75 FGA0102 E FGA0067",
+          "carga_horaria": 75,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0093",
+          "nome": "Princípios De Controle",
+          "creditos": 5,
+          "semestre": 6,
+          "evidencia": "FGA0093 PRINCÍPIOS DE CONTROLE DISCIPLINA 0 60 15 75 FGA0187 OU FGA0102",
+          "carga_horaria": 75,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0164",
+          "nome": "Humanidades E Cidadania",
+          "creditos": 4,
+          "semestre": 6,
+          "evidencia": "FGA0164 HUMANIDADES E CIDADANIA DISCIPLINA 0 60 0 60 -",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0307",
+          "nome": "Gestão Da Produção E Qualidade",
+          "creditos": 4,
+          "semestre": 6,
+          "evidencia": "FGA0307 GESTÃO DA PRODUÇÃO E QUALIDADE DISCIPLINA 15 45 0 60 FGA0133",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0017",
+          "nome": "Projetos De Circuitos Integrados 1",
+          "creditos": 4,
+          "semestre": 7,
+          "evidencia": "FGA0017 PROJETOS DE CIRCUITOS INTEGRADOS 1 DISCIPLINA 0 30 30 60 FGA0068 E FGA0070",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0132",
+          "nome": "Instrumentação Eletrônica Para Engenharia",
+          "creditos": 4,
+          "semestre": 7,
+          "evidencia": "FGA0132 INSTRUMENTAÇÃO ELETRÔNICA PARA ENGENHARIA DISCIPLINA 0 45 15 60 FGA0068 E FGA0070",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0148",
+          "nome": "Engenharia De Segurança Do Trabalho",
+          "creditos": 2,
+          "semestre": 7,
+          "evidencia": "FGA0148 ENGENHARIA DE SEGURANÇA DO TRABALHO DISCIPLINA 0 15 15 30 -",
+          "carga_horaria": 30,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0219",
+          "nome": "Processamento De Sinais",
+          "creditos": 4,
+          "semestre": 7,
+          "evidencia": "FGA0219 PROCESSAMENTO DE SINAIS DISCIPLINA 0 30 30 60 FGA0187 OU FGA0102",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0309",
+          "nome": "Sistemas Operacionais Embarcados",
+          "creditos": 6,
+          "semestre": 7,
+          "evidencia": "FGA0309 SISTEMAS OPERACIONAIS EMBARCADOS DISCIPLINA 15 60 15 90 FGA0308",
+          "carga_horaria": 90,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0310",
+          "nome": "Projeto Extensionista Em Engenharia Eletrônica 1",
+          "creditos": 4,
+          "semestre": 7,
+          "evidencia": "FGA0310 PROJETO EXTENSIONISTA EM ENGENHARIA ELETRÔNICA 1 DISCIPLINA 60 - - 60 FGA0303 E FGA0308",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0098",
+          "nome": "Prática De Circuitos Eletrônicos 3",
+          "creditos": 2,
+          "semestre": 8,
+          "evidencia": "FGA0098 PRÁTICA DE CIRCUITOS ELETRÔNICOS 3 DISCIPLINA 0 0 30 30 FGA0017",
+          "carga_horaria": 30,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0099",
+          "nome": "Teoria De Circuitos Eletrônicos 3",
+          "creditos": 4,
+          "semestre": 8,
+          "evidencia": "FGA0099 TEORIA DE CIRCUITOS ELETRÔNICOS 3 DISCIPLINA 0 60 0 60 FGA0017",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0295",
+          "nome": "Atividade Extensionista 1",
+          "creditos": 4,
+          "semestre": 8,
+          "evidencia": "FGA0295 ATIVIDADE EXTENSIONISTA 1 ATIVIDADE 60 - - 60 -",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0304",
+          "nome": "Projeto Integrador De Engenharia 2",
+          "creditos": 6,
+          "semestre": 8,
+          "evidencia": "FGA0304 PROJETO INTEGRADOR DE ENGENHARIA 2 DISCIPLINA 60 0 30 90 FGA0303",
+          "carga_horaria": 90,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0287",
+          "nome": "Trabalho De Conclusão De Curso 1",
+          "creditos": 4,
+          "semestre": 9,
+          "evidencia": "FGA0287 TRABALHO DE CONCLUSÃO DE CURSO 1 ATIVIDADE DE ORIENTAÇÃO INDIVIDUAL TCC 0 0 60 60 -",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0288",
+          "nome": "Estágio Supervisionado",
+          "creditos": 14,
+          "semestre": 9,
+          "evidencia": "FGA0288 ESTÁGIO SUPERVISIONADO ATIVIDADE DE ORIENTAÇÃO INDIVIDUAL ESTÁGIO 0 0 210 210 -",
+          "carga_horaria": 210,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0311",
+          "nome": "Projeto Extensionista Em Engenharia Eletrônica 2",
+          "creditos": 4,
+          "semestre": 9,
+          "evidencia": "FGA0311 PROJETO EXTENSIONISTA EM ENGENHARIA ELETRÔNICA 2 DISCIPLINA 60 - - 60 FGA0309 E FGA0310",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0290",
+          "nome": "Trabalho De Conclusão De Curso 2",
+          "creditos": 6,
+          "semestre": 10,
+          "evidencia": "FGA0290 TRABALHO DE CONCLUSÃO DE CURSO 2 ATIVIDADE DE ORIENTAÇÃO INDIVIDUAL TCC 0 0 90 90 FGA0287",
+          "carga_horaria": 90,
+          "codigo_oficial": true
+        },
+        {
+          "codigo": "FGA0296",
+          "nome": "Atividade Extensionista 2",
+          "creditos": 4,
+          "semestre": 10,
+          "evidencia": "FGA0296 ATIVIDADE EXTENSIONISTA 2 ATIVIDADE 60 - - 60 FGA0295",
+          "carga_horaria": 60,
+          "codigo_oficial": true
+        }
+      ],
+      "arestas": [
+        {
+          "origem": "MAT0025",
+          "destino": "MAT0026",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [
+            "MAT0024"
+          ],
+          "evidencia": "MAT0026 CÁLCULO 2 DISCIPLINA 0 60 30 90 MAT0025 OU MAT0024"
+        },
+        {
+          "origem": "MAT0025",
+          "destino": "FGA0157",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0157 PROBABILIDADE E ESTATÍSTICA APLICADO A ENGENHARIA DISCIPLINA 0 60 0 60 MAT0025"
+        },
+        {
+          "origem": "MAT0026",
+          "destino": "MAT0027",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "MAT0027 CÁLCULO 3 DISCIPLINA 0 60 30 90 MAT0026"
+        },
+        {
+          "origem": "IFD0171",
+          "destino": "FGA0154",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0154 MECANICA DOS SÓLIDOS 1 PARA ENGENHARIA DISCIPLINA 0 60 0 60 IFD0171"
+        },
+        {
+          "origem": "MAT0026",
+          "destino": "FGA0160",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0160 MÉTODOS NUMÉRICOS PARA ENGENHARIA DISCIPLINA 0 30 30 60 MAT0026"
+        },
+        {
+          "origem": "MAT0031",
+          "destino": "FGA0073",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0073 TEORIA DE ELETRÔNICA DIGITAL 1 DISCIPLINA 0 60 0 60 MAT0031 E FGA0071"
+        },
+        {
+          "origem": "FGA0071",
+          "destino": "FGA0073",
+          "relacao": "correquisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0073 TEORIA DE ELETRÔNICA DIGITAL 1 DISCIPLINA 0 60 0 60 MAT0031 E FGA0071"
+        },
+        {
+          "origem": "MAT0031",
+          "destino": "FGA0071",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0071 PRÁTICA DE ELETRÔNICA DIGITAL 1 DISCIPLINA 0 0 30 30 MAT0031 E FGA0073"
+        },
+        {
+          "origem": "IFD0171",
+          "destino": "FGA0119",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0119 TEORIA DE ELETROMAGNETISMO DISCIPLINA 0 60 0 60 IFD0171 E MAT0027 E FGA0120"
+        },
+        {
+          "origem": "MAT0027",
+          "destino": "FGA0119",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0119 TEORIA DE ELETROMAGNETISMO DISCIPLINA 0 60 0 60 IFD0171 E MAT0027 E FGA0120"
+        },
+        {
+          "origem": "FGA0119",
+          "destino": "FGA0120",
+          "relacao": "correquisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0119 TEORIA DE ELETROMAGNETISMO DISCIPLINA 0 60 0 60 IFD0171 E MAT0027 E FGA0120"
+        },
+        {
+          "origem": "IFD0171",
+          "destino": "FGA0120",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0120 PRÁTICA DE ELETROMAGNETISMO DISCIPLINA 0 0 30 30 IFD0171 E MAT0027 E FGA0119"
+        },
+        {
+          "origem": "MAT0027",
+          "destino": "FGA0120",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0120 PRÁTICA DE ELETROMAGNETISMO DISCIPLINA 0 0 30 30 IFD0171 E MAT0027 E FGA0119"
+        },
+        {
+          "origem": "MAT0027",
+          "destino": "ENM0080",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "ENM0080 FENOMENOS DE TRANSPORTE DISCIPLINA 0 60 15 75 MAT0027 E FGA0154"
+        },
+        {
+          "origem": "FGA0154",
+          "destino": "ENM0080",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "ENM0080 FENOMENOS DE TRANSPORTE DISCIPLINA 0 60 15 75 MAT0027 E FGA0154"
+        },
+        {
+          "origem": "MAT0026",
+          "destino": "FGA0067",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [
+            "MAT0048"
+          ],
+          "evidencia": "FGA0067 TEORIA DE CIRCUITOS ELETRÔNICOS 1 DISCIPLINA 0 60 0 60 MAT0048 OU MAT0026"
+        },
+        {
+          "origem": "MAT0026",
+          "destino": "FGA0069",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [
+            "MAT0048"
+          ],
+          "evidencia": "FGA0069 PRÁTICA DE CIRCUITOS ELETRÔNICOS 1 DISCIPLINA 0 0 30 30 MAT0048 OU MAT0026"
+        },
+        {
+          "origem": "FGA0073",
+          "destino": "FGA0074",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0074 TEORIA DE ELETRÔNICA DIGITAL 2 DISCIPLINA 0 60 0 60 FGA0073 E FGA0071"
+        },
+        {
+          "origem": "FGA0071",
+          "destino": "FGA0074",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0074 TEORIA DE ELETRÔNICA DIGITAL 2 DISCIPLINA 0 60 0 60 FGA0073 E FGA0071"
+        },
+        {
+          "origem": "FGA0073",
+          "destino": "FGA0072",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0072 PRÁTICA DE ELETRÔNICA DIGITAL 2 DISCIPLINA 0 0 30 30 FGA0073 E FGA0071"
+        },
+        {
+          "origem": "FGA0071",
+          "destino": "FGA0072",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0072 PRÁTICA DE ELETRÔNICA DIGITAL 2 DISCIPLINA 0 0 30 30 FGA0073 E FGA0071"
+        },
+        {
+          "origem": "MAT0027",
+          "destino": "FGA0102",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0102 SINAIS E SISTEMAS PARA ENGENHARIA DISCIPLINA 0 60 30 90 MAT0027 E CIC0004"
+        },
+        {
+          "origem": "CIC0004",
+          "destino": "FGA0102",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0102 SINAIS E SISTEMAS PARA ENGENHARIA DISCIPLINA 0 60 30 90 MAT0027 E CIC0004"
+        },
+        {
+          "origem": "IQD0125",
+          "destino": "FGA0078",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0078 TEORIA DE MATERIAIS DE CONSTRUÇÃO DISCIPLINA 0 45 0 45 IQD0125 E IQD0126 E FGA0075"
+        },
+        {
+          "origem": "IQD0126",
+          "destino": "FGA0078",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0078 TEORIA DE MATERIAIS DE CONSTRUÇÃO DISCIPLINA 0 45 0 45 IQD0125 E IQD0126 E FGA0075"
+        },
+        {
+          "origem": "FGA0075",
+          "destino": "FGA0078",
+          "relacao": "correquisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0078 TEORIA DE MATERIAIS DE CONSTRUÇÃO DISCIPLINA 0 45 0 45 IQD0125 E IQD0126 E FGA0075"
+        },
+        {
+          "origem": "IQD0125",
+          "destino": "FGA0075",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0075 LABORATÓRIO DE MATERIAIS DE CONSTRUÇÃO DISCIPLINA 0 15 0 15 IQD0125 E IQD0126 E FGA0078"
+        },
+        {
+          "origem": "IQD0126",
+          "destino": "FGA0075",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0075 LABORATÓRIO DE MATERIAIS DE CONSTRUÇÃO DISCIPLINA 0 15 0 15 IQD0125 E IQD0126 E FGA0078"
+        },
+        {
+          "origem": "FGA0067",
+          "destino": "FGA0086",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0086 TEORIA DE ELETRICIDADE APLICADA DISCIPLINA 0 60 0 60 FGA0067 E FGA0069"
+        },
+        {
+          "origem": "FGA0069",
+          "destino": "FGA0086",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0086 TEORIA DE ELETRICIDADE APLICADA DISCIPLINA 0 60 0 60 FGA0067 E FGA0069"
+        },
+        {
+          "origem": "FGA0067",
+          "destino": "FGA0087",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0087 LABORATÓRIO DE ELETRICIDADE APLICADA DISCIPLINA 0 0 30 30 FGA0067 E FGA0069"
+        },
+        {
+          "origem": "FGA0069",
+          "destino": "FGA0087",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0087 LABORATÓRIO DE ELETRICIDADE APLICADA DISCIPLINA 0 0 30 30 FGA0067 E FGA0069"
+        },
+        {
+          "origem": "FGA0074",
+          "destino": "FGA0308",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0308 ELETRÔNICA EMBARCADA DISCIPLINA 15 60 15 90 FGA0074 E FGA0072"
+        },
+        {
+          "origem": "FGA0072",
+          "destino": "FGA0308",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0308 ELETRÔNICA EMBARCADA DISCIPLINA 15 60 15 90 FGA0074 E FGA0072"
+        },
+        {
+          "origem": "FGA0119",
+          "destino": "FGA0101",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0101 TEORIA DE FÍSICA DOS DISPOSITIVOS ELETRÔNICOS DISCIPLINA 0 60 0 60 FGA0119 E FGA0120"
+        },
+        {
+          "origem": "FGA0120",
+          "destino": "FGA0101",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0101 TEORIA DE FÍSICA DOS DISPOSITIVOS ELETRÔNICOS DISCIPLINA 0 60 0 60 FGA0119 E FGA0120"
+        },
+        {
+          "origem": "FGA0119",
+          "destino": "FGA0100",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0100 PRÁTICA DE FÍSICA DOS DISPOSITIVOS ELETRÔNICOS DISCIPLINA 0 0 30 30 FGA0119 E FGA0120"
+        },
+        {
+          "origem": "FGA0120",
+          "destino": "FGA0100",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0100 PRÁTICA DE FÍSICA DOS DISPOSITIVOS ELETRÔNICOS DISCIPLINA 0 0 30 30 FGA0119 E FGA0120"
+        },
+        {
+          "origem": "FGA0133",
+          "destino": "FGA0307",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0307 GESTÃO DA PRODUÇÃO E QUALIDADE DISCIPLINA 15 45 0 60 FGA0133"
+        },
+        {
+          "origem": "FGA0102",
+          "destino": "FGA0093",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [
+            "FGA0187"
+          ],
+          "evidencia": "FGA0093 PRINCÍPIOS DE CONTROLE DISCIPLINA 0 60 15 75 FGA0187 OU FGA0102"
+        },
+        {
+          "origem": "FGA0102",
+          "destino": "FGA0092",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0092 PRINCÍPIOS DE COMUNICAÇÃO PARA ENGENHARIA DISCIPLINA 0 60 15 75 FGA0102 E FGA0067"
+        },
+        {
+          "origem": "FGA0067",
+          "destino": "FGA0092",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0092 PRINCÍPIOS DE COMUNICAÇÃO PARA ENGENHARIA DISCIPLINA 0 60 15 75 FGA0102 E FGA0067"
+        },
+        {
+          "origem": "FGA0067",
+          "destino": "FGA0068",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0068 TEORIA DE CIRCUITOS ELETRÔNICOS 2 DISCIPLINA 0 60 0 60 FGA0067 E FGA0069 E FGA0101 E FGA0100 E FGA0070"
+        },
+        {
+          "origem": "FGA0069",
+          "destino": "FGA0068",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0068 TEORIA DE CIRCUITOS ELETRÔNICOS 2 DISCIPLINA 0 60 0 60 FGA0067 E FGA0069 E FGA0101 E FGA0100 E FGA0070"
+        },
+        {
+          "origem": "FGA0101",
+          "destino": "FGA0068",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0068 TEORIA DE CIRCUITOS ELETRÔNICOS 2 DISCIPLINA 0 60 0 60 FGA0067 E FGA0069 E FGA0101 E FGA0100 E FGA0070"
+        },
+        {
+          "origem": "FGA0100",
+          "destino": "FGA0068",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0068 TEORIA DE CIRCUITOS ELETRÔNICOS 2 DISCIPLINA 0 60 0 60 FGA0067 E FGA0069 E FGA0101 E FGA0100 E FGA0070"
+        },
+        {
+          "origem": "FGA0068",
+          "destino": "FGA0070",
+          "relacao": "correquisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0068 TEORIA DE CIRCUITOS ELETRÔNICOS 2 DISCIPLINA 0 60 0 60 FGA0067 E FGA0069 E FGA0101 E FGA0100 E FGA0070"
+        },
+        {
+          "origem": "FGA0067",
+          "destino": "FGA0070",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0070 PRÁTICA DE CIRCUITOS ELETRÔNICOS 2 DISCIPLINA 0 0 30 30 FGA0067 E FGA0069 E FGA0101 E FGA0100 E FGA0068"
+        },
+        {
+          "origem": "FGA0069",
+          "destino": "FGA0070",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0070 PRÁTICA DE CIRCUITOS ELETRÔNICOS 2 DISCIPLINA 0 0 30 30 FGA0067 E FGA0069 E FGA0101 E FGA0100 E FGA0068"
+        },
+        {
+          "origem": "FGA0101",
+          "destino": "FGA0070",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0070 PRÁTICA DE CIRCUITOS ELETRÔNICOS 2 DISCIPLINA 0 0 30 30 FGA0067 E FGA0069 E FGA0101 E FGA0100 E FGA0068"
+        },
+        {
+          "origem": "FGA0100",
+          "destino": "FGA0070",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0070 PRÁTICA DE CIRCUITOS ELETRÔNICOS 2 DISCIPLINA 0 0 30 30 FGA0067 E FGA0069 E FGA0101 E FGA0100 E FGA0068"
+        },
+        {
+          "origem": "FGA0102",
+          "destino": "FGA0219",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [
+            "FGA0187"
+          ],
+          "evidencia": "FGA0219 PROCESSAMENTO DE SINAIS DISCIPLINA 0 30 30 60 FGA0187 OU FGA0102"
+        },
+        {
+          "origem": "FGA0068",
+          "destino": "FGA0017",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0017 PROJETOS DE CIRCUITOS INTEGRADOS 1 DISCIPLINA 0 30 30 60 FGA0068 E FGA0070"
+        },
+        {
+          "origem": "FGA0070",
+          "destino": "FGA0017",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0017 PROJETOS DE CIRCUITOS INTEGRADOS 1 DISCIPLINA 0 30 30 60 FGA0068 E FGA0070"
+        },
+        {
+          "origem": "FGA0068",
+          "destino": "FGA0132",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0132 INSTRUMENTAÇÃO ELETRÔNICA PARA ENGENHARIA DISCIPLINA 0 45 15 60 FGA0068 E FGA0070"
+        },
+        {
+          "origem": "FGA0070",
+          "destino": "FGA0132",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0132 INSTRUMENTAÇÃO ELETRÔNICA PARA ENGENHARIA DISCIPLINA 0 45 15 60 FGA0068 E FGA0070"
+        },
+        {
+          "origem": "FGA0308",
+          "destino": "FGA0309",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0309 SISTEMAS OPERACIONAIS EMBARCADOS DISCIPLINA 15 60 15 90 FGA0308"
+        },
+        {
+          "origem": "FGA0303",
+          "destino": "FGA0310",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0310 PROJETO EXTENSIONISTA EM ENGENHARIA ELETRÔNICA 1 DISCIPLINA 60 - - 60 FGA0303 E FGA0308"
+        },
+        {
+          "origem": "FGA0308",
+          "destino": "FGA0310",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0310 PROJETO EXTENSIONISTA EM ENGENHARIA ELETRÔNICA 1 DISCIPLINA 60 - - 60 FGA0303 E FGA0308"
+        },
+        {
+          "origem": "FGA0017",
+          "destino": "FGA0099",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0099 TEORIA DE CIRCUITOS ELETRÔNICOS 3 DISCIPLINA 0 60 0 60 FGA0017"
+        },
+        {
+          "origem": "FGA0017",
+          "destino": "FGA0098",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0098 PRÁTICA DE CIRCUITOS ELETRÔNICOS 3 DISCIPLINA 0 0 30 30 FGA0017"
+        },
+        {
+          "origem": "FGA0303",
+          "destino": "FGA0304",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0304 PROJETO INTEGRADOR DE ENGENHARIA 2 DISCIPLINA 60 0 30 90 FGA0303"
+        },
+        {
+          "origem": "FGA0309",
+          "destino": "FGA0311",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0311 PROJETO EXTENSIONISTA EM ENGENHARIA ELETRÔNICA 2 DISCIPLINA 60 - - 60 FGA0309 E FGA0310"
+        },
+        {
+          "origem": "FGA0310",
+          "destino": "FGA0311",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0311 PROJETO EXTENSIONISTA EM ENGENHARIA ELETRÔNICA 2 DISCIPLINA 60 - - 60 FGA0309 E FGA0310"
+        },
+        {
+          "origem": "FGA0287",
+          "destino": "FGA0290",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0290 TRABALHO DE CONCLUSÃO DE CURSO 2 ATIVIDADE DE ORIENTAÇÃO INDIVIDUAL TCC 0 0 90 90 FGA0287"
+        },
+        {
+          "origem": "FGA0295",
+          "destino": "FGA0296",
+          "relacao": "pre_requisito",
+          "incerta": false,
+          "alternativas": [],
+          "evidencia": "FGA0296 ATIVIDADE EXTENSIONISTA 2 ATIVIDADE 60 - - 60 FGA0295"
+        }
+      ],
+      "equivalencias": [
+        {
+          "codigo": "MAT0025",
+          "equivalentes": [
+            "MAT0024"
+          ],
+          "tipo": "equivalencia_oficial",
+          "bidirecional": true,
+          "observacao": "Pré-requisito aceito em alternativa: MAT0025 OU MAT0024 (F21, Tabela 23).",
+          "evidencia": "MAT0026 CÁLCULO 2 DISCIPLINA 0 60 30 90 MAT0025 OU MAT0024"
+        },
+        {
+          "codigo": "MAT0026",
+          "equivalentes": [
+            "MAT0048"
+          ],
+          "tipo": "equivalencia_oficial",
+          "bidirecional": true,
+          "observacao": "Pré-requisito aceito em alternativa: MAT0048 OU MAT0026 (F21, Tabela 23).",
+          "evidencia": "FGA0067 TEORIA DE CIRCUITOS ELETRÔNICOS 1 DISCIPLINA 0 60 0 60 MAT0048 OU MAT0026"
+        },
+        {
+          "codigo": "FGA0102",
+          "equivalentes": [
+            "FGA0187"
+          ],
+          "tipo": "equivalencia_oficial",
+          "bidirecional": true,
+          "observacao": "Pré-requisito aceito em alternativa: FGA0187 OU FGA0102 (F21, Tabela 23).",
+          "evidencia": "FGA0093 PRINCÍPIOS DE CONTROLE DISCIPLINA 0 60 15 75 FGA0187 OU FGA0102"
+        },
+        {
+          "codigo": "FGA0302",
+          "equivalentes": [
+            "FGA0161"
+          ],
+          "tipo": "equivalencia_oficial",
+          "bidirecional": true,
+          "observacao": "Tabela 24 (PPC 2023): componente extensionista FGA0302 equivale a FGA0161.",
+          "evidencia": "FGA0302 Engenharia e Ambiente 1º FGA0161"
+        },
+        {
+          "codigo": "FGA0303",
+          "equivalentes": [
+            "FGA0150"
+          ],
+          "tipo": "equivalencia_oficial",
+          "bidirecional": true,
+          "observacao": "Tabela 24 (PPC 2023): componente extensionista FGA0303 equivale a FGA0150.",
+          "evidencia": "FGA0303 Projeto Integrador de Engenharia 1 4º FGA0150"
+        },
+        {
+          "codigo": "FGA0308",
+          "equivalentes": [
+            "FGA0096"
+          ],
+          "tipo": "equivalencia_oficial",
+          "bidirecional": true,
+          "observacao": "Tabela 24 (PPC 2023): componente extensionista FGA0308 equivale a FGA0096.",
+          "evidencia": "FGA0308 Eletrônica Embarcada 5º FGA0096"
+        },
+        {
+          "codigo": "FGA0307",
+          "equivalentes": [
+            "FGA0184"
+          ],
+          "tipo": "equivalencia_oficial",
+          "bidirecional": true,
+          "observacao": "Tabela 24 (PPC 2023): componente extensionista FGA0307 equivale a FGA0184.",
+          "evidencia": "FGA0307 Gestão da Produção e Qualidade 6º FGA0184"
+        },
+        {
+          "codigo": "FGA0309",
+          "equivalentes": [
+            "FGA0103"
+          ],
+          "tipo": "equivalencia_oficial",
+          "bidirecional": true,
+          "observacao": "Tabela 24 (PPC 2023): componente extensionista FGA0309 equivale a FGA0103.",
+          "evidencia": "FGA0309 Sistemas Operacionais Embarcados 7º FGA0103"
+        },
+        {
+          "codigo": "FGA0304",
+          "equivalentes": [
+            "FGA0250"
+          ],
+          "tipo": "equivalencia_oficial",
+          "bidirecional": true,
+          "observacao": "Tabela 24 (PPC 2023): componente extensionista FGA0304 equivale a FGA0250.",
+          "evidencia": "FGA0304 Projeto Integrador de Engenharia 2 8º FGA0250"
+        }
+      ]
+    },
+    {
+      "curriculo_id": "automotiva-2027",
+      "curso_slug": "automotiva",
+      "curso": "Engenharia Automotiva",
+      "vigencia": {
+        "inicio": "2027/1",
+        "fim": null,
+        "ativa": true,
+        "descricao": "Ingressantes a partir de 2027 (3.930h)"
+      },
+      "versao_curriculo": "ingressantes a partir de 2027",
+      "total_creditos": 262,
+      "carga_horaria_total": 3930,
+      "cobertura_prerequisitos": "indisponivel_na_base",
+      "cobertura_equivalencias": "indisponivel_na_base",
+      "fonte": {
+        "doc_id": "F19",
+        "titulo": "Engenharia Automotiva — estrutura curricular (ingressantes a partir de 2027)",
+        "orgao": "UnB · FCTE · Engenharia Automotiva",
+        "pagina": 1,
+        "url": "https://automotiva.unb.br/estrutura_curricular/"
+      },
+      "nos": [
+        {
+          "codigo": "SEM-CODIGO:algoritmos-e-programacao-de-computadores",
+          "nome": "Algoritmos E Programação De Computadores",
+          "creditos": 0,
+          "semestre": 1,
+          "evidencia": "1º Nível (ingressantes a partir de 2027): Algoritmos E Programação De Computadores",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:calculo-1",
+          "nome": "Cálculo 1",
+          "creditos": 0,
+          "semestre": 1,
+          "evidencia": "1º Nível (ingressantes a partir de 2027): Cálculo 1",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:desenho-industrial-assistido-por-computador",
+          "nome": "Desenho Industrial Assistido Por Computador",
+          "creditos": 0,
+          "semestre": 1,
+          "evidencia": "1º Nível (ingressantes a partir de 2027): Desenho Industrial Assistido Por Computador",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:engenharia-e-ambiente",
+          "nome": "Engenharia E Ambiente",
+          "creditos": 0,
+          "semestre": 1,
+          "evidencia": "1º Nível (ingressantes a partir de 2027): Engenharia E Ambiente",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:introducao-a-engenharia",
+          "nome": "Introdução À Engenharia",
+          "creditos": 0,
+          "semestre": 1,
+          "evidencia": "1º Nível (ingressantes a partir de 2027): Introdução À Engenharia",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:calculo-2",
+          "nome": "Cálculo 2",
+          "creditos": 0,
+          "semestre": 2,
+          "evidencia": "2º Nível (ingressantes a partir de 2027): Cálculo 2",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:fisica-1",
+          "nome": "Física 1",
+          "creditos": 0,
+          "semestre": 2,
+          "evidencia": "2º Nível (ingressantes a partir de 2027): Física 1",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:fisica-1-experimental",
+          "nome": "Física 1 Experimental",
+          "creditos": 0,
+          "semestre": 2,
+          "evidencia": "2º Nível (ingressantes a partir de 2027): Física 1 Experimental",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:introducao-a-algebra-linear",
+          "nome": "Introdução À Algebra Linear",
+          "creditos": 0,
+          "semestre": 2,
+          "evidencia": "2º Nível (ingressantes a partir de 2027): Introdução À Algebra Linear",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:probabilidade-e-estatistica-aplicada-a-engenharia",
+          "nome": "Probabilidade E Estatística Aplicada À Engenharia",
+          "creditos": 0,
+          "semestre": 2,
+          "evidencia": "2º Nível (ingressantes a partir de 2027): Probabilidade E Estatística Aplicada À Engenharia",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:atividade-de-extensao-3",
+          "nome": "Atividade De Extensão 3",
+          "creditos": 0,
+          "semestre": 3,
+          "evidencia": "3º Nível (ingressantes a partir de 2027): Atividade De Extensão 3",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:calculo-3",
+          "nome": "Cálculo 3",
+          "creditos": 0,
+          "semestre": 3,
+          "evidencia": "3º Nível (ingressantes a partir de 2027): Cálculo 3",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:fisica-2",
+          "nome": "Física 2",
+          "creditos": 0,
+          "semestre": 3,
+          "evidencia": "3º Nível (ingressantes a partir de 2027): Física 2",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:laboratorio-de-ondulatoria-e-fisica-termica-para-a-engenharia",
+          "nome": "Laboratório De Ondulatória E Física Térmica Para A Engenharia",
+          "creditos": 0,
+          "semestre": 3,
+          "evidencia": "3º Nível (ingressantes a partir de 2027): Laboratório De Ondulatória E Física Térmica Para A Engenharia",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:mecanica-dos-solidos-1-para-engenharia",
+          "nome": "Mecânica Dos Sólidos 1 Para Engenharia",
+          "creditos": 0,
+          "semestre": 3,
+          "evidencia": "3º Nível (ingressantes a partir de 2027): Mecânica Dos Sólidos 1 Para Engenharia",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:metodos-numericos-para-engenharia",
+          "nome": "Métodos Numéricos Para Engenharia",
+          "creditos": 0,
+          "semestre": 3,
+          "evidencia": "3º Nível (ingressantes a partir de 2027): Métodos Numéricos Para Engenharia",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:quimica-geral-experimental",
+          "nome": "Química Geral Experimental",
+          "creditos": 0,
+          "semestre": 3,
+          "evidencia": "3º Nível (ingressantes a partir de 2027): Química Geral Experimental",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:quimica-geral-teorica",
+          "nome": "Química Geral Teórica",
+          "creditos": 0,
+          "semestre": 3,
+          "evidencia": "3º Nível (ingressantes a partir de 2027): Química Geral Teórica",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:engenharia-economica",
+          "nome": "Engenharia Econômica",
+          "creditos": 0,
+          "semestre": 4,
+          "evidencia": "4º Nível (ingressantes a partir de 2027): Engenharia Econômica",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:fenomenos-de-transporte",
+          "nome": "Fenômenos De Transporte",
+          "creditos": 0,
+          "semestre": 4,
+          "evidencia": "4º Nível (ingressantes a partir de 2027): Fenômenos De Transporte",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:humanidades-e-cidadania",
+          "nome": "Humanidades E Cidadania",
+          "creditos": 0,
+          "semestre": 4,
+          "evidencia": "4º Nível (ingressantes a partir de 2027): Humanidades E Cidadania",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:laboratorio-de-materiais-de-construcao",
+          "nome": "Laboratório De Materiais De Construção",
+          "creditos": 0,
+          "semestre": 4,
+          "evidencia": "4º Nível (ingressantes a partir de 2027): Laboratório De Materiais De Construção",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:mecanica-dos-solidos-2-para-engenharia",
+          "nome": "Mecânica Dos Sólidos 2 Para Engenharia",
+          "creditos": 0,
+          "semestre": 4,
+          "evidencia": "4º Nível (ingressantes a partir de 2027): Mecânica Dos Sólidos 2 Para Engenharia",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:pratica-de-circuitos-eletronicos-1",
+          "nome": "Prática De Circuitos Eletrônicos 1",
+          "creditos": 0,
+          "semestre": 4,
+          "evidencia": "4º Nível (ingressantes a partir de 2027): Prática De Circuitos Eletrônicos 1",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:teoria-de-circuitos-eletronicos-1",
+          "nome": "Teoria De Circuitos Eletrônicos 1",
+          "creditos": 0,
+          "semestre": 4,
+          "evidencia": "4º Nível (ingressantes a partir de 2027): Teoria De Circuitos Eletrônicos 1",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:teoria-de-materiais-de-construcao",
+          "nome": "Teoria De Materiais De Construção",
+          "creditos": 0,
+          "semestre": 4,
+          "evidencia": "4º Nível (ingressantes a partir de 2027): Teoria De Materiais De Construção",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:engenharia-de-seguranca-do-trabalho",
+          "nome": "Engenharia De Segurança Do Trabalho",
+          "creditos": 0,
+          "semestre": 5,
+          "evidencia": "5º Nível (ingressantes a partir de 2027): Engenharia De Segurança Do Trabalho",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:gestao-da-producao-e-qualidade",
+          "nome": "Gestão Da Produção E Qualidade",
+          "creditos": 0,
+          "semestre": 5,
+          "evidencia": "5º Nível (ingressantes a partir de 2027): Gestão Da Produção E Qualidade",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:laboratorio-de-eletricidade-aplicada",
+          "nome": "Laboratório De Eletricidade Aplicada",
+          "creditos": 0,
+          "semestre": 5,
+          "evidencia": "5º Nível (ingressantes a partir de 2027): Laboratório De Eletricidade Aplicada",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:projeto-de-elementos-automotivos",
+          "nome": "Projeto De Elementos Automotivos",
+          "creditos": 0,
+          "semestre": 5,
+          "evidencia": "5º Nível (ingressantes a partir de 2027): Projeto De Elementos Automotivos",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:sinais-e-sistemas-para-engenharia",
+          "nome": "Sinais E Sistemas Para Engenharia",
+          "creditos": 0,
+          "semestre": 5,
+          "evidencia": "5º Nível (ingressantes a partir de 2027): Sinais E Sistemas Para Engenharia",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:tecnologias-de-fabricacao-1",
+          "nome": "Tecnologias De Fabricação 1",
+          "creditos": 0,
+          "semestre": 5,
+          "evidencia": "5º Nível (ingressantes a partir de 2027): Tecnologias De Fabricação 1",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:teoria-de-eletricidade-aplicada",
+          "nome": "Teoria De Eletricidade Aplicada",
+          "creditos": 0,
+          "semestre": 5,
+          "evidencia": "5º Nível (ingressantes a partir de 2027): Teoria De Eletricidade Aplicada",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:acustica-e-vibracoes-veiculares",
+          "nome": "Acústica E Vibrações Veiculares",
+          "creditos": 0,
+          "semestre": 6,
+          "evidencia": "6º Nível (ingressantes a partir de 2027): Acústica E Vibrações Veiculares",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:dinamica-dos-mecanismos",
+          "nome": "Dinâmica Dos Mecanismos",
+          "creditos": 0,
+          "semestre": 6,
+          "evidencia": "6º Nível (ingressantes a partir de 2027): Dinâmica Dos Mecanismos",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:eletronica-veicular",
+          "nome": "Eletrônica Veicular",
+          "creditos": 0,
+          "semestre": 6,
+          "evidencia": "6º Nível (ingressantes a partir de 2027): Eletrônica Veicular",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:equipamentos-termofluidos-automotivos",
+          "nome": "Equipamentos Termofluidos Automotivos",
+          "creditos": 0,
+          "semestre": 6,
+          "evidencia": "6º Nível (ingressantes a partir de 2027): Equipamentos Termofluidos Automotivos",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:introducao-ao-design-e-concepcao-de-veiculos",
+          "nome": "Introdução Ao Design E Concepção De Veículos",
+          "creditos": 0,
+          "semestre": 6,
+          "evidencia": "6º Nível (ingressantes a partir de 2027): Introdução Ao Design E Concepção De Veículos",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:materiais-compostos-e-plasticos",
+          "nome": "Materiais Compostos E Plásticos",
+          "creditos": 0,
+          "semestre": 6,
+          "evidencia": "6º Nível (ingressantes a partir de 2027): Materiais Compostos E Plásticos",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:projeto-de-sistemas-automotivos",
+          "nome": "Projeto De Sistemas Automotivos",
+          "creditos": 0,
+          "semestre": 6,
+          "evidencia": "6º Nível (ingressantes a partir de 2027): Projeto De Sistemas Automotivos",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:arquitetura-de-motores-de-combustao-interna",
+          "nome": "Arquitetura De Motores De Combustão Interna",
+          "creditos": 0,
+          "semestre": 7,
+          "evidencia": "7º Nível (ingressantes a partir de 2027): Arquitetura De Motores De Combustão Interna",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:dinamica-de-veiculos",
+          "nome": "Dinâmica De Veículos",
+          "creditos": 0,
+          "semestre": 7,
+          "evidencia": "7º Nível (ingressantes a partir de 2027): Dinâmica De Veículos",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:fundamentos-de-veiculos-eletricos",
+          "nome": "Fundamentos De Veículos Elétricos",
+          "creditos": 0,
+          "semestre": 7,
+          "evidencia": "7º Nível (ingressantes a partir de 2027): Fundamentos De Veículos Elétricos",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:metodos-experimentais-para-engenharia",
+          "nome": "Métodos Experimentais Para Engenharia",
+          "creditos": 0,
+          "semestre": 7,
+          "evidencia": "7º Nível (ingressantes a partir de 2027): Métodos Experimentais Para Engenharia",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:projeto-integrador-de-engenharia-1",
+          "nome": "Projeto Integrador De Engenharia 1",
+          "creditos": 0,
+          "semestre": 7,
+          "evidencia": "7º Nível (ingressantes a partir de 2027): Projeto Integrador De Engenharia 1",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:tecnologias-de-fabricacao-2",
+          "nome": "Tecnologias De Fabricação 2",
+          "creditos": 0,
+          "semestre": 7,
+          "evidencia": "7º Nível (ingressantes a partir de 2027): Tecnologias De Fabricação 2",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:atividade-de-extensao-2",
+          "nome": "Atividade De Extensão 2",
+          "creditos": 0,
+          "semestre": 8,
+          "evidencia": "8º Nível (ingressantes a partir de 2027): Atividade De Extensão 2",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:engenharia-de-manutencao",
+          "nome": "Engenharia De Manutenção",
+          "creditos": 0,
+          "semestre": 8,
+          "evidencia": "8º Nível (ingressantes a partir de 2027): Engenharia De Manutenção",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:fundamentos-de-software-automotivo",
+          "nome": "Fundamentos De Software Automotivo",
+          "creditos": 0,
+          "semestre": 8,
+          "evidencia": "8º Nível (ingressantes a partir de 2027): Fundamentos De Software Automotivo",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:projeto-integrador-de-engenharia-2",
+          "nome": "Projeto Integrador De Engenharia 2",
+          "creditos": 0,
+          "semestre": 8,
+          "evidencia": "8º Nível (ingressantes a partir de 2027): Projeto Integrador De Engenharia 2",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:sistemas-de-controle-automotivo",
+          "nome": "Sistemas De Controle Automotivo",
+          "creditos": 0,
+          "semestre": 8,
+          "evidencia": "8º Nível (ingressantes a partir de 2027): Sistemas De Controle Automotivo",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:atividade-de-extensao-1",
+          "nome": "Atividade De Extensão 1",
+          "creditos": 0,
+          "semestre": 9,
+          "evidencia": "9º Nível (ingressantes a partir de 2027): Atividade De Extensão 1",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:estagio-supervisionado",
+          "nome": "Estágio Supervisionado",
+          "creditos": 0,
+          "semestre": 9,
+          "evidencia": "9º Nível (ingressantes a partir de 2027): Estágio Supervisionado",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:trabalho-de-conclusao-de-curso-1",
+          "nome": "Trabalho De Conclusão De Curso 1",
+          "creditos": 0,
+          "semestre": 9,
+          "evidencia": "9º Nível (ingressantes a partir de 2027): Trabalho De Conclusão De Curso 1",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:atividade-de-extensao-4",
+          "nome": "Atividade De Extensão 4",
+          "creditos": 0,
+          "semestre": 10,
+          "evidencia": "10º Nível (ingressantes a partir de 2027): Atividade De Extensão 4",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:trabalho-de-conclusao-de-curso-2",
+          "nome": "Trabalho De Conclusão De Curso 2",
+          "creditos": 0,
+          "semestre": 10,
+          "evidencia": "10º Nível (ingressantes a partir de 2027): Trabalho De Conclusão De Curso 2",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        }
+      ],
+      "arestas": [],
+      "equivalencias": []
+    },
+    {
+      "curriculo_id": "automotiva-2018-2026",
+      "curso_slug": "automotiva",
+      "curso": "Engenharia Automotiva",
+      "vigencia": {
+        "inicio": "2018/1",
+        "fim": "2026/2",
+        "ativa": true,
+        "descricao": "Ingressantes entre 2018 e 2026"
+      },
+      "versao_curriculo": "ingressantes entre 2018 e 2026",
+      "total_creditos": null,
+      "carga_horaria_total": null,
+      "cobertura_prerequisitos": "indisponivel_na_base",
+      "cobertura_equivalencias": "indisponivel_na_base",
+      "fonte": {
+        "doc_id": "F19",
+        "titulo": "Engenharia Automotiva — estrutura curricular (ingressantes a partir de 2027)",
+        "orgao": "UnB · FCTE · Engenharia Automotiva",
+        "pagina": 1,
+        "url": "https://automotiva.unb.br/estrutura_curricular/"
+      },
+      "nos": [
+        {
+          "codigo": "SEM-CODIGO:algoritmos-e-programacao-de-computadores",
+          "nome": "Algoritmos E Programação De Computadores",
+          "creditos": 0,
+          "semestre": 1,
+          "evidencia": "1º Nível (ingressantes entre 2018 e 2026): Algoritmos E Programação De Computadores",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:calculo-1",
+          "nome": "Cálculo 1",
+          "creditos": 0,
+          "semestre": 1,
+          "evidencia": "1º Nível (ingressantes entre 2018 e 2026): Cálculo 1",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:desenho-industrial-assistido-por-computador",
+          "nome": "Desenho Industrial Assistido Por Computador",
+          "creditos": 0,
+          "semestre": 1,
+          "evidencia": "1º Nível (ingressantes entre 2018 e 2026): Desenho Industrial Assistido Por Computador",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:engenharia-e-ambiente",
+          "nome": "Engenharia E Ambiente",
+          "creditos": 0,
+          "semestre": 1,
+          "evidencia": "1º Nível (ingressantes entre 2018 e 2026): Engenharia E Ambiente",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:introducao-a-engenharia",
+          "nome": "Introdução À Engenharia",
+          "creditos": 0,
+          "semestre": 1,
+          "evidencia": "1º Nível (ingressantes entre 2018 e 2026): Introdução À Engenharia",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:calculo-2",
+          "nome": "Cálculo 2",
+          "creditos": 0,
+          "semestre": 2,
+          "evidencia": "2º Nível (ingressantes entre 2018 e 2026): Cálculo 2",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:fisica-1",
+          "nome": "Física 1",
+          "creditos": 0,
+          "semestre": 2,
+          "evidencia": "2º Nível (ingressantes entre 2018 e 2026): Física 1",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:fisica-1-experimental",
+          "nome": "Física 1 Experimental",
+          "creditos": 0,
+          "semestre": 2,
+          "evidencia": "2º Nível (ingressantes entre 2018 e 2026): Física 1 Experimental",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:introducao-a-algebra-linear",
+          "nome": "Introdução À Algebra Linear",
+          "creditos": 0,
+          "semestre": 2,
+          "evidencia": "2º Nível (ingressantes entre 2018 e 2026): Introdução À Algebra Linear",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:probabilidade-e-estatistica-aplicado-a-engenharia",
+          "nome": "Probabilidade E Estatística Aplicado A Engenharia",
+          "creditos": 0,
+          "semestre": 2,
+          "evidencia": "2º Nível (ingressantes entre 2018 e 2026): Probabilidade E Estatística Aplicado A Engenharia",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:calculo-3",
+          "nome": "Cálculo 3",
+          "creditos": 0,
+          "semestre": 3,
+          "evidencia": "3º Nível (ingressantes entre 2018 e 2026): Cálculo 3",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:introducao-ao-design-e-concepcao-de-veiculos",
+          "nome": "Introdução Ao Design E Concepção De Veículos",
+          "creditos": 0,
+          "semestre": 3,
+          "evidencia": "3º Nível (ingressantes entre 2018 e 2026): Introdução Ao Design E Concepção De Veículos",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:laboratorio-de-ondulatoria-e-fisica-termica-para-a-engenharia",
+          "nome": "Laboratório De Ondulatória E Física Térmica Para A Engenharia",
+          "creditos": 0,
+          "semestre": 3,
+          "evidencia": "3º Nível (ingressantes entre 2018 e 2026): Laboratório De Ondulatória E Física Térmica Para A Engenharia",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:mecanica-dos-solidos-1-para-engenharia",
+          "nome": "Mecânica Dos Sólidos 1 Para Engenharia",
+          "creditos": 0,
+          "semestre": 3,
+          "evidencia": "3º Nível (ingressantes entre 2018 e 2026): Mecânica Dos Sólidos 1 Para Engenharia",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:metodos-numericos-para-engenharia",
+          "nome": "Métodos Numéricos Para Engenharia",
+          "creditos": 0,
+          "semestre": 3,
+          "evidencia": "3º Nível (ingressantes entre 2018 e 2026): Métodos Numéricos Para Engenharia",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:ondulatoria-e-fisica-termica-para-a-engenharia",
+          "nome": "Ondulatória E Física Térmica Para A Engenharia",
+          "creditos": 0,
+          "semestre": 3,
+          "evidencia": "3º Nível (ingressantes entre 2018 e 2026): Ondulatória E Física Térmica Para A Engenharia",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:quimica-geral-experimental",
+          "nome": "Química Geral Experimental",
+          "creditos": 0,
+          "semestre": 3,
+          "evidencia": "3º Nível (ingressantes entre 2018 e 2026): Química Geral Experimental",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:quimica-geral-teorica",
+          "nome": "Química Geral Teorica",
+          "creditos": 0,
+          "semestre": 3,
+          "evidencia": "3º Nível (ingressantes entre 2018 e 2026): Química Geral Teorica",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:engenharia-economica",
+          "nome": "Engenharia Econômica",
+          "creditos": 0,
+          "semestre": 4,
+          "evidencia": "4º Nível (ingressantes entre 2018 e 2026): Engenharia Econômica",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:ergonomia-do-produto",
+          "nome": "Ergonomia Do Produto",
+          "creditos": 0,
+          "semestre": 4,
+          "evidencia": "4º Nível (ingressantes entre 2018 e 2026): Ergonomia Do Produto",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:fenomenos-de-transporte",
+          "nome": "Fenômenos De Transporte",
+          "creditos": 0,
+          "semestre": 4,
+          "evidencia": "4º Nível (ingressantes entre 2018 e 2026): Fenômenos De Transporte",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:humanidades-e-cidadania",
+          "nome": "Humanidades E Cidadania",
+          "creditos": 0,
+          "semestre": 4,
+          "evidencia": "4º Nível (ingressantes entre 2018 e 2026): Humanidades E Cidadania",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:laboratorio-de-materiais-de-construcao",
+          "nome": "Laboratório De Materiais De Construção",
+          "creditos": 0,
+          "semestre": 4,
+          "evidencia": "4º Nível (ingressantes entre 2018 e 2026): Laboratório De Materiais De Construção",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:pratica-de-circuitos-eletronicos-1",
+          "nome": "Prática De Circuitos Eletrônicos 1",
+          "creditos": 0,
+          "semestre": 4,
+          "evidencia": "4º Nível (ingressantes entre 2018 e 2026): Prática De Circuitos Eletrônicos 1",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:projeto-integrador-de-engenharia-1",
+          "nome": "Projeto Integrador De Engenharia 1",
+          "creditos": 0,
+          "semestre": 4,
+          "evidencia": "4º Nível (ingressantes entre 2018 e 2026): Projeto Integrador De Engenharia 1",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:teoria-de-circuitos-eletronicos-1",
+          "nome": "Teoria De Circuitos Eletrônicos 1",
+          "creditos": 0,
+          "semestre": 4,
+          "evidencia": "4º Nível (ingressantes entre 2018 e 2026): Teoria De Circuitos Eletrônicos 1",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:teoria-de-materiais-de-construcao",
+          "nome": "Teoria De Materiais De Construção",
+          "creditos": 0,
+          "semestre": 4,
+          "evidencia": "4º Nível (ingressantes entre 2018 e 2026): Teoria De Materiais De Construção",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:gestao-da-producao-e-qualidade",
+          "nome": "Gestão Da Produção E Qualidade",
+          "creditos": 0,
+          "semestre": 5,
+          "evidencia": "5º Nível (ingressantes entre 2018 e 2026): Gestão Da Produção E Qualidade",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:laboratorio-de-eletricidade-aplicada",
+          "nome": "Laboratório De Eletricidade Aplicada",
+          "creditos": 0,
+          "semestre": 5,
+          "evidencia": "5º Nível (ingressantes entre 2018 e 2026): Laboratório De Eletricidade Aplicada",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:mecanica-dos-solidos-2-para-engenharia",
+          "nome": "Mecânica Dos Sólidos 2 Para Engenharia",
+          "creditos": 0,
+          "semestre": 5,
+          "evidencia": "5º Nível (ingressantes entre 2018 e 2026): Mecânica Dos Sólidos 2 Para Engenharia",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:metodos-experimentais-para-engenharia",
+          "nome": "Métodos Experimentais Para Engenharia",
+          "creditos": 0,
+          "semestre": 5,
+          "evidencia": "5º Nível (ingressantes entre 2018 e 2026): Métodos Experimentais Para Engenharia",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:sinais-e-sistemas-para-engenharia",
+          "nome": "Sinais E Sistemas Para Engenharia",
+          "creditos": 0,
+          "semestre": 5,
+          "evidencia": "5º Nível (ingressantes entre 2018 e 2026): Sinais E Sistemas Para Engenharia",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:tecnologias-de-fabricacao-1",
+          "nome": "Tecnologias De Fabricação 1",
+          "creditos": 0,
+          "semestre": 5,
+          "evidencia": "5º Nível (ingressantes entre 2018 e 2026): Tecnologias De Fabricação 1",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:teoria-de-eletricidade-aplicada",
+          "nome": "Teoria De Eletricidade Aplicada",
+          "creditos": 0,
+          "semestre": 5,
+          "evidencia": "5º Nível (ingressantes entre 2018 e 2026): Teoria De Eletricidade Aplicada",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:dinamica-dos-mecanismos",
+          "nome": "Dinâmica Dos Mecanismos",
+          "creditos": 0,
+          "semestre": 6,
+          "evidencia": "6º Nível (ingressantes entre 2018 e 2026): Dinâmica Dos Mecanismos",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:engenharia-de-seguranca-do-trabalho",
+          "nome": "Engenharia De Segurança Do Trabalho",
+          "creditos": 0,
+          "semestre": 6,
+          "evidencia": "6º Nível (ingressantes entre 2018 e 2026): Engenharia De Segurança Do Trabalho",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:equipamentos-termofluidos-automotivos",
+          "nome": "Equipamentos Termofluidos Automotivos",
+          "creditos": 0,
+          "semestre": 6,
+          "evidencia": "6º Nível (ingressantes entre 2018 e 2026): Equipamentos Termofluidos Automotivos",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:materiais-compostos-e-plasticos",
+          "nome": "Materiais Compostos E Plásticos",
+          "creditos": 0,
+          "semestre": 6,
+          "evidencia": "6º Nível (ingressantes entre 2018 e 2026): Materiais Compostos E Plásticos",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:projeto-de-elementos-automotivos",
+          "nome": "Projeto De Elementos Automotivos",
+          "creditos": 0,
+          "semestre": 6,
+          "evidencia": "6º Nível (ingressantes entre 2018 e 2026): Projeto De Elementos Automotivos",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:tecnologias-de-fabricacao-2",
+          "nome": "Tecnologias De Fabricação 2",
+          "creditos": 0,
+          "semestre": 6,
+          "evidencia": "6º Nível (ingressantes entre 2018 e 2026): Tecnologias De Fabricação 2",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:acustica-e-vibracoes-veiculares",
+          "nome": "Acústica E Vibrações Veiculares",
+          "creditos": 0,
+          "semestre": 7,
+          "evidencia": "7º Nível (ingressantes entre 2018 e 2026): Acústica E Vibrações Veiculares",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:arquitetura-de-motores-de-combustao-interna",
+          "nome": "Arquitetura De Motores De Combustão Interna",
+          "creditos": 0,
+          "semestre": 7,
+          "evidencia": "7º Nível (ingressantes entre 2018 e 2026): Arquitetura De Motores De Combustão Interna",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:dinamica-de-veiculos",
+          "nome": "Dinâmica De Veículos",
+          "creditos": 0,
+          "semestre": 7,
+          "evidencia": "7º Nível (ingressantes entre 2018 e 2026): Dinâmica De Veículos",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:eletronica-veicular",
+          "nome": "Eletrônica Veicular",
+          "creditos": 0,
+          "semestre": 7,
+          "evidencia": "7º Nível (ingressantes entre 2018 e 2026): Eletrônica Veicular",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:projeto-de-sistemas-automotivos",
+          "nome": "Projeto De Sistemas Automotivos",
+          "creditos": 0,
+          "semestre": 7,
+          "evidencia": "7º Nível (ingressantes entre 2018 e 2026): Projeto De Sistemas Automotivos",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:analise-estrutural-metodo-dos-elementos-finitos",
+          "nome": "Análise Estrutural Método Dos Elementos Finitos",
+          "creditos": 0,
+          "semestre": 8,
+          "evidencia": "8º Nível (ingressantes entre 2018 e 2026): Análise Estrutural Método Dos Elementos Finitos",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:projeto-de-estruturas-de-veiculos",
+          "nome": "Projeto De Estruturas De Veículos",
+          "creditos": 0,
+          "semestre": 8,
+          "evidencia": "8º Nível (ingressantes entre 2018 e 2026): Projeto De Estruturas De Veículos",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:projeto-integrador-de-engenharia-2",
+          "nome": "Projeto Integrador De Engenharia 2",
+          "creditos": 0,
+          "semestre": 8,
+          "evidencia": "8º Nível (ingressantes entre 2018 e 2026): Projeto Integrador De Engenharia 2",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:estagio-supervisionado",
+          "nome": "Estágio Supervisionado",
+          "creditos": 0,
+          "semestre": 9,
+          "evidencia": "9º Nível (ingressantes entre 2018 e 2026): Estágio Supervisionado",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:trabalho-de-conclusao-de-curso-1",
+          "nome": "Trabalho De Conclusão De Curso 1",
+          "creditos": 0,
+          "semestre": 9,
+          "evidencia": "9º Nível (ingressantes entre 2018 e 2026): Trabalho De Conclusão De Curso 1",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:trabalho-de-conclusao-de-curso-2",
+          "nome": "Trabalho De Conclusão De Curso 2",
+          "creditos": 0,
+          "semestre": 10,
+          "evidencia": "10º Nível (ingressantes entre 2018 e 2026): Trabalho De Conclusão De Curso 2",
+          "carga_horaria": null,
+          "codigo_oficial": false
+        }
+      ],
+      "arestas": [],
+      "equivalencias": []
+    },
+    {
+      "curriculo_id": "energia-2024",
+      "curso_slug": "energia",
+      "curso": "Engenharia de Energia",
+      "vigencia": {
+        "inicio": "2024/2",
+        "fim": null,
+        "ativa": true,
+        "descricao": "Matriz Curricular Atual (publicada em 26/08/2024, 251 créditos)"
+      },
+      "versao_curriculo": "Matriz 2024 (251 créditos)",
+      "total_creditos": 251,
+      "carga_horaria_total": 3765,
+      "cobertura_prerequisitos": "indisponivel_na_base",
+      "cobertura_equivalencias": "indisponivel_na_base",
+      "fonte": {
+        "doc_id": "F23",
+        "titulo": "Matriz curricular de Engenharia de Energia (251 créditos) — transcrição",
+        "orgao": "UnB · FCTE (transcrição do Grupo 04)",
+        "pagina": 1,
+        "url": "https://fcte.unb.br/engenharia-de-energia/"
+      },
+      "nos": [
+        {
+          "codigo": "SEM-CODIGO:calculo-1",
+          "nome": "Cálculo 1",
+          "creditos": 6,
+          "semestre": 1,
+          "evidencia": "Cálculo 1 — 4·2·6 (ciclo básico)",
+          "carga_horaria": 90,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:desenho-industrial-assistido-por-computador",
+          "nome": "Desenho Industrial Assistido por Computador",
+          "creditos": 6,
+          "semestre": 1,
+          "evidencia": "Desenho Industrial Assistido por Computador — 2·4·6 (ciclo básico)",
+          "carga_horaria": 90,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:engenharia-e-ambiente",
+          "nome": "Engenharia e Ambiente",
+          "creditos": 2,
+          "semestre": 1,
+          "evidencia": "Engenharia e Ambiente — 4·0·2 (ciclo básico)",
+          "carga_horaria": 30,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:humanidades-e-cidadania",
+          "nome": "Humanidades e Cidadania",
+          "creditos": 2,
+          "semestre": 1,
+          "evidencia": "Humanidades e Cidadania — 4·0·2 (ciclo básico)",
+          "carga_horaria": 30,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:introducao-a-algebra-linear",
+          "nome": "Introdução à Álgebra Linear",
+          "creditos": 6,
+          "semestre": 1,
+          "evidencia": "Introdução à Álgebra Linear — 4·0·6 (ciclo básico)",
+          "carga_horaria": 90,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:introducao-a-engenharia",
+          "nome": "Introdução à Engenharia",
+          "creditos": 4,
+          "semestre": 1,
+          "evidencia": "Introdução à Engenharia — 4·0·4 (ciclo básico)",
+          "carga_horaria": 60,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:calculo-2",
+          "nome": "Cálculo 2",
+          "creditos": 6,
+          "semestre": 2,
+          "evidencia": "Cálculo 2 — 4·2·6 (ciclo básico)",
+          "carga_horaria": 90,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:engenharia-economica",
+          "nome": "Engenharia Econômica",
+          "creditos": 4,
+          "semestre": 2,
+          "evidencia": "Engenharia Econômica — 4·0·4 (ciclo básico)",
+          "carga_horaria": 60,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:fisica-1",
+          "nome": "Física 1",
+          "creditos": 6,
+          "semestre": 2,
+          "evidencia": "Física 1 — 4·0·6 (ciclo básico)",
+          "carga_horaria": 90,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:fisica-1-experimental",
+          "nome": "Física 1 Experimental",
+          "creditos": 4,
+          "semestre": 2,
+          "evidencia": "Física 1 Experimental — 0·2·4 (ciclo básico)",
+          "carga_horaria": 60,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:fontes-de-energia-e-tecnologias-de-conversao",
+          "nome": "Fontes de Energia e Tecnologias de Conversão",
+          "creditos": 4,
+          "semestre": 2,
+          "evidencia": "Fontes de Energia e Tecnologias de Conversão — 4·0·4 (ciclo específico)",
+          "carga_horaria": 60,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:introducao-a-ciencia-da-computacao",
+          "nome": "Introdução à Ciência da Computação",
+          "creditos": 4,
+          "semestre": 2,
+          "evidencia": "Introdução à Ciência da Computação — 2·4·4 (ciclo básico)",
+          "carga_horaria": 60,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:probabilidade-e-estatistica-aplicada-a-engenharia",
+          "nome": "Probabilidade e Estatística Aplicada à Engenharia",
+          "creditos": 6,
+          "semestre": 2,
+          "evidencia": "Probabilidade e Estatística Aplicada à Engenharia — 4·0·6 (ciclo básico)",
+          "carga_horaria": 90,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:calculo-3",
+          "nome": "Cálculo 3",
+          "creditos": 6,
+          "semestre": 3,
+          "evidencia": "Cálculo 3 — 4·2·6 (ciclo básico)",
+          "carga_horaria": 90,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:gestao-ambiental-para-engenharia",
+          "nome": "Gestão Ambiental para Engenharia",
+          "creditos": 4,
+          "semestre": 3,
+          "evidencia": "Gestão Ambiental para Engenharia — 4·0·4 (ciclo profissionalizante)",
+          "carga_horaria": 60,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:gestao-da-producao-e-qualidade",
+          "nome": "Gestão da Produção e Qualidade",
+          "creditos": 2,
+          "semestre": 3,
+          "evidencia": "Gestão da Produção e Qualidade — 4·0·2 (ciclo básico)",
+          "carga_horaria": 30,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:mecanica-dos-solidos-para-engenharia",
+          "nome": "Mecânica dos Sólidos para Engenharia",
+          "creditos": 6,
+          "semestre": 3,
+          "evidencia": "Mecânica dos Sólidos para Engenharia — 4·0·6 (ciclo básico)",
+          "carga_horaria": 90,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:metodos-numericos-para-engenharia",
+          "nome": "Métodos Numéricos para Engenharia",
+          "creditos": 6,
+          "semestre": 3,
+          "evidencia": "Métodos Numéricos para Engenharia — 2·2·6 (ciclo básico)",
+          "carga_horaria": 90,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:quimica-geral-experimental",
+          "nome": "Química Geral Experimental",
+          "creditos": 6,
+          "semestre": 3,
+          "evidencia": "Química Geral Experimental — 0·2·6 (ciclo básico)",
+          "carga_horaria": 90,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:quimica-geral-teorica",
+          "nome": "Química Geral Teórica",
+          "creditos": 6,
+          "semestre": 3,
+          "evidencia": "Química Geral Teórica — 4·0·6 (ciclo básico)",
+          "carga_horaria": 90,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:circuitos-eletronicos-1",
+          "nome": "Circuitos Eletrônicos 1",
+          "creditos": 6,
+          "semestre": 4,
+          "evidencia": "Circuitos Eletrônicos 1 — 4·2·6 (ciclo específico)",
+          "carga_horaria": 90,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:combustiveis-e-biocombustiveis",
+          "nome": "Combustíveis e Biocombustíveis",
+          "creditos": 4,
+          "semestre": 4,
+          "evidencia": "Combustíveis e Biocombustíveis — 2·2·4 (ciclo específico)",
+          "carga_horaria": 60,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:fenomenos-de-transporte",
+          "nome": "Fenômenos de Transporte",
+          "creditos": 6,
+          "semestre": 4,
+          "evidencia": "Fenômenos de Transporte — 4·1·6 (ciclo básico)",
+          "carga_horaria": 90,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:fisica-moderna",
+          "nome": "Física Moderna",
+          "creditos": 6,
+          "semestre": 4,
+          "evidencia": "Física Moderna — 4·2·6 (ciclo básico)",
+          "carga_horaria": 90,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:materiais-de-construcao-de-engenharia",
+          "nome": "Materiais de Construção de Engenharia",
+          "creditos": 6,
+          "semestre": 4,
+          "evidencia": "Materiais de Construção de Engenharia — 4·0·6 (ciclo básico)",
+          "carga_horaria": 90,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:projeto-integrador-1",
+          "nome": "Projeto Integrador 1",
+          "creditos": 6,
+          "semestre": 4,
+          "evidencia": "Projeto Integrador 1 — 0·4·6 (projeto integrador)",
+          "carga_horaria": 90,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:dinamica-dos-fluidos",
+          "nome": "Dinâmica dos Fluidos",
+          "creditos": 6,
+          "semestre": 5,
+          "evidencia": "Dinâmica dos Fluidos — 4·1·6 (ciclo profissionalizante)",
+          "carga_horaria": 90,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:eletricidade-aplicada",
+          "nome": "Eletricidade Aplicada",
+          "creditos": 6,
+          "semestre": 5,
+          "evidencia": "Eletricidade Aplicada — 4·2·6 (ciclo básico)",
+          "carga_horaria": 90,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:fundamentos-da-teoria-eletromagnetica",
+          "nome": "Fundamentos da Teoria Eletromagnética",
+          "creditos": 6,
+          "semestre": 5,
+          "evidencia": "Fundamentos da Teoria Eletromagnética — 4·2·6 (ciclo básico)",
+          "carga_horaria": 90,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:matematica-aplicada-a-sistemas",
+          "nome": "Matemática Aplicada a Sistemas",
+          "creditos": 4,
+          "semestre": 5,
+          "evidencia": "Matemática Aplicada a Sistemas — 4·0·4 (ciclo específico)",
+          "carga_horaria": 60,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:metodos-matematicos-para-engenharia-1",
+          "nome": "Métodos Matemáticos para Engenharia 1",
+          "creditos": 6,
+          "semestre": 5,
+          "evidencia": "Métodos Matemáticos para Engenharia 1 — 4·0·6 (ciclo específico)",
+          "carga_horaria": 90,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:termodinamica-1",
+          "nome": "Termodinâmica 1",
+          "creditos": 6,
+          "semestre": 5,
+          "evidencia": "Termodinâmica 1 — 4·0·6 (ciclo profissionalizante)",
+          "carga_horaria": 90,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:analise-instrumental-de-combustiveis",
+          "nome": "Análise Instrumental de Combustíveis",
+          "creditos": 4,
+          "semestre": 6,
+          "evidencia": "Análise Instrumental de Combustíveis — 2·2·4 (ciclo específico)",
+          "carga_horaria": 60,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:conversao-eletromecanica-de-energia",
+          "nome": "Conversão Eletromecânica de Energia",
+          "creditos": 4,
+          "semestre": 6,
+          "evidencia": "Conversão Eletromecânica de Energia — 4·2·4 (ciclo profissionalizante)",
+          "carga_horaria": 60,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:engenharia-de-seguranca-do-trabalho",
+          "nome": "Engenharia de Segurança do Trabalho",
+          "creditos": 2,
+          "semestre": 6,
+          "evidencia": "Engenharia de Segurança do Trabalho — 1·1·2 (ciclo básico)",
+          "carga_horaria": 30,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:instrumentacao-e-controle-de-sistemas",
+          "nome": "Instrumentação e Controle de Sistemas",
+          "creditos": 4,
+          "semestre": 6,
+          "evidencia": "Instrumentação e Controle de Sistemas — 4·1·4 (ciclo específico)",
+          "carga_horaria": 60,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:maquinas-de-fluxo",
+          "nome": "Máquinas de Fluxo",
+          "creditos": 4,
+          "semestre": 6,
+          "evidencia": "Máquinas de Fluxo — 4·1·4 (ciclo profissionalizante)",
+          "carga_horaria": 60,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:metodos-experimentais-para-engenharia",
+          "nome": "Métodos Experimentais para Engenharia",
+          "creditos": 4,
+          "semestre": 6,
+          "evidencia": "Métodos Experimentais para Engenharia — 2·2·4 (ciclo específico)",
+          "carga_horaria": 60,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:transferencia-de-calor",
+          "nome": "Transferência de Calor",
+          "creditos": 6,
+          "semestre": 6,
+          "evidencia": "Transferência de Calor — 5·1·6 (ciclo profissionalizante)",
+          "carga_horaria": 90,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:economia-da-energia",
+          "nome": "Economia da Energia",
+          "creditos": 4,
+          "semestre": 7,
+          "evidencia": "Economia da Energia — 4·0·4 (ciclo específico)",
+          "carga_horaria": 60,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:engenharia-de-petroleo-e-gas",
+          "nome": "Engenharia de Petróleo e Gás",
+          "creditos": 4,
+          "semestre": 7,
+          "evidencia": "Engenharia de Petróleo e Gás — 4·0·4 (ciclo específico)",
+          "carga_horaria": 60,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:maquinas-termicas",
+          "nome": "Máquinas Térmicas",
+          "creditos": 4,
+          "semestre": 7,
+          "evidencia": "Máquinas Térmicas — 4·1·4 (ciclo profissionalizante)",
+          "carga_horaria": 60,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:sistemas-de-energia-solar-e-eolica",
+          "nome": "Sistemas de Energia Solar e Eólica",
+          "creditos": 4,
+          "semestre": 7,
+          "evidencia": "Sistemas de Energia Solar e Eólica — 4·0·4 (ciclo específico)",
+          "carga_horaria": 60,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:sistemas-hidroeletricos",
+          "nome": "Sistemas Hidroelétricos",
+          "creditos": 4,
+          "semestre": 7,
+          "evidencia": "Sistemas Hidroelétricos — 4·1·4 (ciclo específico)",
+          "carga_horaria": 60,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:transmissao-e-distribuicao-de-energia-eletrica",
+          "nome": "Transmissão e Distribuição de Energia Elétrica",
+          "creditos": 4,
+          "semestre": 7,
+          "evidencia": "Transmissão e Distribuição de Energia Elétrica — 4·1·4 (ciclo específico)",
+          "carga_horaria": 60,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:biorrefinarias",
+          "nome": "Biorrefinarias",
+          "creditos": 4,
+          "semestre": 8,
+          "evidencia": "Biorrefinarias — 4·0·4 (ciclo específico)",
+          "carga_horaria": 60,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:centrais-de-geracao-termoeletrica",
+          "nome": "Centrais de Geração Termoelétrica",
+          "creditos": 4,
+          "semestre": 8,
+          "evidencia": "Centrais de Geração Termoelétrica — 4·1·4 (ciclo específico)",
+          "carga_horaria": 60,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:planejamento-e-gestao-de-energia",
+          "nome": "Planejamento e Gestão de Energia",
+          "creditos": 4,
+          "semestre": 8,
+          "evidencia": "Planejamento e Gestão de Energia — 4·0·4 (ciclo específico)",
+          "carga_horaria": 60,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:projeto-integrador-2",
+          "nome": "Projeto Integrador 2",
+          "creditos": 6,
+          "semestre": 8,
+          "evidencia": "Projeto Integrador 2 — 0·6·6 (projeto integrador)",
+          "carga_horaria": 90,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:topicos-especiais-para-engenharia-de-energia",
+          "nome": "Tópicos Especiais para Engenharia de Energia",
+          "creditos": 4,
+          "semestre": 8,
+          "evidencia": "Tópicos Especiais para Engenharia de Energia — 4·0·4 (ciclo específico)",
+          "carga_horaria": 60,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:estagio-supervisionado",
+          "nome": "Estágio Supervisionado",
+          "creditos": 14,
+          "semestre": 9,
+          "evidencia": "Estágio Supervisionado — 0·14·0 (estágio)",
+          "carga_horaria": 210,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:trabalho-de-conclusao-de-curso-1",
+          "nome": "Trabalho de Conclusão de Curso 1",
+          "creditos": 8,
+          "semestre": 9,
+          "evidencia": "Trabalho de Conclusão de Curso 1 — 0·4·8 (TCC)",
+          "carga_horaria": 120,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:analise-de-sistemas-de-energia-eletrica",
+          "nome": "Análise de Sistemas de Energia Elétrica",
+          "creditos": 4,
+          "semestre": 10,
+          "evidencia": "Análise de Sistemas de Energia Elétrica — 4·0·4 (ciclo específico)",
+          "carga_horaria": 60,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:desenvolvimento-sustentavel",
+          "nome": "Desenvolvimento Sustentável",
+          "creditos": 4,
+          "semestre": 10,
+          "evidencia": "Desenvolvimento Sustentável — 4·0·4 (ciclo específico)",
+          "carga_horaria": 60,
+          "codigo_oficial": false
+        },
+        {
+          "codigo": "SEM-CODIGO:trabalho-de-conclusao-de-curso-2",
+          "nome": "Trabalho de Conclusão de Curso 2",
+          "creditos": 12,
+          "semestre": 10,
+          "evidencia": "Trabalho de Conclusão de Curso 2 — 0·6·12 (TCC)",
+          "carga_horaria": 180,
+          "codigo_oficial": false
+        }
+      ],
+      "arestas": [],
+      "equivalencias": []
+    }
+  ]
+}

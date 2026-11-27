@@ -31,7 +31,7 @@
 
   /* ---------- Fundo do hero: fichas com termos da base ---------- */
   var TERMOS = ["RU Gama", "R$ 4,50", "Grupo II", "CAD 37/2025", "almoço 11h–14h30", "vegetariano estrito",
-    "FGA0314", "Cálculo 1", "MDS → Requisitos", "ABI Engenharia", "PPGEB", "2026.2", "trancamento",
+    "FGA0314", "Cálculo 1", "MDS → Requisitos", "Engenharia de Software", "PPGEB", "2026.2", "trancamento",
     "SIGAA", "ChromaDB", "e5-base", "BM25", "RRF", "top-5", "[1][2]", "Energia · 251 cr", "Software · 235 cr",
     "Aeroespacial", "Automotiva", "Eletrônica", "Edital 24/2026", "PNAES"];
 
@@ -219,7 +219,7 @@
     indice: [1020, 62, 165, 76, "ChromaDB", "banco vetorial"],
     llm04: [825, 178, 165, 76, "LLM gerador", "Qwen2.5-7B local"],
     resp04: [630, 178, 165, 76, "Resposta", "com fontes [n]"],
-    base: [630, 288, 165, 70, "Base curada", "36 fontes oficiais"],
+    base: [630, 288, 165, 70, "Base curada", "56 fontes oficiais"],
     ingest: [825, 288, 165, 70, "Ingestão", "extrair · chunk · embed"],
     api09: [630, 470, 165, 76, "API do Grupo 09", "POST /perguntar"],
     rag09: [825, 470, 165, 76, "RAG do Grupo 09", "salas e acessos"],
@@ -243,7 +243,7 @@
       pergunta: "Etapa offline: monta a base de conhecimento e o banco vetorial.",
       passos: [
         { nos: ["base"], arestas: [], quem: "g04", titulo: "Curadoria das fontes",
-          texto: "36 documentos oficiais (RU, DDS/DAC, SAA, DEG, FCTE, PPCs e fluxogramas das engenharias, PPGEB) entram no catálogo com órgão, data, URL e eixo.",
+          texto: "56 documentos oficiais (RU, DDS/DAC, SAA, DEG, FCTE, PPCs e fluxogramas das engenharias, PPGEB) entram no catálogo com órgão, data, URL e eixo.",
           carga: "- id: F09\n  titulo: Cardápio semanal do RU Gama — 09/11 a 15/11/2026\n  orgao: UnB · Diretoria do RU\n  eixo: ru\n  tipo: cardapio\n  url: https://ru.unb.br/wp-content/uploads/2026/11/..." },
         { nos: ["ingest"], arestas: ["a_bg"], quem: "g04", titulo: "Extração e chunking",
           texto: "PDFs com pypdf; cardápios lidos como tabela (pdfplumber) e convertidos em um registro por refeição e por dia; HTML com abas vira seções. Chunks de ~900 caracteres respeitando títulos e artigos.",
@@ -287,7 +287,7 @@
           texto: "Rota dentro do campus é do Grupo 09; cardápio é do Grupo 04." },
         { nos: ["orq"], arestas: ["a_po"], quem: "comum", titulo: "O orquestrador divide a pergunta",
           texto: "O LLM roteador quebra a pergunta em subperguntas e escolhe o destino de cada uma.",
-          carga: "{\n  \"subperguntas\": [\n    { \"texto\": \"Como chegar da UAC ao RU (MESP)?\", \"destino\": \"grupo09\" },\n    { \"texto\": \"O que tem no almoço do RU Gama em 11/11/2026?\", \"destino\": \"grupo04\" }\n  ]\n}" },
+          carga: "{\n  \"subperguntas\": [\n    { \"texto\": \"Como chegar da UAC ao RU?\", \"destino\": \"grupo09\" },\n    { \"texto\": \"O que tem no almoço do RU Gama em 11/11/2026?\", \"destino\": \"grupo04\" }\n  ]\n}" },
         { nos: ["api04", "api09"], arestas: ["a_o4", "a_o9"], quem: "comum", titulo: "Chamadas em paralelo",
           texto: "Os dois sistemas recebem o mesmo formato de requisição. Cada grupo continua dono do próprio código, base e entregáveis." },
         { nos: ["busca", "indice", "llm04", "resp04", "rag09", "base09", "resp09"],
@@ -295,7 +295,7 @@
           texto: "Grupo 04: cardápio do dia com fontes do RU. Grupo 09: rota com base no mapeamento das plantas da FCTE (implementação do Grupo 09)." },
         { nos: ["orq"], arestas: ["a_ro", "a_r9"], quem: "comum", titulo: "As respostas voltam etiquetadas",
           texto: "Cada resposta traz o campo \"grupo\" e as próprias fontes, para o estudante saber de onde veio cada parte.",
-          carga: "[\n  { \"grupo\": \"grupo09\", \"resposta\": \"Saia da UAC pelo ... até o MESP.\", \"fontes\": [\"planta MESP\"] },\n  { \"grupo\": \"grupo04\", \"resposta\": \"Almoço de 11/11: ... [1]\", \"fontes\": [\"F09 p.2\"] }\n]" },
+          carga: "[\n  { \"grupo\": \"grupo09\", \"resposta\": \"Saia da UAC pelo ... até o RU.\", \"fontes\": [\"planta do RU\"] },\n  { \"grupo\": \"grupo04\", \"resposta\": \"Almoço de 11/11: ... [1]\", \"fontes\": [\"F09 p.2\"] }\n]" },
         { nos: ["portal", "usuario"], arestas: ["a_op", "a_pu"], quem: "comum", titulo: "Resposta única, fontes separadas",
           texto: "O orquestrador junta as duas partes sem misturar as fontes: \"Como chegar (Grupo 09)\" e \"O que tem no almoço (Grupo 04)\"." }
       ]
@@ -752,15 +752,16 @@
         var tituloEntrega = h1.textContent.replace("¶", "").trim();
         var sumarioItens = '<li><a href="#rm-sec-index">Visão geral (' + esc(tituloEntrega) + ')</a></li>' +
           secoes.map(function (s) { return '<li><a href="#rm-sec-' + esc(s.slug) + '">' + esc(s.titulo) + '</a></li>'; }).join("");
+        var mEntrega = path.match(/\/(entrega-\d+)\/?$/);
+        var urlGitPage = "https://maykonjuso.github.io/residencia-grupo-4/" + (mEntrega ? mEntrega[1] + "/" : "");
 
         var capa = '<div class="rm-capa-pdf">' +
-          '<p class="rm-capa-pdf__topo">Universidade de Brasília (UnB) · Faculdade de Ciências e Tecnologias em Engenharia (FCTE · Campus Gama)<br>Residência em Inteligência Artificial · Turma 1 · Challenge 2 (Big Idea: Qualidade de Vida)</p>' +
+          '<p class="rm-capa-pdf__topo">Universidade de Brasília (UnB)<br>Residência em Inteligência Artificial · Turma 1 · Challenge 2 (Big Idea: Qualidade de Vida)</p>' +
           '<h1 class="rm-capa-pdf__titulo">RUmo · Grupo 04</h1>' +
           '<p class="rm-capa-pdf__subtitulo">' + esc(tituloEntrega) + '</p>' +
           '<div class="rm-capa-pdf__meta">' +
-          '<div><strong>Integrantes (Grupo 04):</strong> Gabriel Maciel Araújo, Gabriella Oliveira de Souza Dias, Keila Alves Ferreira, Kyara Esteves de Sousa e Maykon Júnio dos Santos Soares</div>' +
-          '<div><strong>Mentor:</strong> Jefferson Viana Fonseca Abreu</div>' +
-          '<div><strong>Fonte:</strong> Consolidado gerado automaticamente a partir da GitPage oficial</div>' +
+          '<div><strong>Integrantes (Grupo 04):</strong><br>Gabriel Maciel Araújo<br>Gabriella Oliveira de Souza Dias<br>Keila Alves Ferreira<br>Kyara Esteves de Sousa<br>Maykon Júnio dos Santos Soares</div>' +
+          '<div><strong>GitPage oficial:</strong> <a href="' + urlGitPage + '">' + urlGitPage + '</a></div>' +
           '</div></div>' +
           '<div class="rm-sumario-pdf"><h2>Sumário</h2><ol>' + sumarioItens + '</ol></div>';
 
@@ -783,7 +784,17 @@
           }
         });
         rotularAbas(wrap);
-        wrap.querySelectorAll("details").forEach(function (d) { d.open = true; });
+        wrap.querySelectorAll("details").forEach(function (d) {
+          var sum = d.querySelector("summary");
+          var titulo = sum ? sum.textContent.trim().toLowerCase() : "";
+          if (titulo.indexOf("histórico de revisão") !== -1 || titulo.indexOf("histórico de versão") !== -1) {
+            var prev = d.previousElementSibling;
+            if (prev && prev.tagName === "HR") prev.remove();
+            d.remove();
+            return;
+          }
+          d.open = true;
+        });
 
         wrap.querySelectorAll("a[href]").forEach(function (a) {
           var href = a.getAttribute("href") || "";

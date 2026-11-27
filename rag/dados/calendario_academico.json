@@ -1,0 +1,238 @@
+{
+  "versao": "1.0",
+  "gerado_em": "2026-11-23T14:05:31+00:00",
+  "semestres": [
+    {
+      "semestre": "2026.2",
+      "doc_id": "F57",
+      "titulo": "Feriados, pontos facultativos e período de aulas do 2026.2 — transcrição do calendário",
+      "orgao": "UnB · Secretaria de Administração Acadêmica (transcrição do Grupo 04)",
+      "url": "https://saa.unb.br/wp-content/uploads/2026/10/2026_2_Calend_Ativ_Grad_02_10_2026.pdf",
+      "pagina": 1,
+      "vigencia": {
+        "inicio": "2026-07-22",
+        "fim": "2026-12-19"
+      },
+      "periodo_letivo": {
+        "inicio": "2026-07-22",
+        "fim": "2026-12-19"
+      },
+      "periodo_aulas": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "feriados": [
+        {
+          "data": "2026-09-07",
+          "dia_semana": "segunda-feira",
+          "nome": "Independência do Brasil",
+          "abrangencia": "nacional",
+          "observacao": "feriado da Independência do Brasil"
+        },
+        {
+          "data": "2026-10-12",
+          "dia_semana": "segunda-feira",
+          "nome": "Nossa Senhora Aparecida",
+          "abrangencia": "nacional",
+          "observacao": "feriado de Nossa Senhora Aparecida"
+        },
+        {
+          "data": "2026-11-02",
+          "dia_semana": "segunda-feira",
+          "nome": "Finados",
+          "abrangencia": "nacional",
+          "observacao": "feriado de Finados"
+        },
+        {
+          "data": "2026-11-15",
+          "dia_semana": "domingo",
+          "nome": "Proclamação da República",
+          "abrangencia": "nacional",
+          "observacao": "feriado da Proclamação da República"
+        },
+        {
+          "data": "2026-11-20",
+          "dia_semana": "sexta-feira",
+          "nome": "Dia de Zumbi e Consciência Negra",
+          "abrangencia": "nacional",
+          "observacao": "feriado do Dia de Zumbi e Consciência Negra"
+        },
+        {
+          "data": "2026-12-25",
+          "dia_semana": "sexta-feira",
+          "nome": "Natal",
+          "abrangencia": "nacional",
+          "observacao": "feriado de Natal (depois do último dia de aulas, 14/12/2026)"
+        }
+      ],
+      "pontos_facultativos": [
+        {
+          "data": "2026-10-28",
+          "dia_semana": "quarta-feira",
+          "nome": "Dia do Servidor",
+          "horario": null,
+          "observacao": "Dia do Servidor. Não é feriado no calendário: é ponto facultativo."
+        },
+        {
+          "data": "2026-12-24",
+          "dia_semana": "quinta-feira",
+          "nome": "Véspera de Natal (ponto facultativo)",
+          "horario": "após as 13h",
+          "observacao": "ponto facultativo após as 13h. A data já está fora do período de aulas do 2026.2, que termina em 14/12/2026."
+        },
+        {
+          "data": "2026-12-31",
+          "dia_semana": "quinta-feira",
+          "nome": "Véspera de Ano Novo (ponto facultativo)",
+          "horario": "após as 13h",
+          "observacao": "ponto facultativo após as 13h. A data já está fora do período de aulas do 2026.2, que termina em 14/12/2026."
+        }
+      ],
+      "eventos": [
+        {
+          "titulo": "25% de realização das aulas (2026.2)",
+          "data": "2026-09-09",
+          "inicio": null,
+          "fim": null,
+          "observacao": "Marcos do período de aulas: 25% de realização em 09/09/2026, 50% em 09/10/2026 e 75% em 12/11/2026."
+        },
+        {
+          "titulo": "50% de realização das aulas (2026.2)",
+          "data": "2026-10-09",
+          "inicio": null,
+          "fim": null,
+          "observacao": "Marcos do período de aulas: 25% de realização em 09/09/2026, 50% em 09/10/2026 e 75% em 12/11/2026."
+        },
+        {
+          "titulo": "75% de realização das aulas (2026.2)",
+          "data": "2026-11-12",
+          "inicio": null,
+          "fim": null,
+          "observacao": "Marcos do período de aulas: 25% de realização em 09/09/2026, 50% em 09/10/2026 e 75% em 12/11/2026."
+        },
+        {
+          "titulo": "Semana Universitária 2026 (DEX)",
+          "data": null,
+          "inicio": "2026-09-20",
+          "fim": "2026-09-25",
+          "observacao": "Semana Universitária 2026 (DEX). O calendário não diz se as aulas são suspensas nessa semana."
+        }
+      ],
+      "recesso": [],
+      "semana_provas": [],
+      "observacoes": [
+        "O calendário por atividades não informa datas de recesso nem de semana de provas. Essas informações não constam nesta fonte.",
+        "Depois do último dia de aulas (14/12/2026) não há aulas regulares do 2026.2. As turmas de férias seguem o Calendário de Verão 2027 (documento F58 da base).",
+        "Ponto facultativo não é feriado. O calendário não diz se as aulas são suspensas nesses dias. Para saber se há aula em 28/10/2026, consulte o professor ou a coordenação do curso."
+      ]
+    },
+    {
+      "semestre": "2026.4",
+      "doc_id": "F58",
+      "titulo": "Calendário especial de verão 2027 (2026.4) — turmas de férias",
+      "orgao": "UnB · Secretaria de Administração Acadêmica",
+      "url": "https://saa.unb.br/wp-content/uploads/2026/11/2026_4_Calend_Ativ_Grad_04_11_2026.pdf",
+      "pagina": 1,
+      "vigencia": {
+        "inicio": "2026-12-22",
+        "fim": "2027-02-22"
+      },
+      "periodo_letivo": {
+        "inicio": "2026-12-22",
+        "fim": "2027-02-22"
+      },
+      "periodo_aulas": {
+        "inicio": "2027-01-11",
+        "fim": "2027-02-17"
+      },
+      "feriados": [
+        {
+          "data": "2027-01-01",
+          "dia_semana": "sexta-feira",
+          "nome": "Confraternização Universal",
+          "abrangencia": "nacional",
+          "observacao": "Confraternização Universal (feriado)."
+        }
+      ],
+      "pontos_facultativos": [
+        {
+          "data": "2027-02-08",
+          "dia_semana": "segunda-feira",
+          "nome": "Segunda-feira de carnaval",
+          "horario": null,
+          "observacao": "Segunda-feira de carnaval (ponto facultativo)."
+        },
+        {
+          "data": "2027-02-09",
+          "dia_semana": "terça-feira",
+          "nome": "Carnaval",
+          "horario": null,
+          "observacao": "Carnaval (ponto facultativo)."
+        },
+        {
+          "data": "2027-02-10",
+          "dia_semana": "quarta-feira",
+          "nome": "Quarta-feira de Cinzas",
+          "horario": "até às 14h",
+          "observacao": "Quarta-feira de Cinzas (ponto facultativo até às 14h)."
+        }
+      ],
+      "eventos": [],
+      "recesso": [],
+      "semana_provas": [],
+      "observacoes": [
+        "Calendário especial de verão 2027 (2026.4) — turmas de férias (DEG/SAA UnB)."
+      ]
+    }
+  ],
+  "documentos_calendario": [
+    {
+      "id": "F29",
+      "titulo": "Calendário universitário de graduação 2026.2 por atividades",
+      "orgao": "UnB · Secretaria de Administração Acadêmica",
+      "url": "https://saa.unb.br/wp-content/uploads/2026/10/2026_2_Calend_Ativ_Grad_02_10_2026.pdf",
+      "arquivo": "originais/F29.pdf",
+      "data": "2026-10-02",
+      "vigencia": {
+        "inicio": "2026-07-22",
+        "fim": "2026-12-19"
+      }
+    },
+    {
+      "id": "F30",
+      "titulo": "Calendário de matrícula da graduação 2026.1",
+      "orgao": "UnB · Secretaria de Administração Acadêmica",
+      "url": "https://saa.unb.br/wp-content/uploads/2026/02/2026_1_Calend_Mat_Grad_27_02_2026.pdf",
+      "arquivo": "originais/F30.pdf",
+      "data": "2026-02-27",
+      "vigencia": {
+        "inicio": "2026-02-23",
+        "fim": "2026-07-18"
+      }
+    },
+    {
+      "id": "F57",
+      "titulo": "Feriados, pontos facultativos e período de aulas do 2026.2 — transcrição do calendário",
+      "orgao": "UnB · Secretaria de Administração Acadêmica (transcrição do Grupo 04)",
+      "url": "https://saa.unb.br/wp-content/uploads/2026/10/2026_2_Calend_Ativ_Grad_02_10_2026.pdf",
+      "arquivo": "curados/F57_feriados_calendario_2026_2.md",
+      "data": "2026-10-02",
+      "vigencia": {
+        "inicio": "2026-07-22",
+        "fim": "2026-12-19"
+      }
+    },
+    {
+      "id": "F58",
+      "titulo": "Calendário especial de verão 2027 (2026.4) — turmas de férias",
+      "orgao": "UnB · Secretaria de Administração Acadêmica",
+      "url": "https://saa.unb.br/wp-content/uploads/2026/11/2026_4_Calend_Ativ_Grad_04_11_2026.pdf",
+      "arquivo": "originais/F58.pdf",
+      "data": "2026-11-04",
+      "vigencia": {
+        "inicio": "2026-12-22",
+        "fim": "2027-02-22"
+      }
+    }
+  ]
+}

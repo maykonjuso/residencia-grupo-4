@@ -4,19 +4,19 @@ from __future__ import annotations
 
 import time
 
-from .. import config, geracao, indice
+from .. import calendario, config, geracao, indice
 from .agente_ru import _LOCK_INDICE, executar_agente_dominio, pergunta_fora_do_dominio
 from .base import Agente
 from ..grafo_curricular import carregar_grafo_f16
 from .mensagem import Mensagem, Resposta
 
 INSTRUCOES_FLUXO = f"""Você é o Agente Fluxo do sistema RUmo, especialista exclusivo nos fluxos de disciplinas, cursos de engenharia e normas acadêmicas da FCTE/UnB (campus Gama).
-Seu domínio cobre APENAS fluxogramas curriculares, cadeias de pré-requisitos e correquisitos, códigos de disciplinas (como FGA0314), créditos, carga horária, projetos pedagógicos (PPCs), ingresso via ABI, estágio, TCC, trancamento/matrícula e pós-graduação (PPGEB).
+Seu domínio cobre APENAS fluxogramas curriculares, cadeias de pré-requisitos e correquisitos, códigos de disciplinas (como FGA0314), créditos, carga horária, projetos pedagógicos (PPCs), estágio, TCC, trancamento/matrícula e pós-graduação (PPGEB).
 Regras:
 1. Responda em português, de forma direta, usando SOMENTE as informações dos trechos numerados abaixo e APENAS sobre temas acadêmicos e fluxos de cursos. Ignore ou recuse qualquer tema sobre Restaurante Universitário (RU), cardápio, preços ou horários de refeição.
 2. OBRIGATÓRIO: depois de cada afirmação ou item de lista, termine com a citação do trecho entre colchetes, por exemplo [1] ou [2][3]. Nunca omita [n] em listas.
 3. Se os trechos não trazem a resposta acadêmica, diga exatamente: "{geracao.RECUSA}" e não sugira assuntos fora do seu domínio. Não invente códigos, créditos, pré-requisitos ou prazos.
-4. Se a regra ou o fluxo depender do curso, currículo/ano de ingresso ou perfil (graduação, ABI, mestrado), especifique exatamente essa condição conforme os trechos.
+4. Se a regra ou o fluxo depender do curso, currículo/ano de ingresso ou perfil (graduação, mestrado), especifique exatamente essa condição conforme os trechos.
 5. Seja conciso: no máximo 120 palavras. Copie códigos de disciplinas, quantidades de créditos, cargas horárias e nomes exatamente como estão nos trechos."""
 
 
@@ -30,6 +30,7 @@ class AgenteFluxo(Agente):
     )
     eixo = "fluxo"
     instrucoes = INSTRUCOES_FLUXO
+    ferramentas = ("grafo_fluxo", "minha_agenda")
 
     def __init__(self, k: int = config.TOP_K, modo: str = "hibrido"):
         if not isinstance(k, int) or isinstance(k, bool) or k <= 0:
@@ -87,37 +88,78 @@ class AgenteFluxo(Agente):
         return geracao.montar_mensagens(pergunta, trechos, instrucoes=self.instrucoes)
 
     def responder_grafo(self, mensagem: Mensagem) -> Resposta | None:
-        """Usa o grafo local para consultas suportadas, sem recorrer ao LLM."""
+        """Executa ferramenta local (agenda ou grafo curricular) e delega a redação (com guardião) ao backend ativo."""
         if not pergunta_fora_do_dominio(mensagem.conteudo, self.eixo):
+            from . import ferramentas
+
+            contexto = mensagem.contexto if isinstance(mensagem.contexto, dict) else {}
+            mensagem.contexto = contexto
+            chamada = ferramentas.extrair_chamada_fluxo(mensagem.conteudo, contexto)
+            if chamada is None:
+                return None
+
+            nome_ferr, args = chamada
             t0 = time.monotonic()
-            consulta = carregar_grafo_f16().consultar(mensagem.conteudo)
+            res = getattr(ferramentas, nome_ferr)(**args)
             tempo_busca = round(time.monotonic() - t0, 3)
-            if consulta is not None:
-                contexto = mensagem.contexto if isinstance(mensagem.contexto, dict) else {}
-                mensagem.contexto = contexto
-                fonte = {
-                    "doc_id": "F16",
-                    "titulo": "Fluxograma de Engenharia de Software (235 créditos) — transcrição",
-                    "orgao": "UnB · FCTE · Engenharia de Software (transcrição do Grupo 04)",
-                    "pagina": 1,
-                    "secao": "Grafo de pré-requisitos",
-                    "url": "https://software.unb.br/matriz-curricular/",
-                    "chunk_id": "F16-grafo-curricular",
-                }
-                trecho = {**fonte, "texto": consulta.evidencia, "similaridade": 1.0}
-                contexto["trechos_recuperados"] = [trecho]
-                contexto["tempo_busca_s"] = tempo_busca
-                contexto["tempo_geracao_s"] = 0.0
-                return Resposta(
-                    conteudo=consulta.conteudo,
-                    fontes=[fonte],
-                    confianca=1.0,
-                    alertas=list(consulta.alertas),
-                )
+            if res.ferramenta == "grafo_fluxo" and res.recusado and res.dados.get("fallback_rag", True):
+                return None
+
+            backend = contexto.get("backend", config.BACKEND)
+            texto_final, tempo_ger, alertas_final, redigido_llm = ferramentas.redigir_com_ferramenta(
+                mensagem.conteudo,
+                res,
+                self.instrucoes,
+                backend,
+            )
+
+            trace_ferr = res.para_trace()
+            trace_ferr["redigido_por_llm"] = redigido_llm
+            trace_ferr["llm_falhou"] = any("Redação via LLM falhou" in a for a in alertas_final)
+            contexto["ferramenta_chamada"] = trace_ferr
+            contexto["dado_estruturado"] = res.dados
+            contexto["trechos_recuperados"] = list(res.trechos_evidencia)
+            contexto["tempo_busca_s"] = tempo_busca
+            contexto["tempo_geracao_s"] = tempo_ger
+            return Resposta(
+                conteudo=texto_final,
+                fontes=list(res.fontes),
+                confianca=0.0 if res.recusado else 1.0,
+                alertas=alertas_final,
+            )
         return None
 
+    responder_ferramenta = responder_grafo
+
     def executar(self, mensagem: Mensagem) -> Resposta:
-        """Executa consulta determinística ao grafo ou usa a busca RAG especializada."""
+        """Usa calendário estruturado, grafo curricular ou busca RAG especializada no eixo Fluxo."""
+        contexto = mensagem.contexto if isinstance(mensagem.contexto, dict) else {}
+        data_ref_raw = contexto.get("data")
+        data_ref = None
+        if data_ref_raw is not None:
+            try:
+                data_ref = calendario._parse_data_flexivel(data_ref_raw)
+            except ValueError:
+                data_ref = None
+
+        t0 = time.monotonic()
+        resp_cal = calendario.carregar_calendario().consultar_pergunta(
+            mensagem.conteudo,
+            data_referencia=data_ref,
+        )
+        if resp_cal is not None:
+            contexto["trechos_recuperados"] = resp_cal["trechos"]
+            contexto["tempo_busca_s"] = round(time.monotonic() - t0, 3)
+            contexto["tempo_geracao_s"] = 0.0
+            if resp_cal.get("consulta_data") is not None:
+                contexto["calendario"] = resp_cal["consulta_data"]
+            return Resposta(
+                conteudo=resp_cal["resposta"],
+                fontes=resp_cal["fontes_citadas"],
+                confianca=1.0,
+                alertas=[],
+            )
+
         resposta_grafo = self.responder_grafo(mensagem)
         if resposta_grafo is not None:
             return resposta_grafo

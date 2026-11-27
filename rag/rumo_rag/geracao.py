@@ -82,14 +82,14 @@ def _gerar_hf(msgs):
     return tok.decode(saida[0][entrada["input_ids"].shape[1]:], skip_special_tokens=True).strip()
 
 
-def _post(url, corpo, cabecalhos=None):
+def _post(url, corpo, cabecalhos=None, timeout: float = 180):
     headers = {
         "Content-Type": "application/json",
         "User-Agent": "RUmo-UnB/1.0",
         **(cabecalhos or {}),
     }
     req = urllib.request.Request(url, data=json.dumps(corpo).encode(), headers=headers)
-    with urllib.request.urlopen(req, timeout=180) as r:
+    with urllib.request.urlopen(req, timeout=timeout) as r:
         return json.loads(r.read())
 
 
@@ -105,7 +105,8 @@ def _gerar_openai(msgs):
     url = f"{config.OPENAI_URL.rstrip('/')}/chat/completions"
     r = _post(url,
               {"model": config.OPENAI_MODEL, "messages": msgs, "temperature": 0},
-              {"Authorization": f"Bearer {chave}"})
+              {"Authorization": f"Bearer {chave}"},
+              timeout=config.OPENAI_TIMEOUT)
     return r["choices"][0]["message"]["content"].strip()
 
 
@@ -200,7 +201,12 @@ def valores_sem_fonte(resposta: str, trechos: list[dict]) -> list[str]:
     """Verificador de fidelidade: todo preço, data, horário, código de disciplina ou quantidade
     citado na resposta precisa aparecer em algum trecho recuperado. Os que não aparecem
     são devolvidos para o sistema alertar o estudante (possível alucinação)."""
-    base = _normalizar(" ".join(t["texto"] + " " + t.get("secao", "") for t in trechos))
+    base = _normalizar(
+        " ".join(
+            f"{t.get('titulo', '')} {t.get('secao', '')} {t.get('texto', '')}"
+            for t in trechos
+        )
+    )
     faltando = []
     for v in PADRAO_VALOR.findall(resposta):
         if _normalizar(v) not in base and v not in faltando:

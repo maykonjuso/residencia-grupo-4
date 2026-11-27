@@ -31,6 +31,8 @@ Coordenação 03/08 e 04/08/2026 Solicitação de rematrícula em turmas que nã
 04/08/2026.
 STI 05/08 e 06/08/2026 Processamento das rematrículas
 STI 06/08/2026 Resultado da rematrícula até às 12h do dia 06/08/2026.
+Coordenação 06/08 a 13/08/2026 Ajuste de vagas em turmas ofertadas (preparação para a matrícula extraordinária) a partir das 14h do dia 06/08
+até 23h59 do dia 13/08/2026.
 [[PAGINA 2]]
 
 Universidade de Brasília
@@ -38,11 +40,9 @@ Secretaria de Administração Acadêmica
 2026.2 CALENDÁRIO UNIVERSITÁRIO DE GRADUAÇÃO
 POR ATIVIDADES
 
-Coordenação 06/08 a 13/08/2026 Ajuste de vagas em turmas ofertadas (preparação para a matrícula extraordinária) a partir das 14h do dia 06/08
-até 23h59 do dia 13/08/2026.
 Estudante/Coordenação 07/08 a 14/08/2026 Solicitação de Matrícula Extraordinária de 10h do dia 07/08 até 23h59 do dia 14/08/2026 no SIGAA > Portal
 Discente > Ensino > Matrícula on-line > Realizar Matrícula Extraordinária.
-Estudante/Coordenação 07/08 a 04/09/2026 Solicitação, para SAA via SEI, de matrícula em componentes curricul ares para estudantes em Mobilidade
+Estudante/Coordenação 07/08 a 04/09/2026 Solicitação, para SAA via SEI, de matrícula em componentes curriculares para estudantes em Mobilidade
 Acadêmica (de outras IFES).
 Coordenação 07/08 a 04/09/2026 Solicitação, para SAA via SEI, de matrícula para estudantes ingressantes por Transferência Facultativa (TF) e
 Portador de Diploma de Curso Superior (DCS) em componentes com flexibilização de pré-requisitos.
@@ -75,6 +75,9 @@ MONITORIA
 Unidade Acadêmica 03/08 a 14/12/2026 Matrícula na Atividade de Monitoria.
 Docente Até 19/12/2026 Consolidação da Atividade de Monitoria no SIGAA.
 Unidade Acadêmica 12/11 a 19/12/2026 Envio das listas de monitores bolsistas avaliados positivamente, por meio do formulário próprio.
+DUPLA DIPLOMAÇÃO
+DEG/SAA A partir de 14/09/2026 Publicação do Edital de Dupla Diplomação na página https://saa.unb.br/dupla-diplomacao-e-mudanca-de- curso/. Solicitação por meio do formulário eletrônico.
+MUDANÇA DE CURSO DEG/SAA A partir de 14/09/2026 Publicação do Edital de Mudança de Curso na página https://saa.unb.br/dupla-diplomacao-e-mudanca-de- curso/. Solicitação por meio do formulário eletrônico.
 [[PAGINA 3]]
 
 Universidade de Brasília
@@ -82,33 +85,40 @@ Secretaria de Administração Acadêmica
 2026.2 CALENDÁRIO UNIVERSITÁRIO DE GRADUAÇÃO
 POR ATIVIDADES
 
-DUPLA DIPLOMAÇÃO
-DEG/SAA A partir de 14/09/2026 Publicação do Edital de Dupla Diplomação na página https://saa.unb.br/dupla-diplomacao-e-mudanca-de- curso/. Solicitação por meio do formulário eletrônico.
-MUDANÇA DE CURSO DEG/SAA A partir de 14/09/2026 Publicação do Edital de Mudança de Curso na página https://saa.unb.br/dupla-diplomacao-e-mudanca-de- curso/. Solicitação por meio do formulário eletrônico.
-SEMANA UNIVERSITÁRIA 2026 DEX 20/09 a 25/09/2026 As inscrições para a SemUni UnB 2026 serão divulgadas em momento oportuno por meio da página https://dex.unb.br/. As atividades ofertadas são gratuitas e abertas ao público e ocorrerão no período de 20/09 a 25/09/2026.
+SEMANA UNIVERSITÁRIA 2026 DEX 20/09 a 25/09/2026
+As inscrições para a SemUni UnB 2026 serão divulgadas em momento oportuno por meio da página
+https://dex.unb.br/. As atividades ofertadas são gratuitas e abertas ao público e ocorrerão no período de 20/09
+a 25/09/2026.
 TRANCAMENTO PARCIAL DE
 MATRÍCULA AUTOMÁTICO Estudante Até 09/10/2026 Suspensão das atividades curriculares de um componente curricular apenas ou de um grupo de componentes. Deverá ser realizado através do SIGAA > Portal do Aluno > Ensino > Trancamento de Matrícula.
 TRANCAMENTO GERAL DE
 MATRÍCULA AUTOMÁTICO Estudante Até 12/11/2026 Suspensão de todas as atividades acadêmicas pelo período de um semestre letivo. Deverá ser realizado através do SIGAA > Portal do Aluno > Ensino > Trancamento Automático.
 MENÇÃO FINAL Docente Até 19/12/2026 Registro/Consolidação das Turmas no SIGAA.
 DESLIGAMENTO SAA 21/12/2026 Processamento dos desligamentos (dos estudantes que deverão ser desligados) referente ao semestre 2026.2.
-REVISÃO DE MENÇÃO FINAL Estudante A definir Solicitação nas Unidades Acadêmicas. Docente Análise pelo Corpo Docente (até quinze dias a partir da solicitação do aluno).
+REVISÃO DE MENÇÃO FINAL Estudante 29/03/2027 Solicitação na Unidade Acadêmica responsável pela oferta do componente curricular. Docente Análise pelo docente responsável pela turma (até quinze dias a partir da solicitação do aluno).
 
 Informações Complementares
 APROVEITAMENTO DE
-ESTUDOS Estudante A qualquer momento Solicitação via peticionamento eletrônico (recomendamos a leitura do manual disponível na página SAA - Peticionamento Eletrônico (unb.br)). Conforme regras da Resolução CEPE nº 0123/2023.
+COMPONENTES CURSADOS
+EM OUTRAS IES
+Estudante A qualquer momento do semestre
+A solicitação deve ser realizada por meio do peticionamento eletrônico (SEI/UnB > Usuário Externo).
+Recomenda-se a leitura do manual disponível na página https://saa.unb.br/peticionamento-eletronico-sei-unb/.
+As disposições a respeito do aproveitamento de componentes cursados em outra IES podem ser verificadas
+na Resolução CEPE nº 0123/2023 e na Instrução CEG nº 0002/2023.
 ATIVIDADES
 COMPLEMENTARES
 Estudante A critério da Unidade Solicitação diretamente nas Unidades Acadêmicas.
 Unidade Acadêmica Até 14/12/2026 Encaminhamento dos processos à SAA até o último dia de aulas (14/12/2026).
-CONCESSÃO DE CRÉDITOS
-EM LÍNGUA ESTRANGEIRA Estudante A qualquer momento Solicitação via peticionamento (recomendamos a leitura do manual disponível na página SAA - Peticionamento Eletrônico (unb.br).
-PROGRAMAS DE
-ASSISTÊNCIA ESTUDANTIL Estudante Definidas em Edital
-Programas de Assistência Estudantil - novos pedidos ou renovação, consultar a página da DDS:
-https://dds.dac.unb.br. Para participar da Assistência Estudantil o estudante deverá preencher o Cadastro
-Único no SIGAA (Portal do Discente > Bolsas > Cadastro Único > Aderir) e solicitar as bolsas dentro do
-sistema.
+CONCESSÃO DE
+COMPONENTES EM LÍNGUA
+ESTRANGEIRA
+Estudante A qualquer momento do semestre
+A solicitação deve ser realizada por meio do peticionamento eletrônico (SEI/UnB > Usuário Externo).
+Recomenda-se a leitura do manual disponível na página https://saa.unb.br/peticionamento-eletronico-sei-unb/.
+As disposições a respeito do aproveitamento de componentes de língua estrangeira podem ser verificadas na
+Resolução CEPE nº 0123/2023.
+CONFIRMAÇÃO DE CURSO Estudante A qualquer momento do semestre A solicitação deve ser realizada por meio do peticionamento eletrônico (SEI/UnB > Usuário Externo). Recomenda-se a leitura do manual disponível na página https://saa.unb.br/peticionamento-eletronico-sei-unb/. As disposições a respeito da confirmação de curso podem ser verificadas na Resolução CEG nº 0006/2025.
 [[PAGINA 4]]
 
 Universidade de Brasília
@@ -116,7 +126,48 @@ Secretaria de Administração Acadêmica
 2026.2 CALENDÁRIO UNIVERSITÁRIO DE GRADUAÇÃO
 POR ATIVIDADES
 
+DESLIGAMENTO
+VOLUNTÁRIO Estudante A qualquer momento do semestre A solicitação deve ser realizada por meio do peticionamento eletrônico (SEI/UnB > Usuário Externo). Recomenda-se a leitura do manual disponível na página https://saa.unb.br/peticionamento-eletronico-sei-unb/. As disposições a respeito do desligamento voluntário podem ser verificadas na Resolução CEPE nº 41/2004.
+MIGRAÇÃO DE
+COMPONENTES CURSADOS
+ANTERIORMENTE NA UNB
+Estudante A qualquer momento do semestre
+A solicitação deve ser realizada por meio do peticionamento eletrônico (SEI/UnB > Usuário Externo).
+Recomenda-se a leitura do manual disponível na página https://saa.unb.br/peticionamento-eletronico-sei-unb/.
+As disposições a respeito do aproveitamento de componentes de língua estrangeira podem ser verificadas na
+Resolução CEPE nº 0123/2023.
+MUDANÇA DE ESTRUTURA
+CURRICULAR Estudante A qualquer momento do semestre
+A solicitação deve ser realizada por meio do peticionamento eletrônico (SEI/UnB > Usuário Externo).
+Recomenda-se a leitura do manual disponível na página https://saa.unb.br/peticionamento-eletronico-sei-unb/.
+Somente será permitida a mudança para uma estrutura curricular mais recente que a atualmente vigente,
+conforme decisão da CEG em sua 1429ª reunião, realizada em 20/04/2021.
+PROGRAMAS DE
+ASSISTÊNCIA ESTUDANTIL Estudante Definidas em Edital
+Programas de Assistência Estudantil - novos pedidos ou renovação, consultar a página da DDS:
+https://dds.dac.unb.br. Para participar da Assistência Estudantil o estudante deverá preencher o Cadastro
+Único no SIGAA (Portal do Discente > Bolsas > Cadastro Único > Aderir) e solicitar as bolsas dentro do
+sistema.
+REGISTRO DE DIPLOMA EM
+CURSO SECUNDÁRIO Estudante A qualquer momento do semestre
+A solicitação deve ser realizada por meio do peticionamento eletrônico (SEI/UnB > Usuário Externo).
+Recomenda-se a leitura do manual disponível na página https://saa.unb.br/peticionamento-eletronico-sei-unb/.
+As disposições a respeito do registro de diploma em curso secundário podem ser obtidas na Resolução CEPE
+nº 0130/2026.
+REINTEGRAÇÃO Estudante A qualquer momento do semestre A solicitação deve ser realizada por meio do peticionamento eletrônico (SEI/UnB > Usuário Externo). Recomenda-se a leitura do manual disponível na página https://saa.unb.br/peticionamento-eletronico-sei-unb/. As disposições a respeito da reintegração podem ser obtidas na Resolução CEG nº 001/2023.
 REVALIDAÇÃO DE DIPLOMAS Estudante A qualquer momento Consultar o site www.rrde.unb.br.
+TRANSFERÊNCIA EX-OFFICIO Interessado(a) A qualquer momento do semestre
+A solicitação deve ser realizada por meio do peticionamento eletrônico (SEI/UnB > Usuário Externo).
+Recomenda-se a leitura do manual disponível na página https://saa.unb.br/peticionamento-eletronico-sei-unb/.
+As disposições a respeito dos pedidos de transferência ex officio para os cursos de graduação na UnB podem
+ser verificadas na Resolução CEPE nº 0122/2022.
+
+[[PAGINA 5]]
+
+Universidade de Brasília
+Secretaria de Administração Acadêmica
+2026.2 CALENDÁRIO UNIVERSITÁRIO DE GRADUAÇÃO
+POR ATIVIDADES
 
 C A L E N D Á R I O D E A T I V I D A D E S D A G R A D U A Ç Ã O - 2º / 2 0 2 6
 AGOSTO SETEMBRO OUTUBRO NOVEMBRO DEZEMBRO
