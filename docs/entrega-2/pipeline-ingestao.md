@@ -67,11 +67,15 @@ ingestão concluída em 100s
 O cardápio muda toda semana, e trocar a URL à mão era o passo que mais esquecíamos. O scraper
 (`rag/rumo_rag/coleta/scraper.py`, issue #50) faz isso a partir da fonte oficial.
 
+A **Tabela 2** resume a fonte consultada, o formato obtido e a saída produzida pelo scraper.
+
 | | |
 |---|---|
 | **Fonte** | [`ru.unb.br/cardapio-gama/`](https://ru.unb.br/cardapio-gama/) · UnB · Diretoria do RU, registrada em `fontes_de_coleta` no `catalogo.yaml` |
 | **Formato** | página HTML com um link por semana ("ISM – 31/08/2026 A 06/09/2026") para um PDF com a tabela do cardápio. Não é imagem: a tabela é lida pela mesma função da ingestão (`extracao._ler_cardapio`) |
 | **Saída** | dias da semana com as refeições, no formato do chunking (`## Almoço · terça-feira 01/09/2026`), o que mantém o `api.com_data()` funcionando |
+
+<p class="legenda">Tabela 2. Fonte, formato e saída da coleta automatizada do cardápio.</p>
 
 ```bash
 cd rag
