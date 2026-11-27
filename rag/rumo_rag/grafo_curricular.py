@@ -1074,6 +1074,66 @@ class GrafoCurricular:
 
         return sorted(encontradas.values(), key=lambda d: (d.semestre, d.codigo))
 
+    def _candidatas_por_nome_parcial(self, consulta: str) -> list[Disciplina]:
+        """Retorna disciplinas cujo nome contém o termo informado."""
+        termo = _normalizar(re.sub(r"\([^)]*\)", " ", consulta)).strip()
+        if len(termo) < 4:
+            return []
+        candidatas = []
+        for disciplina in self.disciplinas.values():
+            nome = _normalizar(re.sub(r"\([^)]*\)", " ", disciplina.nome))
+            if re.search(rf"(?<![a-z0-9]){re.escape(termo)}(?![a-z0-9])", nome):
+                candidatas.append(disciplina)
+        return sorted(candidatas, key=lambda d: (d.semestre, d.codigo))
+
+    def _resolver_lista_aprovadas(
+        self, pergunta: str
+    ) -> tuple[list[str], list[str], dict[str, list[Disciplina]]] | None:
+        """Resolve cada item informado após passando/passei/aprovadas."""
+        inicio = re.search(r"\b(?:passando|passei|aprovad[oa]s?)\b", pergunta, re.I)
+        if not inicio:
+            return None
+        trecho = pergunta[inicio.end():]
+        trecho = re.split(
+            r"\b(?:o que abre|quais\b.*?\babre)\b|[?!]",
+            trecho,
+            maxsplit=1,
+            flags=re.I,
+        )[0]
+        trecho = re.sub(r"^\s*(?:em|nas|nos|nestas|nestes|nessas|nesses)\b", "", trecho, flags=re.I)
+        trecho = trecho.strip(" \t,;:.!?\n")
+        if not trecho:
+            return [], [], {}
+
+        grupos = [g.strip() for g in re.split(r"[,;]+", trecho) if g.strip()]
+        itens: list[str] = []
+        for grupo in grupos:
+            grupo_norm = _normalizar(re.sub(r"\([^)]*\)", " ", grupo)).strip()
+            nome_exato = any(
+                grupo_norm == _normalizar(re.sub(r"\([^)]*\)", " ", d.nome)).strip()
+                for d in self.disciplinas.values()
+            )
+            if " e " in f" {grupo_norm} " and not nome_exato:
+                itens.extend(p.strip() for p in re.split(r"\s+e\s+", grupo, flags=re.I) if p.strip())
+            else:
+                itens.append(grupo)
+
+        codigos: set[str] = set()
+        nao_reconhecidas: list[str] = []
+        ambiguas: dict[str, list[Disciplina]] = {}
+        for item in itens:
+            correspondencias = self.buscar_disciplinas(item)
+            if not correspondencias:
+                correspondencias = self._candidatas_por_nome_parcial(item)
+            if len(correspondencias) == 1:
+                codigos.add(correspondencias[0].codigo)
+            elif len(correspondencias) > 1:
+                ambiguas[item] = correspondencias
+            else:
+                nao_reconhecidas.append(item.strip(" \t,;:.!?"))
+
+        return sorted(codigos), nao_reconhecidas, ambiguas
+
     def _to_aresta(self, origem: str, destino: str, attrs: dict) -> Aresta:
         return Aresta(
             origem=origem,
@@ -1451,10 +1511,17 @@ class GrafoCurricular:
             }
 
         if re.search(r"passando|passei|aprovad[oa]s?|o que abre|quais.*abre", texto):
-            if not codigos:
+            resolucao_lista = self._resolver_lista_aprovadas(pergunta)
+            nao_reconhecidas: list[str] = []
+            ambiguas: dict[str, list[Disciplina]] = {}
+            if resolucao_lista is not None:
+                codigos_lista, nao_reconhecidas, ambiguas = resolucao_lista
+                codigos = set(codigos_lista)
+                disciplinas = [self.disciplinas[c] for c in codigos_lista]
+            if not codigos and not nao_reconhecidas and not ambiguas:
                 return None
             abertas, incertas = self.disciplinas_que_abrem(codigos)
-            aprovadas_txt = ", ".join(sorted(codigos))
+            aprovadas_txt = ", ".join(sorted(codigos)) or "nenhuma disciplina reconhecida"
             arestas_usadas = [
                 a for a in self.arestas
                 if a.destino in abertas + incertas
@@ -1483,6 +1550,14 @@ class GrafoCurricular:
                 evidencia = self._evidencia(
                     codigos | set(abertas) | set(incertas), arestas_usadas + arestas_tracejadas
                 )
+            if nao_reconhecidas:
+                resposta += " Não reconheci: " + ", ".join(nao_reconhecidas) + "."
+            if ambiguas:
+                avisos_ambiguos = []
+                for item, candidatas in ambiguas.items():
+                    opcoes = ", ".join(f"{d.nome} ({d.codigo})" for d in candidatas)
+                    avisos_ambiguos.append(f"{item} pode se referir a: {opcoes}")
+                resposta += " Não consegui identificar com segurança: " + "; ".join(avisos_ambiguos) + "."
             nota_eq = self._nota_resolucao_equivalencia(codigos_consulta)
             if nota_eq:
                 resposta += f" {nota_eq}"
@@ -1494,6 +1569,11 @@ class GrafoCurricular:
                     "aprovadas": sorted(codigos),
                     "abertas_confirmadas": [self._no_resumo(c) for c in abertas],
                     "relacoes_incertas": [self._no_resumo(c) for c in incertas],
+                    "disciplinas_nao_reconhecidas": nao_reconhecidas,
+                    "disciplinas_ambiguas": {
+                        item: [self._no_resumo(d.codigo) for d in candidatas]
+                        for item, candidatas in ambiguas.items()
+                    },
                 },
                 "texto": resposta,
                 "evidencia": evidencia,

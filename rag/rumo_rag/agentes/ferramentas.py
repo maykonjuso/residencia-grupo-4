@@ -181,6 +181,17 @@ def _validar_redacao_grafo(texto_limpo: str, res: ResultadoFerramenta) -> list[s
         abertas = _extrair_codigos_lista(dados, "abertas_confirmadas")
         incertas = _extrair_codigos_lista(dados, "relacoes_incertas")
         codigos_obrigatorios = [*abertas, *incertas]
+        nao_reconhecidas = dados.get("disciplinas_nao_reconhecidas") or []
+        ambiguas = dados.get("disciplinas_ambiguas") or {}
+        for item in nao_reconhecidas:
+            if "nao reconheci" not in texto_norm or _norm(str(item)) not in texto_norm:
+                violacoes.append(f"faltou_aviso_nao_reconhecida_{item}")
+        if ambiguas and "nao consegui identificar com seguranca" not in texto_norm:
+            violacoes.append("faltou_aviso_disciplina_ambigua")
+        for item, candidatas in ambiguas.items():
+            if _norm(str(item)) not in texto_norm:
+                violacoes.append(f"faltou_item_ambiguo_{item}")
+            codigos_obrigatorios.extend(_extrair_codigos_lista({"candidatas": candidatas}, "candidatas"))
         if incertas:
             precisa_incerteza = True
             precisa_sigaa = True
@@ -235,6 +246,7 @@ def redigir_com_ferramenta(
             "incertas/tracejadas, mantendo 'confirme no SIGAA' quando aplicável.\n"
             "- Se confirmados ou abertas_confirmadas estiver vazio, NUNCA afirme que a disciplina é "
             "pré-requisito confirmado nem que ela está liberada por seta cheia.\n"
+            "- Preserve os avisos sobre disciplinas não reconhecidas ou ambíguas; para nomes ambíguos, liste as opções e seus códigos.\n"
         )
 
     instrucoes_ferr = (

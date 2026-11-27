@@ -131,6 +131,39 @@ def test_passar_em_tres_disciplinas_calcula_o_conjunto_que_abre():
     assert "Estruturas de Dados 1 (FGA0146)" in consulta.conteudo
 
 
+def test_passar_com_nome_parcial_ambiguo_lista_opcoes_sem_omitir_item():
+    res = carregar_grafo().consultar_estruturado(
+        "Passando em Cálculo 1, Algoritmos e Introdução à Engenharia, o que abre?"
+    )
+
+    assert res is not None
+    assert "Cálculo 2 (MAT0026)" in res["texto"]
+    assert "não consegui identificar com segurança: algoritmos" in res["texto"].lower()
+    assert "CIC0004" in res["texto"]
+    assert "FGA0124" in res["texto"]
+    assert "FGA0163" in res["dados"]["aprovadas"]
+
+
+def test_lista_de_aprovadas_avisa_disciplina_nao_reconhecida():
+    res = carregar_grafo().consultar_estruturado(
+        "Passei em Cálculo 1, Disciplina Inventada, o que abre?"
+    )
+
+    assert res is not None
+    assert "Cálculo 2 (MAT0026)" in res["texto"]
+    assert "Não reconheci: Disciplina Inventada." in res["texto"]
+    assert res["dados"]["disciplinas_nao_reconhecidas"] == ["Disciplina Inventada"]
+
+
+def test_nome_parcial_unico_e_resolvido_na_lista_de_aprovadas():
+    res = carregar_grafo().consultar_estruturado("Passei em Compiladores; o que abre?")
+
+    assert res is not None
+    assert "FGA0003" in res["dados"]["aprovadas"]
+    assert res["dados"]["disciplinas_nao_reconhecidas"] == []
+    assert res["dados"]["disciplinas_ambiguas"] == {}
+
+
 def test_siglas_derivadas_dinamicamente_e_ausencia_de_falsos_positivos():
     grafo = carregar_grafo()
 
