@@ -8,6 +8,7 @@ A **Tabela 1** apresenta o histórico de versões e entregas publicadas nesta Gi
 | 2.0 | 09/11/2026 | [Entrega 2 · Base de conhecimento + protótipo de RAG](../entrega-2/index.md) | 36 fontes, chunking, embeddings, ChromaDB, busca híbrida, LLM local, demonstração com fontes, avaliação e diagrama animado de integração |
 | 3.0 | 13/11/2026 | [Entrega 3 · Respostas baseadas em evidências](../entrega-3/index.md) | Comparação empírica com e sem RAG nas 32 perguntas-ouro, fidelidade, alucinação, análise de falha e reescrita de consulta |
 | 4.0 | 20/11/2026 | [Entrega 4 · Primeiro Protótipo Multiagente](../entrega-4/index.md) | Orquestrador, Agente RU, Agente Fluxo, Agente Validador, Sintetizador, paralelismo, estudo comparativo de roteamento, integração do cardápio semanal com alergênicos e API v1.0 multiagente |
+| 5.0 | Em preparação | [Entrega 5 · Assistente de IA Multimodal](../entrega-5/index.md) | Modalidades (Texto, PDF e ícones de alergênicos), política bloqueante LGPD para documentos pessoais (`#59`), limitações, casos de falha e demonstração |
 
 <p class="legenda">Tabela 1. Histórico de versões desta GitPage.</p>
 
@@ -26,6 +27,7 @@ Ao clicar no botão, o script [`rumo.js`](../javascripts/rumo.js) lê automatica
    - **Entrega 2:** [`/entrega-2/`](../entrega-2/index.md)
    - **Entrega 3:** [`/entrega-3/`](../entrega-3/index.md)
    - **Entrega 4:** [`/entrega-4/`](../entrega-4/index.md)
+   - **Entrega 5:** [`/entrega-5/`](../entrega-5/index.md)
 2. Role até o final da página e clique no botão **📄 Gerar PDF consolidado desta Entrega (A4)**.
 3. Na janela de impressão do navegador, confirme:
    - **Destino:** Salvar como PDF
@@ -103,3 +105,4 @@ A **Tabela 4** consolida as decisões arquiteturais tomadas na implantação do 
     | 13/11/2026 | 3.0 | Consolidação das decisões da Entrega 3, guia de exportação em PDF único (Issue #21) e purga de latência (R3) | Grupo 04 |
     | 16/11/2026 | 4.0 | Inclusão da versão 4.0 (Entrega 4 · Primeiro Protótipo Multiagente) e registro de decisões arquiteturais | Grupo 04 |
     | 20/11/2026 | 4.0 | Fechamento da Entrega 4 (guia de exportação PDF A4 da Issue #48 e consolidação das mudanças finais) | Grupo 04 |
+    | 25/11/2026 | 5.0 | Inclusão da Entrega 5 (Multimodalidade e política LGPD de documentos pessoais da Issue #59) | Grupo 04 |

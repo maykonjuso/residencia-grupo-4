@@ -16,7 +16,7 @@ import time
 from typing import Any
 import unicodedata
 
-from .. import config, geracao
+from .. import config, geracao, privacidade
 from ..coleta import cardapio
 from ..grafo_curricular import carregar_grafo_f16, carregar_repositorio_grafos
 
@@ -214,6 +214,10 @@ def _validar_redacao_grafo(texto_limpo: str, res: ResultadoFerramenta) -> list[s
     return violacoes
 
 
+FERRAMENTAS_DADOS_PESSOAIS = frozenset({"minha_agenda"})
+BACKENDS_LLM_EXTERNOS = frozenset({"openai", "openrouter"})
+
+
 def redigir_com_ferramenta(
     pergunta: str,
     res: ResultadoFerramenta,
@@ -223,6 +227,11 @@ def redigir_com_ferramenta(
     """Redige resposta natural via LLM sobre a saída estruturada da ferramenta, quando aplicável."""
     alertas = list(res.alertas)
     backend_efetivo = config.BACKEND if backend == "auto" else backend
+    if res.ferramenta in FERRAMENTAS_DADOS_PESSOAIS and backend_efetivo in BACKENDS_LLM_EXTERNOS:
+        alertas.append(
+            "Dados do perfil do estudante não são enviados a LLM externo; resposta determinística preservada."
+        )
+        return res.texto_base, 0.0, alertas, False
     if res.recusado or not res.trechos_evidencia or backend_efetivo not in BACKENDS_LLM:
         return res.texto_base, 0.0, alertas, False
 
@@ -831,12 +840,30 @@ def _normalizar_dia_semana(dia: str | None, hoje: date | None = None) -> str:
     return _DIAS_CURTOS.get(bruto, dia.strip().lower())
 
 
+def _nome_disciplina_local(codigo: str) -> str:
+    """Resolve o nome oficial da disciplina localmente a partir do grafo curricular."""
+    cod = str(codigo or "").strip().upper()
+    if not cod:
+        return ""
+    try:
+        repo = carregar_repositorio_grafos()
+        for grafo in repo.curriculos.values():
+            disc = grafo.disciplinas.get(cod)
+            if disc is not None and disc.nome:
+                return disc.nome
+    except Exception:
+        pass
+    return cod
+
+
 def minha_agenda(dia: str | None = None, perfil: dict[str, Any] | None = None) -> ResultadoFerramenta:
     """Retorna as aulas do dia com horário e sala a partir do perfil local do estudante."""
     dia_norm = _normalizar_dia_semana(dia)
-    args = {"dia": dia_norm, "perfil_informado": bool(perfil and perfil.get("aulas"))}
-    aulas_brutas = (perfil or {}).get("aulas") if isinstance(perfil, dict) else None
-    if not isinstance(aulas_brutas, list) or not aulas_brutas:
+    perfil_limpo = privacidade.sanitizar_perfil_contexto(perfil)
+    aulas_brutas = (perfil_limpo or {}).get("aulas") or []
+    discs_brutas = (perfil_limpo or {}).get("disciplinas") or []
+    args = {"dia": dia_norm, "perfil_informado": bool(aulas_brutas or discs_brutas)}
+    if not aulas_brutas and not discs_brutas:
         motivo = "Não há aulas cadastradas no perfil do estudante para consultar a agenda."
         return ResultadoFerramenta(
             ferramenta="minha_agenda",
@@ -851,18 +878,39 @@ def minha_agenda(dia: str | None = None, perfil: dict[str, Any] | None = None) -
         )
 
     dia_cmp = _norm(dia_norm)
-    aulas_dia = [
-        {
+    dia_prefixo = dia_cmp.split("-")[0]
+    aulas_dia: list[dict[str, str]] = []
+
+    for a in aulas_brutas:
+        if not _norm(str(a.get("dia") or "")).startswith(dia_prefixo):
+            continue
+        cod = str(a.get("codigo") or "").strip().upper()
+        nome = str(a.get("disciplina") or a.get("nome") or "").strip() or _nome_disciplina_local(cod)
+        aulas_dia.append({
             "dia": str(a.get("dia") or dia_norm),
             "horario": str(a.get("horario") or "").strip(),
-            "codigo": str(a.get("codigo") or "").strip(),
-            "disciplina": str(a.get("disciplina") or a.get("nome") or "").strip(),
+            "codigo": cod,
+            "turma": str(a.get("turma") or "").strip(),
+            "disciplina": nome,
             "sala": str(a.get("sala") or "").strip(),
-        }
-        for a in aulas_brutas
-        if isinstance(a, dict) and _norm(str(a.get("dia") or "")).startswith(dia_cmp.split("-")[0])
-    ]
-    aulas_dia.sort(key=lambda a: a["horario"])
+        })
+
+    for d in discs_brutas:
+        cod = d["codigo"]
+        nome_disc = _nome_disciplina_local(cod)
+        for slot in privacidade.decodificar_horario_sigaa(d.get("horario", "")):
+            if not _norm(slot["dia"]).startswith(dia_prefixo):
+                continue
+            aulas_dia.append({
+                "dia": slot["dia"],
+                "horario": slot["horario"],
+                "codigo": cod,
+                "turma": d.get("turma", ""),
+                "disciplina": nome_disc,
+                "sala": d.get("sala", ""),
+            })
+
+    aulas_dia.sort(key=lambda a: (a["horario"], a["codigo"]))
 
     if not aulas_dia:
         motivo = f"Não há aulas cadastradas no perfil para {dia_norm}."
@@ -888,12 +936,17 @@ def minha_agenda(dia: str | None = None, perfil: dict[str, Any] | None = None) -
         "url": "",
         "chunk_id": f"PERFIL-{dia_cmp}",
     }
-    linhas = [
-        f"{a['horario']} · {a['disciplina']} ({a['codigo']}) — Sala {a['sala'] or 'não informada'}"
-        if a["codigo"]
-        else f"{a['horario']} · {a['disciplina']} — Sala {a['sala'] or 'não informada'}"
-        for a in aulas_dia
-    ]
+    linhas = []
+    for a in aulas_dia:
+        id_turma = f"{a['codigo']} · Turma {a['turma']}" if a.get("turma") and a["codigo"] else a["codigo"]
+        if a["disciplina"] and a["disciplina"] != a["codigo"] and id_turma:
+            rotulo = f"{a['disciplina']} ({id_turma})"
+        elif id_turma:
+            rotulo = id_turma
+        else:
+            rotulo = a["disciplina"]
+        linhas.append(f"{a['horario']} · {rotulo} — Sala {a['sala'] or 'não informada'}")
+
     trecho = {**fonte, "texto": f"Agenda de {dia_norm}:\n" + "\n".join(f"- {l}" for l in linhas), "similaridade": 1.0}
     resp = f"Suas aulas em {dia_norm} [1]:\n" + "\n".join(f"- {l} [1]" for l in linhas)
     return ResultadoFerramenta(
@@ -1030,7 +1083,7 @@ def extrair_chamada_fluxo(pergunta: str, contexto: dict[str, Any] | None = None)
                 if re.search(rf"\b{chave}(?:-feira)?\b", q):
                     dia_arg = chave
                     break
-        return ("minha_agenda", {"dia": dia_arg, "perfil": ctx.get("perfil")})
+        return ("minha_agenda", {"dia": dia_arg, "perfil": privacidade.sanitizar_perfil_contexto(ctx.get("perfil"))})
 
     curso = ctx.get("curso")
     curriculo_id = ctx.get("curriculo_id")
