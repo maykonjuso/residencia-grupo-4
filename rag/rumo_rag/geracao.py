@@ -117,9 +117,10 @@ def _gerar_extrativo(pergunta, trechos):
     candidatas = []
     for i, t in enumerate(trechos, start=1):
         for frase in re.split(r"(?<=[.;!?])\s+|\n", t["texto"]):
+            frase = re.sub(r"^(?:[-–—*•]\s*)+", "", frase.strip())
             sobreposicao = len(termos & set(tokenizar(frase)))
             if sobreposicao and len(frase) > 25:
-                candidatas.append((sobreposicao, i, frase.strip()))
+                candidatas.append((sobreposicao, i, frase))
     candidatas.sort(key=lambda x: -x[0])
     if not candidatas:
         return RECUSA

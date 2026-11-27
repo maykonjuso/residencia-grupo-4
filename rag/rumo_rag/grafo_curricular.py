@@ -1357,7 +1357,10 @@ class GrafoCurricular:
                 r"|gargalo|destrava.*mais|mais (?:materias|disciplinas)|maior numero"
                 r"|passando|passei|aprovad[oa]s?|o que abre|quais.*abre"
                 r"|reprov|trava|bloque|dependente|depende de"
-                r"|pre-?requisito|co-?requisito",
+                r"|pre-?requisito|co-?requisito"
+                r"|o que (?:eu )?(?:preciso|tenho que|devo) (?:cursar|fazer) antes de"
+                r"|o que (?:eu )?precisa? para cursar"
+                r"|^(?:quais? (?:sao )?(?:os )?)?requisitos? (?:de|para)",
                 texto,
             )
         )
@@ -1569,7 +1572,7 @@ class GrafoCurricular:
                 "alertas": [],
             }
 
-        if re.search(r"pre-?requisito|co-?requisito", texto) and disciplinas:
+        if eh_prereq_op and disciplinas:
             alvo = disciplinas[-1]
             confirmados, incertos = self.prerequisitos(alvo.codigo)
             coreqs = self.correquisitos_de(alvo.codigo)

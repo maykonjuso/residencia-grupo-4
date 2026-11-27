@@ -319,6 +319,43 @@ class TestCardapioEMontarPrato(unittest.TestCase):
 
 
 class TestGrafoEMinhaAgenda(unittest.TestCase):
+    def test_variacoes_de_pergunta_de_prerequisito_acionam_grafo_fluxo(self):
+        perguntas = [
+            "O que preciso cursar antes de Testes de Software?",
+            "O que tenho que fazer antes de Testes de Software?",
+            "O que precisa para cursar Testes de Software?",
+            "Quais são os requisitos de Testes de Software?",
+        ]
+        for pergunta in perguntas:
+            with self.subTest(pergunta=pergunta):
+                chamada = ferramentas.extrair_chamada_fluxo(pergunta)
+                self.assertIsNotNone(chamada)
+                nome, argumentos = chamada
+                self.assertEqual(nome, "grafo_fluxo")
+
+                resultado = ferramentas.grafo_fluxo(**argumentos)
+                self.assertEqual(resultado.dados["tipo_consulta"], "prerequisitos")
+                self.assertEqual(resultado.dados["disciplina"]["codigo"], "FGA0314")
+                self.assertEqual(
+                    {item["codigo"] for item in resultado.dados["confirmados"]},
+                    {"FGA0312"},
+                )
+                self.assertEqual(
+                    resultado.dados["confirmados"][0]["alternativas"][0]["codigo"],
+                    "FGA0313",
+                )
+                self.assertNotIn("FGA0317", resultado.texto_base)
+                self.assertNotIn("FGA0316", resultado.texto_base)
+
+    def test_resposta_extrativa_nao_duplica_marcador_de_lista(self):
+        resposta = geracao._gerar_extrativo(
+            "pré-requisitos de Testes de Software",
+            [{"texto": "- Para cursar Testes de Software (FGA0314), é preciso cumprir o pré-requisito."}],
+        )
+
+        self.assertTrue(resposta.startswith("- Para cursar Testes de Software"))
+        self.assertNotIn("- - ", resposta)
+
     def test_grafo_fluxo_devolve_dado_estruturado_com_ou_alternativo(self):
         res = ferramentas.grafo_fluxo("Quais os pré-requisitos de Testes de Software?")
         self.assertTrue(res.sucesso)
