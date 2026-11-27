@@ -27,7 +27,7 @@ A Entrega 4 evolui o fluxo único da Entrega 3 para o primeiro **sistema multiag
 ### Além do pedido
 
 - [x] **Cardápio semanal estruturado com alergênicos (`#54`, `#55`):** `cardapio_semanal.json` organizado por compartimento, trilha alimentar e alergênicos por prato como fonte direta do Agente do RU.
-- [x] **API v1.0 multiagente e nuvem (`#44`, `#53`):** `POST /perguntar` integrado ao `Orquestrador` mantendo o contrato v1.0 estrito (`trace` opcional), base expandida para 54 fontes e preparo leve para deploy na Vercel e no Render.
+- [x] **API v1.0 multiagente e nuvem (`#44`, `#53`):** `POST /perguntar` integrado ao `Orquestrador` mantendo o contrato v1.0 estrito (`trace` opcional), base com 56 documentos cadastrados em `rag/catalogo.yaml` (55 indexados em 1.964 chunks em `rag/dados/chunks.jsonl`) e preparo leve para deploy na Vercel e no Render.
 
 ---
 

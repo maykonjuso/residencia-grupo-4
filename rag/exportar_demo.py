@@ -28,7 +28,7 @@ for d in dados:
         sim = "" if t.get("similaridade") is None else f'{t["similaridade"]:.3f}'
         secao = (t.get("secao") or "").replace("|", "/")[-60:]
         linhas.append(f'| {i} | `{t["chunk_id"]}` | {t["titulo"]} | {t["pagina"]} | {secao} | {sim} |')
-    resp = d["resposta"].replace("\n", "\n    ")
+    resp = "\n    ".join(l.rstrip() for l in d["resposta"].splitlines())
     linhas.append(f'\n!!! quote "Resposta gerada ({d["backend_rotulo"]})"\n    {resp}\n')
     if d["fontes_citadas"]:
         linhas.append("**Fontes citadas na resposta:**\n")

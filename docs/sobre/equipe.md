@@ -23,7 +23,7 @@ sistema, para que nenhuma parte fique sem responsável.
 
 | Componente | Responsabilidade | Onde fica |
 |---|---|---|
-| Base de conhecimento | Catálogo das 56 fontes oficiais (55 indexadas em RAG + cardápio semanal estruturado), extração dos PDFs e estratégia de chunking | `rag/catalogo.yaml`, `rag/rumo_rag/extracao.py`, `chunking.py`, `cardapio.py` |
+| Base de conhecimento | 56 documentos oficiais cadastrados (55 indexados em RAG, totalizando 1.964 chunks; inclui o cardápio semanal estruturado), extração dos PDFs e estratégia de chunking | `rag/catalogo.yaml`, `rag/dados/chunks.jsonl`, `rag/rumo_rag/extracao.py`, `chunking.py`, `cardapio.py` |
 | Recuperação | Embeddings, banco vetorial e busca híbrida | `rag/rumo_rag/indice.py` |
 | Geração | Prompt, LLM (local ou OpenRouter), citação das fontes e recusa fora da base | `rag/rumo_rag/geracao.py` |
 | Avaliação | Perguntas-ouro, métricas de recuperação, fidelidade e alucinação | `rag/avaliacao/` |
