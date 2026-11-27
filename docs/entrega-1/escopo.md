@@ -41,11 +41,13 @@ comando, com fontes, e recusa fora da base. O que vem depois são os entregávei
 | RF03 | Citar, em cada resposta, os trechos usados (documento, página e URL) | must · MVP | 2 | Semana 2 | entregue |
 | RF04 | Responder "Não encontrei essa informação nas fontes da base" quando não houver base | must · MVP | 2 | Semana 2 | entregue |
 | RF05 | Ler cardápios em PDF como tabela, separando refeição e dia | must · MVP | 2 | Semana 2 | entregue |
-| RF06 | Expor `POST /perguntar` no contrato comum com o Grupo 09 | should | 4 | Semana 4 | planejado |
+| RF06 | Expor `POST /perguntar` no contrato comum com o Grupo 09 | should | 4 | Semana 4 | entregue |
 | RF07 | Receber foto de prato ou cardápio e identificar os componentes | could | 5 | Semana 5 | planejado |
-| RF08 | Atualizar o cardápio semanal automaticamente | should | 6 | Semana 6 | planejado |
+| RF08 | Atualizar o cardápio semanal automaticamente | should | 6 | Semana 6 | parcial |
 
 <p class="legenda">Tabela 1. Requisitos funcionais. <strong>Prioridade</strong> é o valor para quem usa o RUmo; <strong>Obrigatório</strong> é a semana em que o Challenge 2 cobra o entregável. RF01–RF05 formam o MVP.</p>
+
+O RF06 está no ar desde a Entrega 4: a API responde `POST /perguntar` no contrato v1.0, agora pelo fluxo multiagente (`#35`, `#44`). O RF08 está parcial: o código de coleta existe (`python -m rumo_rag.coleta`, `#50`) e a API sincroniza o `cardapio_semanal.json` em segundo plano, mas o workflow agendado `coleta-cardapio.yml` falha em toda execução, e a semana de 23/11 não entrou na base (`#102`).
 
 ## Requisitos não funcionais
 
@@ -65,3 +67,4 @@ comando, com fontes, e recusa fora da base. O que vem depois são os entregávei
     | Data | Versão | Descrição | Autor |
     | :---: | :---: | --- | --- |
     | 09/11/2026 | 1.1 | Declara o MVP, prioriza RF01–RF08 e separa valor de produto de obrigação de cronograma | Maykon Soares |
+    | 26/11/2026 | 1.2 | Atualiza a situação de RF06 (entregue) e RF08 (parcial, `#100`) | Maykon Soares |
