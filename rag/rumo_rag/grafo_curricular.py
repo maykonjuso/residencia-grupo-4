@@ -1556,8 +1556,8 @@ class GrafoCurricular:
                 avisos_ambiguos = []
                 for item, candidatas in ambiguas.items():
                     opcoes = ", ".join(f"{d.nome} ({d.codigo})" for d in candidatas)
-                    avisos_ambiguos.append(f"{item} pode se referir a: {opcoes}")
-                resposta += " Não consegui identificar com segurança: " + "; ".join(avisos_ambiguos) + "."
+                    avisos_ambiguos.append(f"{item} (opções: {opcoes})")
+                resposta += " Não reconheci com segurança: " + "; ".join(avisos_ambiguos) + "."
             nota_eq = self._nota_resolucao_equivalencia(codigos_consulta)
             if nota_eq:
                 resposta += f" {nota_eq}"

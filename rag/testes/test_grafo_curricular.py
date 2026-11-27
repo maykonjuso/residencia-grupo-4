@@ -138,7 +138,7 @@ def test_passar_com_nome_parcial_ambiguo_lista_opcoes_sem_omitir_item():
 
     assert res is not None
     assert "Cálculo 2 (MAT0026)" in res["texto"]
-    assert "não consegui identificar com segurança: algoritmos" in res["texto"].lower()
+    assert "não reconheci com segurança: algoritmos" in res["texto"].lower()
     assert "CIC0004" in res["texto"]
     assert "FGA0124" in res["texto"]
     assert "FGA0163" in res["dados"]["aprovadas"]

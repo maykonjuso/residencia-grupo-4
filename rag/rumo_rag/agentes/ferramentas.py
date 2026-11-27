@@ -186,7 +186,7 @@ def _validar_redacao_grafo(texto_limpo: str, res: ResultadoFerramenta) -> list[s
         for item in nao_reconhecidas:
             if "nao reconheci" not in texto_norm or _norm(str(item)) not in texto_norm:
                 violacoes.append(f"faltou_aviso_nao_reconhecida_{item}")
-        if ambiguas and "nao consegui identificar com seguranca" not in texto_norm:
+        if ambiguas and "nao reconheci com seguranca" not in texto_norm:
             violacoes.append("faltou_aviso_disciplina_ambigua")
         for item, candidatas in ambiguas.items():
             if _norm(str(item)) not in texto_norm:
