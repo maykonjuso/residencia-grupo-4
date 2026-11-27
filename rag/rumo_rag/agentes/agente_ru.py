@@ -14,6 +14,10 @@ from .mensagem import Mensagem, Resposta
 # Protege chamadas simultâneas ao índice vetorial/BM25 em execução paralela (ChromaDB RustBindingsAPI).
 _LOCK_INDICE = threading.Lock()
 
+# Calibrado em BM25 com as perguntas-ouro: D7 fora da base max=9,036;
+# menor positivo sem termos de domínio (Q12) max=9,551 no eixo Fluxo.
+LIMIAR_BM25_SEM_DOMINIO = 9.3
+
 _TERMOS_RU = re.compile(
     r"\b(?:"
     r"ru|restaurante(?:\s+universit[aá]rio)?|almo[cç]o|jantar|caf[eé](?:\s+da\s+manh[aã])?|"
@@ -69,6 +73,14 @@ def pergunta_fora_do_dominio(pergunta: str, eixo: str) -> bool:
     return False
 
 
+def pergunta_sem_dominio(pergunta: str) -> bool:
+    """Retorna True quando a pergunta não contém sinais dos domínios RU nem Fluxo."""
+    if not isinstance(pergunta, str) or not pergunta.strip():
+        return True
+    base = _sem_anotacao_data(pergunta)
+    return not _TERMOS_RU.search(base) and not _TERMOS_FLUXO.search(base)
+
+
 def executar_agente_dominio(agente: Any, mensagem: Mensagem) -> Resposta:
     """Fluxo compartilhado (Opção A): guarda de domínio, busca via pesquisar(), geração e higienização."""
     contexto = mensagem.contexto if isinstance(mensagem.contexto, dict) else {}
@@ -91,6 +103,19 @@ def executar_agente_dominio(agente: Any, mensagem: Mensagem) -> Resposta:
 
     trechos = resultado["trechos"]
     contexto["trechos_recuperados"] = trechos
+
+    if backend == "extrativo" and pergunta_sem_dominio(mensagem.conteudo):
+        scores = [float(t["score_bm25"]) for t in trechos if t.get("score_bm25") is not None]
+        if scores and max(scores) < LIMIAR_BM25_SEM_DOMINIO:
+            contexto["trechos_recuperados"] = []
+            contexto["tempo_busca_s"] = round(t1 - t0, 3)
+            contexto["tempo_geracao_s"] = 0.0
+            return Resposta(
+                conteudo=geracao.RECUSA,
+                fontes=[],
+                confianca=0.0,
+                alertas=["Pergunta sem termos de domínio e com relevância BM25 abaixo do limiar."],
+            )
 
     trechos_norm = [
         {

@@ -95,6 +95,37 @@ def test_perguntar_criterio_issue_44_preserva_contrato_v1_estrito(client):
         assert isinstance(fonte["pagina"], int)
 
 
+def test_perguntar_fora_da_base_no_backend_extrativo_recusa_sem_fontes(client):
+    r = client.post(
+        "/perguntar",
+        json={
+            "pergunta": "Quem ganhou a copa de 2022?",
+            "contexto": {"campus": "gama"},
+        },
+    )
+
+    assert r.status_code == 200
+    dados = r.json()
+    assert geracao.RECUSA in dados["resposta"]
+    assert dados["encontrou_base"] is False
+    assert dados["fontes"] == []
+
+
+def test_perguntas_ouro_sem_termos_de_dominio_mas_com_relevancia_nao_sao_recusadas(client):
+    r = client.post(
+        "/perguntar",
+        json={
+            "pergunta": "Quais são os órgãos colegiados da Faculdade do Gama segundo o regimento interno?",
+            "contexto": {"campus": "gama"},
+        },
+    )
+
+    assert r.status_code == 200
+    dados = r.json()
+    assert dados["encontrou_base"] is True
+    assert dados["fontes"]
+
+
 def test_perguntar_inclui_trace_quando_pedido_no_body_ou_query(client):
     r_body = client.post(
         "/perguntar",

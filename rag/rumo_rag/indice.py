@@ -141,6 +141,7 @@ def _buscar_simples(pergunta: str, k: int = config.TOP_K, modo: str = "hibrido",
     por_id = {c["chunk_id"]: c for c in chunks}
     rankings: list[list[str]] = []
     distancias: dict[str, float] = {}
+    notas_bm25: dict[str, float] = {}
     pesos: list[float] = []
 
     # datas e códigos são identificadores exatos: o embedding quase não os distingue
@@ -156,6 +157,7 @@ def _buscar_simples(pergunta: str, k: int = config.TOP_K, modo: str = "hibrido",
 
     if modo in ("bm25", "hibrido"):
         notas = bm25.get_scores(tokenizar(pergunta))
+        notas_bm25 = {chunks[i]["chunk_id"]: float(nota) for i, nota in enumerate(notas)}
         ordem = sorted(range(len(chunks)), key=lambda i: -notas[i])
         ids = [chunks[i]["chunk_id"] for i in ordem if not eixo or chunks[i]["eixo"] == eixo]
         rankings.append(ids[:config.CANDIDATOS])
@@ -172,6 +174,8 @@ def _buscar_simples(pergunta: str, k: int = config.TOP_K, modo: str = "hibrido",
             continue
         c = dict(por_id[cid])
         c["nota_rrf"] = round(nota, 5)
+        if cid in notas_bm25:
+            c["score_bm25"] = round(notas_bm25[cid], 3)
         if cid in distancias:
             c["similaridade"] = round(1 - distancias[cid], 4)
         resultado.append(c)
