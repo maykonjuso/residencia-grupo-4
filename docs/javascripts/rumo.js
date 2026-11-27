@@ -219,7 +219,7 @@
     indice: [1020, 62, 165, 76, "ChromaDB", "banco vetorial"],
     llm04: [825, 178, 165, 76, "LLM gerador", "Qwen2.5-7B local"],
     resp04: [630, 178, 165, 76, "Resposta", "com fontes [n]"],
-    base: [630, 288, 165, 70, "Base curada", "56 fontes oficiais"],
+    base: [630, 288, 165, 70, "Base curada", "57 fontes oficiais"],
     ingest: [825, 288, 165, 70, "Ingestão", "extrair · chunk · embed"],
     api09: [630, 470, 165, 76, "API do Grupo 09", "POST /perguntar"],
     rag09: [825, 470, 165, 76, "RAG do Grupo 09", "salas e acessos"],

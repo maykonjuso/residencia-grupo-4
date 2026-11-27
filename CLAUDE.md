@@ -33,7 +33,8 @@ Quebrar qualquer uma é bug de produto, não questão de estilo. A lista formal 
 - **Fora da base, recusa**: "Não encontrei essa informação nas fontes da base" (RF04)
 - **Nada sai para serviço externo por padrão**: LLM e embeddings locais; API externa só se
   configurada explicitamente (RNF02)
-- **Nenhum dado pessoal**: sem login, sem SIGAA, sem registro de identidade (RNF06)
+- **Nenhum dado pessoal**: sem login, sem área autenticada do SIGAA, sem registro de identidade (RNF06).
+  Do SIGAA, só as consultas públicas de turmas e componentes (`/sigaa/public/`), sem nome de docente
 
 ## Convenções
 
@@ -78,8 +79,8 @@ mais caro que esta documentação pode ter.
 
 | Número | Fonte de verdade |
 |---|---|
-| 56 fontes (F01–F07, F10–F58) | `rag/catalogo.yaml` |
-| 1.964 chunks (55 fontes; F56 em `cardapio_semanal.json`) | `rag/dados/chunks.jsonl` |
+| 57 fontes (F01–F07, F10–F59) | `rag/catalogo.yaml` |
+| 2.001 chunks (56 fontes; F56 em `cardapio_semanal.json`) | `rag/dados/chunks.jsonl` |
 | 32 perguntas de teste | `rag/avaliacao/perguntas/perguntas_ouro.jsonl` |
 | Hit@1, Hit@5, MRR | `rag/avaliacao/resultados/resultado_recuperacao_*.json` |
 | Modelos, limiares, pesos, tamanho de chunk | `rag/rumo_rag/config.py` |

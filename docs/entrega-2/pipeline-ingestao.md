@@ -108,8 +108,17 @@ estrutura da página e um PDF com o mesmo layout, em `rag/testes/fixtures/cardap
 
 ---
 
+## Coleta no SIGAA público
+
+A oferta de turmas do semestre e as fichas das disciplinas, com os pré-requisitos, são
+coletadas das consultas públicas do SIGAA por `python -m rumo_rag.coleta turmas` e
+`python -m rumo_rag.coleta prerequisitos`. A oferta vira a fonte F59 e entra no índice como
+as demais. O passo a passo, as limitações e a medição estão em
+[Coleta no SIGAA público](coleta-sigaa.md).
+
 ??? abstract "Histórico de revisão"
 
     | Data | Versão | Descrição | Autor |
     | :---: | :---: | --- | --- |
     | 18/11/2026 | 1.1 | Coleta automatizada do cardápio do RU Gama: fonte, formato, comandos e decisões (#50) | Kyara Esteves |
+    | 26/11/2026 | 1.2 | Coleta no SIGAA público: oferta de turmas (F59) e pré-requisitos (#52, #56) | Maykon Soares |

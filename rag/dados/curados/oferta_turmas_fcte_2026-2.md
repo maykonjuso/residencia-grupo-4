@@ -1,0 +1,270 @@
+# Horários e salas das turmas do campus Gama — semestre 2026.2
+
+Fonte: consulta pública de turmas do SIGAA da UnB (https://sigaa.unb.br/sigaa/public/turmas/listar.jsf), unidade "Faculdade de Ciências e Tecnologias em Engenharia" (FCTE, campus Gama), nível graduação, semestre 2026.2. Coletado em 2026-11-26. O horário e o local são os que o SIGAA publicava na data da coleta e podem mudar durante o semestre; confira no SIGAA antes da aula.
+Período letivo das turmas: 10/08/2026 a 14/12/2026.
+
+## Horários e salas por disciplina em 2026.2
+
+FCTE0005 Algoritmos em Grafos — horário das aulas e sala em 2026.2: turma 01: sexta, das 14:00 às 17:50, salas I9, I10. (Horário no SIGAA: 6T2345.)
+
+FCTE0009 Estimação Ótima de Sistemas Dinâmicos Aeroespaciais — horário das aulas e sala em 2026.2: turma 01: quarta e sexta, das 14:00 às 15:50, sala I1. (Horário no SIGAA: 46T23.)
+
+FCTE0014 Dinâmica dos Fluidos Computacional Aplicada — horário das aulas e sala em 2026.2: turma 01: quarta e sexta, das 08:00 às 09:50, sala CONTAINER 02. (Horário no SIGAA: 46M12.)
+
+FCTE0017 Tecnologias de Fabricação 1 — horário das aulas e sala em 2026.2: turma 01: terça e quinta, das 14:00 às 15:50, sala S8. (Horário no SIGAA: 35T23.)
+
+FCTE0018 Tecnologias de Fabricação 2 — horário das aulas e sala em 2026.2: turma 01: terça e quinta, das 10:00 às 11:50, sala I8. (Horário no SIGAA: 35M34.)
+
+FGA0003 Compiladores 1 — horário das aulas e sala em 2026.2: turma 01: segunda e quarta, das 14:00 às 15:50, salas S2, I9; turma 02: segunda e quarta, das 16:00 às 17:50, sala I10. (Horário no SIGAA: 24T23, 24T45.)
+
+FGA0008 Sistemas Aeroespaciais — horário das aulas e sala em 2026.2: turma 01: segunda e quarta, das 10:00 às 11:50, sala CONTAINER 02. (Horário no SIGAA: 24M34.)
+
+FGA0017 Projetos de Circuitos Integrados 1 — horário das aulas e sala em 2026.2: turma 01: terça e quinta, das 14:00 às 15:50, salas I6, LAB SS. (Horário no SIGAA: 35T23.)
+
+FGA0023 Dinâmica dos Mecanismos — horário das aulas e sala em 2026.2: turma 01: terça e quinta, das 08:00 às 09:50, sala S8. (Horário no SIGAA: 35M12.)
+
+FGA0025 Sistemas de Energia Solar e Eólica — horário das aulas e sala em 2026.2: turma 01: segunda e quarta, das 14:00 às 15:50, sala I8. (Horário no SIGAA: 24T23.)
+
+FGA0030 Estruturas de Dados 2 — horário das aulas e sala em 2026.2: turma 01: terça e quinta, das 08:00 às 09:50, sala S3; turma 02: segunda e sexta, das 08:00 às 09:50, sala MOCAP; turma 03: segunda e quarta, das 16:00 às 17:50, salas S9, S4. (Horário no SIGAA: 35M12, 26M12, 24T45.)
+
+FGA0037 Tópicos Especiais em Engenharia Aeroespacial — horário das aulas e sala em 2026.2: turma 01: terça e quinta, das 12:00 às 13:50, sala I6; turma 02: quarta e sexta, das 08:00 às 09:50, sala S8. (Horário no SIGAA: 35M5 35T1, 46M12.)
+
+FGA0038 Aerodinâmica de Sistemas Aeroespaciais — horário das aulas e sala em 2026.2: turma 01: terça e quinta, das 16:00 às 17:50; sexta, das 16:00 às 16:55, sala I4. (Horário no SIGAA: 35T45 6T4.)
+
+FGA0039 Mecânica de Estruturas Aeroespaciais — horário das aulas e sala em 2026.2: turma 01: segunda, das 12:00 às 12:55; terça e quinta, das 08:00 às 09:50, salas I7, I4. (Horário no SIGAA: 2M5 35M12.)
+
+FGA0043 Dinâmica dos Gases para Sistemas Aeroespaciais — horário das aulas e sala em 2026.2: turma 01: terça e quinta, das 14:00 às 15:50, sala S5. (Horário no SIGAA: 35T23.)
+
+FGA0045 Mecânica do Vôo — horário das aulas e sala em 2026.2: turma 01: quarta e sexta, das 10:00 às 11:50, sala S8. (Horário no SIGAA: 46M34.)
+
+FGA0047 Processos Petroquímicos — horário das aulas e sala em 2026.2: turma 01: terça e quinta, das 10:00 às 11:50, sala I1. (Horário no SIGAA: 35M34.)
+
+FGA0048 Mecânica do Voo Espacial — horário das aulas e sala em 2026.2: turma 01: quarta e sexta, das 10:00 às 11:50, sala I5. (Horário no SIGAA: 46M34.)
+
+FGA0050 Dinâmica de Estruturas Aeroespaciais — horário das aulas e sala em 2026.2: turma 01: terça e quinta, das 10:00 às 11:50, sala S6. (Horário no SIGAA: 35M34.)
+
+FGA0057 Eletrônica de Potência — horário das aulas e sala em 2026.2: turma 01: terça e quinta, das 10:00 às 11:50, sala LAB NEI 1. (Horário no SIGAA: 35M34.)
+
+FGA0060 Sistemas de Banco de Dados 2 — horário das aulas e sala em 2026.2: turma 01: terça e quinta, das 08:00 às 09:50, sala S10; turma 02: terça e quinta, das 14:00 às 15:50, sala I10; turma 03: segunda e quarta, das 14:00 às 15:50, salas S10, MOCAP. (Horário no SIGAA: 35M12, 35T23, 24T23.)
+
+FGA0062 Projeto de Sistemas de Observação da Terra — horário das aulas e sala em 2026.2: turma 01: segunda e quarta, das 14:00 às 15:50, sala CONTAINER 02. (Horário no SIGAA: 24T23.)
+
+FGA0066 Fundamentos de Variável Complexa para Engenharia — horário das aulas e sala em 2026.2: turma 01: terça e quinta, das 14:00 às 15:50, sala I9. (Horário no SIGAA: 35T23.)
+
+FGA0067 Teoria de Circuitos Eletrônicos 1 — horário das aulas e sala em 2026.2: turma 01: segunda e quarta, das 14:00 às 15:50, sala S9; turma 02: segunda e quarta, das 08:00 às 09:50, salas I3, S4. (Horário no SIGAA: 24T23, 24M12.)
+
+FGA0068 Teoria de Circuitos Eletrônicos 2 — horário das aulas e sala em 2026.2: turma 01: segunda e quarta, das 10:00 às 11:50, sala I6. (Horário no SIGAA: 24M34.)
+
+FGA0069 Prática de Circuitos Eletrônicos 1 — horário das aulas e sala em 2026.2: turma 01: quinta, das 08:00 às 09:50, sala LAB NEI 1; turma 02: sexta, das 08:00 às 09:50, sala LAB NEI 1; turma 03: quarta, das 08:00 às 09:50, sala LAB NEI 1. (Horário no SIGAA: 5M12, 6M12, 4M12.)
+
+FGA0070 Prática de Circuitos Eletrônicos 2 — horário das aulas e sala em 2026.2: turma 01: terça, das 14:00 às 15:50, sala LAB NEI 1. (Horário no SIGAA: 3T23.)
+
+FGA0071 Prática de Eletrônica Digital 1 — horário das aulas e sala em 2026.2: turma 01: terça, das 08:00 às 09:50, sala LAB NEI 2; turma 02: terça, das 14:00 às 15:50, sala LAB NEI 2; turma 03: segunda, das 10:00 às 11:50, sala LAB NEI 2; turma 04: segunda, das 12:00 às 13:50, sala LAB NEI 2; turma 05: terça, das 12:00 às 13:50, sala LAB NEI 2; turma 06: quarta, das 08:00 às 09:50, sala LAB NEI 2; turma 07: quarta, das 10:00 às 11:50, sala LAB NEI 2; turma 08: quarta, das 14:00 às 15:50, sala LAB NEI 2; turma 09: quarta, das 16:00 às 17:50, sala LAB NEI 2; turma 11: sexta, das 10:00 às 11:50, sala LAB NEI 2; turma 12: sexta, das 08:00 às 09:50, sala LAB NEI 2. (Horário no SIGAA: 3M12, 3T23, 2M34, 2M5 2T1, 3M5 3T1, 4M12, 4M34, 4T23, 4T45, 6M34, 6M12.)
+
+FGA0072 Prática de Eletrônica Digital 2 — horário das aulas e sala em 2026.2: turma 01: segunda, das 08:00 às 09:50, sala LAB SS; turma 02: quarta, das 08:00 às 09:50, sala LAB SS. (Horário no SIGAA: 2M12, 4M12.)
+
+FGA0073 Teoria de Eletrônica Digital 1 — horário das aulas e sala em 2026.2: turma 01: quarta e sexta, das 08:00 às 09:50, sala S1; turma 02: quarta e sexta, das 14:00 às 15:50, sala S2. (Horário no SIGAA: 46M12, 46T23.)
+
+FGA0074 Teoria de Eletrônica Digital 2 — horário das aulas e sala em 2026.2: turma 01: terça e quinta, das 10:00 às 11:50, sala I2. (Horário no SIGAA: 35M34.)
+
+FGA0075 Laboratório de Materiais de Construção — horário das aulas e sala em 2026.2: turma 01: segunda, das 16:00 às 16:55, sala LAB MATERIAIS; turma 02: terça, das 10:55 às 11:50, sala LAB MATERIAIS; turma 03: terça, das 10:00 às 10:55, sala LAB MATERIAIS; turma 04: quarta, das 12:00 às 12:55, sala LAB MATERIAIS; turma 08: quarta, das 16:00 às 16:55, sala LAB MATERIAIS; turma 09: quinta, das 10:00 às 10:55, sala LAB MATERIAIS. (Horário no SIGAA: 2T4, 3M4, 3M3, 4M5, 4T4, 5M3.)
+
+FGA0076 Equipamentos Termofluidos Automotivos — horário das aulas e sala em 2026.2: turma 01: quarta e sexta, das 08:00 às 09:50, sala I4. (Horário no SIGAA: 46M12.)
+
+FGA0077 Introdução ao Desgaste — horário das aulas e sala em 2026.2: turma 01: terça e quinta, das 14:00 às 15:50, sala MULTIUSO. (Horário no SIGAA: 35T23.)
+
+FGA0078 Teoria de Materiais de Construção — horário das aulas e sala em 2026.2: turma 01: segunda, das 14:00 às 15:50; quarta, das 12:55 às 13:50, sala I2; turma 02: terça, das 14:00 às 15:50; quinta, das 14:00 às 14:55, sala I2. (Horário no SIGAA: 2T23 4T1, 3T23 5T2.)
+
+FGA0085 Matemática Discreta 1 — horário das aulas e sala em 2026.2: turma 01: segunda e quarta, das 08:00 às 09:50, sala S9; turma 02: segunda e quarta, das 14:00 às 15:50, sala S7; turma 03: segunda e quarta, das 16:00 às 17:50, sala I3; turma 04: quarta e sexta, das 08:00 às 09:50, sala I3; turma 05: quarta e sexta, das 10:00 às 11:50, salas S3, S1. (Horário no SIGAA: 24M12, 24T23, 24T45, 46M12, 46M34.)
+
+FGA0086 Teoria de Eletricidade Aplicada — horário das aulas e sala em 2026.2: turma 01: segunda e quarta, das 08:00 às 09:50, sala I8; turma 02: segunda e quarta, das 16:00 às 17:50, sala S8. (Horário no SIGAA: 24M12, 24T45.)
+
+FGA0087 Laboratório de Eletricidade Aplicada — horário das aulas e sala em 2026.2: turma 01: segunda, das 10:00 às 11:50, sala LAB ELETRICIDADE; turma 02: terça, das 10:00 às 11:50, sala LAB ELETRICIDADE; turma 03: terça, das 14:00 às 15:50, sala LAB ELETRICIDADE; turma 04: terça, das 16:00 às 17:50, sala LAB ELETRICIDADE; turma 05: quinta, das 10:00 às 11:50, sala LAB ELETRICIDADE. (Horário no SIGAA: 2M34, 3M34, 3T23, 3T45, 5M34.)
+
+FGA0088 Teoria de Sistemas de Conversão de Energia — horário das aulas e sala em 2026.2: turma 01: terça e quinta, das 08:00 às 09:50, sala I1. (Horário no SIGAA: 35M12.)
+
+FGA0089 Laboratório de Sistemas de Conversão de Energia — horário das aulas e sala em 2026.2: turma 01: quarta, das 14:00 às 15:50, sala LAB ELETRICIDADE. (Horário no SIGAA: 4T23.)
+
+FGA0090 Ondulatória e Física Térmica para Engenharia — horário das aulas e sala em 2026.2: turma 01: terça e quinta, das 14:00 às 15:50, sala I1. (Horário no SIGAA: 35T23.)
+
+FGA0091 Máquinas de Fluido — horário das aulas e sala em 2026.2: turma 01: segunda e quarta, das 08:00 às 09:50; quarta, das 14:00 às 15:50, salas I5, LAB TERMOFLUIDOS. (Horário no SIGAA: 24M12 4T23.)
+
+FGA0092 Princípios de Comunicação para Engenharia — horário das aulas e sala em 2026.2: turma 01: terça e quinta, das 08:00 às 09:50; terça, das 12:00 às 12:55, salas I2, LAB SS. (Horário no SIGAA: 3M125 5M12.)
+
+FGA0093 Princípios de Controle — horário das aulas e sala em 2026.2: turma 01: terça, das 12:55 às 15:50; quinta, das 14:00 às 15:50, salas LAB SS, NIT, LDS; turma 02: quarta e sexta, das 14:00 às 15:50; quinta, das 12:55 às 13:50, salas I5, LAB SS. (Horário no SIGAA: 3T123 5T23, 46T23 5T1.)
+
+FGA0098 Prática de Circuitos Eletrônicos 3 — horário das aulas e sala em 2026.2: turma 01: quinta, das 14:00 às 15:50, sala LAB NEI 1. (Horário no SIGAA: 5T23.)
+
+FGA0099 Teoria de Circuitos Eletrônicos 3 — horário das aulas e sala em 2026.2: turma 01: terça e quinta, das 16:00 às 17:50, sala I7. (Horário no SIGAA: 35T45.)
+
+FGA0100 Prática de Física dos Dispositivos Eletrônicos — horário das aulas e sala em 2026.2: turma 02: terça, das 12:00 às 13:50, sala LAB NEI 1; turma 03: sexta, das 12:00 às 13:50, sala LAB NEI 1. (Horário no SIGAA: 3M5 3T1, 6M5 6T1.)
+
+FGA0101 Teoria de Física dos Dispositivos Eletrônicos — horário das aulas e sala em 2026.2: turma 01: terça e quinta, das 16:00 às 17:50, sala I8. (Horário no SIGAA: 35T45.)
+
+FGA0102 Sinais e Sistemas para Engenharia — horário das aulas e sala em 2026.2: turma 01: terça, quinta e sexta, das 14:00 às 15:50, salas I8, I6; turma 02: segunda, quarta e sexta, das 10:00 às 11:50, sala LAB SS; turma 03: segunda, quarta e sexta, das 08:00 às 09:50, salas MOCAP, I9. (Horário no SIGAA: 356T23, 246M34, 246M12.)
+
+FGA0104 Química Orgânica Aplicada à Engenharia — horário das aulas e sala em 2026.2: turma 01: segunda e quarta, das 10:00 às 11:50, sala I1. (Horário no SIGAA: 24M34.)
+
+FGA0105 Tópicos Especiais 2 em Engenharia Aeroespacial — horário das aulas e sala em 2026.2: turma 01: quarta e sexta, das 08:00 às 09:50, sala I6; turma 02: segunda e sexta, das 08:00 às 09:50, salas I1, I2; turma 04: segunda, das 16:00 às 17:50; terça, das 12:00 às 13:50, sala I5. (Horário no SIGAA: 46M12, 26M12, 3M5 2T45 3T1.)
+
+FGA0106 Tópicos Especiais 3 em Engenharia Aeroespacial — horário das aulas e sala em 2026.2: turma 01: terça e quinta, das 16:00 às 17:50, sala S8. (Horário no SIGAA: 35T45.)
+
+FGA0107 Laboratório de Ondulatória e Física Térmica para a Engenharia — horário das aulas e sala em 2026.2: turma 01: quinta, das 10:00 às 11:50, sala LAB FÍSICA 2. (Horário no SIGAA: 5M34.)
+
+FGA0108 Matemática Discreta 2 — horário das aulas e sala em 2026.2: turma 01: sábado, das 08:00 às 11:50, sala S1; turma 02: terça e quinta, das 16:00 às 17:50, sala I2. (Horário no SIGAA: 7M1234, 35T45.)
+
+FGA0109 Fundamentos de Sistemas Embarcados — horário das aulas e sala em 2026.2: turma 01: terça e quinta, das 14:00 às 15:50, sala Mocap; turma 02: quarta e sexta, das 10:00 às 11:50, sala I10. (Horário no SIGAA: 35T23, 46M34.)
+
+FGA0117 Fundamentos de Energia Nuclear — horário das aulas e sala em 2026.2: turma 01: terça e quinta, das 16:00 às 17:50, sala I1. (Horário no SIGAA: 35T45.)
+
+FGA0118 Sistemas de Informação Geográfica para Engenharia — horário das aulas e sala em 2026.2: turma 01: segunda e quarta, das 10:00 às 11:50, salas I5, I2. (Horário no SIGAA: 24M34.)
+
+FGA0119 Teoria de Eletromagnetismo — horário das aulas e sala em 2026.2: turma 01: segunda e quarta, das 14:00 às 15:50, sala I3. (Horário no SIGAA: 24T23.)
+
+FGA0120 Prática de Eletromagnetismo — horário das aulas e sala em 2026.2: turma 01: sexta, das 14:00 às 15:50, salas Termofluidos, Termo-sup; turma 02: terça, das 16:00 às 17:50, salas Termofluidos, Termo-sup. (Horário no SIGAA: 6T23, 3T45.)
+
+FGA0121 Tópicos Especiais 4 em Engenharia Aeroespacial — horário das aulas e sala em 2026.2: turma 02: quarta e sexta, das 08:00 às 09:50, sala S7. (Horário no SIGAA: 46M12.)
+
+FGA0124 Projeto de Algoritmos — horário das aulas e sala em 2026.2: turma 01: segunda e sexta, das 10:00 às 11:50, sala S3. (Horário no SIGAA: 26M34.)
+
+FGA0132 Instrumentação Eletrônica para Engenharia — horário das aulas e sala em 2026.2: turma 01: terça e quinta, das 10:00 às 11:50, salas I3, I7. (Horário no SIGAA: 35M34.)
+
+FGA0133 Engenharia Econômica — horário das aulas e sala em 2026.2: turma 01: terça e quinta, das 10:00 às 11:50, sala I9; turma 02: quarta e sexta, das 16:00 às 17:50, sala S9. (Horário no SIGAA: 35M34, 46T45.)
+
+FGA0134 Tópicos Especiais de Engenharia de Software — horário das aulas e sala em 2026.2: turma 01: segunda e quarta, das 14:00 às 15:50, sala I4; turma 02: terça e quinta, das 14:00 às 15:50, sala I7. (Horário no SIGAA: 24T23, 35T23.)
+
+FGA0137 Sistemas de Banco de Dados 1 — horário das aulas e sala em 2026.2: turma 01: quarta e sexta, das 10:00 às 11:50, sala S2. (Horário no SIGAA: 46M34.)
+
+FGA0141 Gestão Ambiental no Setor Energético — horário das aulas e sala em 2026.2: turma 01: quarta e sexta, das 10:00 às 11:50, sala S5. (Horário no SIGAA: 46M34.)
+
+FGA0142 Fundamentos de Arquitetura de Computadores — horário das aulas e sala em 2026.2: turma 01: terça e quinta, das 10:00 às 11:50, sala S9; turma 02: quarta e sexta, das 08:00 às 09:50, salas I9, S9; turma 03: quarta e sexta, das 16:00 às 17:50, sala I9. (Horário no SIGAA: 35M34, 46M12, 46T45.)
+
+FGA0146 Estruturas de Dados 1 — horário das aulas e sala em 2026.2: turma 01: terça e quinta, das 12:00 às 13:50, sala MOCAP; turma 02: terça e quinta, das 14:00 às 15:50, sala S1. (Horário no SIGAA: 35M5 35T1, 35T23.)
+
+FGA0148 Engenharia de Segurança do Trabalho — horário das aulas e sala em 2026.2: turma 01: segunda, das 08:00 às 09:50, sala S3; turma 02: segunda, das 10:00 às 11:50, sala I2. (Horário no SIGAA: 2M12, 2M34.)
+
+FGA0152 Ergonomia do Produto — horário das aulas e sala em 2026.2: turma 01: quarta e sexta, das 08:00 às 09:50, sala I7. (Horário no SIGAA: 46M12.)
+
+FGA0154 Mecanica dos Sólidos 1 para Engenharia — horário das aulas e sala em 2026.2: turma 02: terça e quinta, das 10:00 às 11:50, sala S3; turma 03: terça e quinta, das 08:00 às 09:50, sala S6. (Horário no SIGAA: 35M34, 35M12.)
+
+FGA0155 Introdução ao Design e Concepção de Veículos — horário das aulas e sala em 2026.2: turma 01: quarta e sexta, das 14:00 às 15:50, sala I7. (Horário no SIGAA: 46T23.)
+
+FGA0156 Combustíveis e Biocombustíveis — horário das aulas e sala em 2026.2: turma 01: quarta e sexta, das 14:00 às 15:50, salas LAB. NIT, LDS. (Horário no SIGAA: 46T23.)
+
+FGA0157 Probabilidade e Estatística Aplicado a Engenharia — horário das aulas e sala em 2026.2: turma 01: quarta e sexta, das 10:00 às 11:50, sala S9; turma 02: quarta e sexta, das 12:00 às 13:50, sala S9; turma 03: segunda e quarta, das 12:00 às 13:50, sala S4. (Horário no SIGAA: 46M34, 46M5 46T1, 24M5 24T1.)
+
+FGA0158 Orientação a Objetos — horário das aulas e sala em 2026.2: turma 01: segunda e quarta, das 14:00 às 15:50, sala I10; turma 03: terça e quinta, das 12:00 às 13:50, sala I10. (Horário no SIGAA: 24T23, 35M5 35T1.)
+
+FGA0160 Métodos Numéricos para Engenharia — horário das aulas e sala em 2026.2: turma 01: segunda e quarta, das 12:00 às 13:50, sala I9; turma 02: segunda e quarta, das 14:00 às 15:50, salas S1, S4; turma 03: terça e quinta, das 12:00 às 13:50, sala S1. (Horário no SIGAA: 24M5 24T1, 24T23, 35M5 35T1.)
+
+FGA0163 Introdução à Engenharia — horário das aulas e sala em 2026.2: turma 01: quarta, das 14:00 às 15:50, sala AUDITÓRIO; turma 02: quarta, das 10:00 às 11:50, sala AUDITÓRIO; turma 03: segunda, das 14:00 às 15:50, sala AUDITÓRIO. (Horário no SIGAA: 4T23, 4M34, 2T23.)
+
+FGA0164 Humanidades e Cidadania — horário das aulas e sala em 2026.2: turma 01: quarta e sexta, das 14:00 às 15:50, sala I2; turma 02: quarta e sexta, das 12:00 às 13:50, sala S3; turma 03: terça e quinta, das 14:00 às 15:50, sala S2; turma 04: terça e quinta, das 16:00 às 17:50, sala S2. (Horário no SIGAA: 46T23, 46M5 46T1, 35T23, 35T45.)
+
+FGA0168 Desenho Industrial Assistido por Computador — horário das aulas e sala em 2026.2: turma 01: segunda, quarta e sexta, das 08:00 às 09:50, sala S10; turma 02: segunda, quarta e sexta, das 08:00 às 09:50, sala I10; turma 03: segunda, terça e quinta, das 10:00 às 11:50, sala S10; turma 04: segunda, terça e quinta, das 10:00 às 11:50, sala I10; turma 05: terça, quinta e sexta, das 16:00 às 17:50, sala S10. (Horário no SIGAA: 246M12, 246M12, 235M34, 235M34, 356T45.)
+
+FGA0169 Fontes de Energia e Tecnologias de Conversão — horário das aulas e sala em 2026.2: turma 01: terça e quinta, das 14:00 às 15:50, sala S6. (Horário no SIGAA: 35T23.)
+
+FGA0170 Fundamentos de Sistemas Operacionais — horário das aulas e sala em 2026.2: turma 02: quarta e sexta, das 12:00 às 13:50, sala S1. (Horário no SIGAA: 46M5 46T1.)
+
+FGA0173 Interação Humano Computador — horário das aulas e sala em 2026.2: turma 01: terça e quinta, das 08:00 às 09:50, sala S7; turma 02: terça e quinta, das 16:00 às 17:50, sala S9. (Horário no SIGAA: 35M12, 35T45.)
+
+FGA0175 Engenharia de Petróleo e Gás — horário das aulas e sala em 2026.2: turma 01: terça e quinta, das 16:00 às 17:50, sala S5. (Horário no SIGAA: 35T45.)
+
+FGA0177 Análise Instrumental de Combustíveis — horário das aulas e sala em 2026.2: turma 01: terça e quinta, das 14:00 às 15:50, sala I5. (Horário no SIGAA: 35T23.)
+
+FGA0179 Mecanica dos Sólidos 2 para Engenharia — horário das aulas e sala em 2026.2: turma 01: quarta e sexta, das 12:00 às 13:50, sala S7. (Horário no SIGAA: 46M5 46T1.)
+
+FGA0188 Métodos Experimentais para Engenharia — horário das aulas e sala em 2026.2: turma 01: terça e quinta, das 08:00 às 09:50, salas MULTIUSO, LAB MATERIAIS. (Horário no SIGAA: 35M12.)
+
+FGA0190 Projeto de Elementos Automotivos — horário das aulas e sala em 2026.2: turma 01: segunda, quarta e sexta, das 10:00 às 11:50, sala I4. (Horário no SIGAA: 246M34.)
+
+FGA0191 Materiais Compostos e Plásticos — horário das aulas e sala em 2026.2: turma 01: terça e quinta, das 14:00 às 15:50, sala I4. (Horário no SIGAA: 35T23.)
+
+FGA0194 Arquitetura de Motores de Combustão Interna — horário das aulas e sala em 2026.2: turma 01: segunda e quarta, das 14:00 às 15:50, sala SALA 302 LDTEA. (Horário no SIGAA: 24T23.)
+
+FGA0201 Projeto de Circuitos Integrados Digitais — horário das aulas e sala em 2026.2: turma 01: terça e quinta, das 08:00 às 09:50, sala LAB SS. (Horário no SIGAA: 35M12.)
+
+FGA0204 Dinâmica dos Fluídos — horário das aulas e sala em 2026.2: turma 01: segunda e sexta, das 10:00 às 11:50; quarta, das 10:00 às 10:55, salas S8, I3, LAB TERMOFLUIDOS; turma 02: segunda e sexta, das 10:00 às 11:50; quarta, das 10:55 às 11:50, salas S8, I3, LAB TERMOFLUIDOS. (Horário no SIGAA: 26M34 4M3, 26M34 4M4.)
+
+FGA0208 Arquitetura e Desenho de Software — horário das aulas e sala em 2026.2: turma 01: segunda e sexta, das 08:00 às 09:50, sala S4; turma 02: segunda e sexta, das 10:00 às 11:50, sala S7. (Horário no SIGAA: 26M12, 26M34.)
+
+FGA0210 Paradigmas de Programação — horário das aulas e sala em 2026.2: turma 01: terça e quinta, das 16:00 às 17:50, sala S4; turma 02: quarta e sexta, das 14:00 às 15:50, sala S10; turma 03: quarta e sexta, das 16:00 às 17:50, sala S3. (Horário no SIGAA: 35T45, 46T23, 46T45.)
+
+FGA0211 Fundamentos de Redes de Computadores — horário das aulas e sala em 2026.2: turma 01: terça e quinta, das 08:00 às 09:50, sala MOCAP. (Horário no SIGAA: 35M12.)
+
+FGA0214 Tópicos Especiais em Engenharia Automotiva — horário das aulas e sala em 2026.2: turma 02: sexta, das 08:00 às 11:50, sala SALA 302 LDTEA; turma 03: terça e quinta, das 16:00 às 17:50, sala LAB FAB; turma 04: segunda e quarta, das 10:00 às 11:50, sala SHP. (Horário no SIGAA: 6M1234, 35T45, 24M34.)
+
+FGA0219 Processamento de Sinais — horário das aulas e sala em 2026.2: turma 01: quarta e sexta, das 08:00 às 09:50, sala I1. (Horário no SIGAA: 46M12.)
+
+FGA0221 Inteligência Artificial — horário das aulas e sala em 2026.2: turma 01: terça e quinta, das 16:00 às 17:50, sala S7. (Horário no SIGAA: 35T45.)
+
+FGA0226 Eletrônica Veicular — horário das aulas e sala em 2026.2: turma 01: terça e quinta, das 10:00 às 11:50, sala S8. (Horário no SIGAA: 35M34.)
+
+FGA0228 Projeto de Sistemas Automotivos — horário das aulas e sala em 2026.2: turma 01: segunda e quarta, das 08:00 às 09:50, sala S5. (Horário no SIGAA: 24M12.)
+
+FGA0229 Análise Estrutural Método dos Elementos Finitos — horário das aulas e sala em 2026.2: turma 01: terça e quinta, das 16:00 às 17:50, sala I6. (Horário no SIGAA: 35T45.)
+
+FGA0230 Dinâmica de Veículos — horário das aulas e sala em 2026.2: turma 01: terça e quinta, das 08:00 às 09:50, sala I8. (Horário no SIGAA: 35M12.)
+
+FGA0242 Técnicas de Programação em Plataformas Emergentes — horário das aulas e sala em 2026.2: turma 01: segunda e quarta, das 16:00 às 17:50, sala S10; turma 02: segunda e quarta, das 08:00 às 09:50, sala S6. (Horário no SIGAA: 24T45, 24M12.)
+
+FGA0244 Programação para Sistemas Paralelos e Distribuídos — horário das aulas e sala em 2026.2: turma 01: quarta e sexta, das 10:00 às 11:50, salas S4, S10. (Horário no SIGAA: 46M34.)
+
+FGA0252 Sistemas Hidroelétricos — horário das aulas e sala em 2026.2: turma 01: segunda, das 16:00 às 16:55; quarta e sexta, das 08:00 às 09:50, salas LAB TERMODINÂMICA, TERMO-SUP. (Horário no SIGAA: 46M12 2T4.)
+
+FGA0254 Ciências Aeroespaciais — horário das aulas e sala em 2026.2: turma 01: terça e quinta, das 10:00 às 11:50, sala S5; turma 02: terça e quinta, das 14:00 às 15:50, sala I3. (Horário no SIGAA: 35M34, 35T23.)
+
+FGA0261 Tópicos Especiais em Eletronica — horário das aulas e sala em 2026.2: turma 01: terça e quinta, das 18:00 às 19:50, sala S7; turma 02: segunda e quarta, das 18:00 às 19:50, sala LAB SS; turma 03: quarta, das 14:00 às 15:50; sexta, das 12:00 às 13:50, salas S8, I7; turma 04: quarta e sexta, das 10:00 às 11:50, sala I7. (Horário no SIGAA: 35T6 35N1, 24T6 24N1, 6M5 4T23 6T1, 46M34.)
+
+FGA0262 Transmissão e Distribuição de Energia Elétrica — horário das aulas e sala em 2026.2: turma 01: segunda, das 10:00 às 11:50; quarta, das 10:00 às 12:55, salas I3, LAB ELETRICIDADE. (Horário no SIGAA: 2M34 4M345.)
+
+FGA0265 Economia de Energia — horário das aulas e sala em 2026.2: turma 01: terça e quinta, das 08:00 às 09:50, sala S5. (Horário no SIGAA: 35M12.)
+
+FGA0266 Acústica e Vibrações Veiculares — horário das aulas e sala em 2026.2: turma 01: quarta e sexta, das 10:00 às 11:50, salas LAB NIT, LDS. (Horário no SIGAA: 46M34.)
+
+FGA0267 Projeto de Estruturas de Veiculos — horário das aulas e sala em 2026.2: turma 01: segunda e quarta, das 12:00 às 13:50, sala I3. (Horário no SIGAA: 24M5 24T1.)
+
+FGA0274 Produtividade e Profissionalismo em Engenharia de Software — horário das aulas e sala em 2026.2: turma 01: terça e quinta, das 10:00 às 11:50, sala I5. (Horário no SIGAA: 35M34.)
+
+FGA0280 Projeto de Circuitos Eletrônicos Integrados 2 — horário das aulas e sala em 2026.2: turma 01: terça e quinta, das 14:00 às 15:50, salas LAB SS, I6. (Horário no SIGAA: 35T23.)
+
+FGA0281 Sistemas de Propulsão Liquida — horário das aulas e sala em 2026.2: turma 01: terça e quinta, das 10:00 às 11:50, sala CONTAINER 02. (Horário no SIGAA: 35M34.)
+
+FGA0283 Mecânica dos Materiais Compósitos — horário das aulas e sala em 2026.2: turma 01: terça e quinta, das 10:00 às 11:50, sala I4. (Horário no SIGAA: 35M34.)
+
+FGA0284 Engenharia de Manutenção — horário das aulas e sala em 2026.2: turma 01: sexta, das 14:00 às 17:50, sala S8. (Horário no SIGAA: 6T2345.)
+
+FGA0285 Introdução à Mecânica da Fratura — horário das aulas e sala em 2026.2: turma 01: segunda e quarta, das 10:00 às 11:50, sala SALA 303 LDTEA. (Horário no SIGAA: 24M34.)
+
+FGA0299 Sistemas Bioinspirados Aplicados a Engenharia — horário das aulas e sala em 2026.2: turma 01: quarta, das 14:00 às 17:50, salas FT - UnB, Campus Darcy Ribeiro. (Horário no SIGAA: 4T2345.)
+
+FGA0300 Telecomunicações Espaciais — horário das aulas e sala em 2026.2: turma 01: quarta e sexta, das 12:00 às 13:50, sala S5. (Horário no SIGAA: 46M5 46T1.)
+
+FGA0302 Engenharia e Ambiente — horário das aulas e sala em 2026.2: turma 01: quarta e sexta, das 08:00 às 09:50, sala S3; turma 02: segunda e quarta, das 16:00 às 17:50, sala S2; turma 03: terça e quinta, das 10:00 às 11:50, sala S1. (Horário no SIGAA: 46M12, 24T45, 35M34.)
+
+FGA0303 Projeto Integrador de Engenharia 1 — horário das aulas e sala em 2026.2: turma 01: segunda e quarta, das 16:00 às 17:50, sala I1; turma 02: segunda e quarta, das 16:00 às 17:50, sala S2; turma 03: segunda e quarta, das 16:00 às 17:50, salas S1, S5; turma 04: segunda e quarta, das 16:00 às 17:50, sala S6; turma 05: segunda e quarta, das 16:00 às 17:50, sala I4. (Horário no SIGAA: 24T45, 24T45, 24T45, 24T45, 24T45.)
+
+FGA0304 Projeto Integrador de Engenharia 2 — horário das aulas e sala em 2026.2: turma 01: quarta, das 16:00 às 17:50; sexta, das 14:00 às 17:50, salas S1, AUDITÓRIO; turma 02: quarta, das 16:00 às 17:50; sexta, das 14:00 às 17:50, salas S1, AUDITÓRIO; turma 03: quarta, das 16:00 às 17:50; sexta, das 14:00 às 17:50, salas S1, AUDITÓRIO; turma 04: quarta, das 16:00 às 17:50; sexta, das 14:00 às 17:50, salas S1, AUDITÓRIO; turma 05: quarta, das 16:00 às 17:50; sexta, das 14:00 às 17:50, salas S1, AUDITÓRIO. (Horário no SIGAA: 4T45 6T2345, 4T45 6T2345, 4T45 6T2345, 4T45 6T2345, 4T45 6T2345.)
+
+FGA0307 Gestão da Produção e Qualidade — horário das aulas e sala em 2026.2: turma 01: terça e quinta, das 16:00 às 17:50, sala S3; turma 02: terça e quinta, das 14:00 às 15:50, sala S9. (Horário no SIGAA: 35T45, 35T23.)
+
+FGA0308 Eletrônica Embarcada — horário das aulas e sala em 2026.2: turma 01: segunda, quarta e sexta, das 16:00 às 17:50, sala LAB SS. (Horário no SIGAA: 246T45.)
+
+FGA0309 Sistemas Operacionais Embarcados — horário das aulas e sala em 2026.2: turma 01: segunda, quarta e sexta, das 14:00 às 15:50, sala LAB SS. (Horário no SIGAA: 246T23.)
+
+FGA0311 Projeto Extensionista em Engenharia Eletrônica 2 — horário das aulas e sala em 2026.2: turma 01: segunda e sexta, das 10:00 às 11:50, salas NIT, LDS, I1. (Horário no SIGAA: 26M34.)
+
+FGA0312 Métodos de Desenvolvimento de Software — horário das aulas e sala em 2026.2: turma 01: segunda e quarta, das 12:00 às 13:50, salas S1, MOCAP; turma 02: segunda e quarta, das 16:00 às 17:50, sala S7; turma 03: segunda e quarta, das 18:00 às 19:50, sala S7. (Horário no SIGAA: 24M5 24T1, 24T45, 24T6 24N1.)
+
+FGA0313 Requisitos de Software — horário das aulas e sala em 2026.2: turma 01: terça e quinta, das 08:00 às 09:50, salas I7, S9; turma 02: terça e quinta, das 10:00 às 11:50, salas I7, I3. (Horário no SIGAA: 35M12, 35M34.)
+
+FGA0314 Testes de Software — horário das aulas e sala em 2026.2: turma 01: terça e quinta, das 08:00 às 09:50, sala I10; turma 02: terça e quinta, das 10:00 às 11:50, sala I6. (Horário no SIGAA: 35M12, 35M34.)
+
+FGA0315 Qualidade de Software 1 — horário das aulas e sala em 2026.2: turma 01: segunda e quarta, das 10:00 às 11:50, sala S6; turma 02: segunda e quarta, das 14:00 às 15:50, sala S6. (Horário no SIGAA: 24M34, 24T23.)
+
+FGA0316 Engenharia de Produto de Software — horário das aulas e sala em 2026.2: turma 01: quarta, das 12:00 às 15:50, salas S2, S3; turma 02: segunda, das 10:00 às 13:50, sala MOCAP. (Horário no SIGAA: 4M5 4T123, 2M345 2T1.)
+
+FGA0317 Gerência de Configuração e Evolução de Software — horário das aulas e sala em 2026.2: turma 01: terça e quinta, das 16:00 às 17:50, sala MOCAP; turma 02: terça e quinta, das 08:00 às 09:50, sala S4. (Horário no SIGAA: 35T45, 35M12.)
+
+FGA0380 Processos Estocásticos — horário das aulas e sala em 2026.2: turma 01: quarta e sexta, das 14:00 às 15:50, sala S5. (Horário no SIGAA: 46T23.)

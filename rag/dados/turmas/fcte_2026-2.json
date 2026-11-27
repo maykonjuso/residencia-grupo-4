@@ -1,0 +1,6063 @@
+{
+  "versao_schema": "1.0",
+  "fonte": {
+    "orgao": "UnB · SIGAA (consulta pública)",
+    "url": "https://sigaa.unb.br/sigaa/public/turmas/listar.jsf",
+    "consulta": {
+      "nivel": "graduação",
+      "unidade": "673",
+      "ano": 2026,
+      "periodo": 2
+    },
+    "coletado_em": "2026-11-26",
+    "observacao": "Local e horário como o SIGAA publica na data da coleta; podem mudar durante o semestre. Docente e vagas não são guardados."
+  },
+  "ano_periodo": "2026.2",
+  "turmas": [
+    {
+      "codigo": "FCTE0005",
+      "nome": "Algoritmos em Grafos",
+      "id_componente": "316553",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "6T2345",
+      "aulas": [
+        {
+          "dia": "sexta",
+          "inicio": "14:00",
+          "fim": "17:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - I9/I10",
+      "salas": [
+        "I9",
+        "I10"
+      ]
+    },
+    {
+      "codigo": "FCTE0009",
+      "nome": "Estimação Ótima de Sistemas Dinâmicos Aeroespaciais",
+      "id_componente": "317114",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "46T23",
+      "aulas": [
+        {
+          "dia": "quarta",
+          "inicio": "14:00",
+          "fim": "15:50"
+        },
+        {
+          "dia": "sexta",
+          "inicio": "14:00",
+          "fim": "15:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - I1",
+      "salas": [
+        "I1"
+      ]
+    },
+    {
+      "codigo": "FCTE0014",
+      "nome": "Dinâmica dos Fluidos Computacional Aplicada",
+      "id_componente": "317122",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "46M12",
+      "aulas": [
+        {
+          "dia": "quarta",
+          "inicio": "08:00",
+          "fim": "09:50"
+        },
+        {
+          "dia": "sexta",
+          "inicio": "08:00",
+          "fim": "09:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - CONTAINER 02",
+      "salas": [
+        "CONTAINER 02"
+      ]
+    },
+    {
+      "codigo": "FCTE0017",
+      "nome": "Tecnologias de Fabricação 1",
+      "id_componente": "317617",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "35T23",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "14:00",
+          "fim": "15:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "14:00",
+          "fim": "15:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - S8",
+      "salas": [
+        "S8"
+      ]
+    },
+    {
+      "codigo": "FCTE0018",
+      "nome": "Tecnologias de Fabricação 2",
+      "id_componente": "317618",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "35M34",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "10:00",
+          "fim": "11:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "10:00",
+          "fim": "11:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - I8",
+      "salas": [
+        "I8"
+      ]
+    },
+    {
+      "codigo": "FGA0003",
+      "nome": "Compiladores 1",
+      "id_componente": "176389",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "24T23",
+      "aulas": [
+        {
+          "dia": "segunda",
+          "inicio": "14:00",
+          "fim": "15:50"
+        },
+        {
+          "dia": "quarta",
+          "inicio": "14:00",
+          "fim": "15:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - S2/I9",
+      "salas": [
+        "S2",
+        "I9"
+      ]
+    },
+    {
+      "codigo": "FGA0003",
+      "nome": "Compiladores 1",
+      "id_componente": "176389",
+      "turma": "02",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "24T45",
+      "aulas": [
+        {
+          "dia": "segunda",
+          "inicio": "16:00",
+          "fim": "17:50"
+        },
+        {
+          "dia": "quarta",
+          "inicio": "16:00",
+          "fim": "17:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - I10",
+      "salas": [
+        "I10"
+      ]
+    },
+    {
+      "codigo": "FGA0008",
+      "nome": "Sistemas Aeroespaciais",
+      "id_componente": "176394",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "24M34",
+      "aulas": [
+        {
+          "dia": "segunda",
+          "inicio": "10:00",
+          "fim": "11:50"
+        },
+        {
+          "dia": "quarta",
+          "inicio": "10:00",
+          "fim": "11:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - CONTAINER 02",
+      "salas": [
+        "CONTAINER 02"
+      ]
+    },
+    {
+      "codigo": "FGA0017",
+      "nome": "Projetos de Circuitos Integrados 1",
+      "id_componente": "176540",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "35T23",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "14:00",
+          "fim": "15:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "14:00",
+          "fim": "15:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - I6 / LAB SS",
+      "salas": [
+        "I6",
+        "LAB SS"
+      ]
+    },
+    {
+      "codigo": "FGA0023",
+      "nome": "Dinâmica dos Mecanismos",
+      "id_componente": "176578",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "35M12",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "08:00",
+          "fim": "09:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "08:00",
+          "fim": "09:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - S8",
+      "salas": [
+        "S8"
+      ]
+    },
+    {
+      "codigo": "FGA0025",
+      "nome": "Sistemas de Energia Solar e Eólica",
+      "id_componente": "176580",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "24T23",
+      "aulas": [
+        {
+          "dia": "segunda",
+          "inicio": "14:00",
+          "fim": "15:50"
+        },
+        {
+          "dia": "quarta",
+          "inicio": "14:00",
+          "fim": "15:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - I8",
+      "salas": [
+        "I8"
+      ]
+    },
+    {
+      "codigo": "FGA0030",
+      "nome": "Estruturas de Dados 2",
+      "id_componente": "176617",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "35M12",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "08:00",
+          "fim": "09:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "08:00",
+          "fim": "09:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - S3",
+      "salas": [
+        "S3"
+      ]
+    },
+    {
+      "codigo": "FGA0030",
+      "nome": "Estruturas de Dados 2",
+      "id_componente": "176617",
+      "turma": "02",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "26M12",
+      "aulas": [
+        {
+          "dia": "segunda",
+          "inicio": "08:00",
+          "fim": "09:50"
+        },
+        {
+          "dia": "sexta",
+          "inicio": "08:00",
+          "fim": "09:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - MOCAP",
+      "salas": [
+        "MOCAP"
+      ]
+    },
+    {
+      "codigo": "FGA0030",
+      "nome": "Estruturas de Dados 2",
+      "id_componente": "176617",
+      "turma": "03",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "24T45",
+      "aulas": [
+        {
+          "dia": "segunda",
+          "inicio": "16:00",
+          "fim": "17:50"
+        },
+        {
+          "dia": "quarta",
+          "inicio": "16:00",
+          "fim": "17:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - S9 / S4",
+      "salas": [
+        "S9",
+        "S4"
+      ]
+    },
+    {
+      "codigo": "FGA0037",
+      "nome": "Tópicos Especiais em Engenharia Aeroespacial",
+      "id_componente": "176793",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "35M5 35T1",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "12:00",
+          "fim": "13:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "12:00",
+          "fim": "13:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - I6",
+      "salas": [
+        "I6"
+      ]
+    },
+    {
+      "codigo": "FGA0037",
+      "nome": "Tópicos Especiais em Engenharia Aeroespacial",
+      "id_componente": "176793",
+      "turma": "02",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "46M12",
+      "aulas": [
+        {
+          "dia": "quarta",
+          "inicio": "08:00",
+          "fim": "09:50"
+        },
+        {
+          "dia": "sexta",
+          "inicio": "08:00",
+          "fim": "09:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - S8",
+      "salas": [
+        "S8"
+      ]
+    },
+    {
+      "codigo": "FGA0038",
+      "nome": "Aerodinâmica de Sistemas Aeroespaciais",
+      "id_componente": "176794",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "35T45 6T4",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "16:00",
+          "fim": "17:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "16:00",
+          "fim": "17:50"
+        },
+        {
+          "dia": "sexta",
+          "inicio": "16:00",
+          "fim": "16:55"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - I4",
+      "salas": [
+        "I4"
+      ]
+    },
+    {
+      "codigo": "FGA0039",
+      "nome": "Mecânica de Estruturas Aeroespaciais",
+      "id_componente": "176795",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "2M5 35M12",
+      "aulas": [
+        {
+          "dia": "segunda",
+          "inicio": "12:00",
+          "fim": "12:55"
+        },
+        {
+          "dia": "terça",
+          "inicio": "08:00",
+          "fim": "09:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "08:00",
+          "fim": "09:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - I7/I4/I4",
+      "salas": [
+        "I7",
+        "I4"
+      ]
+    },
+    {
+      "codigo": "FGA0043",
+      "nome": "Dinâmica dos Gases para Sistemas Aeroespaciais",
+      "id_componente": "177079",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "35T23",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "14:00",
+          "fim": "15:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "14:00",
+          "fim": "15:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - S5",
+      "salas": [
+        "S5"
+      ]
+    },
+    {
+      "codigo": "FGA0045",
+      "nome": "Mecânica do Vôo",
+      "id_componente": "177081",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "46M34",
+      "aulas": [
+        {
+          "dia": "quarta",
+          "inicio": "10:00",
+          "fim": "11:50"
+        },
+        {
+          "dia": "sexta",
+          "inicio": "10:00",
+          "fim": "11:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - S8",
+      "salas": [
+        "S8"
+      ]
+    },
+    {
+      "codigo": "FGA0047",
+      "nome": "Processos Petroquímicos",
+      "id_componente": "177083",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "35M34",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "10:00",
+          "fim": "11:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "10:00",
+          "fim": "11:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - I1",
+      "salas": [
+        "I1"
+      ]
+    },
+    {
+      "codigo": "FGA0048",
+      "nome": "Mecânica do Voo Espacial",
+      "id_componente": "177186",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "46M34",
+      "aulas": [
+        {
+          "dia": "quarta",
+          "inicio": "10:00",
+          "fim": "11:50"
+        },
+        {
+          "dia": "sexta",
+          "inicio": "10:00",
+          "fim": "11:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - I5",
+      "salas": [
+        "I5"
+      ]
+    },
+    {
+      "codigo": "FGA0050",
+      "nome": "Dinâmica de Estruturas Aeroespaciais",
+      "id_componente": "177362",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "35M34",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "10:00",
+          "fim": "11:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "10:00",
+          "fim": "11:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - S6",
+      "salas": [
+        "S6"
+      ]
+    },
+    {
+      "codigo": "FGA0057",
+      "nome": "Eletrônica de Potência",
+      "id_componente": "177990",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "35M34",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "10:00",
+          "fim": "11:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "10:00",
+          "fim": "11:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE / LAB NEI 1",
+      "salas": [
+        "LAB NEI 1"
+      ]
+    },
+    {
+      "codigo": "FGA0060",
+      "nome": "Sistemas de Banco de Dados 2",
+      "id_componente": "178226",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "35M12",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "08:00",
+          "fim": "09:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "08:00",
+          "fim": "09:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - S10",
+      "salas": [
+        "S10"
+      ]
+    },
+    {
+      "codigo": "FGA0060",
+      "nome": "Sistemas de Banco de Dados 2",
+      "id_componente": "178226",
+      "turma": "02",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "35T23",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "14:00",
+          "fim": "15:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "14:00",
+          "fim": "15:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - I10",
+      "salas": [
+        "I10"
+      ]
+    },
+    {
+      "codigo": "FGA0060",
+      "nome": "Sistemas de Banco de Dados 2",
+      "id_componente": "178226",
+      "turma": "03",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "24T23",
+      "aulas": [
+        {
+          "dia": "segunda",
+          "inicio": "14:00",
+          "fim": "15:50"
+        },
+        {
+          "dia": "quarta",
+          "inicio": "14:00",
+          "fim": "15:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - S10 / MOCAP",
+      "salas": [
+        "S10",
+        "MOCAP"
+      ]
+    },
+    {
+      "codigo": "FGA0062",
+      "nome": "Projeto de Sistemas de Observação da Terra",
+      "id_componente": "178546",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "24T23",
+      "aulas": [
+        {
+          "dia": "segunda",
+          "inicio": "14:00",
+          "fim": "15:50"
+        },
+        {
+          "dia": "quarta",
+          "inicio": "14:00",
+          "fim": "15:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - CONTAINER 02",
+      "salas": [
+        "CONTAINER 02"
+      ]
+    },
+    {
+      "codigo": "FGA0066",
+      "nome": "Fundamentos de Variável Complexa para Engenharia",
+      "id_componente": "178768",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "35T23",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "14:00",
+          "fim": "15:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "14:00",
+          "fim": "15:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - I9",
+      "salas": [
+        "I9"
+      ]
+    },
+    {
+      "codigo": "FGA0067",
+      "nome": "Teoria de Circuitos Eletrônicos 1",
+      "id_componente": "178782",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "24T23",
+      "aulas": [
+        {
+          "dia": "segunda",
+          "inicio": "14:00",
+          "fim": "15:50"
+        },
+        {
+          "dia": "quarta",
+          "inicio": "14:00",
+          "fim": "15:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - S9",
+      "salas": [
+        "S9"
+      ]
+    },
+    {
+      "codigo": "FGA0067",
+      "nome": "Teoria de Circuitos Eletrônicos 1",
+      "id_componente": "178782",
+      "turma": "02",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "24M12",
+      "aulas": [
+        {
+          "dia": "segunda",
+          "inicio": "08:00",
+          "fim": "09:50"
+        },
+        {
+          "dia": "quarta",
+          "inicio": "08:00",
+          "fim": "09:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - I3 / S4",
+      "salas": [
+        "I3",
+        "S4"
+      ]
+    },
+    {
+      "codigo": "FGA0068",
+      "nome": "Teoria de Circuitos Eletrônicos 2",
+      "id_componente": "178808",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "24M34",
+      "aulas": [
+        {
+          "dia": "segunda",
+          "inicio": "10:00",
+          "fim": "11:50"
+        },
+        {
+          "dia": "quarta",
+          "inicio": "10:00",
+          "fim": "11:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - I6",
+      "salas": [
+        "I6"
+      ]
+    },
+    {
+      "codigo": "FGA0069",
+      "nome": "Prática de Circuitos Eletrônicos 1",
+      "id_componente": "178809",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "5M12",
+      "aulas": [
+        {
+          "dia": "quinta",
+          "inicio": "08:00",
+          "fim": "09:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - LAB NEI 1",
+      "salas": [
+        "LAB NEI 1"
+      ]
+    },
+    {
+      "codigo": "FGA0069",
+      "nome": "Prática de Circuitos Eletrônicos 1",
+      "id_componente": "178809",
+      "turma": "02",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "6M12",
+      "aulas": [
+        {
+          "dia": "sexta",
+          "inicio": "08:00",
+          "fim": "09:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - LAB NEI 1",
+      "salas": [
+        "LAB NEI 1"
+      ]
+    },
+    {
+      "codigo": "FGA0069",
+      "nome": "Prática de Circuitos Eletrônicos 1",
+      "id_componente": "178809",
+      "turma": "03",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "4M12",
+      "aulas": [
+        {
+          "dia": "quarta",
+          "inicio": "08:00",
+          "fim": "09:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - LAB NEI 1",
+      "salas": [
+        "LAB NEI 1"
+      ]
+    },
+    {
+      "codigo": "FGA0070",
+      "nome": "Prática de Circuitos Eletrônicos 2",
+      "id_componente": "178847",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "3T23",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "14:00",
+          "fim": "15:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - LAB NEI 1",
+      "salas": [
+        "LAB NEI 1"
+      ]
+    },
+    {
+      "codigo": "FGA0071",
+      "nome": "Prática de Eletrônica Digital 1",
+      "id_componente": "178848",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "3M12",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "08:00",
+          "fim": "09:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE- LAB NEI 2",
+      "salas": [
+        "LAB NEI 2"
+      ]
+    },
+    {
+      "codigo": "FGA0071",
+      "nome": "Prática de Eletrônica Digital 1",
+      "id_componente": "178848",
+      "turma": "02",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "3T23",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "14:00",
+          "fim": "15:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - LAB NEI 2",
+      "salas": [
+        "LAB NEI 2"
+      ]
+    },
+    {
+      "codigo": "FGA0071",
+      "nome": "Prática de Eletrônica Digital 1",
+      "id_componente": "178848",
+      "turma": "03",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "2M34",
+      "aulas": [
+        {
+          "dia": "segunda",
+          "inicio": "10:00",
+          "fim": "11:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - LAB NEI 2",
+      "salas": [
+        "LAB NEI 2"
+      ]
+    },
+    {
+      "codigo": "FGA0071",
+      "nome": "Prática de Eletrônica Digital 1",
+      "id_componente": "178848",
+      "turma": "04",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "2M5 2T1",
+      "aulas": [
+        {
+          "dia": "segunda",
+          "inicio": "12:00",
+          "fim": "13:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - LAB NEI 2",
+      "salas": [
+        "LAB NEI 2"
+      ]
+    },
+    {
+      "codigo": "FGA0071",
+      "nome": "Prática de Eletrônica Digital 1",
+      "id_componente": "178848",
+      "turma": "05",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "3M5 3T1",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "12:00",
+          "fim": "13:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - LAB NEI 2",
+      "salas": [
+        "LAB NEI 2"
+      ]
+    },
+    {
+      "codigo": "FGA0071",
+      "nome": "Prática de Eletrônica Digital 1",
+      "id_componente": "178848",
+      "turma": "06",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "4M12",
+      "aulas": [
+        {
+          "dia": "quarta",
+          "inicio": "08:00",
+          "fim": "09:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - LAB NEI 2",
+      "salas": [
+        "LAB NEI 2"
+      ]
+    },
+    {
+      "codigo": "FGA0071",
+      "nome": "Prática de Eletrônica Digital 1",
+      "id_componente": "178848",
+      "turma": "07",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "4M34",
+      "aulas": [
+        {
+          "dia": "quarta",
+          "inicio": "10:00",
+          "fim": "11:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - LAB NEI 2",
+      "salas": [
+        "LAB NEI 2"
+      ]
+    },
+    {
+      "codigo": "FGA0071",
+      "nome": "Prática de Eletrônica Digital 1",
+      "id_componente": "178848",
+      "turma": "08",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "4T23",
+      "aulas": [
+        {
+          "dia": "quarta",
+          "inicio": "14:00",
+          "fim": "15:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - LAB NEI 2",
+      "salas": [
+        "LAB NEI 2"
+      ]
+    },
+    {
+      "codigo": "FGA0071",
+      "nome": "Prática de Eletrônica Digital 1",
+      "id_componente": "178848",
+      "turma": "09",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "4T45",
+      "aulas": [
+        {
+          "dia": "quarta",
+          "inicio": "16:00",
+          "fim": "17:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - LAB NEI 2",
+      "salas": [
+        "LAB NEI 2"
+      ]
+    },
+    {
+      "codigo": "FGA0071",
+      "nome": "Prática de Eletrônica Digital 1",
+      "id_componente": "178848",
+      "turma": "11",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "6M34",
+      "aulas": [
+        {
+          "dia": "sexta",
+          "inicio": "10:00",
+          "fim": "11:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - LAB NEI 2",
+      "salas": [
+        "LAB NEI 2"
+      ]
+    },
+    {
+      "codigo": "FGA0071",
+      "nome": "Prática de Eletrônica Digital 1",
+      "id_componente": "178848",
+      "turma": "12",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "6M12",
+      "aulas": [
+        {
+          "dia": "sexta",
+          "inicio": "08:00",
+          "fim": "09:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - LAB NEI 2",
+      "salas": [
+        "LAB NEI 2"
+      ]
+    },
+    {
+      "codigo": "FGA0072",
+      "nome": "Prática de Eletrônica Digital 2",
+      "id_componente": "178849",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "2M12",
+      "aulas": [
+        {
+          "dia": "segunda",
+          "inicio": "08:00",
+          "fim": "09:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - LAB SS",
+      "salas": [
+        "LAB SS"
+      ]
+    },
+    {
+      "codigo": "FGA0072",
+      "nome": "Prática de Eletrônica Digital 2",
+      "id_componente": "178849",
+      "turma": "02",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "4M12",
+      "aulas": [
+        {
+          "dia": "quarta",
+          "inicio": "08:00",
+          "fim": "09:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - LAB SS",
+      "salas": [
+        "LAB SS"
+      ]
+    },
+    {
+      "codigo": "FGA0073",
+      "nome": "Teoria de Eletrônica Digital 1",
+      "id_componente": "178850",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "46M12",
+      "aulas": [
+        {
+          "dia": "quarta",
+          "inicio": "08:00",
+          "fim": "09:50"
+        },
+        {
+          "dia": "sexta",
+          "inicio": "08:00",
+          "fim": "09:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - S1",
+      "salas": [
+        "S1"
+      ]
+    },
+    {
+      "codigo": "FGA0073",
+      "nome": "Teoria de Eletrônica Digital 1",
+      "id_componente": "178850",
+      "turma": "02",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "46T23",
+      "aulas": [
+        {
+          "dia": "quarta",
+          "inicio": "14:00",
+          "fim": "15:50"
+        },
+        {
+          "dia": "sexta",
+          "inicio": "14:00",
+          "fim": "15:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - S2",
+      "salas": [
+        "S2"
+      ]
+    },
+    {
+      "codigo": "FGA0074",
+      "nome": "Teoria de Eletrônica Digital 2",
+      "id_componente": "178851",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "35M34",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "10:00",
+          "fim": "11:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "10:00",
+          "fim": "11:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE / I2",
+      "salas": [
+        "I2"
+      ]
+    },
+    {
+      "codigo": "FGA0075",
+      "nome": "Laboratório de Materiais de Construção",
+      "id_componente": "178882",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "2T4",
+      "aulas": [
+        {
+          "dia": "segunda",
+          "inicio": "16:00",
+          "fim": "16:55"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - LAB MATERIAIS",
+      "salas": [
+        "LAB MATERIAIS"
+      ]
+    },
+    {
+      "codigo": "FGA0075",
+      "nome": "Laboratório de Materiais de Construção",
+      "id_componente": "178882",
+      "turma": "02",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "3M4",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "10:55",
+          "fim": "11:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - LAB MATERIAIS",
+      "salas": [
+        "LAB MATERIAIS"
+      ]
+    },
+    {
+      "codigo": "FGA0075",
+      "nome": "Laboratório de Materiais de Construção",
+      "id_componente": "178882",
+      "turma": "03",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "3M3",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "10:00",
+          "fim": "10:55"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - LAB MATERIAIS",
+      "salas": [
+        "LAB MATERIAIS"
+      ]
+    },
+    {
+      "codigo": "FGA0075",
+      "nome": "Laboratório de Materiais de Construção",
+      "id_componente": "178882",
+      "turma": "04",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "4M5",
+      "aulas": [
+        {
+          "dia": "quarta",
+          "inicio": "12:00",
+          "fim": "12:55"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - LAB MATERIAIS",
+      "salas": [
+        "LAB MATERIAIS"
+      ]
+    },
+    {
+      "codigo": "FGA0075",
+      "nome": "Laboratório de Materiais de Construção",
+      "id_componente": "178882",
+      "turma": "08",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "4T4",
+      "aulas": [
+        {
+          "dia": "quarta",
+          "inicio": "16:00",
+          "fim": "16:55"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - LAB MATERIAIS",
+      "salas": [
+        "LAB MATERIAIS"
+      ]
+    },
+    {
+      "codigo": "FGA0075",
+      "nome": "Laboratório de Materiais de Construção",
+      "id_componente": "178882",
+      "turma": "09",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "5M3",
+      "aulas": [
+        {
+          "dia": "quinta",
+          "inicio": "10:00",
+          "fim": "10:55"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - LAB MATERIAIS",
+      "salas": [
+        "LAB MATERIAIS"
+      ]
+    },
+    {
+      "codigo": "FGA0076",
+      "nome": "Equipamentos Termofluidos Automotivos",
+      "id_componente": "178883",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "46M12",
+      "aulas": [
+        {
+          "dia": "quarta",
+          "inicio": "08:00",
+          "fim": "09:50"
+        },
+        {
+          "dia": "sexta",
+          "inicio": "08:00",
+          "fim": "09:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - I4",
+      "salas": [
+        "I4"
+      ]
+    },
+    {
+      "codigo": "FGA0077",
+      "nome": "Introdução ao Desgaste",
+      "id_componente": "178884",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "35T23",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "14:00",
+          "fim": "15:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "14:00",
+          "fim": "15:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - MULTIUSO",
+      "salas": [
+        "MULTIUSO"
+      ]
+    },
+    {
+      "codigo": "FGA0078",
+      "nome": "Teoria de Materiais de Construção",
+      "id_componente": "178889",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "2T23 4T1",
+      "aulas": [
+        {
+          "dia": "segunda",
+          "inicio": "14:00",
+          "fim": "15:50"
+        },
+        {
+          "dia": "quarta",
+          "inicio": "12:55",
+          "fim": "13:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - I2",
+      "salas": [
+        "I2"
+      ]
+    },
+    {
+      "codigo": "FGA0078",
+      "nome": "Teoria de Materiais de Construção",
+      "id_componente": "178889",
+      "turma": "02",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "3T23 5T2",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "14:00",
+          "fim": "15:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "14:00",
+          "fim": "14:55"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - I2",
+      "salas": [
+        "I2"
+      ]
+    },
+    {
+      "codigo": "FGA0085",
+      "nome": "Matemática Discreta 1",
+      "id_componente": "178990",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "24M12",
+      "aulas": [
+        {
+          "dia": "segunda",
+          "inicio": "08:00",
+          "fim": "09:50"
+        },
+        {
+          "dia": "quarta",
+          "inicio": "08:00",
+          "fim": "09:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - S9",
+      "salas": [
+        "S9"
+      ]
+    },
+    {
+      "codigo": "FGA0085",
+      "nome": "Matemática Discreta 1",
+      "id_componente": "178990",
+      "turma": "02",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "24T23",
+      "aulas": [
+        {
+          "dia": "segunda",
+          "inicio": "14:00",
+          "fim": "15:50"
+        },
+        {
+          "dia": "quarta",
+          "inicio": "14:00",
+          "fim": "15:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - S7",
+      "salas": [
+        "S7"
+      ]
+    },
+    {
+      "codigo": "FGA0085",
+      "nome": "Matemática Discreta 1",
+      "id_componente": "178990",
+      "turma": "03",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "24T45",
+      "aulas": [
+        {
+          "dia": "segunda",
+          "inicio": "16:00",
+          "fim": "17:50"
+        },
+        {
+          "dia": "quarta",
+          "inicio": "16:00",
+          "fim": "17:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - I3",
+      "salas": [
+        "I3"
+      ]
+    },
+    {
+      "codigo": "FGA0085",
+      "nome": "Matemática Discreta 1",
+      "id_componente": "178990",
+      "turma": "04",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "46M12",
+      "aulas": [
+        {
+          "dia": "quarta",
+          "inicio": "08:00",
+          "fim": "09:50"
+        },
+        {
+          "dia": "sexta",
+          "inicio": "08:00",
+          "fim": "09:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - I3",
+      "salas": [
+        "I3"
+      ]
+    },
+    {
+      "codigo": "FGA0085",
+      "nome": "Matemática Discreta 1",
+      "id_componente": "178990",
+      "turma": "05",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "46M34",
+      "aulas": [
+        {
+          "dia": "quarta",
+          "inicio": "10:00",
+          "fim": "11:50"
+        },
+        {
+          "dia": "sexta",
+          "inicio": "10:00",
+          "fim": "11:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - S3 / S1",
+      "salas": [
+        "S3",
+        "S1"
+      ]
+    },
+    {
+      "codigo": "FGA0086",
+      "nome": "Teoria de Eletricidade Aplicada",
+      "id_componente": "178993",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "24M12",
+      "aulas": [
+        {
+          "dia": "segunda",
+          "inicio": "08:00",
+          "fim": "09:50"
+        },
+        {
+          "dia": "quarta",
+          "inicio": "08:00",
+          "fim": "09:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - I8",
+      "salas": [
+        "I8"
+      ]
+    },
+    {
+      "codigo": "FGA0086",
+      "nome": "Teoria de Eletricidade Aplicada",
+      "id_componente": "178993",
+      "turma": "02",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "24T45",
+      "aulas": [
+        {
+          "dia": "segunda",
+          "inicio": "16:00",
+          "fim": "17:50"
+        },
+        {
+          "dia": "quarta",
+          "inicio": "16:00",
+          "fim": "17:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - S8",
+      "salas": [
+        "S8"
+      ]
+    },
+    {
+      "codigo": "FGA0087",
+      "nome": "Laboratório de Eletricidade Aplicada",
+      "id_componente": "178994",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "2M34",
+      "aulas": [
+        {
+          "dia": "segunda",
+          "inicio": "10:00",
+          "fim": "11:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - LAB ELETRICIDADE",
+      "salas": [
+        "LAB ELETRICIDADE"
+      ]
+    },
+    {
+      "codigo": "FGA0087",
+      "nome": "Laboratório de Eletricidade Aplicada",
+      "id_componente": "178994",
+      "turma": "02",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "3M34",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "10:00",
+          "fim": "11:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - LAB ELETRICIDADE",
+      "salas": [
+        "LAB ELETRICIDADE"
+      ]
+    },
+    {
+      "codigo": "FGA0087",
+      "nome": "Laboratório de Eletricidade Aplicada",
+      "id_componente": "178994",
+      "turma": "03",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "3T23",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "14:00",
+          "fim": "15:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - LAB ELETRICIDADE",
+      "salas": [
+        "LAB ELETRICIDADE"
+      ]
+    },
+    {
+      "codigo": "FGA0087",
+      "nome": "Laboratório de Eletricidade Aplicada",
+      "id_componente": "178994",
+      "turma": "04",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "3T45",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "16:00",
+          "fim": "17:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - LAB ELETRICIDADE",
+      "salas": [
+        "LAB ELETRICIDADE"
+      ]
+    },
+    {
+      "codigo": "FGA0087",
+      "nome": "Laboratório de Eletricidade Aplicada",
+      "id_componente": "178994",
+      "turma": "05",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "5M34",
+      "aulas": [
+        {
+          "dia": "quinta",
+          "inicio": "10:00",
+          "fim": "11:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - LAB ELETRICIDADE",
+      "salas": [
+        "LAB ELETRICIDADE"
+      ]
+    },
+    {
+      "codigo": "FGA0088",
+      "nome": "Teoria de Sistemas de Conversão de Energia",
+      "id_componente": "178995",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "35M12",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "08:00",
+          "fim": "09:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "08:00",
+          "fim": "09:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - I1",
+      "salas": [
+        "I1"
+      ]
+    },
+    {
+      "codigo": "FGA0089",
+      "nome": "Laboratório de Sistemas de Conversão de Energia",
+      "id_componente": "178996",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "4T23",
+      "aulas": [
+        {
+          "dia": "quarta",
+          "inicio": "14:00",
+          "fim": "15:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - LAB ELETRICIDADE",
+      "salas": [
+        "LAB ELETRICIDADE"
+      ]
+    },
+    {
+      "codigo": "FGA0090",
+      "nome": "Ondulatória e Física Térmica para Engenharia",
+      "id_componente": "178997",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "35T23",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "14:00",
+          "fim": "15:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "14:00",
+          "fim": "15:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - I1",
+      "salas": [
+        "I1"
+      ]
+    },
+    {
+      "codigo": "FGA0091",
+      "nome": "Máquinas de Fluido",
+      "id_componente": "179002",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "24M12 4T23",
+      "aulas": [
+        {
+          "dia": "segunda",
+          "inicio": "08:00",
+          "fim": "09:50"
+        },
+        {
+          "dia": "quarta",
+          "inicio": "08:00",
+          "fim": "09:50"
+        },
+        {
+          "dia": "quarta",
+          "inicio": "14:00",
+          "fim": "15:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - I5 / LAB TERMOFLUIDOS",
+      "salas": [
+        "I5",
+        "LAB TERMOFLUIDOS"
+      ]
+    },
+    {
+      "codigo": "FGA0092",
+      "nome": "Princípios de Comunicação para Engenharia",
+      "id_componente": "179006",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "3M125 5M12",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "08:00",
+          "fim": "09:50"
+        },
+        {
+          "dia": "terça",
+          "inicio": "12:00",
+          "fim": "12:55"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "08:00",
+          "fim": "09:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - I2 / LAB SS",
+      "salas": [
+        "I2",
+        "LAB SS"
+      ]
+    },
+    {
+      "codigo": "FGA0093",
+      "nome": "Princípios de Controle",
+      "id_componente": "179007",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "3T123 5T23",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "12:55",
+          "fim": "15:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "14:00",
+          "fim": "15:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - LAB SS / NIT/LDS",
+      "salas": [
+        "LAB SS",
+        "NIT",
+        "LDS"
+      ]
+    },
+    {
+      "codigo": "FGA0093",
+      "nome": "Princípios de Controle",
+      "id_componente": "179007",
+      "turma": "02",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "46T23 5T1",
+      "aulas": [
+        {
+          "dia": "quarta",
+          "inicio": "14:00",
+          "fim": "15:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "12:55",
+          "fim": "13:50"
+        },
+        {
+          "dia": "sexta",
+          "inicio": "14:00",
+          "fim": "15:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - I5 / LAB SS",
+      "salas": [
+        "I5",
+        "LAB SS"
+      ]
+    },
+    {
+      "codigo": "FGA0098",
+      "nome": "Prática de Circuitos Eletrônicos 3",
+      "id_componente": "179012",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "5T23",
+      "aulas": [
+        {
+          "dia": "quinta",
+          "inicio": "14:00",
+          "fim": "15:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - LAB NEI 1",
+      "salas": [
+        "LAB NEI 1"
+      ]
+    },
+    {
+      "codigo": "FGA0099",
+      "nome": "Teoria de Circuitos Eletrônicos 3",
+      "id_componente": "179015",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "35T45",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "16:00",
+          "fim": "17:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "16:00",
+          "fim": "17:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - I7",
+      "salas": [
+        "I7"
+      ]
+    },
+    {
+      "codigo": "FGA0100",
+      "nome": "Prática de Física dos Dispositivos Eletrônicos",
+      "id_componente": "179016",
+      "turma": "02",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "3M5 3T1",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "12:00",
+          "fim": "13:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - LAB NEI 1",
+      "salas": [
+        "LAB NEI 1"
+      ]
+    },
+    {
+      "codigo": "FGA0100",
+      "nome": "Prática de Física dos Dispositivos Eletrônicos",
+      "id_componente": "179016",
+      "turma": "03",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "6M5 6T1",
+      "aulas": [
+        {
+          "dia": "sexta",
+          "inicio": "12:00",
+          "fim": "13:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - LAB NEI 1",
+      "salas": [
+        "LAB NEI 1"
+      ]
+    },
+    {
+      "codigo": "FGA0101",
+      "nome": "Teoria de Física dos Dispositivos Eletrônicos",
+      "id_componente": "179017",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "35T45",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "16:00",
+          "fim": "17:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "16:00",
+          "fim": "17:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - I8",
+      "salas": [
+        "I8"
+      ]
+    },
+    {
+      "codigo": "FGA0102",
+      "nome": "Sinais e Sistemas para Engenharia",
+      "id_componente": "179018",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "356T23",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "14:00",
+          "fim": "15:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "14:00",
+          "fim": "15:50"
+        },
+        {
+          "dia": "sexta",
+          "inicio": "14:00",
+          "fim": "15:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - I8 / I6",
+      "salas": [
+        "I8",
+        "I6"
+      ]
+    },
+    {
+      "codigo": "FGA0102",
+      "nome": "Sinais e Sistemas para Engenharia",
+      "id_componente": "179018",
+      "turma": "02",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "246M34",
+      "aulas": [
+        {
+          "dia": "segunda",
+          "inicio": "10:00",
+          "fim": "11:50"
+        },
+        {
+          "dia": "quarta",
+          "inicio": "10:00",
+          "fim": "11:50"
+        },
+        {
+          "dia": "sexta",
+          "inicio": "10:00",
+          "fim": "11:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - LAB SS",
+      "salas": [
+        "LAB SS"
+      ]
+    },
+    {
+      "codigo": "FGA0102",
+      "nome": "Sinais e Sistemas para Engenharia",
+      "id_componente": "179018",
+      "turma": "03",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "246M12",
+      "aulas": [
+        {
+          "dia": "segunda",
+          "inicio": "08:00",
+          "fim": "09:50"
+        },
+        {
+          "dia": "quarta",
+          "inicio": "08:00",
+          "fim": "09:50"
+        },
+        {
+          "dia": "sexta",
+          "inicio": "08:00",
+          "fim": "09:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - MOCAP/I9",
+      "salas": [
+        "MOCAP",
+        "I9"
+      ]
+    },
+    {
+      "codigo": "FGA0104",
+      "nome": "Química Orgânica Aplicada à Engenharia",
+      "id_componente": "179106",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "24M34",
+      "aulas": [
+        {
+          "dia": "segunda",
+          "inicio": "10:00",
+          "fim": "11:50"
+        },
+        {
+          "dia": "quarta",
+          "inicio": "10:00",
+          "fim": "11:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - I1",
+      "salas": [
+        "I1"
+      ]
+    },
+    {
+      "codigo": "FGA0105",
+      "nome": "Tópicos Especiais 2 em Engenharia Aeroespacial",
+      "id_componente": "179110",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "46M12",
+      "aulas": [
+        {
+          "dia": "quarta",
+          "inicio": "08:00",
+          "fim": "09:50"
+        },
+        {
+          "dia": "sexta",
+          "inicio": "08:00",
+          "fim": "09:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - I6",
+      "salas": [
+        "I6"
+      ]
+    },
+    {
+      "codigo": "FGA0105",
+      "nome": "Tópicos Especiais 2 em Engenharia Aeroespacial",
+      "id_componente": "179110",
+      "turma": "02",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "26M12",
+      "aulas": [
+        {
+          "dia": "segunda",
+          "inicio": "08:00",
+          "fim": "09:50"
+        },
+        {
+          "dia": "sexta",
+          "inicio": "08:00",
+          "fim": "09:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - I1/I2",
+      "salas": [
+        "I1",
+        "I2"
+      ]
+    },
+    {
+      "codigo": "FGA0105",
+      "nome": "Tópicos Especiais 2 em Engenharia Aeroespacial",
+      "id_componente": "179110",
+      "turma": "04",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "3M5 2T45 3T1",
+      "aulas": [
+        {
+          "dia": "segunda",
+          "inicio": "16:00",
+          "fim": "17:50"
+        },
+        {
+          "dia": "terça",
+          "inicio": "12:00",
+          "fim": "13:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - I5",
+      "salas": [
+        "I5"
+      ]
+    },
+    {
+      "codigo": "FGA0106",
+      "nome": "Tópicos Especiais 3 em Engenharia Aeroespacial",
+      "id_componente": "179111",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "35T45",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "16:00",
+          "fim": "17:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "16:00",
+          "fim": "17:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - S8",
+      "salas": [
+        "S8"
+      ]
+    },
+    {
+      "codigo": "FGA0107",
+      "nome": "Laboratório de Ondulatória e Física Térmica para a Engenharia",
+      "id_componente": "179319",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "5M34",
+      "aulas": [
+        {
+          "dia": "quinta",
+          "inicio": "10:00",
+          "fim": "11:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - LAB FÍSICA 2",
+      "salas": [
+        "LAB FÍSICA 2"
+      ]
+    },
+    {
+      "codigo": "FGA0108",
+      "nome": "Matemática Discreta 2",
+      "id_componente": "180070",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "7M1234",
+      "aulas": [
+        {
+          "dia": "sábado",
+          "inicio": "08:00",
+          "fim": "11:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - S1",
+      "salas": [
+        "S1"
+      ]
+    },
+    {
+      "codigo": "FGA0108",
+      "nome": "Matemática Discreta 2",
+      "id_componente": "180070",
+      "turma": "02",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "35T45",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "16:00",
+          "fim": "17:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "16:00",
+          "fim": "17:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - I2",
+      "salas": [
+        "I2"
+      ]
+    },
+    {
+      "codigo": "FGA0109",
+      "nome": "Fundamentos de Sistemas Embarcados",
+      "id_componente": "180071",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "35T23",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "14:00",
+          "fim": "15:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "14:00",
+          "fim": "15:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - Mocap",
+      "salas": [
+        "Mocap"
+      ]
+    },
+    {
+      "codigo": "FGA0109",
+      "nome": "Fundamentos de Sistemas Embarcados",
+      "id_componente": "180071",
+      "turma": "02",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "46M34",
+      "aulas": [
+        {
+          "dia": "quarta",
+          "inicio": "10:00",
+          "fim": "11:50"
+        },
+        {
+          "dia": "sexta",
+          "inicio": "10:00",
+          "fim": "11:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - I10",
+      "salas": [
+        "I10"
+      ]
+    },
+    {
+      "codigo": "FGA0117",
+      "nome": "Fundamentos de Energia Nuclear",
+      "id_componente": "180115",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "35T45",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "16:00",
+          "fim": "17:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "16:00",
+          "fim": "17:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - I1",
+      "salas": [
+        "I1"
+      ]
+    },
+    {
+      "codigo": "FGA0118",
+      "nome": "Sistemas de Informação Geográfica para Engenharia",
+      "id_componente": "180124",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "24M34",
+      "aulas": [
+        {
+          "dia": "segunda",
+          "inicio": "10:00",
+          "fim": "11:50"
+        },
+        {
+          "dia": "quarta",
+          "inicio": "10:00",
+          "fim": "11:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE / I5 / I2",
+      "salas": [
+        "I5",
+        "I2"
+      ]
+    },
+    {
+      "codigo": "FGA0119",
+      "nome": "Teoria de Eletromagnetismo",
+      "id_componente": "180171",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "24T23",
+      "aulas": [
+        {
+          "dia": "segunda",
+          "inicio": "14:00",
+          "fim": "15:50"
+        },
+        {
+          "dia": "quarta",
+          "inicio": "14:00",
+          "fim": "15:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - I3",
+      "salas": [
+        "I3"
+      ]
+    },
+    {
+      "codigo": "FGA0120",
+      "nome": "Prática de Eletromagnetismo",
+      "id_componente": "180172",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "6T23",
+      "aulas": [
+        {
+          "dia": "sexta",
+          "inicio": "14:00",
+          "fim": "15:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - Termofluidos/Termo-sup",
+      "salas": [
+        "Termofluidos",
+        "Termo-sup"
+      ]
+    },
+    {
+      "codigo": "FGA0120",
+      "nome": "Prática de Eletromagnetismo",
+      "id_componente": "180172",
+      "turma": "02",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "3T45",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "16:00",
+          "fim": "17:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - Termofluidos/Termo-sup",
+      "salas": [
+        "Termofluidos",
+        "Termo-sup"
+      ]
+    },
+    {
+      "codigo": "FGA0121",
+      "nome": "Tópicos Especiais 4 em Engenharia Aeroespacial",
+      "id_componente": "180229",
+      "turma": "02",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "46M12",
+      "aulas": [
+        {
+          "dia": "quarta",
+          "inicio": "08:00",
+          "fim": "09:50"
+        },
+        {
+          "dia": "sexta",
+          "inicio": "08:00",
+          "fim": "09:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - S7",
+      "salas": [
+        "S7"
+      ]
+    },
+    {
+      "codigo": "FGA0124",
+      "nome": "Projeto de Algoritmos",
+      "id_componente": "180378",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "26M34",
+      "aulas": [
+        {
+          "dia": "segunda",
+          "inicio": "10:00",
+          "fim": "11:50"
+        },
+        {
+          "dia": "sexta",
+          "inicio": "10:00",
+          "fim": "11:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - S3",
+      "salas": [
+        "S3"
+      ]
+    },
+    {
+      "codigo": "FGA0132",
+      "nome": "Instrumentação Eletrônica para Engenharia",
+      "id_componente": "180502",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "35M34",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "10:00",
+          "fim": "11:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "10:00",
+          "fim": "11:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - I3 / I7",
+      "salas": [
+        "I3",
+        "I7"
+      ]
+    },
+    {
+      "codigo": "FGA0133",
+      "nome": "Engenharia Econômica",
+      "id_componente": "188351",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "35M34",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "10:00",
+          "fim": "11:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "10:00",
+          "fim": "11:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - I9",
+      "salas": [
+        "I9"
+      ]
+    },
+    {
+      "codigo": "FGA0133",
+      "nome": "Engenharia Econômica",
+      "id_componente": "188351",
+      "turma": "02",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "46T45",
+      "aulas": [
+        {
+          "dia": "quarta",
+          "inicio": "16:00",
+          "fim": "17:50"
+        },
+        {
+          "dia": "sexta",
+          "inicio": "16:00",
+          "fim": "17:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - S9",
+      "salas": [
+        "S9"
+      ]
+    },
+    {
+      "codigo": "FGA0134",
+      "nome": "Tópicos Especiais de Engenharia de Software",
+      "id_componente": "188384",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "24T23",
+      "aulas": [
+        {
+          "dia": "segunda",
+          "inicio": "14:00",
+          "fim": "15:50"
+        },
+        {
+          "dia": "quarta",
+          "inicio": "14:00",
+          "fim": "15:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - I4",
+      "salas": [
+        "I4"
+      ]
+    },
+    {
+      "codigo": "FGA0134",
+      "nome": "Tópicos Especiais de Engenharia de Software",
+      "id_componente": "188384",
+      "turma": "02",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "35T23",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "14:00",
+          "fim": "15:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "14:00",
+          "fim": "15:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - I7",
+      "salas": [
+        "I7"
+      ]
+    },
+    {
+      "codigo": "FGA0137",
+      "nome": "Sistemas de Banco de Dados 1",
+      "id_componente": "188387",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "46M34",
+      "aulas": [
+        {
+          "dia": "quarta",
+          "inicio": "10:00",
+          "fim": "11:50"
+        },
+        {
+          "dia": "sexta",
+          "inicio": "10:00",
+          "fim": "11:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - S2",
+      "salas": [
+        "S2"
+      ]
+    },
+    {
+      "codigo": "FGA0141",
+      "nome": "Gestão Ambiental no Setor Energético",
+      "id_componente": "188391",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "46M34",
+      "aulas": [
+        {
+          "dia": "quarta",
+          "inicio": "10:00",
+          "fim": "11:50"
+        },
+        {
+          "dia": "sexta",
+          "inicio": "10:00",
+          "fim": "11:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - S5",
+      "salas": [
+        "S5"
+      ]
+    },
+    {
+      "codigo": "FGA0142",
+      "nome": "Fundamentos de Arquitetura de Computadores",
+      "id_componente": "188392",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "35M34",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "10:00",
+          "fim": "11:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "10:00",
+          "fim": "11:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - S9",
+      "salas": [
+        "S9"
+      ]
+    },
+    {
+      "codigo": "FGA0142",
+      "nome": "Fundamentos de Arquitetura de Computadores",
+      "id_componente": "188392",
+      "turma": "02",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "46M12",
+      "aulas": [
+        {
+          "dia": "quarta",
+          "inicio": "08:00",
+          "fim": "09:50"
+        },
+        {
+          "dia": "sexta",
+          "inicio": "08:00",
+          "fim": "09:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - I9/S9",
+      "salas": [
+        "I9",
+        "S9"
+      ]
+    },
+    {
+      "codigo": "FGA0142",
+      "nome": "Fundamentos de Arquitetura de Computadores",
+      "id_componente": "188392",
+      "turma": "03",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "46T45",
+      "aulas": [
+        {
+          "dia": "quarta",
+          "inicio": "16:00",
+          "fim": "17:50"
+        },
+        {
+          "dia": "sexta",
+          "inicio": "16:00",
+          "fim": "17:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - I9",
+      "salas": [
+        "I9"
+      ]
+    },
+    {
+      "codigo": "FGA0146",
+      "nome": "Estruturas de Dados 1",
+      "id_componente": "188396",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "35M5 35T1",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "12:00",
+          "fim": "13:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "12:00",
+          "fim": "13:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - MOCAP",
+      "salas": [
+        "MOCAP"
+      ]
+    },
+    {
+      "codigo": "FGA0146",
+      "nome": "Estruturas de Dados 1",
+      "id_componente": "188396",
+      "turma": "02",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "35T23",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "14:00",
+          "fim": "15:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "14:00",
+          "fim": "15:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - S1",
+      "salas": [
+        "S1"
+      ]
+    },
+    {
+      "codigo": "FGA0148",
+      "nome": "Engenharia de Segurança do Trabalho",
+      "id_componente": "188398",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "2M12",
+      "aulas": [
+        {
+          "dia": "segunda",
+          "inicio": "08:00",
+          "fim": "09:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - S3",
+      "salas": [
+        "S3"
+      ]
+    },
+    {
+      "codigo": "FGA0148",
+      "nome": "Engenharia de Segurança do Trabalho",
+      "id_componente": "188398",
+      "turma": "02",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "2M34",
+      "aulas": [
+        {
+          "dia": "segunda",
+          "inicio": "10:00",
+          "fim": "11:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - I2",
+      "salas": [
+        "I2"
+      ]
+    },
+    {
+      "codigo": "FGA0152",
+      "nome": "Ergonomia do Produto",
+      "id_componente": "188419",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "46M12",
+      "aulas": [
+        {
+          "dia": "quarta",
+          "inicio": "08:00",
+          "fim": "09:50"
+        },
+        {
+          "dia": "sexta",
+          "inicio": "08:00",
+          "fim": "09:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - I7",
+      "salas": [
+        "I7"
+      ]
+    },
+    {
+      "codigo": "FGA0154",
+      "nome": "Mecanica dos Sólidos 1 para Engenharia",
+      "id_componente": "188596",
+      "turma": "02",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "35M34",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "10:00",
+          "fim": "11:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "10:00",
+          "fim": "11:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - S3",
+      "salas": [
+        "S3"
+      ]
+    },
+    {
+      "codigo": "FGA0154",
+      "nome": "Mecanica dos Sólidos 1 para Engenharia",
+      "id_componente": "188596",
+      "turma": "03",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "35M12",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "08:00",
+          "fim": "09:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "08:00",
+          "fim": "09:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - S6",
+      "salas": [
+        "S6"
+      ]
+    },
+    {
+      "codigo": "FGA0155",
+      "nome": "Introdução ao Design e Concepção de Veículos",
+      "id_componente": "188597",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "46T23",
+      "aulas": [
+        {
+          "dia": "quarta",
+          "inicio": "14:00",
+          "fim": "15:50"
+        },
+        {
+          "dia": "sexta",
+          "inicio": "14:00",
+          "fim": "15:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - I7",
+      "salas": [
+        "I7"
+      ]
+    },
+    {
+      "codigo": "FGA0156",
+      "nome": "Combustíveis e Biocombustíveis",
+      "id_componente": "188598",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "46T23",
+      "aulas": [
+        {
+          "dia": "quarta",
+          "inicio": "14:00",
+          "fim": "15:50"
+        },
+        {
+          "dia": "sexta",
+          "inicio": "14:00",
+          "fim": "15:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - LAB. NIT/LDS",
+      "salas": [
+        "LAB. NIT",
+        "LDS"
+      ]
+    },
+    {
+      "codigo": "FGA0157",
+      "nome": "Probabilidade e Estatística Aplicado a Engenharia",
+      "id_componente": "188599",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "46M34",
+      "aulas": [
+        {
+          "dia": "quarta",
+          "inicio": "10:00",
+          "fim": "11:50"
+        },
+        {
+          "dia": "sexta",
+          "inicio": "10:00",
+          "fim": "11:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - S9",
+      "salas": [
+        "S9"
+      ]
+    },
+    {
+      "codigo": "FGA0157",
+      "nome": "Probabilidade e Estatística Aplicado a Engenharia",
+      "id_componente": "188599",
+      "turma": "02",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "46M5 46T1",
+      "aulas": [
+        {
+          "dia": "quarta",
+          "inicio": "12:00",
+          "fim": "13:50"
+        },
+        {
+          "dia": "sexta",
+          "inicio": "12:00",
+          "fim": "13:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - S9",
+      "salas": [
+        "S9"
+      ]
+    },
+    {
+      "codigo": "FGA0157",
+      "nome": "Probabilidade e Estatística Aplicado a Engenharia",
+      "id_componente": "188599",
+      "turma": "03",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "24M5 24T1",
+      "aulas": [
+        {
+          "dia": "segunda",
+          "inicio": "12:00",
+          "fim": "13:50"
+        },
+        {
+          "dia": "quarta",
+          "inicio": "12:00",
+          "fim": "13:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - S4",
+      "salas": [
+        "S4"
+      ]
+    },
+    {
+      "codigo": "FGA0158",
+      "nome": "Orientação a Objetos",
+      "id_componente": "188600",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "24T23",
+      "aulas": [
+        {
+          "dia": "segunda",
+          "inicio": "14:00",
+          "fim": "15:50"
+        },
+        {
+          "dia": "quarta",
+          "inicio": "14:00",
+          "fim": "15:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - I10",
+      "salas": [
+        "I10"
+      ]
+    },
+    {
+      "codigo": "FGA0158",
+      "nome": "Orientação a Objetos",
+      "id_componente": "188600",
+      "turma": "03",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "35M5 35T1",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "12:00",
+          "fim": "13:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "12:00",
+          "fim": "13:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - I10",
+      "salas": [
+        "I10"
+      ]
+    },
+    {
+      "codigo": "FGA0160",
+      "nome": "Métodos Numéricos para Engenharia",
+      "id_componente": "188606",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "24M5 24T1",
+      "aulas": [
+        {
+          "dia": "segunda",
+          "inicio": "12:00",
+          "fim": "13:50"
+        },
+        {
+          "dia": "quarta",
+          "inicio": "12:00",
+          "fim": "13:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - I9",
+      "salas": [
+        "I9"
+      ]
+    },
+    {
+      "codigo": "FGA0160",
+      "nome": "Métodos Numéricos para Engenharia",
+      "id_componente": "188606",
+      "turma": "02",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "24T23",
+      "aulas": [
+        {
+          "dia": "segunda",
+          "inicio": "14:00",
+          "fim": "15:50"
+        },
+        {
+          "dia": "quarta",
+          "inicio": "14:00",
+          "fim": "15:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - S1 / S4",
+      "salas": [
+        "S1",
+        "S4"
+      ]
+    },
+    {
+      "codigo": "FGA0160",
+      "nome": "Métodos Numéricos para Engenharia",
+      "id_componente": "188606",
+      "turma": "03",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "35M5 35T1",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "12:00",
+          "fim": "13:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "12:00",
+          "fim": "13:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - S1",
+      "salas": [
+        "S1"
+      ]
+    },
+    {
+      "codigo": "FGA0163",
+      "nome": "Introdução à Engenharia",
+      "id_componente": "188905",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "4T23",
+      "aulas": [
+        {
+          "dia": "quarta",
+          "inicio": "14:00",
+          "fim": "15:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - AUDITÓRIO",
+      "salas": [
+        "AUDITÓRIO"
+      ]
+    },
+    {
+      "codigo": "FGA0163",
+      "nome": "Introdução à Engenharia",
+      "id_componente": "188905",
+      "turma": "02",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "4M34",
+      "aulas": [
+        {
+          "dia": "quarta",
+          "inicio": "10:00",
+          "fim": "11:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - AUDITÓRIO",
+      "salas": [
+        "AUDITÓRIO"
+      ]
+    },
+    {
+      "codigo": "FGA0163",
+      "nome": "Introdução à Engenharia",
+      "id_componente": "188905",
+      "turma": "03",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "2T23",
+      "aulas": [
+        {
+          "dia": "segunda",
+          "inicio": "14:00",
+          "fim": "15:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - AUDITÓRIO",
+      "salas": [
+        "AUDITÓRIO"
+      ]
+    },
+    {
+      "codigo": "FGA0164",
+      "nome": "Humanidades e Cidadania",
+      "id_componente": "189004",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "46T23",
+      "aulas": [
+        {
+          "dia": "quarta",
+          "inicio": "14:00",
+          "fim": "15:50"
+        },
+        {
+          "dia": "sexta",
+          "inicio": "14:00",
+          "fim": "15:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - I2",
+      "salas": [
+        "I2"
+      ]
+    },
+    {
+      "codigo": "FGA0164",
+      "nome": "Humanidades e Cidadania",
+      "id_componente": "189004",
+      "turma": "02",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "46M5 46T1",
+      "aulas": [
+        {
+          "dia": "quarta",
+          "inicio": "12:00",
+          "fim": "13:50"
+        },
+        {
+          "dia": "sexta",
+          "inicio": "12:00",
+          "fim": "13:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - S3",
+      "salas": [
+        "S3"
+      ]
+    },
+    {
+      "codigo": "FGA0164",
+      "nome": "Humanidades e Cidadania",
+      "id_componente": "189004",
+      "turma": "03",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "35T23",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "14:00",
+          "fim": "15:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "14:00",
+          "fim": "15:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - S2",
+      "salas": [
+        "S2"
+      ]
+    },
+    {
+      "codigo": "FGA0164",
+      "nome": "Humanidades e Cidadania",
+      "id_componente": "189004",
+      "turma": "04",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "35T45",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "16:00",
+          "fim": "17:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "16:00",
+          "fim": "17:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - S2",
+      "salas": [
+        "S2"
+      ]
+    },
+    {
+      "codigo": "FGA0168",
+      "nome": "Desenho Industrial Assistido por Computador",
+      "id_componente": "189008",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "246M12",
+      "aulas": [
+        {
+          "dia": "segunda",
+          "inicio": "08:00",
+          "fim": "09:50"
+        },
+        {
+          "dia": "quarta",
+          "inicio": "08:00",
+          "fim": "09:50"
+        },
+        {
+          "dia": "sexta",
+          "inicio": "08:00",
+          "fim": "09:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - S10",
+      "salas": [
+        "S10"
+      ]
+    },
+    {
+      "codigo": "FGA0168",
+      "nome": "Desenho Industrial Assistido por Computador",
+      "id_componente": "189008",
+      "turma": "02",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "246M12",
+      "aulas": [
+        {
+          "dia": "segunda",
+          "inicio": "08:00",
+          "fim": "09:50"
+        },
+        {
+          "dia": "quarta",
+          "inicio": "08:00",
+          "fim": "09:50"
+        },
+        {
+          "dia": "sexta",
+          "inicio": "08:00",
+          "fim": "09:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - I10",
+      "salas": [
+        "I10"
+      ]
+    },
+    {
+      "codigo": "FGA0168",
+      "nome": "Desenho Industrial Assistido por Computador",
+      "id_componente": "189008",
+      "turma": "03",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "235M34",
+      "aulas": [
+        {
+          "dia": "segunda",
+          "inicio": "10:00",
+          "fim": "11:50"
+        },
+        {
+          "dia": "terça",
+          "inicio": "10:00",
+          "fim": "11:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "10:00",
+          "fim": "11:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - S10",
+      "salas": [
+        "S10"
+      ]
+    },
+    {
+      "codigo": "FGA0168",
+      "nome": "Desenho Industrial Assistido por Computador",
+      "id_componente": "189008",
+      "turma": "04",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "235M34",
+      "aulas": [
+        {
+          "dia": "segunda",
+          "inicio": "10:00",
+          "fim": "11:50"
+        },
+        {
+          "dia": "terça",
+          "inicio": "10:00",
+          "fim": "11:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "10:00",
+          "fim": "11:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - I10",
+      "salas": [
+        "I10"
+      ]
+    },
+    {
+      "codigo": "FGA0168",
+      "nome": "Desenho Industrial Assistido por Computador",
+      "id_componente": "189008",
+      "turma": "05",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "356T45",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "16:00",
+          "fim": "17:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "16:00",
+          "fim": "17:50"
+        },
+        {
+          "dia": "sexta",
+          "inicio": "16:00",
+          "fim": "17:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - S10",
+      "salas": [
+        "S10"
+      ]
+    },
+    {
+      "codigo": "FGA0169",
+      "nome": "Fontes de Energia e Tecnologias de Conversão",
+      "id_componente": "189009",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "35T23",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "14:00",
+          "fim": "15:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "14:00",
+          "fim": "15:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - S6",
+      "salas": [
+        "S6"
+      ]
+    },
+    {
+      "codigo": "FGA0170",
+      "nome": "Fundamentos de Sistemas Operacionais",
+      "id_componente": "189152",
+      "turma": "02",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "46M5 46T1",
+      "aulas": [
+        {
+          "dia": "quarta",
+          "inicio": "12:00",
+          "fim": "13:50"
+        },
+        {
+          "dia": "sexta",
+          "inicio": "12:00",
+          "fim": "13:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - S1",
+      "salas": [
+        "S1"
+      ]
+    },
+    {
+      "codigo": "FGA0173",
+      "nome": "Interação Humano Computador",
+      "id_componente": "189155",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "35M12",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "08:00",
+          "fim": "09:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "08:00",
+          "fim": "09:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - S7",
+      "salas": [
+        "S7"
+      ]
+    },
+    {
+      "codigo": "FGA0173",
+      "nome": "Interação Humano Computador",
+      "id_componente": "189155",
+      "turma": "02",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "35T45",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "16:00",
+          "fim": "17:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "16:00",
+          "fim": "17:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - S9",
+      "salas": [
+        "S9"
+      ]
+    },
+    {
+      "codigo": "FGA0175",
+      "nome": "Engenharia de Petróleo e Gás",
+      "id_componente": "189157",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "35T45",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "16:00",
+          "fim": "17:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "16:00",
+          "fim": "17:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - S5",
+      "salas": [
+        "S5"
+      ]
+    },
+    {
+      "codigo": "FGA0177",
+      "nome": "Análise Instrumental de Combustíveis",
+      "id_componente": "189159",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "35T23",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "14:00",
+          "fim": "15:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "14:00",
+          "fim": "15:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE / I5",
+      "salas": [
+        "I5"
+      ]
+    },
+    {
+      "codigo": "FGA0179",
+      "nome": "Mecanica dos Sólidos 2 para Engenharia",
+      "id_componente": "189161",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "46M5 46T1",
+      "aulas": [
+        {
+          "dia": "quarta",
+          "inicio": "12:00",
+          "fim": "13:50"
+        },
+        {
+          "dia": "sexta",
+          "inicio": "12:00",
+          "fim": "13:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - S7",
+      "salas": [
+        "S7"
+      ]
+    },
+    {
+      "codigo": "FGA0188",
+      "nome": "Métodos Experimentais para Engenharia",
+      "id_componente": "189439",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "35M12",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "08:00",
+          "fim": "09:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "08:00",
+          "fim": "09:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - MULTIUSO / LAB MATERIAIS",
+      "salas": [
+        "MULTIUSO",
+        "LAB MATERIAIS"
+      ]
+    },
+    {
+      "codigo": "FGA0190",
+      "nome": "Projeto de Elementos Automotivos",
+      "id_componente": "189441",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "246M34",
+      "aulas": [
+        {
+          "dia": "segunda",
+          "inicio": "10:00",
+          "fim": "11:50"
+        },
+        {
+          "dia": "quarta",
+          "inicio": "10:00",
+          "fim": "11:50"
+        },
+        {
+          "dia": "sexta",
+          "inicio": "10:00",
+          "fim": "11:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - I4",
+      "salas": [
+        "I4"
+      ]
+    },
+    {
+      "codigo": "FGA0191",
+      "nome": "Materiais Compostos e Plásticos",
+      "id_componente": "189442",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "35T23",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "14:00",
+          "fim": "15:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "14:00",
+          "fim": "15:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - I4",
+      "salas": [
+        "I4"
+      ]
+    },
+    {
+      "codigo": "FGA0194",
+      "nome": "Arquitetura de Motores de Combustão Interna",
+      "id_componente": "189445",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "24T23",
+      "aulas": [
+        {
+          "dia": "segunda",
+          "inicio": "14:00",
+          "fim": "15:50"
+        },
+        {
+          "dia": "quarta",
+          "inicio": "14:00",
+          "fim": "15:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - SALA 302 LDTEA",
+      "salas": [
+        "SALA 302 LDTEA"
+      ]
+    },
+    {
+      "codigo": "FGA0201",
+      "nome": "Projeto de Circuitos Integrados Digitais",
+      "id_componente": "189452",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "35M12",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "08:00",
+          "fim": "09:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "08:00",
+          "fim": "09:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE / LAB SS",
+      "salas": [
+        "LAB SS"
+      ]
+    },
+    {
+      "codigo": "FGA0204",
+      "nome": "Dinâmica dos Fluídos",
+      "id_componente": "189455",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "26M34 4M3",
+      "aulas": [
+        {
+          "dia": "segunda",
+          "inicio": "10:00",
+          "fim": "11:50"
+        },
+        {
+          "dia": "quarta",
+          "inicio": "10:00",
+          "fim": "10:55"
+        },
+        {
+          "dia": "sexta",
+          "inicio": "10:00",
+          "fim": "11:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE / S8 / I3 / LAB TERMOFLUIDOS",
+      "salas": [
+        "S8",
+        "I3",
+        "LAB TERMOFLUIDOS"
+      ]
+    },
+    {
+      "codigo": "FGA0204",
+      "nome": "Dinâmica dos Fluídos",
+      "id_componente": "189455",
+      "turma": "02",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "26M34 4M4",
+      "aulas": [
+        {
+          "dia": "segunda",
+          "inicio": "10:00",
+          "fim": "11:50"
+        },
+        {
+          "dia": "quarta",
+          "inicio": "10:55",
+          "fim": "11:50"
+        },
+        {
+          "dia": "sexta",
+          "inicio": "10:00",
+          "fim": "11:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - S8 / I3 / LAB TERMOFLUIDOS",
+      "salas": [
+        "S8",
+        "I3",
+        "LAB TERMOFLUIDOS"
+      ]
+    },
+    {
+      "codigo": "FGA0208",
+      "nome": "Arquitetura e Desenho de Software",
+      "id_componente": "189459",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "26M12",
+      "aulas": [
+        {
+          "dia": "segunda",
+          "inicio": "08:00",
+          "fim": "09:50"
+        },
+        {
+          "dia": "sexta",
+          "inicio": "08:00",
+          "fim": "09:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - S4",
+      "salas": [
+        "S4"
+      ]
+    },
+    {
+      "codigo": "FGA0208",
+      "nome": "Arquitetura e Desenho de Software",
+      "id_componente": "189459",
+      "turma": "02",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "26M34",
+      "aulas": [
+        {
+          "dia": "segunda",
+          "inicio": "10:00",
+          "fim": "11:50"
+        },
+        {
+          "dia": "sexta",
+          "inicio": "10:00",
+          "fim": "11:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - S7",
+      "salas": [
+        "S7"
+      ]
+    },
+    {
+      "codigo": "FGA0210",
+      "nome": "Paradigmas de Programação",
+      "id_componente": "189461",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "35T45",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "16:00",
+          "fim": "17:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "16:00",
+          "fim": "17:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - S4",
+      "salas": [
+        "S4"
+      ]
+    },
+    {
+      "codigo": "FGA0210",
+      "nome": "Paradigmas de Programação",
+      "id_componente": "189461",
+      "turma": "02",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "46T23",
+      "aulas": [
+        {
+          "dia": "quarta",
+          "inicio": "14:00",
+          "fim": "15:50"
+        },
+        {
+          "dia": "sexta",
+          "inicio": "14:00",
+          "fim": "15:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - S10",
+      "salas": [
+        "S10"
+      ]
+    },
+    {
+      "codigo": "FGA0210",
+      "nome": "Paradigmas de Programação",
+      "id_componente": "189461",
+      "turma": "03",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "46T45",
+      "aulas": [
+        {
+          "dia": "quarta",
+          "inicio": "16:00",
+          "fim": "17:50"
+        },
+        {
+          "dia": "sexta",
+          "inicio": "16:00",
+          "fim": "17:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - S3",
+      "salas": [
+        "S3"
+      ]
+    },
+    {
+      "codigo": "FGA0211",
+      "nome": "Fundamentos de Redes de Computadores",
+      "id_componente": "189462",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "35M12",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "08:00",
+          "fim": "09:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "08:00",
+          "fim": "09:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - MOCAP",
+      "salas": [
+        "MOCAP"
+      ]
+    },
+    {
+      "codigo": "FGA0214",
+      "nome": "Tópicos Especiais em Engenharia Automotiva",
+      "id_componente": "189465",
+      "turma": "02",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "6M1234",
+      "aulas": [
+        {
+          "dia": "sexta",
+          "inicio": "08:00",
+          "fim": "11:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - SALA 302 LDTEA (Sust na Engenharia)",
+      "salas": [
+        "SALA 302 LDTEA"
+      ]
+    },
+    {
+      "codigo": "FGA0214",
+      "nome": "Tópicos Especiais em Engenharia Automotiva",
+      "id_componente": "189465",
+      "turma": "03",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "35T45",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "16:00",
+          "fim": "17:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "16:00",
+          "fim": "17:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - LAB FAB (NOÇÕES PRÁTICAS FABRICAÇÃO MECÂN.)",
+      "salas": [
+        "LAB FAB"
+      ]
+    },
+    {
+      "codigo": "FGA0214",
+      "nome": "Tópicos Especiais em Engenharia Automotiva",
+      "id_componente": "189465",
+      "turma": "04",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "24M34",
+      "aulas": [
+        {
+          "dia": "segunda",
+          "inicio": "10:00",
+          "fim": "11:50"
+        },
+        {
+          "dia": "quarta",
+          "inicio": "10:00",
+          "fim": "11:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - SHP (Fundamentos dos Veículos Elétricos)",
+      "salas": [
+        "SHP"
+      ]
+    },
+    {
+      "codigo": "FGA0219",
+      "nome": "Processamento de Sinais",
+      "id_componente": "189721",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "46M12",
+      "aulas": [
+        {
+          "dia": "quarta",
+          "inicio": "08:00",
+          "fim": "09:50"
+        },
+        {
+          "dia": "sexta",
+          "inicio": "08:00",
+          "fim": "09:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - I1",
+      "salas": [
+        "I1"
+      ]
+    },
+    {
+      "codigo": "FGA0221",
+      "nome": "Inteligência Artificial",
+      "id_componente": "189723",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "35T45",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "16:00",
+          "fim": "17:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "16:00",
+          "fim": "17:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - S7",
+      "salas": [
+        "S7"
+      ]
+    },
+    {
+      "codigo": "FGA0226",
+      "nome": "Eletrônica Veicular",
+      "id_componente": "189728",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "35M34",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "10:00",
+          "fim": "11:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "10:00",
+          "fim": "11:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - S8",
+      "salas": [
+        "S8"
+      ]
+    },
+    {
+      "codigo": "FGA0228",
+      "nome": "Projeto de Sistemas Automotivos",
+      "id_componente": "189732",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "24M12",
+      "aulas": [
+        {
+          "dia": "segunda",
+          "inicio": "08:00",
+          "fim": "09:50"
+        },
+        {
+          "dia": "quarta",
+          "inicio": "08:00",
+          "fim": "09:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - S5",
+      "salas": [
+        "S5"
+      ]
+    },
+    {
+      "codigo": "FGA0229",
+      "nome": "Análise Estrutural Método dos Elementos Finitos",
+      "id_componente": "189733",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "35T45",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "16:00",
+          "fim": "17:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "16:00",
+          "fim": "17:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - I6",
+      "salas": [
+        "I6"
+      ]
+    },
+    {
+      "codigo": "FGA0230",
+      "nome": "Dinâmica de Veículos",
+      "id_componente": "189734",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "35M12",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "08:00",
+          "fim": "09:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "08:00",
+          "fim": "09:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - I8",
+      "salas": [
+        "I8"
+      ]
+    },
+    {
+      "codigo": "FGA0242",
+      "nome": "Técnicas de Programação em Plataformas Emergentes",
+      "id_componente": "189775",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "24T45",
+      "aulas": [
+        {
+          "dia": "segunda",
+          "inicio": "16:00",
+          "fim": "17:50"
+        },
+        {
+          "dia": "quarta",
+          "inicio": "16:00",
+          "fim": "17:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - S10",
+      "salas": [
+        "S10"
+      ]
+    },
+    {
+      "codigo": "FGA0242",
+      "nome": "Técnicas de Programação em Plataformas Emergentes",
+      "id_componente": "189775",
+      "turma": "02",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "24M12",
+      "aulas": [
+        {
+          "dia": "segunda",
+          "inicio": "08:00",
+          "fim": "09:50"
+        },
+        {
+          "dia": "quarta",
+          "inicio": "08:00",
+          "fim": "09:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - S6",
+      "salas": [
+        "S6"
+      ]
+    },
+    {
+      "codigo": "FGA0244",
+      "nome": "Programação para Sistemas Paralelos e Distribuídos",
+      "id_componente": "189777",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "46M34",
+      "aulas": [
+        {
+          "dia": "quarta",
+          "inicio": "10:00",
+          "fim": "11:50"
+        },
+        {
+          "dia": "sexta",
+          "inicio": "10:00",
+          "fim": "11:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - Salas S4 /S4 / S10 / S10 (120 Vagas)",
+      "salas": [
+        "S4",
+        "S10"
+      ]
+    },
+    {
+      "codigo": "FGA0252",
+      "nome": "Sistemas Hidroelétricos",
+      "id_componente": "189940",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "46M12 2T4",
+      "aulas": [
+        {
+          "dia": "segunda",
+          "inicio": "16:00",
+          "fim": "16:55"
+        },
+        {
+          "dia": "quarta",
+          "inicio": "08:00",
+          "fim": "09:50"
+        },
+        {
+          "dia": "sexta",
+          "inicio": "08:00",
+          "fim": "09:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - LAB TERMODINÂMICA / TERMO-SUP",
+      "salas": [
+        "LAB TERMODINÂMICA",
+        "TERMO-SUP"
+      ]
+    },
+    {
+      "codigo": "FGA0254",
+      "nome": "Ciências Aeroespaciais",
+      "id_componente": "189942",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "35M34",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "10:00",
+          "fim": "11:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "10:00",
+          "fim": "11:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - S5",
+      "salas": [
+        "S5"
+      ]
+    },
+    {
+      "codigo": "FGA0254",
+      "nome": "Ciências Aeroespaciais",
+      "id_componente": "189942",
+      "turma": "02",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "35T23",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "14:00",
+          "fim": "15:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "14:00",
+          "fim": "15:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - I3",
+      "salas": [
+        "I3"
+      ]
+    },
+    {
+      "codigo": "FGA0261",
+      "nome": "Tópicos Especiais em Eletronica",
+      "id_componente": "189949",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "35T6 35N1",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "18:00",
+          "fim": "19:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "18:00",
+          "fim": "19:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - S7",
+      "salas": [
+        "S7"
+      ]
+    },
+    {
+      "codigo": "FGA0261",
+      "nome": "Tópicos Especiais em Eletronica",
+      "id_componente": "189949",
+      "turma": "02",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "24T6 24N1",
+      "aulas": [
+        {
+          "dia": "segunda",
+          "inicio": "18:00",
+          "fim": "19:50"
+        },
+        {
+          "dia": "quarta",
+          "inicio": "18:00",
+          "fim": "19:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE / LAB SS",
+      "salas": [
+        "LAB SS"
+      ]
+    },
+    {
+      "codigo": "FGA0261",
+      "nome": "Tópicos Especiais em Eletronica",
+      "id_componente": "189949",
+      "turma": "03",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "6M5 4T23 6T1",
+      "aulas": [
+        {
+          "dia": "quarta",
+          "inicio": "14:00",
+          "fim": "15:50"
+        },
+        {
+          "dia": "sexta",
+          "inicio": "12:00",
+          "fim": "13:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - S8 / I7",
+      "salas": [
+        "S8",
+        "I7"
+      ]
+    },
+    {
+      "codigo": "FGA0261",
+      "nome": "Tópicos Especiais em Eletronica",
+      "id_componente": "189949",
+      "turma": "04",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "46M34",
+      "aulas": [
+        {
+          "dia": "quarta",
+          "inicio": "10:00",
+          "fim": "11:50"
+        },
+        {
+          "dia": "sexta",
+          "inicio": "10:00",
+          "fim": "11:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - I7",
+      "salas": [
+        "I7"
+      ]
+    },
+    {
+      "codigo": "FGA0262",
+      "nome": "Transmissão e Distribuição de Energia Elétrica",
+      "id_componente": "189950",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "2M34 4M345",
+      "aulas": [
+        {
+          "dia": "segunda",
+          "inicio": "10:00",
+          "fim": "11:50"
+        },
+        {
+          "dia": "quarta",
+          "inicio": "10:00",
+          "fim": "12:55"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - I3 / LAB ELETRICIDADE",
+      "salas": [
+        "I3",
+        "LAB ELETRICIDADE"
+      ]
+    },
+    {
+      "codigo": "FGA0265",
+      "nome": "Economia de Energia",
+      "id_componente": "189977",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "35M12",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "08:00",
+          "fim": "09:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "08:00",
+          "fim": "09:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - S5",
+      "salas": [
+        "S5"
+      ]
+    },
+    {
+      "codigo": "FGA0266",
+      "nome": "Acústica e Vibrações Veiculares",
+      "id_componente": "189980",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "46M34",
+      "aulas": [
+        {
+          "dia": "quarta",
+          "inicio": "10:00",
+          "fim": "11:50"
+        },
+        {
+          "dia": "sexta",
+          "inicio": "10:00",
+          "fim": "11:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - LAB NIT/LDS",
+      "salas": [
+        "LAB NIT",
+        "LDS"
+      ]
+    },
+    {
+      "codigo": "FGA0267",
+      "nome": "Projeto de Estruturas de Veiculos",
+      "id_componente": "189981",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "24M5 24T1",
+      "aulas": [
+        {
+          "dia": "segunda",
+          "inicio": "12:00",
+          "fim": "13:50"
+        },
+        {
+          "dia": "quarta",
+          "inicio": "12:00",
+          "fim": "13:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - I3",
+      "salas": [
+        "I3"
+      ]
+    },
+    {
+      "codigo": "FGA0274",
+      "nome": "Produtividade e Profissionalismo em Engenharia de Software",
+      "id_componente": "189990",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "35M34",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "10:00",
+          "fim": "11:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "10:00",
+          "fim": "11:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - I5",
+      "salas": [
+        "I5"
+      ]
+    },
+    {
+      "codigo": "FGA0280",
+      "nome": "Projeto de Circuitos Eletrônicos Integrados 2",
+      "id_componente": "190022",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "35T23",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "14:00",
+          "fim": "15:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "14:00",
+          "fim": "15:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - LAB SS / I6",
+      "salas": [
+        "LAB SS",
+        "I6"
+      ]
+    },
+    {
+      "codigo": "FGA0281",
+      "nome": "Sistemas de Propulsão Liquida",
+      "id_componente": "191237",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "35M34",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "10:00",
+          "fim": "11:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "10:00",
+          "fim": "11:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - CONTAINER 02",
+      "salas": [
+        "CONTAINER 02"
+      ]
+    },
+    {
+      "codigo": "FGA0283",
+      "nome": "Mecânica dos Materiais Compósitos",
+      "id_componente": "252764",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "35M34",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "10:00",
+          "fim": "11:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "10:00",
+          "fim": "11:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - I4",
+      "salas": [
+        "I4"
+      ]
+    },
+    {
+      "codigo": "FGA0284",
+      "nome": "Engenharia de Manutenção",
+      "id_componente": "254413",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "6T2345",
+      "aulas": [
+        {
+          "dia": "sexta",
+          "inicio": "14:00",
+          "fim": "17:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - S8",
+      "salas": [
+        "S8"
+      ]
+    },
+    {
+      "codigo": "FGA0285",
+      "nome": "Introdução à Mecânica da Fratura",
+      "id_componente": "252328",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "24M34",
+      "aulas": [
+        {
+          "dia": "segunda",
+          "inicio": "10:00",
+          "fim": "11:50"
+        },
+        {
+          "dia": "quarta",
+          "inicio": "10:00",
+          "fim": "11:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - SALA 303 LDTEA",
+      "salas": [
+        "SALA 303 LDTEA"
+      ]
+    },
+    {
+      "codigo": "FGA0299",
+      "nome": "Sistemas Bioinspirados Aplicados a Engenharia",
+      "id_componente": "314468",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "4T2345",
+      "aulas": [
+        {
+          "dia": "quarta",
+          "inicio": "14:00",
+          "fim": "17:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FT - UnB / Campus Darcy Ribeiro",
+      "salas": [
+        "FT - UnB",
+        "Campus Darcy Ribeiro"
+      ]
+    },
+    {
+      "codigo": "FGA0300",
+      "nome": "Telecomunicações Espaciais",
+      "id_componente": "314492",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "46M5 46T1",
+      "aulas": [
+        {
+          "dia": "quarta",
+          "inicio": "12:00",
+          "fim": "13:50"
+        },
+        {
+          "dia": "sexta",
+          "inicio": "12:00",
+          "fim": "13:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - S5",
+      "salas": [
+        "S5"
+      ]
+    },
+    {
+      "codigo": "FGA0302",
+      "nome": "Engenharia e Ambiente",
+      "id_componente": "315421",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "46M12",
+      "aulas": [
+        {
+          "dia": "quarta",
+          "inicio": "08:00",
+          "fim": "09:50"
+        },
+        {
+          "dia": "sexta",
+          "inicio": "08:00",
+          "fim": "09:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - S3",
+      "salas": [
+        "S3"
+      ]
+    },
+    {
+      "codigo": "FGA0302",
+      "nome": "Engenharia e Ambiente",
+      "id_componente": "315421",
+      "turma": "02",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "24T45",
+      "aulas": [
+        {
+          "dia": "segunda",
+          "inicio": "16:00",
+          "fim": "17:50"
+        },
+        {
+          "dia": "quarta",
+          "inicio": "16:00",
+          "fim": "17:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - S2",
+      "salas": [
+        "S2"
+      ]
+    },
+    {
+      "codigo": "FGA0302",
+      "nome": "Engenharia e Ambiente",
+      "id_componente": "315421",
+      "turma": "03",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "35M34",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "10:00",
+          "fim": "11:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "10:00",
+          "fim": "11:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE / S1",
+      "salas": [
+        "S1"
+      ]
+    },
+    {
+      "codigo": "FGA0303",
+      "nome": "Projeto Integrador de Engenharia 1",
+      "id_componente": "315422",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "24T45",
+      "aulas": [
+        {
+          "dia": "segunda",
+          "inicio": "16:00",
+          "fim": "17:50"
+        },
+        {
+          "dia": "quarta",
+          "inicio": "16:00",
+          "fim": "17:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - I1",
+      "salas": [
+        "I1"
+      ]
+    },
+    {
+      "codigo": "FGA0303",
+      "nome": "Projeto Integrador de Engenharia 1",
+      "id_componente": "315422",
+      "turma": "02",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "24T45",
+      "aulas": [
+        {
+          "dia": "segunda",
+          "inicio": "16:00",
+          "fim": "17:50"
+        },
+        {
+          "dia": "quarta",
+          "inicio": "16:00",
+          "fim": "17:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - S2",
+      "salas": [
+        "S2"
+      ]
+    },
+    {
+      "codigo": "FGA0303",
+      "nome": "Projeto Integrador de Engenharia 1",
+      "id_componente": "315422",
+      "turma": "03",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "24T45",
+      "aulas": [
+        {
+          "dia": "segunda",
+          "inicio": "16:00",
+          "fim": "17:50"
+        },
+        {
+          "dia": "quarta",
+          "inicio": "16:00",
+          "fim": "17:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - S1/S5",
+      "salas": [
+        "S1",
+        "S5"
+      ]
+    },
+    {
+      "codigo": "FGA0303",
+      "nome": "Projeto Integrador de Engenharia 1",
+      "id_componente": "315422",
+      "turma": "04",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "24T45",
+      "aulas": [
+        {
+          "dia": "segunda",
+          "inicio": "16:00",
+          "fim": "17:50"
+        },
+        {
+          "dia": "quarta",
+          "inicio": "16:00",
+          "fim": "17:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - S6",
+      "salas": [
+        "S6"
+      ]
+    },
+    {
+      "codigo": "FGA0303",
+      "nome": "Projeto Integrador de Engenharia 1",
+      "id_componente": "315422",
+      "turma": "05",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "24T45",
+      "aulas": [
+        {
+          "dia": "segunda",
+          "inicio": "16:00",
+          "fim": "17:50"
+        },
+        {
+          "dia": "quarta",
+          "inicio": "16:00",
+          "fim": "17:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - I4",
+      "salas": [
+        "I4"
+      ]
+    },
+    {
+      "codigo": "FGA0304",
+      "nome": "Projeto Integrador de Engenharia 2",
+      "id_componente": "315423",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "4T45 6T2345",
+      "aulas": [
+        {
+          "dia": "quarta",
+          "inicio": "16:00",
+          "fim": "17:50"
+        },
+        {
+          "dia": "sexta",
+          "inicio": "14:00",
+          "fim": "17:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - S1 / AUDITÓRIO",
+      "salas": [
+        "S1",
+        "AUDITÓRIO"
+      ]
+    },
+    {
+      "codigo": "FGA0304",
+      "nome": "Projeto Integrador de Engenharia 2",
+      "id_componente": "315423",
+      "turma": "02",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "4T45 6T2345",
+      "aulas": [
+        {
+          "dia": "quarta",
+          "inicio": "16:00",
+          "fim": "17:50"
+        },
+        {
+          "dia": "sexta",
+          "inicio": "14:00",
+          "fim": "17:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - S1 / AUDITÓRIO",
+      "salas": [
+        "S1",
+        "AUDITÓRIO"
+      ]
+    },
+    {
+      "codigo": "FGA0304",
+      "nome": "Projeto Integrador de Engenharia 2",
+      "id_componente": "315423",
+      "turma": "03",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "4T45 6T2345",
+      "aulas": [
+        {
+          "dia": "quarta",
+          "inicio": "16:00",
+          "fim": "17:50"
+        },
+        {
+          "dia": "sexta",
+          "inicio": "14:00",
+          "fim": "17:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - S1 / AUDITÓRIO",
+      "salas": [
+        "S1",
+        "AUDITÓRIO"
+      ]
+    },
+    {
+      "codigo": "FGA0304",
+      "nome": "Projeto Integrador de Engenharia 2",
+      "id_componente": "315423",
+      "turma": "04",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "4T45 6T2345",
+      "aulas": [
+        {
+          "dia": "quarta",
+          "inicio": "16:00",
+          "fim": "17:50"
+        },
+        {
+          "dia": "sexta",
+          "inicio": "14:00",
+          "fim": "17:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - S1 / AUDITÓRIO",
+      "salas": [
+        "S1",
+        "AUDITÓRIO"
+      ]
+    },
+    {
+      "codigo": "FGA0304",
+      "nome": "Projeto Integrador de Engenharia 2",
+      "id_componente": "315423",
+      "turma": "05",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "4T45 6T2345",
+      "aulas": [
+        {
+          "dia": "quarta",
+          "inicio": "16:00",
+          "fim": "17:50"
+        },
+        {
+          "dia": "sexta",
+          "inicio": "14:00",
+          "fim": "17:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - S1 / AUDITÓRIO",
+      "salas": [
+        "S1",
+        "AUDITÓRIO"
+      ]
+    },
+    {
+      "codigo": "FGA0307",
+      "nome": "Gestão da Produção e Qualidade",
+      "id_componente": "315428",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "35T45",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "16:00",
+          "fim": "17:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "16:00",
+          "fim": "17:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - S3",
+      "salas": [
+        "S3"
+      ]
+    },
+    {
+      "codigo": "FGA0307",
+      "nome": "Gestão da Produção e Qualidade",
+      "id_componente": "315428",
+      "turma": "02",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "35T23",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "14:00",
+          "fim": "15:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "14:00",
+          "fim": "15:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - S9",
+      "salas": [
+        "S9"
+      ]
+    },
+    {
+      "codigo": "FGA0308",
+      "nome": "Eletrônica Embarcada",
+      "id_componente": "315533",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "246T45",
+      "aulas": [
+        {
+          "dia": "segunda",
+          "inicio": "16:00",
+          "fim": "17:50"
+        },
+        {
+          "dia": "quarta",
+          "inicio": "16:00",
+          "fim": "17:50"
+        },
+        {
+          "dia": "sexta",
+          "inicio": "16:00",
+          "fim": "17:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - LAB SS",
+      "salas": [
+        "LAB SS"
+      ]
+    },
+    {
+      "codigo": "FGA0309",
+      "nome": "Sistemas Operacionais Embarcados",
+      "id_componente": "315534",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "246T23",
+      "aulas": [
+        {
+          "dia": "segunda",
+          "inicio": "14:00",
+          "fim": "15:50"
+        },
+        {
+          "dia": "quarta",
+          "inicio": "14:00",
+          "fim": "15:50"
+        },
+        {
+          "dia": "sexta",
+          "inicio": "14:00",
+          "fim": "15:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - LAB SS",
+      "salas": [
+        "LAB SS"
+      ]
+    },
+    {
+      "codigo": "FGA0311",
+      "nome": "Projeto Extensionista em Engenharia Eletrônica 2",
+      "id_componente": "315536",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "26M34",
+      "aulas": [
+        {
+          "dia": "segunda",
+          "inicio": "10:00",
+          "fim": "11:50"
+        },
+        {
+          "dia": "sexta",
+          "inicio": "10:00",
+          "fim": "11:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "NIT/LDS(segunda)/I1(sexta)",
+      "salas": [
+        "NIT",
+        "LDS",
+        "I1"
+      ]
+    },
+    {
+      "codigo": "FGA0312",
+      "nome": "Métodos de Desenvolvimento de Software",
+      "id_componente": "315739",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "24M5 24T1",
+      "aulas": [
+        {
+          "dia": "segunda",
+          "inicio": "12:00",
+          "fim": "13:50"
+        },
+        {
+          "dia": "quarta",
+          "inicio": "12:00",
+          "fim": "13:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - S1 / MOCAP",
+      "salas": [
+        "S1",
+        "MOCAP"
+      ]
+    },
+    {
+      "codigo": "FGA0312",
+      "nome": "Métodos de Desenvolvimento de Software",
+      "id_componente": "315739",
+      "turma": "02",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "24T45",
+      "aulas": [
+        {
+          "dia": "segunda",
+          "inicio": "16:00",
+          "fim": "17:50"
+        },
+        {
+          "dia": "quarta",
+          "inicio": "16:00",
+          "fim": "17:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - S7",
+      "salas": [
+        "S7"
+      ]
+    },
+    {
+      "codigo": "FGA0312",
+      "nome": "Métodos de Desenvolvimento de Software",
+      "id_componente": "315739",
+      "turma": "03",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "24T6 24N1",
+      "aulas": [
+        {
+          "dia": "segunda",
+          "inicio": "18:00",
+          "fim": "19:50"
+        },
+        {
+          "dia": "quarta",
+          "inicio": "18:00",
+          "fim": "19:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - S7",
+      "salas": [
+        "S7"
+      ]
+    },
+    {
+      "codigo": "FGA0313",
+      "nome": "Requisitos de Software",
+      "id_componente": "315740",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "35M12",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "08:00",
+          "fim": "09:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "08:00",
+          "fim": "09:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - I7 / S9",
+      "salas": [
+        "I7",
+        "S9"
+      ]
+    },
+    {
+      "codigo": "FGA0313",
+      "nome": "Requisitos de Software",
+      "id_componente": "315740",
+      "turma": "02",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "35M34",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "10:00",
+          "fim": "11:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "10:00",
+          "fim": "11:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - I7 / I3",
+      "salas": [
+        "I7",
+        "I3"
+      ]
+    },
+    {
+      "codigo": "FGA0314",
+      "nome": "Testes de Software",
+      "id_componente": "315741",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "35M12",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "08:00",
+          "fim": "09:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "08:00",
+          "fim": "09:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - I10",
+      "salas": [
+        "I10"
+      ]
+    },
+    {
+      "codigo": "FGA0314",
+      "nome": "Testes de Software",
+      "id_componente": "315741",
+      "turma": "02",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "35M34",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "10:00",
+          "fim": "11:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "10:00",
+          "fim": "11:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - I6",
+      "salas": [
+        "I6"
+      ]
+    },
+    {
+      "codigo": "FGA0315",
+      "nome": "Qualidade de Software 1",
+      "id_componente": "315742",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "24M34",
+      "aulas": [
+        {
+          "dia": "segunda",
+          "inicio": "10:00",
+          "fim": "11:50"
+        },
+        {
+          "dia": "quarta",
+          "inicio": "10:00",
+          "fim": "11:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - S6",
+      "salas": [
+        "S6"
+      ]
+    },
+    {
+      "codigo": "FGA0315",
+      "nome": "Qualidade de Software 1",
+      "id_componente": "315742",
+      "turma": "02",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "24T23",
+      "aulas": [
+        {
+          "dia": "segunda",
+          "inicio": "14:00",
+          "fim": "15:50"
+        },
+        {
+          "dia": "quarta",
+          "inicio": "14:00",
+          "fim": "15:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - S6",
+      "salas": [
+        "S6"
+      ]
+    },
+    {
+      "codigo": "FGA0316",
+      "nome": "Engenharia de Produto de Software",
+      "id_componente": "315743",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "4M5 4T123",
+      "aulas": [
+        {
+          "dia": "quarta",
+          "inicio": "12:00",
+          "fim": "15:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - S2/S3",
+      "salas": [
+        "S2",
+        "S3"
+      ]
+    },
+    {
+      "codigo": "FGA0316",
+      "nome": "Engenharia de Produto de Software",
+      "id_componente": "315743",
+      "turma": "02",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "2M345 2T1",
+      "aulas": [
+        {
+          "dia": "segunda",
+          "inicio": "10:00",
+          "fim": "13:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE - MOCAP",
+      "salas": [
+        "MOCAP"
+      ]
+    },
+    {
+      "codigo": "FGA0317",
+      "nome": "Gerência de Configuração e Evolução de Software",
+      "id_componente": "315744",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "35T45",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "16:00",
+          "fim": "17:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "16:00",
+          "fim": "17:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - MOCAP",
+      "salas": [
+        "MOCAP"
+      ]
+    },
+    {
+      "codigo": "FGA0317",
+      "nome": "Gerência de Configuração e Evolução de Software",
+      "id_componente": "315744",
+      "turma": "02",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "35M12",
+      "aulas": [
+        {
+          "dia": "terça",
+          "inicio": "08:00",
+          "fim": "09:50"
+        },
+        {
+          "dia": "quinta",
+          "inicio": "08:00",
+          "fim": "09:50"
+        }
+      ],
+      "periodo_letivo": null,
+      "local": "FCTE - S4",
+      "salas": [
+        "S4"
+      ]
+    },
+    {
+      "codigo": "FGA0380",
+      "nome": "Processos Estocásticos",
+      "id_componente": "206393",
+      "turma": "01",
+      "ano_periodo": "2026.2",
+      "horario_sigaa": "46T23",
+      "aulas": [
+        {
+          "dia": "quarta",
+          "inicio": "14:00",
+          "fim": "15:50"
+        },
+        {
+          "dia": "sexta",
+          "inicio": "14:00",
+          "fim": "15:50"
+        }
+      ],
+      "periodo_letivo": {
+        "inicio": "2026-08-10",
+        "fim": "2026-12-14"
+      },
+      "local": "FCTE / S5",
+      "salas": [
+        "S5"
+      ]
+    }
+  ]
+}

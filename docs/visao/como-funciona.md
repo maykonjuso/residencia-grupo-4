@@ -26,7 +26,7 @@ flowchart LR
         B4 --> C4[(ChromaDB<br/>1.7 mil chunks)]
         C4 --> L4[LLM Qwen2.5-7B<br/>responde só com os trechos]
         L4 --> R4[Resposta + fontes]
-        K4[(56 fontes oficiais<br/>RU + fluxo)] -. ingestão offline .-> C4
+        K4[(57 fontes oficiais<br/>RU + fluxo)] -. ingestão offline .-> C4
     end
     subgraph G09 [Grupo 09 · Mapeamento FCTE]
         direction LR
@@ -55,7 +55,7 @@ flowchart LR
 | Portal único | Grupos 04 e 09 | Recebe a pergunta e mostra a resposta com selos de fonte, nas cores e fontes da UnB |
 | Orquestrador | Grupos 04 e 09 | Classifica a pergunta, divide quando ela mistura assuntos e chama um ou os dois sistemas |
 | API do RUmo | Grupo 04 | `POST /perguntar` no contrato comum ([ver contrato](escopo-grupos.md#contrato-de-api-proposto)) |
-| Busca híbrida + ChromaDB | Grupo 04 | Recupera os trechos mais relevantes das 55 fontes indexadas ([detalhes](../entrega-2/arquitetura.md)) |
+| Busca híbrida + ChromaDB | Grupo 04 | Recupera os trechos mais relevantes das 56 fontes indexadas ([detalhes](../entrega-2/arquitetura.md)) |
 | LLM gerador | Grupo 04 | Escreve a resposta só com os trechos e cita cada um; sem base, recusa |
 | API e RAG do Grupo 09 | Grupo 09 | Respondem sobre salas, prédios e rotas no campus |
 
