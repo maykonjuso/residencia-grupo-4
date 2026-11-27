@@ -165,4 +165,4 @@ nav:
 
 validation:
   links:
-    anchors: warn
+    anchors: info
