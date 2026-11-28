@@ -788,6 +788,7 @@ def grafo_fluxo(
     curso: str | None = None,
     curriculo_id: str | None = None,
     vigencia: str | None = None,
+    aprovadas: list[str] | None = None,
 ) -> ResultadoFerramenta:
     """Consulta determinística ao grafo curricular multi-curso da FCTE."""
     args: dict[str, Any] = {"consulta": consulta}
@@ -797,9 +798,15 @@ def grafo_fluxo(
         args["curriculo_id"] = curriculo_id
     if vigencia:
         args["vigencia"] = vigencia
+    if aprovadas is not None:
+        args["aprovadas"] = list(aprovadas)
 
     res = carregar_repositorio_grafos().consultar_estruturado(
-        consulta, curso=curso, curriculo_id=curriculo_id, vigencia=vigencia
+        consulta,
+        curso=curso,
+        curriculo_id=curriculo_id,
+        vigencia=vigencia,
+        aprovadas=aprovadas,
     )
     if res is None:
         motivo = "Consulta fora das operações suportadas pelo grafo curricular da FCTE."
@@ -1047,8 +1054,13 @@ def extrair_chamada_fluxo(pergunta: str, contexto: dict[str, Any] | None = None)
     curso = ctx.get("curso")
     curriculo_id = ctx.get("curriculo_id")
     vigencia = ctx.get("vigencia")
+    aprovadas = ctx.get("aprovadas")
     if carregar_repositorio_grafos().consultar_estruturado(
-        pergunta, curso=curso, curriculo_id=curriculo_id, vigencia=vigencia
+        pergunta,
+        curso=curso,
+        curriculo_id=curriculo_id,
+        vigencia=vigencia,
+        aprovadas=aprovadas,
     ) is not None:
         args_grafo: dict[str, Any] = {"consulta": pergunta}
         if curso:
@@ -1057,6 +1069,8 @@ def extrair_chamada_fluxo(pergunta: str, contexto: dict[str, Any] | None = None)
             args_grafo["curriculo_id"] = curriculo_id
         if vigencia:
             args_grafo["vigencia"] = vigencia
+        if aprovadas is not None:
+            args_grafo["aprovadas"] = list(aprovadas)
         return ("grafo_fluxo", args_grafo)
 
     return None
