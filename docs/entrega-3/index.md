@@ -60,8 +60,8 @@ A **Tabela 1** resume o desempenho do sistema nas 38 perguntas de teste (32 ouro
 
 O repositório disponibiliza dois caminhos para reproduzir a avaliação em GPU:
 
-- **Notebook interativo:** [`notebooks/colab_benchmark.ipynb`](https://github.com/maykonjuso/residencia-grupo-4/blob/feat/validacao-reescrita-consulta/notebooks/colab_benchmark.ipynb)
-- **Script CLI direto:** [`colab_benchmark.py`](https://github.com/maykonjuso/residencia-grupo-4/blob/feat/validacao-reescrita-consulta/colab_benchmark.py)
+- **Notebook interativo:** [`notebooks/colab_benchmark.ipynb`](https://github.com/maykonjuso/residencia-grupo-4/blob/main/notebooks/colab_benchmark.ipynb)
+- **Script CLI direto:** [`colab_benchmark.py`](https://github.com/maykonjuso/residencia-grupo-4/blob/main/colab_benchmark.py)
 - **Recuperação em produção (`bm25` × `híbrido`, Issue #51):** comparação completa e limitação de 512 MB no Render registradas em [Avaliação da recuperação](../entrega-2/avaliacao.md).
 
 ### Passo a passo de execução
@@ -73,7 +73,7 @@ O repositório disponibiliza dois caminhos para reproduzir a avaliação em GPU:
    - Para baixar modelos do Hugging Face sem restrição de taxa, cadastre seu `HF_TOKEN` nos **Secrets** do Colab.
 3. **Ambiente e dependências:**
    ```bash
-   !git clone -b feat/validacao-reescrita-consulta https://github.com/maykonjuso/residencia-grupo-4.git
+   !git clone -b main https://github.com/maykonjuso/residencia-grupo-4.git
    %cd residencia-grupo-4
    !pip install -r requirements.txt
    ```
@@ -95,3 +95,4 @@ O repositório disponibiliza dois caminhos para reproduzir a avaliação em GPU:
     | 11/11/2026 | 1.0 | Estrutura inicial da Entrega 3 (Épico #4): checklist, matriz de métricas e navegação | Grupo 04 |
     | 13/11/2026 | 3.0 | Consolidação das métricas de qualidade, purga de latência (R3), validação determinística e guia Colab GPU | Grupo 04 |
     | 16/11/2026 | 3.1 | Registro da comparação `bm25` (produção Render) × `híbrido` e correção de recuperação de preços (Issue #51) | Grupo 04 |
+    | 27/11/2026 | 3.2 | Atualização dos links e comando do Google Colab para a branch `main` (Issue #99) | Keila Alves |
