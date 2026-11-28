@@ -1074,6 +1074,165 @@ class GrafoCurricular:
 
         return sorted(encontradas.values(), key=lambda d: (d.semestre, d.codigo))
 
+    def _candidatas_por_nome_parcial(self, consulta: str) -> list[Disciplina]:
+        """Retorna disciplinas cujo nome contém o termo informado."""
+        termo = _normalizar(re.sub(r"\([^)]*\)", " ", consulta)).strip()
+        if len(termo) < 4:
+            return []
+        candidatas = []
+        for disciplina in self.disciplinas.values():
+            nome = _normalizar(re.sub(r"\([^)]*\)", " ", disciplina.nome))
+            if re.search(rf"(?<![a-z0-9]){re.escape(termo)}(?![a-z0-9])", nome):
+                candidatas.append(disciplina)
+        return sorted(candidatas, key=lambda d: (d.semestre, d.codigo))
+
+    @staticmethod
+    def _padrao_nome_flexivel(texto: str) -> re.Pattern:
+        """Compila regex case/acento-insensível para mascarar nomes de disciplinas preservando o texto original."""
+        mapa = {
+            "a": "[aáàâãä]",
+            "e": "[eéèêë]",
+            "i": "[iíìîï]",
+            "o": "[oóòôõö]",
+            "u": "[uúùûü]",
+            "c": "[cç]",
+        }
+        partes: list[str] = []
+        for ch in _normalizar(texto):
+            if ch == " ":
+                partes.append(r"\s+")
+            elif ch in mapa:
+                partes.append(mapa[ch])
+            else:
+                partes.append(re.escape(ch))
+        return re.compile(rf"(?<![A-Za-zÀ-ÿ0-9]){''.join(partes)}(?![A-Za-zÀ-ÿ0-9])", re.I)
+
+    def resolver_itens_aprovadas(
+        self, itens: list[str] | tuple[str, ...]
+    ) -> tuple[list[str], list[str], dict[str, list[Disciplina]]]:
+        """Resolve uma lista estruturada de nomes/códigos de disciplinas aprovadas.
+
+        Interface direta preparada para chamadas de ferramenta (tool calling) ou UI,
+        sem depender de parsing por regex sobre linguagem natural.
+        """
+        codigos: set[str] = set()
+        nao_reconhecidas: list[str] = []
+        ambiguas: dict[str, list[Disciplina]] = {}
+        for bruto in itens:
+            item = str(bruto).strip(" \t,;:.!?()[]")
+            if not item:
+                continue
+            correspondencias = self.buscar_disciplinas(item)
+            if correspondencias:
+                for disc in correspondencias:
+                    codigos.add(disc.codigo)
+                continue
+            candidatas = self._candidatas_por_nome_parcial(item)
+            if len(candidatas) == 1:
+                codigos.add(candidatas[0].codigo)
+            elif len(candidatas) > 1:
+                ambiguas[item] = candidatas
+            elif item not in nao_reconhecidas:
+                nao_reconhecidas.append(item)
+        return sorted(codigos), nao_reconhecidas, ambiguas
+
+    def _resolver_lista_aprovadas(
+        self, pergunta: str
+    ) -> tuple[list[str], list[str], dict[str, list[Disciplina]]] | None:
+        """Extrai e resolve a lista de disciplinas aprovadas usando estratégia mask-first."""
+        inicio = re.search(r"\b(?:passando|passei|passar|aprovad[oa]s?)\b", pergunta, re.I)
+        if not inicio:
+            inicio = re.search(
+                r"\b(?:o\s+que\s+abre|quais(?:\s+(?:disciplinas?|mat[eé]rias?))?\s+abrem?)\s+com\b",
+                pergunta,
+                re.I,
+            )
+        if not inicio:
+            return None
+
+        trecho = pergunta[inicio.end():]
+        trecho = re.split(
+            r"(?:[;,]\s*|\s+)(?:o\s+que\s+(?:abre|posso|consigo|libera|destrava)"
+            r"|quais\b.*?\b(?:abre\w*|posso|consigo|libera\w*|destrava\w*|pegar|cursar|fazer)"
+            r"|e\s+(?:quero|gostaria|preciso|quais|o\s+que)\b"
+            r"|posso\s+(?:pegar|cursar|fazer)\b"
+            r"|no\s+pr[oó]ximo\s+semestre\b)"
+            r"|[?!]|\.(?:\s|$)",
+            trecho,
+            maxsplit=1,
+            flags=re.I,
+        )[0]
+        trecho = trecho.strip(" \t,;:.!?\n")
+        if not trecho:
+            return [], [], {}
+
+        codigos: set[str] = set()
+        restante = trecho
+
+        # 1. Mascara primeiro nomes oficiais completos (mais longos primeiro) para não quebrar nomes com " e "
+        candidatos_nomes: list[tuple[str, str]] = []
+        vistos_nomes: set[tuple[str, str]] = set()
+        for disc in self.disciplinas.values():
+            for variante in (disc.nome, re.sub(r"\([^)]*\)", " ", disc.nome).strip()):
+                v_norm = _normalizar(variante)
+                if len(v_norm) >= 4 and (v_norm, disc.codigo) not in vistos_nomes:
+                    vistos_nomes.add((v_norm, disc.codigo))
+                    candidatos_nomes.append((variante, disc.codigo))
+        candidatos_nomes.sort(key=lambda item: len(_normalizar(item[0])), reverse=True)
+
+        for variante, cod_disc in candidatos_nomes:
+            padrao = self._padrao_nome_flexivel(variante)
+            if padrao.search(restante):
+                codigos.add(cod_disc)
+                restante = padrao.sub(",", restante)
+
+        # 2. Mascara códigos oficiais reconhecidos (ou equivalentes conhecidos); códigos desconhecidos ficam no texto
+        def _mascarar_codigo_conhecido(match: re.Match) -> str:
+            cod = match.group(0).upper()
+            if cod in self.disciplinas:
+                codigos.add(cod)
+                return ","
+            eqs = [eq for eq in self.equivalentes_de(cod) if eq.codigo in self.disciplinas]
+            if eqs:
+                for eq in eqs:
+                    codigos.add(eq.codigo)
+                return ","
+            return match.group(0)
+
+        restante = CODIGO.sub(_mascarar_codigo_conhecido, restante)
+
+        # 3. Remove menção de contexto de curso que não seja nome de disciplina (já mascarado acima)
+        restante = re.sub(
+            r"\b(?:no\s+curso\s+de|no\s+curr[ií]culo\s+de)\s+"
+            r"(?:engenharia\s+(?:de\s+)?)?(?:software|aeroespacial|automotiva|eletr[oô]nica|energia)\b"
+            r"|\b(?:em|de|da|do)\s+engenharia\s+(?:de\s+)?(?:software|aeroespacial|automotiva|eletr[oô]nica|energia)\b"
+            r"|(?<=,)\s*em\s+(?:software|aeroespacial|automotiva|eletr[oô]nica|energia)\b",
+            ",",
+            restante,
+            flags=re.I,
+        )
+
+        # 4. Divide apenas os fragmentos remanescentes e limpa preposições/conectivos
+        fillers = {"e", "ou", "tambem", "ja", "eu", "em", "na", "no", "nas", "nos", "com", "de", "da", "do", "das", "dos"}
+        itens_restantes: list[str] = []
+        for grupo in re.split(r"[,;]+", restante):
+            for parte in re.split(r"\s+e\s+", grupo, flags=re.I):
+                limpo = parte.strip(" \t,;:.!?()[]")
+                limpo = re.sub(
+                    r"^(?:(?:em|na|no|nas|nos|com|de|da|do|das|dos|nestas|nestes|nessas|nesses|apenas|s[oó])\s+)+",
+                    "",
+                    limpo,
+                    flags=re.I,
+                ).strip(" \t,;:.!?()[]")
+                limpo_norm = _normalizar(limpo)
+                if not limpo_norm or len(limpo_norm) <= 1 or limpo_norm in fillers:
+                    continue
+                itens_restantes.append(limpo)
+
+        codigos_rest, nao_reconhecidas, ambiguas = self.resolver_itens_aprovadas(itens_restantes)
+        codigos.update(codigos_rest)
+        return sorted(codigos), nao_reconhecidas, ambiguas
+
     def _to_aresta(self, origem: str, destino: str, attrs: dict) -> Aresta:
         return Aresta(
             origem=origem,
@@ -1263,11 +1422,17 @@ class GrafoCurricular:
             ],
         }
 
-    def consultar_estruturado(self, pergunta: str) -> dict | None:
+    def consultar_estruturado(
+        self,
+        pergunta: str,
+        aprovadas: list[str] | tuple[str, ...] | None = None,
+    ) -> dict | None:
         """Executa consulta no grafo e devolve payload estruturado + texto + evidência."""
         texto = _normalizar(pergunta)
         disciplinas = self.buscar_disciplinas(pergunta)
         codigos_consulta = [c.upper() for c in CODIGO.findall(pergunta)]
+        if aprovadas:
+            codigos_consulta.extend(c.upper() for item in aprovadas for c in CODIGO.findall(str(item)))
         codigos = {d.codigo for d in disciplinas}
         doc_id = self.metadados["fonte"]["doc_id"]
         fonte = self._fonte_dict()
@@ -1458,22 +1623,57 @@ class GrafoCurricular:
                 "alertas": [],
             }
 
-        if re.search(r"passando|passei|aprovad[oa]s?|o que abre|quais.*abre", texto):
-            if not codigos:
+        if aprovadas is not None or re.search(r"passando|passei|passar|aprovad[oa]s?|o que abre|quais.*abre", texto):
+            nao_reconhecidas: list[str] = []
+            ambiguas: dict[str, list[Disciplina]] = {}
+            if aprovadas is not None:
+                codigos_lista, nao_reconhecidas, ambiguas = self.resolver_itens_aprovadas(aprovadas)
+                codigos = set(codigos_lista)
+                disciplinas = [self.disciplinas[c] for c in codigos_lista]
+            else:
+                resolucao_lista = self._resolver_lista_aprovadas(pergunta)
+                if resolucao_lista is not None:
+                    codigos_lista, nao_reconhecidas, ambiguas = resolucao_lista
+                    codigos = set(codigos_lista)
+                    disciplinas = [self.disciplinas[c] for c in codigos_lista]
+            if not codigos and not nao_reconhecidas and not ambiguas:
                 return None
-            abertas, incertas = self.disciplinas_que_abrem(codigos)
-            aprovadas_txt = ", ".join(sorted(codigos))
+            abertas, incertas = self.disciplinas_que_abrem(codigos) if codigos else ([], [])
             arestas_usadas = [
                 a for a in self.arestas
                 if a.destino in abertas + incertas
                 and a.relacao == "pre_requisito"
                 and (a.origem in codigos or bool(set(a.alternativas) & codigos))
             ]
-            evidencia = self._evidencia(codigos | set(abertas) | set(incertas), arestas_usadas)
-            if abertas:
+            codigos_ambiguos = {
+                d.codigo for candidatas in ambiguas.values() for d in candidatas
+            }
+            extras_evidencia: list[str] = []
+            if nao_reconhecidas:
+                extras_evidencia.append(
+                    "Itens informados pelo estudante não encontrados na matriz oficial: "
+                    + ", ".join(nao_reconhecidas)
+                    + "."
+                )
+            arestas_tracejadas = [
+                a for a in self.arestas
+                if a.destino in incertas and a.incerta and a.relacao == "pre_requisito"
+            ] if incertas else []
+            evidencia = self._evidencia(
+                codigos | set(abertas) | set(incertas) | codigos_ambiguos,
+                arestas_usadas + arestas_tracejadas,
+                extras=extras_evidencia,
+            )
+            if not codigos:
+                resposta = (
+                    f"Não identifiquei disciplinas confirmadas na lista informada em {self.curso} ({doc_id}). [1]"
+                )
+            elif abertas:
+                aprovadas_txt = ", ".join(sorted(codigos))
                 nomes = ", ".join(f"{self.disciplinas[c].nome} ({c})" for c in abertas)
                 resposta = f"Com aprovação em {aprovadas_txt} ({self.curso}), ficam liberadas pelo grafo: {nomes}. [1]"
             else:
+                aprovadas_txt = ", ".join(sorted(codigos))
                 resposta = (
                     f"Com aprovação em {aprovadas_txt} ({self.curso}), não identifiquei novas disciplinas "
                     f"liberadas apenas por pré-requisitos confirmados no {doc_id}. [1]"
@@ -1484,13 +1684,14 @@ class GrafoCurricular:
                     f" Há também possível relação com {nomes_inc}, mas a ligação é tracejada; "
                     "confirme no SIGAA se é pré-requisito ou correquisito. [1]"
                 )
-                arestas_tracejadas = [
-                    a for a in self.arestas
-                    if a.destino in incertas and a.incerta and a.relacao == "pre_requisito"
-                ]
-                evidencia = self._evidencia(
-                    codigos | set(abertas) | set(incertas), arestas_usadas + arestas_tracejadas
-                )
+            if nao_reconhecidas:
+                resposta += " Não reconheci: " + ", ".join(nao_reconhecidas) + "."
+            if ambiguas:
+                avisos_ambiguos = []
+                for item, candidatas in ambiguas.items():
+                    opcoes = ", ".join(f"{d.nome} ({d.codigo})" for d in candidatas)
+                    avisos_ambiguos.append(f"{item} (opções: {opcoes})")
+                resposta += " Não reconheci com segurança: " + "; ".join(avisos_ambiguos) + "."
             nota_eq = self._nota_resolucao_equivalencia(codigos_consulta)
             if nota_eq:
                 resposta += f" {nota_eq}"
@@ -1502,6 +1703,11 @@ class GrafoCurricular:
                     "aprovadas": sorted(codigos),
                     "abertas_confirmadas": [self._no_resumo(c) for c in abertas],
                     "relacoes_incertas": [self._no_resumo(c) for c in incertas],
+                    "disciplinas_nao_reconhecidas": nao_reconhecidas,
+                    "disciplinas_ambiguas": {
+                        item: [self._no_resumo(d.codigo) for d in candidatas]
+                        for item, candidatas in ambiguas.items()
+                    },
                 },
                 "texto": resposta,
                 "evidencia": evidencia,
@@ -1876,12 +2082,14 @@ class RepositorioGrafos:
         curso: str | None = None,
         curriculo_id: str | None = None,
         vigencia: str | None = None,
+        aprovadas: list[str] | tuple[str, ...] | None = None,
     ) -> dict | None:
+        consulta_sel = f"{pergunta} {' '.join(aprovadas)}" if aprovadas else pergunta
         candidatos = self.selecionar(
-            pergunta, curso=curso, curriculo_id=curriculo_id, vigencia=vigencia
+            consulta_sel, curso=curso, curriculo_id=curriculo_id, vigencia=vigencia
         )
         for grafo in candidatos:
-            res = grafo.consultar_estruturado(pergunta)
+            res = grafo.consultar_estruturado(pergunta, aprovadas=aprovadas)
             if res is None:
                 continue
             mesmo_curso = [g for g in self.curriculos.values() if g.curso_slug == grafo.curso_slug]

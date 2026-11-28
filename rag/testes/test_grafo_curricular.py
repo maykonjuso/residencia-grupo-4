@@ -131,6 +131,137 @@ def test_passar_em_tres_disciplinas_calcula_o_conjunto_que_abre():
     assert "Estruturas de Dados 1 (FGA0146)" in consulta.conteudo
 
 
+def test_passar_com_nome_parcial_ambiguo_lista_opcoes_sem_omitir_item():
+    res = carregar_grafo().consultar_estruturado(
+        "Passando em Cálculo 1, Algoritmos e Introdução à Engenharia, o que abre?"
+    )
+
+    assert res is not None
+    assert "Cálculo 2 (MAT0026)" in res["texto"]
+    assert "não reconheci com segurança: algoritmos" in res["texto"].lower()
+    assert "CIC0004" in res["texto"]
+    assert "FGA0124" in res["texto"]
+    assert "FGA0163" in res["dados"]["aprovadas"]
+
+
+def test_lista_de_aprovadas_avisa_disciplina_nao_reconhecida():
+    res = carregar_grafo().consultar_estruturado(
+        "Passei em Cálculo 1, Disciplina Inventada, o que abre?"
+    )
+
+    assert res is not None
+    assert "Cálculo 2 (MAT0026)" in res["texto"]
+    assert "Não reconheci: Disciplina Inventada." in res["texto"]
+    assert res["dados"]["disciplinas_nao_reconhecidas"] == ["Disciplina Inventada"]
+
+
+def test_nome_parcial_unico_e_resolvido_na_lista_de_aprovadas():
+    res = carregar_grafo().consultar_estruturado("Passei em Compiladores; o que abre?")
+
+    assert res is not None
+    assert "FGA0003" in res["dados"]["aprovadas"]
+    assert res["dados"]["disciplinas_nao_reconhecidas"] == []
+    assert res["dados"]["disciplinas_ambiguas"] == {}
+
+
+def test_mask_first_preserva_nomes_com_e_remove_ruido_conversacional():
+    grafo = carregar_grafo()
+
+    # Nome oficial contendo " e " não deve ser quebrado em "Algoritmos" + "Programação de Computadores"
+    res_nome_com_e = grafo.consultar_estruturado(
+        "Passei em Cálculo 1 e Algoritmos e Programação de Computadores, o que abre?"
+    )
+    assert res_nome_com_e is not None
+    assert set(res_nome_com_e["dados"]["aprovadas"]) == {"MAT0025", "CIC0004"}
+    assert res_nome_com_e["dados"]["disciplinas_nao_reconhecidas"] == []
+    assert res_nome_com_e["dados"]["disciplinas_ambiguas"] == {}
+
+    # Cauda conversacional após a lista não deve virar disciplina não reconhecida
+    res_cauda = grafo.consultar_estruturado(
+        "Fui aprovado em Cálculo 1 e quero saber quais disciplinas posso pegar no próximo semestre"
+    )
+    assert res_cauda is not None
+    assert res_cauda["dados"]["aprovadas"] == ["MAT0025"]
+    assert res_cauda["dados"]["disciplinas_nao_reconhecidas"] == []
+
+    # Preposição repetida e padrão "O que abre com ..."
+    res_prep = grafo.consultar_estruturado(
+        "Passei em Cálculo 1 e em Disciplina Inventada, o que abre?"
+    )
+    assert res_prep is not None
+    assert res_prep["dados"]["disciplinas_nao_reconhecidas"] == ["Disciplina Inventada"]
+
+    res_abre_com = grafo.consultar_estruturado(
+        "O que abre com Cálculo 1 e Disciplina Inventada?"
+    )
+    assert res_abre_com is not None
+    assert res_abre_com["dados"]["aprovadas"] == ["MAT0025"]
+    assert res_abre_com["dados"]["disciplinas_nao_reconhecidas"] == ["Disciplina Inventada"]
+
+    # Zero disciplinas reconhecidas produz resposta limpa e evidência respaldada
+    res_zero = grafo.consultar_estruturado("Passei em Magia Negra, o que abre?")
+    assert res_zero is not None
+    assert res_zero["dados"]["aprovadas"] == []
+    assert res_zero["dados"]["disciplinas_nao_reconhecidas"] == ["Magia Negra"]
+    assert "Não identifiquei disciplinas confirmadas" in res_zero["texto"]
+    assert "Magia Negra" in res_zero["evidencia"]
+
+
+def test_contexto_de_curso_na_lista_nao_vira_disciplina_ambigua():
+    from rumo_rag.grafo_curricular import carregar_repositorio_grafos
+
+    res = carregar_repositorio_grafos().consultar_estruturado(
+        "Passei em Cálculo 1 e Física 1 em Eletrônica, o que abre?"
+    )
+    assert res is not None
+    assert res["dados"]["curriculo_id"] == "eletronica-2023"
+    assert set(res["dados"]["aprovadas"]) == {"MAT0025", "IFD0171"}
+    assert res["dados"]["disciplinas_nao_reconhecidas"] == []
+    assert res["dados"]["disciplinas_ambiguas"] == {}
+
+
+def test_interface_estruturada_aprovadas_para_tool_calling():
+    from rumo_rag.agentes.ferramentas import grafo_fluxo
+
+    res = grafo_fluxo("O que abre?", aprovadas=["MAT0025", "Algoritmos", "FGA9999"])
+    assert res.sucesso is True
+    assert res.dados["aprovadas"] == ["MAT0025"]
+    assert res.dados["disciplinas_nao_reconhecidas"] == ["FGA9999"]
+    assert "Algoritmos" in res.dados["disciplinas_ambiguas"]
+    assert "CIC0004" in res.trechos_evidencia[0]["texto"]
+    assert "FGA0124" in res.trechos_evidencia[0]["texto"]
+    assert "FGA9999" in res.trechos_evidencia[0]["texto"]
+
+
+def test_orquestrador_aprova_avisos_de_ambiguidade_e_codigo_desconhecido():
+    from rumo_rag.agentes.orquestrador import Orquestrador
+
+    orq = Orquestrador()
+
+    for pergunta, esperado in [
+        (
+            "Passando em Cálculo 1, Algoritmos e Introdução à Engenharia, o que abre?",
+            "Não reconheci com segurança: Algoritmos",
+        ),
+        (
+            "Passei em MAT0025 e FGA9999, o que abre?",
+            "Não reconheci: FGA9999.",
+        ),
+        (
+            "Passei em Magia Negra, o que abre?",
+            "Não reconheci: Magia Negra.",
+        ),
+    ]:
+        out = orq.executar(pergunta, backend="extrativo")
+        etapas_val = [e for e in out.get("trace", []) if e.get("etapa") == "validacao_factual"]
+        assert etapas_val, f"Esperava etapa validacao_factual para: {pergunta}"
+        resultados = etapas_val[0]["resultados"]
+        assert resultados and all(r.get("aprovado_inicial") is True and r.get("aprovado") is True for r in resultados), resultados
+        assert etapas_val[0]["devolucoes_ao_sintetizador"] == []
+        assert out.get("valores_sem_fonte") == []
+        assert esperado in out["resposta"]
+
+
 def test_siglas_derivadas_dinamicamente_e_ausencia_de_falsos_positivos():
     grafo = carregar_grafo()
 
