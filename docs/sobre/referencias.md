@@ -26,4 +26,4 @@
 
 ## Fontes da base de conhecimento
 
-As 56 fontes, com URL e data, estão em [Base de conhecimento](../entrega-2/base-de-conhecimento.md) e em `rag/catalogo.yaml`.
+Os 56 documentos cadastrados, com URL e data, estão em [Base de conhecimento](../entrega-2/base-de-conhecimento.md) e em `rag/catalogo.yaml`. Destes, 55 estão indexados nos 1.964 chunks de `rag/dados/chunks.jsonl`. O catálogo tem ainda uma entrada em `fontes_de_coleta`, usada para descobrir novos cardápios; ela não é contada como documento da base.

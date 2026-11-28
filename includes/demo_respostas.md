@@ -103,7 +103,7 @@ $ python -m rumo_rag perguntar "Quais disciplinas preciso ter feito antes de cur
 | 5 | `F15-0001` | Engenharia de Software — matriz curricular e créditos (página do curso) | 1 |  | 0.601 |
 
 !!! quote "Resposta gerada (Qwen2.5-7B-Instruct · 4 bits · local)"
-    Para cursar Testes de Software (FGA0314), é necessário ter cursado antes Requisitos de Software (FGA0313) [2]. Além disso, o fluxograma indica que também há uma ligação tracejada entre Métodos de Desenvolvimento de Software (FGA0312) e Testes de Software (FGA0314), mas não especifica se é um pré-requisito ou correquisito [1].
+    Para cursar Testes de Software (FGA0314), o grafo atual adota o pré-requisito alternativo Métodos de Desenvolvimento de Software (FGA0312) ou Requisitos de Software (FGA0313) [1][2] (registro histórico de 09/11/2026, anterior ao PR #88: indicava FGA0313 como obrigatório e FGA0312 como ligação tracejada).
 
 **Fontes citadas na resposta:**
 

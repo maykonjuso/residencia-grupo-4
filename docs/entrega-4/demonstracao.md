@@ -22,9 +22,9 @@ python -m rumo_rag "Qual disciplina de Engenharia de Software destrava mais mat�
 python -m rumo_rag "Passei em MAT0025, CIC0004 e FGA0168; o que abre?"
 ```
 
-Na primeira consulta, a busca de alcançabilidade pelas setas cheias identifica **Testes de Software (FGA0314)** e **Gerência de Configuração e Evolução de Software (GCES) (FGA0317)** como dependentes de **Requisitos de Software (FGA0313)**. Na segunda, o grau de saída das setas cheias identifica **Algoritmos e Programação de Computadores (CIC0004)** como principal gargalo do fluxograma. Já em cursos cujas matrizes oficiais não trazem códigos SIGAA nem pré-requisitos explícitos (Engenharia de Energia e Automotiva), a ferramenta recusa a inferência conforme a RN-03.
+Na primeira consulta, a busca de alcançabilidade identifica **Testes de Software (FGA0314)** como liberada por **Métodos de Desenvolvimento de Software (MDS, FGA0312) ou Requisitos de Software (FGA0313)**; **Gerência de Configuração e Evolução de Software (GCES) (FGA0317)** depende de Testes. Na segunda, o grau de saída das setas cheias identifica **Algoritmos e Programação de Computadores (CIC0004)** como principal gargalo do fluxograma. Já em cursos cujas matrizes oficiais não trazem códigos SIGAA nem pré-requisitos explícitos (Engenharia de Energia e Automotiva), a ferramenta recusa a inferência conforme a RN-03.
 
-Setas tracejadas não são tratadas como pré-requisitos confirmados: ao consultar pré-requisitos ou disciplinas liberadas por ligação tracejada, a resposta mantém o alerta de incerteza e orienta confirmar no SIGAA. O caminho crítico informa a maior cadeia de pré-requisitos confirmados registrada no grafo — não representa uma previsão de semestres até a formatura, pois não há dados de oferta de turmas nem do ritmo individual do estudante.
+Setas tracejadas sem regra explícita no grafo não são tratadas como pré-requisitos confirmados; a resposta mantém o alerta de incerteza e orienta confirmar no SIGAA. Para FGA0314, porém, o grafo atual registra explicitamente o pré-requisito alternativo **MDS ou Requisitos**. O caminho crítico informa a maior cadeia de pré-requisitos confirmados registrada no grafo — não representa uma previsão de semestres até a formatura, pois não há dados de oferta de turmas nem do ritmo individual do estudante.
 
 !!! info "Execuções reproduzíveis e evidência generativa"
     Os Casos 1, 3 e 4 abaixo foram executados no modo extrativo (`--backend extrativo`) com modelos locais offline (`HF_HUB_OFFLINE=1`) para validação determinística do roteamento, paralelismo e degradação. O Caso 2 e o Caso 5 registram o comportamento atual do **Agente Validador ativo** (`#43`) e a execução real com modelo generativo (`qwen2.5:7b` via Ollama) após o fechamento de `#40`–`#43`.
@@ -178,7 +178,7 @@ O conjunto completo de **12 perguntas múltiplas** (`rag/avaliacao/perguntas/per
 
 | ID e perfil | Pergunta | Paralelismo e validação | Síntese da resposta gerada pela LLM (`qwen2.5:7b`) |
 |---|---|---|---|
-| **`M01`** *(Dupla · `ru` + `fluxo`)* | O que tem no almoço de quarta-feira e quais são os pré-requisitos de Testes de Software? | `23,89 s` vs `37,75 s` (`-13,85 s`) · `2/2` aprovadas | **RU:** listou o cardápio completo de quarta-feira (`F08` `[1]`). **Fluxo:** indicou `Requisitos de Software (FGA0313)` como pré-requisito `[2]` e ligação tracejada com `MDS (FGA0312)` `[1]` (`F16`). |
+| **`M01`** *(Dupla · `ru` + `fluxo`; saída histórica de 16/11/2026, antes do PR #88)* | O que tem no almoço de quarta-feira e quais são os pré-requisitos de Testes de Software? | `23,89 s` vs `37,75 s` (`-13,85 s`) · `2/2` aprovadas | **RU:** listou o cardápio completo de quarta-feira (`F08` `[1]`). **Fluxo:** a saída histórica indicou `Requisitos de Software (FGA0313)` e tratou a ligação com `MDS (FGA0312)` como tracejada; a regra atual do grafo é **MDS ou Requisitos** (`F16`). |
 | **`M07`** *(Tripla · `ru` + `fluxo` + `ru` · reparo ativo)* | Quanto custa o desjejum para Grupo II, quantos créditos exige Engenharia Aeroespacial e abre aos sábados para comer? | `39,23 s` vs `88,53 s` (`-49,30 s`) · Fluxo devolvido (`2510 horas`) → corrigido; `3/3` aprovadas | **RU (1):** Desjejum Grupo II custa `R$ 2,00` (`F04` `[1]`). **Fluxo:** após retentativa com feedback, corrigiu para `251 créditos` (`F17` `[1]`). **RU (2):** informou que não abre aos sábados (`F03` `[3]`). |
 | **`M04`** *(Dupla · `fluxo` + `fluxo` · recusa pós-validação)* | Quantas horas de estágio são exigidas em Engenharia de Energia e como um aluno da graduação pede para cursar matéria isolada na pós? | `23,71 s` vs `29,93 s` (`-6,22 s`) · 1 devolução (`14 créditos` sem fonte) → recusa final | **Fluxo (1):** aplicou recusa honesta após o dado sem lastro persistir na 2ª tentativa. **Fluxo (2):** detalhou os 4 passos da Instrução DEG/DPG nº 01/2020 para matrícula no PPGEB (`F26` `[1]`). |
 | **`M12`** *(Quádrupla · 2× `fluxo` + 2× `ru` · 4 workers)* | Estágio de Energia, créditos de Automotiva, documentos na catraca e comprovação de auxílio alimentação | `47,53 s` vs `118,68 s` (`-71,15 s`) · `4/4` aprovadas | **Fluxo:** estágio de Energia (`210 horas`, `[4][5]`) e Automotiva (`215 créditos`, `[1]`). **RU:** QR Code da carteirinha digital (`[1]`) e 3 etapas/critérios do auxílio-alimentação (`[4][5]`). |
@@ -193,7 +193,7 @@ O conjunto completo de **12 perguntas múltiplas** (`rag/avaliacao/perguntas/per
 
 ## Caso 7 — Consulta composta com cardápio semanal estruturado (alergênicos) e Fluxo
 
-Com a integração do cardápio estruturado da semana corrente (`cardapio_semanal.json`, fonte `F56`) ao **Agente do RU** e do catálogo de 54 fontes oficiais, consultas sobre alergênicos passaram a ser respondidas diretamente a partir da semana vigente sem conflito com PDFs antigos no RAG:
+Com a integração do cardápio estruturado da semana corrente (`cardapio_semanal.json`, fonte `F56`) ao **Agente do RU** e do catálogo de 56 documentos cadastrados em `rag/catalogo.yaml` (55 indexados em 1.964 chunks em `rag/dados/chunks.jsonl`), consultas sobre alergênicos passaram a ser respondidas diretamente a partir da semana vigente sem conflito com PDFs antigos no RAG:
 
 ```bash
 cd rag
@@ -202,7 +202,7 @@ RUMO_BUSCA=bm25 RUMO_USAR_D1=0 ../.venv/bin/python -m rumo_rag perguntar \
   --agentes --trace --backend extrativo
 ```
 
-Saída real registrada em terminal (modo leve compatível com deploy em nuvem):
+Saída real registrada em terminal em 20/11/2026, antes do PR #88 (modo leve compatível com deploy em nuvem). Esta captura preserva o comportamento antigo; o grafo atual aceita MDS **ou** Requisitos para FGA0314.
 
 ```text
 === [TRACE · Orquestrador Multiagentes] ===
@@ -243,7 +243,7 @@ Registro completo e consolidado das **12 consultas múltiplas** (**31 subpergunt
     | Consulta e métricas | Agente e subpergunta | Resposta da LLM (`qwen2.5:7b`) | Fontes citadas |
     |---|---|---|---|
     | **M01** (1/2)<br>Paralelo: `23,89 s` vs `37,75 s` (`-13,85 s`)<br>2/2 aprovadas com citação | **Agente RU:** O que tem no almoço de quarta-feira? | No almoço de quarta-feira:<br><br>- Salada 1: Mix de folhas [1]<br>- Salada 2: Abóbora ralada [1]<br>- Molho para salada: Salsa [1]<br>- Prato principal padrão: Strogonoff de frango [1]<br>- Prato principal ovolactovegetariano: Iscas de soja ao sugo gratinadas [1]<br>- Prato principal vegetariano estrito: Polpetone de quinoa [1]<br>- Guarnição: Batata sauté [1]<br>- Acompanhamentos: Arroz branco e integral Feijão preto [1]<br>- Sobremesa: Mexerica [1]<br>- Bebida (refresco de): Manga [1] | [1] F08 · Cardápio semanal do RU Gama — 02/11 a 08/11/2026 (p. 2) |
-    | **M01** (2/2) | **Agente Fluxo:** Quais são os pré-requisitos de Testes de Software? | Para cursar Testes de Software (FGA0314), é preciso ter cursado antes Requisitos de Software (FGA0313) [2]. A seta tracejada no fluxograma também indica que Métodos de Desenvolvimento de Software (FGA0312) tem uma ligação com Testes de Software, mas não é um pré-requisito direto. [1] | [1] F16 · Fluxograma de Engenharia de Software (235 créditos) — transcrição (p. 1)<br>[2] F16 · Fluxograma de Engenharia de Software (235 créditos) — transcrição (p. 1) |
+    | **M01** (2/2; saída histórica de 16/11/2026, antes do PR #88) | **Agente Fluxo:** Quais são os pré-requisitos de Testes de Software? | A resposta registrada naquela execução tratou Requisitos de Software (FGA0313) como obrigatório e MDS (FGA0312) como ligação tracejada. **A regra atual do grafo é MDS ou Requisitos**. | [1] F16 · Fluxograma de Engenharia de Software (235 créditos) — transcrição (p. 1)<br>[2] F16 · Fluxograma de Engenharia de Software (235 créditos) — transcrição (p. 1) |
     | **M02** (1/2)<br>Paralelo: `2,84 s` vs `3,69 s` (`-0,85 s`)<br>RU recusou ("hoje" sem data); Fluxo aprovado | **Agente RU:** Qual a proteína servida hoje ao meio-dia no bandejão? | Não encontrei essa informação nas fontes da base. | — *(recusa honesta)* |
     | **M02** (2/2) | **Agente Fluxo:** O que preciso ter aprovado antes de pegar Cálculo 2? | Para cursar Cálculo 2 (MAT0026), é necessário ter aprovado Cálculo 1 (MAT0025) [2]. | [2] F16 · Fluxograma de Engenharia de Software (235 créditos) — transcrição (p. 1) |
     | **M03** (1/2)<br>Paralelo: `4,66 s` vs `7,62 s` (`-2,95 s`)<br>2/2 aprovadas com citação | **Agente RU:** Quem tem direito a isenção na refeição? | Estudantes do Grupo I têm direito ao subsídio integral das refeições, sendo que o acesso é garantido mediante comprovação de vínculo institucional ativo. [3][6] | [3] F04 · Valores das refeições e grupos de acesso (p. 1) |
@@ -287,3 +287,4 @@ Registro completo e consolidado das **12 consultas múltiplas** (**31 subpergunt
     | 1.7 | 20/11/2026 | @GabrielMacielBR | Seleção de 4 destaques no corpo do Caso 6 (`Tabela 2`) e consolidação das 12 consultas completas (métricas + respostas da LLM) no Apêndice ao final do documento | — |
     | 1.8 | 23/11/2026 | Grupo 04 | Inclusão e destaque do vídeo demonstrativo da Task #47 no início da página | — |
     | 1.9 | 23/11/2026 | @keilogger, @GabrielMacielBR | Documentação das consultas determinísticas ao grafo curricular (`grafo_fluxo` / `grafo_curricular.json`, Issues #61 e #62) | — |
+    | 1.10 | 27/11/2026 | @keilogger | Alinhamento da regra OU de `FGA0314` (PR #88) e contagem atual da base (56 fontes / 1.964 chunks) (Issue #96) | — |

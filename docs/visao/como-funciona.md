@@ -23,7 +23,7 @@ flowchart LR
     subgraph G04 [Grupo 04 · RUmo]
         direction LR
         A4[API /perguntar] --> B4[Busca híbrida<br/>bge-m3 + BM25 · RRF]
-        B4 --> C4[(ChromaDB<br/>1.7 mil chunks)]
+        B4 --> C4[(ChromaDB<br/>1.964 chunks)]
         C4 --> L4[LLM Qwen2.5-7B<br/>responde só com os trechos]
         L4 --> R4[Resposta + fontes]
         K4[(56 fontes oficiais<br/>RU + fluxo)] -. ingestão offline .-> C4
@@ -60,3 +60,5 @@ flowchart LR
 | API e RAG do Grupo 09 | Grupo 09 | Respondem sobre salas, prédios e rotas no campus |
 
 <p class="legenda">Tabela 1. Responsabilidades por componente.</p>
+
+A contagem atual corresponde aos 56 documentos cadastrados em `rag/catalogo.yaml`; 55 deles estão indexados nos 1.964 registros de `rag/dados/chunks.jsonl`. O catálogo também mantém uma entrada em `fontes_de_coleta`, que descreve a página usada para descobrir novos cardápios e não é um documento da base.

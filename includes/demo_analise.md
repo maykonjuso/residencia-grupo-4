@@ -5,7 +5,7 @@ A **Tabela 2** sintetiza o desempenho da recuperação, da geração e da verifi
 | D1 | Preço do almoço (graduação) | Chunk do Grupo II em 1º | R$ 4,50, Grupo II | F04 | <span class="selo selo--verde">correta</span> |
 | D2 | Vegetariano estrito, quarta 11/11 | Almoço de 11/11 em 1º | Abobrinha recheada com lentilha ao sugo | F09 p.2 | <span class="selo selo--verde">correta</span> |
 | D3 | Quem come de graça | Resolução CAD 37/2025 em 1º, 2º e 3º | Cita só o Programa Auxílio Alimentação | F06 | <span class="selo selo--laranja">incompleta</span> |
-| D4 | Pré-requisito de Testes de Software | Linhas de pré-requisito em 1º e 2º | Requisitos de Software (FGA0313), com a ressalva da seta tracejada vinda de MDS | F16 | <span class="selo selo--verde">correta</span> |
+| D4 | Pré-requisito de Testes de Software | Linhas de pré-requisito em 1º e 2º | MDS (FGA0312) ou Requisitos de Software (FGA0313) (regra OU atualizada no PR #88) | F16 | <span class="selo selo--verde">correta</span> |
 | D5 | Termodinâmica 1 e créditos de Energia | 5º semestre em 1º | 5º semestre; 251 créditos | F23 | <span class="selo selo--verde">correta</span> |
 | D6 | Disciplina do mestrado (PPGEB) | Página "aluno de graduação" em 1º e 2º | Passo a passo completo | F26 | <span class="selo selo--verde">correta</span> |
 | D7 | Wifi da biblioteca | Nenhum trecho responde | "Não encontrei essa informação nas fontes da base." | — | <span class="selo selo--verde">recusa correta</span> |
