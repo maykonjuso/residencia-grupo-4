@@ -117,3 +117,4 @@ estrutura da página e um PDF com o mesmo layout, em `rag/testes/fixtures/cardap
     | Data | Versão | Descrição | Autor |
     | :---: | :---: | --- | --- |
     | 18/11/2026 | 1.1 | Coleta automatizada do cardápio do RU Gama: fonte, formato, comandos e decisões (#50) | Kyara Esteves |
+    | 27/11/2026 | 1.2 | Adição de citação e legenda numerada da Tabela 2 (Issue #99) | Keila Alves |
