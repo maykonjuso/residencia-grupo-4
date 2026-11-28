@@ -38,7 +38,7 @@ A **Tabela 1** sintetiza as principais decisões, volumes e métricas alcançado
 | Dimensão | Resultado no protótipo |
 |---|---|
 | Agentes e papéis | `4` agentes (`Orquestrador`, `Agente do RU`, `Agente de Fluxo`, `Agente Validador`) + `Sintetizador` |
-| Base de conhecimento | `54` fontes oficiais (`53` indexadas no RAG = `1.954` chunks + `F56` em `cardapio_semanal.json` com alergênicos) |
+| Base de conhecimento | `56` documentos oficiais cadastrados (`55` indexados no RAG = `1.964` chunks + `F56` em `cardapio_semanal.json` com alergênicos) |
 | Decomposição e roteamento (12 múltiplas) | `12/12` (`100%`) das consultas quebradas e roteadas nas `31` subperguntas esperadas |
 | Acurácia em linguagem natural (`17` subperguntas) | `76,5%` (Regex) → `94,1%` (`d1-omni-600M`) → `100,0%` (`qwen2.5:7b` conjunto) |
 | Ganho de execução em paralelo | Economia de `48,6%` no tempo dos agentes (`264,50 s` paralelos vs `514,13 s` individuais) |
@@ -66,3 +66,4 @@ A **Tabela 1** sintetiza as principais decisões, volumes e métricas alcançado
     | 16/11/2026 | 1.0 | Estrutura inicial da Entrega 4 (Épico #37) | @GabrielMacielBR |
     | 18/11/2026 | 1.4 | Atualização após conclusão do contrato (`#40`), especialistas (`#41`), `Orquestrador` (`#42`), validador ativo (`#43`) e cardápio estruturado (`#54`, por @Kyara2) | @GabrielMacielBR |
     | 20/11/2026 | 2.0 | Alinhamento editorial ao estilo das Entregas 1–3 e consolidação de alergênicos (`#55`), API multiagente (`#44`), pilha técnica e apêndice `M01`–`M12` | @GabrielMacielBR |
+    | 27/11/2026 | 2.1 | Alinhamento da contagem da base para 56 fontes (55 indexadas / 1.964 chunks + F56) (Issue #96) | Keila Alves |

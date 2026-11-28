@@ -63,3 +63,4 @@ Mentor do Challenge 2: Jefferson Viana Fonseca Abreu.
     | 18/11/2026 | 1.2 | Catálogo passa a 37 fontes (Issue #55) | Grupo 04 |
     | 20/11/2026 | 1.3 | Preenchimento da Tabela 3 (Entregas 1 a 4) e atualização da base para 54 fontes (Issue #48) | Grupo 04 |
     | 23/11/2026 | 1.4 | Catálogo passa a 56 fontes: calendário 2026.2 atualizado, feriados (F57) e verão 2027 (F58) (Issue #57) | Gabriella Oliveira |
+    | 27/11/2026 | 1.5 | Explicitação das fontes de verdade (56 cadastradas / 55 indexadas em 1.964 chunks) (Issue #96) | Keila Alves |

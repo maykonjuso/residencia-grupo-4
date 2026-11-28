@@ -202,7 +202,7 @@ RUMO_BUSCA=bm25 RUMO_USAR_D1=0 ../.venv/bin/python -m rumo_rag perguntar \
   --agentes --trace --backend extrativo
 ```
 
-Saída real registrada em terminal em 16/11/2026, antes do PR #88 (modo leve compatível com deploy em nuvem). Esta captura preserva o comportamento antigo; o grafo atual aceita MDS **ou** Requisitos para FGA0314.
+Saída real registrada em terminal em 20/11/2026, antes do PR #88 (modo leve compatível com deploy em nuvem). Esta captura preserva o comportamento antigo; o grafo atual aceita MDS **ou** Requisitos para FGA0314.
 
 ```text
 === [TRACE · Orquestrador Multiagentes] ===
@@ -287,3 +287,4 @@ Registro completo e consolidado das **12 consultas múltiplas** (**31 subpergunt
     | 1.7 | 20/11/2026 | @GabrielMacielBR | Seleção de 4 destaques no corpo do Caso 6 (`Tabela 2`) e consolidação das 12 consultas completas (métricas + respostas da LLM) no Apêndice ao final do documento | — |
     | 1.8 | 23/11/2026 | Grupo 04 | Inclusão e destaque do vídeo demonstrativo da Task #47 no início da página | — |
     | 1.9 | 23/11/2026 | @keilogger, @GabrielMacielBR | Documentação das consultas determinísticas ao grafo curricular (`grafo_fluxo` / `grafo_curricular.json`, Issues #61 e #62) | — |
+    | 1.10 | 27/11/2026 | @keilogger | Alinhamento da regra OU de `FGA0314` (PR #88) e contagem atual da base (56 fontes / 1.964 chunks) (Issue #96) | — |
