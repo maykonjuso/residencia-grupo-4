@@ -1351,13 +1351,21 @@ class GrafoCurricular:
                 "alertas": [] if self.cobertura_equivalencias == "completa" else ["Cobertura parcial de equivalências; confirmar tabela completa no SIGAA."],
             }
 
-        eh_prereq_op = bool(
+        eh_consulta_prerequisito = bool(
+            re.search(
+                r"pre-?requisito|co-?requisito"
+                r"|o que (?:eu )?(?:preciso|tenho que|devo) (?:cursar|fazer|pegar) antes de"
+                r"|o que (?:eu )?precis[ao] para (?:cursar|fazer|pegar)"
+                r"|(?:quais? (?:sao )?(?:os )?)?requisitos? (?:de (?!software\b)|para)",
+                texto,
+            )
+        )
+        eh_prereq_op = eh_consulta_prerequisito or bool(
             re.search(
                 r"caminho critico|quantos semestres.*formar|tempo.*formar"
                 r"|gargalo|destrava.*mais|mais (?:materias|disciplinas)|maior numero"
                 r"|passando|passei|aprovad[oa]s?|o que abre|quais.*abre"
-                r"|reprov|trava|bloque|dependente|depende de"
-                r"|pre-?requisito|co-?requisito",
+                r"|reprov|trava|bloque|dependente|depende de",
                 texto,
             )
         )
@@ -1569,7 +1577,7 @@ class GrafoCurricular:
                 "alertas": [],
             }
 
-        if re.search(r"pre-?requisito|co-?requisito", texto) and disciplinas:
+        if eh_consulta_prerequisito and disciplinas:
             alvo = disciplinas[-1]
             confirmados, incertos = self.prerequisitos(alvo.codigo)
             coreqs = self.correquisitos_de(alvo.codigo)

@@ -221,6 +221,33 @@ class TestRoteamentoELimiar(unittest.TestCase):
 
 
 class TestParalelismoEComposicao(unittest.TestCase):
+    def test_pergunta_composta_despacha_variacao_de_prerequisito_para_grafo(self):
+        agente_ru = _AgenteStub(
+            "ru", "Agente RU", resposta_fixa="Cardápio de hoje [1].", trechos_fixos=[TRECHO_RU]
+        )
+        agente_fluxo = agentes.AgenteFluxo(modo="bm25")
+        orq = agentes.Orquestrador(agente_ru=agente_ru, agente_fluxo=agente_fluxo)
+        pergunta = "O que tem no almoço de hoje e o que preciso cursar antes de Testes de Software?"
+
+        with mock.patch.object(agentes.reescrita, "classificar_composta", return_value=(True, 0.90)), \
+             mock.patch.object(
+                 agentes.reescrita,
+                 "decompor_com_roteamento",
+                 return_value=[
+                     {"pergunta": "O que tem no almoço de hoje?", "eixo": "ru"},
+                     {"pergunta": "O que preciso cursar antes de Testes de Software?", "eixo": "fluxo"},
+                 ],
+             ):
+            res = orq.executar(pergunta, backend="extrativo")
+
+        chamada_fluxo = next(f for f in res["ferramentas_usadas"] if f["agente"] == "fluxo")
+        parte_fluxo = next(p for p in res["partes"] if p["agente"] == "fluxo")
+        self.assertEqual(chamada_fluxo["nome"], "grafo_fluxo")
+        self.assertIn("FGA0312", parte_fluxo["resposta"])
+        self.assertIn("FGA0313", parte_fluxo["resposta"])
+        self.assertNotIn("FGA0317", parte_fluxo["resposta"])
+        self.assertNotIn("FGA0316", parte_fluxo["resposta"])
+
     def test_execucao_paralela_menor_que_soma_individual(self):
         agente_ru = _AgenteStub("ru", "Agente RU", atraso_s=0.25, resposta_fixa="Frango grelhado [1].", trechos_fixos=[TRECHO_RU])
         agente_fluxo = _AgenteStub("fluxo", "Agente Fluxo", atraso_s=0.25, resposta_fixa="Requisito: MDS [1].", trechos_fixos=[TRECHO_FLUXO])
