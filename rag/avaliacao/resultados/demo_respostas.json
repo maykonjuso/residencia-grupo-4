@@ -235,7 +235,7 @@
   },
   {
     "pergunta": "Quais disciplinas preciso ter feito antes de cursar Testes de Software?",
-    "resposta": "Registro histórico da execução de 16/11/2026, anterior ao PR #88: a resposta tratou Métodos de Desenvolvimento de Software como obrigatório. A regra atual do grafo é o pré-requisito alternativo MDS (FGA0312) ou Requisitos de Software (FGA0313). Resposta original: Para cursar Testes de Software, é necessário ter cursado Métodos de Desenvolvimento de Software. [2]",
+    "resposta": "Para cursar Testes de Software, é necessário ter cursado Métodos de Desenvolvimento de Software. [2]",
     "fontes_citadas": [
       {
         "n": 2,

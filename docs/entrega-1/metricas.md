@@ -28,7 +28,11 @@ As métricas foram definidas na Semana 1 e já são medidas a partir da Entrega 
 
 ## Uso (Semana 7)
 
+Os resultados de uso previstos para a Semana 7 estão resumidos na **Tabela 3**.
+
 | Métrica | Definição | Meta |
 |---|---|---|
 | Utilidade percebida | Nota de 1 a 5 dada por estudantes da FCTE após usar o sistema | ≥ 4 |
 | Tempo até a resposta | Tempo para achar a informação com o RUmo × procurando nos sites | Redução ≥ 50% |
+
+<p class="legenda">Tabela 3. Métricas de uso previstas para a Semana 7.</p>
