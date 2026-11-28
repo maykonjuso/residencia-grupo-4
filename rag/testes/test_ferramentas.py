@@ -324,6 +324,7 @@ class TestGrafoEMinhaAgenda(unittest.TestCase):
             "O que preciso cursar antes de Testes de Software?",
             "O que tenho que fazer antes de Testes de Software?",
             "O que precisa para cursar Testes de Software?",
+            "O que eu preciso para cursar Testes de Software?",
             "Quais são os requisitos de Testes de Software?",
         ]
         for pergunta in perguntas:
@@ -355,6 +356,18 @@ class TestGrafoEMinhaAgenda(unittest.TestCase):
 
         self.assertTrue(resposta.startswith("- Para cursar Testes de Software"))
         self.assertNotIn("- - ", resposta)
+
+    def test_nome_requisitos_de_software_nao_aciona_grafo_para_creditos_ou_semestre(self):
+        self.assertIsNone(ferramentas.extrair_chamada_fluxo("Requisitos de Software tem quantos créditos?"))
+        self.assertIsNone(ferramentas.extrair_chamada_fluxo("Requisitos de Software fica em qual semestre?"))
+
+        chamada = ferramentas.extrair_chamada_fluxo("Quais são os requisitos de Requisitos de Software?")
+        self.assertIsNotNone(chamada)
+        nome, argumentos = chamada
+        self.assertEqual(nome, "grafo_fluxo")
+        resultado = ferramentas.grafo_fluxo(**argumentos)
+        self.assertEqual(resultado.dados["tipo_consulta"], "prerequisitos")
+        self.assertEqual(resultado.dados["disciplina"]["codigo"], "FGA0313")
 
     def test_grafo_fluxo_devolve_dado_estruturado_com_ou_alternativo(self):
         res = ferramentas.grafo_fluxo("Quais os pré-requisitos de Testes de Software?")
